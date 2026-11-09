@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Gates for every push: every check. The GameTests and the generated files join with issue #5.
+set -euo pipefail
+
+root="$(git rev-parse --show-toplevel)"
+readonly root
+
+"${root}/gradlew" --project-dir "${root}" check
