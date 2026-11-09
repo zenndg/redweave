@@ -50,7 +50,7 @@ O valor do canal é o **sinal mais forte entre as entradas que contam**. Um cana
 | Entrada | Conta? | Com qual valor |
 |---|---|---|
 | Slot de entrada de um nó `Online` | Sim | O sinal de redstone que o nó lê no bloco, na face configurada |
-| Slot de entrada de um nó `Unloaded` | Sim | O último valor lido antes de o chunk descarregar (perguntas 13 e 29) |
+| Slot de entrada de um nó `Unloaded` | Sim | O último valor lido antes de o chunk descarregar, salvo com a rede, então vale também depois de reiniciar o servidor (perguntas 13, 29 e 37) |
 | Slot de entrada de um nó `Out of range` | Não | Vale 0 (perguntas 23 e 29) |
 | Signal Remote ligado | Sim | O valor que o player escolheu no item |
 | Signal Remote fora do inventário ou do alcance | Não | Vale 0, para o canal não ficar preso ligado (pergunta 27) |
@@ -93,7 +93,7 @@ O nó `Unloaded` não aparece no mundo, porque o chunk dele não está carregado
 
 ### Alcance
 
-O alcance é um raio em blocos a partir do Network Controller, na mesma dimensão (pergunta 23). O raio fica no config, com valor inicial de 128, e 0 significa ilimitado. Outra dimensão nunca alcança, mesmo com o raio ilimitado.
+O alcance é uma esfera com um raio em blocos a partir do Network Controller, na mesma dimensão (perguntas 23 e 36). Conta a distância em linha reta entre o bloco do controlador e o bloco do nó. O raio fica no config, com valor inicial de 128, e 0 significa ilimitado. Outra dimensão nunca alcança, mesmo com o raio ilimitado.
 
 ### Nó recém-colocado
 
@@ -181,5 +181,6 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:39 | Aplica as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:12 | Aplica a pergunta 31 nos IDs. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Cria o documento, com as respostas das perguntas 13 e 22 a 30. |
