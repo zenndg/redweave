@@ -55,7 +55,7 @@ O símbolo perde detalhe conforme diminui: os nós somem em 64 px, e em 16 px el
 | Deepslate polido | `#3A3E45` | Corpo dos blocos e itens |
 | Cobre | `#C27B4C` | Molduras, cabos e botões |
 | Redstone | `#E2392F` | Sinal ativo, núcleo e lentes |
-| Âmbar | `#E3A33B` | Nó fora de alcance (pergunta 13) |
+| Âmbar | `#E3A33B` | Nó `Unloaded`, nas telas (perguntas 13 e 29) |
 | Tela | `#0E1116` | Visores e painéis de LED |
 
 ## Canais
@@ -91,7 +91,7 @@ O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 b
 
 | Elemento | Como é |
 |---|---|
-| Estado | Etiqueta com ponto colorido: `Online` em verde, `Out of range` em âmbar e `No network` em cinza |
+| Estado | Etiqueta com ponto colorido: `Online` em verde, `Unloaded` em âmbar, `Out of range` em vermelho e `No network` em cinza (pergunta 29) |
 | Canal | Quadrado na cor do canal, com o número e o nome em inglês, como `15 Red` |
 | Sinal | O medidor de 15 barras e o número |
 | Direção | Seletor de duas opções, `Input` e `Output`, com a escolhida em cobre |
@@ -138,7 +138,7 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 |---|---|
 | Desligado | Lente escura: sem rede ou com sinal 0 |
 | Ativo | Lente acesa, mais forte quanto maior o sinal |
-| Fora de alcance | Lente âmbar e anel tracejado: o chunk do nó descarregou, e o canal mantém o último valor lido (pergunta 13) |
+| Fora de alcance | Lente apagada e anel tracejado vermelho: o nó está fora do raio do controlador e não conta (perguntas 23 e 29). O nó `Unloaded` não aparece no mundo, porque o chunk dele não está carregado |
 
 ### Configurator
 
@@ -182,6 +182,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 15:39 | Separa os estados `Unloaded` e `Out of range` (pergunta 29). |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:15 | Adiciona o conceito dos blocos e itens da Fase 1. |
 | Marcelo Fabiano | 2026-11-09 11:10 | Adiciona a identidade visual, a paleta, os canais e os elementos de interface. |

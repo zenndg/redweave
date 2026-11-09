@@ -42,7 +42,7 @@ Redweave brings those ideas together, focused on **signal only** (items, fluids 
 
 | Concept | What it is |
 | --- | --- |
-| **Network** | Created at a Network Controller. Has a name, a color, an owner and player permissions. Every network shares **16 channels**, colored like wool. |
+| **Network** | Created at a Network Controller. Has a name, a color and an owner, who is the only one allowed to change it. Every network shares **16 channels**, colored like wool. |
 | **Node** | Attaches to any face of any block. Reads or emits redstone there. Starts with 4 channel slots (upgradable to 9). Can be made invisible. |
 | **Channel** | Per slot: direction (input or output), block face, and which of the 16 network channels it uses. Several inputs on one channel → the strongest signal wins. |
 | **Logic** | Each output slot can transform the signal: invert, pulse only, delay, threshold. |

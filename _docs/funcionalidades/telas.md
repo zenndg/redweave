@@ -8,7 +8,7 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 - **Textos:** em inglês, no `en_us.json`, e em português, no `pt_br.json`, com as mesmas chaves (regra 1 do `AGENTS.md`). As imagens mostram os textos em inglês.
 - **Nada passa da borda:** texto longo é cortado com reticências, e um tooltip mostra o texto inteiro.
 - **Sinal ao vivo:** valores e medidores atualizam com a tela aberta, pelo servidor (regra 16).
-- **Quem abre:** quem tem permissão na rede, validado no servidor (regra 17). Sem permissão, a tela abre só para leitura.
+- **Quem abre:** qualquer player. Só o dono da rede altera alguma coisa, validado no servidor (regra 17 e pergunta 22). Para os outros, a tela abre só para leitura.
 - **Escala:** as imagens mostram as telas em 2×. Os tamanhos finais em pixels da interface do jogo são definidos na implementação.
 
 ## Tela do Nó
@@ -20,7 +20,7 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 | Parte | O que mostra |
 |---|---|
 | Título | `Signal Node` |
-| Estado | No canto superior direito: `Online · <rede>`, `Out of range` ou `No network` |
+| Estado | No canto superior direito: `Online · <rede>`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)) |
 | Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Slot livre aparece tracejado, com `Free slot` e `Click to use` |
 | Slot escolhido | À direita, a configuração do slot selecionado |
 | Direção | Seletor `Input` e `Output` |
@@ -43,21 +43,22 @@ A quantidade de slots vem de [`limites.md`](../limites.md), nunca fixa na tela (
 | Cabeçalho | A cor e o nome da rede, com o botão `Rename` |
 | Estado | `Online · <n> nodes` |
 | Abas | `Nodes`, `Signals` e `Access` |
-| Nodes | Uma linha por nó: canal, bloco onde está, direção (`In` ou `Out`), posição e sinal. Um Signal Remote aparece com a posição `held item`. Um nó fora de alcance aparece em âmbar |
+| Nodes | Uma linha por nó: canal, bloco onde está, direção (`In` ou `Out`), posição e sinal. Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
 | Últimos 30 segundos | À direita, um gráfico em degraus por canal em uso, na cor do canal |
-| Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono, quantos players podem editar e, em âmbar, os nós fora de alcance |
+| Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho |
 
-As abas `Signals` e `Access` têm o seu conteúdo definido na página da rede e dos canais. Um nó fora de alcance continua contando para o canal com o último valor lido (pergunta 13).
+O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
 
 ## Pendências
 
 | Ponto | Depende de |
 |---|---|
-| Conteúdo das abas `Upgrades`, `Info`, `Signals` e `Access` | Página da rede e dos canais, issue #7 |
+| Conteúdo das abas `Upgrades` e `Info` | Issue dos upgrades |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 15:39 | Aplica as perguntas 22 e 29 e aponta as abas `Signals` e `Access` para a página da rede. |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:20 | Descreve as telas do nó e do controlador. |
