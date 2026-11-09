@@ -25,6 +25,7 @@ public final class Network {
   private final Map<ChannelColor, Channel> channels = new EnumMap<>(ChannelColor.class);
   private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
   private final Map<SlotRef, Signal> readings = new HashMap<>();
+  private final Emissions emissions = new Emissions();
   private String name;
   private ChannelColor color;
   private Optional<BlockLocation> controller;
@@ -115,6 +116,7 @@ public final class Network {
       return Outcome.ALREADY_ATTACHED;
     }
     nodes.put(nodeId, Node.withFreeSlots(nodeId, position, limits.slotsPerNode()));
+    emissions.markPending();
     return Outcome.ACCEPTED;
   }
 
@@ -127,6 +129,7 @@ public final class Network {
       return Outcome.UNKNOWN_NODE;
     }
     readings.keySet().removeIf(slot -> slot.node().equals(nodeId));
+    emissions.markPending();
     return Outcome.ACCEPTED;
   }
 
@@ -154,6 +157,7 @@ public final class Network {
     }
     nodes.put(nodeId, node.withSlot(index, slot));
     readings.remove(new SlotRef(nodeId, index));
+    emissions.markPending();
     return Outcome.ACCEPTED;
   }
 
@@ -163,6 +167,7 @@ public final class Network {
       return Outcome.NOT_OWNER;
     }
     controller = Optional.of(location);
+    emissions.markPending();
     return Outcome.ACCEPTED;
   }
 
@@ -172,6 +177,7 @@ public final class Network {
       return Outcome.NOT_OWNER;
     }
     controller = Optional.empty();
+    emissions.markPending();
     return Outcome.ACCEPTED;
   }
 
@@ -247,7 +253,11 @@ public final class Network {
     }
     Signal previous = readings.getOrDefault(new SlotRef(nodeId, index), Signal.OFF);
     readings.put(new SlotRef(nodeId, index), signal);
-    return !previous.equals(signal);
+    if (previous.equals(signal)) {
+      return false;
+    }
+    emissions.markPending();
+    return true;
   }
 
   /**
@@ -255,29 +265,7 @@ public final class Network {
    * off, and a node out of range does not count (answers 23 and 24).
    */
   public Signal channelValue(ChannelColor channelColor) {
-    Signal value = Signal.OFF;
-    if (!isOnline()) {
-      return value;
-    }
-    for (Node node : nodes.values()) {
-      if (inRange(node)) {
-        value = value.strongest(strongestInput(node, channelColor));
-      }
-    }
-    return value;
-  }
-
-  private Signal strongestInput(Node node, ChannelColor channelColor) {
-    Signal value = Signal.OFF;
-    for (int index = 0; index < node.slots().size(); index++) {
-      Optional<ChannelSlot> slot = node.slots().get(index);
-      if (slot.isPresent()
-          && slot.get().direction() == Direction.INPUT
-          && slot.get().channel() == channelColor) {
-        value = value.strongest(readings.getOrDefault(new SlotRef(node.id(), index), Signal.OFF));
-      }
-    }
-    return value;
+    return channelValues().get(channelColor);
   }
 
   private boolean inRange(Node node) {
@@ -322,5 +310,49 @@ public final class Network {
     return node != null
         && node.hasSlot(index)
         && node.slots().get(index).filter(slot -> slot.direction() == Direction.INPUT).isPresent();
+  }
+
+  /** Whether a signal of the network changed since the last evaluation (answer 38). */
+  public boolean isPending() {
+    return emissions.isPending();
+  }
+
+  /** The 16 channels in one pass over the nodes, for the simulator (_docs/limites.md, load). */
+  public Map<ChannelColor, Signal> channelValues() {
+    Map<ChannelColor, Signal> values = new EnumMap<>(ChannelColor.class);
+    channels.keySet().forEach(channelColor -> values.put(channelColor, Signal.OFF));
+    if (!isOnline()) {
+      return values;
+    }
+    for (Node node : nodes.values()) {
+      if (inRange(node)) {
+        addInputs(node, values);
+      }
+    }
+    return values;
+  }
+
+  private void addInputs(Node node, Map<ChannelColor, Signal> values) {
+    for (int index = 0; index < node.slots().size(); index++) {
+      Optional<ChannelSlot> slot = node.slots().get(index);
+      if (slot.isPresent() && slot.get().direction() == Direction.INPUT) {
+        Signal read = readings.getOrDefault(new SlotRef(node.id(), index), Signal.OFF);
+        values.merge(slot.get().channel(), read, Signal::strongest);
+      }
+    }
+  }
+
+  /** Whether a node counts: the network is online and the node is in range. */
+  public boolean counts(NodeId nodeId) {
+    Node node = nodes.get(nodeId);
+    return node != null && inRange(node);
+  }
+
+  /**
+   * Called by the simulator with what every face should emit now. Gives back only the faces that
+   * changed, and the network stops waiting for an evaluation.
+   */
+  public List<OutputChange> settle(Map<OutputFace, Signal> wanted) {
+    return emissions.settle(wanted);
   }
 }

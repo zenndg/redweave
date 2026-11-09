@@ -6,6 +6,8 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.O
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.network;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -53,5 +55,15 @@ class NodeStateTest {
   @Test
   void aNodeThatIsNotInTheNetworkHasNoNetwork() {
     assertEquals(NodeState.NO_NETWORK, network().nodeState(NODE, LOADED));
+  }
+
+  @Test
+  void aNodeInRangeOfAnOnlineNetworkCounts() {
+    assertTrue(networkWithANode().counts(NODE));
+  }
+
+  @Test
+  void aNodeThatIsNotInTheNetworkDoesNotCount() {
+    assertFalse(network().counts(NODE));
   }
 }
