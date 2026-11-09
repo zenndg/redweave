@@ -33,8 +33,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Node` | Um nó, com a posição e os slots. Slot vazio é slot livre | #10 |
 | `ChannelSlot` | A configuração de um nó para um canal: direção, face e canal. A lógica entra na Fase 2 | #10 |
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
-| `NetworkLimits` | Os números da rede: slots por nó e tamanho dos nomes. O domínio define a interface, e o config a implementa | #10 |
-| `ChannelValue` | A regra do canal: o mais forte entre as entradas que contam | #11 |
+| `NetworkLimits` | Os números da rede: slots por nó, tamanho dos nomes e o raio do alcance. O domínio define a interface, e o config a implementa | #10 e #11 |
+| `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
+| `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE` ou `NO_NETWORK` | #11 |
+| `readInput`, `channelValue` e `output` | A regra do canal, no `Network`: guarda a última leitura de cada entrada, dá o mais forte entre as que contam e o que cada saída emite | #11 |
 | `Simulator` | Avalia a rede uma vez por tick, só com canal alterado | #12 |
 
 ## Regras e porquês
@@ -45,8 +47,12 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **IDs vêm de fora:** `NetworkId` e `NodeId` só recebem o UUID. Quem chama gera com uma porta `IdGenerator`, para o domínio não ter aleatoriedade e os testes usarem IDs fixos (pergunta 31).
 - **16 canais, sempre:** cada canal é uma cor de lã, então a rede nasce com os 16 e nunca cria nem apaga um. Assim, um slot sempre aponta para um canal que existe.
 - **Vale o mais forte:** é a regra da própria redstone, em que um fio ligado a duas fontes fica com a mais forte. Sem entradas, o canal vale 0.
-- **Chunk descarregado congela:** a entrada de um nó `Unloaded` mantém o último valor, como a redstone do jogo num chunk descarregado (perguntas 13 e 29). O domínio não sabe de chunks: quem chama informa o estado do nó.
-- **Fora de alcance não conta:** um nó fora do raio ou em outra dimensão vale 0 (pergunta 23). O raio vem de quem chama, porque o domínio não lê o config.
+- **Chunk descarregado congela:** a rede guarda a última leitura de cada entrada, e é ela que conta, com o chunk carregado ou não. Por isso o carregamento só muda o estado na tela, e não o valor do canal. A leitura vai para os saves, então vale também depois de reiniciar o servidor (perguntas 13, 29 e 37). O domínio não sabe de chunks: quem chama informa se o nó está carregado.
+- **Leitura pertence ao slot:** reconfigurar ou liberar um slot, ou desligar o nó, descarta a leitura, para um valor antigo não aparecer num canal novo.
+- **Leitura ruim é ignorada:** uma leitura para um nó que não está na rede, para um índice fora das vagas ou para um slot que não é entrada não muda nada, para um dado ruim do mundo nunca derrubar o tick (regra 14).
+- **Fora de alcance não conta:** um nó fora do raio ou em outra dimensão vale 0, e as saídas dele emitem 0 (pergunta 23). O raio vem de `NetworkLimits`, porque o domínio não lê o config.
+- **Esfera pelos quadrados:** o alcance compara os quadrados das distâncias, em `long`, sem raiz, sem arredondamento e sem estouro perto da borda do mundo (pergunta 36).
+- **Fora de alcance vence descarregado:** na tela, um nó fora do raio aparece como `OUT_OF_RANGE` mesmo descarregado, porque é isso que o impede de contar.
 - **Remote volta a 0:** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado (pergunta 27).
 - **Rede `Offline` zera tudo:** sem o controlador colocado, todos os canais valem 0 (pergunta 24).
 - **Só o dono altera:** toda operação que muda a rede recebe quem pede e confere com `isOwner`, sem exceção para operadores (perguntas 22 e 28). O controlador também: só o dono o retira e o recoloca (pergunta 30).
