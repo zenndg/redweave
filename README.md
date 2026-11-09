@@ -1,3 +1,5 @@
+<p align="center"><img src="_docs/imagens/identidade/logo-escuro.png" alt="Redweave" width="440"></p>
+
 # Redweave
 
 > Weave your redstone. Wireless signal networks, programmable channels and logic chips — with screens that are easy to learn and beautiful to use.

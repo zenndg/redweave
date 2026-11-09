@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="540" viewBox="0 0 540 540" role="img" aria-label="Signal Remote em dois modos: alavanca ligada no canal vermelho e botão de pulso no canal laranja">
+<defs>
+<filter id="sr-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="sr-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<linearGradient id="sr-body" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4A5059"/><stop offset="1" stop-color="#30343A"/></linearGradient>
+<radialGradient id="sr-knob" cx="0.4" cy="0.35" r="0.7"><stop offset="0" stop-color="#E9A87A"/><stop offset="1" stop-color="#9C5A27"/></radialGradient>
+</defs>
+<ellipse cx="185" cy="428" rx="90" ry="12" fill="#000000" opacity="0.4" filter="url(#sr-soft)"/>
+<line x1="226" y1="112" x2="244" y2="54" stroke="#2A2D33" stroke-width="7" stroke-linecap="round"/>
+<circle cx="245" cy="50" r="12" fill="#E2392F" opacity="0.85" filter="url(#sr-glow)"/>
+<circle cx="245" cy="50" r="7" fill="#FF7A62"/>
+<rect x="110" y="104" width="150" height="310" rx="30" fill="url(#sr-body)" stroke="#C27B4C" stroke-width="2.5"/>
+<rect x="110" y="156" width="150" height="14" fill="#E2392F"/>
+<circle cx="138" cy="132" r="9" fill="#E2392F" opacity="0.8" filter="url(#sr-glow)"/>
+<circle cx="138" cy="132" r="5" fill="#FF7A62"/>
+<text x="160" y="137" font-family="IBM Plex Mono, monospace" font-size="13" fill="#F2F3F5">CH 15</text>
+<rect x="146" y="192" width="78" height="120" rx="14" fill="#22252A"/>
+<rect x="180" y="206" width="10" height="92" rx="5" fill="#121417"/>
+<rect x="181" y="222" width="8" height="40" rx="4" fill="#9D9D97"/>
+<circle cx="185" cy="222" r="16" fill="url(#sr-knob)"/>
+<text x="232" y="214" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A9099">ON</text>
+<text x="232" y="300" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A9099">OFF</text>
+<rect x="138" y="336" width="94" height="6" rx="3" fill="#2A2D33"/>
+<rect x="138" y="350" width="94" height="6" rx="3" fill="#2A2D33"/>
+<rect x="138" y="364" width="94" height="6" rx="3" fill="#2A2D33"/>
+<rect x="138" y="378" width="94" height="6" rx="3" fill="#2A2D33"/>
+<text x="185" y="470" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" fill="#C9CDD3">Alavanca · ligada</text>
+<ellipse cx="400" cy="428" rx="74" ry="10" fill="#000000" opacity="0.4" filter="url(#sr-soft)"/>
+<line x1="428" y1="180" x2="442" y2="134" stroke="#2A2D33" stroke-width="6" stroke-linecap="round"/>
+<circle cx="443" cy="131" r="6" fill="#5A2421"/>
+<rect x="340" y="174" width="120" height="240" rx="26" fill="url(#sr-body)" stroke="#C27B4C" stroke-width="2.5"/>
+<rect x="340" y="218" width="120" height="12" fill="#F9801D"/>
+<circle cx="364" cy="198" r="5" fill="#3A3E45"/>
+<text x="380" y="203" font-family="IBM Plex Mono, monospace" font-size="12" fill="#C9CDD3">CH 01</text>
+<circle cx="400" cy="300" r="36" fill="#22252A"/>
+<circle cx="400" cy="300" r="27" fill="url(#sr-knob)"/>
+<circle cx="400" cy="300" r="12" fill="#8E5226"/>
+<rect x="364" y="358" width="72" height="6" rx="3" fill="#2A2D33"/>
+<rect x="364" y="372" width="72" height="6" rx="3" fill="#2A2D33"/>
+<text x="400" y="470" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" fill="#C9CDD3">Botão · pulso</text>
+<text x="20" y="530" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8A9099">nome pendente · pergunta 15</text>
+</svg>

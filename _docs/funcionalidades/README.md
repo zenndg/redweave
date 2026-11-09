@@ -10,10 +10,15 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | 4 · Expansão | Fio físico, cabo agrupado, multipart, integrações e port para 26.x |
 | 5 · Ponte | Ponte MQTT, segurança, protótipos com ESP32 e dashboard |
 
-Ainda não há páginas. A primeira será a da rede e dos canais.
+| Página | Fase | Estado |
+|---|---|---|
+| [`telas.md`](telas.md) | 1 | Conceito das telas do nó e do controlador |
+
+A próxima página é a da rede e dos canais (issue #7).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 11:25 | Lista a página das telas. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
