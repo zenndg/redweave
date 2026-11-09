@@ -22,7 +22,7 @@ O comando chama o `scripts/development/setup-dev.sh`, que baixa o gitleaks para 
 | `pre-commit` | gitleaks | Segredo nas alterações preparadas para o commit |
 | `commit-msg` | Mensagem | Título fora do Conventional Commits |
 | `commit-msg` | Autoria | Coautoria ou atribuição a uma IA. Citar uma ferramenta de IA como assunto da mudança é permitido |
-| `pre-push` | Build | Compilação, testes, cobertura, formatação ou análise estática reprovados, por meio de `make check` |
+| `pre-push` | Build | Compilação, testes, arquitetura, cobertura, formatação ou análise estática reprovados, por meio de `make check` |
 
 Os GameTests e a conferência do `src/generated` entram no `pre-push` com a issue #5.
 
@@ -53,4 +53,5 @@ Nunca use `--no-verify`.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 13:52 | Inclui a arquitetura no gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:28 | Adiciona os hooks de commit e de push, com o gitleaks. |
