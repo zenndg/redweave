@@ -33,6 +33,8 @@ O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
 **`make check-generated`:** a geração apaga `src/generated/resources/` antes de escrever, então um arquivo gerado editado à mão e commitado volta ao original e aparece como diferença. Por enquanto, a geração não produz nada, porque o conteúdo chega com as próximas issues.
 
+**Traduções:** os arquivos `en_us.json` e `pt_br.json` são gerados pelo `make data`, a partir de `datagen/EnglishTexts.java` e `datagen/PortugueseTexts.java`, e ficam em `src/generated/resources/assets/redweave/lang/`. O inglês é a base (regra 1 do `AGENTS.md`). Para adicionar um texto, crie a chave nas duas classes, rode `make data` e commite os dois JSONs. O `LanguageFilesTest` lê os arquivos gerados e reprova se o português não tiver as mesmas chaves do inglês, ou se a descrição na lista de mods divergir da do `neoforge.mods.toml`. Como ele lê o que foi gerado, rode `make data` antes de `make test` depois de mudar um texto. O `make check-generated` pega quem esquecer.
+
 **Conjunto de fontes `clientRun`:** o `make client` e o `make data` o usam, e ele herda o classpath do mod. Dependências só de cliente, como o Jade, entram nele com `clientRunRuntimeOnly`, porque o jogo procura mods no classpath da execução. `make server` e `make gametest` não o carregam, então provam que um servidor dedicado abre sem elas.
 
 **Jar publicado:** a tarefa `jar` exclui os pacotes `gametest` e `datagen` e as estruturas de `data/redweave/structure/`, que só servem ao desenvolvimento. As execuções de desenvolvimento leem as classes direto, sem passar pelo jar.
@@ -66,7 +68,7 @@ Ficam em `config/checkstyle/checkstyle.xml`, com as mensagens em inglês, qualqu
 | Complexidade ciclomática | 10 | Pilar Clareza |
 | Tamanho de arquivo | 400 linhas | Pilar Clareza |
 | Número mágico | Só -1, 0, 1 e 2 são livres | Regra 22 do `AGENTS.md` |
-| String literal | Só em constante `static final` | Regra 22 do `AGENTS.md` |
+| String literal | Só em constante `static final`, na mesma linha da declaração. Texto longo vira várias constantes curtas, somadas noutra constante, porque a regra confere linha por linha | Regra 22 do `AGENTS.md` |
 | `TODO` | Só com issue: `TODO(#12)` | Regra 25 do `AGENTS.md` |
 | Imports | Sem `*` e sem import não usado | Pilar Clareza |
 
@@ -77,6 +79,10 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 ## Quando algo reprova
 
 - **`make gametest`:** uma GameTest reprovou, e o nome dela e o motivo aparecem em `build/gametest.log`, antes de `required tests failed`. Se `GAME TESTS COMPLETE` não aparecer, o mod não carregou. Com `invalid dist` no log, código comum referenciou uma classe de cliente: mova a referência para `client/`.
+- **`LanguageFilesTest`:**
+  - `portugueseHasTheSameKeysAsEnglish`: uma chave existe só num idioma. Adicione-a na classe de textos que falta e rode `make data`.
+  - `theModListDescriptionMatchesTheModsToml`: a descrição em `EnglishTexts` e a do `neoforge.mods.toml` divergem. Iguale as duas e rode `make data`.
+  - `NoSuchFileException`: os arquivos ainda não foram gerados. Rode `make data`.
 - **`theModOpensWithoutTheOptionalMods`:** o Jade ou o The One Probe entrou no servidor. Confira se ele continua só em `clientRunRuntimeOnly`.
 - **`make check-generated`:** se o `datagen/` mudou, rode `make data` e adicione `src/generated` ao commit. Se um arquivo gerado foi editado à mão, desfaça com `git restore src/generated` e leve a mudança para o `datagen/`.
 - **`DomainBoundaryTest`:** o nome da regra que reprovou diz o motivo.
@@ -96,6 +102,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 14:17 | Adiciona as traduções geradas e o teste de paridade. |
 | Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests, a geração de dados, o conjunto de fontes `clientRun` e o jar publicado. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Adiciona o ArchUnit e as regras de fronteira. |
 | Marcelo Fabiano | 2026-11-09 13:29 | Passa os comandos para o Makefile e documenta o JUnit, o JaCoCo, o Spotless e o Checkstyle. |
