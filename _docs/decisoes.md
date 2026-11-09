@@ -32,6 +32,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Signal Remote | Entrada sem posição, que volta a 0 ao sair do inventário ou do alcance | 27 |
 | Estados do nó | `Unloaded` mantém o último valor; `Out of range` vale 0 | 29 |
 | Quebrar o controlador | Só o dono; resiste a explosões; no criativo, quebra | 30 |
+| IDs da rede e do nó | UUID, gerado fora do domínio por uma porta `IdGenerator` | 31 |
 
 Não há perguntas pendentes da concepção.
 
@@ -39,6 +40,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:10 | Registra a decisão 31. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Registra as decisões 22 a 30. |
 | Marcelo Fabiano | 2026-11-09 13:56 | Registra a decisão 21. |
 | Marcelo Fabiano | 2026-11-09 11:50 | Registra as decisões 17 a 20. |
