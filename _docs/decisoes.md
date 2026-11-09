@@ -39,6 +39,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome padrão da rede | `Network` e os 4 primeiros caracteres do ID | 35 |
 | Forma do alcance | Esfera, pela distância em linha reta | 36 |
 | Última leitura | Salva com a rede, para valer depois de reiniciar o servidor | 37 |
+| Estado do simulador | Na rede; o `Simulator` não tem estado, e o primeiro tick depois de carregar reaplica as saídas | 38 |
+| Saídas na mesma face | A face emite a mais forte | 39 |
 
 Não há perguntas pendentes da concepção.
 
@@ -46,6 +48,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:57 | Registra as decisões 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Registra as decisões 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Registra as decisões 32 a 35. |
 | Marcelo Fabiano | 2026-11-09 16:10 | Registra a decisão 31. |
