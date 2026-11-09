@@ -14,7 +14,7 @@ A rede (`Network`) é o agregado: toda mudança nos nós, nos slots e nos canais
 |---|---|
 | ID | `NetworkId`, um UUID único no servidor e que nunca muda. É o que o item do controlador guarda (perguntas 24 e 31) |
 | Nome | Escolhido pelo dono, com um limite de caracteres no config. Nasce com um nome padrão e pode ser renomeado |
-| Cor | Uma das 16 cores de lã, a mesma paleta dos canais. Identifica a rede nas telas, no Jade e no The One Probe |
+| Cor | Uma das 16 cores de lã, a mesma paleta dos canais. Identifica a rede nas telas, no Jade e no The One Probe. Nasce com a primeira cor que nenhuma outra rede do dono usa, ou branca com as 16 em uso (pergunta 40) |
 | Dono | O player que criou a rede. Na Fase 1, o dono não muda |
 | Controlador | A posição e a dimensão do Network Controller, quando ele está colocado |
 | Canais | Sempre 16, um por cor de lã, existindo desde a criação |
@@ -117,6 +117,7 @@ Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 2
 |---|---|---|
 | Ver a Tela do Controlador e a Tela do Nó | Sim | Sim, só leitura |
 | Ligar e desligar nós da rede | Sim | Não |
+| Trocar um nó de rede | Sim, sendo dono da rede antiga e da nova (pergunta 42) | Não |
 | Configurar slots | Sim | Não |
 | Renomear a rede e os canais, e trocar a cor da rede | Sim | Não |
 | Ligar um Signal Remote à rede | Sim | Não |
@@ -183,6 +184,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 17:21 | Aplica as perguntas 40 e 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Detalha a avaliação com as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Aplica as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:12 | Aplica a pergunta 31 nos IDs. |

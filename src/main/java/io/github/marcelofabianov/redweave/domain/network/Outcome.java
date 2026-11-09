@@ -10,5 +10,9 @@ public enum Outcome {
   INVALID_NAME,
   ALREADY_ATTACHED,
   UNKNOWN_NODE,
-  INVALID_SLOT
+  INVALID_SLOT,
+  /** The network is not in the world, as one asked for by an old packet (answer 41). */
+  UNKNOWN_NETWORK,
+  /** The player has no current network, so a node they placed stays without one (25). */
+  NO_CURRENT_NETWORK
 }

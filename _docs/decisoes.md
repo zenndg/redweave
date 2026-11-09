@@ -41,6 +41,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Última leitura | Salva com a rede, para valer depois de reiniciar o servidor | 37 |
 | Estado do simulador | Na rede; o `Simulator` não tem estado, e o primeiro tick depois de carregar reaplica as saídas | 38 |
 | Saídas na mesma face | A face emite a mais forte | 39 |
+| Cor de rede nova | A primeira cor livre entre as redes do dono; com as 16 em uso, o branco | 40 |
+| Retorno dos casos de uso | O `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK` | 41 |
+| Trocar um nó de rede | Exige ser dono da rede antiga e da nova | 42 |
 
 Não há perguntas pendentes da concepção.
 
@@ -48,6 +51,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 17:21 | Registra as decisões 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Registra as decisões 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Registra as decisões 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Registra as decisões 32 a 35. |
