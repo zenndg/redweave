@@ -37,6 +37,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Agregado `Network` | Mutável e protegido, com nós e slots imutáveis | 33 |
 | Nome inválido | Apara as pontas e recusa vazio ou longo; no canal, vazio volta ao nome da cor | 34 |
 | Nome padrão da rede | `Network` e os 4 primeiros caracteres do ID | 35 |
+| Forma do alcance | Esfera, pela distância em linha reta | 36 |
+| Última leitura | Salva com a rede, para valer depois de reiniciar o servidor | 37 |
 
 Não há perguntas pendentes da concepção.
 
@@ -44,6 +46,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:39 | Registra as decisões 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Registra as decisões 32 a 35. |
 | Marcelo Fabiano | 2026-11-09 16:10 | Registra a decisão 31. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Registra as decisões 22 a 30. |

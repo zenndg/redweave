@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 37 | Onde fica a última leitura de cada entrada, que mantém o canal de um nó `Unloaded`? | Salva com a rede, no mundo. Depois de reiniciar o servidor, um nó num chunk descarregado continua contribuindo com o valor que tinha, como a redstone congelada do jogo. Detalha a pergunta 13 |
+| 36 | Que forma tem o alcance do Network Controller? | Esfera: a distância em linha reta até o bloco do nó, comparada pelos quadrados, sem raiz nem arredondamento. Detalha a pergunta 23 |
 | 35 | Qual nome uma rede recebe ao ser criada? | `Network` seguido dos 4 primeiros caracteres do ID, como `Network 3f2a`, em inglês. Quem chama monta o nome, e o domínio só valida. O dono renomeia depois |
 | 34 | O que acontece com um nome de rede ou de canal vazio, ou maior que o limite do config? | Os espaços das pontas são removidos. Vazio ou acima do limite, a operação é recusada com `INVALID_NAME`, e o nome fica como estava. No canal, um nome vazio volta ao nome da cor, porque o nome do canal é opcional. A tela limita o campo ao mesmo tamanho |
 | 33 | O agregado `Network` é mutável ou imutável? | Mutável e protegido: uma entidade cujas operações mudam o estado validando as invariantes. As consultas devolvem cópias imutáveis ou value objects, e os nós e os slots são value objects trocados inteiros |
@@ -35,6 +37,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:39 | Responde as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Responde as perguntas 32 a 35. |
 | Marcelo Fabiano | 2026-11-09 16:10 | Responde a pergunta 31. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Responde as perguntas 22 a 30. |
