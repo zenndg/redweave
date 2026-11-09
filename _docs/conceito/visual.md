@@ -55,7 +55,7 @@ O símbolo perde detalhe conforme diminui: os nós somem em 64 px, e em 16 px el
 | Deepslate polido | `#3A3E45` | Corpo dos blocos e itens |
 | Cobre | `#C27B4C` | Molduras, cabos e botões |
 | Redstone | `#E2392F` | Sinal ativo, núcleo e lentes |
-| Âmbar | `#E3A33B` | Nó fora de alcance, se a pergunta 13 confirmar |
+| Âmbar | `#E3A33B` | Nó fora de alcance (pergunta 13) |
 | Tela | `#0E1116` | Visores e painéis de LED |
 
 ## Canais
@@ -138,7 +138,7 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 |---|---|
 | Desligado | Lente escura: sem rede ou com sinal 0 |
 | Ativo | Lente acesa, mais forte quanto maior o sinal |
-| Fora de alcance | Lente âmbar e anel tracejado. Só existe se a pergunta 13 confirmar que o canal mantém o último valor com o chunk descarregado |
+| Fora de alcance | Lente âmbar e anel tracejado: o chunk do nó descarregou, e o canal mantém o último valor lido (pergunta 13) |
 
 ### Configurator
 
@@ -165,7 +165,7 @@ A rede guardada e a configuração copiada ficam em data components do item (reg
 
 ![Signal Remote](../imagens/conceito/signal-remote.png)
 
-Item, `redweave:signal_remote`. O nome depende da pergunta 15. A alavanca de bolso: liga um canal da rede sem voltar até o circuito.
+Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca de bolso: liga um canal da rede sem voltar até o circuito.
 
 | Modo | Visual e uso |
 |---|---|
@@ -182,5 +182,6 @@ Item, `redweave:signal_remote`. O nome depende da pergunta 15. A alavanca de bol
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:15 | Adiciona o conceito dos blocos e itens da Fase 1. |
 | Marcelo Fabiano | 2026-11-09 11:10 | Adiciona a identidade visual, a paleta, os canais e os elementos de interface. |

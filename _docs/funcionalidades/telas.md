@@ -47,18 +47,17 @@ A quantidade de slots vem de [`limites.md`](../limites.md), nunca fixa na tela (
 | Últimos 30 segundos | À direita, um gráfico em degraus por canal em uso, na cor do canal |
 | Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono, quantos players podem editar e, em âmbar, os nós fora de alcance |
 
-As abas `Signals` e `Access` têm o seu conteúdo definido na página da rede e dos canais. O que a tela mostra de um nó fora de alcance depende da pergunta 13.
+As abas `Signals` e `Access` têm o seu conteúdo definido na página da rede e dos canais. Um nó fora de alcance continua contando para o canal com o último valor lido (pergunta 13).
 
 ## Pendências
 
 | Ponto | Depende de |
 |---|---|
-| Estado `Out of range` nas duas telas | Pergunta 13 |
-| Nome `Signal Remote` na lista de nós | Pergunta 15 |
 | Conteúdo das abas `Upgrades`, `Info`, `Signals` e `Access` | Página da rede e dos canais, issue #7 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:20 | Descreve as telas do nó e do controlador. |
