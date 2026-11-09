@@ -16,10 +16,12 @@ O mapa da documentação. As respostas em [`perguntas/`](perguntas/README.md) s�
 | [`perguntas/`](perguntas/README.md) | As perguntas e respostas, por fase |
 | [`desenvolvimento/pilares.md`](desenvolvimento/pilares.md) | Os pilares de desenvolvimento, em ordem de prioridade |
 | [`desenvolvimento/fluxo-de-trabalho.md`](desenvolvimento/fluxo-de-trabalho.md) | Da issue ao merge, e como publicar uma versão |
+| [`desenvolvimento/ferramentas-de-build.md`](desenvolvimento/ferramentas-de-build.md) | As ferramentas de build, as versões e o que fazer quando algo reprova |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 11:58 | Adiciona as ferramentas de build ao mapa. |
 | Marcelo Fabiano | 2026-11-09 11:25 | Adiciona o visual e as imagens ao mapa. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
