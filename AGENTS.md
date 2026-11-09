@@ -40,7 +40,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 | Java | 21 |
 | Build | MDK oficial do NeoForge para 1.21.1 (ModDevGradle) |
 | Jade | Opcional, versão do Iron Meridian |
-| The One Probe | Opcional, versão do Iron Meridian |
+| The One Probe | Opcional, versão decidida na issue #23 (pergunta 18), porque não está no Iron Meridian |
 
 Confira as versões no `mods/` do Iron Meridian antes de fixar ou atualizar uma dependência.
 
