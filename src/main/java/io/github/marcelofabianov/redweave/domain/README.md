@@ -19,10 +19,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 
 | Termo | Significado | Issue |
 |---|---|---|
-| `Signal` | Um valor de 0 a 15, o mesmo intervalo da redstone do jogo. `record` que valida no construtor | #9 |
-| `ChannelColor` | Uma das 16 cores de lã, na ordem do jogo. Dá a cor dos canais e da rede, e a `key` é o nome usado nos saves | #9 |
-| `NetworkId` | O ID da rede, único no servidor e que nunca muda | #9 |
-| `NodeId` | O ID de um nó, único na rede | #9 |
+| `Signal` | Um valor de 0 a 15, o mesmo intervalo da redstone do jogo. `OFF` e `MAX` são os extremos, `isOn` diz se passa de 0, `strongest` fica com o mais forte de dois, e `clamped` converte um valor lido do mundo no sinal válido mais próximo | #9 |
+| `ChannelColor` | Uma das 16 cores de lã, na ordem do jogo. Dá a cor dos canais e da rede. `number` vai de 1 a 16, como nas telas, a `key` é o nome usado nos saves, e `fromKey` devolve vazio para uma chave desconhecida | #9 |
+| `NetworkId` | O ID da rede, um UUID único no servidor e que nunca muda | #9 |
+| `NodeId` | O ID de um nó, um UUID | #9 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais, os nós e as fontes sem posição | #10 |
 | `Channel` | Um dos 16 canais da rede: a cor, o nome e o valor | #10 |
 | `Node` | Um nó grudado numa face de um bloco, com os seus slots | #10 |
@@ -35,6 +35,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 ## Regras e porquês
 
 - **Sinal de 0 a 15:** é o contrato com a redstone do jogo, então o construtor de `Signal` rejeita qualquer outro valor (regra 5). Quem lê do mundo converte antes, num valor seguro (regra 14).
+- **Converter, não falhar:** o construtor de `Signal` rejeita um valor fora do intervalo, porque isso é erro de programação. Um valor que vem do mundo ou de outro mod passa por `Signal.clamped`, e quem chama registra no log (regra 14).
+- **Chave da cor fixada no teste:** a `key` sai do nome da constante, então o teste fixa as 16 chaves. Renomear uma constante reprova o teste antes de quebrar um save (regra 15). Uma chave desconhecida, como de um save danificado, devolve vazio em vez de derrubar o jogo.
+- **IDs vêm de fora:** `NetworkId` e `NodeId` só recebem o UUID. Quem chama gera com uma porta `IdGenerator`, para o domínio não ter aleatoriedade e os testes usarem IDs fixos (pergunta 31).
 - **16 canais, sempre:** cada canal é uma cor de lã, então a rede nasce com os 16 e nunca cria nem apaga um. Assim, um slot sempre aponta para um canal que existe.
 - **Vale o mais forte:** é a regra da própria redstone, em que um fio ligado a duas fontes fica com a mais forte. Sem entradas, o canal vale 0.
 - **Chunk descarregado congela:** a entrada de um nó `Unloaded` mantém o último valor, como a redstone do jogo num chunk descarregado (perguntas 13 e 29). O domínio não sabe de chunks: quem chama informa o estado do nó.
