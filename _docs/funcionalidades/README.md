@@ -12,13 +12,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Página | Fase | Estado |
 |---|---|---|
+| [`rede-e-canais.md`](rede-e-canais.md) | 1 | Comportamento da rede, dos canais, dos nós e das permissões |
 | [`telas.md`](telas.md) | 1 | Conceito das telas do nó e do controlador |
 
-A próxima página é a da rede e dos canais (issue #7).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 15:39 | Adiciona a página da rede e dos canais. |
 | Marcelo Fabiano | 2026-11-09 11:25 | Lista a página das telas. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
