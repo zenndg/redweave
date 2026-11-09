@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 21 | Até onde vai a fronteira de `domain/` e `application/` no ArchUnit? | Estrita, como no Cubit: `domain/` só depende de si e do Java, e `application/` só de si, de `domain/` e do Java. Um caso de uso usa um adapter do mod só por uma porta. Detalha a regra 10 do `AGENTS.md` |
 | 20 | Qual identificador SPDX de licença vai no `neoforge.mods.toml` e nas páginas do mod? | `LGPL-3.0-only`: só a versão 3 da LGPL. Detalha a pergunta 7 |
 | 19 | Quais hooks de git entram? | Todos os do Cubit, adaptados: branch, histórico dos `.md` de `_docs/`, formatação, gitleaks, Conventional Commits e atribuição a IA no commit; `check`, GameTests e datagen no push. O gitleaks fica fixado com checksum em `.tools/` |
 | 18 | O The One Probe não está no Iron Meridian. Como fica? | Continua opcional e na Fase 1. A versão é a última estável para 1.21.1, decidida quando a issue #23 começar. O mod abre sem ele, conferido pela GameTest da issue #5 |
@@ -20,5 +21,6 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 13:56 | Responde a pergunta 21. |
 | Marcelo Fabiano | 2026-11-09 11:50 | Responde as perguntas 17 a 20. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
