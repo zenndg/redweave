@@ -23,6 +23,7 @@ repositories {
         filter {
             includeGroup('org.jacoco')
             includeGroup('org.ow2.asm')
+            includeGroup('com.tngtech.archunit')
             includeGroupAndSubgroups('org.junit')
         }
     }
@@ -71,6 +72,7 @@ dependencies {
     testImplementation platform("org.junit:junit-bom:${junit_version}")
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation "com.tngtech.archunit:archunit-junit5:${archunit_version}"
 }
 
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
