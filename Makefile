@@ -10,10 +10,10 @@ help: ## Show the available commands
 setup: ## Install the development tools and enable the git hooks
 	scripts/development/setup-dev.sh
 
-check: ## Run every gate: build, tests, coverage, formatting and static analysis
+check: ## Run every gate: build, tests, architecture, coverage, formatting and static analysis
 	$(GRADLE) check
 
-test: ## Run the unit tests
+test: ## Run the unit and architecture tests
 	$(GRADLE) test
 
 coverage: ## Check the domain coverage and show where the report is

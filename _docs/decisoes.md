@@ -23,6 +23,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | The One Probe | Opcional, na Fase 1, com a versão decidida na issue #23 | 18 |
 | Hooks de git | Os do Cubit, com gitleaks | 19 |
 | Licença no metadado | `LGPL-3.0-only` | 20 |
+| Fronteira no ArchUnit | Estrita: `domain/` só depende de si e do Java; `application/` só de si, de `domain/` e do Java | 21 |
 
 Não há perguntas pendentes da concepção.
 
@@ -30,6 +31,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 13:56 | Registra a decisão 21. |
 | Marcelo Fabiano | 2026-11-09 11:50 | Registra as decisões 17 a 20. |
 | Marcelo Fabiano | 2026-11-09 10:34 | Registra as decisões 13 a 16. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

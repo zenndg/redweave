@@ -9,8 +9,8 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 | Comando | O que faz |
 |---|---|
 | `make setup` | Instala as ferramentas de desenvolvimento e ativa os hooks ([`hooks-do-git.md`](hooks-do-git.md)) |
-| `make check` | Roda todos os gates: build, testes, cobertura, formatação e análise estática |
-| `make test` | Roda os testes |
+| `make check` | Roda todos os gates: build, testes, arquitetura, cobertura, formatação e análise estática |
+| `make test` | Roda os testes de unidade e de arquitetura |
 | `make coverage` | Confere a cobertura de `domain/` e mostra onde está o relatório |
 | `make format` | Formata o código Java |
 | `make format-check` | Confere a formatação sem alterar arquivos |
@@ -22,7 +22,9 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 
 O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
-**Cobertura:** enquanto `domain/` não tiver classes, o `jacocoTestCoverageVerification` aparece como `SKIPPED`, porque não há o que medir. Ele passa a reprovar quando o domínio chega, na issue #9.
+**Cobertura:** enquanto `domain/` não tiver classes, o `jacocoTestCoverageVerification` roda e passa, porque não há o que medir. Ele passa a reprovar quando o domínio chega, na issue #9.
+
+**Arquitetura:** as regras ficam em `src/test/java/.../architecture/DomainBoundaryTest.java`. As de `domain/` e `application/` aceitam pacote vazio, então valem desde já e passam a reprovar com a primeira classe. Uma constante `static final` de tipo primitivo ou `String` é copiada pelo compilador para quem a usa, então o ArchUnit não a vê como dependência. Isso não é uma brecha, porque nenhuma classe é carregada.
 
 ## Ferramentas
 
@@ -34,6 +36,7 @@ O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 | Parchment | 2024.11.17 | Dá nomes legíveis aos parâmetros do código do Minecraft | Vem no MDK e deixa o código do jogo mais fácil de ler |
 | JDK 21 Adoptium | 21 | Compila o mod e o Minecraft | O foojay-resolver o baixa sozinho, porque o Java do sistema pode não ter o pacote de desenvolvimento |
 | JUnit | 6.1.3 | Roda os testes do domínio sem subir o jogo | É o padrão em Java e está na regra 28 do `AGENTS.md` |
+| ArchUnit | 1.5.1 | Isola `domain/` e `application/`, separa o código comum do cliente, proíbe `get*` no domínio e deixa só `compat.jade` e `compat.top` importarem o Jade e o The One Probe | Garante as regras 10, 11, 19 e 20 do `AGENTS.md` e a pergunta 21 no build |
 | JaCoCo | 0.8.16 | Mede a cobertura de `domain/`, com mínimo de 85% de instruções e de ramos | Garante a regra 30 do `AGENTS.md` |
 | Spotless com google-java-format | 8.9.0 e 2.0.0 | Formata o código Java, com recuo de 2 espaços, e remove imports não usados | É o padrão mais comum em Java, sem opções para discutir |
 | Checkstyle | 14.4.0 | Confere as regras de forma do código | Reprova no build o que antes dependia da revisão |
@@ -60,6 +63,12 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 ## Quando algo reprova
 
+- **`DomainBoundaryTest`:** o nome da regra que reprovou diz o motivo.
+  - `theDomainOnlyDependsOnItselfAndJava`: uma classe de `domain/` importou o jogo ou outro pacote do mod. Mova a regra para fora do domínio ou inverta a dependência com uma interface.
+  - `theApplicationOnlyDependsOnTheDomainAndJava`: um caso de uso importou o jogo ou um adapter. Declare uma porta em `application/` e implemente-a fora dela.
+  - `commonCodeDoesNotUseTheClient`: código comum citou uma classe de cliente. Mova a referência para `client/`.
+  - `onlyThePluginUsesJade` ou `onlyThePluginUsesTheOneProbe`: uma classe fora de `compat.jade` ou de `compat.top` importou o mod opcional. Mova a referência para o plugin, porque sem ele essa classe quebraria o mod.
+  - `theDomainHasNoGetters`: troque `getStrength()` por `strength()`.
 - **`jacocoTestCoverageVerification`:** faltam testes no domínio. Abra `build/reports/jacoco/test/html/index.html` para ver o que falta.
 - **`spotlessJavaCheck`:** o código não está formatado. Rode `make format`.
 - **`checkstyleMain` ou `checkstyleTest`:** uma regra de forma do código foi violada. Corrija a causa, sem suprimir a regra. O relatório fica em `build/reports/checkstyle/`.
@@ -71,5 +80,6 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 13:52 | Adiciona o ArchUnit e as regras de fronteira. |
 | Marcelo Fabiano | 2026-11-09 13:29 | Passa os comandos para o Makefile e documenta o JUnit, o JaCoCo, o Spotless e o Checkstyle. |
 | Marcelo Fabiano | 2026-11-09 11:58 | Documenta o Gradle, o ModDevGradle, o NeoForge, o Parchment e o JDK. |
