@@ -1,7 +1,9 @@
 package io.github.marcelofabianov.redweave.domain.network;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ public final class Network {
   private final NetworkLimits limits;
   private final Map<ChannelColor, Channel> channels = new EnumMap<>(ChannelColor.class);
   private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
+  private final Map<SlotRef, Signal> readings = new HashMap<>();
   private String name;
   private ChannelColor color;
   private Optional<BlockLocation> controller;
@@ -120,7 +123,11 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
-    return nodes.remove(nodeId) == null ? Outcome.UNKNOWN_NODE : Outcome.ACCEPTED;
+    if (nodes.remove(nodeId) == null) {
+      return Outcome.UNKNOWN_NODE;
+    }
+    readings.keySet().removeIf(slot -> slot.node().equals(nodeId));
+    return Outcome.ACCEPTED;
   }
 
   /** Configures one slot of a node, for the owner only. */
@@ -146,6 +153,7 @@ public final class Network {
       return Outcome.INVALID_SLOT;
     }
     nodes.put(nodeId, node.withSlot(index, slot));
+    readings.remove(new SlotRef(nodeId, index));
     return Outcome.ACCEPTED;
   }
 
@@ -226,5 +234,93 @@ public final class Network {
             .map(ChannelSlot::channel)
             .collect(Collectors.toSet());
     return channels.keySet().stream().filter(channel -> !used.contains(channel)).findFirst();
+  }
+
+  /**
+   * Keeps the last reading of an input slot, which stays while the chunk of the node is unloaded
+   * and goes to the saves (answers 13 and 37). The server reads it, so there is no requester. A
+   * slot that is not an input is ignored. Tells whether the reading changed.
+   */
+  public boolean readInput(NodeId nodeId, int index, Signal signal) {
+    if (!isInput(nodeId, index)) {
+      return false;
+    }
+    Signal previous = readings.getOrDefault(new SlotRef(nodeId, index), Signal.OFF);
+    readings.put(new SlotRef(nodeId, index), signal);
+    return !previous.equals(signal);
+  }
+
+  /**
+   * The strongest of the inputs that count, and off with none. An offline network has every channel
+   * off, and a node out of range does not count (answers 23 and 24).
+   */
+  public Signal channelValue(ChannelColor channelColor) {
+    Signal value = Signal.OFF;
+    if (!isOnline()) {
+      return value;
+    }
+    for (Node node : nodes.values()) {
+      if (inRange(node)) {
+        value = value.strongest(strongestInput(node, channelColor));
+      }
+    }
+    return value;
+  }
+
+  private Signal strongestInput(Node node, ChannelColor channelColor) {
+    Signal value = Signal.OFF;
+    for (int index = 0; index < node.slots().size(); index++) {
+      Optional<ChannelSlot> slot = node.slots().get(index);
+      if (slot.isPresent()
+          && slot.get().direction() == Direction.INPUT
+          && slot.get().channel() == channelColor) {
+        value = value.strongest(readings.getOrDefault(new SlotRef(node.id(), index), Signal.OFF));
+      }
+    }
+    return value;
+  }
+
+  private boolean inRange(Node node) {
+    return controller
+        .map(location -> new Range(limits.range()).reaches(location, node.position().block()))
+        .orElse(false);
+  }
+
+  /**
+   * What an output slot emits into its block: its channel, or off when the node is out of range or
+   * the network is offline. A slot that is not an output emits off.
+   */
+  public Signal output(NodeId nodeId, int index) {
+    Node node = nodes.get(nodeId);
+    if (node == null || !node.hasSlot(index) || !inRange(node)) {
+      return Signal.OFF;
+    }
+    return node.slots()
+        .get(index)
+        .filter(slot -> slot.direction() == Direction.OUTPUT)
+        .map(slot -> channelValue(slot.channel()))
+        .orElse(Signal.OFF);
+  }
+
+  /**
+   * The state of a node for the screens. The caller tells whether its chunk is loaded, because the
+   * domain does not know the world. Out of range wins, because it is what stops the node counting.
+   */
+  public NodeState nodeState(NodeId nodeId, boolean loaded) {
+    Node node = nodes.get(nodeId);
+    if (node == null || !isOnline()) {
+      return NodeState.NO_NETWORK;
+    }
+    if (!inRange(node)) {
+      return NodeState.OUT_OF_RANGE;
+    }
+    return loaded ? NodeState.ONLINE : NodeState.UNLOADED;
+  }
+
+  private boolean isInput(NodeId nodeId, int index) {
+    Node node = nodes.get(nodeId);
+    return node != null
+        && node.hasSlot(index)
+        && node.slots().get(index).filter(slot -> slot.direction() == Direction.INPUT).isPresent();
   }
 }
