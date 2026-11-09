@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 35 | Qual nome uma rede recebe ao ser criada? | `Network` seguido dos 4 primeiros caracteres do ID, como `Network 3f2a`, em inglês. Quem chama monta o nome, e o domínio só valida. O dono renomeia depois |
+| 34 | O que acontece com um nome de rede ou de canal vazio, ou maior que o limite do config? | Os espaços das pontas são removidos. Vazio ou acima do limite, a operação é recusada com `INVALID_NAME`, e o nome fica como estava. No canal, um nome vazio volta ao nome da cor, porque o nome do canal é opcional. A tela limita o campo ao mesmo tamanho |
+| 33 | O agregado `Network` é mutável ou imutável? | Mutável e protegido: uma entidade cujas operações mudam o estado validando as invariantes. As consultas devolvem cópias imutáveis ou value objects, e os nós e os slots são value objects trocados inteiros |
+| 32 | Como o agregado `Network` recusa um pedido esperado, como o de quem não é o dono? | Com um resultado tipado: cada operação devolve um `Outcome` (`ACCEPTED`, `NOT_OWNER`, `INVALID_NAME` e outros), e quem chama decide o que mostrar. Exceção fica só para erro de programação |
 | 31 | Qual é a forma de `NetworkId` e `NodeId`, e quem os gera? | UUID nos dois, como o jogo faz com entidades e players. O domínio só recebe o ID: quem chama gera com `UUID.randomUUID()` por uma porta `IdGenerator`, com uma versão fixa nos testes |
 | 30 | Quem pode quebrar o Network Controller de outro player? | Só o dono. Para os outros, o bloco não quebra no survival, e explosões não o destroem. No criativo, quebra normalmente |
 | 29 | O nó num chunk descarregado e o nó fora do raio precisam de nomes diferentes. Como ficam? | `Unloaded` (Descarregado), em âmbar, mantém o último valor. `Out of range` (Fora de alcance), em vermelho, não conta e vale 0. Ajusta o nome usado na resposta 13, sem mudar o comportamento dela |
@@ -31,6 +35,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:27 | Responde as perguntas 32 a 35. |
 | Marcelo Fabiano | 2026-11-09 16:10 | Responde a pergunta 31. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Responde as perguntas 22 a 30. |
 | Marcelo Fabiano | 2026-11-09 13:56 | Responde a pergunta 21. |

@@ -1,0 +1,230 @@
+package io.github.marcelofabianov.redweave.domain.network;
+
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * The aggregate: every change to the name, the channels and the nodes goes through it, and it keeps
+ * the rules of _docs/funcionalidades/rede-e-canais.md. It is mutable, and its queries only hand out
+ * immutable values (answer 33).
+ */
+public final class Network {
+  private static final String INVALID_DEFAULT_NAME = "The default name of a network must be valid";
+
+  private final NetworkId id;
+  private final PlayerId owner;
+  private final NetworkLimits limits;
+  private final Map<ChannelColor, Channel> channels = new EnumMap<>(ChannelColor.class);
+  private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
+  private String name;
+  private ChannelColor color;
+  private Optional<BlockLocation> controller;
+
+  private Network(
+      NetworkId id,
+      PlayerId owner,
+      String name,
+      ChannelColor color,
+      BlockLocation controller,
+      NetworkLimits limits) {
+    this.id = id;
+    this.owner = owner;
+    this.name = name;
+    this.color = color;
+    this.controller = Optional.of(controller);
+    this.limits = limits;
+    for (ChannelColor channelColor : ChannelColor.values()) {
+      channels.put(channelColor, Channel.unnamed(channelColor));
+    }
+  }
+
+  /**
+   * A network is created when its owner places a Network Controller, so it starts online. The
+   * caller builds the default name (answer 35), so an invalid one is a programming error.
+   */
+  public static Network create(
+      NetworkId id,
+      PlayerId owner,
+      String name,
+      ChannelColor color,
+      BlockLocation controller,
+      NetworkLimits limits) {
+    String valid =
+        Names.valid(name, limits.networkNameLength())
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_DEFAULT_NAME));
+    return new Network(id, owner, valid, color, controller, limits);
+  }
+
+  /** Renames the network, for its owner only. */
+  public Outcome rename(PlayerId requester, String newName) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    Optional<String> valid = Names.valid(newName, limits.networkNameLength());
+    if (valid.isEmpty()) {
+      return Outcome.INVALID_NAME;
+    }
+    name = valid.get();
+    return Outcome.ACCEPTED;
+  }
+
+  /** Changes the color of the network, for its owner only. */
+  public Outcome recolor(PlayerId requester, ChannelColor newColor) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    color = newColor;
+    return Outcome.ACCEPTED;
+  }
+
+  /**
+   * Names a channel, for the owner only. A blank name goes back to the name of the color, because
+   * the name of a channel is optional (answers 26 and 34).
+   */
+  public Outcome renameChannel(PlayerId requester, ChannelColor channelColor, String newName) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    if (newName.isBlank()) {
+      channels.put(channelColor, Channel.unnamed(channelColor));
+      return Outcome.ACCEPTED;
+    }
+    Optional<String> valid = Names.valid(newName, limits.channelNameLength());
+    if (valid.isEmpty()) {
+      return Outcome.INVALID_NAME;
+    }
+    channels.put(channelColor, new Channel(channelColor, valid));
+    return Outcome.ACCEPTED;
+  }
+
+  /** Attaches a node with every slot free, for the owner only. */
+  public Outcome attachNode(PlayerId requester, NodeId nodeId, NodePosition position) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    if (nodes.containsKey(nodeId)) {
+      return Outcome.ALREADY_ATTACHED;
+    }
+    nodes.put(nodeId, Node.withFreeSlots(nodeId, position, limits.slotsPerNode()));
+    return Outcome.ACCEPTED;
+  }
+
+  /** Detaches a node, for the owner only. */
+  public Outcome detachNode(PlayerId requester, NodeId nodeId) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    return nodes.remove(nodeId) == null ? Outcome.UNKNOWN_NODE : Outcome.ACCEPTED;
+  }
+
+  /** Configures one slot of a node, for the owner only. */
+  public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
+    return changeSlot(requester, nodeId, index, Optional.of(slot));
+  }
+
+  /** Frees one slot of a node, for the owner only. */
+  public Outcome clearSlot(PlayerId requester, NodeId nodeId, int index) {
+    return changeSlot(requester, nodeId, index, Optional.empty());
+  }
+
+  private Outcome changeSlot(
+      PlayerId requester, NodeId nodeId, int index, Optional<ChannelSlot> slot) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    Node node = nodes.get(nodeId);
+    if (node == null) {
+      return Outcome.UNKNOWN_NODE;
+    }
+    if (!node.hasSlot(index)) {
+      return Outcome.INVALID_SLOT;
+    }
+    nodes.put(nodeId, node.withSlot(index, slot));
+    return Outcome.ACCEPTED;
+  }
+
+  /** The owner placed the controller again: the network comes back online there. */
+  public Outcome placeController(PlayerId requester, BlockLocation location) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    controller = Optional.of(location);
+    return Outcome.ACCEPTED;
+  }
+
+  /** The owner broke the controller: the network goes offline until it is placed again. */
+  public Outcome removeController(PlayerId requester) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    controller = Optional.empty();
+    return Outcome.ACCEPTED;
+  }
+
+  /** Only the owner changes the network, with no exception for operators (answers 22 and 28). */
+  public boolean isOwner(PlayerId player) {
+    return owner.equals(player);
+  }
+
+  public NetworkId id() {
+    return id;
+  }
+
+  public PlayerId owner() {
+    return owner;
+  }
+
+  public String name() {
+    return name;
+  }
+
+  public ChannelColor color() {
+    return color;
+  }
+
+  public Optional<BlockLocation> controller() {
+    return controller;
+  }
+
+  public boolean isOnline() {
+    return controller.isPresent();
+  }
+
+  /** The 16 channels, in the order of the colors. */
+  public List<Channel> channels() {
+    return List.copyOf(channels.values());
+  }
+
+  public Channel channel(ChannelColor channelColor) {
+    return channels.get(channelColor);
+  }
+
+  /** The nodes, in the order they were attached. */
+  public List<Node> nodes() {
+    return List.copyOf(nodes.values());
+  }
+
+  public Optional<Node> node(NodeId nodeId) {
+    return Optional.ofNullable(nodes.get(nodeId));
+  }
+
+  /**
+   * The first channel, in the order of the colors, with no slot in the network. A node placed by
+   * its owner starts on it (answer 25).
+   */
+  public Optional<ChannelColor> firstFreeChannel() {
+    Set<ChannelColor> used =
+        nodes.values().stream()
+            .flatMap(node -> node.slots().stream())
+            .flatMap(Optional::stream)
+            .map(ChannelSlot::channel)
+            .collect(Collectors.toSet());
+    return channels.keySet().stream().filter(channel -> !used.contains(channel)).findFirst();
+  }
+}
