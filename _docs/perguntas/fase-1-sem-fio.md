@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 39 | Um nó com dois slots de saída na mesma face, em canais diferentes: que sinal o bloco recebe? | O mais forte entre as saídas da face, como dois fios de redstone no mesmo bloco. A mudança que o simulador devolve é por face do nó |
+| 38 | Onde ficam a marca de pendente de avaliação e o último valor emitido por cada saída? | Na rede, e o `Simulator` é um serviço de domínio sem estado, que recebe a rede e devolve as mudanças. O último valor emitido não vai para o save: ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas |
 | 37 | Onde fica a última leitura de cada entrada, que mantém o canal de um nó `Unloaded`? | Salva com a rede, no mundo. Depois de reiniciar o servidor, um nó num chunk descarregado continua contribuindo com o valor que tinha, como a redstone congelada do jogo. Detalha a pergunta 13 |
 | 36 | Que forma tem o alcance do Network Controller? | Esfera: a distância em linha reta até o bloco do nó, comparada pelos quadrados, sem raiz nem arredondamento. Detalha a pergunta 23 |
 | 35 | Qual nome uma rede recebe ao ser criada? | `Network` seguido dos 4 primeiros caracteres do ID, como `Network 3f2a`, em inglês. Quem chama monta o nome, e o domínio só valida. O dono renomeia depois |
@@ -37,6 +39,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:57 | Responde as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Responde as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Responde as perguntas 32 a 35. |
 | Marcelo Fabiano | 2026-11-09 16:10 | Responde a pergunta 31. |

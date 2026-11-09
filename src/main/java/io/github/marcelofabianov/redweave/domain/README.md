@@ -37,7 +37,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
 | `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE` ou `NO_NETWORK` | #11 |
 | `readInput`, `channelValue` e `output` | A regra do canal, no `Network`: guarda a última leitura de cada entrada, dá o mais forte entre as que contam e o que cada saída emite | #11 |
-| `Simulator` | Avalia a rede uma vez por tick, só com canal alterado | #12 |
+| `Simulator` | Serviço sem estado que avalia uma rede pendente: calcula os 16 canais numa passada e devolve só as faces cujo sinal mudou | #12 |
+| `OutputFace` | Uma face onde um nó emite: o nó, o bloco e a face. Todas as saídas do nó nessa face emitem por ela | #12 |
+| `OutputChange` | Uma face cujo sinal mudou, que o jogo aplica antes de avisar os vizinhos | #12 |
+| `Emissions` | Dentro da rede: se ela espera uma avaliação e o que emitiu por último. Não vai para o save | #12 |
 
 ## Regras e porquês
 
@@ -62,7 +65,12 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Offline`, e recolocar volta na nova posição, com tudo igual (pergunta 24).
 - **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o caso de uso que liga um nó confere isso (issue #13).
 - **Primeiro canal livre:** é o primeiro, na ordem das cores, sem nenhum slot na rede (pergunta 25).
-- **Avaliação por mudança:** a rede marca os canais cuja entrada mudou e só os recalcula no fim do tick, uma vez (regra 18). Só as saídas cujo valor mudou são devolvidas a quem chama, para o jogo não fazer block updates em cascata.
+- **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).
+- **Estado na rede, simulador sem estado:** a rede sabe quando um sinal dela mudou e o que emitiu por último, para o estado de uma rede ficar num lugar só (pergunta 38).
+- **Só o que mudou volta:** o simulador devolve só as faces cujo sinal mudou, para o jogo avisar os vizinhos só delas. Uma face que deixou de existir, por um nó desligado ou um slot liberado, volta a `OFF`, e não volta nada se ela já estava em `OFF`.
+- **Primeiro tick reaplica tudo:** uma face nunca emitida sempre muda, até para `OFF`, porque, depois de carregar o mundo, o bloco pode ter qualquer valor (pergunta 38).
+- **Mesma face, o mais forte:** duas saídas do mesmo nó na mesma face emitem a mais forte, como dois fios de redstone no mesmo bloco (pergunta 39).
+- **Canais numa passada:** `channelValues` percorre os nós uma vez para os 16 canais, para a meta de 1.000 nós de `limites.md` não virar uma conta por saída.
 - **Números por interface:** limites como slots por nó e tamanho dos nomes vêm de `NetworkLimits`, nunca de constantes no domínio (regra 3).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

@@ -130,9 +130,11 @@ Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 2
 
 O simulador (`Simulator`) avalia cada rede no máximo uma vez por tick, e só quando a entrada de algum canal mudou (regra 18).
 
-1. Ao longo do tick, as mudanças de entrada são marcadas na rede.
-2. No fim do tick, a rede recalcula só os canais marcados.
-3. Só as saídas dos canais cujo valor mudou atualizam o bloco. Uma saída só avisa os blocos vizinhos quando o valor emitido muda, para não haver block updates em cascata.
+1. Ao longo do tick, uma leitura que muda o valor de uma entrada deixa a rede pendente. Ligar ou desligar um nó, configurar ou liberar um slot e colocar ou retirar o controlador também deixam. Renomear e trocar a cor, não, porque não mudam sinal nenhum.
+2. No fim do tick, o simulador avalia só as redes pendentes: calcula os 16 canais numa passada e depois as saídas, e a rede deixa de estar pendente (pergunta 38).
+3. Só as faces cujo valor mudou atualizam o bloco. Uma saída só avisa os blocos vizinhos quando o valor emitido muda, para não haver block updates em cascata. A saída de um nó desligado, ou de um slot liberado, volta a 0.
+4. Duas saídas do mesmo nó na mesma face emitem a mais forte (pergunta 39).
+5. Ao carregar o mundo, a rede começa pendente, e o primeiro tick reaplica todas as saídas.
 
 Uma saída que alimenta uma entrada da mesma rede pelo mundo leva ao menos um tick para voltar ao canal, então nunca trava o tick. A detecção de loops e oscilação nos circuitos chega nas Fases 2 e 3.
 
@@ -181,6 +183,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:57 | Detalha a avaliação com as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Aplica as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:12 | Aplica a pergunta 31 nos IDs. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Cria o documento, com as respostas das perguntas 13 e 22 a 30. |
