@@ -47,7 +47,7 @@ git add {arquivos do commit}
 git commit -m "tipo(escopo opcional): descrição em português"
 ```
 
-Use `git add` com os arquivos do plano, nunca `git add .`.
+Use `git add` com os arquivos do plano, nunca `git add .`. Os [hooks](hooks-do-git.md) conferem cada commit e cada push. Ative-os uma vez por clone com `make setup`.
 
 ### 8. Pull request
 
@@ -101,4 +101,5 @@ Só para um problema no que já foi publicado: issue, `hotfix/{issue}-{slug}` a 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 13:30 | Aponta os hooks no passo dos commits. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

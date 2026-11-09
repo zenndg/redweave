@@ -1,5 +1,8 @@
 plugins {
     id 'java-library'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'com.diffplug.spotless'
     id 'net.neoforged.moddev'
     id 'idea'
 }
@@ -12,6 +15,18 @@ version = mod_version
 group = mod_group_id
 
 repositories {
+    // Test tooling only lives on Maven Central, so a NeoForged Maven outage must not break the build.
+    exclusiveContent {
+        forRepository {
+            mavenCentral()
+        }
+        filter {
+            includeGroup('org.jacoco')
+            includeGroup('org.ow2.asm')
+            includeGroupAndSubgroups('org.junit')
+        }
+    }
+
     mavenCentral()
 }
 
@@ -52,6 +67,12 @@ neoForge {
     }
 }
 
+dependencies {
+    testImplementation platform("org.junit:junit-bom:${junit_version}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
 var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
     var replaceProperties = [
             minecraft_version_range: minecraft_version_range,
@@ -77,6 +98,64 @@ tasks.named('jar', Jar) {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+def modPath = project.mod_group_id.replace('.', '/')
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+    toolVersion = project.jacoco_version
+}
+
+// Coverage only targets the domain: the rest is validated by GameTests and a manual script.
+def domainClasses = sourceSets.main.output.asFileTree.matching {
+    include "${modPath}/domain/**"
+}
+
+tasks.named('jacocoTestReport', JacocoReport) {
+    dependsOn 'test'
+    classDirectories.setFrom(domainClasses)
+    reports {
+        html.required = true
+        xml.required = true
+    }
+}
+
+tasks.named('jacocoTestCoverageVerification', JacocoCoverageVerification) {
+    dependsOn 'test'
+    classDirectories.setFrom(domainClasses)
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.85
+            }
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.85
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'jacocoTestCoverageVerification'
+}
+
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        googleJavaFormat(project.google_java_format_version)
+        removeUnusedImports()
+    }
+}
+
+checkstyle {
+    toolVersion = project.checkstyle_version
+    maxWarnings = 0
 }
 
 idea {
