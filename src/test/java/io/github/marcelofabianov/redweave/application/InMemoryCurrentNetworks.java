@@ -1,0 +1,22 @@
+package io.github.marcelofabianov.redweave.application;
+
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+/** The current network of each player, kept in memory (answer 25). */
+final class InMemoryCurrentNetworks implements CurrentNetworkFinder, CurrentNetworkChooser {
+  private final Map<PlayerId, NetworkId> current = new HashMap<>();
+
+  @Override
+  public Optional<NetworkId> currentOf(PlayerId player) {
+    return Optional.ofNullable(current.get(player));
+  }
+
+  @Override
+  public void choose(PlayerId player, NetworkId network) {
+    current.put(player, network);
+  }
+}
