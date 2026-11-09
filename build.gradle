@@ -31,11 +31,22 @@ repositories {
     mavenCentral()
 }
 
+sourceSets.main.resources {
+    srcDir('src/generated/resources')
+    exclude('.cache/**')
+}
+
 base {
     archivesName = mod_id
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+// Holds what only the client runs load, such as Jade when it arrives. The game looks for mods on
+// the classpath of the run, so the server and the GameTests prove the mod opens without them.
+sourceSets {
+    clientRun
+}
 
 neoForge {
     version = project.neo_version
@@ -48,11 +59,30 @@ neoForge {
     runs {
         client {
             client()
+            sourceSet = sourceSets.clientRun
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
             server()
             programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        gameTestServer {
+            type = 'gameTestServer'
+            // Keeps a config edited by hand in run/ from changing the test results.
+            gameDirectory = project.file('run/gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            data()
+            // This run also starts as a client, so it loads the same mods.
+            sourceSet = sourceSets.clientRun
+            programArguments.addAll '--mod', project.mod_id, '--all',
+                    '--output', file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
         configureEach {
@@ -66,6 +96,10 @@ neoForge {
             sourceSet(sourceSets.main)
         }
     }
+}
+
+configurations {
+    clientRunRuntimeClasspath.extendsFrom runtimeClasspath
 }
 
 dependencies {
@@ -93,16 +127,19 @@ var generateModMetadata = tasks.register('generateModMetadata', ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
+def modPath = project.mod_group_id.replace('.', '/')
+
 tasks.named('jar', Jar) {
     from('LICENSE')
     from('COPYING')
+    // Only the development runs use these, and they read the classes directly, not the jar.
+    exclude "${modPath}/gametest/**", "${modPath}/datagen/**", "data/${mod_id}/structure/**"
+    includeEmptyDirs = false
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
-
-def modPath = project.mod_group_id.replace('.', '/')
 
 tasks.named('test', Test) {
     useJUnitPlatform()

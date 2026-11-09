@@ -2,7 +2,7 @@
 
 GRADLE := ./gradlew
 
-.PHONY: help setup check test coverage format format-check build clean client server stop
+.PHONY: help setup check test coverage format format-check build clean client server data check-generated gametest stop
 
 help: ## Show the available commands
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "  %-18s %s\n", $$1, $$2}'
@@ -37,6 +37,15 @@ client: ## Open the game with the mod
 
 server: ## Start a dedicated server with the mod
 	$(GRADLE) runServer
+
+data: ## Run the data generation
+	$(GRADLE) runData
+
+check-generated: ## Fail when the data generation changes src/generated
+	scripts/development/check-generated.sh
+
+gametest: ## Run the GameTests on a headless server and confirm that they passed
+	scripts/development/run-gametests.sh
 
 stop: ## Stop the Gradle daemons
 	$(GRADLE) --stop

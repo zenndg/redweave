@@ -18,11 +18,24 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 | `make clean` | Remove a saída do build |
 | `make client` | Abre o jogo com o mod |
 | `make server` | Inicia um servidor dedicado com o mod. Na primeira vez, exige aceitar o EULA em `run/eula.txt` |
+| `make data` | Roda a geração de dados |
+| `make check-generated` | Roda a geração de dados e reprova se `src/generated` mudar |
+| `make gametest` | Roda os GameTests num servidor sem interface |
 | `make stop` | Para os daemons do Gradle |
 
 O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
 **Cobertura:** enquanto `domain/` não tiver classes, o `jacocoTestCoverageVerification` roda e passa, porque não há o que medir. Ele passa a reprovar quando o domínio chega, na issue #9.
+
+**`make gametest`:** o jogo termina com sucesso mesmo quando o mod falha ao carregar, então `scripts/development/run-gametests.sh` só aprova se o log trouxer `All N required tests passed`. Foi conferido que o comando falha com uma GameTest reprovada e com uma classe de cliente no código comum. O log fica em `build/gametest.log`. O servidor roda em `run/gametest/`, separado do `run/` do `make client`, para um config editado à mão não mudar o resultado.
+
+**GameTests:** ficam no pacote `gametest` e cobrem o que está fora de `domain/` (regras 28 e 29 do `AGENTS.md`). As estruturas ficam em `data/redweave/structure/`, e a `empty.nbt` tem 3×3×3 blocos de ar. Cada classe usa `@GameTestHolder(RedweaveMod.MOD_ID)` e `@PrefixGameTestTemplate(false)`, para o `template` citar a estrutura só pelo nome. A `WithoutOptionalModsGameTests` reprova se o Jade ou o The One Probe estiverem carregados, o que prova que o mod abre sem eles num servidor dedicado (regras 20 e 39 e pergunta 18).
+
+**`make check-generated`:** a geração apaga `src/generated/resources/` antes de escrever, então um arquivo gerado editado à mão e commitado volta ao original e aparece como diferença. Por enquanto, a geração não produz nada, porque o conteúdo chega com as próximas issues.
+
+**Conjunto de fontes `clientRun`:** o `make client` e o `make data` o usam, e ele herda o classpath do mod. Dependências só de cliente, como o Jade, entram nele com `clientRunRuntimeOnly`, porque o jogo procura mods no classpath da execução. `make server` e `make gametest` não o carregam, então provam que um servidor dedicado abre sem elas.
+
+**Jar publicado:** a tarefa `jar` exclui os pacotes `gametest` e `datagen` e as estruturas de `data/redweave/structure/`, que só servem ao desenvolvimento. As execuções de desenvolvimento leem as classes direto, sem passar pelo jar.
 
 **Arquitetura:** as regras ficam em `src/test/java/.../architecture/DomainBoundaryTest.java`. As de `domain/` e `application/` aceitam pacote vazio, então valem desde já e passam a reprovar com a primeira classe. Uma constante `static final` de tipo primitivo ou `String` é copiada pelo compilador para quem a usa, então o ArchUnit não a vê como dependência. Isso não é uma brecha, porque nenhuma classe é carregada.
 
@@ -63,6 +76,9 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 ## Quando algo reprova
 
+- **`make gametest`:** uma GameTest reprovou, e o nome dela e o motivo aparecem em `build/gametest.log`, antes de `required tests failed`. Se `GAME TESTS COMPLETE` não aparecer, o mod não carregou. Com `invalid dist` no log, código comum referenciou uma classe de cliente: mova a referência para `client/`.
+- **`theModOpensWithoutTheOptionalMods`:** o Jade ou o The One Probe entrou no servidor. Confira se ele continua só em `clientRunRuntimeOnly`.
+- **`make check-generated`:** se o `datagen/` mudou, rode `make data` e adicione `src/generated` ao commit. Se um arquivo gerado foi editado à mão, desfaça com `git restore src/generated` e leve a mudança para o `datagen/`.
 - **`DomainBoundaryTest`:** o nome da regra que reprovou diz o motivo.
   - `theDomainOnlyDependsOnItselfAndJava`: uma classe de `domain/` importou o jogo ou outro pacote do mod. Mova a regra para fora do domínio ou inverta a dependência com uma interface.
   - `theApplicationOnlyDependsOnTheDomainAndJava`: um caso de uso importou o jogo ou um adapter. Declare uma porta em `application/` e implemente-a fora dela.
@@ -80,6 +96,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests, a geração de dados, o conjunto de fontes `clientRun` e o jar publicado. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Adiciona o ArchUnit e as regras de fronteira. |
 | Marcelo Fabiano | 2026-11-09 13:29 | Passa os comandos para o Makefile e documenta o JUnit, o JaCoCo, o Spotless e o Checkstyle. |
 | Marcelo Fabiano | 2026-11-09 11:58 | Documenta o Gradle, o ModDevGradle, o NeoForge, o Parchment e o JDK. |
