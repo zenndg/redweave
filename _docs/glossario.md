@@ -17,11 +17,12 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
 | Network Controller | `network_controller` | O bloco onde a rede é criada e gerenciada |
 | Configurador | `configurator` | Ferramenta para parear nós e copiar e colar configurações |
-| Signal Remote | `signal_remote` | Item de mão que age como alavanca ou botão num canal. Nome pendente (pergunta 15) |
+| Signal Remote | `signal_remote` | Item de mão que age como alavanca ou botão num canal (pergunta 15) |
 | Ponte | `Bridge` | Na Fase 5, o nó que liga canais a um broker MQTT |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 10:34 | Confirma o nome Signal Remote (pergunta 15). |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
