@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 42 | Para trocar um nó de rede com o Configurador, quem precisa ser o dono? | Das duas redes, a antiga e a nova, para ninguém tirar o nó da rede de outro player. Um nó sem rede entra em qualquer rede do próprio player. Detalha a pergunta 22 |
+| 41 | O que os casos de uso devolvem? | O mesmo `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK`. O `PlaceNode` devolve também o ID do nó criado |
+| 40 | Que cor recebe uma rede recém-criada? | A primeira cor, na ordem das lãs, que nenhuma outra rede do mesmo dono usa. Com as 16 em uso, o branco. O dono troca depois |
 | 39 | Um nó com dois slots de saída na mesma face, em canais diferentes: que sinal o bloco recebe? | O mais forte entre as saídas da face, como dois fios de redstone no mesmo bloco. A mudança que o simulador devolve é por face do nó |
 | 38 | Onde ficam a marca de pendente de avaliação e o último valor emitido por cada saída? | Na rede, e o `Simulator` é um serviço de domínio sem estado, que recebe a rede e devolve as mudanças. O último valor emitido não vai para o save: ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas |
 | 37 | Onde fica a última leitura de cada entrada, que mantém o canal de um nó `Unloaded`? | Salva com a rede, no mundo. Depois de reiniciar o servidor, um nó num chunk descarregado continua contribuindo com o valor que tinha, como a redstone congelada do jogo. Detalha a pergunta 13 |
@@ -39,6 +42,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 17:21 | Responde as perguntas 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Responde as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Responde as perguntas 36 e 37. |
 | Marcelo Fabiano | 2026-11-09 16:27 | Responde as perguntas 32 a 35. |
