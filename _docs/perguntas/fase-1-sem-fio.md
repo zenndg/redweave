@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 31 | Qual é a forma de `NetworkId` e `NodeId`, e quem os gera? | UUID nos dois, como o jogo faz com entidades e players. O domínio só recebe o ID: quem chama gera com `UUID.randomUUID()` por uma porta `IdGenerator`, com uma versão fixa nos testes |
 | 30 | Quem pode quebrar o Network Controller de outro player? | Só o dono. Para os outros, o bloco não quebra no survival, e explosões não o destroem. No criativo, quebra normalmente |
 | 29 | O nó num chunk descarregado e o nó fora do raio precisam de nomes diferentes. Como ficam? | `Unloaded` (Descarregado), em âmbar, mantém o último valor. `Out of range` (Fora de alcance), em vermelho, não conta e vale 0. Ajusta o nome usado na resposta 13, sem mudar o comportamento dela |
 | 28 | Um operador do servidor pode alterar ou apagar a rede de outro player? | Não. Só o dono, sem exceção. Detalha a pergunta 22 |
@@ -30,6 +31,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:10 | Responde a pergunta 31. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Responde as perguntas 22 a 30. |
 | Marcelo Fabiano | 2026-11-09 13:56 | Responde a pergunta 21. |
 | Marcelo Fabiano | 2026-11-09 11:50 | Responde as perguntas 17 a 20. |

@@ -12,7 +12,7 @@ A rede (`Network`) é o agregado: toda mudança nos nós, nos slots e nos canais
 
 | Parte | O que é |
 |---|---|
-| ID | `NetworkId`, único no servidor e que nunca muda. É o que o item do controlador guarda (pergunta 24) |
+| ID | `NetworkId`, um UUID único no servidor e que nunca muda. É o que o item do controlador guarda (perguntas 24 e 31) |
 | Nome | Escolhido pelo dono, com um limite de caracteres no config. Nasce com um nome padrão e pode ser renomeado |
 | Cor | Uma das 16 cores de lã, a mesma paleta dos canais. Identifica a rede nas telas, no Jade e no The One Probe |
 | Dono | O player que criou a rede. Na Fase 1, o dono não muda |
@@ -67,7 +67,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 
 | Parte | O que é |
 |---|---|
-| ID | `NodeId`, único na rede |
+| ID | `NodeId`, um UUID (pergunta 31) |
 | Posição | A dimensão, o bloco e a face onde o nó está grudado |
 | Slots | Até o limite do config: 4, ou 9 com upgrade. Cada slot é um `ChannelSlot` |
 
@@ -181,4 +181,5 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 16:12 | Aplica a pergunta 31 nos IDs. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Cria o documento, com as respostas das perguntas 13 e 22 a 30. |
