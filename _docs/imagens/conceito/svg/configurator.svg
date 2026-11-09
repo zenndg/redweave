@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="540" viewBox="0 0 540 540" role="img" aria-label="Configurator: ferramenta de cabo de cobre com visor mostrando o canal 15 e ponta de prova de redstone; abaixo, o que o player vê ao segurá-la sobre um nó">
+<defs>
+<filter id="cf-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
+<filter id="cf-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
+<linearGradient id="cf-copper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9935F"/><stop offset="1" stop-color="#9C5A27"/></linearGradient>
+<linearGradient id="cf-tip" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B9BBB8"/><stop offset="1" stop-color="#7C7E7B"/></linearGradient>
+</defs>
+<ellipse cx="280" cy="350" rx="190" ry="18" fill="#000000" opacity="0.35" filter="url(#cf-soft)"/>
+<g transform="rotate(-28 280 230)">
+<rect x="56" y="214" width="22" height="36" rx="8" fill="#8E5226"/>
+<rect x="66" y="210" width="196" height="44" rx="18" fill="url(#cf-copper)"/>
+<rect x="92" y="218" width="6" height="28" rx="3" fill="#8E5226"/>
+<rect x="110" y="218" width="6" height="28" rx="3" fill="#8E5226"/>
+<rect x="128" y="218" width="6" height="28" rx="3" fill="#8E5226"/>
+<rect x="146" y="218" width="6" height="28" rx="3" fill="#8E5226"/>
+<rect x="164" y="218" width="6" height="28" rx="3" fill="#8E5226"/>
+<rect x="250" y="180" width="160" height="104" rx="16" fill="#2E3238" stroke="#C27B4C" stroke-width="3"/>
+<rect x="266" y="194" width="104" height="58" rx="6" fill="#0E1116"/>
+<rect x="276" y="204" width="14" height="14" rx="3" fill="#E2392F"/>
+<text x="298" y="217" font-family="IBM Plex Mono, monospace" font-size="15" fill="#F2F3F5">CH 15</text>
+<rect x="276" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="282" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="288" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="294" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="300" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="306" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="312" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="318" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="324" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="330" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="336" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="342" y="230" width="4" height="12" fill="#E2392F"/>
+<rect x="348" y="230" width="4" height="12" fill="#5A2421"/>
+<rect x="354" y="230" width="4" height="12" fill="#5A2421"/>
+<rect x="360" y="230" width="4" height="12" fill="#5A2421"/>
+<circle cx="390" cy="214" r="9" fill="#C27B4C"/>
+<circle cx="390" cy="214" r="5" fill="#8E5226"/>
+<rect x="268" y="262" width="100" height="10" rx="5" fill="#3A3E45"/>
+<rect x="410" y="218" width="40" height="28" rx="4" fill="#3A3E45"/>
+<polygon points="450,214 506,232 450,250" fill="url(#cf-tip)"/>
+<circle cx="506" cy="232" r="9" fill="#E2392F" opacity="0.9" filter="url(#cf-glow)"/>
+<circle cx="506" cy="232" r="5" fill="#FF7A62"/>
+</g>
+<line x1="20" y1="392" x2="520" y2="392" stroke="#2A2E35" stroke-width="1"/>
+<text x="20" y="418" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#8A9099" letter-spacing="1.5">NA MÃO: SINAIS VISÍVEIS NO MUNDO</text>
+<rect x="40" y="440" width="96" height="80" fill="#5C5F63"/>
+<rect x="64" y="456" width="48" height="48" rx="8" fill="#2E3238" stroke="#C27B4C" stroke-width="2"/>
+<circle cx="88" cy="480" r="15" fill="#E2392F" opacity="0.8" filter="url(#cf-glow)"/>
+<circle cx="88" cy="480" r="11" fill="#E2392F"/>
+<line x1="136" y1="470" x2="176" y2="458" stroke="#8A9099" stroke-width="1.25" stroke-dasharray="3 3"/>
+<rect x="176" y="436" width="300" height="44" rx="8" fill="#0E1116" stroke="#3A3E45"/>
+<rect x="190" y="451" width="14" height="14" rx="3" fill="#E2392F"/>
+<text x="214" y="463" font-family="IBM Plex Sans, sans-serif" font-size="14" fill="#F2F3F5">Vermelho · saída · sinal 12</text>
+<text x="176" y="508" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#8A9099">Rede Fábrica · 3 de 4 slots em uso</text>
+</svg>

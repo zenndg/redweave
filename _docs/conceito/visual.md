@@ -99,8 +99,88 @@ O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 b
 | Janela | Metal escuro com chanfro claro em cima e à esquerda e escuro embaixo e à direita, como no Cubit |
 | Abas | À direita da janela, como estado só do cliente |
 
+## Blocos e itens da Fase 1
+
+Os quatro elementos da primeira interação. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
+
+### Network Controller
+
+![Network Controller](../imagens/conceito/network-controller.png)
+
+Bloco, `redweave:network_controller`. Onde a rede nasce: guarda nome, cor, dono e permissões e mostra os 16 canais ao vivo.
+
+| Parte | Como é |
+|---|---|
+| Corpo | Deepslate polido, com moldura de cobre em todas as faces |
+| Topo | Núcleo de redstone com textura emissiva |
+| Frente | Painel com 16 LEDs, um por canal, na cor da lã |
+| Lateral | Grelha de ventilação e medidor de carga da rede |
+
+| Estado | Visual |
+|---|---|
+| Online | Núcleo aceso; cada canal ligado acende o seu LED |
+| Sem nós | Núcleo aceso fraco, painel apagado |
+| Sem rede | Recém-colocado, antes de receber um nome: núcleo apagado |
+
+### Signal Node
+
+![Signal Node](../imagens/conceito/signal-node.png)
+
+Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco e lê ou emite redstone ali.
+
+| Parte | Como é |
+|---|---|
+| Placa | Fina, com cerca de 2 pixels de espessura, presa à face como um botão do jogo, com moldura de cobre |
+| Lente | No centro, acende na cor do sinal |
+| Slots | Quatro pontos nos cantos, cada um na cor do canal configurado. Apagado é slot livre |
+
+| Estado | Visual |
+|---|---|
+| Desligado | Lente escura: sem rede ou com sinal 0 |
+| Ativo | Lente acesa, mais forte quanto maior o sinal |
+| Fora de alcance | Lente âmbar e anel tracejado. Só existe se a pergunta 13 confirmar que o canal mantém o último valor com o chunk descarregado |
+
+### Configurator
+
+![Configurator](../imagens/conceito/configurator.png)
+
+Ferramenta, `redweave:configurator`. Pareia nós e copia e cola configurações.
+
+| Parte | Como é |
+|---|---|
+| Cabo | Cobre, com sulcos de pegada |
+| Visor | A cor e o número do canal guardado e um medidor de 15 barras |
+| Ponta | Ponta de prova com redstone na extremidade |
+| Na mão | Um rótulo flutuante sobre cada nó, com canal, direção e sinal, e a linha da rede e dos slots em uso |
+
+| Ação | Resultado |
+|---|---|
+| Clique no Network Controller | Guarda a rede no visor |
+| Clique num nó | Liga o nó à rede guardada, num canal livre |
+| Shift + clique num nó | Copia a configuração; o próximo clique cola |
+
+A rede guardada e a configuração copiada ficam em data components do item (regra 7 do `AGENTS.md`).
+
+### Signal Remote
+
+![Signal Remote](../imagens/conceito/signal-remote.png)
+
+Item, `redweave:signal_remote`. O nome depende da pergunta 15. A alavanca de bolso: liga um canal da rede sem voltar até o circuito.
+
+| Modo | Visual e uso |
+|---|---|
+| Alavanca | Haste de cobre que sobe e desce; um clique liga, outro desliga, e o LED acende com o canal ligado |
+| Botão | Botão redondo de cobre; cada clique manda um pulso curto |
+
+| Parte | Como é |
+|---|---|
+| Faixa | Na cor do canal, para reconhecer o controle no inventário |
+| Antena | Ponta de redstone, que acende junto com o LED |
+| Troca | Shift + clique troca o modo; clicar no Network Controller escolhe a rede e o canal |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 11:15 | Adiciona o conceito dos blocos e itens da Fase 1. |
 | Marcelo Fabiano | 2026-11-09 11:10 | Adiciona a identidade visual, a paleta, os canais e os elementos de interface. |

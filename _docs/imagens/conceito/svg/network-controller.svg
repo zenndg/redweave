@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="540" viewBox="0 0 540 540" role="img" aria-label="Network Controller em vista isométrica: bloco de deepslate com moldura de cobre, núcleo de redstone aceso no topo e painel de 16 canais na frente">
+<defs>
+<filter id="nc-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="nc-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2"/></filter>
+<radialGradient id="nc-core" cx="0.45" cy="0.4" r="0.6"><stop offset="0" stop-color="#FF8A6E"/><stop offset="0.55" stop-color="#E2392F"/><stop offset="1" stop-color="#7E1611"/></radialGradient>
+</defs>
+<ellipse cx="270" cy="470" rx="160" ry="30" fill="#000000" opacity="0.4" filter="url(#nc-soft)"/>
+<g transform="translate(0 60)">
+<g transform="matrix(1.299 -0.75 1.299 0.75 140.1 165)">
+<rect x="0" y="0" width="100" height="100" fill="#5C626C"/>
+<rect x="4" y="4" width="92" height="92" fill="none" stroke="#C27B4C" stroke-width="3" vector-effect="non-scaling-stroke"/>
+<circle cx="50" cy="50" r="30" fill="#2A2D33" stroke="#C27B4C" stroke-width="2" vector-effect="non-scaling-stroke"/>
+<circle cx="50" cy="50" r="22" fill="#E2392F" opacity="0.9" filter="url(#nc-glow)"/>
+<circle cx="50" cy="50" r="17" fill="url(#nc-core)"/>
+<circle cx="44" cy="44" r="5" fill="#FFD3C4" opacity="0.8"/>
+</g>
+<g transform="matrix(1.299 0.75 0 1.5 140.1 165)">
+<rect x="0" y="0" width="100" height="100" fill="#474C55"/>
+<rect x="4" y="4" width="92" height="92" fill="none" stroke="#C27B4C" stroke-width="3" vector-effect="non-scaling-stroke"/>
+<rect x="14" y="16" width="72" height="6" rx="2" fill="#2C2F35"/>
+<rect x="14" y="28" width="72" height="6" rx="2" fill="#2C2F35"/>
+<rect x="14" y="40" width="72" height="6" rx="2" fill="#2C2F35"/>
+<rect x="14" y="52" width="72" height="6" rx="2" fill="#2C2F35"/>
+<rect x="14" y="70" width="72" height="16" rx="2" fill="#3A3E45" stroke="#C27B4C" stroke-width="1" vector-effect="non-scaling-stroke"/>
+<rect x="20" y="75" width="8" height="6" fill="#E2392F"/>
+<rect x="32" y="75" width="8" height="6" fill="#E2392F"/>
+<rect x="44" y="75" width="8" height="6" fill="#E2392F"/>
+<rect x="56" y="75" width="8" height="6" fill="#5A2421"/>
+<rect x="68" y="75" width="8" height="6" fill="#5A2421"/>
+</g>
+<g transform="matrix(1.299 -0.75 0 1.5 270 240)">
+<rect x="0" y="0" width="100" height="100" fill="#353940"/>
+<rect x="4" y="4" width="92" height="92" fill="none" stroke="#C27B4C" stroke-width="3" vector-effect="non-scaling-stroke"/>
+<rect x="12" y="12" width="76" height="52" rx="3" fill="#0E1116"/>
+<rect x="18" y="18" width="12" height="7" rx="1" fill="#F9FFFE"/>
+<rect x="34" y="18" width="12" height="7" rx="1" fill="#F9801D"/>
+<rect x="50" y="18" width="12" height="7" rx="1" fill="#C74EBD" opacity="0.22"/>
+<rect x="66" y="18" width="12" height="7" rx="1" fill="#3AB3DA"/>
+<rect x="18" y="29" width="12" height="7" rx="1" fill="#FED83D"/>
+<rect x="34" y="29" width="12" height="7" rx="1" fill="#80C71F"/>
+<rect x="50" y="29" width="12" height="7" rx="1" fill="#F38BAA" opacity="0.22"/>
+<rect x="66" y="29" width="12" height="7" rx="1" fill="#474F52" opacity="0.4"/>
+<rect x="18" y="40" width="12" height="7" rx="1" fill="#9D9D97" opacity="0.22"/>
+<rect x="34" y="40" width="12" height="7" rx="1" fill="#169C9C"/>
+<rect x="50" y="40" width="12" height="7" rx="1" fill="#8932B8" opacity="0.22"/>
+<rect x="66" y="40" width="12" height="7" rx="1" fill="#3C44AA" opacity="0.22"/>
+<rect x="18" y="51" width="12" height="7" rx="1" fill="#835432" opacity="0.22"/>
+<rect x="34" y="51" width="12" height="7" rx="1" fill="#5E7C16" opacity="0.22"/>
+<rect x="50" y="51" width="12" height="7" rx="1" fill="#E2392F"/>
+<rect x="66" y="51" width="12" height="7" rx="1" fill="#1D1D21" opacity="0.6"/>
+<rect x="12" y="72" width="76" height="16" rx="3" fill="#2A2D33"/>
+<circle cx="22" cy="80" r="4" fill="#E2392F"/>
+<rect x="32" y="77" width="48" height="6" rx="3" fill="#C27B4C" opacity="0.7"/>
+</g>
+</g>
+<text x="20" y="530" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8A9099">conceito · não final · textura alvo 16×16</text>
+</svg>
