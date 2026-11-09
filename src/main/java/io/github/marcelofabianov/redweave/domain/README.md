@@ -25,7 +25,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
-| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE` e `INVALID_SLOT` | #10 |
+| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE` e `INVALID_SLOT`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK` (pergunta 41) | #10 e #13 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
@@ -63,7 +63,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Agregado mutável, valores imutáveis:** a rede muda pelas operações, e as consultas devolvem listas imutáveis. `Node` e `ChannelSlot` são valores: mudar um slot troca o nó inteiro (pergunta 33).
 - **Nome aparado e recusado:** as pontas saem, e vazio ou longo demais é recusado. No canal, vazio volta ao nome da cor (pergunta 34).
 - **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Offline`, e recolocar volta na nova posição, com tudo igual (pergunta 24).
-- **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o caso de uso que liga um nó confere isso (issue #13).
+- **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o `LinkNode`, em `application/`, tira o nó da rede antiga antes de ligá-lo na nova. Ele confere tudo antes de mudar algo, e quem pede precisa ser dono das duas redes (pergunta 42).
 - **Primeiro canal livre:** é o primeiro, na ordem das cores, sem nenhum slot na rede (pergunta 25).
 - **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).
 - **Estado na rede, simulador sem estado:** a rede sabe quando um sinal dela mudou e o que emitiu por último, para o estado de uma rede ficar num lugar só (pergunta 38).
