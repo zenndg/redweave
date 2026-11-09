@@ -8,15 +8,15 @@ As recomendações abaixo só valem depois da resposta do desenvolvedor.
 
 | # | Pergunta | Opções | Recomendação |
 |---|---|---|---|
-| 16 | Qual é a fonte da verdade do board: o GitHub Projects ou o board do claude.ai? | GitHub Projects; board do claude.ai; os dois; nenhuma das opções | GitHub Projects, com as issues nas milestones. O board do claude.ai fica só como referência até o Project existir |
-| 15 | O controle remoto do Redweave se chama Signal Remote, para não confundir com o Cubit Remote no mesmo pack? | Signal Remote; Redweave Remote; outro nome; nenhuma das opções | Signal Remote |
-| 14 | Em que idioma ficam issues, PRs e commits? | Português; inglês; nenhuma das opções | Português, como no Cubit. Código, IDs e o `README.md` ficam em inglês |
-| 13 | O que acontece com um canal quando o chunk de um nó de entrada descarrega? | Mantém o último valor; cai para 0; mantém por um tempo configurável e depois cai para 0; nenhuma das opções | Mantém o último valor, como a redstone do jogo, que congela num chunk descarregado. A Tela do Controlador marca o nó como fora de alcance. Bloqueia o simulador da Fase 1 |
 
 ## Respondidas
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 16 | Qual é a fonte da verdade do board: o GitHub Projects ou o board do claude.ai? | GitHub Projects, com as issues nas milestones. O board do claude.ai é aposentado |
+| 15 | O controle remoto do Redweave se chama Signal Remote, para não confundir com o Cubit Remote no mesmo pack? | Sim: Signal Remote, com o ID `signal_remote` |
+| 14 | Em que idioma ficam issues, PRs e commits? | Português, como no Cubit. Código, IDs e o `README.md` ficam em inglês |
+| 13 | O que acontece com um canal quando o chunk de um nó de entrada descarrega? | O canal mantém o último valor lido pelo nó, como a redstone do jogo, que congela num chunk descarregado. A Tela do Controlador marca o nó como fora de alcance |
 | 12 | Onde fica o projeto? | Num repositório privado no GitHub, `marcelofabianov/redweave`, com a gestão do board lá |
 | 11 | O Redweave adota o processo do Cubit? | Sim: regras do `AGENTS.md`, pilares, perguntas numeradas, histórico nos documentos, Gitflow, gates e GameTests |
 | 10 | O que o Redweave aproveita do Cubit? | Processo, documentação, gates, GameTests com teste sem Jade, teste de paridade das traduções, `domain/README.md`, value objects em `record`, números em config por seções, compat isolado e a linguagem visual das telas |
@@ -34,4 +34,5 @@ As recomendações abaixo só valem depois da resposta do desenvolvedor.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 10:34 | Responde as perguntas 13 a 16. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Registra as perguntas da concepção. |
