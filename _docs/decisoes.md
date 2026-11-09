@@ -15,7 +15,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome | Redweave | 9 |
 | Processo | O do Cubit: regras, pilares, perguntas numeradas, Gitflow, gates e GameTests | 10, 11 |
 | Repositório | `marcelofabianov/redweave`, privado no início, com o board no GitHub | 12 |
-| Chunk descarregado | O canal mantém o último valor do nó, e a Tela do Controlador marca o nó como fora de alcance | 13 |
+| Chunk descarregado | O canal mantém o último valor do nó, e a Tela do Controlador marca o nó como `Unloaded` | 13, 29 |
 | Idioma do processo | Issues, PRs e commits em português. Código, IDs e o `README.md` em inglês | 14 |
 | Controle remoto | Signal Remote, com o ID `signal_remote` | 15 |
 | Board | GitHub Projects é a fonte da verdade. O board do claude.ai é aposentado | 16 |
@@ -24,6 +24,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Hooks de git | Os do Cubit, com gitleaks | 19 |
 | Licença no metadado | `LGPL-3.0-only` | 20 |
 | Fronteira no ArchUnit | Estrita: `domain/` só depende de si e do Java; `application/` só de si, de `domain/` e do Java | 21 |
+| Permissões | Só o dono altera a rede, sem exceção para operadores | 22, 28 |
+| Alcance | Raio em blocos a partir do controlador, no config (128; 0 é ilimitado), só na mesma dimensão | 23 |
+| Controlador quebrado | A rede fica salva no mundo; o item guarda o ID e, sem controlador, a rede fica `Offline` | 24 |
+| Nó novo | Entra na rede atual do player, com 1 slot de entrada no primeiro canal livre | 25 |
+| Nome do canal | Cor fixa e nome opcional, renomeado pelo dono | 26 |
+| Signal Remote | Entrada sem posição, que volta a 0 ao sair do inventário ou do alcance | 27 |
+| Estados do nó | `Unloaded` mantém o último valor; `Out of range` vale 0 | 29 |
+| Quebrar o controlador | Só o dono; resiste a explosões; no criativo, quebra | 30 |
 
 Não há perguntas pendentes da concepção.
 
@@ -31,6 +39,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 15:39 | Registra as decisões 22 a 30. |
 | Marcelo Fabiano | 2026-11-09 13:56 | Registra a decisão 21. |
 | Marcelo Fabiano | 2026-11-09 11:50 | Registra as decisões 17 a 20. |
 | Marcelo Fabiano | 2026-11-09 10:34 | Registra as decisões 13 a 16. |
