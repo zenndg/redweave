@@ -23,8 +23,8 @@ O comando chama o `scripts/development/setup-dev.sh`, que baixa o gitleaks para 
 | `commit-msg` | Mensagem | Título fora do Conventional Commits |
 | `commit-msg` | Autoria | Coautoria ou atribuição a uma IA. Citar uma ferramenta de IA como assunto da mudança é permitido |
 | `pre-push` | Build | Compilação, testes, arquitetura, cobertura, formatação ou análise estática reprovados, por meio de `make check` |
-
-Os GameTests e a conferência do `src/generated` entram no `pre-push` com a issue #5.
+| `pre-push` | GameTests | GameTest reprovada, ou mod que não carrega no servidor, como com uma classe de cliente, por meio de `make gametest` |
+| `pre-push` | Datagen | `src/generated` diferente do que a geração produz, por meio de `make check-generated` |
 
 O `pre-push` roda todos os gates também ao apagar uma branch remota, porque o script não diferencia esse caso.
 
@@ -45,13 +45,18 @@ Os hooks rodam só na máquina local. Eles não bloqueiam merges feitos pelo Git
 - **gitleaks não encontrado:** rode `make setup`.
 - **Mensagem:** reescreva o título no formato `tipo(escopo opcional): descrição`, em português.
 - **Autoria:** remova a atribuição.
-- **Build:** veja [`ferramentas-de-build.md`](ferramentas-de-build.md#quando-algo-reprova).
+- **Build, GameTests ou datagen:** veja [`ferramentas-de-build.md`](ferramentas-de-build.md#quando-algo-reprova).
 
 Nunca use `--no-verify`.
+
+## Por que o `runServer` não é um gate
+
+Ele exigiria aceitar o EULA em cada clone. Os GameTests usam o mesmo alvo de servidor dedicado e reprovam igualmente uma classe de cliente carregada no servidor.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests e o datagen ao gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Inclui a arquitetura no gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:28 | Adiciona os hooks de commit e de push, com o gitleaks. |
