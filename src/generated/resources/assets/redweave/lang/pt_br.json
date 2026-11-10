@@ -1,3 +1,10 @@
 {
-  "fml.menu.mods.info.description.redweave": "Teça a sua redstone. Redes de sinal sem fio, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar."
+  "block.redweave.network_controller": "Controlador de Rede",
+  "fml.menu.mods.info.description.redweave": "Teça a sua redstone. Redes de sinal sem fio, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar.",
+  "itemGroup.redweave": "Redweave",
+  "message.redweave.network_controller.already_placed": "Esta rede já tem um controlador.",
+  "message.redweave.network_controller.current": "Rede atual: %s",
+  "message.redweave.network_controller.foreign": "%s · dono: %s",
+  "message.redweave.network_controller.no_network": "Sem rede",
+  "message.redweave.network_controller.not_owner": "Só o dono pode colocar esta rede."
 }
