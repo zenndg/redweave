@@ -49,6 +49,21 @@ class NetworkNodesTest {
     assertEquals(Optional.empty(), network.node(NODE));
   }
 
+  /** The block of the node is gone, so there is nobody to ask: it leaves anyway (answer 74). */
+  @Test
+  void losingANodeTakesItOutWithoutAnOwner() {
+    Network network = network();
+    network.attachNode(OWNER, NODE, NODE_POSITION);
+
+    assertEquals(Outcome.ACCEPTED, network.loseNode(NODE));
+    assertEquals(Optional.empty(), network.node(NODE));
+  }
+
+  @Test
+  void losingANodeThatIsNotThereSaysSo() {
+    assertEquals(Outcome.UNKNOWN_NODE, network().loseNode(NODE));
+  }
+
   @Test
   void detachingANodeThatIsNotThereSaysSo() {
     assertEquals(Outcome.UNKNOWN_NODE, network().detachNode(OWNER, NODE));
