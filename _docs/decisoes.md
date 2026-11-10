@@ -49,6 +49,21 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Conferência extra da CI | Só o gitleaks em todo o histórico | 45 |
 | Cache da CI | `cache: gradle` do `actions/setup-java`, sem o `gradle/actions` | 46 |
 | Versões das actions | `checkout` v7.0.1, `setup-java` v6.2.0 e `upload-artifact` v7.0.2 | 47 |
+| Ordem da Fase 1 | #14, #15, #18 e #19, o primeiro teste manual, e depois #16, #17 e o restante | 48 |
+| Controlador que some | Operação sem quem pede deixa a rede `Offline` | 49 |
+| Config | `network.range`, `network.name_length`, `channel.name_length` e `node.slots`, no config do servidor | 50 |
+| Clique no controlador | Mensagem na action bar até a tela da #20 | 52 |
+| Redes até a #16 | Num objeto por servidor, em memória | 53 |
+| Página do controlador | `controlador-de-rede.md` | 54 |
+| Item com a rede de outro player | Não coloca, com aviso na action bar | 55 |
+| Rede que já tem controlador | Não coloca, com aviso na action bar | 56 |
+| Item com rede que não existe | Nasce uma rede nova | 57 |
+| Colocado sem player real | Não coloca | 58 |
+| Texturas da Fase 1 | As do desenvolvedor, extraídas de `_docs/imagens/conceito/texturas.png` | 51 |
+| Nó fora de alcance | Vale o `visual.md`, com a textura refeita | 59 |
+| Controlador sem nós | `top_on` sem a camada emissiva | 60 |
+| Pontos de slot do nó | Textura `signal_node_slot` tingida pelo canal | 61 |
+| Testes do controlador | Domínio, aplicação e GameTests | 62 |
 
 Não há perguntas pendentes da concepção.
 
@@ -56,6 +71,13 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:06 | Registra a decisão 62. |
+| Marcelo Fabiano | 2026-11-10 09:05 | Atualiza a decisão 59. |
+| Marcelo Fabiano | 2026-11-10 08:59 | Registra as decisões 51 e 59 a 61. |
+| Marcelo Fabiano | 2026-11-10 08:54 | Registra as decisões 55 a 58. |
+| Marcelo Fabiano | 2026-11-10 08:52 | Registra as decisões 53 e 54. |
+| Marcelo Fabiano | 2026-11-10 08:47 | Registra as decisões 49, 50 e 52. |
+| Marcelo Fabiano | 2026-11-10 08:30 | Registra a decisão 48. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Registra as decisões 43 a 47. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Registra as decisões 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Registra as decisões 38 e 39. |
