@@ -44,6 +44,11 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cor de rede nova | A primeira cor livre entre as redes do dono; com as 16 em uso, o branco | 40 |
 | Retorno dos casos de uso | O `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK` | 41 |
 | Trocar um nó de rede | Exige ser dono da rede antiga e da nova | 42 |
+| Gates da CI | Os três do `pre-push` em todo push e PR para `develop`, `homolog`, `main` e `release/*` | 43 |
+| Versão das actions | Fixada pelo SHA do commit | 44 |
+| Conferência extra da CI | Só o gitleaks em todo o histórico | 45 |
+| Cache da CI | `cache: gradle` do `actions/setup-java`, sem o `gradle/actions` | 46 |
+| Versões das actions | `checkout` v7.0.1, `setup-java` v6.2.0 e `upload-artifact` v7.0.2 | 47 |
 
 Não há perguntas pendentes da concepção.
 
@@ -51,6 +56,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 08:09 | Registra as decisões 43 a 47. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Registra as decisões 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Registra as decisões 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Registra as decisões 36 e 37. |

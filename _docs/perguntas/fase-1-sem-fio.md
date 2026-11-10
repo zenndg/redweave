@@ -11,6 +11,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 47 | Quais versões das actions a CI fixa? | As últimas estáveis em 2026-11-10: `actions/checkout` v7.0.1, `actions/setup-java` v6.2.0 e `actions/upload-artifact` v7.0.2, cada uma pelo SHA do commit (pergunta 44) |
+| 46 | Como a CI faz o cache do Gradle e do Minecraft preparado? | Pelo `cache: gradle` do `actions/setup-java`, sem o `gradle/actions`: é uma dependência a menos, com licença MIT, e evita o cache proprietário que a v6 do `gradle/actions` usa por padrão. O cache guarda `~/.gradle/caches`, onde fica o `neoformruntime`, e o wrapper |
+| 45 | Que conferências a CI faz além dos gates do `pre-push`? | Só o gitleaks em todo o histórico, com a mesma versão e o mesmo checksum do `setup-dev.sh`, para pegar um segredo que entrou sem passar pelos hooks. As mensagens e o nome da branch do PR não são conferidos na CI |
+| 44 | Como a CI fixa a versão das actions de terceiros? | Pelo SHA do commit, com a tag num comentário ao lado, para uma tag movida não trocar o código que roda |
+| 43 | Quais gates a CI roda em cada evento? | Os três do `pre-push` (`make check`, `make gametest` e `make check-generated`) em todo push e todo PR para `develop`, `homolog`, `main` e `release/*` |
 | 42 | Para trocar um nó de rede com o Configurador, quem precisa ser o dono? | Das duas redes, a antiga e a nova, para ninguém tirar o nó da rede de outro player. Um nó sem rede entra em qualquer rede do próprio player. Detalha a pergunta 22 |
 | 41 | O que os casos de uso devolvem? | O mesmo `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK`. O `PlaceNode` devolve também o ID do nó criado |
 | 40 | Que cor recebe uma rede recém-criada? | A primeira cor, na ordem das lãs, que nenhuma outra rede do mesmo dono usa. Com as 16 em uso, o branco. O dono troca depois |
@@ -42,6 +47,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 08:09 | Responde as perguntas 43 a 47. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Responde as perguntas 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Responde as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Responde as perguntas 36 e 37. |

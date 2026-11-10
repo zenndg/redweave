@@ -21,6 +21,7 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 | `make data` | Roda a geração de dados |
 | `make check-generated` | Roda a geração de dados e reprova se `src/generated` mudar |
 | `make gametest` | Roda os GameTests num servidor sem interface |
+| `make scan-secrets` | Procura segredos em todo o histórico do Git com o gitleaks. Exige o `make setup` antes ([`ci.md`](ci.md)) |
 | `make stop` | Para os daemons do Gradle |
 
 O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
@@ -102,6 +103,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 08:09 | Adiciona o `make scan-secrets`. |
 | Marcelo Fabiano | 2026-11-09 14:17 | Adiciona as traduções geradas e o teste de paridade. |
 | Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests, a geração de dados, o conjunto de fontes `clientRun` e o jar publicado. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Adiciona o ArchUnit e as regras de fronteira. |
