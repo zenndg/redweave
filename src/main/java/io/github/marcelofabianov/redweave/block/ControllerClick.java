@@ -21,21 +21,19 @@ final class ControllerClick {
   static void show(RedweaveServer server, NetworkControllerBlockEntity controller, Player player) {
     Optional<Network> network = controller.network().flatMap(server::network);
     if (network.isEmpty()) {
-      tell(player, Component.translatable(ControllerMessages.NO_NETWORK));
+      ActionBar.tell(player, Component.translatable(ControllerMessages.NO_NETWORK));
       return;
     }
     PlayerId clicker = new PlayerId(player.getUUID());
     if (network.get().isOwner(clicker)) {
       server.openNetwork().open(clicker, network.get().id());
-      tell(player, Component.translatable(ControllerMessages.CURRENT, network.get().name()));
+      ActionBar.tell(
+          player, Component.translatable(ControllerMessages.CURRENT, network.get().name()));
       return;
     }
     String owner = ownerName(player.getServer(), network.get().owner().value());
-    tell(player, Component.translatable(ControllerMessages.FOREIGN, network.get().name(), owner));
-  }
-
-  static void tell(Player player, Component message) {
-    player.displayClientMessage(message, true);
+    ActionBar.tell(
+        player, Component.translatable(ControllerMessages.FOREIGN, network.get().name(), owner));
   }
 
   /** The name the server knows for the owner, or the UUID of an owner it never saw. */
