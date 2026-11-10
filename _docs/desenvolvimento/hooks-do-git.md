@@ -28,7 +28,7 @@ O comando chama o `scripts/development/setup-dev.sh`, que baixa o gitleaks para 
 
 O `pre-push` roda todos os gates também ao apagar uma branch remota, porque o script não diferencia esse caso.
 
-Os hooks rodam só na máquina local. Eles não bloqueiam merges feitos pelo GitHub nem um push direto de outra máquina. A CI, na issue #2, repete os gates no GitHub.
+Os hooks rodam só na máquina local. Eles não bloqueiam merges feitos pelo GitHub nem um push direto de outra máquina. A [CI](ci.md) repete os gates do `pre-push` no GitHub e procura segredos em todo o histórico.
 
 ## gitleaks
 
@@ -57,6 +57,7 @@ Ele exigiria aceitar o EULA em cada clone. Os GameTests usam o mesmo alvo de ser
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 08:09 | Aponta a CI. |
 | Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests e o datagen ao gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Inclui a arquitetura no gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:28 | Adiciona os hooks de commit e de push, com o gitleaks. |

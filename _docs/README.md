@@ -18,11 +18,13 @@ O mapa da documentação. As respostas em [`perguntas/`](perguntas/README.md) s�
 | [`desenvolvimento/fluxo-de-trabalho.md`](desenvolvimento/fluxo-de-trabalho.md) | Da issue ao merge, e como publicar uma versão |
 | [`desenvolvimento/ferramentas-de-build.md`](desenvolvimento/ferramentas-de-build.md) | As ferramentas de build, as versões e o que fazer quando algo reprova |
 | [`desenvolvimento/hooks-do-git.md`](desenvolvimento/hooks-do-git.md) | Os hooks de commit e de push, como ativar e o que fazer quando reprovam |
+| [`desenvolvimento/ci.md`](desenvolvimento/ci.md) | A CI no GitHub Actions, as actions fixadas e o que fazer quando reprova |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 08:09 | Adiciona a CI ao mapa. |
 | Marcelo Fabiano | 2026-11-09 13:29 | Adiciona os hooks do Git ao mapa. |
 | Marcelo Fabiano | 2026-11-09 11:58 | Adiciona as ferramentas de build ao mapa. |
 | Marcelo Fabiano | 2026-11-09 11:25 | Adiciona o visual e as imagens ao mapa. |
