@@ -32,7 +32,7 @@ O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
 **GameTests:** ficam no pacote `gametest` e cobrem o que está fora de `domain/` (regras 28 e 29 do `AGENTS.md`). As estruturas ficam em `data/redweave/structure/`, e a `empty.nbt` tem 3×3×3 blocos de ar. Cada classe usa `@GameTestHolder(RedweaveMod.MOD_ID)` e `@PrefixGameTestTemplate(false)`, para o `template` citar a estrutura só pelo nome. A `WithoutOptionalModsGameTests` reprova se o Jade ou o The One Probe estiverem carregados, o que prova que o mod abre sem eles num servidor dedicado (regras 20 e 39 e pergunta 18).
 
-**Player nas GameTests:** o NeoForge coloca o item que está na mão do player, e não o `ItemStack` passado ao `placeAt`. Antes de colocar um bloco, ponha o item na mão com `setItemInHand`, como faz a `NetworkControllerGameTests`.
+**Player nas GameTests:** o NeoForge coloca o item que está na mão do player, e não o `ItemStack` passado ao `placeAt`. Para colocar e quebrar como um player, use a `GameTestActions`: o `placeOn` põe o item na mão antes, e o `breakBy` faz o que o jogo faz quando a quebra termina.
 
 **`make check-generated`:** a geração apaga `src/generated/resources/` antes de escrever, então um arquivo gerado editado à mão e commitado volta ao original e aparece como diferença. A geração produz as traduções, os blockstates, os modelos de bloco e de item e as loot tables. Antes do primeiro commit de um arquivo gerado, o gate reprova, porque o arquivo ainda não está no Git: commite o que o `make data` gerou.
 
@@ -105,6 +105,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 10:20 | Aponta a `GameTestActions` nas GameTests. |
 | Marcelo Fabiano | 2026-11-10 09:31 | Atualiza o que a geração produz e explica o item na mão nas GameTests. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Adiciona o `make scan-secrets`. |
 | Marcelo Fabiano | 2026-11-09 14:17 | Adiciona as traduções geradas e o teste de paridade. |

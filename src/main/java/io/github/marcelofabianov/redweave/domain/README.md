@@ -37,6 +37,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
 | `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE` ou `NO_NETWORK` | #11 |
 | `readInput`, `channelValue` e `output` | A regra do canal, no `Network`: guarda a última leitura de cada entrada, dá o mais forte entre as que contam e o que cada saída emite | #11 |
+| `emission` | O que um nó emite no mundo: a mais forte entre as saídas dele, porque ele alimenta o bloco de apoio como uma alavanca (pergunta 71) | #15 |
 | `Simulator` | Serviço sem estado que avalia uma rede pendente: calcula os 16 canais numa passada e devolve só as faces cujo sinal mudou | #12 |
 | `OutputFace` | Uma face onde um nó emite: o nó, o bloco e a face. Todas as saídas do nó nessa face emitem por ela | #12 |
 | `OutputChange` | Uma face cujo sinal mudou, que o jogo aplica antes de avisar os vizinhos | #12 |
@@ -64,6 +65,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Nome aparado e recusado:** as pontas saem, e vazio ou longo demais é recusado. No canal, vazio volta ao nome da cor (pergunta 34).
 - **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Offline`, e recolocar volta na nova posição, com tudo igual (pergunta 24). Uma rede com o controlador colocado recusa outro com `ALREADY_PLACED`, para um item copiado não dar dois controladores a ela, e mover é retirar e recolocar (pergunta 56).
 - **Controlador perdido sem pedido:** quando o bloco some sem o dono quebrá-lo, como no criativo, por comando ou por outro mod, `loseController` deixa a rede `Offline` sem receber quem pede, porque não há a quem perguntar. Só `removeController`, a quebra pelo dono, confere o dono (pergunta 49).
+- **Nó perdido sem pedido:** do mesmo jeito, `loseNode` tira da rede o nó cujo bloco sumiu ou que uma explosão levou, sem receber quem pede. Só `detachNode`, a retirada pelo dono, confere o dono (pergunta 74).
 - **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o `LinkNode`, em `application/`, tira o nó da rede antiga antes de ligá-lo na nova. Ele confere tudo antes de mudar algo, e quem pede precisa ser dono das duas redes (pergunta 42).
 - **Primeiro canal livre:** é o primeiro, na ordem das cores, sem nenhum slot na rede (pergunta 25).
 - **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).

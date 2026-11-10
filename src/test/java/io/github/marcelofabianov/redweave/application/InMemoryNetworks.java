@@ -11,9 +11,18 @@ import java.util.Optional;
 
 /** Every port about the networks, kept in memory, as the saved world would keep them. */
 final class InMemoryNetworks
-    implements NetworkFinder, NetworkSaver, NodeNetworkFinder, OwnerNetworkFinder {
+    implements AllNetworksFinder,
+        NetworkFinder,
+        NetworkSaver,
+        NodeNetworkFinder,
+        OwnerNetworkFinder {
   private final Map<NetworkId, Network> networks = new LinkedHashMap<>();
   private int saves;
+
+  @Override
+  public List<Network> all() {
+    return List.copyOf(networks.values());
+  }
 
   @Override
   public Optional<Network> find(NetworkId id) {

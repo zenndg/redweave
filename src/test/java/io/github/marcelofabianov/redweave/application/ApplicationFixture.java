@@ -4,6 +4,7 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.C
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.STRANGER;
 
+import io.github.marcelofabianov.redweave.domain.network.NetworkFixture;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.network.TestLimits;
@@ -32,6 +33,14 @@ final class ApplicationFixture {
   /** One more network of OWNER, which becomes the current one. */
   NetworkId ownersOtherNetwork() {
     return networkOf(OWNER, UUID.randomUUID());
+  }
+
+  /** The network of OWNER with NODE placed in it, as an input on the first free channel (25). */
+  NetworkId ownersNetworkWithANode() {
+    NetworkId network = ownersNetwork();
+    new PlaceNode(new FixedIds(List.of(NODE_ID)), current, networks, networks)
+        .place(OWNER, NetworkFixture.NODE_POSITION);
+    return network;
   }
 
   NetworkId strangersNetwork() {

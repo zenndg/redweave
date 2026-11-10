@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 77 | Em quais fronteiras ficam os testes do Signal Node? | Nas três camadas. No domínio: `loseNode`, que tira o nó sem quem pede (pergunta 74). Na aplicação: ler uma entrada e salvar a última leitura, quebrar o nó pelo dono, perder o nó sem dono e avaliar só as redes pendentes. No mundo, com GameTests: alavanca, nó, rede, nó e lâmpada que acende e apaga, nó sem rede, outro player que não quebra, bloco de apoio que some e nó que não se lê de volta |
+| 76 | Com qual chave de NBT a BlockEntity do Signal Node salva o `NodeId`? | `node`, com o UUID, como no controlador (pergunta 67). O sinal emitido não vai para o save, porque o primeiro tick depois de carregar reaplica as saídas (pergunta 38). Fica fixada na #26 |
+| 75 | O que o clique com a mão vazia num Signal Node mostra, antes da Tela do Nó da #19? | Uma mensagem traduzida na action bar com o estado e a rede, como `Online · Network 3f2a`, `Out of range`, `Unloaded` ou `No network`. A Tela do Nó substitui a mensagem. Segue a pergunta 52 |
+| 74 | Quem pode quebrar um Signal Node? | No survival, só o dono da rede do nó, como o controlador; um nó sem rede, qualquer um. No criativo, qualquer player. Quando o bloco de apoio some ou uma explosão leva o nó, ele sai da rede por uma operação sem quem pede, como na pergunta 49. O nó cai como item simples. Detalha a pergunta 22 |
+| 73 | Como se chama a página da funcionalidade do Signal Node? | `no-de-sinal.md`, em português, pela regra 21 |
+| 72 | Quais propriedades de blockstate o Signal Node tem? | `facing`, nas 6 direções, a face do bloco onde o nó está grudado, como um botão, e `powered`, verdadeiro quando alguma saída do nó emite mais que 0, que acende a lente. O estado fora de alcance e os pontos dos slots chegam com a #19. São contrato de save e ficam fixados na #26 |
+| 71 | O que a face do bloco de um slot quer dizer no mundo? | Na entrada, a face escolhe de qual vizinho do bloco de apoio o nó lê, como um repetidor lê o bloco atrás dele; na face onde o nó está grudado, ele lê a força do próprio bloco de apoio, ignorando o próprio nó. Na saída, o nó alimenta com força o bloco de apoio, como uma alavanca grudada, qualquer que seja a face, porque um bloco do jogo só emite por outro lado com um mixin. Assim, todas as saídas de um nó emitem a mais forte. Muda a linha da face do slot em `rede-e-canais.md` e detalha a pergunta 39 (regra 38) |
+| 70 | Quem liga o nó recém-colocado à rede atual, a #15 ou a #18? | A #15: o Signal Node já nasce na rede atual, com 1 entrada no primeiro canal livre, pelo `PlaceNode` (pergunta 25), porque sem isso não há como testar ler e emitir. A #18 é fechada como entregue pela #15 |
 | 69 | Em que aba do inventário criativo fica o item do Network Controller? | Numa aba própria, `Redweave`, com o ícone do controlador, que recebe cada item novo da Fase 1 |
 | 68 | Como o nome do Network Controller aparece no `pt_br.json`? | `Controlador de Rede`, traduzido como o jogo faz com os próprios blocos, e as mensagens também em português |
 | 67 | Com quais chaves de NBT a BlockEntity do controlador salva a rede e o dono? | `network`, com o `NetworkId`, e `owner`, com o UUID do dono, que vai também ao cliente para a quebra não aparecer a quem não é dono. São contrato de save e ficam fixadas na issue #26 |
@@ -41,7 +49,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 42 | Para trocar um nó de rede com o Configurador, quem precisa ser o dono? | Das duas redes, a antiga e a nova, para ninguém tirar o nó da rede de outro player. Um nó sem rede entra em qualquer rede do próprio player. Detalha a pergunta 22 |
 | 41 | O que os casos de uso devolvem? | O mesmo `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK`. O `PlaceNode` devolve também o ID do nó criado |
 | 40 | Que cor recebe uma rede recém-criada? | A primeira cor, na ordem das lãs, que nenhuma outra rede do mesmo dono usa. Com as 16 em uso, o branco. O dono troca depois |
-| 39 | Um nó com dois slots de saída na mesma face, em canais diferentes: que sinal o bloco recebe? | O mais forte entre as saídas da face, como dois fios de redstone no mesmo bloco. A mudança que o simulador devolve é por face do nó |
+| 39 | Um nó com dois slots de saída na mesma face, em canais diferentes: que sinal o bloco recebe? | O mais forte entre as saídas da face, como dois fios de redstone no mesmo bloco. A mudança que o simulador devolve é por face do nó. No mundo, o nó emite a mais forte entre todas as faces (pergunta 71) |
 | 38 | Onde ficam a marca de pendente de avaliação e o último valor emitido por cada saída? | Na rede, e o `Simulator` é um serviço de domínio sem estado, que recebe a rede e devolve as mudanças. O último valor emitido não vai para o save: ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas |
 | 37 | Onde fica a última leitura de cada entrada, que mantém o canal de um nó `Unloaded`? | Salva com a rede, no mundo. Depois de reiniciar o servidor, um nó num chunk descarregado continua contribuindo com o valor que tinha, como a redstone congelada do jogo. Detalha a pergunta 13 |
 | 36 | Que forma tem o alcance do Network Controller? | Esfera: a distância em linha reta até o bloco do nó, comparada pelos quadrados, sem raiz nem arredondamento. Detalha a pergunta 23 |
@@ -69,6 +77,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:45 | Responde as perguntas 70 a 77. |
 | Marcelo Fabiano | 2026-11-10 09:29 | Responde as perguntas 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Responde as perguntas 64 a 66. |
 | Marcelo Fabiano | 2026-11-10 09:14 | Responde a pergunta 63. |

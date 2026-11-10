@@ -1,14 +1,21 @@
 package io.github.marcelofabianov.redweave.server;
 
 import io.github.marcelofabianov.redweave.application.BreakController;
+import io.github.marcelofabianov.redweave.application.BreakNode;
 import io.github.marcelofabianov.redweave.application.CreateNetwork;
+import io.github.marcelofabianov.redweave.application.EvaluateNetworks;
 import io.github.marcelofabianov.redweave.application.LoseController;
+import io.github.marcelofabianov.redweave.application.LoseNode;
 import io.github.marcelofabianov.redweave.application.OpenNetwork;
 import io.github.marcelofabianov.redweave.application.PlaceController;
+import io.github.marcelofabianov.redweave.application.PlaceNode;
+import io.github.marcelofabianov.redweave.application.ReadInput;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
+import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.simulation.Simulator;
 import java.util.Optional;
 
 /**
@@ -24,13 +31,24 @@ public final class RedweaveServer {
   private final BreakController breakController;
   private final LoseController loseController;
   private final OpenNetwork openNetwork;
+  private final PlaceNode placeNode;
+  private final ReadInput readInput;
+  private final BreakNode breakNode;
+  private final LoseNode loseNode;
+  private final EvaluateNetworks evaluateNetworks;
 
   private RedweaveServer(NetworkLimits limits) {
-    CreateNetwork create = new CreateNetwork(new RandomIds(), networks, networks, current, limits);
+    RandomIds ids = new RandomIds();
+    CreateNetwork create = new CreateNetwork(ids, networks, networks, current, limits);
     placeController = new PlaceController(create, networks, networks);
     breakController = new BreakController(networks, networks);
     loseController = new LoseController(networks, networks);
     openNetwork = new OpenNetwork(networks, current);
+    placeNode = new PlaceNode(ids, current, networks, networks);
+    readInput = new ReadInput(networks, networks);
+    breakNode = new BreakNode(networks, networks);
+    loseNode = new LoseNode(networks, networks);
+    evaluateNetworks = new EvaluateNetworks(networks, new Simulator());
   }
 
   /** The server that is running now, or none, as on a client that only shows the world. */
@@ -60,6 +78,30 @@ public final class RedweaveServer {
 
   public OpenNetwork openNetwork() {
     return openNetwork;
+  }
+
+  public PlaceNode placeNode() {
+    return placeNode;
+  }
+
+  public ReadInput readInput() {
+    return readInput;
+  }
+
+  public BreakNode breakNode() {
+    return breakNode;
+  }
+
+  public LoseNode loseNode() {
+    return loseNode;
+  }
+
+  public EvaluateNetworks evaluateNetworks() {
+    return evaluateNetworks;
+  }
+
+  public Optional<Network> networkOfNode(NodeId node) {
+    return networks.findByNode(node);
   }
 
   public Optional<Network> network(NetworkId id) {

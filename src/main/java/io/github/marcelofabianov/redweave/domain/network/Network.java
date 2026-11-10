@@ -125,6 +125,14 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
+    return loseNode(nodeId);
+  }
+
+  /**
+   * The node left the world without its owner taking it, as when its block is gone or an explosion
+   * takes it. There is nobody to ask, so it leaves anyway (answer 74).
+   */
+  public Outcome loseNode(NodeId nodeId) {
     if (nodes.remove(nodeId) == null) {
       return Outcome.UNKNOWN_NODE;
     }
@@ -299,6 +307,22 @@ public final class Network {
         .filter(slot -> slot.direction() == Direction.OUTPUT)
         .map(slot -> channelValue(slot.channel()))
         .orElse(Signal.OFF);
+  }
+
+  /**
+   * What a node emits in the world: it feeds its block like a lever, so its strongest output wins,
+   * whatever the face of each slot (answer 71).
+   */
+  public Signal emission(NodeId nodeId) {
+    Node node = nodes.get(nodeId);
+    if (node == null) {
+      return Signal.OFF;
+    }
+    Signal strongest = Signal.OFF;
+    for (int index = 0; index < node.slots().size(); index++) {
+      strongest = strongest.strongest(output(nodeId, index));
+    }
+    return strongest;
   }
 
   /**

@@ -24,6 +24,7 @@ final class RedweaveBlockLoot extends BlockLootSubProvider {
             .apply(
                 CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
                     .include(RedweaveDataComponents.NETWORK.get())));
+    dropSelf(RedweaveBlocks.SIGNAL_NODE.get());
   }
 
   @Override

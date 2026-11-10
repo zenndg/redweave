@@ -15,13 +15,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -66,7 +64,7 @@ public final class NetworkControllerGameTests {
   @GameTest(template = EMPTY)
   public static void aFakePlayerDoesNotPlaceTheController(GameTestHelper helper) {
     Player fake = FakePlayerFactory.getMinecraft(helper.getLevel());
-    holdAndPlace(helper, fake, controllerItem(), FLOOR);
+    GameTestActions.placeOn(helper, fake, controllerItem(), FLOOR, Direction.UP);
 
     helper.assertBlockNotPresent(RedweaveBlocks.NETWORK_CONTROLLER.get(), CONTROLLER);
     helper.succeed();
@@ -91,7 +89,7 @@ public final class NetworkControllerGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NetworkId network = place(helper, owner, controllerItem(), FLOOR);
 
-    helper.assertTrue(breakBy(helper, owner, CONTROLLER), STRANGER_BREAKS);
+    helper.assertTrue(GameTestActions.breakBy(helper, owner, CONTROLLER), STRANGER_BREAKS);
 
     helper.assertBlockNotPresent(RedweaveBlocks.NETWORK_CONTROLLER.get(), CONTROLLER);
     helper.assertFalse(networkOf(network).isOnline(), STILL_ONLINE);
@@ -103,7 +101,7 @@ public final class NetworkControllerGameTests {
   public static void theItemWithTheNetworkBringsItBackOnline(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NetworkId network = place(helper, owner, controllerItem(), FLOOR);
-    breakBy(helper, owner, CONTROLLER);
+    GameTestActions.breakBy(helper, owner, CONTROLLER);
     ItemStack stored = controllerItem();
     stored.set(RedweaveDataComponents.NETWORK.get(), network);
 
@@ -125,7 +123,7 @@ public final class NetworkControllerGameTests {
 
     helper.assertTrue(
         state.getDestroyProgress(stranger, helper.getLevel(), absolute) == 0, STRANGER_BREAKS);
-    helper.assertFalse(breakBy(helper, stranger, CONTROLLER), STRANGER_BREAKS);
+    helper.assertFalse(GameTestActions.breakBy(helper, stranger, CONTROLLER), STRANGER_BREAKS);
     helper.assertBlockPresent(RedweaveBlocks.NETWORK_CONTROLLER.get(), CONTROLLER);
     helper.assertTrue(networkOf(network).isOnline(), NOT_ONLINE);
     helper.succeed();
@@ -171,29 +169,9 @@ public final class NetworkControllerGameTests {
   /** Places the item on top of the floor block and returns the network the block keeps. */
   private static NetworkId place(
       GameTestHelper helper, Player player, ItemStack stack, BlockPos floor) {
-    holdAndPlace(helper, player, stack, floor);
+    GameTestActions.placeOn(helper, player, stack, floor, Direction.UP);
     NetworkControllerBlockEntity controller = helper.getBlockEntity(floor.above());
     return controller.network().orElseThrow();
-  }
-
-  /** The game places what is in the hand of the player, as when a player right-clicks. */
-  private static void holdAndPlace(
-      GameTestHelper helper, Player player, ItemStack stack, BlockPos floor) {
-    player.setItemInHand(InteractionHand.MAIN_HAND, stack);
-    helper.placeAt(player, stack, floor, Direction.UP);
-  }
-
-  /** What the game does when a player finishes breaking the block, without a real connection. */
-  private static boolean breakBy(GameTestHelper helper, Player player, BlockPos relative) {
-    Level level = helper.getLevel();
-    BlockPos pos = helper.absolutePos(relative);
-    BlockState state = level.getBlockState(pos);
-    NetworkControllerBlockEntity controller = helper.getBlockEntity(relative);
-    boolean removed = state.onDestroyedByPlayer(level, pos, player, true, level.getFluidState(pos));
-    if (removed) {
-      Block.dropResources(state, level, pos, controller, player, ItemStack.EMPTY);
-    }
-    return removed;
   }
 
   private static Optional<NetworkId> droppedNetwork(GameTestHelper helper) {

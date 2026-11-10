@@ -59,7 +59,7 @@ O mais forte vence porque é a regra da própria redstone: um fio ligado a duas 
 
 ### Saídas
 
-Um slot de saída emite o valor do canal no bloco, na face configurada. Na Fase 1, a lógica do slot é sempre `None`, então a saída repete o canal como ele está. As outras lógicas chegam na Fase 2. Um nó `Out of range` ou numa rede `Offline` emite 0.
+Um slot de saída emite o valor do canal no bloco onde o nó está grudado, alimentando-o com força como uma alavanca, então todas as saídas de um nó emitem a mais forte (pergunta 71). Na Fase 1, a lógica do slot é sempre `None`, então a saída repete o canal como ele está. As outras lógicas chegam na Fase 2. Um nó `Out of range` ou numa rede `Offline` emite 0.
 
 ## Nós
 
@@ -76,7 +76,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Parte | Valores |
 |---|---|
 | Direção | `Input`, quando o nó lê o bloco, ou `Output`, quando emite no bloco |
-| Face do bloco | Uma das 6 faces do bloco onde o nó está |
+| Face do bloco | Uma das 6 faces do bloco onde o nó está. Na entrada, escolhe de qual vizinho o nó lê; na saída, o nó sempre alimenta o bloco onde está grudado, como uma alavanca (pergunta 71) |
 | Canal | Um dos 16 canais da rede |
 | Lógica | Na Fase 1, só `None` |
 
@@ -134,7 +134,7 @@ O simulador (`Simulator`) avalia cada rede no máximo uma vez por tick, e só qu
 1. Ao longo do tick, uma leitura que muda o valor de uma entrada deixa a rede pendente. Ligar ou desligar um nó, configurar ou liberar um slot e colocar ou retirar o controlador também deixam. Renomear e trocar a cor, não, porque não mudam sinal nenhum.
 2. No fim do tick, o simulador avalia só as redes pendentes: calcula os 16 canais numa passada e depois as saídas, e a rede deixa de estar pendente (pergunta 38).
 3. Só as faces cujo valor mudou atualizam o bloco. Uma saída só avisa os blocos vizinhos quando o valor emitido muda, para não haver block updates em cascata. A saída de um nó desligado, ou de um slot liberado, volta a 0.
-4. Duas saídas do mesmo nó na mesma face emitem a mais forte (pergunta 39).
+4. Duas saídas do mesmo nó na mesma face emitem a mais forte (pergunta 39). No mundo, o nó emite a mais forte entre todas as faces dele (pergunta 71).
 5. Ao carregar o mundo, a rede começa pendente, e o primeiro tick reaplica todas as saídas.
 
 Uma saída que alimenta uma entrada da mesma rede pelo mundo leva ao menos um tick para voltar ao canal, então nunca trava o tick. A detecção de loops e oscilação nos circuitos chega nas Fases 2 e 3.
@@ -184,6 +184,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:45 | Aplica a pergunta 71 à face do slot e às saídas. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Aplica as perguntas 40 e 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Detalha a avaliação com as perguntas 38 e 39. |
 | Marcelo Fabiano | 2026-11-09 16:39 | Aplica as perguntas 36 e 37. |
