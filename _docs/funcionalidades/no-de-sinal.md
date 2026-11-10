@@ -61,7 +61,7 @@ Um clique com a mão vazia abre a [Tela do Nó](telas.md#tela-do-nó), da issue 
 | Nome | `Signal Node`, e `Nó de Sinal` em português |
 | Aba do criativo | `Redweave` (pergunta 69) |
 
-O item não guarda configuração. Copiar e colar a configuração de um nó é o Configurador, na issue #17.
+O item não guarda configuração. Copiar e colar a configuração de um nó é o [Configurator](configurador.md).
 
 ## Visual
 
@@ -79,13 +79,13 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 ## Fora desta funcionalidade
 
 - A Tela do Nó e a configuração dos slots (issue #19).
-- O Configurador (issue #17).
 - As camadas emissivas e a receita (issue #24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 15:23 | Descreve a intensidade na lente com as perguntas 98 a 100. |
 | Marcelo Fabiano | 2026-11-10 13:10 | Tira a #16 do que fica fora desta funcionalidade. |
 | Marcelo Fabiano | 2026-11-10 11:26 | Aplica a Tela do Nó e as perguntas 86 e 87. |
