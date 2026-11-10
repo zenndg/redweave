@@ -47,6 +47,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Channels` | Dentro da rede: os 16 canais, o nome de cada um e o primeiro canal livre. Saiu do `Network` como `Readings` | #16 |
 | `NetworkSnapshot` | Tudo da rede que vai para o save: nome, cor, dono, controlador, os canais com nome, os nós e as leituras. `snapshot()` o tira da rede, e `Network.restore` refaz a rede a partir dele (pergunta 90) | #16 |
 | `SlotReading` | A última leitura de um slot de entrada, como vai para o save | #16 |
+| `NodeCopy` | Os slots em uso de um nó, copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
+| `CopiedSlot` | Um slot da cópia: a posição no nó e a configuração | #17 |
+| `Pasted` | Os slots de um nó depois de colar e quantos slots da cópia ficaram de fora (pergunta 106) | #17 |
 
 ## Regras e porquês
 
@@ -84,5 +87,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Limites valem para as próximas mudanças:** a rede restaurada mantém os slots de cada nó e o tamanho dos nomes, mesmo que o config agora permita menos, para uma troca de config não apagar o trabalho do player (pergunta 93).
 - **Restaurada, a rede espera o primeiro tick:** o snapshot não leva o que a rede emitiu, então a rede restaurada começa pendente e reaplica todas as saídas (pergunta 38).
 - **Leitura 0 não vai para o save:** é o mesmo que uma entrada nunca lida, então o snapshot só leva as leituras ligadas, e a ida e volta pelo save sai igual (pergunta 89).
+- **A face grudada acompanha o nó:** ao colar, um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para continuar lendo o próprio bloco (perguntas 71 e 105). As outras faces ficam como estão.
+- **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Um slot que passa do tamanho do nó de destino fica de fora (pergunta 106).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

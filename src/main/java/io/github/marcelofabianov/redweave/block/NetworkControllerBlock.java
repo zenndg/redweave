@@ -7,8 +7,11 @@ import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -99,6 +102,25 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
           .ifPresent(id -> server.ifPresent(running -> running.loseController().lose(id)));
     }
     super.onRemove(state, level, pos, newState, movedByPiston);
+  }
+
+  /**
+   * Only an empty hand uses this block itself. With an item, as the Configurator, the click goes
+   * straight to the item (answer 113).
+   */
+  @Override
+  protected ItemInteractionResult useItemOn(
+      ItemStack stack,
+      BlockState state,
+      Level level,
+      BlockPos pos,
+      Player player,
+      InteractionHand hand,
+      BlockHitResult hit) {
+    if (!stack.isEmpty()) {
+      return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+    }
+    return super.useItemOn(stack, state, level, pos, player, hand, hit);
   }
 
   @Override

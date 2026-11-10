@@ -140,7 +140,7 @@ O player tem uma **rede atual**: a última que ele criou ou abriu no Network Con
 2. ganha 1 slot `Input` na face em que foi grudado;
 3. usa o **primeiro canal livre**, ou seja, o primeiro canal, na ordem das cores, sem nenhum slot na rede.
 
-Sem rede atual, o nó fica `No network`. Com os 16 canais em uso, o nó entra na rede sem slot, e a Tela do Nó mostra `Free slot`. O Configurador troca a rede depois.
+Sem rede atual, o nó fica `No network`. Com os 16 canais em uso, o nó entra na rede sem slot, e a Tela do Nó mostra `Free slot`. O [Configurator](configurador.md) troca a rede depois.
 
 ## Signal Remote
 
@@ -222,6 +222,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 13:10 | Descreve a gravação da rede com as perguntas 88 a 93, 95 e 97. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Aplica a pergunta 71 à face do slot e às saídas. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Aplica as perguntas 40 e 42. |

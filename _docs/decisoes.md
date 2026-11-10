@@ -104,6 +104,17 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Luz do nó | Só a lente brilha; o nó não é fonte de luz | 100 |
 | Issue da lente | #24 | 101 |
 | Passo 20 do roteiro | Detalhado, com os passos 22 e 23 do arquivo corrompido | 102 |
+| Escopo do Configurator | Item e ações na #17; visor ao vivo e rótulo sobre os nós em issue própria | 103 |
+| Configurator no controlador | Só o dono guarda a rede; a rede atual não muda | 104 |
+| Copiar um nó | Slots em `redweave:node_slots`, com a face grudada relativa | 105 |
+| Colar | Cola várias vezes até o Shift + clique no ar; o nó fica na rede dele | 106 |
+| Página do Configurator | `configurador.md` | 107 |
+| Mensagens do Configurator | Uma por resultado, na action bar, e tooltip com a rede e a cópia | 108 |
+| Testes do Configurator | Domínio, aplicação e GameTests | 109 |
+| Label | Item que guarda uma configuração de nó, renomeável e copiável | 110 |
+| Quando entra o Label | Issue própria logo depois da #17 | 111 |
+| Nome da rede no tooltip | Gravado em `redweave:network_name` ao guardar a rede | 112 |
+| Clique com item no nó e no controlador | Vai para o item; só a mão vazia abre a tela ou mostra a mensagem | 113 |
 
 Não há perguntas pendentes da concepção.
 
@@ -111,6 +122,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:06 | Registra a decisão 113. |
+| Marcelo Fabiano | 2026-11-10 15:49 | Registra a decisão 112. |
+| Marcelo Fabiano | 2026-11-10 15:48 | Registra as decisões 110 e 111. |
+| Marcelo Fabiano | 2026-11-10 15:46 | Registra as decisões 107 a 109. |
+| Marcelo Fabiano | 2026-11-10 15:45 | Registra as decisões 103 a 106. |
 | Marcelo Fabiano | 2026-11-10 15:23 | Registra as decisões 98 a 102. |
 | Marcelo Fabiano | 2026-11-10 14:07 | Registra as decisões 96 e 97. |
 | Marcelo Fabiano | 2026-11-10 13:43 | Registra a decisão 95. |

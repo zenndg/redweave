@@ -13,7 +13,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -130,7 +132,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
   }
 
   /** The domain keeps the block the node sticks to and the face it sticks on. */
-  private static NodePosition positionOf(Level level, BlockPos pos, BlockState state) {
+  public static NodePosition positionOf(Level level, BlockPos pos, BlockState state) {
     Direction stuckTo = state.getValue(FACING);
     return new NodePosition(
         BlockLocations.of(level, pos.relative(stuckTo.getOpposite())), Faces.of(stuckTo));
@@ -222,6 +224,25 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
           .ifPresent(server -> node.ifPresent(id -> server.loseNode().lose(id)));
     }
     super.onRemove(state, level, pos, newState, movedByPiston);
+  }
+
+  /**
+   * Only an empty hand uses this block itself. With an item, as the Configurator, the click goes
+   * straight to the item (answer 113).
+   */
+  @Override
+  protected ItemInteractionResult useItemOn(
+      ItemStack stack,
+      BlockState state,
+      Level level,
+      BlockPos pos,
+      Player player,
+      InteractionHand hand,
+      BlockHitResult hit) {
+    if (!stack.isEmpty()) {
+      return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+    }
+    return super.useItemOn(stack, state, level, pos, player, hand, hit);
   }
 
   /** A click with an empty hand opens the Node Screen (telas.md and answer 75). */
