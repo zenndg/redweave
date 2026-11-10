@@ -18,7 +18,7 @@ Só um player real coloca o controlador. Sem um player real, como pelo FakePlaye
 | Uma rede de outro player | O bloco não é colocado, o item fica na mão, e a action bar mostra `Only the owner can place this network.` | 55 |
 | O ID de uma rede que não existe | Nasce uma rede nova, como com o item sem ID | 57 |
 
-O bloco guarda o `NetworkId` da rede na BlockEntity dele.
+O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves de NBT `network` e `owner`. O dono vai também ao cliente, para a quebra não aparecer a quem não é dono. As chaves são contrato de save e ficam fixadas na issue #26 (pergunta 67).
 
 ## Clicar
 
@@ -49,8 +49,9 @@ Quando o controlador some sem o dono quebrá-lo, a rede fica `Offline` por uma o
 | Parte | O que é |
 |---|---|
 | ID | `redweave:network_controller`, o mesmo do bloco |
-| Data component | O `NetworkId` da rede, só quando o item veio de um controlador quebrado (regra 7 do `AGENTS.md`). O ID do componente é contrato de save e fica fixado na issue #26 (regra 15) |
-| Tooltip | O nome da rede guardada, quando houver |
+| Nome | `Network Controller`, e `Controlador de Rede` em português (pergunta 68) |
+| Aba do criativo | `Redweave`, a aba do mod, com o ícone do controlador (pergunta 69) |
+| Data component | `redweave:network`, com o `NetworkId` da rede, só quando o item veio de um controlador quebrado (regra 7 do `AGENTS.md` e pergunta 65). O ID do componente é contrato de save e fica fixado na issue #26 (regra 15) |
 
 ## Onde ficam as redes até a #16
 
@@ -67,6 +68,8 @@ As quatro chaves que o `NetworkLimits` lê entram com este bloco, no config do s
 | `channel.name_length` | 16 | Tamanho máximo do nome do canal |
 | `node.slots` | 4 | Slots por nó |
 
+As faixas são as da pergunta 66: o alcance vai de 0 a 30.000.000, os nomes de 1 a 64 caracteres e os slots de 1 a 9. Um valor fora da faixa volta ao padrão, com um aviso no log.
+
 ## Visual
 
 As texturas são as da prancha [`texturas.png`](../imagens/conceito/texturas.png), extraídas para `assets/redweave/textures/block/` (pergunta 51). Nesta issue, o bloco usa as texturas de corpo e mostra o estado do núcleo. As camadas emissivas e os LEDs por canal chegam com a issue #24.
@@ -75,6 +78,8 @@ As texturas são as da prancha [`texturas.png`](../imagens/conceito/texturas.png
 |---|---|
 | Topo | `network_controller_top`, sem rede; `network_controller_top_on`, com rede |
 | Frente | `network_controller_front`, voltada para o player que colocou o bloco |
+
+O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro quando o bloco tem rede, que escolhe o topo (pergunta 64). Os dois são contrato de save e ficam fixados na issue #26.
 | Laterais e fundo | `network_controller_side` e `network_controller_bottom` |
 
 | Estado | Visual | Pergunta |
@@ -93,4 +98,6 @@ As texturas são as da prancha [`texturas.png`](../imagens/conceito/texturas.png
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:31 | Aplica as perguntas 67 a 69. |
+| Marcelo Fabiano | 2026-11-10 09:20 | Aplica as perguntas 64 a 66 e tira o tooltip, que não foi decidido. |
 | Marcelo Fabiano | 2026-11-10 08:55 | Cria o documento, com as respostas das perguntas 49 a 58, 51 e 60. |
