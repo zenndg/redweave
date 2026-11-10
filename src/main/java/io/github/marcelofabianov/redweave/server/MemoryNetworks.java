@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.server;
 
+import io.github.marcelofabianov.redweave.application.AllNetworksFinder;
 import io.github.marcelofabianov.redweave.application.NetworkFinder;
 import io.github.marcelofabianov.redweave.application.NetworkSaver;
 import io.github.marcelofabianov.redweave.application.NodeNetworkFinder;
@@ -18,8 +19,17 @@ import java.util.Optional;
  * are gone after a restart (answers 48 and 53).
  */
 final class MemoryNetworks
-    implements NetworkFinder, NetworkSaver, NodeNetworkFinder, OwnerNetworkFinder {
+    implements AllNetworksFinder,
+        NetworkFinder,
+        NetworkSaver,
+        NodeNetworkFinder,
+        OwnerNetworkFinder {
   private final Map<NetworkId, Network> networks = new LinkedHashMap<>();
+
+  @Override
+  public List<Network> all() {
+    return List.copyOf(networks.values());
+  }
 
   @Override
   public Optional<Network> find(NetworkId id) {

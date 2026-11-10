@@ -1,10 +1,14 @@
 {
   "block.redweave.network_controller": "Network Controller",
+  "block.redweave.signal_node": "Signal Node",
   "fml.menu.mods.info.description.redweave": "Weave your redstone. Wireless signal networks, programmable channels and logic chips, with screens that are easy to learn and beautiful to use.",
   "itemGroup.redweave": "Redweave",
   "message.redweave.network_controller.already_placed": "This network already has a controller.",
   "message.redweave.network_controller.current": "Current network: %s",
   "message.redweave.network_controller.foreign": "%s · owner: %s",
   "message.redweave.network_controller.no_network": "No network",
-  "message.redweave.network_controller.not_owner": "Only the owner can place this network."
+  "message.redweave.network_controller.not_owner": "Only the owner can place this network.",
+  "message.redweave.signal_node.no_network": "No network",
+  "message.redweave.signal_node.online": "Online · %s",
+  "message.redweave.signal_node.out_of_range": "Out of range · %s"
 }
