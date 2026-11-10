@@ -102,7 +102,9 @@ class ChannelValueTest {
   void aNodeBackInRangeCountsAgainWithItsLastReading() {
     Network network = networkReadingDoorOn(NODE);
     network.readInput(NODE, SLOT, STRONG);
+    network.removeController(OWNER);
     network.placeController(OWNER, FAR_CONTROLLER);
+    network.removeController(OWNER);
     network.placeController(OWNER, CONTROLLER);
 
     assertEquals(STRONG, network.channelValue(DOOR));

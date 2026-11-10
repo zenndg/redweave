@@ -20,12 +20,21 @@ Este diretório concentra as perguntas do projeto, com um arquivo por fase. A pe
 - **Ponteiros:** quando uma resposta muda outra, a nova cita a antiga, e a antiga ganha um ponteiro para a nova.
 - **Pendentes:** têm uma recomendação, que só vale depois da resposta do desenvolvedor.
 - **Fonte da verdade:** as respostas prevalecem sobre os outros documentos.
-- **Próximo número livre:** 48.
+- **Próximo número livre:** 70.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:29 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 09:20 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 09:14 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 09:06 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 08:59 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 08:54 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 08:52 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 08:47 | Atualiza o próximo número livre. |
+| Marcelo Fabiano | 2026-11-10 08:30 | Atualiza o próximo número livre. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Atualiza o próximo número livre. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Atualiza o próximo número livre. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Atualiza o próximo número livre. |

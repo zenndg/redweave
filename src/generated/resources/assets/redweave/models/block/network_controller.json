@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "redweave:block/network_controller_bottom",
+    "front": "redweave:block/network_controller_front",
+    "side": "redweave:block/network_controller_side",
+    "top": "redweave:block/network_controller_top"
+  }
+}

@@ -11,6 +11,28 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 69 | Em que aba do inventário criativo fica o item do Network Controller? | Numa aba própria, `Redweave`, com o ícone do controlador, que recebe cada item novo da Fase 1 |
+| 68 | Como o nome do Network Controller aparece no `pt_br.json`? | `Controlador de Rede`, traduzido como o jogo faz com os próprios blocos, e as mensagens também em português |
+| 67 | Com quais chaves de NBT a BlockEntity do controlador salva a rede e o dono? | `network`, com o `NetworkId`, e `owner`, com o UUID do dono, que vai também ao cliente para a quebra não aparecer a quem não é dono. São contrato de save e ficam fixadas na issue #26 |
+| 66 | Quais limites mínimo e máximo valem para as chaves de config? | `network.range` de 0 a 30.000.000, a borda do mundo; `network.name_length` e `channel.name_length` de 1 a 64; `node.slots` de 1 a 9, o máximo com upgrade. Um valor fora do intervalo volta ao padrão, e o mod registra no log. Detalha a pergunta 50 |
+| 65 | Qual é o ID do data component que guarda a rede no item do Network Controller? | `redweave:network`, com o `NetworkId`. O mesmo componente serve à rede guardada no Configurador (#17), porque é o mesmo conceito |
+| 64 | Quais propriedades de blockstate o Network Controller tem? | `facing`, nas 4 direções horizontais, com a frente voltada para quem colocou, e `linked`, verdadeiro quando o bloco tem rede, que escolhe o topo `top_on` ou `top`. O estado `Sem nós` vem com a camada emissiva da #24, sem propriedade nova |
+| 63 | Onde fica o objeto por servidor que guarda as redes até a #16? | Num pacote novo, `server/`, com o `RedweaveServer`, a raiz de composição por servidor, as redes em memória e o gerador de IDs. A #16 troca só as redes em memória pelo `SavedData`. A estrutura de pacotes do `AGENTS.md` ganha a linha do pacote. Detalha a pergunta 53 |
+| 62 | Em quais fronteiras ficam os testes do Network Controller? | Nas três camadas. No domínio, com JUnit: `placeController` recusa com `ALREADY_PLACED` quando já há controlador (pergunta 56), e `loseController` deixa a rede `Offline` sem quem pede (pergunta 49). Na aplicação, com JUnit: os casos de uso de colocar, quebrar e perder o controlador. No mundo, com GameTests: colocar, quebrar como dono e soltar o item com o ID, outro player não quebra, explosão não destrói e recolocar volta `Online` |
+| 61 | De onde vêm os quatro pontos de slot nos cantos do Signal Node? | Da textura branca `signal_node_slot`, tingida com a cor do canal em quatro elementos do modelo, nos cantos. O modelo fica com a #15 |
+| 60 | Qual textura mostra o Network Controller no estado `Sem nós`, com o núcleo aceso fraco? | A `network_controller_top_on` sem a camada emissiva `network_controller_top_glow`, então o núcleo fica fraco no escuro, sem textura nova |
+| 59 | A textura `signal_node_front_out_of_range` tem lente âmbar e anel de cobre, e o `visual.md` pede lente apagada e anel tracejado vermelho. Qual vale? | O `visual.md`. O desenvolvedor redesenhou a textura, com a lente apagada e o anel tracejado vermelho, em `_docs/imagens/conceito/texturas-out-of-range-e-button-on.png`, junto com o `signal_remote_button_on`, o Remote em modo botão com a antena e o LED acesos durante o pulso |
+| 51 | Qual é o visual do Network Controller até a #24 trazer a textura final? | As texturas do desenvolvedor, enviadas numa prancha 16×16 ampliada 8×, em `_docs/imagens/conceito/texturas.png`, e extraídas para `assets/redweave/textures/block/` e `item/`. Valem para todos os blocos e itens da Fase 1 |
+| 58 | Quem é o dono de um Network Controller colocado sem um player real, como pelo FakePlayer de outro mod? | Ninguém: o bloco não é colocado. Só um player real cria ou recoloca uma rede, porque o dono a altera depois pela tela |
+| 57 | O que acontece ao colocar um controlador cujo item guarda o ID de uma rede que não existe? | Nasce uma rede nova, como com um controlador sem ID, e ela vira a rede atual do player. Acontece, por exemplo, depois de reiniciar o servidor antes da #16 |
+| 56 | O que acontece ao colocar um controlador cujo item guarda uma rede que já tem um controlador colocado, como um item duplicado no criativo? | O bloco não é colocado, o item fica na mão, e a action bar mostra `This network already has a controller.` O primeiro controlador continua sendo o da rede |
+| 55 | O que acontece quando um player coloca um controlador cujo item guarda a rede de outro player? | O bloco não é colocado, o item fica na mão, e a action bar mostra `Only the owner can place this network.` Detalha a pergunta 30 |
+| 54 | Como se chama a página da funcionalidade do Network Controller? | `controlador-de-rede.md`, em português, como pede a regra 21. O texto usa o nome do bloco, Network Controller |
+| 53 | Até a persistência da #16, onde ficam as redes no servidor? | Num objeto por servidor, criado ao abrir o mundo e descartado ao fechar, com as redes e a rede atual de cada player. A #16 o troca pelo `SavedData`. Até lá, um controlador que sobra no mundo depois de reiniciar fica sem rede e mostra `No network` no clique. Detalha a pergunta 48 |
+| 52 | O que o player vê ao clicar no Network Controller com a mão vazia, antes da tela da #20? | Uma mensagem traduzida na action bar. Para o dono, a rede passa a ser a atual, e a mensagem mostra o nome dela, como `Current network: Network 3f2a`. Para os outros, a mensagem mostra o nome da rede e o dono, sem trocar a rede atual. A Tela do Controlador substitui a mensagem |
+| 50 | Quais chaves de config entram com o Network Controller? | As quatro que o `NetworkLimits` lê, no config do servidor (`redweave-server.toml`), que vale por mundo e é enviado aos clientes: `network.range` (128), `network.name_length` (32), `channel.name_length` (16) e `node.slots` (4). Os 9 slots com upgrade entram com o upgrade. Detalha a regra 3 |
+| 49 | O que acontece com a rede quando o Network Controller some do mundo sem o dono quebrá-lo, como no criativo, por comando ou por outro mod? | O domínio ganha uma operação sem quem pede, para o controlador que sumiu: a rede fica `Offline`. Sem item, ela continua salva `Offline`, como uma rede cujo item se perdeu. A retirada pelo dono continua conferindo o dono. Detalha as perguntas 24 e 30 |
+| 48 | Em que ordem seguem as issues da Fase 1, para chegar ao primeiro teste manual? | Antecipando a #18 e a #19: #14 Network Controller, #15 Signal Node, #18 nó num canal livre e #19 Tela do Nó, e então o primeiro teste manual de alavanca, rede e lâmpada. Depois, #16 persistência, #17 Configurador e o restante. Até a #16, a rede some ao reiniciar o servidor |
 | 47 | Quais versões das actions a CI fixa? | As últimas estáveis em 2026-11-10: `actions/checkout` v7.0.1, `actions/setup-java` v6.2.0 e `actions/upload-artifact` v7.0.2, cada uma pelo SHA do commit (pergunta 44) |
 | 46 | Como a CI faz o cache do Gradle e do Minecraft preparado? | Pelo `cache: gradle` do `actions/setup-java`, sem o `gradle/actions`: é uma dependência a menos, com licença MIT, e evita o cache proprietário que a v6 do `gradle/actions` usa por padrão. O cache guarda `~/.gradle/caches`, onde fica o `neoformruntime`, e o wrapper |
 | 45 | Que conferências a CI faz além dos gates do `pre-push`? | Só o gitleaks em todo o histórico, com a mesma versão e o mesmo checksum do `setup-dev.sh`, para pegar um segredo que entrou sem passar pelos hooks. As mensagens e o nome da branch do PR não são conferidos na CI |
@@ -47,6 +69,16 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:29 | Responde as perguntas 67 a 69. |
+| Marcelo Fabiano | 2026-11-10 09:20 | Responde as perguntas 64 a 66. |
+| Marcelo Fabiano | 2026-11-10 09:14 | Responde a pergunta 63. |
+| Marcelo Fabiano | 2026-11-10 09:06 | Responde a pergunta 62. |
+| Marcelo Fabiano | 2026-11-10 09:05 | Atualiza a resposta 59 com a textura refeita. |
+| Marcelo Fabiano | 2026-11-10 08:59 | Responde as perguntas 51 e 59 a 61. |
+| Marcelo Fabiano | 2026-11-10 08:54 | Responde as perguntas 55 a 58. |
+| Marcelo Fabiano | 2026-11-10 08:52 | Responde as perguntas 53 e 54. |
+| Marcelo Fabiano | 2026-11-10 08:47 | Responde as perguntas 49, 50 e 52 e registra a 51 como pendente. |
+| Marcelo Fabiano | 2026-11-10 08:30 | Responde a pergunta 48. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Responde as perguntas 43 a 47. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Responde as perguntas 40 a 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Responde as perguntas 38 e 39. |

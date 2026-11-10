@@ -166,6 +166,9 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
+    if (controller.isPresent()) {
+      return Outcome.ALREADY_PLACED;
+    }
     controller = Optional.of(location);
     emissions.markPending();
     return Outcome.ACCEPTED;
@@ -176,9 +179,17 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
+    loseController();
+    return Outcome.ACCEPTED;
+  }
+
+  /**
+   * The controller left the world without its owner breaking it, as in creative, by a command or by
+   * another mod. There is nobody to ask, so the network just goes offline (answer 49).
+   */
+  public void loseController() {
     controller = Optional.empty();
     emissions.markPending();
-    return Outcome.ACCEPTED;
   }
 
   /** Only the owner changes the network, with no exception for operators (answers 22 and 28). */

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,linked=false": {
+      "model": "redweave:block/network_controller",
+      "y": 90
+    },
+    "facing=east,linked=true": {
+      "model": "redweave:block/network_controller_linked",
+      "y": 90
+    },
+    "facing=north,linked=false": {
+      "model": "redweave:block/network_controller"
+    },
+    "facing=north,linked=true": {
+      "model": "redweave:block/network_controller_linked"
+    },
+    "facing=south,linked=false": {
+      "model": "redweave:block/network_controller",
+      "y": 180
+    },
+    "facing=south,linked=true": {
+      "model": "redweave:block/network_controller_linked",
+      "y": 180
+    },
+    "facing=west,linked=false": {
+      "model": "redweave:block/network_controller",
+      "y": 270
+    },
+    "facing=west,linked=true": {
+      "model": "redweave:block/network_controller_linked",
+      "y": 270
+    }
+  }
+}
