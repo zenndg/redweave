@@ -62,12 +62,29 @@ Entregue com a issue #17 (perguntas 103 a 112). Comece com o circuito dos passos
 | 32 | Troque o idioma para Português (Brasil) | `Configurador` e todas as mensagens em português |
 | 33 | Clique num nó e no controlador segurando um graveto | Nada acontece: a Tela do Nó não abre, e a rede atual não muda (pergunta 113) |
 
+## Fase 1: o Label
+
+Entregue com a issue #81 (perguntas 110, 111 e 114 a 123). Comece com o circuito dos passos 1 a 8 montado.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 34 | Pegue 3 Labels na aba `Redweave` e passe o mouse sobre eles | A etiqueta vazia, `Empty` e a dica de como gravar |
+| 35 | Com o Configurator na mão principal e os Labels na outra, Shift + clique no nó da lâmpada | `Copied 1 slots to a Label`; sobram 2 vazios na outra mão, e um Label gravado, com a faixa de redstone, vai para o inventário |
+| 36 | Passe o mouse sobre o Label gravado | `Red · Output · ...`, na cor do canal, e `Click a node to apply.` |
+| 37 | Renomeie o Label na bigorna como "Porta" | O título do item vira "Porta" |
+| 38 | Com o Label na mão, clique num nó novo grudado numa lâmpada | `Pasted 1 slots`; a lâmpada acompanha a alavanca, e o Label continua na mão |
+| 39 | Na grade de crafting, ponha o Label gravado e 2 vazios | Saem 2 Labels gravados iguais, e o original volta para a grade |
+| 40 | Ponha um Label gravado sozinho na grade | Sai um Label vazio |
+| 41 | Com o segundo player, clique com um Label gravado num nó do dono | `Only the owner of ... can change this node.`, sem mudar nada |
+| 42 | Troque o idioma para Português (Brasil) | `Etiqueta` e as mensagens em português |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:38 | Adiciona os passos do Label, da #81. |
 | Marcelo Fabiano | 2026-11-10 16:08 | Adiciona o passo do clique com item, da pergunta 113. |
 | Marcelo Fabiano | 2026-11-10 15:58 | Adiciona os passos do Configurator, da #17. |
 | Marcelo Fabiano | 2026-11-10 15:23 | Detalha o passo 20 e adiciona os passos 22 e 23, pela pergunta 102. |

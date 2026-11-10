@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
+import io.github.marcelofabianov.redweave.registry.RedweaveRecipes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -24,6 +25,7 @@ public final class RedweaveMod {
     RedweaveBlockEntities.register(modBus);
     RedweaveCreativeTabs.register(modBus);
     RedweaveMenus.register(modBus);
+    RedweaveRecipes.register(modBus);
     container.registerConfig(ModConfig.Type.SERVER, RedweaveConfig.SPEC);
   }
 }

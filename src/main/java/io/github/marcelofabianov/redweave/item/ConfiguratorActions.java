@@ -57,22 +57,42 @@ final class ConfiguratorActions {
     Player player = context.getPlayer();
     ItemStack stack = context.getItemInHand();
     if (player.isSecondaryUseActive()) {
-      return copy(server, stack, node.get());
+      return copy(server, player, stack, node.get());
     }
     NodeCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
-    Component message =
-        copy == null ? link(server, context, node.get()) : paste(server, player, node.get(), copy);
+    if (copy != null) {
+      return apply(server, context, block, copy);
+    }
+    Component message = link(server, context, node.get());
     refresh(server, context.getLevel(), context.getClickedPos());
     return message;
   }
 
-  private static Component copy(RedweaveServer server, ItemStack stack, NodeId node) {
+  /** Pastes a copy on the node, from the Configurator or from a Label (answers 106 and 118). */
+  static Component apply(
+      RedweaveServer server, UseOnContext context, SignalNodeBlockEntity block, NodeCopy copy) {
+    Optional<NodeId> node = block.node();
+    if (node.isEmpty()) {
+      return Component.translatable(ControllerMessages.NO_NETWORK);
+    }
+    Component message = paste(server, context.getPlayer(), node.get(), copy);
+    refresh(server, context.getLevel(), context.getClickedPos());
+    return message;
+  }
+
+  /** The Configurator keeps the copy, and an empty Label in the other hand gets it too (122). */
+  private static Component copy(
+      RedweaveServer server, Player player, ItemStack stack, NodeId node) {
     Optional<NodeCopy> copy = server.copyNode().copy(node);
     if (copy.isEmpty()) {
       return Component.translatable(ControllerMessages.NO_NETWORK);
     }
     stack.set(RedweaveDataComponents.NODE_SLOTS.get(), copy.get());
-    return Component.translatable(ConfiguratorMessages.COPIED, copy.get().slots().size());
+    int slots = copy.get().slots().size();
+    if (LabelWriting.write(player, copy.get())) {
+      return Component.translatable(LabelMessages.WRITTEN, slots);
+    }
+    return Component.translatable(ConfiguratorMessages.COPIED, slots);
   }
 
   private static Component paste(RedweaveServer server, Player player, NodeId node, NodeCopy copy) {

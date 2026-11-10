@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
+import io.github.marcelofabianov.redweave.item.LabelItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
 import java.util.Collection;
 import net.minecraft.world.item.BlockItem;
@@ -16,6 +17,8 @@ public final class RedweaveItems {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
   private static final String SIGNAL_NODE_ID = "signal_node";
   private static final String CONFIGURATOR_ID = "configurator";
+  private static final String LABEL_ID = "label";
+  private static final int LABEL_STACK = 16;
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -34,6 +37,10 @@ public final class RedweaveItems {
   public static final DeferredItem<ConfiguratorItem> CONFIGURATOR =
       ITEMS.register(
           CONFIGURATOR_ID, () -> new ConfiguratorItem(new Item.Properties().stacksTo(1)));
+
+  /** Up to 16, and written ones only join with the same copy and name (answer 115). */
+  public static final DeferredItem<LabelItem> LABEL =
+      ITEMS.register(LABEL_ID, () -> new LabelItem(new Item.Properties().stacksTo(LABEL_STACK)));
 
   private RedweaveItems() {}
 
