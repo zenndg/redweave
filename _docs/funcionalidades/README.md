@@ -15,12 +15,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`rede-e-canais.md`](rede-e-canais.md) | 1 | Comportamento da rede, dos canais, dos nós e das permissões |
 | [`telas.md`](telas.md) | 1 | Conceito das telas do nó e do controlador |
 | [`controlador-de-rede.md`](controlador-de-rede.md) | 1 | O Network Controller: colocar, clicar, quebrar e o item que guarda a rede |
+| [`no-de-sinal.md`](no-de-sinal.md) | 1 | O Signal Node: colocar, ler, emitir, clicar e quebrar |
 
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:47 | Adiciona a página do nó de sinal. |
 | Marcelo Fabiano | 2026-11-10 09:06 | Adiciona a página do controlador de rede. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Adiciona a página da rede e dos canais. |
 | Marcelo Fabiano | 2026-11-09 11:25 | Lista a página das telas. |
