@@ -192,6 +192,7 @@ io.github.marcelofabianov.redweave
 ├── item/                   // Configurador, Signal Remote, chips
 ├── menu/                   // menus das telas
 ├── network/                // pacotes próprios, validados no servidor
+├── server/                 // estado por servidor: redes, rede atual de cada player e casos de uso
 ├── compat/jade/            // só este pacote importa o Jade
 ├── compat/top/             // só este pacote importa o The One Probe
 ├── client/                 // telas, renderers
