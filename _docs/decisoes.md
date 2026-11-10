@@ -73,7 +73,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Aba do criativo | Aba própria `Redweave` | 69 |
 | Nó ligado ao colocar | Na #15, pelo `PlaceNode`; a #18 fecha junto | 70 |
 | Face do slot no mundo | Entrada lê o vizinho daquela face; saída alimenta o bloco de apoio como uma alavanca | 71 |
-| Blockstate do nó | `facing` e `powered` | 72 |
+| Blockstate do nó | `facing` e `powered`; o `powered` vira `signal` pela 99 | 72 |
 | Página do nó | `no-de-sinal.md` | 73 |
 | Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
 | Clique no nó | Mensagem na action bar até a tela da #19 | 75 |
@@ -99,6 +99,11 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Slots do nó no save | Chave `slot_count`, de 1 a 9; `slots` só com os em uso | 95 |
 | Mundo dos GameTests | Apagado antes de cada execução | 96 |
 | Save corrompido | Copiado para `redweave_networks.unreadable.backup.dat` | 97 |
+| Valor da lente do nó | O mais forte entre leituras e emissão | 98 |
+| Intensidade na lente | Propriedade `signal` (0 a 15), no lugar do `powered`, e tinta por nível | 99 |
+| Luz do nó | Só a lente brilha; o nó não é fonte de luz | 100 |
+| Issue da lente | #24 | 101 |
+| Passo 20 do roteiro | Detalhado, com os passos 22 e 23 do arquivo corrompido | 102 |
 
 Não há perguntas pendentes da concepção.
 
@@ -106,6 +111,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 15:23 | Registra as decisões 98 a 102. |
 | Marcelo Fabiano | 2026-11-10 14:07 | Registra as decisões 96 e 97. |
 | Marcelo Fabiano | 2026-11-10 13:43 | Registra a decisão 95. |
 | Marcelo Fabiano | 2026-11-10 13:10 | Registra as decisões 92 a 94. |
