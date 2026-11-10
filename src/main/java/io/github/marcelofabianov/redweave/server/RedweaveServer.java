@@ -4,14 +4,18 @@ import io.github.marcelofabianov.redweave.application.BreakController;
 import io.github.marcelofabianov.redweave.application.BreakNode;
 import io.github.marcelofabianov.redweave.application.ClearSlot;
 import io.github.marcelofabianov.redweave.application.ConfigureSlot;
+import io.github.marcelofabianov.redweave.application.CopyNode;
 import io.github.marcelofabianov.redweave.application.CreateNetwork;
 import io.github.marcelofabianov.redweave.application.EvaluateNetworks;
+import io.github.marcelofabianov.redweave.application.LinkNode;
 import io.github.marcelofabianov.redweave.application.LoseController;
 import io.github.marcelofabianov.redweave.application.LoseNode;
 import io.github.marcelofabianov.redweave.application.OpenNetwork;
+import io.github.marcelofabianov.redweave.application.PasteNode;
 import io.github.marcelofabianov.redweave.application.PlaceController;
 import io.github.marcelofabianov.redweave.application.PlaceNode;
 import io.github.marcelofabianov.redweave.application.ReadInput;
+import io.github.marcelofabianov.redweave.application.StoreNetwork;
 import io.github.marcelofabianov.redweave.application.UseFreeSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -43,6 +47,10 @@ public final class RedweaveServer {
   private final UseFreeSlot useFreeSlot;
   private final ConfigureSlot configureSlot;
   private final ClearSlot clearSlot;
+  private final StoreNetwork storeNetwork;
+  private final LinkNode linkNode;
+  private final CopyNode copyNode;
+  private final PasteNode pasteNode;
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -60,6 +68,10 @@ public final class RedweaveServer {
     useFreeSlot = new UseFreeSlot(networks, networks);
     configureSlot = new ConfigureSlot(networks, networks);
     clearSlot = new ClearSlot(networks, networks);
+    storeNetwork = new StoreNetwork(networks);
+    linkNode = new LinkNode(networks, networks, networks);
+    copyNode = new CopyNode(networks);
+    pasteNode = new PasteNode(networks, networks);
   }
 
   /** The server that is running now, or none, as on a client that only shows the world. */
@@ -121,6 +133,22 @@ public final class RedweaveServer {
 
   public ClearSlot clearSlot() {
     return clearSlot;
+  }
+
+  public StoreNetwork storeNetwork() {
+    return storeNetwork;
+  }
+
+  public LinkNode linkNode() {
+    return linkNode;
+  }
+
+  public CopyNode copyNode() {
+    return copyNode;
+  }
+
+  public PasteNode pasteNode() {
+    return pasteNode;
   }
 
   /** The networks waiting for the next tick, read before it evaluates them. */

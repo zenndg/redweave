@@ -32,6 +32,7 @@ final class EnglishTexts {
     add.accept(RedweaveBlocks.NETWORK_CONTROLLER.get().getDescriptionId(), NETWORK_CONTROLLER);
     add.accept(RedweaveCreativeTabs.TITLE, TAB);
     NodeScreenEnglishTexts.addTo(add);
+    ConfiguratorEnglishTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.CURRENT, CURRENT);
     add.accept(ControllerMessages.FOREIGN, FOREIGN);

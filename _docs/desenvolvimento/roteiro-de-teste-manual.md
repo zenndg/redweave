@@ -45,12 +45,29 @@ Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1
 | 22 | Feche o jogo, troque o conteúdo de `redweave_networks.dat` por um texto qualquer e abra o mundo | O mundo abre sem redes, `redweave_networks.unreadable.backup.dat` aparece ao lado, e o `logs/latest.log` mostra `The Redweave save was kept in ...` (pergunta 97) |
 | 23 | Feche o jogo, ponha o backup do passo 22 de volta como `redweave_networks.dat` e abra o mundo | O mesmo do passo 22, sem o jogo travar |
 
+## Fase 1: o Configurator
+
+Entregue com a issue #17 (perguntas 103 a 112). Comece com o circuito dos passos 1 a 8 montado, e com um segundo controlador colocado, que vira a rede atual.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 24 | Pegue o Configurator na aba `Redweave` e passe o mouse sobre ele | O nome `Configurator`, `No network stored` e as duas dicas em cinza |
+| 25 | Clique com ele no primeiro controlador | `Configurator: Network xxxx` na action bar, e o tooltip mostra `Network: Network xxxx` |
+| 26 | Grude um nó novo, que entra na rede do segundo controlador, e clique nele com o Configurator | `Linked to Network xxxx`, e a Tela do Nó, aberta com a mão vazia, mostra a primeira rede |
+| 27 | Clique de novo no mesmo nó | `This node is already in Network xxxx.`, sem mudar nada |
+| 28 | Shift + clique no nó da lâmpada | `Copied 1 slots`, e o tooltip mostra `Copy: 1 slots` |
+| 29 | Grude um nó num lado de outra lâmpada e clique nele | `Pasted 1 slots`, e a lâmpada nova acende e apaga junto com a alavanca |
+| 30 | Shift + clique no ar | `Copy cleared`, e o tooltip perde a linha da cópia |
+| 31 | Com o segundo player, clique com um Configurator no controlador e cole uma cópia num nó do dono | `Only the owner can use this network.` e `Only the owner of ... can change this node.`, sem mudar nada |
+| 32 | Troque o idioma para Português (Brasil) | `Configurador` e todas as mensagens em português |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 15:58 | Adiciona os passos do Configurator, da #17. |
 | Marcelo Fabiano | 2026-11-10 15:23 | Detalha o passo 20 e adiciona os passos 22 e 23, pela pergunta 102. |
 | Marcelo Fabiano | 2026-11-10 13:55 | Adiciona os passos das redes depois de reiniciar, da #16. |
 | Marcelo Fabiano | 2026-11-10 11:45 | Cria o documento, com o primeiro circuito da Fase 1. |

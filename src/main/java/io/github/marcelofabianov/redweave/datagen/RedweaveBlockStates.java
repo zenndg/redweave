@@ -72,6 +72,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
           return state.getValue(SignalNodeBlock.POWERED) ? on : off;
         });
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
+    itemModels().basicItem(RedweaveItems.CONFIGURATOR.get());
   }
 
   /** A thin plate on the floor of the block, turned to each face by the blockstate (answer 72). */

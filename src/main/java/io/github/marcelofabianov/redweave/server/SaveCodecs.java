@@ -17,10 +17,11 @@ import java.util.Optional;
 import net.minecraft.core.UUIDUtil;
 
 /**
- * The codecs of the small values of the saves (answer 89). The UUIDs use the codec of the game, the
+ * The codecs of the small values of the saves (answer 89), also used by the copy of the
+ * Configurator, so both keep the same keys (answer 105). The UUIDs use the codec of the game, the
  * same form as the NBT of the blocks of the mod.
  */
-final class SaveCodecs {
+public final class SaveCodecs {
   static final String DIMENSION = "dimension";
   static final String X = "x";
   static final String Y = "y";
@@ -30,9 +31,9 @@ final class SaveCodecs {
   private static final String UNKNOWN_KEY = "Unknown key: ";
   private static final String INVALID_NAME = "Blank, padded or too long name: ";
 
-  static final Codec<Face> FACE = keyed(Face.class);
-  static final Codec<Direction> DIRECTION = keyed(Direction.class);
-  static final Codec<ChannelColor> CHANNEL_COLOR =
+  public static final Codec<Face> FACE = keyed(Face.class);
+  public static final Codec<Direction> DIRECTION = keyed(Direction.class);
+  public static final Codec<ChannelColor> CHANNEL_COLOR =
       Codec.STRING.comapFlatMap(
           key -> ChannelColor.fromKey(key).map(DataResult::success).orElseGet(() -> unknown(key)),
           ChannelColor::key);

@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
 import java.util.Collection;
 import net.minecraft.world.item.BlockItem;
@@ -14,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class RedweaveItems {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
   private static final String SIGNAL_NODE_ID = "signal_node";
+  private static final String CONFIGURATOR_ID = "configurator";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -27,6 +29,11 @@ public final class RedweaveItems {
 
   public static final DeferredItem<BlockItem> SIGNAL_NODE =
       ITEMS.registerSimpleBlockItem(SIGNAL_NODE_ID, RedweaveBlocks.SIGNAL_NODE);
+
+  /** One per stack, because each one keeps its own network and copy (configurador.md). */
+  public static final DeferredItem<ConfiguratorItem> CONFIGURATOR =
+      ITEMS.register(
+          CONFIGURATOR_ID, () -> new ConfiguratorItem(new Item.Properties().stacksTo(1)));
 
   private RedweaveItems() {}
 
