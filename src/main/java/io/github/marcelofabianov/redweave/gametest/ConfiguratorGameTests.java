@@ -1,18 +1,14 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
-import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -22,11 +18,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -58,10 +50,10 @@ public final class ConfiguratorGameTests {
   @GameTest(template = EMPTY)
   public static void theOwnerStoresTheNetworkOfAController(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
-    NetworkId network = placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     ItemStack configurator = holdConfigurator(owner);
 
-    click(helper, owner, CONTROLLER);
+    NodeScene.click(helper, owner, CONTROLLER);
 
     helper.assertTrue(
         network.equals(configurator.get(RedweaveDataComponents.NETWORK.get())), NOT_STORED);
@@ -74,10 +66,10 @@ public final class ConfiguratorGameTests {
   public static void anotherPlayerDoesNotStoreTheNetwork(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     Player stranger = helper.makeMockPlayer(GameType.SURVIVAL);
-    placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     ItemStack configurator = holdConfigurator(stranger);
 
-    click(helper, stranger, CONTROLLER);
+    NodeScene.click(helper, stranger, CONTROLLER);
 
     helper.assertFalse(configurator.has(RedweaveDataComponents.NETWORK.get()), STORED);
     helper.succeed();
@@ -86,15 +78,15 @@ public final class ConfiguratorGameTests {
   @GameTest(template = EMPTY)
   public static void aClickLinksANodeToTheStoredNetwork(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
-    NetworkId stored = placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
-    placeController(helper, owner, OTHER_CONTROLLER_FLOOR, OTHER_CONTROLLER);
-    NodeId node = placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
+    NetworkId stored = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeScene.placeController(helper, owner, OTHER_CONTROLLER_FLOOR, OTHER_CONTROLLER);
+    NodeId node = NodeScene.placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
     holdConfigurator(owner);
 
-    click(helper, owner, CONTROLLER);
-    click(helper, owner, SOURCE_NODE);
+    NodeScene.click(helper, owner, CONTROLLER);
+    NodeScene.click(helper, owner, SOURCE_NODE);
 
-    helper.assertTrue(networkOf(node).id().equals(stored), NOT_LINKED);
+    helper.assertTrue(NodeScene.networkOf(node).id().equals(stored), NOT_LINKED);
     helper.succeed();
   }
 
@@ -102,16 +94,17 @@ public final class ConfiguratorGameTests {
   @GameTest(template = EMPTY)
   public static void aPasteFollowsTheFaceTheTargetSticksTo(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
-    placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     NodeId source = configuredSource(helper, owner);
-    NodeId target = placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    NodeId target = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
     ItemStack configurator = holdConfigurator(owner);
 
-    copy(helper, owner, SOURCE_NODE);
-    click(helper, owner, TARGET_NODE);
+    NodeScene.shiftClick(helper, owner, SOURCE_NODE);
+    NodeScene.click(helper, owner, TARGET_NODE);
 
     helper.assertTrue(configurator.has(RedweaveDataComponents.NODE_SLOTS.get()), NOT_COPIED);
-    List<Optional<ChannelSlot>> slots = networkOf(target).node(target).orElseThrow().slots();
+    List<Optional<ChannelSlot>> slots =
+        NodeScene.networkOf(target).node(target).orElseThrow().slots();
     Optional<ChannelSlot> sourceInput = slotOf(source, FIRST_SLOT);
     helper.assertTrue(slots.get(FIRST_SLOT).orElseThrow().face() == Face.NORTH, NOT_PASTED);
     helper.assertTrue(
@@ -128,26 +121,28 @@ public final class ConfiguratorGameTests {
   public static void anotherPlayerDoesNotPaste(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     Player stranger = helper.makeMockPlayer(GameType.SURVIVAL);
-    placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     configuredSource(helper, owner);
-    NodeId target = placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
-    List<Optional<ChannelSlot>> before = networkOf(target).node(target).orElseThrow().slots();
+    NodeId target = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    List<Optional<ChannelSlot>> before =
+        NodeScene.networkOf(target).node(target).orElseThrow().slots();
     holdConfigurator(stranger);
 
-    copy(helper, stranger, SOURCE_NODE);
-    click(helper, stranger, TARGET_NODE);
+    NodeScene.shiftClick(helper, stranger, SOURCE_NODE);
+    NodeScene.click(helper, stranger, TARGET_NODE);
 
-    helper.assertTrue(before.equals(networkOf(target).node(target).orElseThrow().slots()), PASTED);
+    helper.assertTrue(
+        before.equals(NodeScene.networkOf(target).node(target).orElseThrow().slots()), PASTED);
     helper.succeed();
   }
 
   @GameTest(template = EMPTY)
   public static void shiftAndClickInTheAirClearsTheCopy(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
-    placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     configuredSource(helper, owner);
     ItemStack configurator = holdConfigurator(owner);
-    copy(helper, owner, SOURCE_NODE);
+    NodeScene.shiftClick(helper, owner, SOURCE_NODE);
 
     owner.setShiftKeyDown(true);
     configurator.use(helper.getLevel(), owner, InteractionHand.MAIN_HAND);
@@ -158,8 +153,8 @@ public final class ConfiguratorGameTests {
 
   /** A node with an input on the face it sticks to and an output on another face. */
   private static NodeId configuredSource(GameTestHelper helper, Player owner) {
-    NodeId node = placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
-    networkOf(node)
+    NodeId node = NodeScene.placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
+    NodeScene.networkOf(node)
         .configureSlot(
             new PlayerId(owner.getUUID()),
             node,
@@ -172,48 +167,12 @@ public final class ConfiguratorGameTests {
   }
 
   private static Optional<ChannelSlot> slotOf(NodeId node, int index) {
-    return networkOf(node).node(node).orElseThrow().slots().get(index);
+    return NodeScene.slotsOf(node).get(index);
   }
 
   private static ItemStack holdConfigurator(Player player) {
     ItemStack configurator = new ItemStack(RedweaveItems.CONFIGURATOR.get());
     player.setItemInHand(InteractionHand.MAIN_HAND, configurator);
     return configurator;
-  }
-
-  private static void copy(GameTestHelper helper, Player player, BlockPos relative) {
-    player.setShiftKeyDown(true);
-    click(helper, player, relative);
-    player.setShiftKeyDown(false);
-  }
-
-  /** What the game does when the player right-clicks the block with the item in the hand. */
-  private static void click(GameTestHelper helper, Player player, BlockPos relative) {
-    BlockPos pos = helper.absolutePos(relative);
-    BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
-    player
-        .getItemInHand(InteractionHand.MAIN_HAND)
-        .useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, hit));
-  }
-
-  private static NetworkId placeController(
-      GameTestHelper helper, Player owner, BlockPos floor, BlockPos controller) {
-    ItemStack item = new ItemStack(RedweaveItems.NETWORK_CONTROLLER.get());
-    GameTestActions.placeOn(helper, owner, item, floor, Direction.UP);
-    NetworkControllerBlockEntity block = helper.getBlockEntity(controller);
-    return block.network().orElseThrow();
-  }
-
-  private static NodeId placeNode(
-      GameTestHelper helper, Player owner, BlockPos stone, Direction face) {
-    helper.setBlock(stone, Blocks.STONE);
-    ItemStack item = new ItemStack(RedweaveItems.SIGNAL_NODE.get());
-    GameTestActions.placeOn(helper, owner, item, stone, face);
-    SignalNodeBlockEntity node = helper.getBlockEntity(stone.relative(face));
-    return node.node().orElseThrow();
-  }
-
-  private static Network networkOf(NodeId node) {
-    return RedweaveServer.running().orElseThrow().networkOfNode(node).orElseThrow();
   }
 }
