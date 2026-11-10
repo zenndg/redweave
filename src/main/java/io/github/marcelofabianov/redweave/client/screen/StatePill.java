@@ -1,0 +1,61 @@
+package io.github.marcelofabianov.redweave.client.screen;
+
+import io.github.marcelofabianov.redweave.domain.network.NodeState;
+import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
+import java.util.Optional;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+
+/** The colored state on the top right, as `● Online · Factory` (telas.md and answer 29). */
+final class StatePill {
+  private static final int HEIGHT = 13;
+  private static final int DOT_SIZE = 5;
+  private static final int DOT_X = 5;
+  private static final int DOT_Y = 4;
+  private static final int TEXT_X = 13;
+  private static final int TEXT_Y = 3;
+  private static final int RIGHT_PADDING = 6;
+  private static final int MAX_TEXT = 120;
+
+  private StatePill() {}
+
+  /** Draws the pill ending at the right edge given, and gives back where it is. */
+  static Box draw(
+      GuiGraphics graphics,
+      Font font,
+      int right,
+      int y,
+      Optional<NodeState> state,
+      String network) {
+    Component text = textOf(state, network);
+    String shown = FittedText.fit(font, text, MAX_TEXT);
+    int width = TEXT_X + font.width(shown) + RIGHT_PADDING;
+    Box box = new Box(right - width, y, width, HEIGHT);
+    graphics.blitSprite(NodeSprites.STATE_PILL, box.x(), box.y(), box.width(), box.height());
+    int color = colorOf(state);
+    graphics.setColor(Channels.red(color), Channels.green(color), Channels.blue(color), 1);
+    graphics.blitSprite(NodeSprites.DOT, box.x() + DOT_X, box.y() + DOT_Y, DOT_SIZE, DOT_SIZE);
+    graphics.setColor(1, 1, 1, 1);
+    graphics.drawString(font, shown, box.x() + TEXT_X, box.y() + TEXT_Y, color, false);
+    return box;
+  }
+
+  static Component textOf(Optional<NodeState> state, String network) {
+    return switch (state.orElse(NodeState.NO_NETWORK)) {
+      case ONLINE -> Component.translatable(NodeScreenTexts.STATE_ONLINE, network);
+      case UNLOADED -> Component.translatable(NodeScreenTexts.STATE_UNLOADED);
+      case OUT_OF_RANGE -> Component.translatable(NodeScreenTexts.STATE_OUT_OF_RANGE);
+      case NO_NETWORK -> Component.translatable(NodeScreenTexts.STATE_NO_NETWORK);
+    };
+  }
+
+  private static int colorOf(Optional<NodeState> state) {
+    return switch (state.orElse(NodeState.NO_NETWORK)) {
+      case ONLINE -> ScreenColors.ONLINE;
+      case UNLOADED -> ScreenColors.UNLOADED;
+      case OUT_OF_RANGE -> ScreenColors.OUT_OF_RANGE;
+      case NO_NETWORK -> ScreenColors.NO_NETWORK;
+    };
+  }
+}

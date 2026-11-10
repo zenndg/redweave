@@ -32,11 +32,84 @@
         2,
         13
       ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#slot",
+          "tintindex": 0
+        }
+      },
+      "from": [
+        4,
+        2,
+        4
+      ],
+      "to": [
+        5,
+        2.25,
+        5
+      ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#slot",
+          "tintindex": 1
+        }
+      },
+      "from": [
+        11,
+        2,
+        4
+      ],
+      "to": [
+        12,
+        2.25,
+        5
+      ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#slot",
+          "tintindex": 2
+        }
+      },
+      "from": [
+        4,
+        2,
+        11
+      ],
+      "to": [
+        5,
+        2.25,
+        12
+      ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#slot",
+          "tintindex": 3
+        }
+      },
+      "from": [
+        11,
+        2,
+        11
+      ],
+      "to": [
+        12,
+        2.25,
+        12
+      ]
     }
   ],
   "textures": {
     "edge": "redweave:block/signal_node_edge",
     "front": "redweave:block/signal_node_front_on",
-    "particle": "redweave:block/signal_node_edge"
+    "particle": "redweave:block/signal_node_edge",
+    "slot": "redweave:block/signal_node_slot"
   }
 }

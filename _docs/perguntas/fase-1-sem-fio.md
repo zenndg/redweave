@@ -11,6 +11,16 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 87 | O que os 4 pontos nos cantos do Signal Node mostram, se um nó pode ter até 9 slots? | Os 4 primeiros slots, cada um num canto, na cor do canal, e apagado quando o slot está livre. Os slots 5 a 9 aparecem só na tela. As cores vão ao cliente pela BlockEntity e tingem o modelo, sem renderer por nó. Detalha a pergunta 61 |
+| 86 | Como o nó mostra no mundo que está fora de alcance? | Por uma propriedade `out_of_range` no blockstate, que troca a frente pela textura do anel tracejado. O servidor atualiza os nós carregados de uma rede quando o estado deles muda, como ao mover o controlador. É contrato de save e fica fixada na #26. Detalha a pergunta 72 |
+| 85 | Como a Tela do Nó mostra o modo só leitura, para quem não é o dono da rede? | Os controles ficam apagados, sem efeito ao passar o mouse, e uma linha no rodapé, com um cadeado, diz `Only the owner of <rede> can change this node.` Tudo continua visível e ao vivo. Detalha a pergunta 22 |
+| 84 | Como o player libera um slot em uso na Tela do Nó? | Por um botão secundário `Clear slot`, no painel do slot escolhido, com confirmação no segundo clique (`Click again to clear`), para errar barato (pilar 4 de `ux.md`) |
+| 83 | O que `Click to use` faz num slot livre? | Cria uma entrada na face onde o nó está grudado, no primeiro canal livre, ou no primeiro canal com os 16 em uso, como o nó recém-colocado (pergunta 25). O slot já fica selecionado para o player ajustar |
+| 82 | Com que frequência o sinal e o estado atualizam com a Tela do Nó aberta? | A cada tick, só o que mudou, pelos data slots do menu, o mecanismo do jogo para as fornalhas |
+| 81 | Até que distância o player usa a Tela do Nó? | O alcance de interação de blocos do jogo (`block_interaction_range`), o mesmo de baús e fornalhas, conferido pelo servidor a cada ação. Respeita os mods que o mudam e não cria chave de config. Detalha a regra 17 |
+| 80 | O que as abas `Upgrades` e `Info` mostram antes de o conteúdo delas ser definido? | Nada: por enquanto a tela tem só a aba `Slots`, e as outras entram quando tiverem conteúdo |
+| 79 | Como fica o cubo da face do bloco, onde o player escolhe a face do slot? | Em 3D, com o próprio bloco de apoio e a textura dele, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face |
+| 78 | Como a Tela do Nó é desenhada? | Com sprites em pixel art, em 9-slice como os do jogo, fiéis a `tela-do-no.png`: janela, painéis, slots, botões, abas, molduras das cores, etiqueta de estado, cadeado e barras do medidor. O desenvolvedor gera os sprites numa ferramenta de IA a partir de um prompt, e a grade é conferida antes de usar. Os textos usam a fonte do jogo |
 | 77 | Em quais fronteiras ficam os testes do Signal Node? | Nas três camadas. No domínio: `loseNode`, que tira o nó sem quem pede (pergunta 74). Na aplicação: ler uma entrada e salvar a última leitura, quebrar o nó pelo dono, perder o nó sem dono e avaliar só as redes pendentes. No mundo, com GameTests: alavanca, nó, rede, nó e lâmpada que acende e apaga, nó sem rede, outro player que não quebra, bloco de apoio que some e nó que não se lê de volta |
 | 76 | Com qual chave de NBT a BlockEntity do Signal Node salva o `NodeId`? | `node`, com o UUID, como no controlador (pergunta 67). O sinal emitido não vai para o save, porque o primeiro tick depois de carregar reaplica as saídas (pergunta 38). Fica fixada na #26 |
 | 75 | O que o clique com a mão vazia num Signal Node mostra, antes da Tela do Nó da #19? | Uma mensagem traduzida na action bar com o estado e a rede, como `Online · Network 3f2a`, `Out of range`, `Unloaded` ou `No network`. A Tela do Nó substitui a mensagem. Segue a pergunta 52 |
@@ -77,6 +87,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 11:26 | Responde as perguntas 86 e 87. |
+| Marcelo Fabiano | 2026-11-10 11:00 | Responde as perguntas 78 a 85. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Responde as perguntas 70 a 77. |
 | Marcelo Fabiano | 2026-11-10 09:29 | Responde as perguntas 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Responde as perguntas 64 a 66. |

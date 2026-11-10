@@ -79,6 +79,16 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Clique no nó | Mensagem na action bar até a tela da #19 | 75 |
 | NBT do nó | `node` | 76 |
 | Testes do nó | Domínio, aplicação e GameTests | 77 |
+| Desenho da Tela do Nó | Sprites em pixel art, 9-slice, gerados por IA | 78 |
+| Cubo da face | 3D com o bloco de apoio real, girável | 79 |
+| Abas da Tela do Nó | Só `Slots` por enquanto | 80 |
+| Distância da tela | O alcance de interação do jogo | 81 |
+| Atualização ao vivo | A cada tick, só o que mudou | 82 |
+| Usar um slot livre | Entrada no primeiro canal livre | 83 |
+| Liberar um slot | Botão `Clear slot` com confirmação | 84 |
+| Modo só leitura | Controles apagados e aviso com cadeado | 85 |
+| Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate | 86 |
+| Pontos dos slots | Os 4 primeiros slots, tingidos pelo canal | 87 |
 
 Não há perguntas pendentes da concepção.
 
@@ -86,6 +96,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 11:26 | Registra as decisões 86 e 87. |
+| Marcelo Fabiano | 2026-11-10 11:00 | Registra as decisões 78 a 85. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Registra as decisões 70 a 77. |
 | Marcelo Fabiano | 2026-11-10 09:29 | Registra as decisões 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Registra as decisões 64 a 66. |

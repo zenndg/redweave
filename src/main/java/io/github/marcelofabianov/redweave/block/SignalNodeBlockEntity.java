@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.block;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -12,6 +13,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -22,10 +24,12 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class SignalNodeBlockEntity extends BlockEntity {
   private static final String NODE_TAG = "node";
   private static final String OWNER_TAG = "owner";
+  private static final String CORNERS_TAG = "corners";
 
   private Optional<NodeId> node = Optional.empty();
   private Optional<UUID> ownerOnClient = Optional.empty();
   private int emitted;
+  private int[] corners = {NodeLook.FREE, NodeLook.FREE, NodeLook.FREE, NodeLook.FREE};
 
   public SignalNodeBlockEntity(BlockPos pos, BlockState state) {
     super(RedweaveBlockEntities.SIGNAL_NODE.get(), pos, state);
@@ -46,6 +50,20 @@ public final class SignalNodeBlockEntity extends BlockEntity {
 
   void setEmitted(int strength) {
     emitted = strength;
+  }
+
+  /** The channel of each corner, or NodeLook.FREE, as the client draws it (answer 87). */
+  public int corner(int index) {
+    return index < corners.length ? corners[index] : NodeLook.FREE;
+  }
+
+  /** Keeps the corners and tells whether they changed, so only a change goes to the clients. */
+  boolean setCorners(int[] next) {
+    if (Arrays.equals(corners, next)) {
+      return false;
+    }
+    corners = next.clone();
+    return true;
   }
 
   /** The owner of the network of the node, known on the server and sent to the client. */
@@ -83,6 +101,18 @@ public final class SignalNodeBlockEntity extends BlockEntity {
     super.loadAdditional(tag, registries);
     node = tag.hasUUID(NODE_TAG) ? Optional.of(new NodeId(tag.getUUID(NODE_TAG))) : node;
     ownerOnClient = tag.hasUUID(OWNER_TAG) ? Optional.of(tag.getUUID(OWNER_TAG)) : ownerOnClient;
+    if (tag.contains(CORNERS_TAG) && tag.getIntArray(CORNERS_TAG).length == NodeLook.CORNERS) {
+      corners = tag.getIntArray(CORNERS_TAG);
+      redrawOnClient();
+    }
+  }
+
+  /** The corners tint the model, so the client draws the block again when they change. */
+  private void redrawOnClient() {
+    if (level != null && level.isClientSide) {
+      level.sendBlockUpdated(
+          worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+    }
   }
 
   /** Only the client gets the owner, so it shows the breaking as the server decides it (74). */
@@ -90,6 +120,7 @@ public final class SignalNodeBlockEntity extends BlockEntity {
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag tag = saveCustomOnly(registries);
     owner().ifPresent(id -> tag.putUUID(OWNER_TAG, id));
+    tag.putIntArray(CORNERS_TAG, corners);
     return tag;
   }
 

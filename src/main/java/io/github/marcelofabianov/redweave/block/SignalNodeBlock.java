@@ -5,14 +5,16 @@ import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -48,10 +50,17 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
   /** True when the node emits more than 0, which lights its lens (answer 72). */
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
+  /** True when the node is out of the reach of its controller: dashed red ring (answer 86). */
+  public static final BooleanProperty OUT_OF_RANGE = BooleanProperty.create("out_of_range");
+
   public SignalNodeBlock(Properties properties) {
     super(properties);
     registerDefaultState(
-        stateDefinition.any().setValue(FACING, Direction.UP).setValue(POWERED, false));
+        stateDefinition
+            .any()
+            .setValue(FACING, Direction.UP)
+            .setValue(POWERED, false)
+            .setValue(OUT_OF_RANGE, false));
   }
 
   @Override
@@ -61,7 +70,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    builder.add(FACING, POWERED);
+    builder.add(FACING, POWERED, OUT_OF_RANGE);
   }
 
   @Override
@@ -115,6 +124,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
       PlayerId owner = new PlayerId(player.getUUID());
       node.setNode(server.get().placeNode().place(owner, positionOf(level, pos, state)).node());
       NodeSignals.read(server.get(), level, pos, state);
+      NodeLook.refresh(server.get(), level, pos);
       level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
     }
   }
@@ -147,6 +157,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
         .ifPresent(server -> {
           NodeSignals.read(server, level, pos, state);
           NodeSignals.refreshEmission(server, level, pos);
+          NodeLook.refresh(server, level, pos);
         });
   }
 
@@ -213,21 +224,19 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
     super.onRemove(state, level, pos, newState, movedByPiston);
   }
 
+  /** A click with an empty hand opens the Node Screen (telas.md and answer 75). */
   @Override
   protected InteractionResult useWithoutItem(
       BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
     if (level.isClientSide) {
       return InteractionResult.SUCCESS;
     }
-    RedweaveServer.running()
-        .ifPresent(server -> ActionBar.tell(player, stateOf(server, level, pos)));
+    if (player instanceof ServerPlayer viewer) {
+      viewer.openMenu(
+          new SimpleMenuProvider(
+              (id, inventory, opener) -> new NodeMenu(id, viewer, pos), getName()),
+          extra -> NodeMenu.writeOpening(extra, viewer, pos));
+    }
     return InteractionResult.CONSUME;
-  }
-
-  private static Component stateOf(RedweaveServer server, Level level, BlockPos pos) {
-    Optional<NodeId> node = NodeSignals.nodeAt(level, pos);
-    return node.flatMap(server::networkOfNode)
-        .map(network -> NodeMessages.stateOf(network, node.get()))
-        .orElseGet(NodeMessages::noNetwork);
   }
 }

@@ -3,7 +3,6 @@ package io.github.marcelofabianov.redweave.domain.network;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public final class Network {
   private final NetworkLimits limits;
   private final Map<ChannelColor, Channel> channels = new EnumMap<>(ChannelColor.class);
   private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
-  private final Map<SlotRef, Signal> readings = new HashMap<>();
+  private final Readings readings = new Readings();
   private final Emissions emissions = new Emissions();
   private String name;
   private ChannelColor color;
@@ -136,7 +135,7 @@ public final class Network {
     if (nodes.remove(nodeId) == null) {
       return Outcome.UNKNOWN_NODE;
     }
-    readings.keySet().removeIf(slot -> slot.node().equals(nodeId));
+    readings.forgetNode(nodeId);
     emissions.markPending();
     return Outcome.ACCEPTED;
   }
@@ -164,7 +163,7 @@ public final class Network {
       return Outcome.INVALID_SLOT;
     }
     nodes.put(nodeId, node.withSlot(index, slot));
-    readings.remove(new SlotRef(nodeId, index));
+    readings.forget(new SlotRef(nodeId, index));
     emissions.markPending();
     return Outcome.ACCEPTED;
   }
@@ -270,9 +269,7 @@ public final class Network {
     if (!isInput(nodeId, index)) {
       return false;
     }
-    Signal previous = readings.getOrDefault(new SlotRef(nodeId, index), Signal.OFF);
-    readings.put(new SlotRef(nodeId, index), signal);
-    if (previous.equals(signal)) {
+    if (!readings.record(new SlotRef(nodeId, index), signal)) {
       return false;
     }
     emissions.markPending();
@@ -307,6 +304,21 @@ public final class Network {
         .filter(slot -> slot.direction() == Direction.OUTPUT)
         .map(slot -> channelValue(slot.channel()))
         .orElse(Signal.OFF);
+  }
+
+  /**
+   * The signal of one slot, for the meter of the Node Screen: the last reading of an input and what
+   * an output emits. A free slot shows 0.
+   */
+  public Signal slotSignal(NodeId nodeId, int index) {
+    Node node = nodes.get(nodeId);
+    if (node == null || !node.hasSlot(index)) {
+      return Signal.OFF;
+    }
+    if (isInput(nodeId, index)) {
+      return readings.of(new SlotRef(nodeId, index));
+    }
+    return output(nodeId, index);
   }
 
   /**
@@ -361,20 +373,10 @@ public final class Network {
     }
     for (Node node : nodes.values()) {
       if (inRange(node)) {
-        addInputs(node, values);
+        readings.addInputsOf(node, values);
       }
     }
     return values;
-  }
-
-  private void addInputs(Node node, Map<ChannelColor, Signal> values) {
-    for (int index = 0; index < node.slots().size(); index++) {
-      Optional<ChannelSlot> slot = node.slots().get(index);
-      if (slot.isPresent() && slot.get().direction() == Direction.INPUT) {
-        Signal read = readings.getOrDefault(new SlotRef(node.id(), index), Signal.OFF);
-        values.merge(slot.get().channel(), read, Signal::strongest);
-      }
-    }
   }
 
   /** Whether a node counts: the network is online and the node is in range. */

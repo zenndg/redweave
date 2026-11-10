@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -24,6 +25,17 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String BOTTOM = "_bottom";
   private static final String NODE = "signal_node";
   private static final String POWERED_SUFFIX = "_on";
+  private static final String OUT_OF_RANGE_SUFFIX = "_out_of_range";
+  private static final String NODE_SLOT = "_slot";
+  private static final String SLOT_KEY = "slot";
+  private static final String SLOT_REF = "#slot";
+  private static final float DOT = 1;
+  private static final float DOT_HEIGHT = 0.25F;
+
+  /** The 4 corners of the plate, inside its copper frame, in the order of the first 4 slots. */
+  private static final float[] CORNER_X = {4, 11, 4, 11};
+
+  private static final float[] CORNER_Z = {4, 4, 11, 11};
   private static final String NODE_FRONT = "_front";
   private static final String NODE_EDGE = "_edge";
   private static final String FRONT_KEY = "front";
@@ -50,24 +62,52 @@ final class RedweaveBlockStates extends BlockStateProvider {
     simpleBlockItem(RedweaveBlocks.NETWORK_CONTROLLER.get(), unlinked);
     ModelFile off = nodeModel(NODE, NODE_FRONT);
     ModelFile on = nodeModel(NODE + POWERED_SUFFIX, NODE_FRONT + POWERED_SUFFIX);
+    ModelFile outOfRange = nodeModel(NODE + OUT_OF_RANGE_SUFFIX, NODE_FRONT + OUT_OF_RANGE_SUFFIX);
     directionalBlock(
         RedweaveBlocks.SIGNAL_NODE.get(),
-        state -> state.getValue(SignalNodeBlock.POWERED) ? on : off);
+        state -> {
+          if (state.getValue(SignalNodeBlock.OUT_OF_RANGE)) {
+            return outOfRange;
+          }
+          return state.getValue(SignalNodeBlock.POWERED) ? on : off;
+        });
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
   }
 
   /** A thin plate on the floor of the block, turned to each face by the blockstate (answer 72). */
   private ModelFile nodeModel(String name, String front) {
-    return models()
-        .getBuilder(name)
-        .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
-        .texture(FRONT_KEY, nodeTexture(front))
-        .texture(EDGE_KEY, nodeTexture(NODE_EDGE))
-        .texture(PARTICLE_KEY, nodeTexture(NODE_EDGE))
+    BlockModelBuilder model =
+        models()
+            .getBuilder(name)
+            .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
+            .texture(FRONT_KEY, nodeTexture(front))
+            .texture(EDGE_KEY, nodeTexture(NODE_EDGE))
+            .texture(SLOT_KEY, nodeTexture(NODE_SLOT))
+            .texture(PARTICLE_KEY, nodeTexture(NODE_EDGE))
+            .element()
+            .from(PLATE_EDGE, 0, PLATE_EDGE)
+            .to(PLATE_FAR_EDGE, PLATE_THICKNESS, PLATE_FAR_EDGE)
+            .allFaces((side, face) -> face.texture(side == Direction.UP ? FRONT_REF : EDGE_REF))
+            .end();
+    for (int corner = 0; corner < CORNER_X.length; corner++) {
+      cornerDot(model, corner);
+    }
+    return model;
+  }
+
+  /**
+   * A dot on a corner of the plate, tinted with the channel of a slot by the client: the tint index
+   * is the slot, from 0 to 3 (answers 61 and 87).
+   */
+  private static void cornerDot(BlockModelBuilder model, int corner) {
+    model
         .element()
-        .from(PLATE_EDGE, 0, PLATE_EDGE)
-        .to(PLATE_FAR_EDGE, PLATE_THICKNESS, PLATE_FAR_EDGE)
-        .allFaces((side, face) -> face.texture(side == Direction.UP ? FRONT_REF : EDGE_REF))
+        .from(CORNER_X[corner], PLATE_THICKNESS, CORNER_Z[corner])
+        .to(CORNER_X[corner] + DOT, PLATE_THICKNESS + DOT_HEIGHT, CORNER_Z[corner] + DOT)
+        .face(Direction.UP)
+        .texture(SLOT_REF)
+        .tintindex(corner)
+        .end()
         .end();
   }
 

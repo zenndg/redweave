@@ -100,4 +100,23 @@ class OutputTest {
   void aNodeWithoutOutputsEmitsOff() {
     assertEquals(Signal.OFF, leverAndLamp().emission(NODE));
   }
+
+  /** The meter of the Node Screen: the last reading of an input, what an output emits (#19). */
+  @Test
+  void theSignalOfASlotIsItsReadingOrItsOutput() {
+    Network network = leverAndLamp();
+
+    assertEquals(LEVER, network.slotSignal(NODE, SLOT));
+    assertEquals(LEVER, network.slotSignal(OTHER_NODE, SLOT));
+    assertEquals(Signal.OFF, network.slotSignal(OTHER_NODE, FREE_SLOT));
+  }
+
+  @Test
+  void theSignalOfAnOutputOutOfRangeIsOff() {
+    Network network = leverAndLamp();
+    network.removeController(OWNER);
+    network.placeController(OWNER, NEAR_THE_LEVER_ONLY);
+
+    assertEquals(Signal.OFF, network.slotSignal(OTHER_NODE, SLOT));
+  }
 }
