@@ -310,6 +310,22 @@ public final class Network {
   }
 
   /**
+   * What a node emits in the world: it feeds its block like a lever, so its strongest output wins,
+   * whatever the face of each slot (answer 71).
+   */
+  public Signal emission(NodeId nodeId) {
+    Node node = nodes.get(nodeId);
+    if (node == null) {
+      return Signal.OFF;
+    }
+    Signal strongest = Signal.OFF;
+    for (int index = 0; index < node.slots().size(); index++) {
+      strongest = strongest.strongest(output(nodeId, index));
+    }
+    return strongest;
+  }
+
+  /**
    * The state of a node for the screens. The caller tells whether its chunk is loaded, because the
    * domain does not know the world. Out of range wins, because it is what stops the node counting.
    */

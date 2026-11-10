@@ -80,4 +80,24 @@ class OutputTest {
 
     assertEquals(Signal.OFF, network.output(OTHER_NODE, SLOT));
   }
+
+  /** In the world a node feeds its block like a lever, so it emits its strongest output (71). */
+  @Test
+  void aNodeEmitsItsStrongestOutput() {
+    Network network = leverAndLamp();
+    network.configureSlot(
+        OWNER, OTHER_NODE, SLOT, new ChannelSlot(Direction.OUTPUT, Face.UP, ChannelColor.BLACK));
+    network.configureSlot(
+        OWNER,
+        OTHER_NODE,
+        FREE_SLOT,
+        new ChannelSlot(Direction.OUTPUT, OTHER_NODE_POSITION.face(), LAMP));
+
+    assertEquals(LEVER, network.emission(OTHER_NODE));
+  }
+
+  @Test
+  void aNodeWithoutOutputsEmitsOff() {
+    assertEquals(Signal.OFF, leverAndLamp().emission(NODE));
+  }
 }
