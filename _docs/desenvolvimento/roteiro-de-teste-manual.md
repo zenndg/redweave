@@ -4,7 +4,7 @@ O que os testes automáticos não cobrem e um player precisa conferir no jogo: o
 
 ## Como preparar
 
-1. `make client`, num mundo novo em criativo, com os comandos liberados.
+1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
 2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller e o Signal Node (pergunta 69).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
@@ -33,15 +33,17 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 
 ## Fase 1: as redes depois de reiniciar
 
-Entregue com a issue #16 (perguntas 88 a 95). Comece com o circuito dos passos 1 a 8 montado, com a lâmpada acesa e um canal renomeado, se a tela já permitir.
+Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1 a 8 montado, com a lâmpada acesa e um canal renomeado, se a tela já permitir.
 
 | # | Faça | Espere ver |
 |---|---|---|
 | 17 | Saia para o menu e abra o mesmo mundo de novo | A lâmpada continua acesa, e a Tela do Nó mostra a mesma rede, os mesmos slots e o mesmo sinal |
 | 18 | Puxe a alavanca | A lâmpada apaga e acende junto, como antes de sair |
 | 19 | Grude um nó novo sem clicar no controlador | O nó entra na mesma rede, porque a rede atual também foi salva |
-| 20 | Afaste-se até o chunk do primeiro nó descarregar, com a alavanca ligada, saia e abra o mundo | A lâmpada acende assim que o mundo abre, com a última leitura do nó descarregado |
-| 21 | Feche o jogo, apague `saves/<mundo>/data/redweave_networks.dat` e abra o mundo | Os controladores mostram `No network`, sem o jogo travar |
+| 20 | Em Opções, ponha as distâncias de renderização e de simulação em 2. Monte o nó da alavanca a uns 100 blocos do controlador e da lâmpada, que ficam juntos, ligue a alavanca, vá até a lâmpada, saia e abra o mundo | A lâmpada acende assim que o mundo abre, com a última leitura do nó descarregado, e a Tela do Nó da alavanca mostra `Unloaded` em âmbar |
+| 21 | Feche o jogo, apague `saves/<mundo>/data/redweave_networks.dat` e abra o mundo | Os controladores e os nós mostram `No network`, sem o jogo travar |
+| 22 | Feche o jogo, troque o conteúdo de `redweave_networks.dat` por um texto qualquer e abra o mundo | O mundo abre sem redes, `redweave_networks.unreadable.backup.dat` aparece ao lado, e o `logs/latest.log` mostra `The Redweave save was kept in ...` (pergunta 97) |
+| 23 | Feche o jogo, ponha o backup do passo 22 de volta como `redweave_networks.dat` e abra o mundo | O mesmo do passo 22, sem o jogo travar |
 
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
@@ -49,5 +51,6 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 15:23 | Detalha o passo 20 e adiciona os passos 22 e 23, pela pergunta 102. |
 | Marcelo Fabiano | 2026-11-10 13:55 | Adiciona os passos das redes depois de reiniciar, da #16. |
 | Marcelo Fabiano | 2026-11-10 11:45 | Cria o documento, com o primeiro circuito da Fase 1. |
