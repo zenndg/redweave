@@ -32,6 +32,26 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 
 A quantidade de slots vem de [`limites.md`](../limites.md), nunca fixa na tela (regra 3). O conteúdo das abas `Upgrades` e `Info` é definido junto com os upgrades.
 
+### Comportamento
+
+O que a tela faz, decidido na issue #19.
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Desenho | Sprites em pixel art, em 9-slice como os do jogo, das folhas [`tela-do-no-sprites-a.png`](../imagens/telas/tela-do-no-sprites-a.png) e [`tela-do-no-sprites-b.png`](../imagens/telas/tela-do-no-sprites-b.png). Os textos usam a fonte do jogo | 78 |
+| Abas | Por enquanto, só `Slots`. `Upgrades` e `Info` entram quando tiverem conteúdo | 80 |
+| Selecionar um slot | Um clique no slot da lista o mostra à direita. A seleção é só do cliente | — |
+| Usar um slot livre | `Click to use` cria uma entrada na face onde o nó está grudado, no primeiro canal livre, e seleciona o slot | 83 |
+| Direção | Um clique em `Input` ou `Output` troca a direção do slot | — |
+| Face do bloco | Um cubo 3D com o próprio bloco de apoio, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face | 79 |
+| Canal | Um clique numa das 16 cores troca o canal do slot | — |
+| Liberar um slot | O botão `Clear slot` pede confirmação no segundo clique, `Click again to clear` | 84 |
+| Medidor | O sinal do slot escolhido: na entrada, a última leitura; na saída, o que ela emite | — |
+| Ao vivo | O estado, a rede e o sinal de cada slot atualizam a cada tick, só quando mudam | 82 |
+| Só leitura | Para quem não é o dono, os controles ficam apagados, e o rodapé mostra um cadeado e `Only the owner of <rede> can change this node.` | 85 |
+
+**O servidor confere cada ação (regras 16 e 17):** quem pede é o dono da rede do nó, o player está dentro do alcance de interação de blocos do jogo (pergunta 81), o slot existe e a face e o canal são válidos. Uma ação recusada não muda nada, e a tela volta a mostrar o estado do servidor.
+
 ## Tela do Controlador
 
 ![Tela do Controlador](../imagens/telas/tela-do-controlador.png)
@@ -53,12 +73,13 @@ O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-c
 
 | Ponto | Depende de |
 |---|---|
-| Conteúdo das abas `Upgrades` e `Info` | Issue dos upgrades |
+| Conteúdo das abas `Upgrades` e `Info`, que por enquanto não aparecem (pergunta 80) | Issue dos upgrades |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 11:26 | Descreve o comportamento da Tela do Nó com as perguntas 78 a 85. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Aplica as perguntas 22 e 29 e aponta as abas `Signals` e `Access` para a página da rede. |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:20 | Descreve as telas do nó e do controlador. |

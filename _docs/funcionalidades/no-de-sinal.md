@@ -41,15 +41,7 @@ No fim de cada tick, o servidor avalia só as redes pendentes, com o simulador, 
 
 ## Clicar
 
-Um clique com a mão vazia mostra na action bar o estado e a rede, até a Tela do Nó chegar com a issue #19 (pergunta 75).
-
-| Estado | Mensagem |
-|---|---|
-| `Online` | `Online · <rede>` |
-| `Out of range` | `Out of range · <rede>` |
-| `No network` | `No network` |
-
-O estado `Unloaded` não aparece no clique, porque um nó num chunk descarregado não pode ser clicado.
+Um clique com a mão vazia abre a [Tela do Nó](telas.md#tela-do-nó), da issue #19, que substitui a mensagem da action bar da pergunta 75.
 
 ## Quebrar
 
@@ -80,7 +72,7 @@ Uma placa fina, com cerca de 2 pixels de espessura, presa à face como um botão
 | Frente | `signal_node_front`, com a lente apagada; `signal_node_front_on`, com a lente acesa |
 | Bordas | `signal_node_edge` |
 
-O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó está, e `powered`, verdadeiro quando o nó emite mais que 0, que acende a lente (pergunta 72). Os dois são contrato de save e ficam fixados na issue #26. O anel de fora de alcance, os pontos dos slots tingidos (pergunta 61) e a lente mais forte com o sinal chegam com a Tela do Nó (#19) e as camadas emissivas (#24).
+O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó está, e `powered`, verdadeiro quando o nó emite mais que 0, que acende a lente (pergunta 72). Os dois são contrato de save e ficam fixados na issue #26. O blockstate tem também `out_of_range`, que troca a frente por `signal_node_front_out_of_range`, com a lente apagada e o anel tracejado vermelho. O servidor atualiza os nós carregados de uma rede quando o estado deles muda (pergunta 86). Os 4 cantos da placa mostram os 4 primeiros slots, cada um na cor do canal, com a textura `signal_node_slot` tingida, e ficam apagados com o slot livre. Os slots 5 a 9 aparecem só na tela (perguntas 61 e 87). A lente mais forte com o sinal chega com as camadas emissivas (#24).
 
 ## Fora desta funcionalidade
 
@@ -93,4 +85,5 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 11:26 | Aplica a Tela do Nó e as perguntas 86 e 87. |
 | Marcelo Fabiano | 2026-11-10 09:46 | Cria o documento, com as respostas das perguntas 70 a 76. |
