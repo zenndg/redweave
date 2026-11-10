@@ -2,7 +2,7 @@
 
 GRADLE := ./gradlew
 
-.PHONY: help setup check test coverage format format-check build clean client server data check-generated gametest stop
+.PHONY: help setup check test coverage format format-check build clean client server data check-generated gametest scan-secrets stop
 
 help: ## Show the available commands
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "  %-18s %s\n", $$1, $$2}'
@@ -46,6 +46,9 @@ check-generated: ## Fail when the data generation changes src/generated
 
 gametest: ## Run the GameTests on a headless server and confirm that they passed
 	scripts/development/run-gametests.sh
+
+scan-secrets: ## Scan the whole git history for secrets (run make setup first)
+	.tools/gitleaks git --redact --no-banner .
 
 stop: ## Stop the Gradle daemons
 	$(GRADLE) --stop
