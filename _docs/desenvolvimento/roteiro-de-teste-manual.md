@@ -60,6 +60,7 @@ Entregue com a issue #17 (perguntas 103 a 112). Comece com o circuito dos passos
 | 30 | Shift + clique no ar | `Copy cleared`, e o tooltip perde a linha da cópia |
 | 31 | Com o segundo player, clique com um Configurator no controlador e cole uma cópia num nó do dono | `Only the owner can use this network.` e `Only the owner of ... can change this node.`, sem mudar nada |
 | 32 | Troque o idioma para Português (Brasil) | `Configurador` e todas as mensagens em português |
+| 33 | Clique num nó e no controlador segurando um graveto | Nada acontece: a Tela do Nó não abre, e a rede atual não muda (pergunta 113) |
 
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
@@ -67,6 +68,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:08 | Adiciona o passo do clique com item, da pergunta 113. |
 | Marcelo Fabiano | 2026-11-10 15:58 | Adiciona os passos do Configurator, da #17. |
 | Marcelo Fabiano | 2026-11-10 15:23 | Detalha o passo 20 e adiciona os passos 22 e 23, pela pergunta 102. |
 | Marcelo Fabiano | 2026-11-10 13:55 | Adiciona os passos das redes depois de reiniciar, da #16. |

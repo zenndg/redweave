@@ -3,7 +3,6 @@ package io.github.marcelofabianov.redweave.block;
 import com.mojang.serialization.MapCodec;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -106,8 +105,8 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
   }
 
   /**
-   * The Configurator acts on this block itself, so its click skips the click with an empty hand and
-   * goes straight to the item (configurador.md).
+   * Only an empty hand uses this block itself. With an item, as the Configurator, the click goes
+   * straight to the item (answer 113).
    */
   @Override
   protected ItemInteractionResult useItemOn(
@@ -118,7 +117,7 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
       Player player,
       InteractionHand hand,
       BlockHitResult hit) {
-    if (stack.is(RedweaveItems.CONFIGURATOR.get())) {
+    if (!stack.isEmpty()) {
       return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
     }
     return super.useItemOn(stack, state, level, pos, player, hand, hit);
