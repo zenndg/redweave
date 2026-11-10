@@ -27,9 +27,14 @@ public final class RedweaveConfig {
   private static final int MAX_RANGE = 30_000_000;
   private static final int DEFAULT_NETWORK_NAME = 32;
   private static final int DEFAULT_CHANNEL_NAME = 16;
-  private static final int MAX_NAME = 64;
+
+  /** The longest name the config allows, also the ceiling of a name in the saves (answer 93). */
+  public static final int MAX_NAME = 64;
+
   private static final int DEFAULT_SLOTS = 4;
-  private static final int MAX_SLOTS = 9;
+
+  /** The most slots the config allows, also the ceiling of a node in the saves (answer 95). */
+  public static final int MAX_SLOTS = 9;
 
   public static final ModConfigSpec SPEC;
   static final ModConfigSpec.IntValue RANGE_VALUE;

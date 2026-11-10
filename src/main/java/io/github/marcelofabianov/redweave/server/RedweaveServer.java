@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The state of one running server and the use cases over it. It is born when the world opens and
- * dropped when it closes, so nothing leaks from one world to the next (answers 53 and 63).
+ * The state of one running server and the use cases over it. It is born when the world opens, with
+ * the networks of its save, and dropped when it closes, so nothing leaks from one world to the next
+ * (answers 63 and 88).
  */
 public final class RedweaveServer {
   private static RedweaveServer running;
 
-  private final MemoryNetworks networks = new MemoryNetworks();
-  private final MemoryCurrentNetworks current = new MemoryCurrentNetworks();
+  private final SavedDataNetworks networks;
   private final PlaceController placeController;
   private final BreakController breakController;
   private final LoseController loseController;
@@ -44,14 +44,15 @@ public final class RedweaveServer {
   private final ConfigureSlot configureSlot;
   private final ClearSlot clearSlot;
 
-  private RedweaveServer(NetworkLimits limits) {
+  private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
+    this.networks = networks;
     RandomIds ids = new RandomIds();
-    CreateNetwork create = new CreateNetwork(ids, networks, networks, current, limits);
+    CreateNetwork create = new CreateNetwork(ids, networks, networks, networks, limits);
     placeController = new PlaceController(create, networks, networks);
     breakController = new BreakController(networks, networks);
     loseController = new LoseController(networks, networks);
-    openNetwork = new OpenNetwork(networks, current);
-    placeNode = new PlaceNode(ids, current, networks, networks);
+    openNetwork = new OpenNetwork(networks, networks);
+    placeNode = new PlaceNode(ids, networks, networks, networks);
     readInput = new ReadInput(networks, networks);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
@@ -66,8 +67,8 @@ public final class RedweaveServer {
     return Optional.ofNullable(running);
   }
 
-  static void start(NetworkLimits limits) {
-    running = new RedweaveServer(limits);
+  static void start(NetworkLimits limits, SavedDataNetworks networks) {
+    running = new RedweaveServer(limits, networks);
   }
 
   static void stop() {
@@ -136,6 +137,6 @@ public final class RedweaveServer {
   }
 
   public Optional<NetworkId> currentOf(PlayerId player) {
-    return current.currentOf(player);
+    return networks.currentOf(player);
   }
 }

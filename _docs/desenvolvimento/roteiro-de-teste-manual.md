@@ -31,10 +31,23 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 15 | Quebre a pedra de um nó | O nó cai como item e sai da rede |
 | 16 | Troque o idioma para Português (Brasil) | Todos os textos da tela e dos itens em português, sem nada passando da borda |
 
+## Fase 1: as redes depois de reiniciar
+
+Entregue com a issue #16 (perguntas 88 a 95). Comece com o circuito dos passos 1 a 8 montado, com a lâmpada acesa e um canal renomeado, se a tela já permitir.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 17 | Saia para o menu e abra o mesmo mundo de novo | A lâmpada continua acesa, e a Tela do Nó mostra a mesma rede, os mesmos slots e o mesmo sinal |
+| 18 | Puxe a alavanca | A lâmpada apaga e acende junto, como antes de sair |
+| 19 | Grude um nó novo sem clicar no controlador | O nó entra na mesma rede, porque a rede atual também foi salva |
+| 20 | Afaste-se até o chunk do primeiro nó descarregar, com a alavanca ligada, saia e abra o mundo | A lâmpada acende assim que o mundo abre, com a última leitura do nó descarregado |
+| 21 | Feche o jogo, apague `saves/<mundo>/data/redweave_networks.dat` e abra o mundo | Os controladores mostram `No network`, sem o jogo travar |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 13:55 | Adiciona os passos das redes depois de reiniciar, da #16. |
 | Marcelo Fabiano | 2026-11-10 11:45 | Cria o documento, com o primeiro circuito da Fase 1. |
