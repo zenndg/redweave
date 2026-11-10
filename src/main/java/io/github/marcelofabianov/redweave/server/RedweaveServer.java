@@ -2,6 +2,8 @@ package io.github.marcelofabianov.redweave.server;
 
 import io.github.marcelofabianov.redweave.application.BreakController;
 import io.github.marcelofabianov.redweave.application.BreakNode;
+import io.github.marcelofabianov.redweave.application.ClearSlot;
+import io.github.marcelofabianov.redweave.application.ConfigureSlot;
 import io.github.marcelofabianov.redweave.application.CreateNetwork;
 import io.github.marcelofabianov.redweave.application.EvaluateNetworks;
 import io.github.marcelofabianov.redweave.application.LoseController;
@@ -10,12 +12,14 @@ import io.github.marcelofabianov.redweave.application.OpenNetwork;
 import io.github.marcelofabianov.redweave.application.PlaceController;
 import io.github.marcelofabianov.redweave.application.PlaceNode;
 import io.github.marcelofabianov.redweave.application.ReadInput;
+import io.github.marcelofabianov.redweave.application.UseFreeSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.simulation.Simulator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +40,9 @@ public final class RedweaveServer {
   private final BreakNode breakNode;
   private final LoseNode loseNode;
   private final EvaluateNetworks evaluateNetworks;
+  private final UseFreeSlot useFreeSlot;
+  private final ConfigureSlot configureSlot;
+  private final ClearSlot clearSlot;
 
   private RedweaveServer(NetworkLimits limits) {
     RandomIds ids = new RandomIds();
@@ -49,6 +56,9 @@ public final class RedweaveServer {
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
     evaluateNetworks = new EvaluateNetworks(networks, new Simulator());
+    useFreeSlot = new UseFreeSlot(networks, networks);
+    configureSlot = new ConfigureSlot(networks, networks);
+    clearSlot = new ClearSlot(networks, networks);
   }
 
   /** The server that is running now, or none, as on a client that only shows the world. */
@@ -98,6 +108,23 @@ public final class RedweaveServer {
 
   public EvaluateNetworks evaluateNetworks() {
     return evaluateNetworks;
+  }
+
+  public UseFreeSlot useFreeSlot() {
+    return useFreeSlot;
+  }
+
+  public ConfigureSlot configureSlot() {
+    return configureSlot;
+  }
+
+  public ClearSlot clearSlot() {
+    return clearSlot;
+  }
+
+  /** The networks waiting for the next tick, read before it evaluates them. */
+  public List<Network> pendingNetworks() {
+    return networks.all().stream().filter(Network::isPending).toList();
   }
 
   public Optional<Network> networkOfNode(NodeId node) {

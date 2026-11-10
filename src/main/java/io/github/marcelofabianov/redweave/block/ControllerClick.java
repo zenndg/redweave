@@ -1,14 +1,10 @@
 package io.github.marcelofabianov.redweave.block;
 
-import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import java.util.UUID;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -31,17 +27,8 @@ final class ControllerClick {
           player, Component.translatable(ControllerMessages.CURRENT, network.get().name()));
       return;
     }
-    String owner = ownerName(player.getServer(), network.get().owner().value());
+    String owner = PlayerNames.of(player.getServer(), network.get().owner().value());
     ActionBar.tell(
         player, Component.translatable(ControllerMessages.FOREIGN, network.get().name(), owner));
-  }
-
-  /** The name the server knows for the owner, or the UUID of an owner it never saw. */
-  private static String ownerName(MinecraftServer minecraftServer, UUID owner) {
-    GameProfileCache profiles = minecraftServer == null ? null : minecraftServer.getProfileCache();
-    if (profiles == null) {
-      return owner.toString();
-    }
-    return profiles.get(owner).map(GameProfile::getName).orElse(owner.toString());
   }
 }

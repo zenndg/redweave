@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
-import io.github.marcelofabianov.redweave.block.NodeMessages;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
 import java.util.function.BiConsumer;
@@ -19,9 +18,6 @@ final class EnglishTexts {
 
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Signal Node";
-  private static final String NODE_ONLINE = "Online · %s";
-  private static final String NODE_OUT_OF_RANGE = "Out of range · %s";
-  private static final String NODE_NO_NETWORK = "No network";
   private static final String NETWORK_CONTROLLER = "Network Controller";
   private static final String CURRENT = "Current network: %s";
   private static final String FOREIGN = "%s · owner: %s";
@@ -35,10 +31,8 @@ final class EnglishTexts {
     add.accept(RedweaveLanguageProvider.MOD_DESCRIPTION_KEY, MOD_DESCRIPTION);
     add.accept(RedweaveBlocks.NETWORK_CONTROLLER.get().getDescriptionId(), NETWORK_CONTROLLER);
     add.accept(RedweaveCreativeTabs.TITLE, TAB);
+    NodeScreenEnglishTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
-    add.accept(NodeMessages.ONLINE, NODE_ONLINE);
-    add.accept(NodeMessages.OUT_OF_RANGE, NODE_OUT_OF_RANGE);
-    add.accept(NodeMessages.NO_NETWORK, NODE_NO_NETWORK);
     add.accept(ControllerMessages.CURRENT, CURRENT);
     add.accept(ControllerMessages.FOREIGN, FOREIGN);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

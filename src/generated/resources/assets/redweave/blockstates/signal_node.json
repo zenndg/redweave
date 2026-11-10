@@ -1,54 +1,106 @@
 {
   "variants": {
-    "facing=down,powered=false": {
+    "facing=down,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node",
       "x": 180
     },
-    "facing=down,powered=true": {
+    "facing=down,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on",
       "x": 180
     },
-    "facing=east,powered=false": {
+    "facing=down,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 180
+    },
+    "facing=down,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 180
+    },
+    "facing=east,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node",
       "x": 90,
       "y": 90
     },
-    "facing=east,powered=true": {
+    "facing=east,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on",
       "x": 90,
       "y": 90
     },
-    "facing=north,powered=false": {
+    "facing=east,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node",
       "x": 90
     },
-    "facing=north,powered=true": {
+    "facing=north,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on",
       "x": 90
     },
-    "facing=south,powered=false": {
+    "facing=north,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90
+    },
+    "facing=north,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90
+    },
+    "facing=south,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node",
       "x": 90,
       "y": 180
     },
-    "facing=south,powered=true": {
+    "facing=south,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on",
       "x": 90,
       "y": 180
     },
-    "facing=up,powered=false": {
+    "facing=south,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node"
     },
-    "facing=up,powered=true": {
+    "facing=up,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on"
     },
-    "facing=west,powered=false": {
+    "facing=up,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range"
+    },
+    "facing=up,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range"
+    },
+    "facing=west,out_of_range=false,powered=false": {
       "model": "redweave:block/signal_node",
       "x": 90,
       "y": 270
     },
-    "facing=west,powered=true": {
+    "facing=west,out_of_range=false,powered=true": {
       "model": "redweave:block/signal_node_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,out_of_range=true,powered=false": {
+      "model": "redweave:block/signal_node_out_of_range",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,out_of_range=true,powered=true": {
+      "model": "redweave:block/signal_node_out_of_range",
       "x": 90,
       "y": 270
     }

@@ -19,7 +19,7 @@ public final class NodeSignals {
   private NodeSignals() {}
 
   /** Reads every input of the node into its network (no-de-sinal.md, section Ler). */
-  static void read(RedweaveServer server, Level level, BlockPos pos, BlockState state) {
+  public static void read(RedweaveServer server, Level level, BlockPos pos, BlockState state) {
     Optional<NodeId> id = nodeAt(level, pos);
     Optional<Node> node = id.flatMap(server::networkOfNode).flatMap(net -> net.node(id.get()));
     if (node.isEmpty()) {
