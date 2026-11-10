@@ -71,6 +71,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | NBT do controlador | `network` e `owner` | 67 |
 | Nome em português | `Controlador de Rede` | 68 |
 | Aba do criativo | Aba própria `Redweave` | 69 |
+| Nó ligado ao colocar | Na #15, pelo `PlaceNode`; a #18 fecha junto | 70 |
+| Face do slot no mundo | Entrada lê o vizinho daquela face; saída alimenta o bloco de apoio como uma alavanca | 71 |
+| Blockstate do nó | `facing` e `powered` | 72 |
+| Página do nó | `no-de-sinal.md` | 73 |
+| Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
+| Clique no nó | Mensagem na action bar até a tela da #19 | 75 |
+| NBT do nó | `node` | 76 |
+| Testes do nó | Domínio, aplicação e GameTests | 77 |
 
 Não há perguntas pendentes da concepção.
 
@@ -78,6 +86,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:45 | Registra as decisões 70 a 77. |
 | Marcelo Fabiano | 2026-11-10 09:29 | Registra as decisões 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Registra as decisões 64 a 66. |
 | Marcelo Fabiano | 2026-11-10 09:14 | Registra a decisão 63. |
