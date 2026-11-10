@@ -64,6 +64,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Controlador sem nós | `top_on` sem a camada emissiva | 60 |
 | Pontos de slot do nó | Textura `signal_node_slot` tingida pelo canal | 61 |
 | Testes do controlador | Domínio, aplicação e GameTests | 62 |
+| Estado por servidor | Pacote `server/`, com o `RedweaveServer` | 63 |
+| Blockstate do controlador | `facing` e `linked` | 64 |
+| Componente da rede | `redweave:network` | 65 |
+| Faixas do config | Alcance de 0 a 30.000.000, nomes de 1 a 64 e slots de 1 a 9 | 66 |
+| NBT do controlador | `network` e `owner` | 67 |
+| Nome em português | `Controlador de Rede` | 68 |
+| Aba do criativo | Aba própria `Redweave` | 69 |
 
 Não há perguntas pendentes da concepção.
 
@@ -71,6 +78,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:29 | Registra as decisões 67 a 69. |
+| Marcelo Fabiano | 2026-11-10 09:20 | Registra as decisões 64 a 66. |
+| Marcelo Fabiano | 2026-11-10 09:14 | Registra a decisão 63. |
 | Marcelo Fabiano | 2026-11-10 09:06 | Registra a decisão 62. |
 | Marcelo Fabiano | 2026-11-10 09:05 | Atualiza a decisão 59. |
 | Marcelo Fabiano | 2026-11-10 08:59 | Registra as decisões 51 e 59 a 61. |

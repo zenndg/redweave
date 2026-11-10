@@ -11,6 +11,13 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 69 | Em que aba do inventário criativo fica o item do Network Controller? | Numa aba própria, `Redweave`, com o ícone do controlador, que recebe cada item novo da Fase 1 |
+| 68 | Como o nome do Network Controller aparece no `pt_br.json`? | `Controlador de Rede`, traduzido como o jogo faz com os próprios blocos, e as mensagens também em português |
+| 67 | Com quais chaves de NBT a BlockEntity do controlador salva a rede e o dono? | `network`, com o `NetworkId`, e `owner`, com o UUID do dono, que vai também ao cliente para a quebra não aparecer a quem não é dono. São contrato de save e ficam fixadas na issue #26 |
+| 66 | Quais limites mínimo e máximo valem para as chaves de config? | `network.range` de 0 a 30.000.000, a borda do mundo; `network.name_length` e `channel.name_length` de 1 a 64; `node.slots` de 1 a 9, o máximo com upgrade. Um valor fora do intervalo volta ao padrão, e o mod registra no log. Detalha a pergunta 50 |
+| 65 | Qual é o ID do data component que guarda a rede no item do Network Controller? | `redweave:network`, com o `NetworkId`. O mesmo componente serve à rede guardada no Configurador (#17), porque é o mesmo conceito |
+| 64 | Quais propriedades de blockstate o Network Controller tem? | `facing`, nas 4 direções horizontais, com a frente voltada para quem colocou, e `linked`, verdadeiro quando o bloco tem rede, que escolhe o topo `top_on` ou `top`. O estado `Sem nós` vem com a camada emissiva da #24, sem propriedade nova |
+| 63 | Onde fica o objeto por servidor que guarda as redes até a #16? | Num pacote novo, `server/`, com o `RedweaveServer`, a raiz de composição por servidor, as redes em memória e o gerador de IDs. A #16 troca só as redes em memória pelo `SavedData`. A estrutura de pacotes do `AGENTS.md` ganha a linha do pacote. Detalha a pergunta 53 |
 | 62 | Em quais fronteiras ficam os testes do Network Controller? | Nas três camadas. No domínio, com JUnit: `placeController` recusa com `ALREADY_PLACED` quando já há controlador (pergunta 56), e `loseController` deixa a rede `Offline` sem quem pede (pergunta 49). Na aplicação, com JUnit: os casos de uso de colocar, quebrar e perder o controlador. No mundo, com GameTests: colocar, quebrar como dono e soltar o item com o ID, outro player não quebra, explosão não destrói e recolocar volta `Online` |
 | 61 | De onde vêm os quatro pontos de slot nos cantos do Signal Node? | Da textura branca `signal_node_slot`, tingida com a cor do canal em quatro elementos do modelo, nos cantos. O modelo fica com a #15 |
 | 60 | Qual textura mostra o Network Controller no estado `Sem nós`, com o núcleo aceso fraco? | A `network_controller_top_on` sem a camada emissiva `network_controller_top_glow`, então o núcleo fica fraco no escuro, sem textura nova |
@@ -62,6 +69,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:29 | Responde as perguntas 67 a 69. |
+| Marcelo Fabiano | 2026-11-10 09:20 | Responde as perguntas 64 a 66. |
+| Marcelo Fabiano | 2026-11-10 09:14 | Responde a pergunta 63. |
 | Marcelo Fabiano | 2026-11-10 09:06 | Responde a pergunta 62. |
 | Marcelo Fabiano | 2026-11-10 09:05 | Atualiza a resposta 59 com a textura refeita. |
 | Marcelo Fabiano | 2026-11-10 08:59 | Responde as perguntas 51 e 59 a 61. |
