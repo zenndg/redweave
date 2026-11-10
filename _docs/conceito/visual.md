@@ -120,7 +120,7 @@ Bloco, `redweave:network_controller`. Onde a rede nasce: guarda nome, cor, dono 
 |---|---|
 | Online | Núcleo aceso; cada canal ligado acende o seu LED |
 | Sem nós | Núcleo aceso fraco, painel apagado |
-| Sem rede | Recém-colocado, antes de receber um nome: núcleo apagado |
+| Sem rede | Controlador sem rede, como o que sobra depois de reiniciar o servidor antes da #16: núcleo apagado (perguntas 53 e 57) |
 
 ### Signal Node
 
@@ -182,6 +182,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 09:05 | Corrige o estado Sem rede do Network Controller. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Separa os estados `Unloaded` e `Out of range` (pergunta 29). |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |
 | Marcelo Fabiano | 2026-11-09 11:15 | Adiciona o conceito dos blocos e itens da Fase 1. |
