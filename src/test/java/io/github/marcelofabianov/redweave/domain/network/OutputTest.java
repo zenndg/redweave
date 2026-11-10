@@ -49,6 +49,7 @@ class OutputTest {
   @Test
   void anOutputOutOfRangeEmitsOff() {
     Network network = leverAndLamp();
+    network.removeController(OWNER);
     network.placeController(OWNER, NEAR_THE_LEVER_ONLY);
     assertEquals(LEVER, network.channelValue(LAMP));
 

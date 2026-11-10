@@ -91,6 +91,7 @@ class OutputFacesTest {
   void aLampOutOfRangeTurnsOff() {
     Network network = twoLevers(WEST, Face.UP);
     simulator.evaluate(network);
+    network.removeController(OWNER);
     network.placeController(OWNER, NEAR_THE_LEVERS_ONLY);
 
     assertEquals(

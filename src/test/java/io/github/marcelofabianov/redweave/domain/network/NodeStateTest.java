@@ -38,6 +38,7 @@ class NodeStateTest {
   @Test
   void aNodeOutOfTheRadiusIsOutOfRangeLoadedOrNot() {
     Network network = networkWithANode();
+    network.removeController(OWNER);
     network.placeController(OWNER, FAR_CONTROLLER);
 
     assertEquals(NodeState.OUT_OF_RANGE, network.nodeState(NODE, LOADED));

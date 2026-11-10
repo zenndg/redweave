@@ -49,6 +49,29 @@ class NetworkControllerTest {
     assertTrue(network.isOnline());
   }
 
+  /** A copied item cannot give a network a second controller: the first one stays (answer 56). */
+  @Test
+  void aNetworkWithItsControllerPlacedRefusesAnotherOne() {
+    Network network = network();
+
+    assertEquals(Outcome.ALREADY_PLACED, network.placeController(OWNER, ELSEWHERE));
+    assertEquals(Optional.of(CONTROLLER), network.controller());
+  }
+
+  /**
+   * The block is already gone, as in creative or by a command, so there is nobody to ask: the
+   * network goes offline anyway (answer 49).
+   */
+  @Test
+  void losingTheControllerTakesTheNetworkOfflineWithoutAnOwner() {
+    Network network = network();
+
+    network.loseController();
+
+    assertFalse(network.isOnline());
+    assertEquals(Optional.empty(), network.controller());
+  }
+
   @Test
   void anotherPlayerCannotPlaceTheController() {
     Network network = network();
