@@ -89,6 +89,16 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Modo só leitura | Controles apagados e aviso com cadeado | 85 |
 | Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate | 86 |
 | Pontos dos slots | Os 4 primeiros slots, tingidos pelo canal | 87 |
+| Onde salvar as redes | Um `SavedData` único no Overworld, `redweave_networks.dat` | 88 |
+| Formato do save | Codecs sobre `NbtOps`, com `version` e chaves estáveis; a leitura fica no slot | 89 |
+| Restaurar a rede | `NetworkSnapshot` no domínio, com `snapshot()` e `Network.restore` | 90 |
+| Rede atual no save | Salva no mesmo arquivo; entrada sem rede é descartada | 91 |
+| Save inválido | Descarta a menor parte com aviso; versão desconhecida vira backup e o mod começa vazio | 92 |
+| Config menor que o save | A rede volta como estava; o limite vale para as próximas mudanças, com teto nas faixas da 66 | 93 |
+| Testes da persistência | Domínio e GameTests; o reinício real no roteiro manual | 94 |
+| Slots do nó no save | Chave `slot_count`, de 1 a 9; `slots` só com os em uso | 95 |
+| Mundo dos GameTests | Apagado antes de cada execução | 96 |
+| Save corrompido | Copiado para `redweave_networks.unreadable.backup.dat` | 97 |
 
 Não há perguntas pendentes da concepção.
 
@@ -96,6 +106,10 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 14:07 | Registra as decisões 96 e 97. |
+| Marcelo Fabiano | 2026-11-10 13:43 | Registra a decisão 95. |
+| Marcelo Fabiano | 2026-11-10 13:10 | Registra as decisões 92 a 94. |
+| Marcelo Fabiano | 2026-11-10 13:08 | Registra as decisões 88 a 91. |
 | Marcelo Fabiano | 2026-11-10 11:26 | Registra as decisões 86 e 87. |
 | Marcelo Fabiano | 2026-11-10 11:00 | Registra as decisões 78 a 85. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Registra as decisões 70 a 77. |
