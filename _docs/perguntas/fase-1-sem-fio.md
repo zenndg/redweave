@@ -11,6 +11,17 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 124 | As texturas `label` e `label_written` ainda não existem, e o `make data` reprova sem elas. Como resolver? | Pelo processo das perguntas 78 e 120: o desenvolvedor gera a prancha com o prompt de `tmp/arte/label-prompt.md`, e o agente confere a grade, a paleta e a silhueta antes de extrair as duas texturas. A #81 espera a arte |
+| 123 | Como se chamam os tipos e os arquivos das receitas de copiar e de esvaziar o Label? | `redweave:label_copy` e `redweave:label_clear`, em `data/redweave/recipe/label_copy.json` e `label_clear.json`, no singular e em `snake_case` (regra 24). São contrato com o KubeJS e outros mods e ficam fixados na #26 |
+| 122 | Que mensagem a action bar mostra quando o Shift + clique grava um Label? | `Copied <n> slots to a Label`, e `<n> slots copiados para uma etiqueta` em português. O Configurator também guarda a cópia, como no Shift + clique normal (pergunta 105). Completa a pergunta 108 |
+| 121 | Em quais fronteiras ficam os testes do Label? | No mundo, com GameTests: gravar um Label da pilha, aplicar sem gastar, aplicar recusado para outro player, um Label gravado na outra mão que não é regravado, a cópia e o esvaziar na grade. Gravar e aplicar reaproveitam `CopyNode`, `PasteNode` e `NodeCopy`, já testados; JUnit só para regra nova fora do jogo |
+| 120 | Qual é o visual do Label? | Uma etiqueta de papel bege com ilhós de cobre e um cordão, em 16×16 na paleta do mod. Vazia, só o papel; gravada, uma faixa de redstone acesa e linhas escritas. Duas texturas, `label` e `label_written`, geradas pelo desenvolvedor a partir de um prompt do agente e conferidas antes de usar (pergunta 78) |
+| 119 | O que o tooltip de um Label mostra? | Uma linha por slot gravado, na cor do canal, como `Red · Input · East`, até 9 linhas, e a dica `Click a node to apply.` Vazio: `Empty` e `Shift + click a node with a Configurator to write it.` O nome dado na bigorna é o título, como em qualquer item |
+| 118 | Como funciona gravar e aplicar o Label? | Com o Configurator na mão principal e Labels vazios na outra, o Shift + clique num nó grava um Label da pilha, que vai para o inventário, ou cai no chão se ele estiver cheio. Um Label gravado na outra mão não é regravado; ali o Shift + clique só copia para o Configurator (pergunta 105). Aplicar com o Label na mão segue as regras de colar da pergunta 106 e não gasta o Label |
+| 117 | Onde entram as receitas do Label? | A cópia na grade (um Label gravado com Labels vazios) e o esvaziar entram na #81, em JSON de datapack com um tipo de receita próprio, que o pack pode sobrescrever (regra 4). A receita do Label vazio fica na #24, com as do controlador, do nó e do Configurator |
+| 116 | Como um Label gravado volta a ficar vazio? | Sozinho na grade de crafting, ele dá um Label vazio, como no RFTools. Fica longe do uso normal, para ninguém apagar uma etiqueta por engano |
+| 115 | O Label empilha? | Até 16, como placas. Os gravados só se juntam quando têm a mesma configuração e o mesmo nome, como o jogo faz com itens de componentes iguais |
+| 114 | Qual é o ID e o nome do Label, e como se chama a página da funcionalidade? | `redweave:label`, com o nome `Label` em inglês e `Etiqueta` em português (pergunta 68). A página é `etiqueta.md`, em português pela regra 21. O ID é contrato e fica fixado na #26 |
 | 113 | Clicar no Signal Node ou no Network Controller com qualquer item na mão também abre a Tela do Nó ou mostra a mensagem do clique, mas os documentos dizem "com a mão vazia". O que fazer? | Corrigir na #17: com um item na mão, o clique vai para o item, e só a mão vazia abre a Tela do Nó ou mostra a mensagem do controlador, como dizem as perguntas 52 e 75 e o `telas.md`. Um GameTest cobre os dois blocos |
 | 112 | O tooltip do Configurator roda no cliente, e o componente `redweave:network` só guarda o `NetworkId`. Como o tooltip mostra a rede guardada? | Ao guardar a rede, o servidor grava também o nome dela num componente `redweave:network_name`, só para exibição, e o tooltip mostra `Network: <nome>`. Depois de uma renomeação, o tooltip mostra o nome antigo até o próximo clique no controlador; as ações usam sempre o ID. O ID do componente é contrato e fica fixado na #26. Muda a pergunta 108 |
 | 111 | Quando o Label entra? | Numa issue própria da Fase 1, logo depois da #17, reaproveitando o formato da cópia (`redweave:node_slots`, pergunta 105) e as regras de colar (pergunta 106) |
@@ -113,6 +124,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:42 | Responde a pergunta 124. |
+| Marcelo Fabiano | 2026-11-10 16:30 | Responde as perguntas 122 e 123. |
+| Marcelo Fabiano | 2026-11-10 16:28 | Responde as perguntas 118 a 121. |
+| Marcelo Fabiano | 2026-11-10 16:27 | Responde as perguntas 114 a 117. |
 | Marcelo Fabiano | 2026-11-10 16:06 | Responde a pergunta 113. |
 | Marcelo Fabiano | 2026-11-10 15:49 | Responde a pergunta 112 e aponta a 108 para ela. |
 | Marcelo Fabiano | 2026-11-10 15:48 | Responde as perguntas 110 e 111. |

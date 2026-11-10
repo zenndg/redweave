@@ -115,6 +115,17 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Quando entra o Label | Issue própria logo depois da #17 | 111 |
 | Nome da rede no tooltip | Gravado em `redweave:network_name` ao guardar a rede | 112 |
 | Clique com item no nó e no controlador | Vai para o item; só a mão vazia abre a tela ou mostra a mensagem | 113 |
+| Nome do Label | `redweave:label`, `Label` e `Etiqueta`; página `etiqueta.md` | 114 |
+| Pilha do Label | Até 16; gravados iguais se juntam | 115 |
+| Esvaziar o Label | Sozinho na grade de crafting | 116 |
+| Receitas do Label | Cópia e esvaziar na #81; o Label vazio na #24 | 117 |
+| Gravar e aplicar o Label | Grava um da pilha com o Configurator; aplicar não gasta | 118 |
+| Tooltip do Label | Um slot por linha, na cor do canal | 119 |
+| Visual do Label | Etiqueta de papel com ilhós de cobre; `label` e `label_written` | 120 |
+| Testes do Label | GameTests, e JUnit só para regra nova | 121 |
+| Mensagem ao gravar | `Copied <n> slots to a Label`; o Configurator guarda a cópia também | 122 |
+| Tipos das receitas do Label | `redweave:label_copy` e `redweave:label_clear` | 123 |
+| Arte do Label | Gerada pelo desenvolvedor por IA; a #81 espera | 124 |
 
 Não há perguntas pendentes da concepção.
 
@@ -122,6 +133,10 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:42 | Registra a decisão 124. |
+| Marcelo Fabiano | 2026-11-10 16:30 | Registra as decisões 122 e 123. |
+| Marcelo Fabiano | 2026-11-10 16:28 | Registra as decisões 118 a 121. |
+| Marcelo Fabiano | 2026-11-10 16:27 | Registra as decisões 114 a 117. |
 | Marcelo Fabiano | 2026-11-10 16:06 | Registra a decisão 113. |
 | Marcelo Fabiano | 2026-11-10 15:49 | Registra a decisão 112. |
 | Marcelo Fabiano | 2026-11-10 15:48 | Registra as decisões 110 e 111. |

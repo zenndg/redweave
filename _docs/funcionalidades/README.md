@@ -17,12 +17,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`controlador-de-rede.md`](controlador-de-rede.md) | 1 | O Network Controller: colocar, clicar, quebrar e o item que guarda a rede |
 | [`no-de-sinal.md`](no-de-sinal.md) | 1 | O Signal Node: colocar, ler, emitir, clicar e quebrar |
 | [`configurador.md`](configurador.md) | 1 | O Configurator: guardar a rede, ligar nós, copiar e colar |
+| [`etiqueta.md`](etiqueta.md) | 1 | O Label: gravar, nomear, aplicar e copiar a configuração de um nó |
 
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a página da etiqueta. |
 | Marcelo Fabiano | 2026-11-10 15:52 | Adiciona a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 09:47 | Adiciona a página do nó de sinal. |
 | Marcelo Fabiano | 2026-11-10 09:06 | Adiciona a página do controlador de rede. |
