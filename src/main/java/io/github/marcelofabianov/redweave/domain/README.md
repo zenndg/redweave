@@ -44,6 +44,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `OutputFace` | Uma face onde um nó emite: o nó, o bloco e a face. Todas as saídas do nó nessa face emitem por ela | #12 |
 | `OutputChange` | Uma face cujo sinal mudou, que o jogo aplica antes de avisar os vizinhos | #12 |
 | `Emissions` | Dentro da rede: se ela espera uma avaliação e o que emitiu por último. Não vai para o save | #12 |
+| `Channels` | Dentro da rede: os 16 canais, o nome de cada um e o primeiro canal livre. Saiu do `Network` como `Readings` | #16 |
+| `NetworkSnapshot` | Tudo da rede que vai para o save: nome, cor, dono, controlador, os canais com nome, os nós e as leituras. `snapshot()` o tira da rede, e `Network.restore` refaz a rede a partir dele (pergunta 90) | #16 |
+| `SlotReading` | A última leitura de um slot de entrada, como vai para o save | #16 |
 
 ## Regras e porquês
 
@@ -77,5 +80,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Mesma face, o mais forte:** duas saídas do mesmo nó na mesma face emitem a mais forte, como dois fios de redstone no mesmo bloco (pergunta 39).
 - **Canais numa passada:** `channelValues` percorre os nós uma vez para os 16 canais, para a meta de 1.000 nós de `limites.md` não virar uma conta por saída.
 - **Números por interface:** limites como slots por nó e tamanho dos nomes vêm de `NetworkLimits`, nunca de constantes no domínio (regra 3).
+- **Restaurar sem setters:** a rede salva volta por `Network.restore`, uma fábrica que recebe o `NetworkSnapshot`, e não por métodos que mudam campos, para nenhuma regra ficar de fora (pergunta 90). A fronteira descarta o que está inválido no save antes do domínio, então um snapshot que quebra as regras do `SnapshotRules`, como um nó repetido ou uma leitura fora de uma entrada, é erro de programação (pergunta 92).
+- **Limites valem para as próximas mudanças:** a rede restaurada mantém os slots de cada nó e o tamanho dos nomes, mesmo que o config agora permita menos, para uma troca de config não apagar o trabalho do player (pergunta 93).
+- **Restaurada, a rede espera o primeiro tick:** o snapshot não leva o que a rede emitiu, então a rede restaurada começa pendente e reaplica todas as saídas (pergunta 38).
+- **Leitura 0 não vai para o save:** é o mesmo que uma entrada nunca lida, então o snapshot só leva as leituras ligadas, e a ida e volta pelo save sai igual (pergunta 89).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

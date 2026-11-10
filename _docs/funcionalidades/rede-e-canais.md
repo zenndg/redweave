@@ -23,7 +23,44 @@ A rede (`Network`) é o agregado: toda mudança nos nós, nos slots e nos canais
 
 ### Onde a rede fica salva
 
-A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunta 24). Assim, ela funciona com o chunk do controlador descarregado, sem carregar nenhum chunk à força (regra 6 do `AGENTS.md`).
+A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunta 24). Assim, ela funciona com o chunk do controlador descarregado, sem carregar nenhum chunk à força (regra 6 do `AGENTS.md`). A issue #16 entrega a gravação.
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Arquivo | Um só para o servidor inteiro, `data/redweave_networks.dat`, no armazenamento do Overworld, onde o jogo guarda o scoreboard. A rede não pertence a uma dimensão | 88 |
+| Quando grava | Toda mudança aceita marca o arquivo como alterado, e o jogo grava no salvamento automático e ao fechar o mundo | — |
+| O que vai | A rede inteira, os nós, os slots, os nomes dos canais e a última leitura de cada entrada, além da rede atual de cada player | 37, 89 e 91 |
+| O que não vai | O último valor emitido por cada saída. Ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas | 38 |
+| Formato | Contrato de save (regra 15), com versão e chaves estáveis, descrito abaixo e fixado na #26 | 89 |
+| Dado inválido | Descartado na menor parte possível, com aviso no log | 92 |
+| Versão desconhecida | O arquivo é copiado para `redweave_networks.v<N>.backup.dat`, e o mod começa sem redes, com um erro no log | 92 |
+| Arquivo corrompido | Quando nem o jogo consegue ler o arquivo, ele é copiado para `redweave_networks.unreadable.backup.dat`, e o mod começa sem redes, com um erro no log | 97 |
+| Config menor | Uma rede salva com mais slots ou nomes mais longos do que o config atual permite volta como estava, com aviso no log. O limite novo vale para as próximas mudanças | 93 |
+
+#### Formato do save
+
+A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`.
+
+| Parte | Chaves |
+|---|---|
+| Rede | `id`, `owner`, `name`, `color`, `controller` (opcional), `channels` e `nodes` |
+| Bloco (`controller` e o do nó) | `dimension`, `x`, `y` e `z` |
+| Canal | `color` e `name`. Só os canais renomeados entram |
+| Nó | `id`, `block`, `face`, `slot_count`, de 1 a 9 (pergunta 95), e `slots` |
+| Slot | `index`, `direction`, `face`, `channel` e `reading`. Só os slots em uso entram, e `reading` fica de fora quando é 0 |
+| Rede atual | `player` e `network` |
+
+#### Dado inválido
+
+| O que está inválido | O que acontece |
+|---|---|
+| Um slot, como com uma direção, face ou canal desconhecido, ou um `index` repetido ou fora do `slot_count` | O slot fica livre |
+| Um nó, como sem ID ou com `slot_count` fora de 1 a 9 | O nó sai da rede |
+| Um nó que aparece em duas redes | Fica só na primeira |
+| Uma rede sem ID ou dono válido, ou com um nome vazio ou de mais de 64 caracteres | A rede não é carregada |
+| Uma rede atual que aponta para uma rede que não existe | É descartada |
+
+O teto são as faixas do config da pergunta 66: 9 slots e 64 caracteres.
 
 ### Estado da rede
 
@@ -166,13 +203,14 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 1. Um `Signal` está sempre entre 0 e 15.
 2. Uma rede tem sempre 16 canais, um por cor, e cada cor aparece uma vez.
-3. Um nó pertence a no máximo uma rede, e não passa do limite de slots.
+3. Um nó pertence a no máximo uma rede, e não passa do limite de slots ao ser ligado. Uma rede restaurada do save mantém os slots que tinha (pergunta 93).
 4. Um slot sempre aponta para um canal da própria rede.
 5. O valor de um canal é o mais forte entre as entradas que contam, e 0 sem entradas.
 6. Uma rede `Offline` tem todos os canais em 0.
 7. Toda alteração confere se quem pede é o dono.
-8. O nome da rede e o do canal respeitam o limite do config e não ficam vazios.
+8. O nome da rede e o do canal respeitam o limite do config ao serem dados e nunca ficam vazios. Uma rede restaurada do save mantém os nomes que tinha (pergunta 93).
 9. Uma rede só é avaliada quando um canal mudou, uma vez por tick.
+10. Uma rede restaurada do save volta igual ao que foi salvo, menos o último valor emitido, e começa pendente (perguntas 38 e 90).
 
 ## Fora da Fase 1
 
@@ -184,6 +222,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 13:10 | Descreve a gravação da rede com as perguntas 88 a 93, 95 e 97. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Aplica a pergunta 71 à face do slot e às saídas. |
 | Marcelo Fabiano | 2026-11-09 17:21 | Aplica as perguntas 40 e 42. |
 | Marcelo Fabiano | 2026-11-09 16:57 | Detalha a avaliação com as perguntas 38 e 39. |

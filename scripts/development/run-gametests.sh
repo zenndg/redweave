@@ -8,8 +8,11 @@ readonly SUCCESS_PATTERN='All [0-9]+ required tests passed'
 root="$(git rev-parse --show-toplevel)"
 readonly root
 readonly log_file="${root}/build/gametest.log"
+# The world keeps the saved networks, so every run starts from a new one, as in the CI (answer 96).
+readonly world_dir="${root}/run/gametest/world"
 
 mkdir -p "$(dirname "${log_file}")"
+rm -rf "${world_dir}"
 "${root}/gradlew" --project-dir "${root}" runGameTestServer | tee "${log_file}"
 
 if ! grep -Eq "${SUCCESS_PATTERN}" "${log_file}"; then

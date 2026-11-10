@@ -28,7 +28,7 @@ O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
 **Cobertura:** enquanto `domain/` não tiver classes, o `jacocoTestCoverageVerification` roda e passa, porque não há o que medir. Ele passa a reprovar quando o domínio chega, na issue #9.
 
-**`make gametest`:** o jogo termina com sucesso mesmo quando o mod falha ao carregar, então `scripts/development/run-gametests.sh` só aprova se o log trouxer `All N required tests passed`. Foi conferido que o comando falha com uma GameTest reprovada e com uma classe de cliente no código comum. O log fica em `build/gametest.log`. O servidor roda em `run/gametest/`, separado do `run/` do `make client`, para um config editado à mão não mudar o resultado.
+**`make gametest`:** o jogo termina com sucesso mesmo quando o mod falha ao carregar, então `scripts/development/run-gametests.sh` só aprova se o log trouxer `All N required tests passed`. Foi conferido que o comando falha com uma GameTest reprovada e com uma classe de cliente no código comum. O log fica em `build/gametest.log`. O servidor roda em `run/gametest/`, separado do `run/` do `make client`, para um config editado à mão não mudar o resultado. O mundo `run/gametest/world` é apagado antes de cada execução, porque ele guarda as redes salvas, e assim nenhum teste depende do que outra execução deixou, como na CI (pergunta 96).
 
 **GameTests:** ficam no pacote `gametest` e cobrem o que está fora de `domain/` (regras 28 e 29 do `AGENTS.md`). As estruturas ficam em `data/redweave/structure/`, e a `empty.nbt` tem 3×3×3 blocos de ar. Cada classe usa `@GameTestHolder(RedweaveMod.MOD_ID)` e `@PrefixGameTestTemplate(false)`, para o `template` citar a estrutura só pelo nome. A `WithoutOptionalModsGameTests` reprova se o Jade ou o The One Probe estiverem carregados, o que prova que o mod abre sem eles num servidor dedicado (regras 20 e 39 e pergunta 18).
 
@@ -105,6 +105,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 14:07 | Apaga o mundo dos GameTests antes de cada execução. |
 | Marcelo Fabiano | 2026-11-10 10:20 | Aponta a `GameTestActions` nas GameTests. |
 | Marcelo Fabiano | 2026-11-10 09:31 | Atualiza o que a geração produz e explica o item na mão nas GameTests. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Adiciona o `make scan-secrets`. |

@@ -78,12 +78,12 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 - A Tela do Nó e a configuração dos slots (issue #19).
 - O Configurador (issue #17).
-- Salvar as redes no mundo (issue #16).
 - As camadas emissivas e a receita (issue #24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 13:10 | Tira a #16 do que fica fora desta funcionalidade. |
 | Marcelo Fabiano | 2026-11-10 11:26 | Aplica a Tela do Nó e as perguntas 86 e 87. |
 | Marcelo Fabiano | 2026-11-10 09:46 | Cria o documento, com as respostas das perguntas 70 a 76. |

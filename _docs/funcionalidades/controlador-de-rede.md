@@ -30,7 +30,7 @@ Um clique com a mão vazia mostra uma mensagem na action bar, até a Tela do Con
 | Outro player | `<nome> · owner: <dono>` | Nenhum: só o dono troca a rede atual para ela |
 | Qualquer um, num controlador sem rede | `No network` | Nenhum |
 
-Um controlador fica sem rede quando sobra no mundo depois de reiniciar o servidor, antes da persistência da issue #16 (pergunta 53).
+Um controlador fica sem rede quando a rede dele não existe mais no save, como quando ela foi descartada por estar inválida (pergunta 92), ou num mundo criado antes da persistência da issue #16 (pergunta 53).
 
 ## Quebrar
 
@@ -53,9 +53,9 @@ Quando o controlador some sem o dono quebrá-lo, a rede fica `Offline` por uma o
 | Aba do criativo | `Redweave`, a aba do mod, com o ícone do controlador (pergunta 69) |
 | Data component | `redweave:network`, com o `NetworkId` da rede, só quando o item veio de um controlador quebrado (regra 7 do `AGENTS.md` e pergunta 65). O ID do componente é contrato de save e fica fixado na issue #26 (regra 15) |
 
-## Onde ficam as redes até a #16
+## Onde ficam as redes
 
-Num objeto por servidor, criado ao abrir o mundo e descartado ao fechar, com as redes e a rede atual de cada player. Até a issue #16, a rede some ao reiniciar o servidor (perguntas 48 e 53).
+No save do mundo, num arquivo único para o servidor, com as redes e a rede atual de cada player, como descrito em [`rede-e-canais.md`](rede-e-canais.md#onde-a-rede-fica-salva) (issue #16, perguntas 88 a 93). O objeto por servidor da pergunta 63 continua sendo a raiz de composição, e só as redes em memória deram lugar ao save.
 
 ## Config
 
@@ -92,12 +92,12 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 - A Tela do Controlador (issue #20).
 - A textura final, os LEDs ao vivo e a receita (issue #24).
-- Salvar as redes no mundo (issue #16).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 13:10 | Aplica a persistência da #16. |
 | Marcelo Fabiano | 2026-11-10 09:31 | Aplica as perguntas 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Aplica as perguntas 64 a 66 e tira o tooltip, que não foi decidido. |
 | Marcelo Fabiano | 2026-11-10 08:55 | Cria o documento, com as respostas das perguntas 49 a 58, 51 e 60. |

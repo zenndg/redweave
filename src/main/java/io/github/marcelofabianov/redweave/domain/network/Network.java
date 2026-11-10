@@ -2,13 +2,10 @@ package io.github.marcelofabianov.redweave.domain.network;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * The aggregate: every change to the name, the channels and the nodes goes through it, and it keeps
@@ -21,7 +18,7 @@ public final class Network {
   private final NetworkId id;
   private final PlayerId owner;
   private final NetworkLimits limits;
-  private final Map<ChannelColor, Channel> channels = new EnumMap<>(ChannelColor.class);
+  private final Channels channels = new Channels();
   private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
   private final Readings readings = new Readings();
   private final Emissions emissions = new Emissions();
@@ -34,17 +31,14 @@ public final class Network {
       PlayerId owner,
       String name,
       ChannelColor color,
-      BlockLocation controller,
+      Optional<BlockLocation> controller,
       NetworkLimits limits) {
     this.id = id;
     this.owner = owner;
     this.name = name;
     this.color = color;
-    this.controller = Optional.of(controller);
+    this.controller = controller;
     this.limits = limits;
-    for (ChannelColor channelColor : ChannelColor.values()) {
-      channels.put(channelColor, Channel.unnamed(channelColor));
-    }
   }
 
   /**
@@ -61,7 +55,34 @@ public final class Network {
     String valid =
         Names.valid(name, limits.networkNameLength())
             .orElseThrow(() -> new IllegalArgumentException(INVALID_DEFAULT_NAME));
-    return new Network(id, owner, valid, color, controller, limits);
+    return new Network(id, owner, valid, color, Optional.of(controller), limits);
+  }
+
+  /**
+   * A network loaded from the saves, the same as it was, but waiting for the first tick, which
+   * applies every output again (answers 38 and 90). The limits of the config only hold for the next
+   * changes, so a node keeps its slots and a name its length (answer 93).
+   */
+  public static Network restore(NetworkSnapshot snapshot, NetworkLimits limits) {
+    SnapshotRules.check(snapshot);
+    Network network =
+        new Network(
+            snapshot.id(),
+            snapshot.owner(),
+            snapshot.name(),
+            snapshot.color(),
+            snapshot.controller(),
+            limits);
+    snapshot.channels().forEach(network.channels::restore);
+    snapshot.nodes().forEach(node -> network.nodes.put(node.id(), node));
+    snapshot.readings().forEach(network.readings::restore);
+    return network;
+  }
+
+  /** Everything that goes to the saves, without what the network last emitted (answer 38). */
+  public NetworkSnapshot snapshot() {
+    return new NetworkSnapshot(
+        id, owner, name, color, controller, channels.named(), nodes(), readings.all());
   }
 
   /** Renames the network, for its owner only. */
@@ -86,24 +107,12 @@ public final class Network {
     return Outcome.ACCEPTED;
   }
 
-  /**
-   * Names a channel, for the owner only. A blank name goes back to the name of the color, because
-   * the name of a channel is optional (answers 26 and 34).
-   */
+  /** Names a channel, for the owner only, or goes back to the name of the color (answer 34). */
   public Outcome renameChannel(PlayerId requester, ChannelColor channelColor, String newName) {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
-    if (newName.isBlank()) {
-      channels.put(channelColor, Channel.unnamed(channelColor));
-      return Outcome.ACCEPTED;
-    }
-    Optional<String> valid = Names.valid(newName, limits.channelNameLength());
-    if (valid.isEmpty()) {
-      return Outcome.INVALID_NAME;
-    }
-    channels.put(channelColor, new Channel(channelColor, valid));
-    return Outcome.ACCEPTED;
+    return channels.rename(channelColor, newName, limits.channelNameLength());
   }
 
   /** Attaches a node with every slot free, for the owner only. */
@@ -230,11 +239,11 @@ public final class Network {
 
   /** The 16 channels, in the order of the colors. */
   public List<Channel> channels() {
-    return List.copyOf(channels.values());
+    return channels.all();
   }
 
   public Channel channel(ChannelColor channelColor) {
-    return channels.get(channelColor);
+    return channels.of(channelColor);
   }
 
   /** The nodes, in the order they were attached. */
@@ -251,13 +260,7 @@ public final class Network {
    * its owner starts on it (answer 25).
    */
   public Optional<ChannelColor> firstFreeChannel() {
-    Set<ChannelColor> used =
-        nodes.values().stream()
-            .flatMap(node -> node.slots().stream())
-            .flatMap(Optional::stream)
-            .map(ChannelSlot::channel)
-            .collect(Collectors.toSet());
-    return channels.keySet().stream().filter(channel -> !used.contains(channel)).findFirst();
+    return channels.firstFreeAmong(nodes.values());
   }
 
   /**
@@ -366,8 +369,7 @@ public final class Network {
 
   /** The 16 channels in one pass over the nodes, for the simulator (_docs/limites.md, load). */
   public Map<ChannelColor, Signal> channelValues() {
-    Map<ChannelColor, Signal> values = new EnumMap<>(ChannelColor.class);
-    channels.keySet().forEach(channelColor -> values.put(channelColor, Signal.OFF));
+    Map<ChannelColor, Signal> values = channels.allOff();
     if (!isOnline()) {
       return values;
     }
