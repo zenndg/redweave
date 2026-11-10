@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 113 | Clicar no Signal Node ou no Network Controller com qualquer item na mão também abre a Tela do Nó ou mostra a mensagem do clique, mas os documentos dizem "com a mão vazia". O que fazer? | Corrigir na #17: com um item na mão, o clique vai para o item, e só a mão vazia abre a Tela do Nó ou mostra a mensagem do controlador, como dizem as perguntas 52 e 75 e o `telas.md`. Um GameTest cobre os dois blocos |
 | 112 | O tooltip do Configurator roda no cliente, e o componente `redweave:network` só guarda o `NetworkId`. Como o tooltip mostra a rede guardada? | Ao guardar a rede, o servidor grava também o nome dela num componente `redweave:network_name`, só para exibição, e o tooltip mostra `Network: <nome>`. Depois de uma renomeação, o tooltip mostra o nome antigo até o próximo clique no controlador; as ações usam sempre o ID. O ID do componente é contrato e fica fixado na #26. Muda a pergunta 108 |
 | 111 | Quando o Label entra? | Numa issue própria da Fase 1, logo depois da #17, reaproveitando o formato da cópia (`redweave:node_slots`, pergunta 105) e as regras de colar (pergunta 106) |
 | 110 | Como é o label que guarda a configuração de um nó para reutilizar? | Um item novo, o Label, que empilha vazio e guarda uma configuração depois de gravado. Shift + clique num nó com o Configurator e um Label vazio na outra mão grava os slots no Label, e o player o renomeia na bigorna. Com o Label na mão, o clique num nó aplica a configuração, com as regras de colar da pergunta 106. Os Labels vão para baús e podem ser copiados na grade de crafting. Inspirado no Logistics Network, só na experiência (regra 8) |
@@ -112,6 +113,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:06 | Responde a pergunta 113. |
 | Marcelo Fabiano | 2026-11-10 15:49 | Responde a pergunta 112 e aponta a 108 para ela. |
 | Marcelo Fabiano | 2026-11-10 15:48 | Responde as perguntas 110 e 111. |
 | Marcelo Fabiano | 2026-11-10 15:46 | Responde as perguntas 107 a 109. |

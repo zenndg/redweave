@@ -114,6 +114,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Label | Item que guarda uma configuração de nó, renomeável e copiável | 110 |
 | Quando entra o Label | Issue própria logo depois da #17 | 111 |
 | Nome da rede no tooltip | Gravado em `redweave:network_name` ao guardar a rede | 112 |
+| Clique com item no nó e no controlador | Vai para o item; só a mão vazia abre a tela ou mostra a mensagem | 113 |
 
 Não há perguntas pendentes da concepção.
 
@@ -121,6 +122,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Marcelo Fabiano | 2026-11-10 16:06 | Registra a decisão 113. |
 | Marcelo Fabiano | 2026-11-10 15:49 | Registra a decisão 112. |
 | Marcelo Fabiano | 2026-11-10 15:48 | Registra as decisões 110 e 111. |
 | Marcelo Fabiano | 2026-11-10 15:46 | Registra as decisões 107 a 109. |
