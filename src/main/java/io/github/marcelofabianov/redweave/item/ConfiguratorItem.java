@@ -87,7 +87,7 @@ public final class ConfiguratorItem extends Item {
     ConfiguratorCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
     if (copy != null) {
       tooltip.add(
-          Component.translatable(ConfiguratorMessages.COPY, copy.slots().enabled())
+          Component.translatable(ConfiguratorMessages.COPY, copy.slots().configured())
               .withStyle(ChatFormatting.GRAY));
     }
     tooltip.add(hint(ConfiguratorMessages.hintOf(mode)));

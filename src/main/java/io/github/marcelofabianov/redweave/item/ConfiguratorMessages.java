@@ -12,6 +12,8 @@ public final class ConfiguratorMessages {
   public static final String MODE = PREFIX + "mode";
   public static final String COPIED = PREFIX + "copied";
   public static final String PASTED = PREFIX + "pasted";
+  public static final String ENABLED = PREFIX + "enabled";
+  public static final String DISABLED = PREFIX + "disabled";
   public static final String CLEARED = PREFIX + "cleared";
   public static final String PICKED_UP = PREFIX + "picked_up";
   public static final String NOT_PLACER = PREFIX + "not_placer";

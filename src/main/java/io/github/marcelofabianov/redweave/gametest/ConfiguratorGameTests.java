@@ -54,6 +54,8 @@ public final class ConfiguratorGameTests {
   private static final String NOT_CLEARED = "Shift + click in the air should clear the copy";
   private static final String NOT_JOINED = "A paste on a node with no network should join it";
   private static final String JOINED = "Only who placed the node should paste a network on it";
+  private static final String NOT_TOGGLED = "Toggle should enable and disable the channels";
+  private static final String TOGGLED = "Only the owner should toggle the channels";
   private static final String REACTED = "The controller should not take the Configurator";
 
   private ConfiguratorGameTests() {}
@@ -219,6 +221,34 @@ public final class ConfiguratorGameTests {
 
     helper.assertTrue(
         RedweaveServer.running().orElseThrow().networkOfNode(target).isEmpty(), JOINED);
+    helper.succeed();
+  }
+
+  /** A click enables every configured channel, Shift + click disables them (answer 241). */
+  @GameTest(template = EMPTY)
+  public static void theToggleModeEnablesAndDisablesTheChannels(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeId node = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    PlayerId ownerId = new PlayerId(owner.getUUID());
+    NodeScene.networkOf(node)
+        .setUpSlot(
+            ownerId,
+            node,
+            SECOND_SLOT,
+            io.github.marcelofabianov.redweave.domain.network.Direction.INPUT,
+            Face.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.TOGGLE);
+
+    NodeScene.click(helper, owner, TARGET_NODE);
+    helper.assertTrue(NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), NOT_TOGGLED);
+    Player stranger = helper.makeMockPlayer(GameType.SURVIVAL);
+    holdConfigurator(stranger, ConfiguratorMode.TOGGLE);
+    NodeScene.shiftClick(helper, stranger, TARGET_NODE);
+    helper.assertTrue(NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), TOGGLED);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+    helper.assertFalse(
+        NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), NOT_TOGGLED);
     helper.succeed();
   }
 

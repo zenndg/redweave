@@ -22,6 +22,7 @@ import io.github.marcelofabianov.redweave.application.RenameNetwork;
 import io.github.marcelofabianov.redweave.application.RenameNode;
 import io.github.marcelofabianov.redweave.application.RenameSlot;
 import io.github.marcelofabianov.redweave.application.ShowNetwork;
+import io.github.marcelofabianov.redweave.application.ToggleSlots;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
@@ -57,6 +58,7 @@ public final class RedweaveServer {
   private final RenameNode renameNode;
   private final CopyNode copyNode;
   private final PasteNode pasteNode;
+  private final ToggleSlots toggleSlots;
   private final ShowNetwork showNetwork;
   private final RenameNetwork renameNetwork;
   private final RecolorNetwork recolorNetwork;
@@ -83,6 +85,7 @@ public final class RedweaveServer {
     renameNode = new RenameNode(networks, networks);
     copyNode = new CopyNode(networks);
     pasteNode = new PasteNode(networks, networks);
+    toggleSlots = new ToggleSlots(networks, networks);
     showNetwork = new ShowNetwork(networks);
     renameNetwork = new RenameNetwork(networks, networks);
     recolorNetwork = new RecolorNetwork(networks, networks);
@@ -168,6 +171,10 @@ public final class RedweaveServer {
 
   public PasteNode pasteNode() {
     return pasteNode;
+  }
+
+  public ToggleSlots toggleSlots() {
+    return toggleSlots;
   }
 
   public ShowNetwork showNetwork() {

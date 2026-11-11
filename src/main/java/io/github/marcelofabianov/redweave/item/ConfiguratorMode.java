@@ -4,13 +4,14 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * The modes of the Configurator, in the order Shift + scroll goes through them (answers 143 and
- * 164). The saved names are the contract of {@code redweave:configurator_mode} (answer 173), and
- * each mode has its own color, always shown with its name (answers 167 to 169).
+ * The modes of the Configurator, in the order Shift + scroll goes through them (answers 143, 164
+ * and 241). The saved names are the contract of {@code redweave:configurator_mode} (answer 173),
+ * and each mode has its own color, always shown with its name (answers 167 to 169).
  */
 public enum ConfiguratorMode {
   OPEN(Saved.OPEN, 0x5B9BF0),
   COPY(Saved.COPY, 0x3FAE5A),
+  TOGGLE(Saved.TOGGLE, 0xE3A33B),
   WRENCH(Saved.WRENCH, 0xD94A64);
 
   /** The mode of a Configurator that was never switched. */
@@ -52,6 +53,7 @@ public enum ConfiguratorMode {
   private static final class Saved {
     static final String OPEN = "open";
     static final String COPY = "copy";
+    static final String TOGGLE = "toggle";
     static final String WRENCH = "wrench";
 
     private Saved() {}

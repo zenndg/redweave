@@ -9,8 +9,8 @@ public record Pasted(List<Optional<ChannelSlot>> slots) {
     slots = List.copyOf(slots);
   }
 
-  /** How many slots of the node are enabled after the paste. */
+  /** How many slots of the node are configured after the paste, enabled or not (answer 240). */
   public int inUse() {
-    return (int) slots.stream().flatMap(Optional::stream).filter(ChannelSlot::active).count();
+    return (int) slots.stream().filter(Optional::isPresent).count();
   }
 }

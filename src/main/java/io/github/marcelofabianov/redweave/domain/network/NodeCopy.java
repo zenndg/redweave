@@ -25,9 +25,9 @@ public record NodeCopy(Face attached, List<CopiedSlot> slots) {
     }
   }
 
-  /** How many slots of the copy are enabled, as `Copied <n> slots` shows. */
-  public int enabled() {
-    return (int) slots.stream().filter(copied -> copied.slot().active()).count();
+  /** How many configured slots the copy holds, enabled or not, as `Copied <n> slots` (240). */
+  public int configured() {
+    return slots.size();
   }
 
   public static NodeCopy of(Node node) {

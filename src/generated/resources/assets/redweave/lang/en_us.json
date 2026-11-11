@@ -6,9 +6,12 @@
   "itemGroup.redweave": "Redweave",
   "message.redweave.configurator.cleared": "Copy cleared",
   "message.redweave.configurator.copied": "Copied %s slots",
+  "message.redweave.configurator.disabled": "Disabled %s channels",
+  "message.redweave.configurator.enabled": "Enabled %s channels",
   "message.redweave.configurator.mode": "Mode: %s",
   "message.redweave.configurator.mode.copy": "Copy",
   "message.redweave.configurator.mode.open": "Open",
+  "message.redweave.configurator.mode.toggle": "Toggle",
   "message.redweave.configurator.mode.wrench": "Wrench",
   "message.redweave.configurator.not_placer": "Only the player who placed this node can pick it up.",
   "message.redweave.configurator.paste_not_placer": "Only the player who placed this node can paste a network on it.",
@@ -83,6 +86,7 @@
   "tooltip.redweave.configurator.copy": "Copy: %s slots",
   "tooltip.redweave.configurator.hint.copy": "Click a node to copy it, Shift + click to paste.",
   "tooltip.redweave.configurator.hint.open": "Click a node to open it.",
+  "tooltip.redweave.configurator.hint.toggle": "Click a node to enable its channels, Shift + click to disable them.",
   "tooltip.redweave.configurator.hint.wrench": "Click a node to pick it up.",
   "tooltip.redweave.configurator.hint_scroll": "Shift + scroll to change the mode."
 }

@@ -11,6 +11,12 @@ final class ConfiguratorPortugueseTexts {
   private static final String MODE = "Modo: %s";
   private static final String OPEN = "Abrir";
   private static final String COPY_MODE = "Copiar";
+  private static final String TOGGLE = "Alternar";
+  private static final String TOGGLE_CLICK = "Clique num nó para ativar os canais,";
+  private static final String TOGGLE_SHIFT = " Shift + clique para desativar.";
+  private static final String HINT_TOGGLE = TOGGLE_CLICK + TOGGLE_SHIFT;
+  private static final String ENABLED = "%s canais ativados";
+  private static final String DISABLED = "%s canais desativados";
   private static final String WRENCH = "Chave";
   private static final String COPIED = "%s slots copiados";
   private static final String PASTED = "%s slots colados";
@@ -34,6 +40,10 @@ final class ConfiguratorPortugueseTexts {
     add.accept(ConfiguratorMessages.MODE, MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.OPEN), OPEN);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.COPY), COPY_MODE);
+    add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.TOGGLE), TOGGLE);
+    add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.TOGGLE), HINT_TOGGLE);
+    add.accept(ConfiguratorMessages.ENABLED, ENABLED);
+    add.accept(ConfiguratorMessages.DISABLED, DISABLED);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.WRENCH), WRENCH);
     add.accept(ConfiguratorMessages.COPIED, COPIED);
     add.accept(ConfiguratorMessages.PASTED, PASTED);

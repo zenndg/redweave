@@ -6,9 +6,12 @@
   "itemGroup.redweave": "Redweave",
   "message.redweave.configurator.cleared": "Cópia apagada",
   "message.redweave.configurator.copied": "%s slots copiados",
+  "message.redweave.configurator.disabled": "%s canais desativados",
+  "message.redweave.configurator.enabled": "%s canais ativados",
   "message.redweave.configurator.mode": "Modo: %s",
   "message.redweave.configurator.mode.copy": "Copiar",
   "message.redweave.configurator.mode.open": "Abrir",
+  "message.redweave.configurator.mode.toggle": "Alternar",
   "message.redweave.configurator.mode.wrench": "Chave",
   "message.redweave.configurator.not_placer": "Só quem colocou este nó pode retirá-lo.",
   "message.redweave.configurator.paste_not_placer": "Só quem colocou este nó pode colar uma rede nele.",
@@ -83,6 +86,7 @@
   "tooltip.redweave.configurator.copy": "Cópia: %s slots",
   "tooltip.redweave.configurator.hint.copy": "Clique num nó para copiá-lo, Shift + clique para colar.",
   "tooltip.redweave.configurator.hint.open": "Clique num nó para abri-lo.",
+  "tooltip.redweave.configurator.hint.toggle": "Clique num nó para ativar os canais, Shift + clique para desativar.",
   "tooltip.redweave.configurator.hint.wrench": "Clique num nó para retirá-lo.",
   "tooltip.redweave.configurator.hint_scroll": "Shift + scroll para trocar o modo."
 }
