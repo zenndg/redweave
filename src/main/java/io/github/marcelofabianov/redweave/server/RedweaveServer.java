@@ -10,11 +10,12 @@ import io.github.marcelofabianov.redweave.application.EvaluateNetworks;
 import io.github.marcelofabianov.redweave.application.LinkNode;
 import io.github.marcelofabianov.redweave.application.LoseController;
 import io.github.marcelofabianov.redweave.application.LoseNode;
-import io.github.marcelofabianov.redweave.application.OpenNetwork;
+import io.github.marcelofabianov.redweave.application.NetworkChoices;
 import io.github.marcelofabianov.redweave.application.PasteNode;
 import io.github.marcelofabianov.redweave.application.PlaceController;
 import io.github.marcelofabianov.redweave.application.PlaceNode;
 import io.github.marcelofabianov.redweave.application.ReadInput;
+import io.github.marcelofabianov.redweave.application.RenameNode;
 import io.github.marcelofabianov.redweave.application.UseFreeSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -37,7 +38,6 @@ public final class RedweaveServer {
   private final PlaceController placeController;
   private final BreakController breakController;
   private final LoseController loseController;
-  private final OpenNetwork openNetwork;
   private final PlaceNode placeNode;
   private final ReadInput readInput;
   private final BreakNode breakNode;
@@ -47,18 +47,19 @@ public final class RedweaveServer {
   private final ConfigureSlot configureSlot;
   private final ClearSlot clearSlot;
   private final LinkNode linkNode;
+  private final NetworkChoices networkChoices;
+  private final RenameNode renameNode;
   private final CopyNode copyNode;
   private final PasteNode pasteNode;
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
     RandomIds ids = new RandomIds();
-    CreateNetwork create = new CreateNetwork(ids, networks, networks, networks, limits);
+    CreateNetwork create = new CreateNetwork(ids, networks, networks, limits);
     placeController = new PlaceController(create, networks, networks);
     breakController = new BreakController(networks, networks);
     loseController = new LoseController(networks, networks);
-    openNetwork = new OpenNetwork(networks, networks);
-    placeNode = new PlaceNode(ids, networks, networks, networks);
+    placeNode = new PlaceNode(ids);
     readInput = new ReadInput(networks, networks);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
@@ -66,7 +67,9 @@ public final class RedweaveServer {
     useFreeSlot = new UseFreeSlot(networks, networks);
     configureSlot = new ConfigureSlot(networks, networks);
     clearSlot = new ClearSlot(networks, networks);
-    linkNode = new LinkNode(networks, networks, networks);
+    linkNode = new LinkNode(networks, networks, networks, networks);
+    networkChoices = new NetworkChoices(networks, networks);
+    renameNode = new RenameNode(networks, networks);
     copyNode = new CopyNode(networks);
     pasteNode = new PasteNode(networks, networks);
   }
@@ -94,10 +97,6 @@ public final class RedweaveServer {
 
   public LoseController loseController() {
     return loseController;
-  }
-
-  public OpenNetwork openNetwork() {
-    return openNetwork;
   }
 
   public PlaceNode placeNode() {
@@ -136,6 +135,14 @@ public final class RedweaveServer {
     return linkNode;
   }
 
+  public NetworkChoices networkChoices() {
+    return networkChoices;
+  }
+
+  public RenameNode renameNode() {
+    return renameNode;
+  }
+
   public CopyNode copyNode() {
     return copyNode;
   }
@@ -157,7 +164,7 @@ public final class RedweaveServer {
     return networks.find(id);
   }
 
-  public Optional<NetworkId> currentOf(PlayerId player) {
-    return networks.currentOf(player);
+  public Optional<NetworkId> lastUsedOf(PlayerId player) {
+    return networks.lastUsedOf(player);
   }
 }

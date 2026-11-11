@@ -6,6 +6,7 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.I
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.NAME;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.NODE;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.NODE_POSITION;
+import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OTHER_NODE;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,6 +31,7 @@ class NetworkRestoreTest {
   private static final String BLANK = "  ";
   private static final String PADDED_NAME = " Network ";
   private static final String CHANNEL_NAME = "Door";
+  private static final String NODE_NAME = "Front lamp";
   private static final ChannelColor CHANNEL = ChannelColor.RED;
   private static final Signal READ = new Signal(7);
 
@@ -40,7 +42,12 @@ class NetworkRestoreTest {
             Optional.empty(),
             Optional.empty(),
             Optional.empty());
-    return new Node(NODE, NODE_POSITION, slots);
+    return new Node(NODE, Optional.empty(), NODE_POSITION, slots);
+  }
+
+  private static Node named(Optional<String> name) {
+    Node input = node(Direction.INPUT);
+    return new Node(input.id(), name, input.position(), input.slots());
   }
 
   private static NetworkSnapshot snapshot(
@@ -61,7 +68,11 @@ class NetworkRestoreTest {
   @Test
   void aNodeKeepsItsSlotsWhenTheConfigNowAllowsFewer() {
     Node upgraded =
-        new Node(NODE, NODE_POSITION, Collections.nCopies(UPGRADED_SLOTS, Optional.empty()));
+        new Node(
+            NODE,
+            Optional.empty(),
+            NODE_POSITION,
+            Collections.nCopies(UPGRADED_SLOTS, Optional.empty()));
 
     Network restored =
         Network.restore(withNodes(List.of(upgraded), List.of()), TestLimits.STARTING);
@@ -119,5 +130,24 @@ class NetworkRestoreTest {
             withNodes(List.of(node(Direction.INPUT)), List.of(reading)), TestLimits.STARTING);
 
     assertEquals(READ, restored.channelValue(CHANNEL));
+  }
+
+  @Test
+  void aNodeKeepsItsNameAndANameLongerThanTheConfigNowAllows() {
+    String longName = LETTER.repeat(LONG_NAME_LENGTH);
+    Node lamp = named(Optional.of(NODE_NAME));
+    Node longNamed = new Node(OTHER_NODE, Optional.of(longName), NODE_POSITION, lamp.slots());
+
+    Network restored =
+        Network.restore(withNodes(List.of(lamp, longNamed), List.of()), TestLimits.STARTING);
+
+    assertEquals(NODE_NAME, restored.node(NODE).orElseThrow().displayName());
+    assertEquals(longName, restored.node(OTHER_NODE).orElseThrow().displayName());
+  }
+
+  @Test
+  void aNodeWithABlankOrPaddedNameIsRejected() {
+    assertRejected(withNodes(List.of(named(Optional.of(BLANK))), List.of()));
+    assertRejected(withNodes(List.of(named(Optional.of(PADDED_NAME))), List.of()));
   }
 }

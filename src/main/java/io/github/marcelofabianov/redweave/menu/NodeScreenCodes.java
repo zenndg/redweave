@@ -49,6 +49,7 @@ public final class NodeScreenCodes {
     return Optional.of(new ChannelSlot(direction, Face.values()[face], channel));
   }
 
+  /** A choice carries only its position, which takes every bit above the kind (answer 145). */
   public static int button(NodeAction action) {
     return action.kind().ordinal()
         | action.index() << INDEX_SHIFT
@@ -57,8 +58,11 @@ public final class NodeScreenCodes {
 
   public static Optional<NodeAction> actionOf(int button) {
     int kind = button & KIND_MASK;
-    if (kind >= NodeAction.Kind.values().length) {
+    if (button < 0) {
       return Optional.empty();
+    }
+    if (kind == NodeAction.Kind.CHOOSE.ordinal()) {
+      return Optional.of(NodeAction.choose(button >> INDEX_SHIFT));
     }
     int index = button >> INDEX_SHIFT & INDEX_MASK;
     int slotCode = button >> SLOT_SHIFT;

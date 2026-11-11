@@ -1,8 +1,8 @@
 package io.github.marcelofabianov.redweave.server;
 
 import io.github.marcelofabianov.redweave.application.AllNetworksFinder;
-import io.github.marcelofabianov.redweave.application.CurrentNetworkChooser;
-import io.github.marcelofabianov.redweave.application.CurrentNetworkFinder;
+import io.github.marcelofabianov.redweave.application.LastUsedNetworkFinder;
+import io.github.marcelofabianov.redweave.application.LastUsedNetworkRecorder;
 import io.github.marcelofabianov.redweave.application.NetworkFinder;
 import io.github.marcelofabianov.redweave.application.NetworkSaver;
 import io.github.marcelofabianov.redweave.application.NodeNetworkFinder;
@@ -23,9 +23,9 @@ import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 
 /**
- * The networks and the current network of each player, saved in the world, in the data of the
- * Overworld, and not in the blocks (answers 24, 88 and 91). A saved change only marks the data as
- * changed, and the game writes it at the autosave and when the world closes.
+ * The networks and the network each player last put a node in, saved in the world, in the data of
+ * the Overworld, and not in the blocks (answers 24, 88 and 91). A saved change only marks the data
+ * as changed, and the game writes it at the autosave and when the world closes.
  */
 public final class SavedDataNetworks extends SavedData
     implements AllNetworksFinder,
@@ -33,16 +33,16 @@ public final class SavedDataNetworks extends SavedData
         NetworkSaver,
         NodeNetworkFinder,
         OwnerNetworkFinder,
-        CurrentNetworkFinder,
-        CurrentNetworkChooser {
+        LastUsedNetworkFinder,
+        LastUsedNetworkRecorder {
   public static final String NAME = "redweave_networks";
 
   private final Map<NetworkId, Network> networks;
-  private final Map<PlayerId, NetworkId> current;
+  private final Map<PlayerId, NetworkId> lastUsed;
 
   private SavedDataNetworks(NetworkSave.Contents contents) {
     networks = contents.networks();
-    current = contents.current();
+    lastUsed = contents.lastUsed();
   }
 
   /** The data of the save of this server, read from its file once and kept by the game. */
@@ -81,7 +81,7 @@ public final class SavedDataNetworks extends SavedData
 
   @Override
   public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-    return NetworkSave.write(tag, networks.values(), current);
+    return NetworkSave.write(tag, networks.values(), lastUsed);
   }
 
   @Override
@@ -111,13 +111,13 @@ public final class SavedDataNetworks extends SavedData
   }
 
   @Override
-  public Optional<NetworkId> currentOf(PlayerId player) {
-    return Optional.ofNullable(current.get(player));
+  public Optional<NetworkId> lastUsedOf(PlayerId player) {
+    return Optional.ofNullable(lastUsed.get(player));
   }
 
   @Override
-  public void choose(PlayerId player, NetworkId network) {
-    current.put(player, network);
+  public void record(PlayerId player, NetworkId network) {
+    lastUsed.put(player, network);
     setDirty();
   }
 }

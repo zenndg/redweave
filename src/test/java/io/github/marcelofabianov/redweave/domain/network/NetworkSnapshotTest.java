@@ -23,6 +23,7 @@ class NetworkSnapshotTest {
   private static final int OUTPUT_SLOT = 1;
   private static final String RENAMED = "Base door";
   private static final String CHANNEL_NAME = "Door";
+  private static final String NODE_NAME = "Lever";
   private static final ChannelColor NEW_COLOR = ChannelColor.ORANGE;
   private static final ChannelColor CHANNEL = ChannelColor.RED;
   private static final Signal READ = new Signal(11);
@@ -32,8 +33,9 @@ class NetworkSnapshotTest {
     network.rename(OWNER, RENAMED);
     network.recolor(OWNER, NEW_COLOR);
     network.renameChannel(OWNER, CHANNEL, CHANNEL_NAME);
-    network.attachNode(OWNER, NODE, NODE_POSITION);
-    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
+    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
+    network.renameNode(OWNER, NODE, NODE_NAME);
     network.configureSlot(
         OWNER, NODE, INPUT_SLOT, new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL));
     network.configureSlot(
@@ -68,6 +70,7 @@ class NetworkSnapshotTest {
     assertEquals(RENAMED, restored.name());
     assertEquals(NEW_COLOR, restored.color());
     assertEquals(Optional.of(CHANNEL_NAME), restored.channel(CHANNEL).name());
+    assertEquals(NODE_NAME, restored.node(NODE).orElseThrow().displayName());
     assertEquals(busyNetwork().nodes(), restored.nodes());
   }
 

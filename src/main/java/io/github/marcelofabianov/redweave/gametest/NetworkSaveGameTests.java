@@ -7,6 +7,7 @@ import static io.github.marcelofabianov.redweave.gametest.SaveTags.RED;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.WEST;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -47,6 +48,7 @@ public final class NetworkSaveGameTests {
   private static final UUID IDLE_NODE = UUID.fromString(IDLE_NODE_UUID);
   private static final String NAME = "Base door";
   private static final String CHANNEL_NAME = "Door";
+  private static final String NODE_NAME = "Lever";
   private static final String LETTER = "x";
   private static final int VERSION = 1;
   private static final int SLOTS = 4;
@@ -59,7 +61,7 @@ public final class NetworkSaveGameTests {
   private static final BlockPos FLOOR = new BlockPos(1, 0, 1);
   private static final Path NO_FILE = Path.of(SavedDataNetworks.NAME);
   private static final String NOT_SAME = "The save should come back as it was written";
-  private static final String NOT_KEPT = "The network should keep its reading, names and current";
+  private static final String NOT_KEPT = "The network should keep its reading, names, last used";
   private static final String NOT_ALLOWED = "The save should keep what the config no longer allows";
   private static final String NOT_DIRTY = "A saved change should mark the save as changed";
   private static final String NOT_WRITTEN = "The change should be in what the save writes";
@@ -73,13 +75,13 @@ public final class NetworkSaveGameTests {
             SaveTags.slot(1, OUTPUT, WEST, RED));
     ListTag nodes =
         SaveTags.list(
-            SaveTags.node(NODE, NODE_X, SLOTS, slots),
+            SaveTags.named(SaveTags.node(NODE, NODE_X, SLOTS, slots), NODE_NAME),
             SaveTags.node(IDLE_NODE, IDLE_NODE_X, SLOTS, SaveTags.list()));
     ListTag channels = SaveTags.list(SaveTags.channel(RED, CHANNEL_NAME));
     return SaveTags.save(
         VERSION,
         SaveTags.list(SaveTags.network(NETWORK, OWNER, NAME, channels, nodes)),
-        SaveTags.list(SaveTags.current(OWNER, NETWORK)));
+        SaveTags.list(SaveTags.lastUsed(OWNER, NETWORK)));
   }
 
   private static SavedDataNetworks load(CompoundTag tag) {
@@ -96,7 +98,7 @@ public final class NetworkSaveGameTests {
   }
 
   @GameTest(template = EMPTY)
-  public static void aLoadedNetworkKeepsItsReadingNamesAndCurrent(GameTestHelper helper) {
+  public static void aLoadedNetworkKeepsItsReadingNamesAndLastUsed(GameTestHelper helper) {
     SavedDataNetworks data = load(fullSave());
     Network network = data.find(new NetworkId(NETWORK)).orElseThrow();
 
@@ -104,9 +106,11 @@ public final class NetworkSaveGameTests {
     helper.assertTrue(network.name().equals(NAME), NOT_KEPT);
     helper.assertTrue(
         network.channel(ChannelColor.RED).name().equals(Optional.of(CHANNEL_NAME)), NOT_KEPT);
+    helper.assertTrue(
+        network.node(new NodeId(NODE)).orElseThrow().displayName().equals(NODE_NAME), NOT_KEPT);
     helper.assertTrue(network.isPending(), NOT_KEPT);
     helper.assertTrue(
-        data.currentOf(new PlayerId(OWNER)).equals(Optional.of(network.id())), NOT_KEPT);
+        data.lastUsedOf(new PlayerId(OWNER)).equals(Optional.of(network.id())), NOT_KEPT);
     helper.succeed();
   }
 
@@ -153,9 +157,7 @@ public final class NetworkSaveGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     ItemStack controller = new ItemStack(RedweaveItems.NETWORK_CONTROLLER.get());
     GameTestActions.placeOn(helper, owner, controller, FLOOR, Direction.UP);
-    return RedweaveServer.running()
-        .orElseThrow()
-        .currentOf(new PlayerId(owner.getUUID()))
-        .orElseThrow();
+    NetworkControllerBlockEntity block = helper.getBlockEntity(FLOOR.above());
+    return block.network().orElseThrow();
   }
 }

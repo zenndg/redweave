@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.application;
 
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
@@ -9,19 +10,26 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import java.util.Optional;
 
 /**
- * Moves a node to another network, from the Node Screen in #87 (answers 141 and 194). The node
- * leaves the old one, so it has one network at most, and the player must own both, so nobody takes
- * a node of another (answer 42).
+ * Picks or switches the network of a node, from the Node Screen (answers 139, 141 and 194). The
+ * node leaves the old one, so it has one network at most, keeps its name (200) and joins only an
+ * online network (157). The player must own both, so nobody takes a node of another (42). Who may
+ * pick for a node with no network is checked by the block, which knows who placed it (172).
  */
 public final class LinkNode {
   private final NetworkFinder finder;
   private final NodeNetworkFinder nodeFinder;
   private final NetworkSaver saver;
+  private final LastUsedNetworkRecorder lastUsed;
 
-  public LinkNode(NetworkFinder finder, NodeNetworkFinder nodeFinder, NetworkSaver saver) {
+  public LinkNode(
+      NetworkFinder finder,
+      NodeNetworkFinder nodeFinder,
+      NetworkSaver saver,
+      LastUsedNetworkRecorder lastUsed) {
     this.finder = finder;
     this.nodeFinder = nodeFinder;
     this.saver = saver;
+    this.lastUsed = lastUsed;
   }
 
   public Outcome link(PlayerId player, NodeId node, NodePosition position, NetworkId targetId) {
@@ -34,12 +42,14 @@ public final class LinkNode {
     if (allowed != Outcome.ACCEPTED) {
       return allowed;
     }
+    Optional<String> name = old.flatMap(network -> network.node(node)).flatMap(Node::name);
     old.ifPresent(network -> {
       network.detachNode(player, node);
       saver.save(network);
     });
-    Outcome joined = JoinNetwork.join(target.get(), player, node, position);
+    Outcome joined = JoinNetwork.join(target.get(), player, node, position, name);
     saver.save(target.get());
+    lastUsed.record(player, targetId);
     return joined;
   }
 
@@ -49,6 +59,9 @@ public final class LinkNode {
       return Outcome.ALREADY_ATTACHED;
     }
     boolean ownsOld = old.map(network -> network.isOwner(player)).orElse(true);
-    return ownsOld && target.isOwner(player) ? Outcome.ACCEPTED : Outcome.NOT_OWNER;
+    if (!ownsOld || !target.isOwner(player)) {
+      return Outcome.NOT_OWNER;
+    }
+    return target.isOnline() ? Outcome.ACCEPTED : Outcome.NETWORK_NOT_ONLINE;
   }
 }

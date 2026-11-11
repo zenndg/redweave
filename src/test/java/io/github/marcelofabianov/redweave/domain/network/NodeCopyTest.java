@@ -30,7 +30,10 @@ class NodeCopyTest {
 
   private static Node node(NodeId id, Face attached, int slotCount) {
     return new Node(
-        id, new NodePosition(BLOCK, attached), Collections.nCopies(slotCount, Optional.empty()));
+        id,
+        Optional.empty(),
+        new NodePosition(BLOCK, attached),
+        Collections.nCopies(slotCount, Optional.empty()));
   }
 
   private static Node source() {

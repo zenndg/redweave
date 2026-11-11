@@ -20,7 +20,7 @@ class NetworkSlotsTest {
 
   private static Network networkWithANode() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     return network;
   }
 

@@ -22,11 +22,13 @@ public final class RedweaveConfig {
   private static final String NETWORK_NAME_COMMENT = "Maximum length of the name of a network.";
   private static final String CHANNEL_NAME_COMMENT = "Maximum length of the name of a channel.";
   private static final String SLOTS_COMMENT = "Channel slots of a Signal Node.";
+  private static final String NODE_NAME_COMMENT = "Maximum length of the name of a Signal Node.";
 
   private static final int DEFAULT_RANGE = 128;
   private static final int MAX_RANGE = 30_000_000;
   private static final int DEFAULT_NETWORK_NAME = 32;
   private static final int DEFAULT_CHANNEL_NAME = 16;
+  private static final int DEFAULT_NODE_NAME = 16;
 
   /** The longest name the config allows, also the ceiling of a name in the saves (answer 93). */
   public static final int MAX_NAME = 64;
@@ -41,6 +43,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue NETWORK_NAME_LENGTH;
   static final ModConfigSpec.IntValue CHANNEL_NAME_LENGTH;
   static final ModConfigSpec.IntValue SLOTS_PER_NODE;
+  static final ModConfigSpec.IntValue NODE_NAME_LENGTH;
 
   static {
     ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -60,6 +63,10 @@ public final class RedweaveConfig {
     builder.push(NODE);
     SLOTS_PER_NODE =
         builder.comment(SLOTS_COMMENT).defineInRange(SLOTS, DEFAULT_SLOTS, 1, MAX_SLOTS);
+    NODE_NAME_LENGTH =
+        builder
+            .comment(NODE_NAME_COMMENT)
+            .defineInRange(NAME_LENGTH, DEFAULT_NODE_NAME, 1, MAX_NAME);
     builder.pop();
     SPEC = builder.build();
   }

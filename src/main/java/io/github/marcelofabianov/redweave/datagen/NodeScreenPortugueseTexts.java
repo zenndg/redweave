@@ -34,10 +34,20 @@ final class NodeScreenPortugueseTexts {
   private static final String READ_ONLY = "Só o dono de %s pode alterar este nó.";
   private static final String NOT_IN_A_NETWORK = "Este nó não está numa rede.";
   private static final String TAB_SLOTS = "Slots";
-  private static final String STATE_ONLINE = "Online · %s";
+  private static final String STATE_ONLINE = "Online";
   private static final String STATE_UNLOADED = "Descarregado";
   private static final String STATE_OUT_OF_RANGE = "Fora de alcance";
   private static final String STATE_NO_NETWORK = "Sem rede";
+  private static final String CHOOSE_NETWORK = "Escolha uma rede";
+  private static final String NONE_ONLINE = "Nenhuma rede ligada.";
+  private static final String PLACE_A_CONTROLLER = " Coloque um Controlador de Rede";
+  private static final String TO_CREATE_ONE = " para criar uma.";
+  private static final String NO_NETWORK_ONLINE = NONE_ONLINE + PLACE_A_CONTROLLER + TO_CREATE_ONE;
+  private static final String NODE_COUNT_ONE = "%s nó";
+  private static final String NODE_COUNT_MANY = "%s nós";
+  private static final String BACK = "Voltar";
+  private static final String RENAME_TOOLTIP = "Clique para renomear. Enter salva, Esc cancela.";
+  private static final String SWITCH_NETWORK_TOOLTIP = "Clique para trocar de rede.";
   private static final String FACE_DOWN = "Baixo";
   private static final String FACE_UP = "Cima";
   private static final String FACE_NORTH = "Norte";
@@ -52,6 +62,17 @@ final class NodeScreenPortugueseTexts {
     addActions(add);
     addStates(add);
     addFaces(add);
+    addNetworkChoice(add);
+  }
+
+  private static void addNetworkChoice(BiConsumer<String, String> add) {
+    add.accept(NodeScreenTexts.CHOOSE_NETWORK, CHOOSE_NETWORK);
+    add.accept(NodeScreenTexts.NO_NETWORK_ONLINE, NO_NETWORK_ONLINE);
+    add.accept(NodeScreenTexts.NODE_COUNT_ONE, NODE_COUNT_ONE);
+    add.accept(NodeScreenTexts.NODE_COUNT_MANY, NODE_COUNT_MANY);
+    add.accept(NodeScreenTexts.BACK, BACK);
+    add.accept(NodeScreenTexts.RENAME_TOOLTIP, RENAME_TOOLTIP);
+    add.accept(NodeScreenTexts.SWITCH_NETWORK_TOOLTIP, SWITCH_NETWORK_TOOLTIP);
   }
 
   private static void addLabels(BiConsumer<String, String> add) {

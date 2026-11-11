@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /** The state the screens show for a node (answer 29 and rede-e-canais.md). */
@@ -20,7 +21,7 @@ class NodeStateTest {
 
   private static Network networkWithANode() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     return network;
   }
 

@@ -35,7 +35,6 @@ public final class NetworkControllerGameTests {
   private static final BlockPos FLOOR = new BlockPos(1, 0, 1);
   private static final BlockPos CONTROLLER = FLOOR.above();
   private static final BlockPos OTHER_FLOOR = new BlockPos(0, 0, 0);
-  private static final BlockPos OTHER_CONTROLLER = OTHER_FLOOR.above();
   private static final float EXPLOSION_POWER = 4.0F;
   private static final double CENTER = 0.5;
   private static final String NOT_LINKED = "A placed controller should keep its network";
@@ -43,7 +42,6 @@ public final class NetworkControllerGameTests {
   private static final String STILL_ONLINE = "The network should be offline";
   private static final String STRANGER_BREAKS = "Only the owner should break the controller";
   private static final String NO_DROP = "The owner should get the item with the network";
-  private static final String NOT_CURRENT = "A click by the owner should make it the current";
   private static final String NOT_BACK = "The item should bring the same network back";
 
   private NetworkControllerGameTests() {}
@@ -67,19 +65,6 @@ public final class NetworkControllerGameTests {
     GameTestActions.placeOn(helper, fake, controllerItem(), FLOOR, Direction.UP);
 
     helper.assertBlockNotPresent(RedweaveBlocks.NETWORK_CONTROLLER.get(), CONTROLLER);
-    helper.succeed();
-  }
-
-  @GameTest(template = EMPTY)
-  public static void aClickByTheOwnerMakesTheNetworkCurrent(GameTestHelper helper) {
-    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
-    NetworkId first = place(helper, owner, controllerItem(), FLOOR);
-    place(helper, owner, controllerItem(), OTHER_FLOOR);
-
-    helper.useBlock(CONTROLLER, owner);
-
-    Optional<NetworkId> current = server().currentOf(new PlayerId(owner.getUUID()));
-    helper.assertTrue(current.equals(Optional.of(first)), NOT_CURRENT);
     helper.succeed();
   }
 

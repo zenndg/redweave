@@ -12,7 +12,7 @@ import net.minecraft.nbt.NbtUtils;
 final class SaveTags {
   static final String VERSION = "version";
   static final String NETWORKS = "networks";
-  static final String CURRENT = "current";
+  static final String LAST_USED = "last_used";
   static final String ID = "id";
   static final String OWNER = "owner";
   static final String NAME = "name";
@@ -45,15 +45,15 @@ final class SaveTags {
 
   private SaveTags() {}
 
-  static CompoundTag save(int version, ListTag networks, ListTag current) {
+  static CompoundTag save(int version, ListTag networks, ListTag lastUsed) {
     CompoundTag tag = new CompoundTag();
     tag.putInt(VERSION, version);
     tag.put(NETWORKS, networks);
-    tag.put(CURRENT, current);
+    tag.put(LAST_USED, lastUsed);
     return tag;
   }
 
-  static CompoundTag current(UUID player, UUID network) {
+  static CompoundTag lastUsed(UUID player, UUID network) {
     CompoundTag tag = new CompoundTag();
     tag.put(PLAYER, NbtUtils.createUUID(player));
     tag.put(NETWORK, NbtUtils.createUUID(network));
@@ -89,6 +89,12 @@ final class SaveTags {
     tag.putInt(SLOT_COUNT, slotCount);
     tag.put(SLOTS, slots);
     return tag;
+  }
+
+  /** A node its owner renamed: the name goes to the saves only then (answer 206). */
+  static CompoundTag named(CompoundTag node, String name) {
+    node.putString(NAME, name);
+    return node;
   }
 
   static CompoundTag slot(int index, String direction, String face, String channel) {

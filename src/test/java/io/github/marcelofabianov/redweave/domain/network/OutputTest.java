@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /** An output repeats its channel in the block, and emits off when it does not count. */
@@ -27,10 +28,10 @@ class OutputTest {
   /** NODE reads the lever into the channel, and OTHER_NODE lights the lamp with it. */
   private static Network leverAndLamp() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(
         OWNER, NODE, SLOT, new ChannelSlot(Direction.INPUT, NODE_POSITION.face(), LAMP));
-    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION);
+    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
     network.configureSlot(
         OWNER,
         OTHER_NODE,

@@ -13,4 +13,12 @@ final class Names {
     }
     return Optional.of(trimmed);
   }
+
+  /**
+   * Whether a name given before is still whole: not empty and with no spaces at the ends. Its
+   * length is not checked, because the limit of the config only holds for new names (answer 93).
+   */
+  static boolean isKept(String name) {
+    return valid(name, name.length()).filter(name::equals).isPresent();
+  }
 }

@@ -9,7 +9,8 @@ final class NodeScreenLayout {
   static final int SLOT_COUNT = 0;
   static final int STATE = 1;
   static final int VIEWER_IS_OWNER = 2;
-  static final int FIRST_SLOT = 3;
+  static final int VIEWER_PLACED = 3;
+  static final int FIRST_SLOT = 4;
   static final int FIRST_SIGNAL = FIRST_SLOT + MAX_SLOTS;
   static final int SIZE = FIRST_SIGNAL + MAX_SLOTS;
 

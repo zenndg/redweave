@@ -12,7 +12,7 @@ final class NodeScreenFrame {
   private static final int TITLE_Y = 9;
   private static final int PILL_Y = 6;
   private static final int PILL_RIGHT_PADDING = 10;
-  private static final int TAB_Y = 26;
+  private static final int TAB_Y = 38;
   private static final int TAB_OVERLAP = 3;
   private static final int TAB_WIDTH = 44;
   private static final int TAB_HEIGHT = 18;
@@ -33,13 +33,7 @@ final class NodeScreenFrame {
     drawTab(graphics, font, left + width - TAB_OVERLAP, top + TAB_Y);
     graphics.blitSprite(NodeSprites.WINDOW, left, top, width, height);
     graphics.drawString(font, title, left + TITLE_X, top + TITLE_Y, ScreenColors.TEXT, false);
-    StatePill.draw(
-        graphics,
-        font,
-        left + width - PILL_RIGHT_PADDING,
-        top + PILL_Y,
-        menu.state(),
-        menu.networkName());
+    StatePill.draw(graphics, font, left + width - PILL_RIGHT_PADDING, top + PILL_Y, menu.state());
   }
 
   /** Only Slots for now: the other tabs arrive with their content (answer 80). */

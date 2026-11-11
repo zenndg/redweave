@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.application;
 
 import static io.github.marcelofabianov.redweave.application.ApplicationFixture.NODE_ID;
-import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.NODE_POSITION;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.STRANGER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +11,6 @@ import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -29,12 +27,9 @@ class ChangeSlotTest {
   private final ConfigureSlot configureSlot = new ConfigureSlot(fixture.networks, fixture.networks);
   private final ClearSlot clearSlot = new ClearSlot(fixture.networks, fixture.networks);
 
-  /** The network of OWNER with the node placed, and how many saves that took. */
+  /** The network of OWNER with the node in it, and how many saves that took. */
   private int placedNode() {
-    fixture.ownersNetwork();
-    new PlaceNode(
-            new FixedIds(List.of(NODE_ID)), fixture.current, fixture.networks, fixture.networks)
-        .place(OWNER, NODE_POSITION);
+    fixture.ownersNetworkWithANode();
     return fixture.networks.saves();
   }
 

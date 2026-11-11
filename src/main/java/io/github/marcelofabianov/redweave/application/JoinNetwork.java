@@ -7,18 +7,20 @@ import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import java.util.Optional;
 
 /**
- * How a node joins a network, placed or moved: one input on the face it sticks to, on the first
- * free channel, so it works without opening a screen. No free channel leaves every slot free (25).
+ * How a node joins a network, picked or switched: one input on the face it sticks to, on the first
+ * free channel, so it works at once. No free channel leaves every slot free (answers 25 and 171).
  */
 final class JoinNetwork {
   private static final int FIRST_SLOT = 0;
 
   private JoinNetwork() {}
 
-  static Outcome join(Network network, PlayerId player, NodeId node, NodePosition position) {
-    Outcome outcome = network.attachNode(player, node, position);
+  static Outcome join(
+      Network network, PlayerId player, NodeId node, NodePosition position, Optional<String> name) {
+    Outcome outcome = network.attachNode(player, node, position, name);
     if (outcome != Outcome.ACCEPTED) {
       return outcome;
     }

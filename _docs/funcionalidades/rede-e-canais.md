@@ -39,16 +39,16 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 
 #### Formato do save
 
-A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato que a #16 entregou. Com as #87 e #88, ainda na `version` 1, o nó ganha `name`, a rede ganha `offline`, e `last_used`, com `player` e `network`, substitui o `current` (perguntas 157 e 174). O Network Terminal entra numa lista `terminals`, com `player` e o bloco (pergunta 175).
+A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato da #16 com o que a #87 trouxe, ainda na `version` 1: o `name` do nó e o `last_used`, com `player` e `network`, no lugar do `current` (perguntas 157, 174 e 206). Com a #88, a rede ganha `offline`. O Network Terminal entra numa lista `terminals`, com `player` e o bloco (pergunta 175).
 
 | Parte | Chaves |
 |---|---|
 | Rede | `id`, `owner`, `name`, `color`, `controller` (opcional), `channels` e `nodes` |
 | Bloco (`controller` e o do nó) | `dimension`, `x`, `y` e `z` |
 | Canal | `color` e `name`. Só os canais renomeados entram |
-| Nó | `id`, `block`, `face`, `slot_count`, de 1 a 9 (pergunta 95), e `slots` |
+| Nó | `id`, `name` (opcional), `block`, `face`, `slot_count`, de 1 a 9 (pergunta 95), e `slots`. O `name` só entra quando o dono renomeia o nó, como o nome do canal (pergunta 206) |
 | Slot | `index`, `direction`, `face`, `channel` e `reading`. Só os slots em uso entram, e `reading` fica de fora quando é 0 |
-| Rede atual | `player` e `network` |
+| Última rede usada (`last_used`) | `player` e `network` |
 
 #### Dado inválido
 
@@ -56,9 +56,10 @@ A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de en
 |---|---|
 | Um slot, como com uma direção, face ou canal desconhecido, ou um `index` repetido ou fora do `slot_count` | O slot fica livre |
 | Um nó, como sem ID ou com `slot_count` fora de 1 a 9 | O nó sai da rede |
+| O nome de um nó, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome, e o nó volta ao nome padrão (perguntas 92 e 206) |
 | Um nó que aparece em duas redes | Fica só na primeira |
 | Uma rede sem ID ou dono válido, ou com um nome vazio ou de mais de 64 caracteres | A rede não é carregada |
-| Uma entrada de `current` que aponta para uma rede que não existe | É descartada |
+| Uma entrada de `last_used` que aponta para uma rede que não existe | É descartada |
 
 O teto são as faixas do config da pergunta 66: 9 slots e 64 caracteres.
 
@@ -239,6 +240,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:46 | Aplica a #87: o `name` do nó e o `last_used` no save, e o nome de nó inválido (perguntas 157, 174 e 206). |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 174, 175 e 177. |
 | Zennd | 2026-11-11 09:51 | Aplica o Network Terminal, os estados `Offline` e `Unplaced`, o limite de redes, o nome do nó e o nó que escolhe a rede (perguntas 129 a 172). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |

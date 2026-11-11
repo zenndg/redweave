@@ -76,7 +76,8 @@ public final class InvalidSaveGameTests {
   private static final String STRAY_READING = "A reading of an output should be dropped";
   private static final String WRONG_NODES = "Only the valid nodes should stay";
   private static final String WRONG_NETWORKS = "Only the valid networks should stay";
-  private static final String WRONG_CURRENT = "A current network should point to a loaded one";
+  private static final String WRONG_LAST_USED = "A last used network should be a loaded one";
+  private static final String WRONG_NODE_NAME = "Only the invalid name should leave the node";
   private static final String NOT_BACKED_UP = "An unknown version should be kept aside";
   private static final String NOT_EMPTY = "An unknown version should start with no networks";
   private static final String NOT_KEPT_UNREADABLE = "An unreadable file should be kept aside";
@@ -114,6 +115,19 @@ public final class InvalidSaveGameTests {
     helper.succeed();
   }
 
+  /** The smallest part goes: the node stays, with the default name (answers 92 and 206). */
+  @GameTest(template = EMPTY)
+  public static void aNodeNameThatDoesNotFitIsDropped(GameTestHelper helper) {
+    ListTag nodes =
+        SaveTags.list(SaveTags.named(SaveTags.node(NODE, NODE_X, SLOTS, SaveTags.list()), BLANK));
+
+    Network network = only(nodes);
+
+    helper.assertTrue(
+        network.node(new NodeId(NODE)).orElseThrow().name().isEmpty(), WRONG_NODE_NAME);
+    helper.succeed();
+  }
+
   @GameTest(template = EMPTY)
   public static void nodesThatDoNotFitAreDropped(GameTestHelper helper) {
     CompoundTag withoutId = SaveTags.node(OTHER_NODE, NODE_X, SLOTS, SaveTags.list());
@@ -141,7 +155,7 @@ public final class InvalidSaveGameTests {
             SaveTags.network(BLANK_NETWORK, OWNER, BLANK, SaveTags.list(), SaveTags.list()),
             SaveTags.network(OTHER_NETWORK, OWNER, NAME, SaveTags.list(), node.copy()),
             SaveTags.network(NETWORK, OWNER, NAME, SaveTags.list(), SaveTags.list()));
-    ListTag current = SaveTags.list(SaveTags.current(OWNER, BLANK_NETWORK));
+    ListTag current = SaveTags.list(SaveTags.lastUsed(OWNER, BLANK_NETWORK));
 
     SavedDataNetworks data = load(networks, current, NO_FILE);
 
@@ -151,7 +165,7 @@ public final class InvalidSaveGameTests {
     helper.assertTrue(first.node(new NodeId(NODE)).isPresent(), WRONG_NETWORKS);
     helper.assertTrue(
         data.find(new NetworkId(OTHER_NETWORK)).orElseThrow().nodes().isEmpty(), WRONG_NETWORKS);
-    helper.assertTrue(data.currentOf(new PlayerId(OWNER)).isEmpty(), WRONG_CURRENT);
+    helper.assertTrue(data.lastUsedOf(new PlayerId(OWNER)).isEmpty(), WRONG_LAST_USED);
     helper.succeed();
   }
 

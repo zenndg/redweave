@@ -27,7 +27,7 @@ class FirstFreeChannelTest {
       int slot = channel.ordinal() % slotsPerNode;
       if (slot == FIRST_SLOT) {
         nodeId = new NodeId(UUID.randomUUID());
-        network.attachNode(OWNER, nodeId, NODE_POSITION);
+        network.attachNode(OWNER, nodeId, NODE_POSITION, Optional.empty());
       }
       network.configureSlot(OWNER, nodeId, slot, reading(channel));
     }
@@ -41,7 +41,7 @@ class FirstFreeChannelTest {
   @Test
   void aChannelInUseIsSkipped() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(OWNER, NODE, FIRST_SLOT, reading(ChannelColor.WHITE));
 
     assertEquals(Optional.of(ChannelColor.ORANGE), network.firstFreeChannel());

@@ -129,9 +129,8 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
       return;
     }
     if (level.getBlockEntity(pos) instanceof SignalNodeBlockEntity node) {
-      PlayerId owner = new PlayerId(player.getUUID());
       node.setPlacer(player.getUUID());
-      node.setNode(server.get().placeNode().place(owner, positionOf(level, pos, state)).node());
+      node.setNode(server.get().placeNode().place());
       NodeSignals.read(server.get(), level, pos, state);
       NodeLook.refresh(server.get(), level, pos);
       level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);

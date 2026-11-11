@@ -2,10 +2,9 @@ package io.github.marcelofabianov.redweave.application;
 
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import java.util.Optional;
 
-/** The current network of a player: the last one they created or opened as owner (answer 25). */
+/** Keeps the network a player last put a node in, for the next choice (answer 157). */
 @FunctionalInterface
-public interface CurrentNetworkFinder {
-  Optional<NetworkId> currentOf(PlayerId player);
+public interface LastUsedNetworkRecorder {
+  void record(PlayerId player, NetworkId network);
 }

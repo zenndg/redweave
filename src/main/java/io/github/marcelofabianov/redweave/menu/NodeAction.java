@@ -9,11 +9,15 @@ public record NodeAction(Kind kind, int index, Optional<ChannelSlot> slot) {
   private static final String MISSING = "An action needs a kind and a slot";
   private static final String MISMATCH = "Only configure carries a slot";
 
-  /** Use a free slot (83), configure a slot, or clear it (84). */
+  /**
+   * Use a free slot (83), configure a slot, clear it (84), or choose the network at a position of
+   * the list the server keeps (answers 139 and 141).
+   */
   public enum Kind {
     USE,
     CONFIGURE,
-    CLEAR
+    CLEAR,
+    CHOOSE
   }
 
   public NodeAction {
@@ -34,5 +38,10 @@ public record NodeAction(Kind kind, int index, Optional<ChannelSlot> slot) {
 
   public static NodeAction clear(int index) {
     return new NodeAction(Kind.CLEAR, index, Optional.empty());
+  }
+
+  /** The index is the position in the network choice, not a slot. */
+  public static NodeAction choose(int position) {
+    return new NodeAction(Kind.CHOOSE, position, Optional.empty());
   }
 }

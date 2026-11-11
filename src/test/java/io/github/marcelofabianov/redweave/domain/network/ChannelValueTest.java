@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -33,7 +34,7 @@ class ChannelValueTest {
     Network network = network();
     for (NodeId node : nodes) {
       NodePosition position = node.equals(NODE) ? NODE_POSITION : OTHER_NODE_POSITION;
-      network.attachNode(OWNER, node, position);
+      network.attachNode(OWNER, node, position, Optional.empty());
       network.configureSlot(
           OWNER, node, SLOT, new ChannelSlot(Direction.INPUT, position.face(), DOOR));
     }
@@ -113,7 +114,7 @@ class ChannelValueTest {
   @Test
   void aReadingOnAnOutputIsIgnored() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(
         OWNER, NODE, SLOT, new ChannelSlot(Direction.OUTPUT, NODE_POSITION.face(), DOOR));
 

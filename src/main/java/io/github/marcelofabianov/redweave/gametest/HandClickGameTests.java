@@ -3,11 +3,8 @@ package io.github.marcelofabianov.redweave.gametest;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
-import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import io.github.marcelofabianov.redweave.server.RedweaveServer;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -33,14 +30,10 @@ public final class HandClickGameTests {
   private static final String EMPTY = "empty";
   private static final BlockPos CONTROLLER_FLOOR = new BlockPos(0, 0, 2);
   private static final BlockPos CONTROLLER = CONTROLLER_FLOOR.above();
-  private static final BlockPos OTHER_CONTROLLER_FLOOR = new BlockPos(2, 0, 2);
-  private static final BlockPos OTHER_CONTROLLER = OTHER_CONTROLLER_FLOOR.above();
   private static final BlockPos STONE = new BlockPos(0, 1, 0);
   private static final BlockPos NODE = STONE.east();
   private static final String OPENED = "A click with an item should not open the Node Screen";
   private static final String OPENED_BY_HAND = "An empty hand should not open the Node Screen";
-  private static final String CHANGED = "A click with an item should keep the current network";
-  private static final String NOT_CHANGED = "A click with an empty hand should choose the network";
 
   private HandClickGameTests() {}
 
@@ -78,19 +71,6 @@ public final class HandClickGameTests {
     helper.succeed();
   }
 
-  @GameTest(template = EMPTY)
-  public static void onlyAnEmptyHandChoosesTheNetworkOfAController(GameTestHelper helper) {
-    ServerPlayer owner = helper.makeMockServerPlayerInLevel();
-    NetworkId first = placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
-    NetworkId second = placeController(helper, owner, OTHER_CONTROLLER_FLOOR, OTHER_CONTROLLER);
-
-    click(helper, owner, new ItemStack(Items.STICK), CONTROLLER);
-    helper.assertTrue(currentOf(owner).equals(Optional.of(second)), CHANGED);
-    click(helper, owner, ItemStack.EMPTY, CONTROLLER);
-    helper.assertTrue(currentOf(owner).equals(Optional.of(first)), NOT_CHANGED);
-    helper.succeed();
-  }
-
   /** A right-click on the block, as the game handles the packet of a player. */
   private static InteractionResult click(
       GameTestHelper helper, ServerPlayer player, ItemStack stack, BlockPos relative) {
@@ -107,9 +87,5 @@ public final class HandClickGameTests {
     GameTestActions.placeOn(helper, owner, item, floor, Direction.UP);
     NetworkControllerBlockEntity block = helper.getBlockEntity(controller);
     return block.network().orElseThrow();
-  }
-
-  private static Optional<NetworkId> currentOf(ServerPlayer player) {
-    return RedweaveServer.running().orElseThrow().currentOf(new PlayerId(player.getUUID()));
   }
 }

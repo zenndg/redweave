@@ -25,13 +25,12 @@ O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves
 
 Um clique com a mão vazia abre a [Tela do Controlador](telas.md#tela-do-controlador), que chega com a issue #20. O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (perguntas 113 e 154). Numa rede `Offline`, nada abre, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (pergunta 160).
 
-Até a #20, o clique mostra uma mensagem na action bar (pergunta 52). A #14 entregou as mensagens abaixo. Com o fim da rede atual (pergunta 139), o clique do dono deixa de trocá-la, e o texto da mensagem dele é definido na #20.
+Até a #20, o clique mostra uma mensagem na action bar (pergunta 52). Com o fim da rede atual (pergunta 139), a #87 tirou o `Current network: <nome>` do dono, e todos veem a mesma mensagem (pergunta 201). O clique não muda nada.
 
-| Quem clica | Mensagem que a #14 entregou | Efeito depois da pergunta 139 |
-|---|---|---|
-| O dono | `Current network: <nome>` | Nenhum |
-| Outro player | `<nome> · owner: <dono>` | Nenhum |
-| Qualquer um, num controlador sem rede | `No network` | Nenhum |
+| Quem clica | Mensagem |
+|---|---|
+| Qualquer um | `<nome> · owner: <dono>` |
+| Qualquer um, num controlador sem rede | `No network` |
 
 Um controlador fica sem rede quando a rede dele não existe mais no save, como quando ela foi descartada por estar inválida (pergunta 92), ou num mundo criado antes da persistência da issue #16 (pergunta 53).
 
@@ -101,6 +100,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:46 | Aplica a pergunta 201, da #87: o clique mostra a mesma mensagem para todos. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 178. |
 | Zennd | 2026-11-11 09:51 | Aplica o estado `Unplaced`, o limite de redes, o nome padrão e o fim da rede atual (perguntas 129 a 160). |
 | Marcelo Fabiano | 2026-11-10 13:10 | Aplica a persistência da #16. |

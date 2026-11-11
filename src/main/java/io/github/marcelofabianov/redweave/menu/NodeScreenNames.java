@@ -3,7 +3,10 @@ package io.github.marcelofabianov.redweave.menu;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.PlayerNames;
+import io.github.marcelofabianov.redweave.domain.network.DefaultNames;
 import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.network.Node;
+import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -17,13 +20,17 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The names the Node Screen shows, which do not fit the numbers of the data slots: the network and
- * its owner. Sent when the screen opens and again when they change (answer 82).
+ * The names the Node Screen shows, which do not fit the numbers of the data slots: the node, the
+ * network, its color and its owner. Sent when the screen opens and again when they change (82). A
+ * node with no network has the default name and no color (answers 142 and 208).
  */
-public record NodeScreenNames(int menu, String network, String owner)
+public record NodeScreenNames(int menu, String node, String network, int color, String owner)
     implements CustomPacketPayload {
   private static final String ID = "node_screen_names";
   private static final String NONE = "";
+
+  /** The color of a node with no network. */
+  public static final int NO_COLOR = -1;
 
   public static final Type<NodeScreenNames> TYPE =
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
@@ -33,7 +40,11 @@ public record NodeScreenNames(int menu, String network, String owner)
           ByteBufCodecs.VAR_INT,
           NodeScreenNames::menu,
           ByteBufCodecs.STRING_UTF8,
+          NodeScreenNames::node,
+          ByteBufCodecs.STRING_UTF8,
           NodeScreenNames::network,
+          ByteBufCodecs.VAR_INT,
+          NodeScreenNames::color,
           ByteBufCodecs.STRING_UTF8,
           NodeScreenNames::owner,
           NodeScreenNames::new);
@@ -44,14 +55,24 @@ public record NodeScreenNames(int menu, String network, String owner)
   }
 
   static NodeScreenNames read(ServerPlayer player, BlockPos pos, int menu) {
+    Optional<NodeId> id = NodeSignals.nodeAt(player.level(), pos);
     Optional<Network> network =
-        NodeSignals.nodeAt(player.level(), pos)
-            .flatMap(id -> RedweaveServer.running().flatMap(server -> server.networkOfNode(id)));
+        id.flatMap(node -> RedweaveServer.running().flatMap(server -> server.networkOfNode(node)));
+    String node =
+        network
+            .flatMap(found -> found.node(id.get()))
+            .map(Node::displayName)
+            .or(() -> id.map(found -> DefaultNames.of(found.value())))
+            .orElse(NONE);
     return network
         .map(found ->
             new NodeScreenNames(
-                menu, found.name(), PlayerNames.of(player.getServer(), found.owner().value())))
-        .orElse(new NodeScreenNames(menu, NONE, NONE));
+                menu,
+                node,
+                found.name(),
+                found.color().ordinal(),
+                PlayerNames.of(player.getServer(), found.owner().value())))
+        .orElse(new NodeScreenNames(menu, node, NONE, NO_COLOR, NONE));
   }
 
   static void send(ServerPlayer player, NodeScreenNames names) {
