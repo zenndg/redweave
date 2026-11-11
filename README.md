@@ -8,7 +8,7 @@
 ![Loader](https://img.shields.io/badge/NeoForge-21.1.x-E68A00)
 ![Java](https://img.shields.io/badge/Java-21-007396)
 ![License](https://img.shields.io/badge/license-LGPL--3.0-blue)
-![Status](https://img.shields.io/badge/status-in%20design-lightgrey)
+![Status](https://img.shields.io/badge/status-in%20development-orange)
 
 Redweave is a redstone mod for Minecraft NeoForge. It lets players build complex automation — doors, farms, factories, alarms — out of wireless **nodes**, named **networks**, colored **channels** and reusable **logic chips**, without walls of dust and repeaters.
 
@@ -42,8 +42,8 @@ Redweave brings those ideas together, focused on **signal only** (items, fluids 
 
 | Concept | What it is |
 | --- | --- |
-| **Network** | Created at a Network Controller. Has a name, a color and an owner, who is the only one allowed to change it. Every network shares **16 channels**, colored like wool. |
-| **Node** | Attaches to any face of any block. Reads or emits redstone there. Starts with 4 channel slots (upgradable to 9). Can be made invisible. |
+| **Network** | Created by placing a Network Controller: each controller is one network. Has a name, a color and an owner, who is the only one allowed to change it. Every network shares **16 channels**, colored like wool. A Network Terminal lists all of a player's networks. |
+| **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and starts with 4 channel slots (upgradable to 9). Can be made invisible. |
 | **Channel** | Per slot: direction (input or output), block face, and which of the 16 network channels it uses. Several inputs on one channel → the strongest signal wins. |
 | **Logic** | Each output slot can transform the signal: invert, pulse only, delay, threshold. |
 | **Chip** | A circuit of gates designed in the Circuit Editor and saved into an item, with a name and icon. Placed in a node slot, it runs as a single high-performance piece. |
@@ -61,7 +61,7 @@ flowchart LR
 
 | Phase | Theme | Delivers |
 | --- | --- | --- |
-| **1 · Wireless** (MVP) | Signal anywhere | Signal Node, Network Controller, Configurator tool, Remote Control item, domain simulator, Jade / The One Probe integration |
+| **1 · Wireless** (MVP) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
 | **2 · Logic** | Gates you can see | Plate-shaped AND / OR / XOR / NOT / NAND gates (floor, wall, ceiling), Timer and Counter, per-channel logic |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Physical wiring | Redstone wire and 16-channel bundled cable, multipart, more mod integrations |
@@ -73,7 +73,7 @@ Every phase ends with a playable release.
 
 1. **Always see the signal.** Every node, wire and gate shows whether it is on and how strong (0–15), in the world and on screen.
 2. **Simple on the surface, deep underneath.** The common case is one click. Advanced tools (chip editor, tick debugger) exist but stay out of the way.
-3. **Configure where you stand.** A new node already gets a free channel and works without opening a screen. Pairing is clicking one node on another. Shift + scroll changes a gate's mode.
+3. **Configure where you stand.** A new node joins a network with one click, with the last one used already highlighted, and starts on a free channel. Shift + scroll changes the Configurator's mode and a gate's mode.
 4. **Cheap mistakes.** Undo in the editor, placement preview before a block exists, and clear warnings when a circuit loops or oscillates — pointing to where.
 5. **Teach along the way.** Gate tooltips show a small truth table, each screen gives a one-line hint on first use, and the guide book has ready-to-copy examples.
 
@@ -119,15 +119,22 @@ flowchart TB
 
 ```text
 src/main/java/io/github/marcelofabianov/redweave/
+├── RedweaveMod              # entry point: only wires the registries
 ├── domain/                  # pure Java, no Minecraft imports
+│   ├── signal/              # Signal (0–15), ChannelColor
 │   ├── network/             # Network aggregate, Node, Channel, permissions
-│   ├── circuit/             # gates, connections, chips
-│   └── simulation/          # graph compiler, tick evaluator, loop detection
-├── application/             # use cases (one per player action) and ports
-│   └── port/                # inbound and outbound interfaces
-└── adapter/
-    ├── neoforge/            # blocks, block entities, items, menus, screens, packets, codecs
-    └── integration/         # Jade, The One Probe, future mod integrations
+│   ├── circuit/             # gates, connections, chips (planned, phases 2 and 3)
+│   └── simulation/          # tick evaluator, loop and oscillation detection
+├── application/             # use cases (one per player action) and their ports
+├── config/                  # server config, implements the domain limits
+├── registry/                # blocks, items, data components, menus
+├── block/ item/ menu/       # world adapters: blocks, block entities, items, menus
+├── network/                 # packets, validated on the server
+├── server/                  # per-server state: networks and use cases
+├── compat/                  # Jade and The One Probe, optional (planned)
+├── client/                  # screens and renderers
+├── datagen/                 # recipes, loot, translations
+└── gametest/                # in-world tests
 
 src/test/java/...            # domain and application tests run without the game
 ```
@@ -137,7 +144,7 @@ src/test/java/...            # domain and application tests run without the game
 Requirements: **JDK 21**.
 
 ```bash
-git clone https://github.com/marcelofabianov/redweave.git
+git clone git@github.com:zenndg/redweave.git
 cd redweave
 
 ./gradlew test        # domain and application tests
@@ -165,16 +172,16 @@ Redweave stands on ideas from great mods. Code from MIT-licensed projects may be
 | --- | --- | --- |
 | [Logistics Network](https://www.curseforge.com/minecraft/mc-mods/logistics-network) | Nodes on any block, channels per node, invisible automation, pack-dev tags | All Rights Reserved (UX only) |
 | [XNet](https://www.curseforge.com/minecraft/mc-mods/xnet) | Central controller, performance as a requirement | MIT |
-| [Flux Networks](https://www.curseforge.com/minecraft/mc-mods/flux-networks) | Named and colored networks, permissions, live graphs | All Rights Reserved (UX only) |
-| [RFTools Redstone Transmitter](https://ftb.fandom.com/wiki/Redstone_Transmitter_(RFTools)) | Zero-config channels, pairing by click | to be checked |
+| [Flux Networks](https://www.curseforge.com/minecraft/mc-mods/flux-networks) | Named and colored networks, permissions, remote management | All Rights Reserved (UX only) |
+| [RFTools Redstone Transmitter](https://ftb.fandom.com/wiki/Redstone_Transmitter_(RFTools)) | Automatic channel assignment | to be checked |
 | [More Red](https://www.curseforge.com/minecraft/mc-mods/more-red) | Plate-shaped gates, placement preview | MIT |
 | [Project Red](https://github.com/MrTJP/ProjectRed) | Logic gates, integrated circuits as a single gate, bundled cable | MIT |
 
 ## Contributing
 
-Redweave is in the design stage; issues with ideas and feedback are very welcome.
+Redweave is in development, in Phase 1; issues with ideas and feedback are very welcome.
 
-When code arrives:
+When contributing code:
 
 - **Tests first** for anything in `domain` and `application`.
 - Keep the dependency rule: if a class needs Minecraft, it belongs in `adapter`.

@@ -6,8 +6,8 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 ## Estado atual
 
-- **Etapa atual:** concepção encerrada, início da Fase 1, sem fio. Ainda não há código. O trabalho entra por issue, na milestone da fase.
-- **Próximos:** o projeto NeoForge com os gates, a decisão sobre chunks descarregados e o domínio da rede.
+- **Etapa atual:** Fase 1, sem fio, em andamento. Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o Label (#81). As perguntas 125 a 172 tiram o Label, redesenham o Configurator e a entrada do nó na rede e trazem o Network Terminal. O trabalho entra por issue, na milestone da fase.
+- **Próximos:** implementar as perguntas 125 a 172 em issues próprias (remover o Label, os modos do Configurator, o nó que escolhe a rede, os estados `Offline` e `Unplaced`, a Tela do Controlador da #20 com o log, o Network Terminal e a #80) e, depois, as issues #22 a #27.
 - **Limite:** não avance para as fases seguintes sem pedido explícito.
 
 ## Documentação
@@ -96,7 +96,7 @@ O significado de cada pilar, os checklists e a matriz de decisão estão em [`_d
 
 ### Forma do código
 
-21. **Idioma:** arquivos de programação (como `.java` e `.sh`) ficam em inglês, incluindo comentários, logs e testes. Arquivos de conteúdo (como `.md`) ficam em português, inclusive o nome do arquivo e da pasta, assim como issues, PRs e mensagens de commit. `README.md`, `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `COPYING` e `pull_request_template.md` mantêm o nome, porque as ferramentas dependem dele. O `README.md` fica em inglês, porque é a vitrine do mod.
+21. **Idioma:** arquivos de programação (como `.java` e `.sh`) ficam em inglês, incluindo comentários, logs e testes. Arquivos de conteúdo (como `.md`) ficam em português, inclusive o nome do arquivo e da pasta, assim como issues, PRs e mensagens de commit. `README.md`, `ROADMAP.md`, `AGENTS.md`, `CLAUDE.md`, `LICENSE`, `COPYING` e `pull_request_template.md` mantêm o nome, porque as ferramentas e o costume dependem dele. O `README.md` e o `ROADMAP.md` ficam em inglês, porque são a vitrine do mod (pergunta 180).
 22. **Constantes em vez de literais:** nada de número mágico nem string literal solta, inclusive nos testes. Balanceamento vai no config, e o resto vira constante nomeada.
 23. **Funções** têm no máximo 30 linhas e uma responsabilidade. Prefira classes pequenas e composição em vez de herança.
 24. **Nomes:** classes em `PascalCase`; JSONs e IDs em `snake_case`, no singular; scripts `.sh` e arquivos `.md` em `kebab-case`. Adapters levam o que adaptam como prefixo (`NeoForgeNetworkLimits`).
@@ -148,8 +148,8 @@ O significado de cada pilar, os checklists e a matriz de decisão estão em [`_d
 - **Merge:** somente o desenvolvedor faz.
 - **Autoria:** nunca atribua autoria ou coautoria a uma IA, nem em commits, PRs, tags, releases ou comentários.
 - **Assinatura:** os commits feitos na máquina do desenvolvedor são assinados com SSH. Não desligue a assinatura.
-- **Remote:** `git@github.com-personal:marcelofabianov/redweave.git`. Não troque por HTTPS nem por `git@github.com:`, que caem na conta profissional.
-- **Conta do `gh`:** esta é a conta pessoal. Se o `gh api user --jq .login` mostrar outra, prefixe o comando com `GH_TOKEN=$(gh auth token --user marcelofabianov)`.
+- **Remote:** `git@github.com-zenndg:zenndg/redweave.git` (pergunta 170). Não troque por HTTPS nem por `git@github.com:`, que caem na conta profissional.
+- **Conta do `gh`:** esta é a conta `zenndg`. Se o `gh api user --jq .login` mostrar outra, prefixe o comando com `GH_TOKEN=$(gh auth token --user zenndg)`.
 
 ### Fluxo de branches
 
@@ -192,7 +192,7 @@ io.github.marcelofabianov.redweave
 ├── item/                   // Configurador, Signal Remote, chips
 ├── menu/                   // menus das telas
 ├── network/                // pacotes próprios, validados no servidor
-├── server/                 // estado por servidor: redes, rede atual de cada player e casos de uso
+├── server/                 // estado por servidor: redes, última rede usada de cada player e casos de uso
 ├── compat/jade/            // só este pacote importa o Jade
 ├── compat/top/             // só este pacote importa o The One Probe
 ├── client/                 // telas, renderers
