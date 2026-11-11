@@ -94,6 +94,23 @@ final class NetworkSignals {
   }
 
   /**
+   * The signal of a node, for its lens and the node list of the Controller Screen: the strongest of
+   * its last readings and of what it emits, so an input receiving a signal lights it too. A node
+   * that does not count is off (answers 98, 177 and 179).
+   */
+  Signal nodeSignal(NodeId nodeId) {
+    Node node = nodes.at(nodeId);
+    if (node == null || !counts(nodeId)) {
+      return Signal.OFF;
+    }
+    Signal strongest = Signal.OFF;
+    for (int index = 0; index < node.slots().size(); index++) {
+      strongest = strongest.strongest(slotSignal(nodeId, index));
+    }
+    return strongest;
+  }
+
+  /**
    * The state of a node for the screens. The caller tells whether its chunk is loaded, because the
    * domain does not know the world. Out of range wins, because it is what stops the node counting.
    */

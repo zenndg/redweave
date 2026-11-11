@@ -331,6 +331,11 @@ public final class Network {
     return signals.emission(nodeId);
   }
 
+  /** The signal of a node: its strongest reading or emission, off when it does not count (98). */
+  public Signal nodeSignal(NodeId nodeId) {
+    return signals.nodeSignal(nodeId);
+  }
+
   /** The state of a node for the screens; the caller tells whether its chunk is loaded. */
   public NodeState nodeState(NodeId nodeId, boolean loaded) {
     return signals.nodeState(nodeId, loaded);
