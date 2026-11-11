@@ -15,7 +15,11 @@ import io.github.marcelofabianov.redweave.application.PasteNode;
 import io.github.marcelofabianov.redweave.application.PlaceController;
 import io.github.marcelofabianov.redweave.application.PlaceNode;
 import io.github.marcelofabianov.redweave.application.ReadInput;
+import io.github.marcelofabianov.redweave.application.RecolorNetwork;
+import io.github.marcelofabianov.redweave.application.RenameChannel;
+import io.github.marcelofabianov.redweave.application.RenameNetwork;
 import io.github.marcelofabianov.redweave.application.RenameNode;
+import io.github.marcelofabianov.redweave.application.ShowNetwork;
 import io.github.marcelofabianov.redweave.application.UseFreeSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -51,6 +55,10 @@ public final class RedweaveServer {
   private final RenameNode renameNode;
   private final CopyNode copyNode;
   private final PasteNode pasteNode;
+  private final ShowNetwork showNetwork;
+  private final RenameNetwork renameNetwork;
+  private final RecolorNetwork recolorNetwork;
+  private final RenameChannel renameChannel;
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -72,6 +80,10 @@ public final class RedweaveServer {
     renameNode = new RenameNode(networks, networks);
     copyNode = new CopyNode(networks);
     pasteNode = new PasteNode(networks, networks);
+    showNetwork = new ShowNetwork(networks);
+    renameNetwork = new RenameNetwork(networks, networks);
+    recolorNetwork = new RecolorNetwork(networks, networks);
+    renameChannel = new RenameChannel(networks, networks);
   }
 
   /** The server that is running now, or none, as on a client that only shows the world. */
@@ -149,6 +161,22 @@ public final class RedweaveServer {
 
   public PasteNode pasteNode() {
     return pasteNode;
+  }
+
+  public ShowNetwork showNetwork() {
+    return showNetwork;
+  }
+
+  public RenameNetwork renameNetwork() {
+    return renameNetwork;
+  }
+
+  public RecolorNetwork recolorNetwork() {
+    return recolorNetwork;
+  }
+
+  public RenameChannel renameChannel() {
+    return renameChannel;
   }
 
   /** The networks waiting for the next tick, read before it evaluates them. */
