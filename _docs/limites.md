@@ -5,8 +5,8 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Limite | Valor inicial | Chave de config | Fase |
 |---|---|---|---|
 | Canais por rede | 16 | fixo, ligado às cores de lã | 1 |
-| Slots de canal por nó | 4, de 1 a 9 | `node.slots` (pergunta 50) | 1 |
-| Slots de canal com upgrade | 9 | a definir | 1 |
+| Slots de canal por nó | 16, um por cor, de 0 a 16 ativos (pergunta 224) | fixo, ligado às cores de lã | 1 |
+| Tamanho do nome do slot | 32 caracteres, de 1 a 64 (pergunta 227) | `slot.name_length` | 1 |
 | Intervalo do sinal | 0 a 15 | fixo, contrato com a redstone do jogo | 1 |
 | Avaliação da rede | 1 vez por tick, só com canal alterado | a definir | 1 |
 | Meta de carga | 1.000 nós numa rede sem impacto visível no MSPT | — | 1 |
@@ -25,6 +25,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:40 | Troca `node.slots` pelos 16 slots fixos e adiciona `slot.name_length` (perguntas 224 e 227). |
 | Zennd | 2026-11-11 09:51 | Adiciona o nome do nó, as redes por player, o log e os Terminais por player. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Preenche as chaves de config e as faixas. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Define o alcance do nó e os tamanhos dos nomes. |

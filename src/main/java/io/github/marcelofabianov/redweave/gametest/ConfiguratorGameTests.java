@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.gametest;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -10,6 +11,7 @@ import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -36,8 +38,10 @@ public final class ConfiguratorGameTests {
   private static final BlockPos SOURCE_NODE = SOURCE_STONE.east();
   private static final BlockPos TARGET_STONE = new BlockPos(2, 1, 2);
   private static final BlockPos TARGET_NODE = TARGET_STONE.north();
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
+  private static final int FIRST_SLOT = ChannelColor.WHITE.ordinal();
+  private static final ChannelColor SECOND_CHANNEL = ChannelColor.ORANGE;
+  private static final int SECOND_SLOT = SECOND_CHANNEL.ordinal();
+  private static final int TARGET_ONLY_SLOT = ChannelColor.RED.ordinal();
   private static final double SCROLL_DOWN = -1;
   private static final double SCROLL_UP = 1;
   private static final String NOT_SWITCHED = "Shift + scroll should switch the mode";
@@ -45,8 +49,13 @@ public final class ConfiguratorGameTests {
   private static final String NOT_OPENED = "The Open mode should take the click and copy nothing";
   private static final String NOT_COPIED = "A click in the Copy mode should copy the node";
   private static final String NOT_PASTED = "The copy should follow the face of the target";
+  private static final String NOT_REPLACED = "The paste should replace every slot of the target";
   private static final String PASTED = "Another player should not paste";
   private static final String NOT_CLEARED = "Shift + click in the air should clear the copy";
+  private static final String NOT_JOINED = "A paste on a node with no network should join it";
+  private static final String JOINED = "Only who placed the node should paste a network on it";
+  private static final String NOT_TOGGLED = "Toggle should enable and disable the channels";
+  private static final String TOGGLED = "Only the owner should toggle the channels";
   private static final String REACTED = "The controller should not take the Configurator";
 
   private ConfiguratorGameTests() {}
@@ -97,13 +106,17 @@ public final class ConfiguratorGameTests {
     helper.succeed();
   }
 
-  /** A slot on the face the source sticks to goes to the face of the target (answer 105). */
+  /**
+   * A slot on the face the source sticks to goes to the face of the target (answer 105), and the
+   * paste replaces all 16 slots, so a slot only the target had is gone.
+   */
   @GameTest(template = EMPTY)
   public static void aPasteFollowsTheFaceTheTargetSticksTo(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     NodeId source = configuredSource(helper, owner);
     NodeId target = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    NodeScene.enableSlot(owner, target, TARGET_ONLY_SLOT);
     ItemStack configurator = holdConfigurator(owner, ConfiguratorMode.COPY);
 
     NodeScene.click(helper, owner, SOURCE_NODE);
@@ -120,6 +133,7 @@ public final class ConfiguratorGameTests {
         NOT_PASTED);
     helper.assertTrue(
         slots.get(SECOND_SLOT).equals(NodeScene.slotsOf(source).get(SECOND_SLOT)), NOT_PASTED);
+    helper.assertTrue(slots.get(TARGET_ONLY_SLOT).isEmpty(), NOT_REPLACED);
     helper.succeed();
   }
 
@@ -169,8 +183,78 @@ public final class ConfiguratorGameTests {
   }
 
   /** A node with an input on the face it sticks to and an output on another face. */
+  /**
+   * A paste on a node with no network joins it to the network of the copy and applies the slots,
+   * for whoever placed it, owner of that network (answer 238).
+   */
+  @GameTest(template = EMPTY)
+  public static void aPasteOnANodeWithNoNetworkJoinsTheNetworkOfTheCopy(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeId source = configuredSource(helper, owner);
+    NodeId target = NodeScene.placeLooseNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.COPY);
+
+    NodeScene.click(helper, owner, SOURCE_NODE);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+
+    helper.assertTrue(NodeScene.networkOf(target).id().equals(network), NOT_JOINED);
+    helper.assertTrue(
+        NodeScene.slotsOf(target)
+            .get(SECOND_SLOT)
+            .equals(NodeScene.slotsOf(source).get(SECOND_SLOT)),
+        NOT_JOINED);
+    helper.succeed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void onlyWhoPlacedTheNodePastesANetworkOnIt(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    configuredSource(helper, owner);
+    Player placer = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeId target = NodeScene.placeLooseNode(helper, placer, TARGET_STONE, Direction.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.COPY);
+
+    NodeScene.click(helper, owner, SOURCE_NODE);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+
+    helper.assertTrue(
+        RedweaveServer.running().orElseThrow().networkOfNode(target).isEmpty(), JOINED);
+    helper.succeed();
+  }
+
+  /** A click enables every configured channel, Shift + click disables them (answer 241). */
+  @GameTest(template = EMPTY)
+  public static void theToggleModeEnablesAndDisablesTheChannels(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeId node = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    PlayerId ownerId = new PlayerId(owner.getUUID());
+    NodeScene.networkOf(node)
+        .setUpSlot(
+            ownerId,
+            node,
+            SECOND_SLOT,
+            io.github.marcelofabianov.redweave.domain.network.Direction.INPUT,
+            Face.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.TOGGLE);
+
+    NodeScene.click(helper, owner, TARGET_NODE);
+    helper.assertTrue(NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), NOT_TOGGLED);
+    Player stranger = helper.makeMockPlayer(GameType.SURVIVAL);
+    holdConfigurator(stranger, ConfiguratorMode.TOGGLE);
+    NodeScene.shiftClick(helper, stranger, TARGET_NODE);
+    helper.assertTrue(NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), TOGGLED);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+    helper.assertFalse(
+        NodeScene.slotsOf(node).get(SECOND_SLOT).orElseThrow().active(), NOT_TOGGLED);
+    helper.succeed();
+  }
+
   private static NodeId configuredSource(GameTestHelper helper, Player owner) {
     NodeId node = NodeScene.placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
+    NodeScene.enableSlot(owner, node, FIRST_SLOT);
     NodeScene.networkOf(node)
         .configureSlot(
             new PlayerId(owner.getUUID()),
@@ -179,7 +263,7 @@ public final class ConfiguratorGameTests {
             new ChannelSlot(
                 io.github.marcelofabianov.redweave.domain.network.Direction.OUTPUT,
                 Face.UP,
-                ChannelColor.RED));
+                SECOND_CHANNEL));
     return node;
   }
 

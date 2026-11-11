@@ -53,7 +53,7 @@ final class Readings {
   void addInputsOf(Node node, Map<ChannelColor, Signal> channels) {
     for (int index = 0; index < node.slots().size(); index++) {
       Optional<ChannelSlot> slot = node.slots().get(index);
-      if (slot.isPresent() && slot.get().direction() == Direction.INPUT) {
+      if (slot.filter(ChannelSlot::reads).isPresent()) {
         channels.merge(slot.get().channel(), of(new SlotRef(node.id(), index)), Signal::strongest);
       }
     }

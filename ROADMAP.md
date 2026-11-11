@@ -69,7 +69,7 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [x] Remove the Label (#85)
 - [x] Configurator modes `Open`, `Copy` and `Wrench`, each with a color (#86)
 - [x] A new node joins no network and its owner picks one; node names; switching networks from the Node Screen (#87)
-- [ ] `Offline` and `Unplaced` network states, and the per-player network limit (#88)
+- [x] `Offline` and `Unplaced` network states, and the per-player network limit (#88)
 - [ ] Controller Screen: node list with name, signal and position, rename and access (#20)
 - [ ] Signal change log on the Controller Screen (#90)
 - [ ] Network Terminal: list, rename, turn off and on, clear nodes and delete unplaced networks (#89)

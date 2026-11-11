@@ -12,11 +12,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 class NetworkSlotsTest {
-  private static final int FIRST_SLOT = 0;
-  private static final int PAST_THE_LAST_SLOT = 4;
+  private static final ChannelColor RED = ChannelColor.RED;
+  private static final int FIRST_SLOT = RED.ordinal();
+  private static final int PAST_THE_LAST_SLOT = Node.SLOT_COUNT;
   private static final int BEFORE_THE_FIRST_SLOT = -1;
-  private static final ChannelSlot READ_RED =
-      new ChannelSlot(Direction.INPUT, Face.EAST, ChannelColor.RED);
+  private static final ChannelSlot READ_RED = new ChannelSlot(Direction.INPUT, Face.EAST, RED);
 
   private static Network networkWithANode() {
     Network network = network();

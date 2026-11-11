@@ -1,5 +1,7 @@
 package io.github.marcelofabianov.redweave.gametest;
 
+import static io.github.marcelofabianov.redweave.gametest.SaveTags.BLACK;
+import static io.github.marcelofabianov.redweave.gametest.SaveTags.CYAN;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.EAST;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.INPUT;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.OUTPUT;
@@ -14,6 +16,7 @@ import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -21,7 +24,9 @@ import io.github.marcelofabianov.redweave.server.SavedDataNetworks;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,18 +67,14 @@ public final class InvalidSaveGameTests {
   private static final byte[] CONTENT = {1, 2, 3};
   private static final int VERSION = 1;
   private static final int NEWER_VERSION = 2;
-  private static final int SLOTS = 4;
-  private static final int TOO_MANY_SLOTS = 10;
-  private static final int OUTSIDE_SLOT = 5;
-  private static final int OUTPUT_SLOT = 2;
   private static final int NODE_X = 8;
   private static final int READ = 9;
   private static final Path NO_FILE = Path.of(SavedDataNetworks.NAME);
   private static final ChannelSlot KEPT_INPUT =
       new ChannelSlot(Direction.INPUT, Face.EAST, ChannelColor.RED);
   private static final ChannelSlot KEPT_OUTPUT =
-      new ChannelSlot(Direction.OUTPUT, Face.WEST, ChannelColor.RED);
-  private static final String WRONG_SLOTS = "Only the slots that fit the node should stay";
+      new ChannelSlot(Direction.OUTPUT, Face.WEST, ChannelColor.BLACK);
+  private static final String WRONG_SLOTS = "Only the valid first slot of a channel should stay";
   private static final String STRAY_READING = "A reading of an output should be dropped";
   private static final String WRONG_NODES = "Only the valid nodes should stay";
   private static final String WRONG_NETWORKS = "Only the valid networks should stay";
@@ -97,20 +98,28 @@ public final class InvalidSaveGameTests {
     return load(networks, SaveTags.list(), NO_FILE).find(new NetworkId(NETWORK)).orElseThrow();
   }
 
+  /**
+   * A slot that does not decode, and one whose channel repeats on the node, are dropped; the first
+   * slot of a channel stays in the place of that channel (answers 92 and 224).
+   */
   @GameTest(template = EMPTY)
-  public static void slotsThatDoNotFitTheNodeAreDropped(GameTestHelper helper) {
+  public static void invalidAndRepeatedSlotsAreDropped(GameTestHelper helper) {
+    CompoundTag withoutActive = SaveTags.slot(CYAN, INPUT, EAST);
+    withoutActive.remove(SaveTags.ACTIVE);
     ListTag slots =
         SaveTags.list(
-            SaveTags.slot(0, INPUT, EAST, RED),
-            SaveTags.slot(1, SIDEWAYS, EAST, RED),
-            SaveTags.slot(OUTSIDE_SLOT, INPUT, EAST, RED),
-            SaveTags.slot(0, OUTPUT, EAST, RED),
-            SaveTags.reading(SaveTags.slot(OUTPUT_SLOT, OUTPUT, WEST, RED), READ));
-    Network network = only(SaveTags.list(SaveTags.node(NODE, NODE_X, SLOTS, slots)));
+            SaveTags.slot(RED, INPUT, EAST),
+            SaveTags.slot(SIDEWAYS, INPUT, EAST),
+            SaveTags.slot(CYAN, SIDEWAYS, EAST),
+            withoutActive,
+            SaveTags.slot(RED, OUTPUT, EAST),
+            SaveTags.reading(SaveTags.slot(BLACK, OUTPUT, WEST), READ));
+    Network network = only(SaveTags.list(SaveTags.node(NODE, NODE_X, slots)));
 
     List<Optional<ChannelSlot>> expected =
-        Arrays.asList(
-            Optional.of(KEPT_INPUT), Optional.empty(), Optional.of(KEPT_OUTPUT), Optional.empty());
+        new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
+    expected.set(KEPT_INPUT.channel().ordinal(), Optional.of(KEPT_INPUT));
+    expected.set(KEPT_OUTPUT.channel().ordinal(), Optional.of(KEPT_OUTPUT));
     helper.assertTrue(
         network.node(new NodeId(NODE)).orElseThrow().slots().equals(expected), WRONG_SLOTS);
     helper.assertTrue(network.snapshot().readings().isEmpty(), STRAY_READING);
@@ -136,7 +145,7 @@ public final class InvalidSaveGameTests {
   @GameTest(template = EMPTY)
   public static void aNodeNameThatDoesNotFitIsDropped(GameTestHelper helper) {
     ListTag nodes =
-        SaveTags.list(SaveTags.named(SaveTags.node(NODE, NODE_X, SLOTS, SaveTags.list()), BLANK));
+        SaveTags.list(SaveTags.named(SaveTags.node(NODE, NODE_X, SaveTags.list()), BLANK));
 
     Network network = only(nodes);
 
@@ -147,13 +156,12 @@ public final class InvalidSaveGameTests {
 
   @GameTest(template = EMPTY)
   public static void nodesThatDoNotFitAreDropped(GameTestHelper helper) {
-    CompoundTag withoutId = SaveTags.node(OTHER_NODE, NODE_X, SLOTS, SaveTags.list());
+    CompoundTag withoutId = SaveTags.node(OTHER_NODE, NODE_X, SaveTags.list());
     withoutId.remove(SaveTags.ID);
+    CompoundTag withoutSlots = SaveTags.node(NODE, NODE_X, SaveTags.list());
+    withoutSlots.remove(SaveTags.SLOTS);
     ListTag nodes =
-        SaveTags.list(
-            SaveTags.node(NODE, NODE_X, TOO_MANY_SLOTS, SaveTags.list()),
-            withoutId,
-            SaveTags.node(OTHER_NODE, NODE_X, SLOTS, SaveTags.list()));
+        SaveTags.list(withoutSlots, withoutId, SaveTags.node(OTHER_NODE, NODE_X, SaveTags.list()));
 
     Network network = only(nodes);
 
@@ -165,7 +173,7 @@ public final class InvalidSaveGameTests {
   @GameTest(template = EMPTY)
   public static void networksThatDoNotFitAreDropped(GameTestHelper helper) {
     ListTag channels = SaveTags.list(SaveTags.channel(RED, BLANK));
-    ListTag node = SaveTags.list(SaveTags.node(NODE, NODE_X, SLOTS, SaveTags.list()));
+    ListTag node = SaveTags.list(SaveTags.node(NODE, NODE_X, SaveTags.list()));
     ListTag networks =
         SaveTags.list(
             SaveTags.network(NETWORK, OWNER, NAME, channels, node),

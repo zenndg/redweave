@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.block;
 
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
-import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -28,7 +27,7 @@ public final class NodeSignals {
     net.minecraft.core.Direction stuckTo = state.getValue(SignalNodeBlock.FACING);
     List<Optional<ChannelSlot>> slots = node.get().slots();
     for (int index = 0; index < slots.size(); index++) {
-      Optional<ChannelSlot> input = slots.get(index).filter(s -> s.direction() == Direction.INPUT);
+      Optional<ChannelSlot> input = slots.get(index).filter(ChannelSlot::reads);
       if (input.isPresent()) {
         net.minecraft.core.Direction face = Faces.toDirection(input.get().face());
         server.readInput().read(id.get(), index, NodeReading.read(level, pos, stuckTo, face));

@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +24,6 @@ import org.junit.jupiter.api.Test;
  * The limits of the config only hold for new changes (answers 90, 92 and 93).
  */
 class NetworkRestoreTest {
-  private static final int SLOT = 0;
-  private static final int UPGRADED_SLOTS = 9;
-  private static final int MISSING_SLOT = 8;
   private static final int LONG_NAME_LENGTH = 40;
   private static final String LETTER = "x";
   private static final String BLANK = "  ";
@@ -33,15 +31,19 @@ class NetworkRestoreTest {
   private static final String CHANNEL_NAME = "Door";
   private static final String NODE_NAME = "Front lamp";
   private static final ChannelColor CHANNEL = ChannelColor.RED;
+  private static final int SLOT = CHANNEL.ordinal();
+  private static final int FREE_SLOT = ChannelColor.BLUE.ordinal();
+  private static final int MISSING_SLOT = Node.SLOT_COUNT;
   private static final Signal READ = new Signal(7);
 
   private static Node node(Direction direction) {
+    return withSlot(new ChannelSlot(direction, Face.EAST, CHANNEL));
+  }
+
+  private static Node withSlot(ChannelSlot slot) {
     List<Optional<ChannelSlot>> slots =
-        List.of(
-            Optional.of(new ChannelSlot(direction, Face.EAST, CHANNEL)),
-            Optional.empty(),
-            Optional.empty(),
-            Optional.empty());
+        new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
+    slots.set(SLOT, Optional.of(slot));
     return new Node(NODE, Optional.empty(), NODE_POSITION, slots);
   }
 
@@ -66,18 +68,22 @@ class NetworkRestoreTest {
   }
 
   @Test
-  void aNodeKeepsItsSlotsWhenTheConfigNowAllowsFewer() {
-    Node upgraded =
-        new Node(
-            NODE,
-            Optional.empty(),
-            NODE_POSITION,
-            Collections.nCopies(UPGRADED_SLOTS, Optional.empty()));
+  void aSlotKeepsANameLongerThanTheConfigNowAllows() {
+    Optional<String> longName = Optional.of(LETTER.repeat(LONG_NAME_LENGTH));
+    ChannelSlot named = new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL).named(longName);
 
     Network restored =
-        Network.restore(withNodes(List.of(upgraded), List.of()), TestLimits.STARTING);
+        Network.restore(withNodes(List.of(withSlot(named)), List.of()), TestLimits.STARTING);
 
-    assertEquals(UPGRADED_SLOTS, restored.node(NODE).orElseThrow().slots().size());
+    assertEquals(Optional.of(named), restored.node(NODE).orElseThrow().slots().get(SLOT));
+  }
+
+  @Test
+  void aSlotWithABlankOrPaddedNameIsRejected() {
+    ChannelSlot input = new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL);
+
+    assertRejected(withNodes(List.of(withSlot(input.named(Optional.of(BLANK)))), List.of()));
+    assertRejected(withNodes(List.of(withSlot(input.named(Optional.of(PADDED_NAME)))), List.of()));
   }
 
   @Test
@@ -115,10 +121,14 @@ class NetworkRestoreTest {
   void aReadingOutsideAnInputSlotIsRejected() {
     SlotReading reading = new SlotReading(NODE, SLOT, READ);
     SlotReading missingSlot = new SlotReading(NODE, MISSING_SLOT, READ);
+    SlotReading freeSlot = new SlotReading(NODE, FREE_SLOT, READ);
+    Node disabled = withSlot(new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL).enabled(false));
 
     assertRejected(withNodes(List.of(), List.of(reading)));
     assertRejected(withNodes(List.of(node(Direction.OUTPUT)), List.of(reading)));
     assertRejected(withNodes(List.of(node(Direction.INPUT)), List.of(missingSlot)));
+    assertRejected(withNodes(List.of(node(Direction.INPUT)), List.of(freeSlot)));
+    assertRejected(withNodes(List.of(disabled), List.of(reading)));
   }
 
   @Test

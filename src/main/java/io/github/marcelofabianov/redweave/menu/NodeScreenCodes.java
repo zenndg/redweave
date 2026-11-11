@@ -7,9 +7,10 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import java.util.Optional;
 
 /**
- * The numbers the Node Screen and the server exchange: a slot fits a data slot of the menu, which
- * the game sends as 16 bits, and an action fits a button click of the game. Anything that does not
- * decode is refused, because a client can send any number (rule 16).
+ * The numbers the Node Screen and the server exchange: a slot, with its status but not its name,
+ * fits a data slot of the menu, which the game sends as 16 bits, and an action fits a button click
+ * of the game. Anything that does not decode is refused, because a client can send any number (rule
+ * 16).
  */
 public final class NodeScreenCodes {
   private static final int USED = 1;
@@ -18,7 +19,8 @@ public final class NodeScreenCodes {
   private static final int FACE_MASK = 0b111;
   private static final int CHANNEL_SHIFT = 5;
   private static final int CHANNEL_MASK = 0b1111;
-  private static final int SLOT_BITS = 9;
+  private static final int ACTIVE_SHIFT = 9;
+  private static final int SLOT_BITS = 10;
 
   private static final int KIND_MASK = 0b11;
   private static final int INDEX_SHIFT = 2;
@@ -36,7 +38,8 @@ public final class NodeScreenCodes {
     return USED
         | slot.direction().ordinal() << DIRECTION_SHIFT
         | slot.face().ordinal() << FACE_SHIFT
-        | slot.channel().ordinal() << CHANNEL_SHIFT;
+        | slot.channel().ordinal() << CHANNEL_SHIFT
+        | (slot.active() ? USED : 0) << ACTIVE_SHIFT;
   }
 
   public static Optional<ChannelSlot> slotOf(int code) {
@@ -46,7 +49,9 @@ public final class NodeScreenCodes {
     }
     Direction direction = Direction.values()[code >> DIRECTION_SHIFT & USED];
     ChannelColor channel = ChannelColor.values()[code >> CHANNEL_SHIFT & CHANNEL_MASK];
-    return Optional.of(new ChannelSlot(direction, Face.values()[face], channel));
+    boolean active = (code >> ACTIVE_SHIFT & USED) == USED;
+    return Optional.of(
+        new ChannelSlot(direction, Face.values()[face], channel, active, Optional.empty()));
   }
 
   /** A choice carries only its position, which takes every bit above the kind (answer 145). */
@@ -74,6 +79,8 @@ public final class NodeScreenCodes {
   }
 
   private static NodeAction simple(int kind, int index) {
-    return kind == NodeAction.Kind.USE.ordinal() ? NodeAction.use(index) : NodeAction.clear(index);
+    return kind == NodeAction.Kind.ENABLE.ordinal()
+        ? NodeAction.enable(index)
+        : NodeAction.disable(index);
   }
 }

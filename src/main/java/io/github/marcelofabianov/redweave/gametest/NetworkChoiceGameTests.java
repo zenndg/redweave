@@ -3,15 +3,14 @@ package io.github.marcelofabianov.redweave.gametest;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
-import io.github.marcelofabianov.redweave.domain.network.Direction;
-import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
+import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -35,12 +34,11 @@ public final class NetworkChoiceGameTests {
   private static final BlockPos OTHER_CONTROLLER = OTHER_CONTROLLER_FLOOR.above();
   private static final BlockPos STONE = new BlockPos(1, 1, 1);
   private static final BlockPos NODE = STONE.above();
-  private static final int FIRST_SLOT = 0;
   private static final int SECOND_CHOICE = 1;
   private static final String NODE_NAME = "Gate lever";
   private static final String HAS_NETWORK = "A placed node should have no network";
   private static final String NOT_JOINED = "The placer should put the node in the network";
-  private static final String NO_INPUT = "The node should join with an input on its face";
+  private static final String ENABLED = "A node should join with no enabled slot";
   private static final String NOT_LAST_USED = "The picked network should be the last used one";
   private static final String NOT_PLACER = "Only whoever placed the node should pick its network";
   private static final String NOT_SWITCHED = "The owner should move the node to the other network";
@@ -58,10 +56,24 @@ public final class NetworkChoiceGameTests {
     NodeScene.choose(helper, owner, NODE, NodeScene.FIRST_CHOICE);
 
     helper.assertTrue(networkIdOf(node).equals(Optional.of(network)), NOT_JOINED);
-    ChannelSlot input = new ChannelSlot(Direction.INPUT, Face.UP, ChannelColor.WHITE);
-    helper.assertTrue(NodeScene.slotsOf(node).get(FIRST_SLOT).equals(Optional.of(input)), NO_INPUT);
     Optional<NetworkId> lastUsed = server().lastUsedOf(new PlayerId(owner.getUUID()));
     helper.assertTrue(lastUsed.equals(Optional.of(network)), NOT_LAST_USED);
+    helper.succeed();
+  }
+
+  /** A node joins with its 16 slots empty: no channel is enabled for it (answer 224). */
+  @GameTest(template = EMPTY)
+  public static void aNodeJoinsWithNoEnabledSlot(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+
+    NodeId node = NodeScene.placeNode(helper, owner, STONE, net.minecraft.core.Direction.UP);
+
+    List<Optional<ChannelSlot>> slots = NodeScene.slotsOf(node);
+    helper.assertTrue(slots.size() == Node.SLOT_COUNT, ENABLED);
+    helper.assertTrue(slots.stream().allMatch(Optional::isEmpty), ENABLED);
+    helper.assertTrue(
+        NodeScene.networkOf(node).node(node).orElseThrow().enabledChannels().isEmpty(), ENABLED);
     helper.succeed();
   }
 

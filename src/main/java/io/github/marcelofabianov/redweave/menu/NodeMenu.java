@@ -26,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class NodeMenu extends AbstractContainerMenu {
   private static final int NO_STATE = 0;
+  private static final String NO_NAME = "";
 
   private final BlockPos pos;
   private final ContainerLevelAccess access;
@@ -56,7 +57,12 @@ public final class NodeMenu extends AbstractContainerMenu {
     NodeScreenNames opening = NodeScreenNames.STREAM_CODEC.decode(extra);
     this.names =
         new NodeScreenNames(
-            id, opening.node(), opening.network(), opening.color(), opening.owner());
+            id,
+            opening.node(),
+            opening.network(),
+            opening.color(),
+            opening.owner(),
+            opening.labels());
     addDataSlots(data);
   }
 
@@ -151,6 +157,20 @@ public final class NodeMenu extends AbstractContainerMenu {
   /** The networks the viewer may pick, in the order the server keeps (answers 157 and 203). */
   public List<NodeScreenChoices.Row> choices() {
     return rows;
+  }
+
+  /** The name the owner gave a channel, or empty for the name of its color (answer 221). */
+  public String channelName(ChannelColor channel) {
+    return nameAt(names.labels().channels(), channel);
+  }
+
+  /** The name the owner gave the slot of a color on this node, or empty (answer 227). */
+  public String slotName(ChannelColor channel) {
+    return nameAt(names.labels().slots(), channel);
+  }
+
+  private static String nameAt(List<String> names, ChannelColor channel) {
+    return channel.ordinal() < names.size() ? names.get(channel.ordinal()) : NO_NAME;
   }
 
   public String ownerName() {

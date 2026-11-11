@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * The aggregate: every change to the name, the channels and the nodes goes through it, and it keeps
@@ -61,9 +62,8 @@ public final class Network {
   }
 
   /**
-   * A network loaded from the saves, the same as it was, but waiting for the first tick, which
-   * applies every output again (answers 38 and 90). The limits of the config only hold for the next
-   * changes, so a node keeps its slots and a name its length (answer 93).
+   * A network loaded from the saves, as it was, waiting for the first tick to apply every output
+   * again (answers 38 and 90). A name keeps its length if the config now allows less (answer 93).
    */
   public static Network restore(NetworkSnapshot snapshot, NetworkLimits limits) {
     SnapshotRules.check(snapshot);
@@ -137,7 +137,7 @@ public final class Network {
     if (!isOnline()) {
       return Outcome.NETWORK_NOT_ONLINE;
     }
-    return pendingIfAccepted(nodes.attach(nodeId, position, nodeName, limits.slotsPerNode()));
+    return pendingIfAccepted(nodes.attach(nodeId, position, nodeName));
   }
 
   /** Names a node, for the owner only; blank gives back the default (144). It changes no signal. */
@@ -172,6 +172,48 @@ public final class Network {
   /** Configures one slot of a node, for the owner only. */
   public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
     return changeSlot(requester, nodeId, index, Optional.of(slot));
+  }
+
+  /** Enables the slot of a color, for the owner only (answers 226 and 228). */
+  public Outcome enableSlot(PlayerId requester, NodeId nodeId, int index) {
+    return changeSlotWith(requester, nodeId, index, SlotChanges::enable);
+  }
+
+  /** Disables a slot, which keeps its configuration, for the owner only (answer 228). */
+  public Outcome disableSlot(PlayerId requester, NodeId nodeId, int index) {
+    return changeSlotWith(requester, nodeId, index, SlotChanges::disable);
+  }
+
+  /** Sets up the direction and face of a slot that is not enabled, for the owner (answer 237). */
+  public Outcome setUpSlot(PlayerId requester, NodeId nodeId, int index, Direction way, Face face) {
+    if (isOwner(requester) && nodes.isEnabled(nodeId, index)) {
+      return Outcome.SLOT_ENABLED;
+    }
+    return changeSlotWith(
+        requester, nodeId, index, (node, at) -> SlotChanges.setUp(node, at, way, face));
+  }
+
+  /** Names a slot, for the owner only; blank takes the name away. It changes no signal (227). */
+  public Outcome renameSlot(PlayerId requester, NodeId nodeId, int index, String newName) {
+    Optional<Optional<String>> name = SlotChanges.validName(newName, limits.slotNameLength());
+    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
+    if (found != Outcome.ACCEPTED || name.isEmpty()) {
+      return found == Outcome.ACCEPTED ? Outcome.INVALID_NAME : found;
+    }
+    return nodes.changeSlot(nodeId, index, SlotChanges.name(nodes.at(nodeId), index, name.get()));
+  }
+
+  private Outcome changeSlotWith(
+      PlayerId requester,
+      NodeId nodeId,
+      int index,
+      BiFunction<Node, Integer, Optional<ChannelSlot>> change) {
+    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
+    if (found != Outcome.ACCEPTED) {
+      return found;
+    }
+    Optional<ChannelSlot> changed = change.apply(nodes.at(nodeId), index);
+    return changed.isEmpty() ? Outcome.INVALID_SLOT : changeSlot(requester, nodeId, index, changed);
   }
 
   /** Frees one slot of a node, for the owner only. */
@@ -288,14 +330,6 @@ public final class Network {
   }
 
   /**
-   * The first channel, in the order of the colors, with no slot in the network. A node placed by
-   * its owner starts on it (answer 25).
-   */
-  public Optional<ChannelColor> firstFreeChannel() {
-    return channels.firstFreeAmong(nodes.all());
-  }
-
-  /**
    * Keeps the last reading of an input slot, which stays while the chunk of the node is unloaded
    * and goes to the saves (answers 13 and 37). The server reads it, so there is no requester. A
    * slot that is not an input is ignored. Tells whether the reading changed.
@@ -329,6 +363,11 @@ public final class Network {
   /** What a node emits in the world: its strongest output, like a lever (answer 71). */
   public Signal emission(NodeId nodeId) {
     return signals.emission(nodeId);
+  }
+
+  /** The signal of a node: its strongest reading or emission, off when it does not count (98). */
+  public Signal nodeSignal(NodeId nodeId) {
+    return signals.nodeSignal(nodeId);
   }
 
   /** The state of a node for the screens; the caller tells whether its chunk is loaded. */

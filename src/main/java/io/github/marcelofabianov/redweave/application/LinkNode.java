@@ -47,7 +47,7 @@ public final class LinkNode {
       network.detachNode(player, node);
       saver.save(network);
     });
-    Outcome joined = JoinNetwork.join(target.get(), player, node, position, name);
+    Outcome joined = target.get().attachNode(player, node, position, name);
     saver.save(target.get());
     lastUsed.record(player, targetId);
     return joined;

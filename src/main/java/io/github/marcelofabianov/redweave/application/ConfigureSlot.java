@@ -5,7 +5,10 @@ import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 
-/** The Node Screen configures one slot of the node, in the one network of the node. */
+/**
+ * The Node Screen sets up the direction and the face of a slot that is not enabled. An enabled slot
+ * is locked, so a change never fires redstone by accident (answer 237).
+ */
 public final class ConfigureSlot {
   private final NodeNetworkFinder finder;
   private final NetworkSaver saver;
@@ -19,7 +22,7 @@ public final class ConfigureSlot {
     return SavedChange.apply(
         finder.findByNode(node),
         Outcome.UNKNOWN_NODE,
-        network -> network.configureSlot(player, node, index, slot),
+        network -> network.setUpSlot(player, node, index, slot.direction(), slot.face()),
         saver);
   }
 }

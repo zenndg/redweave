@@ -10,13 +10,13 @@ public record NodeAction(Kind kind, int index, Optional<ChannelSlot> slot) {
   private static final String MISMATCH = "Only configure carries a slot";
 
   /**
-   * Use a free slot (83), configure a slot, clear it (84), or choose the network at a position of
-   * the list the server keeps (answers 139 and 141).
+   * Enable the slot of a color, configure its direction or face, disable it (answers 226 and 228),
+   * or choose the network at a position of the list the server keeps (139 and 141).
    */
   public enum Kind {
-    USE,
+    ENABLE,
     CONFIGURE,
-    CLEAR,
+    DISABLE,
     CHOOSE
   }
 
@@ -28,16 +28,16 @@ public record NodeAction(Kind kind, int index, Optional<ChannelSlot> slot) {
     }
   }
 
-  public static NodeAction use(int index) {
-    return new NodeAction(Kind.USE, index, Optional.empty());
+  public static NodeAction enable(int index) {
+    return new NodeAction(Kind.ENABLE, index, Optional.empty());
   }
 
   public static NodeAction configure(int index, ChannelSlot slot) {
     return new NodeAction(Kind.CONFIGURE, index, Optional.of(slot));
   }
 
-  public static NodeAction clear(int index) {
-    return new NodeAction(Kind.CLEAR, index, Optional.empty());
+  public static NodeAction disable(int index) {
+    return new NodeAction(Kind.DISABLE, index, Optional.empty());
   }
 
   /** The index is the position in the network choice, not a slot. */

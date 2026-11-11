@@ -23,14 +23,13 @@ O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves
 
 ## Clicar
 
-Um clique com a mão vazia abre a [Tela do Controlador](telas.md#tela-do-controlador), que chega com a issue #20. O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (perguntas 113 e 154). Numa rede `Offline`, nada abre, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (pergunta 160).
+Um clique com a mão vazia, ou com o Configurator no modo `Open`, abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201). Os modos `Copy` e `Wrench` não agem no controlador (perguntas 164 e 232).
 
-Até a #20, o clique mostra uma mensagem na action bar (pergunta 52). Com o fim da rede atual (pergunta 139), a #87 tirou o `Current network: <nome>` do dono, e todos veem a mesma mensagem (pergunta 201). O clique não muda nada.
-
-| Quem clica | Mensagem |
-|---|---|
-| Qualquer um | `<nome> · owner: <dono>` |
-| Qualquer um, num controlador sem rede | `No network` |
+| Situação | O que acontece | Pergunta |
+|---|---|---|
+| Rede `Online` | Abre a Tela do Controlador | 113 |
+| Rede `Offline` | Nada abre, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` | 158 e 160 |
+| Controlador sem rede | A action bar mostra `No network` | 53 e 92 |
 
 Um controlador fica sem rede quando a rede dele não existe mais no save, como quando ela foi descartada por estar inválida (pergunta 92), ou num mundo criado antes da persistência da issue #16 (pergunta 53).
 
@@ -92,7 +91,6 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 ## Fora desta funcionalidade
 
-- A Tela do Controlador (issue #20).
 - O Network Terminal, que administra as redes do player ([`terminal-de-rede.md`](terminal-de-rede.md)).
 - A textura final, os LEDs ao vivo e a receita (issue #24).
 
@@ -100,6 +98,8 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` abre a Tela do Controlador (pergunta 232). |
+| Zennd | 2026-11-11 15:40 | O clique com a mão vazia abre a Tela do Controlador, da #20. |
 | Zennd | 2026-11-11 14:09 | Registra o aviso do limite de redes e o núcleo apagado da rede `Offline`, da #88. |
 | Zennd | 2026-11-11 13:46 | Aplica a pergunta 201, da #87: o clique mostra a mesma mensagem para todos. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 178. |

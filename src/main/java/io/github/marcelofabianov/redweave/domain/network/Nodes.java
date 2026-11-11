@@ -14,14 +14,14 @@ final class Nodes {
   private final Map<NodeId, Node> byId = new LinkedHashMap<>();
 
   /** A node that moves in keeps the name it had, even past the limit of today (93 and 200). */
-  Outcome attach(NodeId id, NodePosition position, Optional<String> name, int slotCount) {
+  Outcome attach(NodeId id, NodePosition position, Optional<String> name) {
     if (byId.containsKey(id)) {
       return Outcome.ALREADY_ATTACHED;
     }
     if (name.filter(given -> !Names.isKept(given)).isPresent()) {
       return Outcome.INVALID_NAME;
     }
-    byId.put(id, Node.withFreeSlots(id, position, slotCount).withName(name));
+    byId.put(id, Node.withFreeSlots(id, position).withName(name));
     return Outcome.ACCEPTED;
   }
 
@@ -47,11 +47,26 @@ final class Nodes {
     if (node == null) {
       return Outcome.UNKNOWN_NODE;
     }
-    if (!node.hasSlot(index)) {
+    if (!node.hasSlot(index)
+        || slot.filter(given -> given.channel().ordinal() != index).isPresent()) {
       return Outcome.INVALID_SLOT;
     }
     byId.put(id, node.withSlot(index, slot));
     return Outcome.ACCEPTED;
+  }
+
+  /** Whether the node is in the network and has a slot at the index. */
+  Outcome slotOf(NodeId id, int index) {
+    Node node = byId.get(id);
+    if (node == null) {
+      return Outcome.UNKNOWN_NODE;
+    }
+    return node.hasSlot(index) ? Outcome.ACCEPTED : Outcome.INVALID_SLOT;
+  }
+
+  boolean isEnabled(NodeId id, int index) {
+    Node node = byId.get(id);
+    return node != null && node.slotAt(index).filter(ChannelSlot::active).isPresent();
   }
 
   boolean remove(NodeId id) {
@@ -65,8 +80,7 @@ final class Nodes {
 
   boolean isInput(NodeId id, int index) {
     Node node = byId.get(id);
-    return node != null
-        && node.slotAt(index).filter(slot -> slot.direction() == Direction.INPUT).isPresent();
+    return node != null && node.slotAt(index).filter(ChannelSlot::reads).isPresent();
   }
 
   /** The node, or null when it is not in the network, like Map.get, for the paths of the tick. */

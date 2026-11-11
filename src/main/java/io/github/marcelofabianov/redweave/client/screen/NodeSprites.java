@@ -3,7 +3,10 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import net.minecraft.resources.ResourceLocation;
 
-/** The sprites of the Node Screen, from _docs/imagens/telas/tela-do-no-sprites-*.png (78, 198). */
+/**
+ * The sprites of the Node Screen, from _docs/imagens/telas/tela-do-no-sprites-*.png (answers 78,
+ * 198 and 231).
+ */
 final class NodeSprites {
   private static final String FOLDER = "node_screen/";
 
@@ -39,6 +42,15 @@ final class NodeSprites {
   static final ResourceLocation BAR_OFF = of("bar_off");
   static final ResourceLocation BAR_ON = of("bar_on");
   static final ResourceLocation BAR_GLOW = of("bar_glow");
+  static final ResourceLocation CHANNEL_TAB = of("channel_tab");
+  static final ResourceLocation CHANNEL_TAB_HOVER = of("channel_tab_hover");
+  static final ResourceLocation CHANNEL_TAB_ACTIVE = of("channel_tab_active");
+  static final ResourceLocation CHANNEL_TAB_SELECTED = of("channel_tab_selected");
+  static final ResourceLocation STATUS_ENABLED = of("status_enabled");
+  static final ResourceLocation STATUS_DISABLED = of("status_disabled");
+  static final ResourceLocation STATUS_HOVER = of("status_hover");
+  static final ResourceLocation ICON_ACTIVE = of("icon_active");
+  static final ResourceLocation ICON_INACTIVE = of("icon_inactive");
 
   private NodeSprites() {}
 

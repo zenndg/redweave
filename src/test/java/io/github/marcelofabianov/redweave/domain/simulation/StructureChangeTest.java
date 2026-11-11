@@ -24,9 +24,10 @@ import org.junit.jupiter.api.Test;
 
 /** A change to the structure can change a signal, so it makes the network wait (answer 38). */
 class StructureChangeTest {
-  private static final int SLOT = 0;
-  private static final int SECOND_SLOT = 1;
   private static final ChannelColor LAMP = ChannelColor.YELLOW;
+  private static final ChannelColor SECOND_LAMP = ChannelColor.RED;
+  private static final int SLOT = LAMP.ordinal();
+  private static final int SECOND_SLOT = SECOND_LAMP.ordinal();
   private static final Signal LEVER = new Signal(13);
   private static final String NEW_NAME = "Door";
   private static final OutputFace LAMP_FACE =
@@ -87,11 +88,19 @@ class StructureChangeTest {
     assertEquals(List.of(new OutputChange(LAMP_FACE, Signal.OFF)), simulator.evaluate(network));
   }
 
+  /** A node holds one slot per channel, so the new output repeats a second lever (224). */
   @Test
   void aNewOutputStartsEmitting() {
     Network network = settledLeverAndLamp();
     network.configureSlot(
-        OWNER, OTHER_NODE, SECOND_SLOT, new ChannelSlot(Direction.OUTPUT, Face.UP, LAMP));
+        OWNER,
+        NODE,
+        SECOND_SLOT,
+        new ChannelSlot(Direction.INPUT, NODE_POSITION.face(), SECOND_LAMP));
+    network.readInput(NODE, SECOND_SLOT, LEVER);
+    simulator.evaluate(network);
+    network.configureSlot(
+        OWNER, OTHER_NODE, SECOND_SLOT, new ChannelSlot(Direction.OUTPUT, Face.UP, SECOND_LAMP));
 
     assertEquals(List.of(new OutputChange(SECOND_LAMP_FACE, LEVER)), simulator.evaluate(network));
   }

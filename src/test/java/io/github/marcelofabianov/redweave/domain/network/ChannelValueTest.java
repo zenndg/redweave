@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
  * A channel is worth the strongest of the inputs that count, and 0 with none (rede-e-canais.md).
  */
 class ChannelValueTest {
-  private static final int SLOT = 0;
-  private static final int PAST_THE_LAST_SLOT = 4;
   private static final ChannelColor DOOR = ChannelColor.RED;
+  private static final int SLOT = DOOR.ordinal();
+  private static final int PAST_THE_LAST_SLOT = Node.SLOT_COUNT;
   private static final Signal WEAK = new Signal(4);
   private static final Signal MIDDLE = new Signal(9);
   private static final Signal STRONG = new Signal(11);

@@ -2,10 +2,8 @@ package io.github.marcelofabianov.redweave.server;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
-import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -21,20 +19,18 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 /**
- * A node as it is in the saves: the name only when its owner gave one (answer 206), the slot count,
- * which it keeps even if the config now allows fewer, and only the slots in use (93 and 95).
+ * A node as it is in the saves: the name only when its owner gave one (answer 206) and the slots
+ * ever enabled, each in the place of its channel (answer 224).
  */
-record SavedNode(
-    NodeId id, Optional<String> name, NodePosition position, int slotCount, List<SavedSlot> slots) {
+record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<SavedSlot> slots) {
   private static final String ID = "id";
   private static final String BLOCK = "block";
   private static final String FACE = "face";
-  private static final String SLOT_COUNT = "slot_count";
   private static final String SLOTS = "slots";
   private static final String SLOT_PART = "slot";
   private static final String NAME_PART = "node name";
   private static final String READING_PART = "reading";
-  private static final String OUTSIDE = "index outside the slot count or repeated";
+  private static final String REPEATED = "channel repeated on the node";
   private static final String NOT_INPUT = "reading of a slot that is not an input";
 
   static final Codec<SavedNode> CODEC =
@@ -46,9 +42,6 @@ record SavedNode(
                       .forGetter(SavedNode::name),
                   SaveCodecs.BLOCK.fieldOf(BLOCK).forGetter(node -> node.position().block()),
                   SaveCodecs.FACE.fieldOf(FACE).forGetter(node -> node.position().face()),
-                  Codec.intRange(1, RedweaveConfig.MAX_SLOTS)
-                      .fieldOf(SLOT_COUNT)
-                      .forGetter(SavedNode::slotCount),
                   Lenient.list(SavedSlot.CODEC, SLOT_PART)
                       .fieldOf(SLOTS)
                       .forGetter(SavedNode::slots))
@@ -63,44 +56,37 @@ record SavedNode(
     List<SavedSlot> used = new ArrayList<>();
     for (int index = 0; index < node.slots().size(); index++) {
       int at = index;
-      node.slots()
-          .get(index)
-          .ifPresent(slot -> used.add(new SavedSlot(at, slot, readingOf.apply(at))));
+      node.slots().get(index).ifPresent(slot -> used.add(new SavedSlot(slot, readingOf.apply(at))));
     }
-    return new SavedNode(node.id(), node.name(), node.position(), node.slots().size(), used);
+    return new SavedNode(node.id(), node.name(), node.position(), used);
   }
 
-  /** Drops the slots that do not fit the node and the readings out of an input (answer 92). */
+  /** Drops a repeated channel and the readings out of an enabled input (answer 92). */
   private static SavedNode checked(
-      NodeId id,
-      Optional<String> name,
-      BlockLocation block,
-      Face face,
-      int slotCount,
-      List<SavedSlot> slots) {
+      NodeId id, Optional<String> name, BlockLocation block, Face face, List<SavedSlot> slots) {
     Set<Integer> taken = new HashSet<>();
     List<SavedSlot> kept = new ArrayList<>();
     for (SavedSlot slot : slots) {
-      if (slot.index() >= slotCount || !taken.add(slot.index())) {
-        Lenient.dropped(SLOT_PART, OUTSIDE);
+      if (!taken.add(slot.index())) {
+        Lenient.dropped(SLOT_PART, REPEATED);
         continue;
       }
       kept.add(withoutStrayReading(slot));
     }
-    return new SavedNode(id, name, new NodePosition(block, face), slotCount, kept);
+    return new SavedNode(id, name, new NodePosition(block, face), kept);
   }
 
   private static SavedSlot withoutStrayReading(SavedSlot slot) {
-    if (slot.slot().direction() == Direction.INPUT || !slot.reading().isOn()) {
+    if (slot.slot().reads() || !slot.reading().isOn()) {
       return slot;
     }
     Lenient.dropped(READING_PART, NOT_INPUT);
-    return new SavedSlot(slot.index(), slot.slot(), Signal.OFF);
+    return new SavedSlot(slot.slot(), Signal.OFF);
   }
 
   Node node() {
     List<Optional<ChannelSlot>> all =
-        new ArrayList<>(Collections.nCopies(slotCount, Optional.empty()));
+        new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
     slots.forEach(saved -> all.set(saved.index(), Optional.of(saved.slot())));
     return new Node(id, name, position, all);
   }

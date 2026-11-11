@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.application;
 
 import static io.github.marcelofabianov.redweave.application.ApplicationFixture.NODE_ID;
+import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.NODE_POSITION;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.STRANGER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,11 +12,14 @@ import io.github.marcelofabianov.redweave.domain.network.CopiedSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,22 +30,20 @@ class CopyAndPasteNodeTest {
   private static final NodeId NODE = new NodeId(NODE_ID);
   private static final String UNPLACED_UUID = "3d4e5f6a-7b8c-4d9e-8f0a-1b2c3d4e5f6a";
   private static final NodeId UNPLACED = new NodeId(UUID.fromString(UNPLACED_UUID));
-  private static final int SLOT = 0;
-  private static final int SECOND_SLOT = 1;
-  private static final int PAST_THE_END = 5;
+  private static final ChannelColor DOOR = ChannelColor.RED;
+  private static final ChannelColor LEVER = ChannelColor.BLUE;
+  private static final int SLOT = DOOR.ordinal();
+  private static final int SECOND_SLOT = LEVER.ordinal();
   private static final int PASTED = 2;
   private static final Signal READ = new Signal(9);
-  private static final ChannelSlot OWN_BLOCK =
-      new ChannelSlot(Direction.OUTPUT, Face.WEST, ChannelColor.RED);
-  private static final ChannelSlot NEIGHBOR =
-      new ChannelSlot(Direction.INPUT, Face.NORTH, ChannelColor.BLUE);
+  private static final ChannelSlot OWN_BLOCK = new ChannelSlot(Direction.OUTPUT, Face.WEST, DOOR);
+  private static final ChannelSlot NEIGHBOR = new ChannelSlot(Direction.INPUT, Face.NORTH, LEVER);
+  private static final ChannelSlot INPUT =
+      new ChannelSlot(Direction.INPUT, NODE_POSITION.face(), DOOR);
   private static final NodeCopy COPY =
       new NodeCopy(
           Face.WEST,
-          List.of(
-              new CopiedSlot(SLOT, OWN_BLOCK),
-              new CopiedSlot(SECOND_SLOT, NEIGHBOR),
-              new CopiedSlot(PAST_THE_END, NEIGHBOR)));
+          List.of(new CopiedSlot(SLOT, OWN_BLOCK), new CopiedSlot(SECOND_SLOT, NEIGHBOR)));
 
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final CopyNode copyNode = new CopyNode(fixture.networks);
@@ -54,6 +56,7 @@ class CopyAndPasteNodeTest {
   @Test
   void aCopyHoldsTheSlotsOfTheNode() {
     fixture.ownersNetworkWithANode();
+    network().configureSlot(OWNER, NODE, SLOT, INPUT);
 
     NodeCopy copy = copyNode.copy(NODE).orElseThrow();
 
@@ -66,29 +69,31 @@ class CopyAndPasteNodeTest {
   }
 
   @Test
-  void pastingReplacesTheSlotsAndCountsTheOnesLeftOut() {
+  void pastingReplacesTheSlotsAndCountsTheEnabledOnes() {
     fixture.ownersNetworkWithANode();
 
     PasteResult result = pasteNode.paste(OWNER, NODE, COPY);
 
-    assertEquals(new PasteResult(Outcome.ACCEPTED, PASTED, 1), result);
-    ChannelSlot followed = new ChannelSlot(Direction.OUTPUT, Face.EAST, ChannelColor.RED);
-    assertEquals(
-        List.of(Optional.of(followed), Optional.of(NEIGHBOR), Optional.empty(), Optional.empty()),
-        network().node(NODE).orElseThrow().slots());
+    assertEquals(new PasteResult(Outcome.ACCEPTED, PASTED), result);
+    ChannelSlot followed = new ChannelSlot(Direction.OUTPUT, NODE_POSITION.face(), DOOR);
+    List<Optional<ChannelSlot>> expected =
+        new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
+    expected.set(SLOT, Optional.of(followed));
+    expected.set(SECOND_SLOT, Optional.of(NEIGHBOR));
+    assertEquals(expected, network().node(NODE).orElseThrow().slots());
   }
 
   @Test
   void pastingDropsTheReadingsOfTheNode() {
     fixture.ownersNetworkWithANode();
-    ChannelColor channel =
-        network().node(NODE).orElseThrow().slots().get(SLOT).orElseThrow().channel();
+    network().configureSlot(OWNER, NODE, SLOT, INPUT);
     network().readInput(NODE, SLOT, READ);
+    assertEquals(READ, network().channelValue(DOOR));
     NodeCopy itself = copyNode.copy(NODE).orElseThrow();
 
     pasteNode.paste(OWNER, NODE, itself);
 
-    assertEquals(Signal.OFF, network().channelValue(channel));
+    assertEquals(Signal.OFF, network().channelValue(DOOR));
   }
 
   @Test

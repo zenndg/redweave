@@ -40,12 +40,13 @@ public final class SaveCodecs {
   static final Codec<Signal> SIGNAL =
       Codec.intRange(Signal.OFF.strength(), Signal.MAX.strength())
           .xmap(Signal::new, Signal::strength);
-  static final Codec<NetworkId> NETWORK_ID = UUIDUtil.CODEC.xmap(NetworkId::new, NetworkId::value);
+  public static final Codec<NetworkId> NETWORK_ID =
+      UUIDUtil.CODEC.xmap(NetworkId::new, NetworkId::value);
   static final Codec<NodeId> NODE_ID = UUIDUtil.CODEC.xmap(NodeId::new, NodeId::value);
   static final Codec<PlayerId> PLAYER_ID = UUIDUtil.CODEC.xmap(PlayerId::new, PlayerId::value);
 
   /** A name kept as it was given, up to the ceiling of the config (answer 93). */
-  static final Codec<String> SAVED_NAME = Codec.STRING.validate(SaveCodecs::checkName);
+  public static final Codec<String> SAVED_NAME = Codec.STRING.validate(SaveCodecs::checkName);
 
   static final Codec<BlockLocation> BLOCK =
       RecordCodecBuilder.create(instance ->

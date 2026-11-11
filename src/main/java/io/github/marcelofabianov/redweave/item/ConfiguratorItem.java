@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
-import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -85,10 +84,10 @@ public final class ConfiguratorItem extends Item {
       ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
     ConfiguratorMode mode = modeOf(stack);
     tooltip.add(Component.translatable(ConfiguratorMessages.MODE, named(mode)));
-    NodeCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
+    ConfiguratorCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
     if (copy != null) {
       tooltip.add(
-          Component.translatable(ConfiguratorMessages.COPY, copy.slots().size())
+          Component.translatable(ConfiguratorMessages.COPY, copy.slots().configured())
               .withStyle(ChatFormatting.GRAY));
     }
     tooltip.add(hint(ConfiguratorMessages.hintOf(mode)));

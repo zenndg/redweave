@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.domain.simulation;
 
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
-import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.OutputChange;
@@ -28,7 +27,7 @@ public final class Simulator {
     for (Node node : network.nodes()) {
       boolean counts = network.counts(node.id());
       for (Optional<ChannelSlot> slot : node.slots()) {
-        slot.filter(output -> output.direction() == Direction.OUTPUT)
+        slot.filter(ChannelSlot::emits)
             .ifPresent(output ->
                 wanted.merge(
                     new OutputFace(node.id(), node.position().block(), output.face()),

@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.application;
 
 import static io.github.marcelofabianov.redweave.application.ApplicationFixture.NODE_ID;
+import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.OWNER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -13,27 +14,34 @@ import org.junit.jupiter.api.Test;
 /** A node reads the redstone of its block into the channel, and the reading is saved (37). */
 class ReadInputTest {
   private static final NodeId NODE = new NodeId(NODE_ID);
-  private static final int FIRST_SLOT = 0;
+  private static final ChannelColor CHANNEL = ChannelColor.WHITE;
+  private static final int FIRST_SLOT = CHANNEL.ordinal();
   private static final Signal LEVER = Signal.MAX;
 
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final ReadInput readInput = new ReadInput(fixture.networks, fixture.networks);
 
+  /** The network of the fixture, with an input enabled on the first slot of its node. */
+  private NetworkId networkWithAnInput() {
+    NetworkId network = fixture.ownersNetworkWithANode();
+    new EnableSlot(fixture.networks, fixture.networks).enable(OWNER, NODE, FIRST_SLOT);
+    return network;
+  }
+
   @Test
   void aReadingGoesIntoTheChannelAndIsSaved() {
-    NetworkId network = fixture.ownersNetworkWithANode();
+    NetworkId network = networkWithAnInput();
     int savesBefore = fixture.networks.saves();
 
     assertEquals(Outcome.ACCEPTED, readInput.read(NODE, FIRST_SLOT, LEVER));
-    assertEquals(
-        LEVER, fixture.networks.find(network).orElseThrow().channelValue(ChannelColor.WHITE));
+    assertEquals(LEVER, fixture.networks.find(network).orElseThrow().channelValue(CHANNEL));
     assertEquals(savesBefore + 1, fixture.networks.saves());
   }
 
   /** Only a change waits for a tick and is saved, so a steady lever costs nothing (rule 18). */
   @Test
   void theSameReadingAgainChangesNothing() {
-    fixture.ownersNetworkWithANode();
+    networkWithAnInput();
     readInput.read(NODE, FIRST_SLOT, LEVER);
     int savesBefore = fixture.networks.saves();
 

@@ -11,17 +11,11 @@ import java.util.Locale;
 public final class NodeScreenTexts {
   private static final String PREFIX = "screen." + RedweaveMod.MOD_ID + ".node.";
 
-  public static final String CHANNEL_SLOTS = PREFIX + "channel_slots";
-  public static final String SLOT = PREFIX + "slot";
-  public static final String FREE_SLOT = PREFIX + "free_slot";
-  public static final String CLICK_TO_USE = PREFIX + "click_to_use";
   public static final String INPUT = PREFIX + "input";
   public static final String OUTPUT = PREFIX + "output";
-  public static final String SLOT_LINE = PREFIX + "slot_line";
   public static final String DIRECTION = PREFIX + "direction";
   public static final String BLOCK_FACE = PREFIX + "block_face";
   public static final String FACE_TOOLTIP = PREFIX + "face_tooltip";
-  public static final String CHANNEL = PREFIX + "channel";
   public static final String LOGIC = PREFIX + "logic";
   public static final String LOGIC_NONE = PREFIX + "logic.none";
   public static final String LOGIC_INVERT = PREFIX + "logic.invert";
@@ -30,13 +24,15 @@ public final class NodeScreenTexts {
   public static final String LOGIC_THRESHOLD = PREFIX + "logic.threshold";
   public static final String LOGIC_LATER = PREFIX + "logic_later";
   public static final String LOGIC_TOOLTIP = PREFIX + "logic_tooltip";
-  public static final String CLEAR = PREFIX + "clear";
-  public static final String CLEAR_CONFIRM = PREFIX + "clear_confirm";
   public static final String SIGNAL = PREFIX + "signal";
-  public static final String SLOTS_IN_USE = PREFIX + "slots_in_use";
+  public static final String CHANNELS_ACTIVE = PREFIX + "channels_active";
+  public static final String NAME = PREFIX + "name";
+  public static final String CLICK_TO_NAME = PREFIX + "click_to_name";
+  public static final String STATUS = PREFIX + "status";
+  public static final String ENABLED = PREFIX + "enabled";
+  public static final String DISABLED = PREFIX + "disabled";
   public static final String READ_ONLY = PREFIX + "read_only";
   public static final String NOT_IN_A_NETWORK = PREFIX + "not_in_a_network";
-  public static final String TAB_SLOTS = PREFIX + "tab.slots";
   public static final String STATE_ONLINE = PREFIX + "state.online";
   public static final String STATE_UNLOADED = PREFIX + "state.unloaded";
   public static final String STATE_OUT_OF_RANGE = PREFIX + "state.out_of_range";

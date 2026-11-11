@@ -11,6 +11,36 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 241 | Como o Configurator ativa e desativa canais sem abrir a Tela do Nó? | Com um modo novo, `Toggle` (`Alternar`), em âmbar, na ordem `Open`, `Copy`, `Toggle` e `Wrench`. O clique num nó ativa todos os canais configurados dele, e o Shift + clique desativa todos; um canal nunca configurado fica como está. Só o dono da rede, com ela `Online`. A action bar mostra `Enabled <n> channels` ou `Disabled <n> channels`. Completa a pergunta 143 |
+| 240 | O que contam `Copied <n> slots`, `Pasted <n> slots` e o tooltip da cópia? | Todos os canais configurados, ativos ou não, que é o que vai na cópia. Muda a pergunta 230 |
+| 239 | Colar num nó que já tem outra rede troca a rede dele para a da cópia? | Não: num nó com rede, colar só aplica os slots. A rede só vem junto num nó sem rede, e trocar de rede continua sendo pela Tela do Nó (pergunta 141) |
+| 238 | Colar num nó sem rede, hoje recusado, passa a ligá-lo à rede da cópia? | Sim: a cópia guarda o ID da rede de origem, e colar num nó sem rede o liga a ela e aplica os slots, contando como a última rede usada (pergunta 157). Só quem pode escolher a rede daquele nó, quem o colocou (pergunta 172), sendo dono da rede da cópia, com ela `Online`. Se a rede não existe mais, não está `Online` ou o player não é dono, recusa com o motivo, e o nó fica sem rede. Muda as perguntas 126 e 230 |
+| 237 | Em que estado do canal o dono muda a direção e a face? | Só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer; `Enabled` trava a configuração, e o servidor recusa configurar um canal ativo. Para mudar um canal ativo, o dono desativa, configura e ativa. Um canal nunca ativado já pode ser configurado e fica `Disabled`, nascendo como `Input` na face grudada. O nome muda nos dois estados, porque não mexe em sinal. Muda a pergunta 228 |
+| 236 | Como encurtar as contagens do rodapé da Tela do Controlador, que passavam da borda? | Sem a palavra "nodes": `0 unloaded` e `0 out of range`, e `0 descarregados` e `0 fora de alcance` em português, sem singular e plural. O ponto âmbar e o vermelho seguem indicando o estado. Muda a pergunta 219 |
+| 235 | O que acontece com os mundos de teste que têm nós no formato antigo de até 4 slots? | Nada converte: um nó fora do formato novo é inválido, e a rede dele é descartada com aviso no log, como na pergunta 92. Para testar, cria-se um mundo novo, e o save continua na versão 1, porque nada foi publicado (pergunta 224) |
+| 234 | Com 16 slots por cor, o que a linha aberta de um nó mostra na Tela do Controlador? | Só os canais ativos, um por sub-linha, como `15 Red · Input · Redstone from lever 1`, e `15 Red · Input` sem nome. Um nó sem canal ativo mostra `No active channel`. Muda a pergunta 179 |
+| 233 | A aba lateral `Slots` da Tela do Nó continua sem os upgrades? | Não: a tela fica sem abas laterais, como no mockup da pergunta 231. A aba `Info` volta quando tiver conteúdo. Muda a pergunta 80 |
+| 232 | O clique direito com o Configurator no Network Controller abre a Tela do Controlador? | Só no modo `Open`, com o mesmo comportamento da mão vazia, inclusive os avisos de rede `Offline` e de controlador sem rede. `Copy` e `Wrench` continuam sem ação no controlador (pergunta 164). Completa a pergunta 113 |
+| 231 | Como fica a arte da Tela do Nó com a fileira das 16 cores? | Numa prancha nova, em `tmp/arte/node_screen_channels/`, com o mockup da tela e uma folha só com os sprites que faltam. Enquanto a arte não chega, o domínio, o save e o servidor andam com TDD, e a tela espera a arte aprovada (perguntas 185 e 186) |
+| 230 | O que a cópia do Configurator (`Copy` e `Paste`) leva no modelo de 16 slots? | Tudo dos 16: status, direção, face e nome de cada cor, com a regra da face grudada da pergunta 105. Colar substitui os 16 slots do nó de destino. Muda as perguntas 105 e 106 |
+| 229 | Com 0 a 16 canais ativos por nó, o que mostram os 4 pontos nos cantos da placa? | Os 4 primeiros canais ativos, na ordem das cores. Os outros aparecem só nas telas, no Jade e no The One Probe, e um nó sem canal ativo fica com os 4 pontos escuros. O modelo e a textura do bloco não mudam. Muda a pergunta 87 |
+| 228 | O que acontece ao ativar e ao desativar um slot? | Na primeira ativação, o slot vira `Input` na face onde o nó está grudado, como na pergunta 83. Desativar para de ler e de emitir, mas guarda a direção, a face e o nome, para reativar como estava |
+| 227 | O nome que o player dá a um slot é de quê? | Do slot no nó: cada nó tem o próprio nome por cor, editado na Tela do Nó. O nome do canal da rede, da aba `Signals`, continua separado. O limite fica no config, `slot.name_length`: 32 caracteres, de 1 a 64. Vazio volta a mostrar só o canal |
+| 226 | Como um Signal Node nasce no modelo de 16 slots, e quantos canais ele pode ter ativos? | De 0 a 16. Todos nascem inativos, e o player ativa cada canal na configuração, trocando o status para `Enabled`. O slot é a cor, e o player pode dar um nome a ele. Muda as perguntas 25, 83 e 171 |
+| 225 | Onde entra o redesenho dos slots, junto com o nome do slot? | Dentro da #20, na mesma branch e antes do push. Completa a pergunta 223 |
+| 224 | Qual é o modelo novo dos slots do Signal Node? | 16 slots fixos, um por cor de canal, cada um com status ativo ou inativo, direção, face e nome. Um nó não lê e emite na mesma cor ao mesmo tempo. A Tela do Nó perde a lista de slots da esquerda e ganha uma fileira com as 16 cores, as ativas marcadas, mantendo o estilo da tela. Saem a chave `node.slots` e os upgrades de slot, sem migração porque nada foi publicado (regras 15 e 38). Muda as perguntas 50, 66, 84 e 93 |
+| 223 | Como entra o nome do slot, como `Redstone acionado pela leve 1`, além do canal? | Dentro da #20, na mesma branch e antes do push, com uma rodada de decisões própria antes do código, porque muda o save, o Configurator e as duas telas |
+| 222 | Na Tela do Controlador, o dono renomeia com um clique ou com dois cliques no nome? | Com duplo clique, no nó da aba `Nodes` e no canal da aba `Signals`, para um clique solto não abrir a edição sem querer. Na aba `Nodes`, um clique no nome abre e fecha os slots, como o resto da linha, e o duplo clique deixa a linha como estava. O cabeçalho continua com o botão `Rename`. Muda a pergunta 217 |
+| 221 | Com a #20, o dono renomeia os canais. A Tela do Nó mostra esses nomes? | Sim, na própria #20: a Tela do Nó recebe do servidor os 16 nomes de canal, só quando mudam, e mostra o nome dado, como `15 Main door`, nos slots e no canal escolhido. Sem nome próprio, continua o nome da cor (pergunta 26) |
+| 220 | O que a aba `Nodes` da Tela do Controlador mostra numa rede ainda sem nenhum nó? | A tabela vazia com `No node in this network yet.` e `Nenhum nó nesta rede ainda.` no meio, como a lista vazia da escolha de rede (pergunta 199) |
+| 219 | O que o rodapé da Tela do Controlador mostra quando nenhum nó está `Unloaded` ou `Out of range`? | As duas contagens sempre aparecem, mesmo com zero, nas cores, como `0 nodes unloaded` em âmbar e `0 nodes out of range` em vermelho, como no mockup da pergunta 214 |
+| 218 | Quantas linhas da aba `Nodes` da Tela do Controlador podem ficar abertas, com os slots à mostra, ao mesmo tempo? | Uma por vez: abrir uma linha fecha a anterior, como no mockup da pergunta 214. A linha aberta é só do cliente |
+| 217 | Como o dono põe o nome de um nó em edição na aba `Nodes`? | Com um clique no nome, que vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão, como o canal na aba `Signals`. O clique no resto da linha abre e fecha os slots. Para os outros players, a linha inteira só abre e fecha. Completa a pergunta 144 |
+| 216 | Em que ordem a aba `Nodes` da Tela do Controlador lista os nós? | Na ordem em que entraram na rede, como o domínio já guarda. Um nó novo vai para o fim |
+| 215 | O que a Tela do Controlador mostra no lugar da aba `Log` na #20, antes da #90? | Nada: a #20 entrega só as abas `Nodes`, `Signals` e `Access`, e a #90 acrescenta a aba `Log`. Nenhuma aba fica na tela sem função. Completa a pergunta 213 |
+| 214 | A prancha de arte nova da Tela do Controlador já inclui a aba `Log` da #90? | Sim: um prompt em `tmp/arte/controller_screen/` com a tela inteira, o cabeçalho, as abas `Nodes` com uma linha expandida, `Signals`, `Access` e `Log`, e a paleta de cores. A #20 e a #90 usam a mesma prancha (perguntas 185 e 186) |
+| 213 | Como a #20 é entregue, sendo a maior tela até agora? | Numa issue e num PR, com tudo: a tela, o cabeçalho com nome, cor e `Rename`, as abas `Nodes`, `Signals` e `Access` e o rodapé. A aba `Log` continua na #90 |
+| 212 | Onde o dono troca a cor da rede na Tela do Controlador? | No cabeçalho: o dono clica no quadrado da cor ao lado do nome, e abre uma paleta com as 16 cores, nos mesmos swatches da Tela do Nó. Para os outros players, o quadrado não reage. Completa a pergunta 156 |
 | 211 | Que texto a action bar mostra quando o player já tem `network.max_per_player` redes e tenta colocar um Network Controller que criaria outra? | `You have reached the limit of <n> networks. Delete an unplaced one at a Network Terminal.` e `Você chegou ao limite de <n> redes. Apague uma não colocada num Terminal de Rede.`, com o número do config, para ensinar como liberar espaço (pilar 5 de `ux.md` e pergunta 166). Completa a pergunta 145 |
 | 210 | Como a chave `offline` da rede vai para o save? | Só numa rede desligada, como `offline: true`; sem a chave, a rede está ligada. Segue o padrão do save, em que `reading`, o `name` do nó e o `controller` só aparecem quando existem, e um save da #87 abre sem migração. Completa a pergunta 174 |
 | 209 | Como entra o estado `Offline` na #88, antes de o Network Terminal existir? | No domínio: o estado, o desligar e o religar no `Network`, só para o dono e com teste, o save e todos os efeitos de uma rede `Offline` (Configurator, controlador, lente, núcleo e tela), cobertos por GameTests. Só o Terminal da #89 chama o desligar e o religar no jogo; até lá, o roteiro manual testa o `Offline` com a chave editada no save |
@@ -211,6 +241,24 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:30 | Responde as perguntas 240 e 241. |
+| Zennd | 2026-11-11 17:08 | Responde as perguntas 238 e 239. |
+| Zennd | 2026-11-11 16:52 | Responde a pergunta 237. |
+| Zennd | 2026-11-11 16:40 | Responde a pergunta 236. |
+| Zennd | 2026-11-11 16:34 | Responde a pergunta 235. |
+| Zennd | 2026-11-11 16:30 | Responde as perguntas 233 e 234. |
+| Zennd | 2026-11-11 16:12 | Responde a pergunta 232. |
+| Zennd | 2026-11-11 16:08 | Responde a pergunta 231. |
+| Zennd | 2026-11-11 16:06 | Responde a pergunta 229. |
+| Zennd | 2026-11-11 16:02 | Responde as perguntas 227, 228 e 230. |
+| Zennd | 2026-11-11 15:58 | Responde as perguntas 224 a 226. |
+| Zennd | 2026-11-11 15:52 | Responde a pergunta 223. |
+| Zennd | 2026-11-11 15:47 | Responde a pergunta 222. |
+| Zennd | 2026-11-11 15:24 | Responde a pergunta 221. |
+| Zennd | 2026-11-11 15:08 | Responde as perguntas 219 e 220. |
+| Zennd | 2026-11-11 14:52 | Responde as perguntas 216 a 218. |
+| Zennd | 2026-11-11 14:40 | Responde a pergunta 215. |
+| Zennd | 2026-11-11 14:21 | Responde as perguntas 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Responde as perguntas 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Responde as perguntas 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Responde as perguntas 198 a 205. |

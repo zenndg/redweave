@@ -46,23 +46,24 @@ A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de 
 | Rede | `id`, `owner`, `name`, `color`, `controller` (opcional), `offline` (opcional), `channels` e `nodes`. O `offline: true` só entra numa rede desligada pelo dono (pergunta 210) |
 | Bloco (`controller` e o do nó) | `dimension`, `x`, `y` e `z` |
 | Canal | `color` e `name`. Só os canais renomeados entram |
-| Nó | `id`, `name` (opcional), `block`, `face`, `slot_count`, de 1 a 9 (pergunta 95), e `slots`. O `name` só entra quando o dono renomeia o nó, como o nome do canal (pergunta 206) |
-| Slot | `index`, `direction`, `face`, `channel` e `reading`. Só os slots em uso entram, e `reading` fica de fora quando é 0 |
+| Nó | `id`, `name` (opcional), `block`, `face` e `slots`. O `name` só entra quando o dono renomeia o nó, como o nome do canal (pergunta 206) |
+| Slot | `channel`, `active`, `direction`, `face`, `name` (opcional) e `reading`. O canal é a posição do slot no nó (pergunta 224). Entra todo slot já ativado alguma vez, mesmo desativado, porque ele guarda a direção, a face e o nome (pergunta 228); `name` só entra quando o dono dá um nome, e `reading` fica de fora quando é 0 |
 | Última rede usada (`last_used`) | `player` e `network` |
 
 #### Dado inválido
 
 | O que está inválido | O que acontece |
 |---|---|
-| Um slot, como com uma direção, face ou canal desconhecido, ou um `index` repetido ou fora do `slot_count` | O slot fica livre |
-| Um nó, como sem ID ou com `slot_count` fora de 1 a 9 | O nó sai da rede |
+| Um slot, como com uma direção, face ou canal desconhecido, ou um `channel` repetido no nó | O slot volta a nunca ativado |
+| O nome de um slot, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome (pergunta 227) |
+| Um nó, como sem ID ou no formato antigo, com `slot_count` ou slot com `index` | O nó sai da rede; um mundo de teste anterior aos 16 slots é recriado (pergunta 235) |
 | O nome de um nó, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome, e o nó volta ao nome padrão (perguntas 92 e 206) |
 | Um nó que aparece em duas redes | Fica só na primeira |
 | Uma rede sem ID ou dono válido, ou com um nome vazio ou de mais de 64 caracteres | A rede não é carregada |
 | Um `offline` que não é verdadeiro ou falso | Sai só a chave, e a rede fica ligada (perguntas 92 e 210) |
 | Uma entrada de `last_used` que aponta para uma rede que não existe | É descartada |
 
-O teto são as faixas do config da pergunta 66: 9 slots e 64 caracteres.
+O teto são as faixas do config da pergunta 66: 64 caracteres.
 
 ### Estado da rede
 
@@ -115,15 +116,17 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Nome | Nasce com os 8 primeiros caracteres do ID (pergunta 142). O dono o renomeia na Tela do Nó e na lista da tela do controlador, com o limite de `node.name_length` (pergunta 144) |
 | Quem colocou | O player que colocou o bloco, gravado na BlockEntity. Num nó sem rede, é o dono para a escolha da rede e para a Chave do Configurator (perguntas 165 e 172) |
 | Posição | A dimensão, o bloco e a face onde o nó está grudado |
-| Slots | Até o limite do config: 4, ou 9 com upgrade. Cada slot é um `ChannelSlot` |
+| Slots | 16, um por cor de canal, fixos, cada um um `ChannelSlot`. Todos nascem inativos, e o nó pode ter de 0 a 16 ativos (perguntas 224 e 226) |
 
 ### Slot de canal
 
 | Parte | Valores |
 |---|---|
+| Canal | A cor do slot: o slot 15 é sempre o canal `15 Red`. Um nó não lê e emite na mesma cor ao mesmo tempo (pergunta 224) |
+| Status | `Enabled` ou `Disabled`. Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção, a face e o nome (pergunta 228). A direção e a face só mudam com o slot `Disabled`, e um slot `Enabled` fica travado (pergunta 237) |
+| Nome | Opcional, dado pelo dono na Tela do Nó, como `Redstone from lever 1`, com o limite de `slot.name_length`. É do slot no nó, separado do nome do canal da rede (pergunta 227) |
 | Direção | `Input`, quando o nó lê o bloco, ou `Output`, quando emite no bloco |
 | Face do bloco | Uma das 6 faces do bloco onde o nó está. Na entrada, escolhe de qual vizinho o nó lê; na saída, o nó sempre alimenta o bloco onde está grudado, como uma alavanca (pergunta 71) |
-| Canal | Um dos 16 canais da rede |
 | Lógica | Na Fase 1, só `None` |
 
 ### Estados do nó
@@ -150,10 +153,10 @@ Não há rede atual: o player escolhe a rede de cada nó (pergunta 139).
 
 1. O Signal Node nasce `No network` e não pode ser configurado até ter rede.
 2. Aberto pela primeira vez, com o [Configurator](configurador.md) no modo `Open`, a Tela do Nó mostra a lista das redes `Online` de quem colocou o nó, com a última usada destacada (perguntas 157 e 172). Para os outros players, a tela abre só para leitura, com `No network`.
-3. Escolhida a rede, o nó ganha 1 slot `Input` na face em que foi grudado, no **primeiro canal livre**, ou seja, o primeiro canal, na ordem das cores, sem nenhum slot na rede (pergunta 171).
+3. Escolhida a rede, o nó entra com os 16 slots inativos, e o dono ativa os canais que quiser (pergunta 226).
 4. A tela segue para a configuração, que é onde ela abre nas próximas vezes.
 
-Com os 16 canais em uso, o nó entra na rede sem slot, e a Tela do Nó mostra `Free slot`. Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
+Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 ## Signal Remote
 
@@ -199,7 +202,7 @@ Completam a [Tela do Controlador](telas.md#tela-do-controlador).
 
 | Aba | O que mostra |
 |---|---|
-| `Signals` | Os 16 canais, cada um com a cor, o nome, o valor atual e quantas entradas e saídas usa. O dono renomeia um canal com um clique no nome |
+| `Signals` | Os 16 canais, cada um com a cor, o nome, o valor atual e quantas entradas e saídas usa. O dono renomeia um canal com um duplo clique no nome (pergunta 222) |
 | `Access` | O dono da rede e o aviso `Only the owner can change this network.` |
 
 ## Config
@@ -209,8 +212,7 @@ As chaves entram com o código que as lê (issue do config) e, depois de publica
 | Número | Valor inicial |
 |---|---|
 | Raio do alcance | 128 blocos, 0 é ilimitado |
-| Slots por nó | 4 |
-| Slots por nó com upgrade | 9 |
+| Tamanho do nome do slot | 32 caracteres |
 | Tamanho do nome da rede | 32 caracteres |
 | Tamanho do nome do canal | 16 caracteres |
 | Tamanho do nome do nó | 16 caracteres (pergunta 144) |
@@ -223,7 +225,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 1. Um `Signal` está sempre entre 0 e 15.
 2. Uma rede tem sempre 16 canais, um por cor, e cada cor aparece uma vez.
-3. Um nó pertence a no máximo uma rede, e não passa do limite de slots ao ser ligado. Uma rede restaurada do save mantém os slots que tinha (pergunta 93).
+3. Um nó pertence a no máximo uma rede, e tem sempre os 16 slots, um por cor (pergunta 224).
 4. Um slot sempre aponta para um canal da própria rede.
 5. O valor de um canal é o mais forte entre as entradas que contam, e 0 sem entradas.
 6. Uma rede `Offline` ou `Unplaced` tem todos os canais em 0.
@@ -242,6 +244,9 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o slot desativado (pergunta 237). |
+| Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor, o status e o nome do slot (perguntas 224 a 228 e 235). |
+| Zennd | 2026-11-11 15:47 | Aplica a pergunta 222: o canal é renomeado com duplo clique. |
 | Zennd | 2026-11-11 14:09 | Aplica a #88: a chave `offline`, o estado `Offline` do nó e o aviso do limite de redes (perguntas 209 a 211). |
 | Zennd | 2026-11-11 13:46 | Aplica a #87: o `name` do nó e o `last_used` no save, e o nome de nó inválido (perguntas 157, 174 e 206). |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 174, 175 e 177. |

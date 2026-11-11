@@ -213,6 +213,36 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Offline` antes do Terminal | No domínio, no save e nos efeitos, com GameTests; o Terminal da #89 liga o botão | 209 |
 | Chave `offline` no save | Só numa rede desligada | 210 |
 | Aviso do limite de redes | O limite e como liberar espaço, no Terminal | 211 |
+| Cor da rede na Tela do Controlador | Clique no quadrado da cor, com a paleta de 16 cores | 212 |
+| Entrega da #20 | Uma issue e um PR, com as abas `Nodes`, `Signals` e `Access` | 213 |
+| Prancha da Tela do Controlador | Uma só, já com a aba `Log` da #90 | 214 |
+| Aba `Log` na #20 | Não aparece; a #90 a acrescenta | 215 |
+| Ordem da aba `Nodes` | A ordem em que os nós entraram na rede | 216 |
+| Renomear o nó na aba `Nodes` | Duplo clique no nome, para o dono; o clique abre os slots (muda a 217) | 217 e 222 |
+| Linhas abertas na aba `Nodes` | Uma por vez | 218 |
+| Contagens do rodapé com zero | Sempre aparecem, nas cores | 219 |
+| Aba `Nodes` sem nós | Texto de ajuda no meio da tabela | 220 |
+| Nome do canal na Tela do Nó | Entra na #20, com os nomes enviados só quando mudam | 221 |
+| Renomear na Tela do Controlador | Duplo clique no nome do nó e do canal | 222 |
+| Nome do slot | Entra na #20, com decisões próprias antes do código | 223 |
+| Slots do Signal Node | 16 fixos, um por cor, com status ativo ou inativo; saem `node.slots` e os upgrades | 224 |
+| Redesenho dos slots | Dentro da #20 | 225 |
+| Nó novo | Todos os canais inativos; o player ativa cada um | 226 |
+| Nome do slot | Do slot no nó, com `slot.name_length` de 32 | 227 |
+| Ativar e desativar | Desativar guarda direção, face e nome | 228 |
+| Cantos da placa | Os 4 primeiros canais ativos | 229 |
+| Cópia do Configurator | Os 16 slots inteiros, com o nome | 230 |
+| Arte da Tela do Nó com 16 cores | Prancha nova; a tela espera a arte | 231 |
+| Configurator no controlador | O modo `Open` abre a tela, como a mão vazia | 232 |
+| Aba `Slots` da Tela do Nó | Sai; a tela fica sem abas laterais | 233 |
+| Linha aberta no controlador | Só os canais ativos, com o nome do slot | 234 |
+| Saves de teste no formato antigo | Sem conversão; a rede é descartada e o teste usa um mundo novo | 235 |
+| Contagens do rodapé do controlador | Sem a palavra "nodes", para caber na linha | 236 |
+| Configurar um canal | Só com `Disabled`; `Enabled` trava a direção e a face | 237 |
+| Colar num nó sem rede | Liga o nó à rede da cópia, para quem o colocou e é dono dela | 238 |
+| Colar num nó com rede | Só aplica os slots, sem trocar a rede | 239 |
+| Contagem da cópia | Todos os canais configurados | 240 |
+| Modo `Toggle` do Configurator | Clique ativa os configurados; Shift + clique desativa | 241 |
 
 Não há perguntas pendentes da concepção.
 
@@ -220,6 +250,24 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:30 | Registra as decisões 240 e 241. |
+| Zennd | 2026-11-11 17:08 | Registra as decisões 238 e 239. |
+| Zennd | 2026-11-11 16:52 | Registra a decisão 237. |
+| Zennd | 2026-11-11 16:40 | Registra a decisão 236. |
+| Zennd | 2026-11-11 16:34 | Registra a decisão 235. |
+| Zennd | 2026-11-11 16:30 | Registra as decisões 233 e 234. |
+| Zennd | 2026-11-11 16:12 | Registra a decisão 232. |
+| Zennd | 2026-11-11 16:08 | Registra a decisão 231. |
+| Zennd | 2026-11-11 16:06 | Registra a decisão 229. |
+| Zennd | 2026-11-11 16:02 | Registra as decisões 227, 228 e 230. |
+| Zennd | 2026-11-11 15:58 | Registra as decisões 224 a 226. |
+| Zennd | 2026-11-11 15:52 | Registra a decisão 223. |
+| Zennd | 2026-11-11 15:47 | Registra a decisão 222. |
+| Zennd | 2026-11-11 15:24 | Registra a decisão 221. |
+| Zennd | 2026-11-11 15:08 | Registra as decisões 219 e 220. |
+| Zennd | 2026-11-11 14:52 | Registra as decisões 216 a 218. |
+| Zennd | 2026-11-11 14:40 | Registra a decisão 215. |
+| Zennd | 2026-11-11 14:21 | Registra as decisões 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Registra as decisões 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Registra as decisões 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Registra as decisões 198 a 205. |

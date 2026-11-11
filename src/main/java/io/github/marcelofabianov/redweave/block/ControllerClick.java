@@ -2,14 +2,19 @@ package io.github.marcelofabianov.redweave.block;
 
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
+import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * A click with an empty hand on a controller shows every player the network and its owner, until
- * the Controller Screen of issue #20 (answers 52 and 201). A network turned off only says so (160).
+ * A click with an empty hand on a controller opens the Controller Screen for any player, read-only
+ * for anyone but the owner (answers 22 and 113). A network turned off only says so, and nothing
+ * opens (answers 158 and 160).
  */
 final class ControllerClick {
   private ControllerClick() {}
@@ -24,8 +29,16 @@ final class ControllerClick {
       ActionBar.tell(player, ControllerMessages.offline(network.get().name()));
       return;
     }
-    String owner = PlayerNames.of(player.getServer(), network.get().owner().value());
-    ActionBar.tell(
-        player, Component.translatable(ControllerMessages.OWNED_BY, network.get().name(), owner));
+    if (player instanceof ServerPlayer viewer) {
+      openScreen(viewer, controller.getBlockPos(), network.get());
+    }
+  }
+
+  private static void openScreen(ServerPlayer viewer, BlockPos pos, Network network) {
+    viewer.openMenu(
+        new SimpleMenuProvider(
+            (id, inventory, opener) -> new ControllerMenu(id, viewer, pos, network.id()),
+            Component.literal(network.name())),
+        extra -> ControllerMenu.writeOpening(extra, viewer, pos, network.id()));
   }
 }

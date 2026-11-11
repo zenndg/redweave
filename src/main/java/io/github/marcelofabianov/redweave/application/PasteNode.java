@@ -43,6 +43,6 @@ public final class PasteNode {
               () -> network.get().clearSlot(player, nodeId, at));
     }
     saver.save(network.get());
-    return new PasteResult(Outcome.ACCEPTED, pasted.inUse(), pasted.leftOut());
+    return new PasteResult(Outcome.ACCEPTED, pasted.inUse());
   }
 }

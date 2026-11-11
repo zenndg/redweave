@@ -7,10 +7,11 @@ import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-/** The modes of the Configurator and their order: configurador.md (answers 143, 173 and 192). */
+/** The modes of the Configurator and their order: configurador.md (answers 143, 173, 192, 241). */
 class ConfiguratorModeTest {
   private static final String OPEN = "open";
   private static final String COPY = "copy";
+  private static final String TOGGLE = "toggle";
   private static final String WRENCH = "wrench";
   private static final String UNKNOWN = "label";
   private static final int SCROLL_DOWN = -1;
@@ -19,7 +20,8 @@ class ConfiguratorModeTest {
   @Test
   void theModesGoInTheOrderOfTheShiftScroll() {
     assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.OPEN.next());
-    assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.COPY.next());
+    assertEquals(ConfiguratorMode.TOGGLE, ConfiguratorMode.COPY.next());
+    assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.TOGGLE.next());
     assertEquals(ConfiguratorMode.OPEN, ConfiguratorMode.WRENCH.next());
   }
 
@@ -27,7 +29,8 @@ class ConfiguratorModeTest {
   void theModesGoBackInTheOtherDirection() {
     assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.OPEN.previous());
     assertEquals(ConfiguratorMode.OPEN, ConfiguratorMode.COPY.previous());
-    assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.WRENCH.previous());
+    assertEquals(ConfiguratorMode.TOGGLE, ConfiguratorMode.WRENCH.previous());
+    assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.TOGGLE.previous());
   }
 
   /** Like the hotbar: scrolling down goes forward, scrolling up goes back (answer 192). */
@@ -41,6 +44,7 @@ class ConfiguratorModeTest {
   void theSavedNamesAreTheContractOfTheComponent() {
     assertEquals(OPEN, ConfiguratorMode.OPEN.serializedName());
     assertEquals(COPY, ConfiguratorMode.COPY.serializedName());
+    assertEquals(TOGGLE, ConfiguratorMode.TOGGLE.serializedName());
     assertEquals(WRENCH, ConfiguratorMode.WRENCH.serializedName());
   }
 

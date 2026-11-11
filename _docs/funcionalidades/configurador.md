@@ -8,12 +8,13 @@ Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do
 
 ## Modos
 
-O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy` e `Wrench`. Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
+O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy`, `Toggle` e `Wrench` (pergunta 241). Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
 
 | Modo | Em português | Cor | Clique num nó | Shift + clique num nó | Pergunta |
 |---|---|---|---|---|---|
 | `Open` | `Abrir` | Azul | Abre a Tela do Nó | — | 140 e 143 |
 | `Copy` | `Copiar` | Verde | Copia a configuração dos slots | Cola a cópia | 127 e 143 |
+| `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
 Em qualquer modo, o Shift + clique no ar apaga a cópia (pergunta 128). O clique em qualquer outro bloco não faz nada, para um Shift + clique num bloco não apagar a cópia por engano.
@@ -24,22 +25,22 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Abrir
 
-É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
+É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. No Network Controller, o modo `Open` faz o mesmo que a mão vazia e abre a Tela do Controlador (pergunta 232). Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
 
 ### Copiar
 
-A cópia leva cada slot em uso, com a posição, a direção, a face e o canal, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão (pergunta 105). Copiar um nó sem rede é recusado, porque ele não tem slots.
+A cópia leva os 16 slots, cada um com o canal, o status, a direção, a face e o nome, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão (perguntas 105 e 230). Copiar um nó sem rede é recusado, porque ele não tem slots.
 
 ### Colar
 
-Colar troca todos os slots do nó de destino: os da cópia são configurados, e os outros ficam livres (pergunta 106). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
+Colar substitui os 16 slots do nó de destino pelos da cópia, com o status e o nome (perguntas 106 e 230). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
 
 | Regra | Como é |
 |---|---|
 | Face grudada | Um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para ler o próprio bloco em qualquer orientação (pergunta 71). As outras faces ficam como estão |
-| Slots demais | Um slot cuja posição passa da quantidade de slots do nó de destino fica de fora, e a mensagem diz quantos |
 | Rede | O nó continua na rede dele. Os canais são os mesmos em toda rede, porque são as 16 cores |
-| Dono | Só o dono da rede do nó cola. Um nó sem rede recusa |
+| Dono | Só o dono da rede do nó cola. Num nó com rede, a rede não muda (pergunta 239) |
+| Nó sem rede | Colar liga o nó à rede da cópia e aplica os slots, como escolher a rede na Tela do Nó: só quem colocou o nó, sendo dono da rede da cópia, com ela `Online`, e ela vira a última rede usada (pergunta 238) |
 | Cópia | Continua no item até o Shift + clique no ar, então cola em vários nós |
 | Sem cópia | O Shift + clique não faz nada nem mostra mensagem (pergunta 195) |
 
@@ -55,12 +56,17 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 
 | Ação | Resultado | Mensagem |
 |---|---|---|
-| Copiar | Copiou | `Copied <n> slots` |
+| Copiar | Copiou | `Copied <n> slots`, com todos os canais configurados, ativos ou não (pergunta 240) |
 | Copiar | Nó sem rede | `No network` |
-| Colar | Colou | `Pasted <n> slots` |
-| Colar | Sobraram slots | `Pasted <n> slots, <m> left out` |
+| Colar | Colou | `Pasted <n> slots`, com todos os canais configurados (pergunta 240) |
+| Alternar | Clique | `Enabled <n> channels` |
+| Alternar | Shift + clique | `Disabled <n> channels` |
+| Alternar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
-| Colar | Nó sem rede | `No network` |
+| Colar | Nó sem rede, colocado por outro player | `Only the player who placed this node can paste a network on it.` |
+| Colar | Nó sem rede, rede da cópia de outro dono | `Only the owner of <rede> can change this node.` |
+| Colar | Nó sem rede, rede da cópia desligada | `<rede> is offline. Turn it on at a Network Terminal.` |
+| Colar | Nó sem rede, rede da cópia que não existe mais | `No network` |
 | Limpar | Apagou | `Copy cleared` |
 | Trocar de modo | Trocou | `Mode: <modo>`, com o nome na cor do modo |
 | Retirar | Retirou | `Node picked up` |
@@ -82,11 +88,11 @@ O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` qu
 | Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51). A camada do visor, que mostra o modo, fica para a issue #80 (pergunta 159) |
 | Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy` ou `wrench` (pergunta 173). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
 
-O item não guarda mais a rede: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). O `redweave:network` continua no item do Network Controller.
+O item não guarda mais a rede atual: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). A cópia guarda a rede do nó copiado, para colar num nó sem rede (pergunta 238). O `redweave:network` continua no item do Network Controller.
 
 ### Formato da cópia
 
-O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem estava grudado, e `slots`, com `index`, `direction`, `face` e `channel` de cada slot em uso. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
+O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (pergunta 238), `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction`, `face` e `name` (opcional) de cada slot já ativado alguma vez, como no save. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
 
 ## Fora desta funcionalidade
 
@@ -97,6 +103,10 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:45 | Adiciona o modo `Toggle` e conta todos os canais configurados na cópia (perguntas 240 e 241). |
+| Zennd | 2026-11-11 17:20 | Colar num nó sem rede o liga à rede da cópia (perguntas 238 e 239). |
+| Zennd | 2026-11-11 16:40 | A cópia leva os 16 slots, com o status e o nome (perguntas 224 e 230). |
+| Zennd | 2026-11-11 16:12 | O modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 11:21 | Aplica as perguntas 188 a 195, da #86. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 173. |
 | Zennd | 2026-11-11 09:51 | Reescreve o Configurator com os modos `Open`, `Copy` e `Wrench`, sem guardar a rede e sem ligar nós (perguntas 125 a 169). |

@@ -4,7 +4,7 @@ import io.github.marcelofabianov.redweave.menu.NodeAction;
 import java.util.Optional;
 import net.minecraft.network.chat.Component;
 
-/** One clickable thing of the slot panel: where it is, how it looks and what it asks. */
+/** One clickable thing of the channel panel: where it is, how it looks and what it asks. */
 record Control(
     Box box,
     Look look,
@@ -19,19 +19,12 @@ record Control(
     BUTTON,
     CHOSEN,
     DISABLED,
-    SWATCH,
-    CHOSEN_SWATCH,
-    ARMS_CLEAR
+    STATUS_ON,
+    STATUS_OFF
   }
 
   static Control button(Box box, Look look, Component label, Optional<NodeAction> action) {
     return new Control(box, look, Optional.of(label), action, Optional.empty(), NO_COLOR);
-  }
-
-  static Control swatch(
-      Box box, boolean chosen, int color, Optional<NodeAction> action, Component name) {
-    Look look = chosen ? Look.CHOSEN_SWATCH : Look.SWATCH;
-    return new Control(box, look, Optional.empty(), action, Optional.of(name), color);
   }
 
   Control withTooltip(Component text) {
@@ -39,6 +32,6 @@ record Control(
   }
 
   boolean clickable() {
-    return look == Look.ARMS_CLEAR || action.isPresent();
+    return action.isPresent();
   }
 }

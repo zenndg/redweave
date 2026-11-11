@@ -1,6 +1,6 @@
 package io.github.marcelofabianov.redweave.item;
 
-import io.github.marcelofabianov.redweave.application.PasteResult;
+import io.github.marcelofabianov.redweave.application.ToggleResult;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
@@ -49,6 +49,7 @@ final class ConfiguratorActions {
     return switch (mode) {
       case OPEN -> open(player, context.getClickedPos());
       case COPY -> copyOrPaste(server, player, context, block);
+      case TOGGLE -> toggle(server, player, context, block);
       case WRENCH -> pickUp(server, player, context.getLevel(), context.getClickedPos(), block);
     };
   }
@@ -59,6 +60,30 @@ final class ConfiguratorActions {
       SignalNodeBlock.openScreen(viewer, pos);
     }
     return Optional.empty();
+  }
+
+  /**
+   * A click enables every configured channel of the node, and Shift + click disables them, without
+   * opening the Node Screen (answer 241).
+   */
+  private static Optional<Component> toggle(
+      RedweaveServer server, Player player, UseOnContext context, SignalNodeBlockEntity block) {
+    Optional<NodeId> node = block.node();
+    if (node.isEmpty()) {
+      return Optional.of(Component.translatable(ControllerMessages.NO_NETWORK));
+    }
+    boolean enable = !player.isSecondaryUseActive();
+    ToggleResult result = server.toggleSlots().toggle(playerOf(player), node.get(), enable);
+    refresh(server, context.getLevel(), context.getClickedPos());
+    return Optional.of(
+        switch (result.outcome()) {
+          case ACCEPTED ->
+              Component.translatable(
+                  enable ? ConfiguratorMessages.ENABLED : ConfiguratorMessages.DISABLED,
+                  result.channels());
+          case NOT_OWNER -> notOwner(server, node.get());
+          default -> Component.translatable(ControllerMessages.NO_NETWORK);
+        });
   }
 
   /** A click copies, and Shift + click pastes; with no copy, nothing happens (127, 143, 195). */
@@ -72,39 +97,26 @@ final class ConfiguratorActions {
     if (!player.isSecondaryUseActive()) {
       return Optional.of(copy(server, stack, node.get()));
     }
-    NodeCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
+    ConfiguratorCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
     if (copy == null) {
       return Optional.empty();
     }
-    Component message = paste(server, player, node.get(), copy);
+    Component message =
+        ConfiguratorPaste.paste(server, player, context.getLevel(), context.getClickedPos(), copy);
     refresh(server, context.getLevel(), context.getClickedPos());
     return Optional.of(message);
   }
 
   private static Component copy(RedweaveServer server, ItemStack stack, NodeId node) {
     Optional<NodeCopy> copy = server.copyNode().copy(node);
-    if (copy.isEmpty()) {
+    Optional<Network> network = server.networkOfNode(node);
+    if (copy.isEmpty() || network.isEmpty()) {
       return Component.translatable(ControllerMessages.NO_NETWORK);
     }
-    stack.set(RedweaveDataComponents.NODE_SLOTS.get(), copy.get());
-    return Component.translatable(ConfiguratorMessages.COPIED, copy.get().slots().size());
-  }
-
-  private static Component paste(RedweaveServer server, Player player, NodeId node, NodeCopy copy) {
-    PasteResult result = server.pasteNode().paste(playerOf(player), node, copy);
-    return switch (result.outcome()) {
-      case ACCEPTED -> pasted(result);
-      case NOT_OWNER -> notOwner(server, node);
-      default -> Component.translatable(ControllerMessages.NO_NETWORK);
-    };
-  }
-
-  private static Component pasted(PasteResult result) {
-    if (result.leftOut() == 0) {
-      return Component.translatable(ConfiguratorMessages.PASTED, result.pasted());
-    }
-    return Component.translatable(
-        ConfiguratorMessages.PASTED_LEFT_OUT, result.pasted(), result.leftOut());
+    stack.set(
+        RedweaveDataComponents.NODE_SLOTS.get(),
+        new ConfiguratorCopy(network.get().id(), copy.get()));
+    return Component.translatable(ConfiguratorMessages.COPIED, copy.get().configured());
   }
 
   /**

@@ -13,7 +13,6 @@ import net.minecraft.network.chat.Component;
  */
 final class StatePill {
   private static final int HEIGHT = 13;
-  private static final int DOT_SIZE = 5;
   private static final int DOT_X = 5;
   private static final int DOT_Y = 4;
   private static final int TEXT_X = 13;
@@ -25,15 +24,16 @@ final class StatePill {
 
   /** Draws the pill ending at the right edge given, and gives back where it is. */
   static Box draw(GuiGraphics graphics, Font font, int right, int y, Optional<NodeState> state) {
-    Component text = textOf(state);
+    return draw(graphics, font, right, y, textOf(state), colorOf(state));
+  }
+
+  /** A pill with any text, as `● Online · 6 nodes` of the Controller Screen. */
+  static Box draw(GuiGraphics graphics, Font font, int right, int y, Component text, int color) {
     String shown = FittedText.fit(font, text, MAX_TEXT);
     int width = TEXT_X + font.width(shown) + RIGHT_PADDING;
     Box box = new Box(right - width, y, width, HEIGHT);
     graphics.blitSprite(NodeSprites.STATE_PILL, box.x(), box.y(), box.width(), box.height());
-    int color = colorOf(state);
-    graphics.setColor(Channels.red(color), Channels.green(color), Channels.blue(color), 1);
-    graphics.blitSprite(NodeSprites.DOT, box.x() + DOT_X, box.y() + DOT_Y, DOT_SIZE, DOT_SIZE);
-    graphics.setColor(1, 1, 1, 1);
+    Dots.draw(graphics, box.x() + DOT_X, box.y() + DOT_Y, color);
     graphics.drawString(font, shown, box.x() + TEXT_X, box.y() + TEXT_Y, color, false);
     return box;
   }
@@ -48,7 +48,7 @@ final class StatePill {
     };
   }
 
-  private static int colorOf(Optional<NodeState> state) {
+  static int colorOf(Optional<NodeState> state) {
     return switch (state.orElse(NodeState.NO_NETWORK)) {
       case ONLINE -> ScreenColors.ONLINE;
       case UNLOADED -> ScreenColors.UNLOADED;

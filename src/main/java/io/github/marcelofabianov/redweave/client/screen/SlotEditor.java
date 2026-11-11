@@ -1,8 +1,8 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
-import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
+import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
@@ -13,26 +13,26 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 
 /**
- * The panel of the chosen slot: direction, block face, channel and logic (telas.md). It builds the
- * controls of a frame; drawing and clicking both use the same list, so they never disagree.
+ * The panel of the open channel: its name, status, direction, block face and logic (telas.md). It
+ * builds the controls of a frame; drawing and clicking both use the same list, so they never
+ * disagree. An enabled channel is locked, and a disabled one is set up (answers 228 and 237).
  */
 final class SlotEditor {
   static final int LABEL_X = 8;
   static final int CONTROL_X = 58;
   static final int TITLE_Y = 7;
-  static final int DIRECTION_Y = 24;
-  static final int FACE_Y = 40;
-  static final int CUBE_SIZE = 30;
-  static final int CHANNEL_Y = 76;
-  static final int LOGIC_Y = 108;
-  private static final int BUTTON_HEIGHT = 14;
+  static final int NAME_Y = 22;
+  static final int STATUS_Y = 40;
+  static final int DIRECTION_Y = 58;
+  static final int FACE_Y = 76;
+  static final int CUBE_SIZE = 24;
+  static final int LOGIC_Y = 106;
+  static final int NAME_WIDTH = 150;
+  static final int ROW_HEIGHT = 14;
+  private static final int STATUS_WIDTH = 50;
   private static final int BUTTON_PADDING = 12;
   private static final int SPACING = 2;
-  private static final int SWATCH = 12;
-  private static final int SWATCH_STEP = 13;
-  private static final int SWATCHES_PER_ROW = 8;
   private static final int RIGHT_PADDING = 6;
-  private static final int CLEAR_Y = 4;
   private static final List<String> LATER_LOGIC =
       List.of(
           NodeScreenTexts.LOGIC_INVERT,
@@ -42,18 +42,11 @@ final class SlotEditor {
 
   private SlotEditor() {}
 
-  static List<Control> controls(Font font, NodeView view, Box panel, int index, boolean armed) {
+  static List<Control> controls(Font font, NodeView view, Box panel, int index, Face stuck) {
     List<Control> controls = new ArrayList<>();
     Optional<ChannelSlot> slot = view.menu().slot(index);
-    if (slot.isEmpty()) {
-      useButton(font, view, panel, index).ifPresent(controls::add);
-      return controls;
-    }
-    if (view.editable()) {
-      controls.add(clearButton(font, panel, index, armed));
-    }
-    controls.addAll(directionButtons(font, view, panel, index, slot.get()));
-    controls.addAll(swatches(view, panel, index, slot.get()));
+    controls.add(statusButton(view, panel, index, slot));
+    controls.addAll(directionButtons(font, view, panel, index, setUpOf(slot, index, stuck)));
     controls.addAll(logicButtons(font, panel));
     return controls;
   }
@@ -62,28 +55,43 @@ final class SlotEditor {
     return new Box(panel.x() + CONTROL_X, panel.y() + FACE_Y, CUBE_SIZE, CUBE_SIZE);
   }
 
-  /** "Click to use" on a free slot (answer 83). */
-  private static Optional<Control> useButton(Font font, NodeView view, Box panel, int index) {
-    if (!view.editable()) {
-      return Optional.empty();
-    }
-    Component label = Component.translatable(NodeScreenTexts.CLICK_TO_USE);
-    Box box = button(font, label, panel.x() + CONTROL_X, panel.y() + DIRECTION_Y);
-    return Optional.of(
-        Control.button(box, Control.Look.CHOSEN, label, Optional.of(NodeAction.use(index))));
+  /** Where the name of the slot is, which its owner clicks to rename (answer 227). */
+  static Box nameBox(Box panel) {
+    return new Box(panel.x() + CONTROL_X, panel.y() + NAME_Y, NAME_WIDTH, ROW_HEIGHT);
   }
 
-  /** The first click arms, the second clears, so a slip costs nothing (answer 84). */
-  private static Control clearButton(Font font, Box panel, int index, boolean armed) {
-    String key = armed ? NodeScreenTexts.CLEAR_CONFIRM : NodeScreenTexts.CLEAR;
-    Component label = Component.translatable(key);
-    int width = font.width(label) + BUTTON_PADDING;
-    Box box =
-        new Box(panel.right() - RIGHT_PADDING - width, panel.y() + CLEAR_Y, width, BUTTON_HEIGHT);
-    if (armed) {
-      return Control.button(box, Control.Look.CHOSEN, label, Optional.of(NodeAction.clear(index)));
-    }
-    return Control.button(box, Control.Look.ARMS_CLEAR, label, Optional.empty());
+  static boolean isEnabled(Optional<ChannelSlot> slot) {
+    return slot.filter(ChannelSlot::active).isPresent();
+  }
+
+  /** Enabled or Disabled; the owner's click turns it the other way (answers 226 and 228). */
+  private static Control statusButton(
+      NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
+    boolean enabled = isEnabled(slot);
+    Component label =
+        Component.translatable(enabled ? NodeScreenTexts.ENABLED : NodeScreenTexts.DISABLED);
+    Box box = new Box(panel.x() + CONTROL_X, panel.y() + STATUS_Y, STATUS_WIDTH, ROW_HEIGHT);
+    Optional<NodeAction> action =
+        view.editable()
+            ? Optional.of(enabled ? NodeAction.disable(index) : NodeAction.enable(index))
+            : Optional.empty();
+    Control.Look look = enabled ? Control.Look.STATUS_ON : Control.Look.STATUS_OFF;
+    return Control.button(box, look, label, action);
+  }
+
+  /**
+   * The slot as the panel shows it: its own, or, never enabled, an input on the face the node
+   * sticks to, as enabling it would make (answer 228).
+   */
+  static ChannelSlot setUpOf(Optional<ChannelSlot> slot, int index, Face stuck) {
+    return slot.orElseGet(() ->
+        new ChannelSlot(
+            Direction.INPUT, stuck, ChannelColor.values()[index], false, Optional.empty()));
+  }
+
+  /** An enabled slot is locked; the owner sets up a disabled one (answer 237). */
+  static boolean isSettable(NodeView view, ChannelSlot slot) {
+    return view.editable() && !slot.active();
   }
 
   private static List<Control> directionButtons(
@@ -91,7 +99,7 @@ final class SlotEditor {
     List<Control> buttons = new ArrayList<>();
     int x = panel.x() + CONTROL_X;
     for (Direction direction : Direction.values()) {
-      Component label = SlotList.directionOf(withDirection(slot, direction));
+      Component label = directionOf(direction);
       Box box = button(font, label, x, panel.y() + DIRECTION_Y);
       ChannelSlot changed = withDirection(slot, direction);
       buttons.add(choice(box, label, direction == slot.direction(), view, index, changed));
@@ -100,28 +108,9 @@ final class SlotEditor {
     return buttons;
   }
 
-  private static List<Control> swatches(NodeView view, Box panel, int index, ChannelSlot slot) {
-    List<Control> swatches = new ArrayList<>();
-    for (ChannelColor channel : ChannelColor.values()) {
-      int column = channel.ordinal() % SWATCHES_PER_ROW;
-      int row = channel.ordinal() / SWATCHES_PER_ROW;
-      Box box =
-          new Box(
-              panel.x() + CONTROL_X + column * SWATCH_STEP,
-              panel.y() + CHANNEL_Y + row * SWATCH_STEP,
-              SWATCH,
-              SWATCH);
-      ChannelSlot changed = new ChannelSlot(slot.direction(), slot.face(), channel);
-      boolean chosen = channel == slot.channel();
-      Optional<NodeAction> action =
-          view.editable() && !chosen
-              ? Optional.of(NodeAction.configure(index, changed))
-              : Optional.empty();
-      swatches.add(
-          Control.swatch(
-              box, chosen, ChannelColors.argb(channel), action, ChannelNames.of(channel)));
-    }
-    return swatches;
+  static Component directionOf(Direction direction) {
+    return Component.translatable(
+        direction == Direction.INPUT ? NodeScreenTexts.INPUT : NodeScreenTexts.OUTPUT);
   }
 
   /** Only None works in Phase 1; the others show what arrives in Phase 2 (telas.md). */
@@ -145,7 +134,7 @@ final class SlotEditor {
     if (chosen) {
       return Control.button(box, Control.Look.CHOSEN, label, Optional.empty());
     }
-    if (!view.editable()) {
+    if (!isSettable(view, changed)) {
       return Control.button(box, Control.Look.DISABLED, label, Optional.empty());
     }
     return Control.button(
@@ -153,11 +142,11 @@ final class SlotEditor {
   }
 
   private static ChannelSlot withDirection(ChannelSlot slot, Direction direction) {
-    return new ChannelSlot(direction, slot.face(), slot.channel());
+    return new ChannelSlot(direction, slot.face(), slot.channel(), slot.active(), slot.name());
   }
 
   static Box button(Font font, Component label, int x, int y) {
-    return new Box(x, y, font.width(label) + BUTTON_PADDING, BUTTON_HEIGHT);
+    return new Box(x, y, font.width(label) + BUTTON_PADDING, ROW_HEIGHT);
   }
 
   /** Places buttons left to right and wraps them to a new row at the edge of the panel. */
@@ -178,7 +167,7 @@ final class SlotEditor {
       Box box = button(font, label, x, y);
       if (box.right() > right && x > left) {
         x = left;
-        y += BUTTON_HEIGHT + SPACING;
+        y += ROW_HEIGHT + SPACING;
         box = button(font, label, x, y);
       }
       x = box.right() + SPACING;

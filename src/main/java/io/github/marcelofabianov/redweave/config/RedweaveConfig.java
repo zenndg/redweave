@@ -12,7 +12,7 @@ public final class RedweaveConfig {
   private static final String NODE = "node";
   private static final String RANGE = "range";
   private static final String NAME_LENGTH = "name_length";
-  private static final String SLOTS = "slots";
+  private static final String SLOT = "slot";
   private static final String MAX_PER_PLAYER_KEY = "max_per_player";
 
   private static final String RANGE_RADIUS = "Radius of the reach of a Network Controller,";
@@ -23,7 +23,7 @@ public final class RedweaveConfig {
   private static final String NETWORK_NAME_COMMENT = "Maximum length of the name of a network.";
   private static final String MAX_PER_PLAYER_COMMENT = "Networks a player may have, of any state.";
   private static final String CHANNEL_NAME_COMMENT = "Maximum length of the name of a channel.";
-  private static final String SLOTS_COMMENT = "Channel slots of a Signal Node.";
+  private static final String SLOT_NAME_COMMENT = "Maximum length of the name of a slot.";
   private static final String NODE_NAME_COMMENT = "Maximum length of the name of a Signal Node.";
 
   private static final int DEFAULT_RANGE = 128;
@@ -37,17 +37,14 @@ public final class RedweaveConfig {
   /** The longest name the config allows, also the ceiling of a name in the saves (answer 93). */
   public static final int MAX_NAME = 64;
 
-  private static final int DEFAULT_SLOTS = 4;
-
-  /** The most slots the config allows, also the ceiling of a node in the saves (answer 95). */
-  public static final int MAX_SLOTS = 9;
+  private static final int DEFAULT_SLOT_NAME = 32;
 
   public static final ModConfigSpec SPEC;
   static final ModConfigSpec.IntValue RANGE_VALUE;
   static final ModConfigSpec.IntValue NETWORK_NAME_LENGTH;
   static final ModConfigSpec.IntValue MAX_PER_PLAYER;
   static final ModConfigSpec.IntValue CHANNEL_NAME_LENGTH;
-  static final ModConfigSpec.IntValue SLOTS_PER_NODE;
+  static final ModConfigSpec.IntValue SLOT_NAME_LENGTH;
   static final ModConfigSpec.IntValue NODE_NAME_LENGTH;
 
   static {
@@ -70,12 +67,16 @@ public final class RedweaveConfig {
             .defineInRange(NAME_LENGTH, DEFAULT_CHANNEL_NAME, 1, MAX_NAME);
     builder.pop();
     builder.push(NODE);
-    SLOTS_PER_NODE =
-        builder.comment(SLOTS_COMMENT).defineInRange(SLOTS, DEFAULT_SLOTS, 1, MAX_SLOTS);
     NODE_NAME_LENGTH =
         builder
             .comment(NODE_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_NODE_NAME, 1, MAX_NAME);
+    builder.pop();
+    builder.push(SLOT);
+    SLOT_NAME_LENGTH =
+        builder
+            .comment(SLOT_NAME_COMMENT)
+            .defineInRange(NAME_LENGTH, DEFAULT_SLOT_NAME, 1, MAX_NAME);
     builder.pop();
     SPEC = builder.build();
   }
