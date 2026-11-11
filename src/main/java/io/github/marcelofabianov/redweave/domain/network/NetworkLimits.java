@@ -11,6 +11,8 @@ public interface NetworkLimits {
 
   int channelNameLength();
 
+  int nodeNameLength();
+
   /** The radius of the reach of the controller, in blocks. 0 reaches the whole dimension. */
   int range();
 }

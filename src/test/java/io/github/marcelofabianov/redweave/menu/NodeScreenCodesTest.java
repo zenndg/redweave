@@ -17,6 +17,9 @@ class NodeScreenCodesTest {
   private static final int LAST_SLOT = 8;
   private static final int NEGATIVE_USE = -4;
 
+  /** Past the 4 bits of a slot index, as a player with many networks (answer 145). */
+  private static final int LAST_CHOICE = 99;
+
   /** Used, input, face 7, white. */
   private static final int SEVENTH_FACE = 0b11101;
 
@@ -51,18 +54,23 @@ class NodeScreenCodesTest {
     NodeAction configure = NodeAction.configure(LAST_SLOT, RED_OUTPUT);
     NodeAction use = NodeAction.use(LAST_SLOT);
     NodeAction clear = NodeAction.clear(0);
+    NodeAction choose = NodeAction.choose(LAST_CHOICE);
 
     assertEquals(
         Optional.of(configure), NodeScreenCodes.actionOf(NodeScreenCodes.button(configure)));
     assertEquals(Optional.of(use), NodeScreenCodes.actionOf(NodeScreenCodes.button(use)));
     assertEquals(Optional.of(clear), NodeScreenCodes.actionOf(NodeScreenCodes.button(clear)));
+    assertEquals(Optional.of(choose), NodeScreenCodes.actionOf(NodeScreenCodes.button(choose)));
   }
 
-  /** A button id sent by a modified client is refused, not trusted (rule 16). */
+  /**
+   * A negative button id sent by a modified client is refused, not trusted (rule 16). A choice past
+   * the list is decoded, and the menu refuses it, because only it knows the list.
+   */
   @Test
-  void anUnknownButtonIsRefused() {
+  void aNegativeButtonIsRefused() {
     assertEquals(Optional.empty(), NodeScreenCodes.actionOf(-1));
-    assertEquals(Optional.empty(), NodeScreenCodes.actionOf(Integer.MAX_VALUE));
+    assertEquals(Optional.empty(), NodeScreenCodes.actionOf(Integer.MIN_VALUE));
     assertEquals(Optional.empty(), NodeScreenCodes.actionOf(NEGATIVE_USE));
   }
 

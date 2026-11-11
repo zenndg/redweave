@@ -9,8 +9,7 @@ import net.minecraft.network.chat.Component;
 public final class ControllerMessages {
   private static final String PREFIX = "message." + RedweaveMod.MOD_ID + ".network_controller.";
 
-  public static final String CURRENT = PREFIX + "current";
-  public static final String FOREIGN = PREFIX + "foreign";
+  public static final String OWNED_BY = PREFIX + "owned_by";
   public static final String NO_NETWORK = PREFIX + "no_network";
   public static final String NOT_OWNER = PREFIX + "not_owner";
   public static final String ALREADY_PLACED = PREFIX + "already_placed";

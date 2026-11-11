@@ -32,10 +32,19 @@ final class NodeScreenEnglishTexts {
   private static final String READ_ONLY = "Only the owner of %s can change this node.";
   private static final String NOT_IN_A_NETWORK = "This node is not in a network.";
   private static final String TAB_SLOTS = "Slots";
-  private static final String STATE_ONLINE = "Online · %s";
+  private static final String STATE_ONLINE = "Online";
   private static final String STATE_UNLOADED = "Unloaded";
   private static final String STATE_OUT_OF_RANGE = "Out of range";
   private static final String STATE_NO_NETWORK = "No network";
+  private static final String CHOOSE_NETWORK = "Choose a network";
+  private static final String NONE_ONLINE = "No network online.";
+  private static final String PLACE_A_CONTROLLER = " Place a Network Controller to create one.";
+  private static final String NO_NETWORK_ONLINE = NONE_ONLINE + PLACE_A_CONTROLLER;
+  private static final String NODE_COUNT_ONE = "%s node";
+  private static final String NODE_COUNT_MANY = "%s nodes";
+  private static final String BACK = "Back";
+  private static final String RENAME_TOOLTIP = "Click to rename. Enter saves, Esc cancels.";
+  private static final String SWITCH_NETWORK_TOOLTIP = "Click to switch networks.";
   private static final String FACE_DOWN = "Down";
   private static final String FACE_UP = "Up";
   private static final String FACE_NORTH = "North";
@@ -50,6 +59,17 @@ final class NodeScreenEnglishTexts {
     addActions(add);
     addStates(add);
     addFaces(add);
+    addNetworkChoice(add);
+  }
+
+  private static void addNetworkChoice(BiConsumer<String, String> add) {
+    add.accept(NodeScreenTexts.CHOOSE_NETWORK, CHOOSE_NETWORK);
+    add.accept(NodeScreenTexts.NO_NETWORK_ONLINE, NO_NETWORK_ONLINE);
+    add.accept(NodeScreenTexts.NODE_COUNT_ONE, NODE_COUNT_ONE);
+    add.accept(NodeScreenTexts.NODE_COUNT_MANY, NODE_COUNT_MANY);
+    add.accept(NodeScreenTexts.BACK, BACK);
+    add.accept(NodeScreenTexts.RENAME_TOOLTIP, RENAME_TOOLTIP);
+    add.accept(NodeScreenTexts.SWITCH_NETWORK_TOOLTIP, SWITCH_NETWORK_TOOLTIP);
   }
 
   private static void addLabels(BiConsumer<String, String> add) {

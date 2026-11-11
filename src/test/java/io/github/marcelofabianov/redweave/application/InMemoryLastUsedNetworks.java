@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-/** The current network of each player, kept in memory (answer 25). */
-final class InMemoryCurrentNetworks implements CurrentNetworkFinder, CurrentNetworkChooser {
-  private final Map<PlayerId, NetworkId> current = new HashMap<>();
+/** The network each player last put a node in, kept in memory (answer 157). */
+final class InMemoryLastUsedNetworks implements LastUsedNetworkFinder, LastUsedNetworkRecorder {
+  private final Map<PlayerId, NetworkId> lastUsed = new HashMap<>();
 
   @Override
-  public Optional<NetworkId> currentOf(PlayerId player) {
-    return Optional.ofNullable(current.get(player));
+  public Optional<NetworkId> lastUsedOf(PlayerId player) {
+    return Optional.ofNullable(lastUsed.get(player));
   }
 
   @Override
-  public void choose(PlayerId player, NetworkId network) {
-    current.put(player, network);
+  public void record(PlayerId player, NetworkId network) {
+    lastUsed.put(player, network);
   }
 }

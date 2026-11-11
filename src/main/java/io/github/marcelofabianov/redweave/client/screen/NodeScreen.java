@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
+import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,29 +20,43 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * The Node Screen: _docs/funcionalidades/telas.md and _docs/imagens/telas/tela-do-no.png. It only
- * shows what the server sends and asks for actions; the server decides (rule 16).
+ * The Node Screen: _docs/funcionalidades/telas.md, _docs/imagens/telas/tela-do-no.png and
+ * tela-do-no-escolha-de-rede.png. It only shows what the server sends and asks for actions; the
+ * server decides (rule 16). A node with no network opens on the network choice for whoever placed
+ * it, and its owner goes back to it with a click on the network (answers 139, 141 and 172).
  */
 public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int WIDTH = 312;
-  private static final int HEIGHT = 222;
+  private static final int HEIGHT = 234;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 32;
-  private static final int LIST_LABEL_Y = 28;
-  private static final int LIST_Y = 40;
+  private static final int LIST_LABEL_Y = 40;
+  private static final int LIST_Y = 52;
   private static final int LIST_WIDTH = 118;
-  private static final Box PANEL = new Box(136, 26, 166, 160);
+  private static final Box PANEL = new Box(136, 38, 166, 160);
+  private static final int BACK_WIDTH = 48;
+  private static final int BACK_HEIGHT = 16;
+  private static final int BACK_Y = 8;
 
   private final SlotList list = new SlotList();
   private final FaceCube cube = new FaceCube();
   private final NodeScreenFooter footer = new NodeScreenFooter();
+  private final NetworkChoiceList choices = new NetworkChoiceList();
+  private final NodeNameField name = new NodeNameField();
   private int selected;
   private boolean clearArmed;
+  private boolean switching;
 
   public NodeScreen(NodeMenu menu, Inventory inventory, Component title) {
     super(menu, inventory, title);
     imageWidth = WIDTH;
     imageHeight = HEIGHT;
+  }
+
+  @Override
+  protected void init() {
+    super.init();
+    name.attach(font, NodeHeader.fieldBox(leftPos, topPos), this::addRenderableWidget);
   }
 
   @Override
@@ -55,8 +70,29 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   @Override
   protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
     NodeView view = view(mouseX, mouseY);
-    selected = Math.max(0, Math.min(selected, menu.slotCount() - 1));
     NodeScreenFrame.draw(graphics, font, leftPos, topPos, WIDTH, HEIGHT, title, menu);
+    name.drawBackground(graphics);
+    if (!name.editing()) {
+      NodeHeader.drawName(graphics, font, leftPos, topPos, menu, ownsNetwork());
+    }
+    if (showsChoice()) {
+      drawChoice(graphics, view);
+      return;
+    }
+    NodeHeader.drawLink(graphics, font, leftPos, topPos, WIDTH, menu, view);
+    drawConfiguration(graphics, view);
+  }
+
+  /** The list of networks and, while switching, the way back (answers 199 and 205). */
+  private void drawChoice(GuiGraphics graphics, NodeView view) {
+    choices.draw(graphics, font, choiceArea(), menu.choices(), view.mouseX(), view.mouseY());
+    if (switching) {
+      ControlPainter.draw(graphics, font, backButton(), view);
+    }
+  }
+
+  private void drawConfiguration(GuiGraphics graphics, NodeView view) {
+    selected = Math.max(0, Math.min(selected, menu.slotCount() - 1));
     NodeScreenFrame.label(graphics, font, leftPos + PADDING, topPos + LIST_LABEL_Y);
     list.draw(graphics, font, view, listArea(), selected);
     Box panel = panel();
@@ -85,6 +121,15 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
 
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    if (name.editing() && !name.box().contains(mouseX, mouseY)) {
+      name.cancel();
+    }
+    if (showsChoice()) {
+      return clickChoice(mouseX, mouseY) || super.mouseClicked(mouseX, mouseY, button);
+    }
+    if (clickHeader(mouseX, mouseY)) {
+      return true;
+    }
     NodeView view = view(mouseX, mouseY);
     Optional<Integer> row = list.slotAt(listArea(), menu.slotCount(), mouseX, mouseY);
     if (row.isPresent()) {
@@ -117,13 +162,60 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     return super.mouseReleased(mouseX, mouseY, button);
   }
 
+  /** Enter saves the name, Esc cancels it, and no key closes the screen while typing (204). */
+  @Override
+  public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    if (!name.editing()) {
+      return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+    name.keyPressed(keyCode, scanCode, modifiers, menu.pos());
+    return true;
+  }
+
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+    if (showsChoice() && choiceArea().contains(mouseX, mouseY)) {
+      choices.scroll(scrollY, choiceArea(), menu.choices().size());
+      return true;
+    }
     if (listArea().contains(mouseX, mouseY)) {
       list.scroll(scrollY);
       return true;
     }
     return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+  }
+
+  /** A click on a network picks it, and the screen goes on to the configuration (171). */
+  private boolean clickChoice(double mouseX, double mouseY) {
+    Optional<Integer> row = choices.rowAt(choiceArea(), menu.choices().size(), mouseX, mouseY);
+    if (row.isPresent()) {
+      send(NodeAction.choose(row.get()));
+      switching = false;
+      selected = 0;
+      return true;
+    }
+    if (switching && backButton().box().contains(mouseX, mouseY)) {
+      switching = false;
+      return true;
+    }
+    return false;
+  }
+
+  /** The owner renames the node or opens the network choice from the header (141 and 204). */
+  private boolean clickHeader(double mouseX, double mouseY) {
+    if (!ownsNetwork()) {
+      return false;
+    }
+    if (NodeHeader.nameBox(font, leftPos, topPos, menu, true).contains(mouseX, mouseY)) {
+      name.start(menu.nodeName(), this::setFocused);
+      return true;
+    }
+    Optional<Box> link = NodeHeader.linkBox(font, leftPos, topPos, WIDTH, menu);
+    if (link.isPresent() && link.get().contains(mouseX, mouseY)) {
+      switching = true;
+      return true;
+    }
+    return false;
   }
 
   /** A click on a free slot uses it at once (answer 83); on a used one, selects it. */
@@ -149,6 +241,13 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   }
 
   private Optional<Component> tooltipAt(NodeView view) {
+    if (showsChoice()) {
+      return Optional.empty();
+    }
+    Optional<Component> header = headerTooltipAt(view);
+    if (header.isPresent()) {
+      return header;
+    }
     for (Control control : controls(view)) {
       if (control.box().contains(view.mouseX(), view.mouseY()) && control.tooltip().isPresent()) {
         return control.tooltip();
@@ -156,6 +255,43 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     }
     return NodeScreenPanel.tooltipAt(font, view, panel(), selected)
         .or(() -> footer.tooltipAt(view));
+  }
+
+  private Optional<Component> headerTooltipAt(NodeView view) {
+    if (!ownsNetwork() || name.editing()) {
+      return Optional.empty();
+    }
+    if (view.hovers(NodeHeader.nameBox(font, leftPos, topPos, menu, true))) {
+      return Optional.of(NodeHeader.renameTooltip());
+    }
+    return NodeHeader.linkBox(font, leftPos, topPos, WIDTH, menu)
+        .filter(view::hovers)
+        .map(link -> NodeHeader.switchTooltip());
+  }
+
+  /**
+   * The network choice shows for whoever placed a node with no network, and for the owner who
+   * clicked the network (answers 139, 141 and 172).
+   */
+  private boolean showsChoice() {
+    return switching || (menu.state().isEmpty() && menu.viewerPlacedIt());
+  }
+
+  /** Only the owner of the network of the node renames it and switches it (answer 141). */
+  private boolean ownsNetwork() {
+    return menu.state().isPresent() && menu.viewerIsOwner();
+  }
+
+  private Control backButton() {
+    Box box =
+        new Box(
+            leftPos + PADDING, topPos + HEIGHT - FOOTER_HEIGHT + BACK_Y, BACK_WIDTH, BACK_HEIGHT);
+    return Control.button(
+        box, Control.Look.BUTTON, Component.translatable(NodeScreenTexts.BACK), Optional.empty());
+  }
+
+  private Box choiceArea() {
+    return new Box(leftPos + PADDING, topPos + PANEL.y(), WIDTH - 2 * PADDING, PANEL.height());
   }
 
   private List<Control> controls(NodeView view) {

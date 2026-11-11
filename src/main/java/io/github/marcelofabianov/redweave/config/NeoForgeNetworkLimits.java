@@ -20,6 +20,11 @@ public final class NeoForgeNetworkLimits implements NetworkLimits {
   }
 
   @Override
+  public int nodeNameLength() {
+    return RedweaveConfig.NODE_NAME_LENGTH.get();
+  }
+
+  @Override
   public int range() {
     return RedweaveConfig.RANGE_VALUE.get();
   }

@@ -19,6 +19,7 @@ import io.github.marcelofabianov.redweave.domain.network.OutputFace;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /** NODE reads two levers into two channels, and OTHER_NODE emits them. */
@@ -43,10 +44,10 @@ class OutputFacesTest {
 
   private static Network twoLevers(Face doorFace, Face lampFace) {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(OWNER, NODE, FIRST_SLOT, input(DOOR));
     network.configureSlot(OWNER, NODE, SECOND_SLOT, input(LAMP));
-    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION);
+    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
     network.configureSlot(OWNER, OTHER_NODE, FIRST_SLOT, output(doorFace, DOOR));
     network.configureSlot(OWNER, OTHER_NODE, SECOND_SLOT, output(lampFace, LAMP));
     network.readInput(NODE, FIRST_SLOT, WEAK);

@@ -17,14 +17,16 @@ import org.junit.jupiter.api.Test;
 
 class CreateNetworkTest {
   private static final UUID FIRST_ID = UUID.fromString("6f1c2b0e-3a4d-4e5f-8a9b-0c1d2e3f4a5b");
-  private static final String FIRST_NAME = "Network 6f1c";
+
+  /** The first 8 characters of FIRST_ID (answer 142). */
+  private static final String FIRST_NAME = "6f1c2b0e";
+
   private static final int CHANNELS = 16;
 
   private final InMemoryNetworks networks = new InMemoryNetworks();
-  private final InMemoryCurrentNetworks current = new InMemoryCurrentNetworks();
 
   private CreateNetwork createNetworkWith(List<UUID> ids) {
-    return new CreateNetwork(new FixedIds(ids), networks, networks, current, TestLimits.STARTING);
+    return new CreateNetwork(new FixedIds(ids), networks, networks, TestLimits.STARTING);
   }
 
   private static List<UUID> randomIds(int count) {
@@ -35,7 +37,7 @@ class CreateNetworkTest {
     return ids;
   }
 
-  /** "Network" and the first 4 characters of the ID, in English, the base (answer 35). */
+  /** The first 8 characters of the ID, like a node (answer 142). */
   @Test
   void aNewNetworkIsNamedAfterItsId() {
     NetworkId id = createNetworkWith(List.of(FIRST_ID)).create(OWNER, CONTROLLER);
@@ -44,13 +46,6 @@ class CreateNetworkTest {
     assertEquals(FIRST_NAME, network.name());
     assertEquals(OWNER, network.owner());
     assertEquals(Optional.of(CONTROLLER), network.controller());
-  }
-
-  @Test
-  void aNewNetworkBecomesTheCurrentNetworkOfItsOwner() {
-    NetworkId id = createNetworkWith(List.of(FIRST_ID)).create(OWNER, CONTROLLER);
-
-    assertEquals(Optional.of(id), current.currentOf(OWNER));
   }
 
   /** The networks of one player start with different colors (answer 40). */

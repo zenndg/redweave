@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /** A reading belongs to the slot as it was configured, so a change of the slot drops it. */
@@ -23,7 +24,7 @@ class StaleReadingTest {
 
   private static Network networkThatRead() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(OWNER, NODE, SLOT, reading(OLD_CHANNEL));
     network.readInput(NODE, SLOT, READ);
     return network;
@@ -51,7 +52,7 @@ class StaleReadingTest {
   void detachingANodeDropsItsReadings() {
     Network network = networkThatRead();
     network.detachNode(OWNER, NODE);
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(OWNER, NODE, SLOT, reading(OLD_CHANNEL));
 
     assertEquals(Signal.OFF, network.channelValue(OLD_CHANNEL));

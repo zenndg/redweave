@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.block.NodeSignals;
+import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -8,6 +9,7 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
 
@@ -16,18 +18,23 @@ import net.minecraft.world.level.Level;
  * compares them every tick and sends only what changed (answer 82).
  */
 final class NodeScreenData implements ContainerData {
+  private final Player player;
   private final Level level;
   private final BlockPos pos;
   private final PlayerId viewer;
 
-  NodeScreenData(Level level, BlockPos pos, PlayerId viewer) {
-    this.level = level;
+  NodeScreenData(Player player, BlockPos pos) {
+    this.player = player;
+    this.level = player.level();
     this.pos = pos;
-    this.viewer = viewer;
+    this.viewer = NodeScreenActions.playerOf(player);
   }
 
   @Override
   public int get(int index) {
+    if (index == NodeScreenLayout.VIEWER_PLACED) {
+      return placedByViewer() ? 1 : 0;
+    }
     Optional<NodeId> id = NodeSignals.nodeAt(level, pos);
     Optional<Network> network =
         id.flatMap(node -> RedweaveServer.running().flatMap(server -> server.networkOfNode(node)));
@@ -52,6 +59,11 @@ final class NodeScreenData implements ContainerData {
       return slot < node.slots().size() ? NodeScreenCodes.slot(node.slots().get(slot)) : 0;
     }
     return network.slotSignal(node.id(), slot - NodeScreenLayout.MAX_SLOTS).strength();
+  }
+
+  private boolean placedByViewer() {
+    return level.getBlockEntity(pos) instanceof SignalNodeBlockEntity entity
+        && entity.wasPlacedBy(player);
   }
 
   @Override

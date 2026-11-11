@@ -6,6 +6,7 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.S
 
 import io.github.marcelofabianov.redweave.domain.network.NetworkFixture;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.network.TestLimits;
 import java.util.List;
@@ -23,23 +24,23 @@ final class ApplicationFixture {
   private static final TestLimits LIMITS = TestLimits.STARTING;
 
   final InMemoryNetworks networks = new InMemoryNetworks();
-  final InMemoryCurrentNetworks current = new InMemoryCurrentNetworks();
+  final InMemoryLastUsedNetworks lastUsed = new InMemoryLastUsedNetworks();
 
-  /** Creates the network of OWNER and leaves it as the current one of OWNER. */
+  /** Creates the network of OWNER, online, with its controller at CONTROLLER. */
   NetworkId ownersNetwork() {
     return networkOf(OWNER, UUID.fromString(NETWORK_UUID));
   }
 
-  /** One more network of OWNER, which becomes the current one. */
+  /** One more network of OWNER, online. */
   NetworkId ownersOtherNetwork() {
     return networkOf(OWNER, UUID.randomUUID());
   }
 
-  /** The network of OWNER with NODE placed in it, as an input on the first free channel (25). */
+  /** The network of OWNER with NODE in it, as an input on the first free channel (171). */
   NetworkId ownersNetworkWithANode() {
     NetworkId network = ownersNetwork();
-    new PlaceNode(new FixedIds(List.of(NODE_ID)), current, networks, networks)
-        .place(OWNER, NetworkFixture.NODE_POSITION);
+    new LinkNode(networks, networks, networks, lastUsed)
+        .link(OWNER, new NodeId(NODE_ID), NetworkFixture.NODE_POSITION, network);
     return network;
   }
 
@@ -48,7 +49,7 @@ final class ApplicationFixture {
   }
 
   private NetworkId networkOf(PlayerId owner, UUID id) {
-    return new CreateNetwork(new FixedIds(List.of(id)), networks, networks, current, LIMITS)
+    return new CreateNetwork(new FixedIds(List.of(id)), networks, networks, LIMITS)
         .create(owner, CONTROLLER);
   }
 }

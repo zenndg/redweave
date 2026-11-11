@@ -25,12 +25,14 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
-| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT` e `ALREADY_PLACED`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK` (pergunta 41) | #10, #13 e #14 |
+| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED` e `NETWORK_NOT_ONLINE`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14 e #87 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
 | `NodePosition` | Onde o nó está: o bloco e a face | #10 |
-| `Node` | Um nó, com a posição e os slots. Slot vazio é slot livre | #10 |
+| `Node` | Um nó, com o nome opcional, a posição e os slots. Slot vazio é slot livre, e nome vazio é o padrão, que `displayName` calcula (pergunta 206) | #10 e #87 |
+| `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
+| `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
 | `ChannelSlot` | A configuração de um nó para um canal: direção, face e canal. A lógica entra na Fase 2 | #10 |
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
 | `NetworkLimits` | Os números da rede: slots por nó, tamanho dos nomes e o raio do alcance. O domínio define a interface, e o config a implementa | #10 e #11 |
@@ -75,8 +77,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Controlador perdido sem pedido:** quando o bloco some sem o dono quebrá-lo, como no criativo, por comando ou por outro mod, `loseController` deixa a rede `Offline` sem receber quem pede, porque não há a quem perguntar. Só `removeController`, a quebra pelo dono, confere o dono (pergunta 49).
 - **Nó perdido sem pedido:** do mesmo jeito, `loseNode` tira da rede o nó cujo bloco sumiu ou que uma explosão levou, sem receber quem pede. Só `detachNode`, a retirada pelo dono, confere o dono (pergunta 74).
 - **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o `LinkNode`, em `application/`, tira o nó da rede antiga antes de ligá-lo na nova. Ele confere tudo antes de mudar algo, e quem pede precisa ser dono das duas redes (pergunta 42).
+- **Só rede `Online` recebe nó:** `attachNode` recusa com `NETWORK_NOT_ONLINE` uma rede sem o controlador colocado, porque o player só escolhe entre as redes `Online` dele (perguntas 157 e 172).
+- **Nome do nó opcional:** sem nome próprio, o nó mostra os 8 primeiros caracteres do ID, calculados na hora, então não há nome padrão gravado que fique velho. Renomear para vazio limpa o nome (perguntas 144 e 206). O nome é do nó, então ele o leva ao trocar de rede, mesmo que passe do limite de hoje, como na restauração (perguntas 93 e 200).
 - **Primeiro canal livre:** é o primeiro, na ordem das cores, sem nenhum slot na rede (pergunta 25).
-- **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).
+- **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear a rede, o canal ou o nó e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).
 - **Estado na rede, simulador sem estado:** a rede sabe quando um sinal dela mudou e o que emitiu por último, para o estado de uma rede ficar num lugar só (pergunta 38).
 - **Só o que mudou volta:** o simulador devolve só as faces cujo sinal mudou, para o jogo avisar os vizinhos só delas. Uma face que deixou de existir, por um nó desligado ou um slot liberado, volta a `OFF`, e não volta nada se ela já estava em `OFF`.
 - **Primeiro tick reaplica tudo:** uma face nunca emitida sempre muda, até para `OFF`, porque, depois de carregar o mundo, o bloco pode ter qualquer valor (pergunta 38).

@@ -7,7 +7,10 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-/** The colored state on the top right, as `● Online · Factory` (telas.md and answer 29). */
+/**
+ * The colored state on the top right, as `● Online` (telas.md and answer 29). The network has its
+ * own link under the title, in every state (answer 208).
+ */
 final class StatePill {
   private static final int HEIGHT = 13;
   private static final int DOT_SIZE = 5;
@@ -21,14 +24,8 @@ final class StatePill {
   private StatePill() {}
 
   /** Draws the pill ending at the right edge given, and gives back where it is. */
-  static Box draw(
-      GuiGraphics graphics,
-      Font font,
-      int right,
-      int y,
-      Optional<NodeState> state,
-      String network) {
-    Component text = textOf(state, network);
+  static Box draw(GuiGraphics graphics, Font font, int right, int y, Optional<NodeState> state) {
+    Component text = textOf(state);
     String shown = FittedText.fit(font, text, MAX_TEXT);
     int width = TEXT_X + font.width(shown) + RIGHT_PADDING;
     Box box = new Box(right - width, y, width, HEIGHT);
@@ -41,9 +38,9 @@ final class StatePill {
     return box;
   }
 
-  static Component textOf(Optional<NodeState> state, String network) {
+  static Component textOf(Optional<NodeState> state) {
     return switch (state.orElse(NodeState.NO_NETWORK)) {
-      case ONLINE -> Component.translatable(NodeScreenTexts.STATE_ONLINE, network);
+      case ONLINE -> Component.translatable(NodeScreenTexts.STATE_ONLINE);
       case UNLOADED -> Component.translatable(NodeScreenTexts.STATE_UNLOADED);
       case OUT_OF_RANGE -> Component.translatable(NodeScreenTexts.STATE_OUT_OF_RANGE);
       case NO_NETWORK -> Component.translatable(NodeScreenTexts.STATE_NO_NETWORK);

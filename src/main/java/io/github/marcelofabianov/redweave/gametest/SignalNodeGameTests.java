@@ -46,7 +46,7 @@ public final class SignalNodeGameTests {
   private static final String STILL_IN = "The node should have left its network";
   private static final String STRANGER_BREAKS = "Only the owner should break the node";
   private static final String NOT_IN = "The node should stay in its network";
-  private static final String HAS_NETWORK = "A node without a current network has none";
+  private static final String HAS_NETWORK = "A node with no network to pick has none";
   private static final String NOT_ON = "The channel should follow the lever";
 
   private SignalNodeGameTests() {}
@@ -112,7 +112,7 @@ public final class SignalNodeGameTests {
   }
 
   @GameTest(template = EMPTY)
-  public static void aNodeWithoutACurrentNetworkStaysInTheWorld(GameTestHelper helper) {
+  public static void aNodeWithNoNetworkToPickStaysInTheWorld(GameTestHelper helper) {
     Player stranger = helper.makeMockPlayer(GameType.SURVIVAL);
     helper.setBlock(LEVER_BLOCK, Blocks.STONE);
 
@@ -187,6 +187,7 @@ public final class SignalNodeGameTests {
     helper.setBlock(LEVER, lever);
   }
 
+  /** Places the node and picks the network, as its placer does on the Node Screen (139). */
   private static NodeId placeNode(
       GameTestHelper helper, Player player, BlockPos block, net.minecraft.core.Direction face) {
     GameTestActions.placeOn(
@@ -194,6 +195,7 @@ public final class SignalNodeGameTests {
     SignalNodeBlockEntity node = helper.getBlockEntity(block.relative(face));
     Optional<NodeId> id = node.node();
     helper.assertTrue(id.isPresent(), NO_NODE);
+    NodeScene.choose(helper, player, block.relative(face), NodeScene.FIRST_CHOICE);
     return id.orElseThrow();
   }
 

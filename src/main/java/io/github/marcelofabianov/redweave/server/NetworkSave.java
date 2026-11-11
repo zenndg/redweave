@@ -21,18 +21,18 @@ import net.minecraft.nbt.NbtOps;
 import org.slf4j.Logger;
 
 /**
- * The root of the save of the networks: the version, the networks and the current network of each
- * player (answers 88, 89 and 91). Reading never throws, because the game would then start an empty
- * save and write it over the file (answer 92 and rule 14).
+ * The root of the save of the networks: the version, the networks and the network each player last
+ * put a node in (answers 88, 89, 157 and 174). Reading never throws, because the game would then
+ * start an empty save and write it over the file (answer 92 and rule 14).
  */
 final class NetworkSave {
   static final int VERSION = 1;
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String VERSION_KEY = "version";
   private static final String NETWORKS = "networks";
-  private static final String CURRENT = "current";
+  private static final String LAST_USED = "last_used";
   private static final String NETWORK_PART = "network";
-  private static final String CURRENT_PART = "current network";
+  private static final String LAST_USED_PART = "last used network";
   private static final String REPEATED = "repeated in the save";
   private static final String UNKNOWN_NETWORK = "points to a network that is not in the save";
   private static final String SAVE_VERSION = "The Redweave save has version {},";
@@ -48,29 +48,29 @@ final class NetworkSave {
                   Lenient.list(SavedNetwork.CODEC, NETWORK_PART)
                       .optionalFieldOf(NETWORKS, List.of())
                       .forGetter(Root::networks),
-                  Lenient.list(CurrentChoice.CODEC, CURRENT_PART)
-                      .optionalFieldOf(CURRENT, List.of())
-                      .forGetter(Root::current))
+                  Lenient.list(LastUsedChoice.CODEC, LAST_USED_PART)
+                      .optionalFieldOf(LAST_USED, List.of())
+                      .forGetter(Root::lastUsed))
               .apply(instance, Root::new));
 
   private NetworkSave() {}
 
   /** What the save holds, in the order it was written. */
-  record Contents(Map<NetworkId, Network> networks, Map<PlayerId, NetworkId> current) {
+  record Contents(Map<NetworkId, Network> networks, Map<PlayerId, NetworkId> lastUsed) {
     static Contents empty() {
       return new Contents(new LinkedHashMap<>(), new LinkedHashMap<>());
     }
   }
 
-  private record Root(List<SavedNetwork> networks, List<CurrentChoice> current) {}
+  private record Root(List<SavedNetwork> networks, List<LastUsedChoice> lastUsed) {}
 
   static CompoundTag write(
-      CompoundTag tag, Collection<Network> networks, Map<PlayerId, NetworkId> current) {
+      CompoundTag tag, Collection<Network> networks, Map<PlayerId, NetworkId> lastUsed) {
     List<SavedNetwork> saved =
         networks.stream().map(network -> SavedNetwork.of(network.snapshot())).toList();
-    List<CurrentChoice> choices =
-        current.entrySet().stream()
-            .map(entry -> new CurrentChoice(entry.getKey(), entry.getValue()))
+    List<LastUsedChoice> choices =
+        lastUsed.entrySet().stream()
+            .map(entry -> new LastUsedChoice(entry.getKey(), entry.getValue()))
             .toList();
     tag.merge(
         (CompoundTag) ROOT.encodeStart(NbtOps.INSTANCE, new Root(saved, choices)).getOrThrow());
@@ -96,7 +96,7 @@ final class NetworkSave {
       return Contents.empty();
     }
     Map<NetworkId, Network> networks = restore(root.get().networks(), limits);
-    return new Contents(networks, current(root.get().current(), networks));
+    return new Contents(networks, lastUsed(root.get().lastUsed(), networks));
   }
 
   private static Map<NetworkId, Network> restore(List<SavedNetwork> saved, NetworkLimits limits) {
@@ -127,16 +127,16 @@ final class NetworkSave {
     }
   }
 
-  private static Map<PlayerId, NetworkId> current(
-      List<CurrentChoice> choices, Map<NetworkId, Network> networks) {
-    Map<PlayerId, NetworkId> current = new LinkedHashMap<>();
-    for (CurrentChoice choice : choices) {
+  private static Map<PlayerId, NetworkId> lastUsed(
+      List<LastUsedChoice> choices, Map<NetworkId, Network> networks) {
+    Map<PlayerId, NetworkId> lastUsed = new LinkedHashMap<>();
+    for (LastUsedChoice choice : choices) {
       if (!networks.containsKey(choice.network())) {
-        Lenient.dropped(CURRENT_PART, UNKNOWN_NETWORK);
-      } else if (current.putIfAbsent(choice.player(), choice.network()) != null) {
-        Lenient.dropped(CURRENT_PART, REPEATED);
+        Lenient.dropped(LAST_USED_PART, UNKNOWN_NETWORK);
+      } else if (lastUsed.putIfAbsent(choice.player(), choice.network()) != null) {
+        Lenient.dropped(LAST_USED_PART, REPEATED);
       }
     }
-    return current;
+    return lastUsed;
   }
 }

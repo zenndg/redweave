@@ -159,6 +159,7 @@ public final class NodeScreenGameTests {
         STONE,
         net.minecraft.core.Direction.UP);
     SignalNodeBlockEntity entity = helper.getBlockEntity(NODE);
+    NodeScene.choose(helper, owner, NODE, NodeScene.FIRST_CHOICE);
     return entity.node().orElseThrow();
   }
 

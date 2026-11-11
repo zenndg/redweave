@@ -5,16 +5,16 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 
-/** The current network of one player, as it is in the saves (answers 25 and 91). */
-record CurrentChoice(PlayerId player, NetworkId network) {
+/** The network one player last put a node in, as it is in the saves (answers 157 and 174). */
+record LastUsedChoice(PlayerId player, NetworkId network) {
   private static final String PLAYER = "player";
   private static final String NETWORK = "network";
 
-  static final Codec<CurrentChoice> CODEC =
+  static final Codec<LastUsedChoice> CODEC =
       RecordCodecBuilder.create(instance ->
           instance
               .group(
-                  SaveCodecs.PLAYER_ID.fieldOf(PLAYER).forGetter(CurrentChoice::player),
-                  SaveCodecs.NETWORK_ID.fieldOf(NETWORK).forGetter(CurrentChoice::network))
-              .apply(instance, CurrentChoice::new));
+                  SaveCodecs.PLAYER_ID.fieldOf(PLAYER).forGetter(LastUsedChoice::player),
+                  SaveCodecs.NETWORK_ID.fieldOf(NETWORK).forGetter(LastUsedChoice::network))
+              .apply(instance, LastUsedChoice::new));
 }

@@ -16,8 +16,7 @@ final class PortugueseTexts {
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
-  private static final String CURRENT = "Rede atual: %s";
-  private static final String FOREIGN = "%s · dono: %s";
+  private static final String OWNED_BY = "%s · dono: %s";
   private static final String NO_NETWORK = "Sem rede";
   private static final String NOT_OWNER = "Só o dono pode colocar esta rede.";
   private static final String ALREADY_PLACED = "Esta rede já tem um controlador.";
@@ -31,8 +30,7 @@ final class PortugueseTexts {
     NodeScreenPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
-    add.accept(ControllerMessages.CURRENT, CURRENT);
-    add.accept(ControllerMessages.FOREIGN, FOREIGN);
+    add.accept(ControllerMessages.OWNED_BY, OWNED_BY);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);
     add.accept(ControllerMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ControllerMessages.ALREADY_PLACED, ALREADY_PLACED);

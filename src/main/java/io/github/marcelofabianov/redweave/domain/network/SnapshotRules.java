@@ -29,7 +29,7 @@ final class SnapshotRules {
   }
 
   private static void requireName(String name) {
-    if (Names.valid(name, name.length()).filter(name::equals).isEmpty()) {
+    if (!Names.isKept(name)) {
       throw new IllegalArgumentException(INVALID_NAME);
     }
   }
@@ -50,6 +50,7 @@ final class SnapshotRules {
       if (byId.put(node.id(), node) != null) {
         throw new IllegalArgumentException(REPEATED_NODE);
       }
+      node.name().ifPresent(SnapshotRules::requireName);
     }
     return byId;
   }

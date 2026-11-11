@@ -27,11 +27,7 @@ class PlaceControllerTest {
   private PlaceController placeController() {
     CreateNetwork create =
         new CreateNetwork(
-            new FixedIds(List.of(NEW_ID)),
-            fixture.networks,
-            fixture.networks,
-            fixture.current,
-            TestLimits.STARTING);
+            new FixedIds(List.of(NEW_ID)), fixture.networks, fixture.networks, TestLimits.STARTING);
     return new PlaceController(create, fixture.networks, fixture.networks);
   }
 

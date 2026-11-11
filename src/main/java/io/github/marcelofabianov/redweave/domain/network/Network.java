@@ -2,7 +2,6 @@ package io.github.marcelofabianov.redweave.domain.network;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +18,7 @@ public final class Network {
   private final PlayerId owner;
   private final NetworkLimits limits;
   private final Channels channels = new Channels();
-  private final Map<NodeId, Node> nodes = new LinkedHashMap<>();
+  private final Nodes nodes = new Nodes();
   private final Readings readings = new Readings();
   private final Emissions emissions = new Emissions();
   private String name;
@@ -74,7 +73,7 @@ public final class Network {
             snapshot.controller(),
             limits);
     snapshot.channels().forEach(network.channels::restore);
-    snapshot.nodes().forEach(node -> network.nodes.put(node.id(), node));
+    snapshot.nodes().forEach(network.nodes::restore);
     snapshot.readings().forEach(network.readings::restore);
     return network;
   }
@@ -115,17 +114,31 @@ public final class Network {
     return channels.rename(channelColor, newName, limits.channelNameLength());
   }
 
-  /** Attaches a node with every slot free, for the owner only. */
-  public Outcome attachNode(PlayerId requester, NodeId nodeId, NodePosition position) {
+  /**
+   * Attaches a node with every slot free, for the owner only and while online (answer 157). An
+   * empty name is the default one, and a node that moves in keeps its own (answers 200 and 206).
+   */
+  public Outcome attachNode(
+      PlayerId requester, NodeId nodeId, NodePosition position, Optional<String> nodeName) {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
-    if (nodes.containsKey(nodeId)) {
-      return Outcome.ALREADY_ATTACHED;
+    if (!isOnline()) {
+      return Outcome.NETWORK_NOT_ONLINE;
     }
-    nodes.put(nodeId, Node.withFreeSlots(nodeId, position, limits.slotsPerNode()));
-    emissions.markPending();
-    return Outcome.ACCEPTED;
+    Outcome attached = nodes.attach(nodeId, position, nodeName, limits.slotsPerNode());
+    if (attached == Outcome.ACCEPTED) {
+      emissions.markPending();
+    }
+    return attached;
+  }
+
+  /** Names a node, for the owner only; blank gives back the default (144). It changes no signal. */
+  public Outcome renameNode(PlayerId requester, NodeId nodeId, String newName) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    return nodes.rename(nodeId, newName, limits.nodeNameLength());
   }
 
   /** Detaches a node, for the owner only. */
@@ -141,7 +154,7 @@ public final class Network {
    * takes it. There is nobody to ask, so it leaves anyway (answer 74).
    */
   public Outcome loseNode(NodeId nodeId) {
-    if (nodes.remove(nodeId) == null) {
+    if (!nodes.remove(nodeId)) {
       return Outcome.UNKNOWN_NODE;
     }
     readings.forgetNode(nodeId);
@@ -164,14 +177,10 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
-    Node node = nodes.get(nodeId);
-    if (node == null) {
-      return Outcome.UNKNOWN_NODE;
+    Outcome changed = nodes.changeSlot(nodeId, index, slot);
+    if (changed != Outcome.ACCEPTED) {
+      return changed;
     }
-    if (!node.hasSlot(index)) {
-      return Outcome.INVALID_SLOT;
-    }
-    nodes.put(nodeId, node.withSlot(index, slot));
     readings.forget(new SlotRef(nodeId, index));
     emissions.markPending();
     return Outcome.ACCEPTED;
@@ -248,11 +257,11 @@ public final class Network {
 
   /** The nodes, in the order they were attached. */
   public List<Node> nodes() {
-    return List.copyOf(nodes.values());
+    return List.copyOf(nodes.all());
   }
 
   public Optional<Node> node(NodeId nodeId) {
-    return Optional.ofNullable(nodes.get(nodeId));
+    return Optional.ofNullable(nodes.at(nodeId));
   }
 
   /**
@@ -260,7 +269,7 @@ public final class Network {
    * its owner starts on it (answer 25).
    */
   public Optional<ChannelColor> firstFreeChannel() {
-    return channels.firstFreeAmong(nodes.values());
+    return channels.firstFreeAmong(nodes.all());
   }
 
   /**
@@ -269,7 +278,7 @@ public final class Network {
    * slot that is not an input is ignored. Tells whether the reading changed.
    */
   public boolean readInput(NodeId nodeId, int index, Signal signal) {
-    if (!isInput(nodeId, index)) {
+    if (!nodes.isInput(nodeId, index)) {
       return false;
     }
     if (!readings.record(new SlotRef(nodeId, index), signal)) {
@@ -298,12 +307,11 @@ public final class Network {
    * the network is offline. A slot that is not an output emits off.
    */
   public Signal output(NodeId nodeId, int index) {
-    Node node = nodes.get(nodeId);
-    if (node == null || !node.hasSlot(index) || !inRange(node)) {
+    Node node = nodes.at(nodeId);
+    if (node == null || !inRange(node)) {
       return Signal.OFF;
     }
-    return node.slots()
-        .get(index)
+    return node.slotAt(index)
         .filter(slot -> slot.direction() == Direction.OUTPUT)
         .map(slot -> channelValue(slot.channel()))
         .orElse(Signal.OFF);
@@ -314,11 +322,11 @@ public final class Network {
    * an output emits. A free slot shows 0.
    */
   public Signal slotSignal(NodeId nodeId, int index) {
-    Node node = nodes.get(nodeId);
+    Node node = nodes.at(nodeId);
     if (node == null || !node.hasSlot(index)) {
       return Signal.OFF;
     }
-    if (isInput(nodeId, index)) {
+    if (nodes.isInput(nodeId, index)) {
       return readings.of(new SlotRef(nodeId, index));
     }
     return output(nodeId, index);
@@ -329,7 +337,7 @@ public final class Network {
    * whatever the face of each slot (answer 71).
    */
   public Signal emission(NodeId nodeId) {
-    Node node = nodes.get(nodeId);
+    Node node = nodes.at(nodeId);
     if (node == null) {
       return Signal.OFF;
     }
@@ -345,7 +353,7 @@ public final class Network {
    * domain does not know the world. Out of range wins, because it is what stops the node counting.
    */
   public NodeState nodeState(NodeId nodeId, boolean loaded) {
-    Node node = nodes.get(nodeId);
+    Node node = nodes.at(nodeId);
     if (node == null || !isOnline()) {
       return NodeState.NO_NETWORK;
     }
@@ -353,13 +361,6 @@ public final class Network {
       return NodeState.OUT_OF_RANGE;
     }
     return loaded ? NodeState.ONLINE : NodeState.UNLOADED;
-  }
-
-  private boolean isInput(NodeId nodeId, int index) {
-    Node node = nodes.get(nodeId);
-    return node != null
-        && node.hasSlot(index)
-        && node.slots().get(index).filter(slot -> slot.direction() == Direction.INPUT).isPresent();
   }
 
   /** Whether a signal of the network changed since the last evaluation (answer 38). */
@@ -373,7 +374,7 @@ public final class Network {
     if (!isOnline()) {
       return values;
     }
-    for (Node node : nodes.values()) {
+    for (Node node : nodes.all()) {
       if (inRange(node)) {
         readings.addInputsOf(node, values);
       }
@@ -383,7 +384,7 @@ public final class Network {
 
   /** Whether a node counts: the network is online and the node is in range. */
   public boolean counts(NodeId nodeId) {
-    Node node = nodes.get(nodeId);
+    Node node = nodes.at(nodeId);
     return node != null && inRange(node);
   }
 

@@ -15,6 +15,6 @@ public enum Outcome {
   ALREADY_PLACED,
   /** The network is not in the world, as one asked for by an old packet (answer 41). */
   UNKNOWN_NETWORK,
-  /** The player has no current network, so a node they placed stays without one (25). */
-  NO_CURRENT_NETWORK
+  /** A node only joins a network that is online, with its controller in the world (157 and 172). */
+  NETWORK_NOT_ONLINE
 }

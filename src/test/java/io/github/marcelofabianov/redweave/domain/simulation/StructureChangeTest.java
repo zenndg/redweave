@@ -19,6 +19,7 @@ import io.github.marcelofabianov.redweave.domain.network.OutputFace;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /** A change to the structure can change a signal, so it makes the network wait (answer 38). */
@@ -38,10 +39,10 @@ class StructureChangeTest {
   /** Same scene as SimulatorTest, already evaluated once, so nothing waits. */
   private Network settledLeverAndLamp() {
     Network network = network();
-    network.attachNode(OWNER, NODE, NODE_POSITION);
+    network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.configureSlot(
         OWNER, NODE, SLOT, new ChannelSlot(Direction.INPUT, NODE_POSITION.face(), LAMP));
-    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION);
+    network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
     network.configureSlot(
         OWNER,
         OTHER_NODE,
@@ -101,6 +102,7 @@ class StructureChangeTest {
     network.rename(OWNER, NEW_NAME);
     network.recolor(OWNER, ChannelColor.LIME);
     network.renameChannel(OWNER, LAMP, NEW_NAME);
+    network.renameNode(OWNER, NODE, NEW_NAME);
 
     assertFalse(network.isPending());
   }
