@@ -17,13 +17,13 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 1 | Coloque um Network Controller | A frente voltada para você e o núcleo do topo aceso (`linked`) |
 | 2 | Clique no controlador com a mão vazia | A Tela do Controlador abre, com o nome `xxxxxxxx`, os 8 primeiros caracteres do ID, `Online · 0 nodes` e `No node in this network yet.` |
 | 3 | Ponha uma alavanca em cima de uma pedra e grude um Signal Node num lado da pedra | Uma placa fina de cobre, sem cor nos cantos, porque o nó nasce sem rede |
-| 4 | Clique no nó com o Configurator no modo `Open` e clique na rede da lista | A escolha de rede, fiel a `tela-do-no-escolha-de-rede.png`, com a rede e `0 nodes`; depois do clique, a configuração, com `● Online` em verde, a rede à direita do nome do nó e o slot 1 como `Input`, e o primeiro canto colorido |
+| 4 | Clique no nó com o Configurator no modo `Open` e clique na rede da lista | A escolha de rede, fiel a `tela-do-no-escolha-de-rede.png`, com a rede e `0 nodes`; depois do clique, a configuração, com `● Online` em verde, a rede à direita do nome do nó, a fileira dos 16 canais toda inativa e os cantos apagados. Ative o canal `01` em `Status`: ele vira `Enabled`, `Input`, e o primeiro canto fica branco |
 | 5 | Puxe a alavanca, com a tela aberta | O medidor sobe na hora até 15, e as barras brilham a partir de 12 |
-| 6 | Grude um segundo nó numa lâmpada de redstone, abra a tela dele e escolha a rede | A rede no topo da lista, em cobre, como a última usada, e depois o slot 1 em `Input`, num canal livre |
-| 7 | Troque o slot 1 para `Output` e escolha o mesmo canal do primeiro nó | O botão de cobre muda para `Output`, e a cor escolhida fica realçada |
+| 6 | Grude um segundo nó numa lâmpada de redstone, abra a tela dele e escolha a rede | A rede no topo da lista, em cobre, como a última usada, e depois os 16 canais inativos |
+| 7 | Abra o canal `01`, ative-o e troque para `Output` | O botão de cobre muda para `Output`, e a aba `01` ganha a barra verde |
 | 8 | Puxe a alavanca algumas vezes | A lâmpada acende e apaga junto, e a lente do nó acende |
 | 9 | No cubo da face, arraste o mouse e clique numa face | O bloco gira, a face sob o cursor fica em cobre, e o nome da face muda |
-| 10 | Clique em `Free slot` e depois em `Clear slot` duas vezes | O slot vira uma entrada no próximo canal livre; o primeiro clique em `Clear slot` pede confirmação, e o segundo libera |
+| 10 | Clique em `Status` para desativar o canal `01` e depois para ativá-lo | `Disabled` apaga a lâmpada e a barra verde; `Enabled` volta como estava, em `Output` |
 | 11 | Abra a tela com o segundo player | Tudo visível e ao vivo, mas os controles apagados e o cadeado com `Only the owner of ...` no rodapé |
 | 12 | Com o segundo player, tente quebrar o controlador e um nó no survival | Nenhum dos dois quebra, e nada racha |
 | 13 | Quebre o controlador com o dono, no survival | O item cai, a lâmpada apaga, e o nó, aberto com o Configurator, mostra `No network` em cinza |
@@ -116,12 +116,29 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 | 64 | Com 20 nós ou mais, role a lista com a roda do mouse | A lista rola, e nada passa da borda |
 | 65 | Troque o idioma para Português (Brasil) | Todos os textos da tela em português, sem nada passando da borda |
 
+## Fase 1: os 16 canais do Signal Node
+
+Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os saves anteriores aos 16 canais não são convertidos (pergunta 235).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 66 | Abra um nó com rede | A tela fiel a `tela-do-no.png`: a fileira dos 16 canais, de `01` a `16`, sem a lista de slots à esquerda e sem abas laterais |
+| 67 | Ative os canais `15`, `02` e `09`, nessa ordem | Cada um ganha a barra verde, o rodapé mostra `3 of 16 channels active`, e os cantos da placa mostram laranja, cinza-claro e vermelho, na ordem das cores |
+| 68 | Ative mais dois canais | Os cantos continuam com os 4 primeiros ativos, na ordem das cores |
+| 69 | No canal `15`, clique no nome, digite `Redstone from lever 1` e aperte Enter | O nome aparece no campo; vazio volta a `Click to name` |
+| 70 | Desative o canal `15` e ative de novo | A direção, a face e o nome voltam como estavam |
+| 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `15 Red · Input · Redstone from lever 1`; um nó sem canal ativo mostra `No active channel` |
+| 72 | Copie o nó com o Configurator e cole noutro | `Copied 5 slots` e `Pasted 5 slots`; o outro nó fica com os mesmos canais ativos, nomes e direções |
+| 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
+| 74 | Troque o idioma para Português (Brasil) | `Nome`, `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:45 | Ajusta os passos 4, 6, 7 e 10 e adiciona os passos 66 a 74, dos 16 canais do nó. |
 | Zennd | 2026-11-11 16:12 | Adiciona o passo 52a, do Configurator no controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:47 | Ajusta os passos 55, 58 e 62 ao duplo clique da pergunta 222. |
 | Zennd | 2026-11-11 15:40 | Ajusta o passo 2 e adiciona os passos 52 a 65, da #20. |

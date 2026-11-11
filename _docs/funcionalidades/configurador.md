@@ -28,16 +28,15 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Copiar
 
-A cópia leva cada slot em uso, com a posição, a direção, a face e o canal, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão (pergunta 105). Copiar um nó sem rede é recusado, porque ele não tem slots.
+A cópia leva os 16 slots, cada um com o canal, o status, a direção, a face e o nome, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão (perguntas 105 e 230). Copiar um nó sem rede é recusado, porque ele não tem slots.
 
 ### Colar
 
-Colar troca todos os slots do nó de destino: os da cópia são configurados, e os outros ficam livres (pergunta 106). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
+Colar substitui os 16 slots do nó de destino pelos da cópia, com o status e o nome (perguntas 106 e 230). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
 
 | Regra | Como é |
 |---|---|
 | Face grudada | Um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para ler o próprio bloco em qualquer orientação (pergunta 71). As outras faces ficam como estão |
-| Slots demais | Um slot cuja posição passa da quantidade de slots do nó de destino fica de fora, e a mensagem diz quantos |
 | Rede | O nó continua na rede dele. Os canais são os mesmos em toda rede, porque são as 16 cores |
 | Dono | Só o dono da rede do nó cola. Um nó sem rede recusa |
 | Cópia | Continua no item até o Shift + clique no ar, então cola em vários nós |
@@ -55,10 +54,9 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 
 | Ação | Resultado | Mensagem |
 |---|---|---|
-| Copiar | Copiou | `Copied <n> slots` |
+| Copiar | Copiou | `Copied <n> slots`, com os slots ativos |
 | Copiar | Nó sem rede | `No network` |
-| Colar | Colou | `Pasted <n> slots` |
-| Colar | Sobraram slots | `Pasted <n> slots, <m> left out` |
+| Colar | Colou | `Pasted <n> slots`, com os slots ativos |
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Nó sem rede | `No network` |
 | Limpar | Apagou | `Copy cleared` |
@@ -86,7 +84,7 @@ O item não guarda mais a rede: os componentes `redweave:network` e `redweave:ne
 
 ### Formato da cópia
 
-O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem estava grudado, e `slots`, com `index`, `direction`, `face` e `channel` de cada slot em uso. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
+O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction`, `face` e `name` (opcional) de cada slot já ativado alguma vez, como no save. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
 
 ## Fora desta funcionalidade
 
@@ -97,6 +95,7 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:40 | A cópia leva os 16 slots, com o status e o nome (perguntas 224 e 230). |
 | Zennd | 2026-11-11 16:12 | O modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 11:21 | Aplica as perguntas 188 a 195, da #86. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 173. |
