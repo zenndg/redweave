@@ -64,7 +64,7 @@ O merge é feito no GitHub, somente pelo desenvolvedor.
 ### 10. Encerramento
 
 1. Confira se a issue fechou e se o card andou no board.
-2. Atualize a `develop` local.
+2. Atualize a `develop` local e marque no [`ROADMAP.md`](../../ROADMAP.md) o que o PR entregou (pergunta 182).
 3. Peça autorização para apagar a branch da tarefa, local e remota.
 4. Apresente no que vai atuar em seguida e pergunte se o desenvolvedor quer algum ajuste no roteiro (regra 41).
 
@@ -101,5 +101,6 @@ Só para um problema no que já foi publicado: issue, `hotfix/{issue}-{slug}` a 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:40 | Marca o roadmap no encerramento de cada PR. |
 | Marcelo Fabiano | 2026-11-09 13:30 | Aponta os hooks no passo dos commits. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

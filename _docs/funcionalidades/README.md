@@ -4,7 +4,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Fase | Funcionalidades |
 |---|---|
-| 1 · Sem fio | Rede e canais, Signal Node, Network Controller, Configurador, Signal Remote, telas do nó e do controlador, Jade e The One Probe |
+| 1 · Sem fio | Rede e canais, Signal Node, Network Controller, Network Terminal, Configurador, Signal Remote, telas do nó e do controlador, Jade e The One Probe |
 | 2 · Lógica | Portas em placa, lógica por canal, temporizador e contador |
 | 3 · Chips | Circuitos, chips, Bancada de Circuitos, editor e livro guia |
 | 4 · Expansão | Fio físico, cabo agrupado, multipart, integrações e port para 26.x |
@@ -16,14 +16,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`telas.md`](telas.md) | 1 | Conceito das telas do nó e do controlador |
 | [`controlador-de-rede.md`](controlador-de-rede.md) | 1 | O Network Controller: colocar, clicar, quebrar e o item que guarda a rede |
 | [`no-de-sinal.md`](no-de-sinal.md) | 1 | O Signal Node: colocar, ler, emitir, clicar e quebrar |
-| [`configurador.md`](configurador.md) | 1 | O Configurator: guardar a rede, ligar nós, copiar e colar |
-| [`etiqueta.md`](etiqueta.md) | 1 | O Label: gravar, nomear, aplicar e copiar a configuração de um nó |
-
+| [`terminal-de-rede.md`](terminal-de-rede.md) | 1 | O Network Terminal: as redes do player, desligar, religar, limpar e apagar |
+| [`configurador.md`](configurador.md) | 1 | O Configurator: os modos de abrir, copiar e colar, e retirar nós |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, atualiza o Configurator e tira a página da etiqueta (perguntas 125 e 155). |
 | Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a página da etiqueta. |
 | Marcelo Fabiano | 2026-11-10 15:52 | Adiciona a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 09:47 | Adiciona a página do nó de sinal. |

@@ -6,8 +6,8 @@ Os mods que inspiram o Redweave e o que se aproveita de cada um. Código de mods
 |---|---|---|
 | [Logistics Network](https://www.curseforge.com/minecraft/mc-mods/logistics-network) | Nó grudado em qualquer bloco, invisível; 9 canais por nó; lado de entrada e saída por canal; upgrades; tags de blacklist para quem monta pack | All Rights Reserved: só UX |
 | [XNet](https://www.curseforge.com/minecraft/mc-mods/xnet) | Controlador central; redes enormes sem lag | MIT |
-| [Flux Networks](https://www.curseforge.com/minecraft/mc-mods/flux-networks) | Redes com nome e cor, permissões, gráficos, edição remota | All Rights Reserved: só UX |
-| [RFTools: Redstone Transmitter](https://ftb.fandom.com/wiki/Redstone_Transmitter_(RFTools)) | Canal atribuído sozinho, parear com um clique, limpar na grade de crafting | A conferir |
+| [Flux Networks](https://www.curseforge.com/minecraft/mc-mods/flux-networks) | Redes com nome e cor, permissões, edição remota, como no Network Terminal | All Rights Reserved: só UX |
+| [RFTools: Redstone Transmitter](https://ftb.fandom.com/wiki/Redstone_Transmitter_(RFTools)) | Canal atribuído sozinho | A conferir |
 | [More Red](https://www.curseforge.com/minecraft/mc-mods/more-red) | Portas em placa, prévia de colocação, fios em paredes e tetos | MIT |
 | [Project Red](https://github.com/MrTJP/ProjectRed) | Portas lógicas, circuito integrado como uma porta só, cabo agrupado | MIT |
 | [Cubit](https://github.com/marcelofabianov/cubit) | Processo, pilares, gates, GameTests e a linguagem visual das telas | Projeto do mesmo autor |
@@ -23,4 +23,5 @@ Os mods que inspiram o Redweave e o que se aproveita de cada um. Código de mods
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Tira o parear e a grade de crafting, que saíram com as perguntas 125 e 126, e liga a edição remota ao Network Terminal. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

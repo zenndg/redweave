@@ -4,7 +4,7 @@ O Network Controller (`redweave:network_controller`) é o bloco onde a rede nasc
 
 ## Em uma frase
 
-Colocar um controlador cria uma rede, ou traz de volta a rede que o item guarda. Quebrá-lo deixa a rede `Offline` e devolve o item com o ID dela.
+Cada controlador é uma rede (pergunta 129). Colocar um controlador cria uma rede, ou traz de volta a rede que o item guarda. Quebrá-lo deixa a rede `Unplaced` e devolve o item com o ID dela. As redes do player são administradas juntas no [Network Terminal](terminal-de-rede.md).
 
 ## Colocar
 
@@ -12,22 +12,25 @@ Só um player real coloca o controlador. Sem um player real, como pelo FakePlaye
 
 | O item guarda | O que acontece | Pergunta |
 |---|---|---|
-| Nada | Nasce uma rede nova, com o player como dono, o nome padrão e a primeira cor livre. Ela vira a rede atual do player | 25, 35 e 40 |
-| Uma rede do player, sem controlador colocado | A rede volta `Online`, igual ao que era, e o alcance passa a ser medido da nova posição | 24 |
+| Nada | Nasce uma rede nova, com o player como dono, o nome padrão, os 8 primeiros caracteres do ID, e a primeira cor livre | 40, 129 e 142 |
+| Nada, com o player no limite de redes | O bloco não é colocado, o item fica na mão, e a action bar avisa | 145 |
+| Uma rede do player, `Unplaced` | A rede volta igual ao que era, e o alcance passa a ser medido da nova posição. O estado em que ela volta depende da pergunta 178 | 24 e 135 |
 | Uma rede do player que já tem um controlador colocado | O bloco não é colocado, o item fica na mão, e a action bar mostra `This network already has a controller.` | 56 |
 | Uma rede de outro player | O bloco não é colocado, o item fica na mão, e a action bar mostra `Only the owner can place this network.` | 55 |
-| O ID de uma rede que não existe | Nasce uma rede nova, como com o item sem ID | 57 |
+| O ID de uma rede que não existe | Nasce uma rede nova, como com o item sem ID, com o mesmo limite de redes | 57 e 145 |
 
 O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves de NBT `network` e `owner`. O dono vai também ao cliente, para a quebra não aparecer a quem não é dono. As chaves são contrato de save e ficam fixadas na issue #26 (pergunta 67).
 
 ## Clicar
 
-Um clique com a mão vazia mostra uma mensagem na action bar, até a Tela do Controlador chegar com a issue #20 (pergunta 52).
+Um clique com a mão vazia abre a [Tela do Controlador](telas.md#tela-do-controlador), que chega com a issue #20. O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (perguntas 113 e 154). Numa rede `Offline`, nada abre, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (pergunta 160).
 
-| Quem clica | Mensagem | Efeito |
+Até a #20, o clique mostra uma mensagem na action bar (pergunta 52). A #14 entregou as mensagens abaixo. Com o fim da rede atual (pergunta 139), o clique do dono deixa de trocá-la, e o texto da mensagem dele é definido na #20.
+
+| Quem clica | Mensagem que a #14 entregou | Efeito depois da pergunta 139 |
 |---|---|---|
-| O dono | `Current network: <nome>` | A rede vira a rede atual do player (pergunta 25) |
-| Outro player | `<nome> · owner: <dono>` | Nenhum: só o dono troca a rede atual para ela |
+| O dono | `Current network: <nome>` | Nenhum |
+| Outro player | `<nome> · owner: <dono>` | Nenhum |
 | Qualquer um, num controlador sem rede | `No network` | Nenhum |
 
 Um controlador fica sem rede quando a rede dele não existe mais no save, como quando ela foi descartada por estar inválida (pergunta 92), ou num mundo criado antes da persistência da issue #16 (pergunta 53).
@@ -36,13 +39,13 @@ Um controlador fica sem rede quando a rede dele não existe mais no save, como q
 
 | Quem quebra | O que acontece | Pergunta |
 |---|---|---|
-| O dono, no survival | O bloco quebra e solta o item com o `NetworkId` num data component. A rede fica `Offline` | 24 e 30 |
+| O dono, no survival | O bloco quebra e solta o item com o `NetworkId` num data component. A rede fica `Unplaced`. Vale também com a rede `Offline` | 24, 30, 136 e 146 |
 | Outro player, no survival | O bloco não quebra | 30 |
 | Explosão | O bloco não é destruído | 30 |
-| Qualquer player, no criativo | O bloco quebra, sem soltar item, como no jogo puro. A rede fica `Offline` | 30 e 49 |
-| Comando ou outro mod | A rede fica `Offline` | 49 |
+| Qualquer player, no criativo | O bloco quebra, sem soltar item, como no jogo puro. A rede fica `Unplaced` | 30, 49 e 146 |
+| Comando ou outro mod | A rede fica `Unplaced` | 49 e 146 |
 
-Quando o controlador some sem o dono quebrá-lo, a rede fica `Offline` por uma operação do domínio sem quem pede, porque o bloco já não está no mundo. Sem o item, a rede continua salva `Offline`, como uma rede cujo item se perdeu (pergunta 49). A retirada pelo dono continua conferindo o dono.
+Quando o controlador some sem o dono quebrá-lo, a rede fica `Unplaced` por uma operação do domínio sem quem pede, porque o bloco já não está no mundo. Sem o item, a rede continua salva `Unplaced`, como uma rede cujo item se perdeu, e o dono a apaga pelo Network Terminal (perguntas 49 e 166). A retirada pelo dono continua conferindo o dono.
 
 ## Item
 
@@ -55,7 +58,7 @@ Quando o controlador some sem o dono quebrá-lo, a rede fica `Offline` por uma o
 
 ## Onde ficam as redes
 
-No save do mundo, num arquivo único para o servidor, com as redes e a rede atual de cada player, como descrito em [`rede-e-canais.md`](rede-e-canais.md#onde-a-rede-fica-salva) (issue #16, perguntas 88 a 93). O objeto por servidor da pergunta 63 continua sendo a raiz de composição, e só as redes em memória deram lugar ao save.
+No save do mundo, num arquivo único para o servidor, com as redes e a última rede usada por cada player (pergunta 157), como descrito em [`rede-e-canais.md`](rede-e-canais.md#onde-a-rede-fica-salva) (issue #16, perguntas 88 a 93). O objeto por servidor da pergunta 63 continua sendo a raiz de composição, e só as redes em memória deram lugar ao save.
 
 ## Config
 
@@ -91,12 +94,14 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 ## Fora desta funcionalidade
 
 - A Tela do Controlador (issue #20).
+- O Network Terminal, que administra as redes do player ([`terminal-de-rede.md`](terminal-de-rede.md)).
 - A textura final, os LEDs ao vivo e a receita (issue #24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Aplica o estado `Unplaced`, o limite de redes, o nome padrão e o fim da rede atual (perguntas 129 a 160). |
 | Marcelo Fabiano | 2026-11-10 13:10 | Aplica a persistência da #16. |
 | Marcelo Fabiano | 2026-11-10 09:31 | Aplica as perguntas 67 a 69. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Aplica as perguntas 64 a 66 e tira o tooltip, que não foi decidido. |

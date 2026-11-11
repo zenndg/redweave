@@ -5,17 +5,18 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Termo | Em inglês | O que é |
 |---|---|---|
 | Sinal | `Signal` | Um valor de 0 a 15, o mesmo intervalo da redstone do jogo |
-| Rede | `Network` | O agregado criado no Network Controller. Tem nome, cor e dono, e reúne os nós e os canais. Só o dono a altera (pergunta 22) |
+| Rede | `Network` | O agregado criado ao colocar um Network Controller: cada controlador é uma rede. Tem nome, cor e dono, e reúne os nós e os canais. Só o dono a altera (perguntas 22 e 129) |
 | Canal | `Channel` | Uma das 16 linhas de sinal de uma rede, cada uma com uma cor de lã e um nome, que o dono pode mudar. Com várias entradas, vale o sinal mais forte |
 | Cor do canal | `ChannelColor` | Uma das 16 cores de lã. Dá a cor dos canais e da rede |
-| Rede atual | — | A última rede que o player criou ou abriu como dono. Um nó recém-colocado entra nela (pergunta 25) |
+| Última rede usada | — | A última rede em que o player colocou um nó. Fica destacada na escolha de rede de um nó novo (pergunta 157). Substitui a rede atual, que acabou (pergunta 139) |
 | Alcance | — | O raio em blocos a partir do Network Controller, na mesma dimensão (pergunta 23) |
-| Online | `Online` | Rede com o controlador colocado, ou nó funcionando dentro do alcance |
-| Offline | `Offline` | Rede com o controlador quebrado: todos os canais valem 0 (pergunta 24) |
+| Online | `Online` | Rede com o controlador colocado e ligada, ou nó funcionando dentro do alcance |
+| Offline | `Offline` | Rede desligada pelo dono no Network Terminal: todos os canais valem 0, e só o Terminal age sobre ela (perguntas 132 e 135) |
+| Não colocada | `Unplaced` | Rede com o controlador fora do mundo, quebrado ou perdido: todos os canais valem 0 (perguntas 135 e 146) |
 | Descarregado | `Unloaded` | Nó num chunk descarregado: a entrada mantém o último valor (perguntas 13 e 29) |
 | Fora de alcance | `Out of range` | Nó fora do raio ou em outra dimensão: não conta e vale 0 (perguntas 23 e 29) |
-| Sem rede | `No network` | Nó sem rede, ou numa rede `Offline` |
-| Nó | `Node` | Peça grudada numa face de um bloco. Lê ou emite redstone ali, por slots de canal |
+| Sem rede | `No network` | Nó sem rede, ou numa rede `Unplaced`. Um nó novo nasce assim e não pode ser configurado até ter rede (pergunta 139) |
+| Nó | `Node` | Peça grudada numa face de um bloco. Lê ou emite redstone ali, por slots de canal. Tem um nome, que nasce com os 8 primeiros caracteres do ID (perguntas 142 e 144) |
 | Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: direção, face do bloco, canal da rede e lógica |
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
 | Lógica | `Logic` | Transformação de um slot de saída: inverter, só pulso, atraso, limiar |
@@ -23,9 +24,11 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Circuito | `Circuit` | Um grafo de portas, avaliado em ordem topológica |
 | Chip | `Chip` | Um circuito gravado num item, com nome e ícone, que roda como uma peça só |
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
-| Network Controller | `network_controller` | O bloco onde a rede é criada e gerenciada |
-| Configurador | `configurator` | Ferramenta para parear nós e copiar e colar configurações |
-| Etiqueta | `label` | Item que guarda a configuração de um nó para reutilizar |
+| Network Controller | `network_controller` | O bloco que é uma rede: colocá-lo cria a rede, e a tela dele a gerencia, com a lista de nós e o log |
+| Network Terminal | `network_terminal` | O bloco que administra todas as redes do dono: renomear, desligar, religar, limpar os nós e apagar as `Unplaced`. Não cria redes (perguntas 130 e 131) |
+| Configurador | `configurator` | Ferramenta com três modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, e `Wrench` retira o nó como item (perguntas 143 e 161) |
+| Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
+| Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
 | Signal Remote | `signal_remote` | Item de mão que age como alavanca ou botão num canal (pergunta 15). Na rede, é uma entrada sem posição (pergunta 27) |
 | Ponte | `Bridge` | Na Fase 5, o nó que liga canais a um broker MQTT |
 
@@ -33,6 +36,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, os estados `Offline` e `Unplaced`, o modo e o log; troca a rede atual pela última rede usada e tira a etiqueta (perguntas 125 a 157). |
 | Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a etiqueta. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Adiciona os termos da rede e dos canais e aplica as perguntas 22 a 29. |
 | Marcelo Fabiano | 2026-11-09 10:34 | Confirma o nome Signal Remote (pergunta 15). |

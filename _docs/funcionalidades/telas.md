@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Controller. Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Controller. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -9,18 +9,33 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 - **Nada passa da borda:** texto longo é cortado com reticências, e um tooltip mostra o texto inteiro.
 - **Sinal ao vivo:** valores e medidores atualizam com a tela aberta, pelo servidor (regra 16).
 - **Quem abre:** qualquer player. Só o dono da rede altera alguma coisa, validado no servidor (regra 17 e pergunta 22). Para os outros, a tela abre só para leitura.
+- **Rede `Offline`:** as telas da rede não abrem, nem para o dono, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` Só o Network Terminal age sobre ela (perguntas 132 e 160).
 - **Escala:** as imagens mostram as telas em 2×. Os tamanhos finais em pixels da interface do jogo são definidos na implementação.
 
 ## Tela do Nó
 
 ![Tela do Nó](../imagens/telas/tela-do-no.png)
 
-**Abre** com um clique no Signal Node com a mão vazia.
+**Abre** com um clique no Signal Node com o [Configurator](configurador.md) no modo `Open` (pergunta 140). A mão vazia só mostra a dica `Use a Configurator to open this node.` (pergunta 154).
+
+### Escolha de rede
+
+Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 139).
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Quem escolhe | Só quem colocou o nó. Para os outros, a tela abre só para leitura, com `No network` | 172 |
+| Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
+| Escolher | Um clique numa rede liga o nó a ela, com 1 slot `Input` no primeiro canal livre, e a tela segue para a configuração | 171 |
+| Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
+
+### Configuração
 
 | Parte | O que mostra |
 |---|---|
 | Título | `Signal Node` |
-| Estado | No canto superior direito: `Online · <rede>`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)) |
+| Nome do nó | O nome, que nasce com os 8 primeiros caracteres do ID e que o dono renomeia com um clique, com o limite de `node.name_length` (perguntas 142 e 144) |
+| Estado | No canto superior direito: `Online · <rede>`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)). O clique no nome da rede abre a escolha de rede (pergunta 141) |
 | Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Slot livre aparece tracejado, com `Free slot` e `Click to use` |
 | Slot escolhido | À direita, a configuração do slot selecionado |
 | Direção | Seletor `Input` e `Output` |
@@ -56,18 +71,18 @@ O que a tela faz, decidido na issue #19.
 
 ![Tela do Controlador](../imagens/telas/tela-do-controlador.png)
 
-**Abre** com um clique no Network Controller.
+**Abre** com um clique no Network Controller com a mão vazia, ou pela lista do [Network Terminal](terminal-de-rede.md) (perguntas 113 e 131). A imagem é anterior às perguntas 144 a 150 e ainda mostra o gráfico dos últimos 30 segundos, que saiu.
 
 | Parte | O que mostra |
 |---|---|
-| Cabeçalho | A cor e o nome da rede, com o botão `Rename` |
+| Cabeçalho | A cor e o nome da rede, com o botão `Rename` para o dono (pergunta 156) |
 | Estado | `Online · <n> nodes` |
-| Abas | `Nodes`, `Signals` e `Access` |
-| Nodes | Uma linha por nó: canal, bloco onde está, direção (`In` ou `Out`), posição e sinal. Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
-| Últimos 30 segundos | À direita, um gráfico em degraus por canal em uso, na cor do canal |
+| Abas | `Nodes`, `Signals`, `Access` e `Log` |
+| Nodes | Uma linha por nó, com o nome, o sinal de 0 a 15 e a posição x, y e z; as outras colunas e qual sinal a linha mostra dependem da pergunta 179. A posição só aparece para o dono (pergunta 149). O dono renomeia o nó na linha (pergunta 144). Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
+| Log | Uma linha por mudança de valor de uma entrada ou de uma saída: a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
 | Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho |
 
-O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
+O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
 
 ## Pendências
 
@@ -79,6 +94,7 @@ O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-c
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Aplica a abertura pelo Configurator, a escolha de rede, o nome do nó, a lista de nós e o log no lugar do gráfico (perguntas 139 a 160). |
 | Marcelo Fabiano | 2026-11-10 11:26 | Descreve o comportamento da Tela do Nó com as perguntas 78 a 85. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Aplica as perguntas 22 e 29 e aponta as abas `Signals` e `Access` para a página da rede. |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |

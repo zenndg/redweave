@@ -101,7 +101,7 @@ O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 b
 
 ## Blocos e itens da Fase 1
 
-Os quatro elementos da primeira interação. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
+Os quatro elementos da primeira interação. O Network Terminal, que entrou depois (pergunta 130), ganha a prancha na issue dele. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
 
 ### Network Controller
 
@@ -144,22 +144,24 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 
 ![Configurator](../imagens/conceito/configurator.png)
 
-Ferramenta, `redweave:configurator`. Pareia nós e copia e cola configurações.
+Ferramenta, `redweave:configurator`. Abre, copia, cola e retira Signal Nodes, com três modos ([`configurador.md`](../funcionalidades/configurador.md)). A prancha é anterior às perguntas 126 a 169 e mostra o visor do canal guardado, que deu lugar ao visor do modo.
 
 | Parte | Como é |
 |---|---|
 | Cabo | Cobre, com sulcos de pegada |
-| Visor | A cor e o número do canal guardado e um medidor de 15 barras |
+| Visor | Uma faixa com a cor e o nome do modo atual e a marca de que há cópia (issue #80, pergunta 159) |
 | Ponta | Ponta de prova com redstone na extremidade |
 | Na mão | Um rótulo flutuante sobre cada nó, com canal, direção e sinal, e a linha da rede e dos slots em uso |
 
-| Ação | Resultado |
-|---|---|
-| Clique no Network Controller | Guarda a rede no visor |
-| Clique num nó | Liga o nó à rede guardada, num canal livre |
-| Shift + clique num nó | Copia a configuração; o próximo clique cola |
+| Modo | Em português | Cor | Tom | Uso |
+|---|---|---|---|---|
+| `Open` | `Abrir` | Azul | `#5B9BF0` | Clique num nó abre a Tela do Nó |
+| `Copy` | `Copiar` | Verde | `#3FAE5A` | Clique num nó copia; Shift + clique cola |
+| `Wrench` | `Chave` | Vermelho | `#D94A64` | Clique num nó o retira como item |
 
-A rede guardada e a configuração copiada ficam em data components do item (regra 7 do `AGENTS.md`).
+A cor do modo aparece sempre com o nome escrito, na action bar, no tooltip e no visor, para não ser confundida com as cores dos canais, com o `Online` (`#6BD48F`) ou com o vermelho de redstone (`#E2392F`), nem depender só da cor para quem tem daltonismo. O rótulo flutuante sobre os nós não usa a cor do modo (perguntas 167 a 169).
+
+O modo e a configuração copiada ficam em data components do item (regra 7 do `AGENTS.md`).
 
 ### Signal Remote
 
@@ -182,6 +184,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Troca as ações do Configurator pelos modos, com as cores e os tons (perguntas 143 e 159 a 169). |
 | Marcelo Fabiano | 2026-11-10 09:05 | Corrige o estado Sem rede do Network Controller. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Separa os estados `Unloaded` e `Out of range` (pergunta 29). |
 | Marcelo Fabiano | 2026-11-09 11:03 | Aplica as respostas das perguntas 13 e 15. |

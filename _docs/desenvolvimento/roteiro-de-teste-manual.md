@@ -1,6 +1,6 @@
 # Roteiro de teste manual
 
-O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
+O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. As perguntas 125 a 172 mudam os passos 2, 4, 19 e 24 a 42, que são reescritos junto com as issues que as implementam. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
 
 ## Como preparar
 
@@ -84,6 +84,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Avisa quais passos mudam com as perguntas 125 a 172. |
 | Marcelo Fabiano | 2026-11-10 16:38 | Adiciona os passos do Label, da #81. |
 | Marcelo Fabiano | 2026-11-10 16:08 | Adiciona o passo do clique com item, da pergunta 113. |
 | Marcelo Fabiano | 2026-11-10 15:58 | Adiciona os passos do Configurator, da #17. |
