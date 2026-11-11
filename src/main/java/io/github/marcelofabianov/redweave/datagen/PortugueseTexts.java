@@ -30,7 +30,6 @@ final class PortugueseTexts {
     add.accept(RedweaveCreativeTabs.TITLE, TAB);
     NodeScreenPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
-    LabelPortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.CURRENT, CURRENT);
     add.accept(ControllerMessages.FOREIGN, FOREIGN);

@@ -3,7 +3,6 @@
   "block.redweave.signal_node": "Nó de Sinal",
   "fml.menu.mods.info.description.redweave": "Teça a sua redstone. Redes de sinal sem fio, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar.",
   "item.redweave.configurator": "Configurador",
-  "item.redweave.label": "Etiqueta",
   "itemGroup.redweave": "Redweave",
   "message.redweave.configurator.already_in": "Este nó já está em %s.",
   "message.redweave.configurator.cleared": "Cópia apagada",
@@ -16,7 +15,6 @@
   "message.redweave.configurator.pasted": "%s slots colados",
   "message.redweave.configurator.pasted_left_out": "%s slots colados, %s de fora",
   "message.redweave.configurator.stored": "Configurador: %s",
-  "message.redweave.label.written": "%s slots copiados para uma etiqueta",
   "message.redweave.network_controller.already_placed": "Esta rede já tem um controlador.",
   "message.redweave.network_controller.current": "Rede atual: %s",
   "message.redweave.network_controller.foreign": "%s · dono: %s",
@@ -62,9 +60,5 @@
   "tooltip.redweave.configurator.hint_copy": "Shift + clique num nó para copiá-lo.",
   "tooltip.redweave.configurator.hint_store": "Clique num controlador para guardar a rede.",
   "tooltip.redweave.configurator.network": "Rede: %s",
-  "tooltip.redweave.configurator.no_network": "Nenhuma rede guardada",
-  "tooltip.redweave.label.empty": "Vazia",
-  "tooltip.redweave.label.hint_apply": "Clique num nó para aplicar.",
-  "tooltip.redweave.label.hint_write": "Shift + clique num nó com um Configurador para gravar.",
-  "tooltip.redweave.label.slot": "%s · %s · %s"
+  "tooltip.redweave.configurator.no_network": "Nenhuma rede guardada"
 }

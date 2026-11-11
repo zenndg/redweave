@@ -3,7 +3,6 @@
   "block.redweave.signal_node": "Signal Node",
   "fml.menu.mods.info.description.redweave": "Weave your redstone. Wireless signal networks, programmable channels and logic chips, with screens that are easy to learn and beautiful to use.",
   "item.redweave.configurator": "Configurator",
-  "item.redweave.label": "Label",
   "itemGroup.redweave": "Redweave",
   "message.redweave.configurator.already_in": "This node is already in %s.",
   "message.redweave.configurator.cleared": "Copy cleared",
@@ -16,7 +15,6 @@
   "message.redweave.configurator.pasted": "Pasted %s slots",
   "message.redweave.configurator.pasted_left_out": "Pasted %s slots, %s left out",
   "message.redweave.configurator.stored": "Configurator: %s",
-  "message.redweave.label.written": "Copied %s slots to a Label",
   "message.redweave.network_controller.already_placed": "This network already has a controller.",
   "message.redweave.network_controller.current": "Current network: %s",
   "message.redweave.network_controller.foreign": "%s · owner: %s",
@@ -62,9 +60,5 @@
   "tooltip.redweave.configurator.hint_copy": "Shift + click a node to copy it.",
   "tooltip.redweave.configurator.hint_store": "Click a controller to store its network.",
   "tooltip.redweave.configurator.network": "Network: %s",
-  "tooltip.redweave.configurator.no_network": "No network stored",
-  "tooltip.redweave.label.empty": "Empty",
-  "tooltip.redweave.label.hint_apply": "Click a node to apply.",
-  "tooltip.redweave.label.hint_write": "Shift + click a node with a Configurator to write it.",
-  "tooltip.redweave.label.slot": "%s · %s · %s"
+  "tooltip.redweave.configurator.no_network": "No network stored"
 }
