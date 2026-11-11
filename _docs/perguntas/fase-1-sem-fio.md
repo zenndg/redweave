@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 205 | Na troca de rede pela Tela do Nó, como o player volta mantendo a rede atual? | Por um botão `Back` no rodapé da lista, que volta à configuração sem mudar nada. Só aparece na troca, não na primeira escolha. Entra na prancha da pergunta 198. Completa a pergunta 141 |
+| 204 | Como o dono renomeia o Signal Node na Tela do Nó? | Com um clique no nome, que vira um campo de texto: Enter salva, Esc cancela. O texto vai num pacote próprio, e o servidor confere o dono e o limite de `node.name_length` (regra 17); vazio volta ao nome padrão (pergunta 144). Entra na prancha da pergunta 198 |
+| 203 | Em que ordem a escolha de rede lista as redes `Online` do player? | A última usada no topo, realçada, para o caso comum ser um clique (pilar 2 de `ux.md`), e as outras em ordem alfabética |
+| 202 | O que cada linha da lista de escolha de rede mostra? | O quadrado na cor da rede, o nome e a quantidade de nós, como a lista do Network Terminal (pergunta 131). A última usada fica realçada em cobre |
+| 201 | Sem rede atual, o que o clique com a mão vazia no Network Controller mostra para o dono, até a Tela do Controlador da #20? | O mesmo que para os outros players: `<nome> · owner: <dono>`. Sai o `Current network: <nome>`. Muda a pergunta 52 |
+| 200 | Quando o dono troca um Signal Node de rede pela Tela do Nó, o nome do nó continua? | Sim: o nome é do nó, não da rede. Os slots seguem a pergunta 171, com 1 entrada no primeiro canal livre |
+| 199 | O que a escolha de rede mostra quando quem colocou o nó não tem nenhuma rede `Online`? | A lista vazia com `No network online. Place a Network Controller to create one.` e `Nenhuma rede ligada. Coloque um Controlador de Rede para criar uma.` (pilar 5 de `ux.md`) |
+| 198 | Como é desenhada a escolha de rede na Tela do Nó? | Com uma prancha nova de arte: o agente escreve o prompt em `tmp/arte/node_screen_network_choice/`, e o desenvolvedor gera a imagem antes da tela ser implementada (perguntas 185 e 186) |
 | 197 | O mínimo de cobertura sobe acima de 85%? | Não: o gate reprova abaixo de 85%, e 95% fica como meta. Todo PR informa a cobertura de `domain/` e de `application/`, em instruções e ramos, para uma queda aparecer na revisão |
 | 196 | Qual código a regra dos 85% de cobertura cobre, garantida no `pre-push`? | `domain/` e `application/`, em instruções e ramos, medidos com JaCoCo pelo `make check`, que o `pre-push` roda. Em 2026-11-11 estavam em 99,6% e 97,6% (`domain/`) e 99,5% e 96,2% (`application/`). O resto do código se cobre com GameTests e o roteiro manual, que o JaCoCo não mede (regras 29 e 30). Muda a regra 30 |
 | 195 | No modo `Copy`, o que acontece no Shift + clique num nó quando o Configurator ainda não tem cópia? | Nada, e sem mensagem |
@@ -157,7 +165,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 55 | O que acontece quando um player coloca um controlador cujo item guarda a rede de outro player? | O bloco não é colocado, o item fica na mão, e a action bar mostra `Only the owner can place this network.` Detalha a pergunta 30 |
 | 54 | Como se chama a página da funcionalidade do Network Controller? | `controlador-de-rede.md`, em português, como pede a regra 21. O texto usa o nome do bloco, Network Controller |
 | 53 | Até a persistência da #16, onde ficam as redes no servidor? | Num objeto por servidor, criado ao abrir o mundo e descartado ao fechar, com as redes e a rede atual de cada player. A #16 o troca pelo `SavedData`. Até lá, um controlador que sobra no mundo depois de reiniciar fica sem rede e mostra `No network` no clique. Detalha a pergunta 48 |
-| 52 | O que o player vê ao clicar no Network Controller com a mão vazia, antes da tela da #20? | Uma mensagem traduzida na action bar. Para o dono, a rede passa a ser a atual, e a mensagem mostra o nome dela, como `Current network: Network 3f2a`. Para os outros, a mensagem mostra o nome da rede e o dono, sem trocar a rede atual. A Tela do Controlador substitui a mensagem **Mudada pela pergunta 139:** a rede atual acaba, então o clique do dono não a troca mais. |
+| 52 | O que o player vê ao clicar no Network Controller com a mão vazia, antes da tela da #20? | Uma mensagem traduzida na action bar. Para o dono, a rede passa a ser a atual, e a mensagem mostra o nome dela, como `Current network: Network 3f2a`. Para os outros, a mensagem mostra o nome da rede e o dono, sem trocar a rede atual. A Tela do Controlador substitui a mensagem **Mudada pela pergunta 139:** a rede atual acaba, então o clique do dono não a troca mais. **Mudada também pela pergunta 201.** |
 | 50 | Quais chaves de config entram com o Network Controller? | As quatro que o `NetworkLimits` lê, no config do servidor (`redweave-server.toml`), que vale por mundo e é enviado aos clientes: `network.range` (128), `network.name_length` (32), `channel.name_length` (16) e `node.slots` (4). Os 9 slots com upgrade entram com o upgrade. Detalha a regra 3 |
 | 49 | O que acontece com a rede quando o Network Controller some do mundo sem o dono quebrá-lo, como no criativo, por comando ou por outro mod? | O domínio ganha uma operação sem quem pede, para o controlador que sumiu: a rede fica `Offline`. Sem item, ela continua salva `Offline`, como uma rede cujo item se perdeu. A retirada pelo dono continua conferindo o dono. Detalha as perguntas 24 e 30 **Mudada pelas perguntas 135 e 146:** a rede fica `Unplaced`. |
 | 48 | Em que ordem seguem as issues da Fase 1, para chegar ao primeiro teste manual? | Antecipando a #18 e a #19: #14 Network Controller, #15 Signal Node, #18 nó num canal livre e #19 Tela do Nó, e então o primeiro teste manual de alavanca, rede e lâmpada. Depois, #16 persistência, #17 Configurador e o restante. Até a #16, a rede some ao reiniciar o servidor |
@@ -197,6 +205,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:52 | Responde as perguntas 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Responde as perguntas 196 e 197. |
 | Zennd | 2026-11-11 11:06 | Responde a pergunta 195. |
 | Zennd | 2026-11-11 11:04 | Responde a pergunta 194. |
