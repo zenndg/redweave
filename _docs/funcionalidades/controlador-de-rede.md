@@ -13,8 +13,8 @@ Só um player real coloca o controlador. Sem um player real, como pelo FakePlaye
 | O item guarda | O que acontece | Pergunta |
 |---|---|---|
 | Nada | Nasce uma rede nova, com o player como dono, o nome padrão, os 8 primeiros caracteres do ID, e a primeira cor livre | 40, 129 e 142 |
-| Nada, com o player no limite de redes | O bloco não é colocado, o item fica na mão, e a action bar avisa | 145 |
-| Uma rede do player, `Unplaced` | A rede volta igual ao que era, e o alcance passa a ser medido da nova posição. Volta no estado que tinha: `Online`, ou `Offline` se o dono a tinha desligado | 24, 135 e 178 |
+| Nada, com o player no limite de redes | O bloco não é colocado, o item fica na mão, e a action bar mostra `You have reached the limit of <n> networks. Delete an unplaced one at a Network Terminal.` | 145 e 211 |
+| Uma rede do player, `Unplaced` | A rede volta igual ao que era, e o alcance passa a ser medido da nova posição. Volta no estado que tinha: `Online`, ou `Offline` se o dono a tinha desligado, com o núcleo apagado | 24, 135, 177 e 178 |
 | Uma rede do player que já tem um controlador colocado | O bloco não é colocado, o item fica na mão, e a action bar mostra `This network already has a controller.` | 56 |
 | Uma rede de outro player | O bloco não é colocado, o item fica na mão, e a action bar mostra `Only the owner can place this network.` | 55 |
 | O ID de uma rede que não existe | Nasce uma rede nova, como com o item sem ID, com o mesmo limite de redes | 57 e 145 |
@@ -100,6 +100,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:09 | Registra o aviso do limite de redes e o núcleo apagado da rede `Offline`, da #88. |
 | Zennd | 2026-11-11 13:46 | Aplica a pergunta 201, da #87: o clique mostra a mesma mensagem para todos. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 178. |
 | Zennd | 2026-11-11 09:51 | Aplica o estado `Unplaced`, o limite de redes, o nome padrão e o fim da rede atual (perguntas 129 a 160). |
