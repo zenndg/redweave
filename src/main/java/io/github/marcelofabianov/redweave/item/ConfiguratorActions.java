@@ -1,6 +1,5 @@
 package io.github.marcelofabianov.redweave.item;
 
-import io.github.marcelofabianov.redweave.application.PasteResult;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
@@ -72,35 +71,26 @@ final class ConfiguratorActions {
     if (!player.isSecondaryUseActive()) {
       return Optional.of(copy(server, stack, node.get()));
     }
-    NodeCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
+    ConfiguratorCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
     if (copy == null) {
       return Optional.empty();
     }
-    Component message = paste(server, player, node.get(), copy);
+    Component message =
+        ConfiguratorPaste.paste(server, player, context.getLevel(), context.getClickedPos(), copy);
     refresh(server, context.getLevel(), context.getClickedPos());
     return Optional.of(message);
   }
 
   private static Component copy(RedweaveServer server, ItemStack stack, NodeId node) {
     Optional<NodeCopy> copy = server.copyNode().copy(node);
-    if (copy.isEmpty()) {
+    Optional<Network> network = server.networkOfNode(node);
+    if (copy.isEmpty() || network.isEmpty()) {
       return Component.translatable(ControllerMessages.NO_NETWORK);
     }
-    stack.set(RedweaveDataComponents.NODE_SLOTS.get(), copy.get());
+    stack.set(
+        RedweaveDataComponents.NODE_SLOTS.get(),
+        new ConfiguratorCopy(network.get().id(), copy.get()));
     return Component.translatable(ConfiguratorMessages.COPIED, copy.get().enabled());
-  }
-
-  private static Component paste(RedweaveServer server, Player player, NodeId node, NodeCopy copy) {
-    PasteResult result = server.pasteNode().paste(playerOf(player), node, copy);
-    return switch (result.outcome()) {
-      case ACCEPTED -> pasted(result);
-      case NOT_OWNER -> notOwner(server, node);
-      default -> Component.translatable(ControllerMessages.NO_NETWORK);
-    };
-  }
-
-  private static Component pasted(PasteResult result) {
-    return Component.translatable(ConfiguratorMessages.PASTED, result.pasted());
   }
 
   /**

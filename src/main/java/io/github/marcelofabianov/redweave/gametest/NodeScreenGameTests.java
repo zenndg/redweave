@@ -65,6 +65,7 @@ public final class NodeScreenGameTests {
           ChannelColor.ORANGE,
           DISABLED_CHANNEL);
   private static final String NOT_ENABLED = "Enable should give an input on the face of the node";
+  private static final String CHANGED_ENABLED = "An enabled slot should be locked";
   private static final String NOT_CHANGED = "The owner should change the slot";
   private static final String NOT_DISABLED = "Disable should turn the slot off";
   private static final String NOT_KEPT_DISABLED = "A disabled slot should keep direction and face";
@@ -80,19 +81,22 @@ public final class NodeScreenGameTests {
 
   private NodeScreenGameTests() {}
 
-  /** Enabling a slot never enabled gives an input on the face the node sticks to (226). */
+  /** A slot is set up while disabled; enabled, it is locked (answer 237). */
   @GameTest(template = EMPTY)
-  public static void theOwnerEnablesChangesAndDisablesASlot(GameTestHelper helper) {
+  public static void theOwnerSetsUpADisabledSlotAndEnablesIt(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NodeId node = nodeOf(helper, owner);
     NodeMenu menu = menuOf(helper, owner.getUUID(), OWNER_NAME);
     ChannelSlot input = new ChannelSlot(Direction.INPUT, Face.UP, SECOND_CHANNEL);
     ChannelSlot output = new ChannelSlot(Direction.OUTPUT, Face.EAST, SECOND_CHANNEL);
 
-    click(menu, helper, owner.getUUID(), NodeAction.enable(SECOND_SLOT));
-    helper.assertTrue(slot(node, SECOND_SLOT).equals(Optional.of(input)), NOT_ENABLED);
     click(menu, helper, owner.getUUID(), NodeAction.configure(SECOND_SLOT, output));
-    helper.assertTrue(slot(node, SECOND_SLOT).equals(Optional.of(output)), NOT_CHANGED);
+    helper.assertTrue(
+        slot(node, SECOND_SLOT).equals(Optional.of(output.enabled(false))), NOT_CHANGED);
+    click(menu, helper, owner.getUUID(), NodeAction.enable(SECOND_SLOT));
+    helper.assertTrue(slot(node, SECOND_SLOT).equals(Optional.of(output)), NOT_ENABLED);
+    click(menu, helper, owner.getUUID(), NodeAction.configure(SECOND_SLOT, input));
+    helper.assertTrue(slot(node, SECOND_SLOT).equals(Optional.of(output)), CHANGED_ENABLED);
     click(menu, helper, owner.getUUID(), NodeAction.disable(SECOND_SLOT));
     helper.assertFalse(slot(node, SECOND_SLOT).orElseThrow().active(), NOT_DISABLED);
     helper.succeed();
@@ -105,8 +109,8 @@ public final class NodeScreenGameTests {
     NodeId node = nodeOf(helper, owner);
     NodeMenu menu = menuOf(helper, owner.getUUID(), OWNER_NAME);
     ChannelSlot output = new ChannelSlot(Direction.OUTPUT, Face.EAST, SECOND_CHANNEL);
-    click(menu, helper, owner.getUUID(), NodeAction.enable(SECOND_SLOT));
     click(menu, helper, owner.getUUID(), NodeAction.configure(SECOND_SLOT, output));
+    click(menu, helper, owner.getUUID(), NodeAction.enable(SECOND_SLOT));
 
     click(menu, helper, owner.getUUID(), NodeAction.disable(SECOND_SLOT));
     helper.assertTrue(

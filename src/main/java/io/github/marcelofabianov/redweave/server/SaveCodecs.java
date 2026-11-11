@@ -40,7 +40,8 @@ public final class SaveCodecs {
   static final Codec<Signal> SIGNAL =
       Codec.intRange(Signal.OFF.strength(), Signal.MAX.strength())
           .xmap(Signal::new, Signal::strength);
-  static final Codec<NetworkId> NETWORK_ID = UUIDUtil.CODEC.xmap(NetworkId::new, NetworkId::value);
+  public static final Codec<NetworkId> NETWORK_ID =
+      UUIDUtil.CODEC.xmap(NetworkId::new, NetworkId::value);
   static final Codec<NodeId> NODE_ID = UUIDUtil.CODEC.xmap(NodeId::new, NodeId::value);
   static final Codec<PlayerId> PLAYER_ID = UUIDUtil.CODEC.xmap(PlayerId::new, PlayerId::value);
 

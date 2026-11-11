@@ -16,6 +16,9 @@ final class ConfiguratorPortugueseTexts {
   private static final String PASTED = "%s slots colados";
   private static final String CLEARED = "Cópia apagada";
   private static final String PICKED_UP = "Nó retirado";
+  private static final String WHO_PLACED = "Só quem colocou este nó";
+  private static final String MAY_PASTE = " pode colar uma rede nele.";
+  private static final String PASTE_NOT_PLACER = WHO_PLACED + MAY_PASTE;
   private static final String NOT_PLACER = "Só quem colocou este nó pode retirá-lo.";
   private static final String USE_TO_OPEN = "Use um Configurador para abrir este nó.";
   private static final String COPY = "Cópia: %s slots";
@@ -37,6 +40,7 @@ final class ConfiguratorPortugueseTexts {
     add.accept(ConfiguratorMessages.CLEARED, CLEARED);
     add.accept(ConfiguratorMessages.PICKED_UP, PICKED_UP);
     add.accept(ConfiguratorMessages.NOT_PLACER, NOT_PLACER);
+    add.accept(ConfiguratorMessages.PASTE_NOT_PLACER, PASTE_NOT_PLACER);
     add.accept(ConfiguratorMessages.USE_TO_OPEN, USE_TO_OPEN);
     add.accept(ConfiguratorMessages.COPY, COPY);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.OPEN), HINT_OPEN);

@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.gametest;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -10,6 +11,7 @@ import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -50,6 +52,8 @@ public final class ConfiguratorGameTests {
   private static final String NOT_REPLACED = "The paste should replace every slot of the target";
   private static final String PASTED = "Another player should not paste";
   private static final String NOT_CLEARED = "Shift + click in the air should clear the copy";
+  private static final String NOT_JOINED = "A paste on a node with no network should join it";
+  private static final String JOINED = "Only who placed the node should paste a network on it";
   private static final String REACTED = "The controller should not take the Configurator";
 
   private ConfiguratorGameTests() {}
@@ -177,6 +181,47 @@ public final class ConfiguratorGameTests {
   }
 
   /** A node with an input on the face it sticks to and an output on another face. */
+  /**
+   * A paste on a node with no network joins it to the network of the copy and applies the slots,
+   * for whoever placed it, owner of that network (answer 238).
+   */
+  @GameTest(template = EMPTY)
+  public static void aPasteOnANodeWithNoNetworkJoinsTheNetworkOfTheCopy(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeId source = configuredSource(helper, owner);
+    NodeId target = NodeScene.placeLooseNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.COPY);
+
+    NodeScene.click(helper, owner, SOURCE_NODE);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+
+    helper.assertTrue(NodeScene.networkOf(target).id().equals(network), NOT_JOINED);
+    helper.assertTrue(
+        NodeScene.slotsOf(target)
+            .get(SECOND_SLOT)
+            .equals(NodeScene.slotsOf(source).get(SECOND_SLOT)),
+        NOT_JOINED);
+    helper.succeed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void onlyWhoPlacedTheNodePastesANetworkOnIt(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    configuredSource(helper, owner);
+    Player placer = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeId target = NodeScene.placeLooseNode(helper, placer, TARGET_STONE, Direction.NORTH);
+    holdConfigurator(owner, ConfiguratorMode.COPY);
+
+    NodeScene.click(helper, owner, SOURCE_NODE);
+    NodeScene.shiftClick(helper, owner, TARGET_NODE);
+
+    helper.assertTrue(
+        RedweaveServer.running().orElseThrow().networkOfNode(target).isEmpty(), JOINED);
+    helper.succeed();
+  }
+
   private static NodeId configuredSource(GameTestHelper helper, Player owner) {
     NodeId node = NodeScene.placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
     NodeScene.enableSlot(owner, node, FIRST_SLOT);

@@ -15,6 +15,7 @@ public final class ConfiguratorMessages {
   public static final String CLEARED = PREFIX + "cleared";
   public static final String PICKED_UP = PREFIX + "picked_up";
   public static final String NOT_PLACER = PREFIX + "not_placer";
+  public static final String PASTE_NOT_PLACER = PREFIX + "paste_not_placer";
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String COPY = TOOLTIP + "copy";
   public static final String HINT_SCROLL = TOOLTIP + "hint_scroll";

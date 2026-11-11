@@ -19,8 +19,8 @@ final class NodeScreenPanel {
   private static final int SQUARE = 7;
   private static final int SQUARE_Y = 7;
   private static final int TITLE_X = 18;
-  private static final int FACE_NAME_X = 96;
-  private static final int FACE_NAME_Y = 87;
+  private static final int FACE_NAME_X = 90;
+  private static final int FACE_NAME_Y = 84;
   private static final int HINT_BOTTOM = 13;
   private static final int MESSAGE_Y = 24;
   private static final int SIDE_PADDING = 16;
@@ -65,7 +65,7 @@ final class NodeScreenPanel {
   private static void drawFace(GuiGraphics graphics, Font font, Box panel, ChannelSlot slot) {
     Component face = Component.translatable(NodeScreenTexts.face(slot.face()));
     int color = slot.active() ? ScreenColors.TEXT : ScreenColors.DIM;
-    int faceY = panel.y() + FACE_NAME_Y - LABEL_OFFSET;
+    int faceY = panel.y() + FACE_NAME_Y;
     graphics.drawString(font, face, panel.x() + FACE_NAME_X, faceY, color, false);
   }
 
@@ -91,8 +91,8 @@ final class NodeScreenPanel {
 
   /** The block face explains itself on hover, and the logic hint shows what comes next. */
   static Optional<Component> tooltipAt(NodeView view, Box panel, int index) {
-    if (SlotEditor.isEnabled(view.menu().slot(index))
-        && SlotEditor.cubeBox(panel).contains(view.mouseX(), view.mouseY())) {
+    boolean settable = view.editable() && !SlotEditor.isEnabled(view.menu().slot(index));
+    if (settable && SlotEditor.cubeBox(panel).contains(view.mouseX(), view.mouseY())) {
       return Optional.of(Component.translatable(NodeScreenTexts.FACE_TOOLTIP));
     }
     if (view.editable() && SlotEditor.nameBox(panel).contains(view.mouseX(), view.mouseY())) {

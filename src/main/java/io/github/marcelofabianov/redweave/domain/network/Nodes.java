@@ -64,6 +64,11 @@ final class Nodes {
     return node.hasSlot(index) ? Outcome.ACCEPTED : Outcome.INVALID_SLOT;
   }
 
+  boolean isEnabled(NodeId id, int index) {
+    Node node = byId.get(id);
+    return node != null && node.slotAt(index).filter(ChannelSlot::active).isPresent();
+  }
+
   boolean remove(NodeId id) {
     return byId.remove(id) != null;
   }

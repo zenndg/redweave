@@ -11,6 +11,8 @@ public enum Outcome {
   ALREADY_ATTACHED,
   UNKNOWN_NODE,
   INVALID_SLOT,
+  /** An enabled slot is locked; the owner disables it to set it up (answer 237). */
+  SLOT_ENABLED,
   /** The network already has its controller in the world, as with a copied item (answer 56). */
   ALREADY_PLACED,
   /** The network is not in the world, as one asked for by an old packet (answer 41). */

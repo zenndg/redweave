@@ -12,15 +12,15 @@ import net.minecraft.network.chat.Component;
 
 /**
  * The footer of the Controller Screen, in two lines: the channels in use and how many nodes are
- * Unloaded, in amber, and Out of range, in red, even at zero (answer 219); then the owner, or the
- * lock and the notice for anyone else (telas.md and answer 22).
+ * Unloaded, in amber, and Out of range, in red, even at zero and without the word "nodes" to fit
+ * the line (answers 219 and 236); then the owner, or the lock and the notice for anyone else
+ * (telas.md and answer 22).
  */
 final class ControllerFooter {
   private static final int SECOND_LINE = 12;
   private static final int COUNT_GAP = 12;
   private static final int DOT_GAP = 4;
   private static final int DOT_Y = 2;
-  private static final int ONE = 1;
 
   private ControllerFooter() {}
 
@@ -45,7 +45,7 @@ final class ControllerFooter {
   private static int drawCount(
       GuiGraphics graphics, Font font, int x, int y, int count, boolean unloaded) {
     int color = unloaded ? ScreenColors.UNLOADED : ScreenColors.OUT_OF_RANGE;
-    String key = keyOf(count, unloaded);
+    String key = keyOf(unloaded);
     Component text = Component.translatable(key, count);
     Dots.draw(graphics, x, y + DOT_Y, color);
     int textX = x + Dots.SIZE + DOT_GAP;
@@ -53,15 +53,8 @@ final class ControllerFooter {
     return textX + font.width(text) + COUNT_GAP;
   }
 
-  private static String keyOf(int count, boolean unloaded) {
-    if (unloaded) {
-      return count == ONE
-          ? ControllerScreenTexts.UNLOADED_ONE
-          : ControllerScreenTexts.UNLOADED_MANY;
-    }
-    return count == ONE
-        ? ControllerScreenTexts.OUT_OF_RANGE_ONE
-        : ControllerScreenTexts.OUT_OF_RANGE_MANY;
+  private static String keyOf(boolean unloaded) {
+    return unloaded ? ControllerScreenTexts.UNLOADED : ControllerScreenTexts.OUT_OF_RANGE;
   }
 
   private static void drawOwner(GuiGraphics graphics, Font font, int x, int y, Header header) {

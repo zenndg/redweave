@@ -10,11 +10,12 @@ import io.github.marcelofabianov.redweave.server.SaveCodecs;
 import java.util.List;
 
 /**
- * The copy of the Configurator as it is in the item: the face the node stuck to, and the channel,
- * status, direction, face and name of each slot ever enabled, with the keys of the save of the
- * networks (answers 105 and 230).
+ * The copy of the Configurator as it is in the item: the network of the node (answer 238), the face
+ * it stuck to, and the channel, status, direction, face and name of each slot ever enabled, with
+ * the keys of the save of the networks (answers 105 and 230).
  */
 public final class NodeSlotsCodec {
+  private static final String NETWORK = "network";
   private static final String ATTACHED = "attached";
   private static final String SLOTS = "slots";
   private static final String ACTIVE = "active";
@@ -50,13 +51,17 @@ public final class NodeSlotsCodec {
   private static final Codec<List<CopiedSlot>> SLOTS_CODEC =
       SLOT.listOf().validate(NodeSlotsCodec::eachIndexOnce);
 
-  public static final Codec<NodeCopy> CODEC =
+  public static final Codec<ConfiguratorCopy> CODEC =
       RecordCodecBuilder.create(instance ->
           instance
               .group(
-                  SaveCodecs.FACE.fieldOf(ATTACHED).forGetter(NodeCopy::attached),
-                  SLOTS_CODEC.fieldOf(SLOTS).forGetter(NodeCopy::slots))
-              .apply(instance, NodeCopy::new));
+                  SaveCodecs.NETWORK_ID.fieldOf(NETWORK).forGetter(ConfiguratorCopy::network),
+                  SaveCodecs.FACE.fieldOf(ATTACHED).forGetter(copy -> copy.slots().attached()),
+                  SLOTS_CODEC.fieldOf(SLOTS).forGetter(copy -> copy.slots().slots()))
+              .apply(
+                  instance,
+                  (network, attached, slots) ->
+                      new ConfiguratorCopy(network, new NodeCopy(attached, slots))));
 
   private NodeSlotsCodec() {}
 

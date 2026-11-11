@@ -2,6 +2,8 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
+import io.github.marcelofabianov.redweave.domain.network.Face;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import net.minecraft.network.chat.Component;
 /**
  * The panel of the open channel: its name, status, direction, block face and logic (telas.md). It
  * builds the controls of a frame; drawing and clicking both use the same list, so they never
- * disagree. A channel never enabled, or disabled, shows its rows dimmed (answers 226 and 228).
+ * disagree. An enabled channel is locked, and a disabled one is set up (answers 228 and 237).
  */
 final class SlotEditor {
   static final int LABEL_X = 8;
@@ -23,8 +25,8 @@ final class SlotEditor {
   static final int STATUS_Y = 40;
   static final int DIRECTION_Y = 58;
   static final int FACE_Y = 76;
-  static final int CUBE_SIZE = 30;
-  static final int LOGIC_Y = 110;
+  static final int CUBE_SIZE = 24;
+  static final int LOGIC_Y = 106;
   static final int NAME_WIDTH = 150;
   static final int ROW_HEIGHT = 14;
   private static final int STATUS_WIDTH = 50;
@@ -40,11 +42,11 @@ final class SlotEditor {
 
   private SlotEditor() {}
 
-  static List<Control> controls(Font font, NodeView view, Box panel, int index) {
+  static List<Control> controls(Font font, NodeView view, Box panel, int index, Face stuck) {
     List<Control> controls = new ArrayList<>();
     Optional<ChannelSlot> slot = view.menu().slot(index);
     controls.add(statusButton(view, panel, index, slot));
-    controls.addAll(directionButtons(font, view, panel, index, slot));
+    controls.addAll(directionButtons(font, view, panel, index, setUpOf(slot, index, stuck)));
     controls.addAll(logicButtons(font, panel));
     return controls;
   }
@@ -77,19 +79,30 @@ final class SlotEditor {
     return Control.button(box, look, label, action);
   }
 
+  /**
+   * The slot as the panel shows it: its own, or, never enabled, an input on the face the node
+   * sticks to, as enabling it would make (answer 228).
+   */
+  static ChannelSlot setUpOf(Optional<ChannelSlot> slot, int index, Face stuck) {
+    return slot.orElseGet(() ->
+        new ChannelSlot(
+            Direction.INPUT, stuck, ChannelColor.values()[index], false, Optional.empty()));
+  }
+
+  /** An enabled slot is locked; the owner sets up a disabled one (answer 237). */
+  static boolean isSettable(NodeView view, ChannelSlot slot) {
+    return view.editable() && !slot.active();
+  }
+
   private static List<Control> directionButtons(
-      Font font, NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
+      Font font, NodeView view, Box panel, int index, ChannelSlot slot) {
     List<Control> buttons = new ArrayList<>();
     int x = panel.x() + CONTROL_X;
     for (Direction direction : Direction.values()) {
       Component label = directionOf(direction);
       Box box = button(font, label, x, panel.y() + DIRECTION_Y);
-      if (isEnabled(slot)) {
-        ChannelSlot changed = withDirection(slot.get(), direction);
-        buttons.add(choice(box, label, direction == slot.get().direction(), view, index, changed));
-      } else {
-        buttons.add(Control.button(box, Control.Look.DISABLED, label, Optional.empty()));
-      }
+      ChannelSlot changed = withDirection(slot, direction);
+      buttons.add(choice(box, label, direction == slot.direction(), view, index, changed));
       x = box.right();
     }
     return buttons;
@@ -121,7 +134,7 @@ final class SlotEditor {
     if (chosen) {
       return Control.button(box, Control.Look.CHOSEN, label, Optional.empty());
     }
-    if (!view.editable()) {
+    if (!isSettable(view, changed)) {
       return Control.button(box, Control.Look.DISABLED, label, Optional.empty());
     }
     return Control.button(

@@ -32,6 +32,7 @@ class ChangeSlotTest {
   private final ConfigureSlot configureSlot = new ConfigureSlot(fixture.networks, fixture.networks);
   private final DisableSlot disableSlot = new DisableSlot(fixture.networks, fixture.networks);
   private final RenameSlot renameSlot = new RenameSlot(fixture.networks, fixture.networks);
+  private final EnableSlot enableSlot = new EnableSlot(fixture.networks, fixture.networks);
 
   /** The network of OWNER with the node in it, and how many saves that took. */
   private int placedNode() {
@@ -55,7 +56,7 @@ class ChangeSlotTest {
     int saves = placedNode();
 
     assertEquals(Outcome.ACCEPTED, configureSlot.configure(OWNER, NODE, SLOT, LIGHT_THE_LAMP));
-    assertEquals(Optional.of(LIGHT_THE_LAMP), theSlot());
+    assertEquals(Optional.of(LIGHT_THE_LAMP.enabled(false)), theSlot());
     assertEquals(saves + 1, fixture.networks.saves());
   }
 
@@ -79,11 +80,21 @@ class ChangeSlotTest {
   void theOwnerDisablesASlotWhichKeepsItsConfiguration() {
     placedNode();
     configureSlot.configure(OWNER, NODE, SLOT, LIGHT_THE_LAMP);
+    enableSlot.enable(OWNER, NODE, SLOT);
     int saves = fixture.networks.saves();
 
     assertEquals(Outcome.ACCEPTED, disableSlot.disable(OWNER, NODE, SLOT));
     assertEquals(Optional.of(LIGHT_THE_LAMP.enabled(false)), theSlot());
     assertEquals(saves + 1, fixture.networks.saves());
+  }
+
+  /** An enabled slot is locked: the owner disables it to set it up (answer 237). */
+  @Test
+  void anEnabledSlotIsNotConfigured() {
+    placedNode();
+    enableSlot.enable(OWNER, NODE, SLOT);
+
+    assertEquals(Outcome.SLOT_ENABLED, configureSlot.configure(OWNER, NODE, SLOT, LIGHT_THE_LAMP));
   }
 
   /** The screen sends only the direction and the face, so the status and the name stay (228). */

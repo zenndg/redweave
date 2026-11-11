@@ -173,4 +173,42 @@ class SlotsByColorTest {
     assertEquals(List.of(ChannelColor.WHITE, DOOR, ChannelColor.BLACK), enabled);
     assertTrue(enabled.size() < FIRST_SLOTS);
   }
+
+  /** An enabled slot is locked, so a change never fires redstone by accident (answer 237). */
+  @Test
+  void anEnabledSlotIsNotSetUp() {
+    Network network = networkWithNode();
+    network.enableSlot(OWNER, NODE, DOOR_SLOT);
+
+    assertEquals(
+        Outcome.SLOT_ENABLED,
+        network.setUpSlot(OWNER, NODE, DOOR_SLOT, Direction.OUTPUT, Face.DOWN));
+  }
+
+  /** A slot never enabled is set up disabled, waiting for the owner to enable it (237). */
+  @Test
+  void aNewSlotIsSetUpDisabled() {
+    Network network = networkWithNode();
+
+    assertEquals(
+        Outcome.ACCEPTED, network.setUpSlot(OWNER, NODE, DOOR_SLOT, Direction.OUTPUT, Face.DOWN));
+
+    ChannelSlot expected =
+        new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false, Optional.empty());
+    assertEquals(Optional.of(expected), slot(network, DOOR_SLOT));
+  }
+
+  @Test
+  void aDisabledSlotKeepsItsNameWhenSetUp() {
+    Network network = networkWithNode();
+    network.renameSlot(OWNER, NODE, DOOR_SLOT, LEVER);
+
+    network.setUpSlot(OWNER, NODE, DOOR_SLOT, Direction.OUTPUT, Face.DOWN);
+
+    ChannelSlot expected =
+        new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false, Optional.of(LEVER));
+    assertEquals(Optional.of(expected), slot(network, DOOR_SLOT));
+    assertEquals(
+        Outcome.NOT_OWNER, network.setUpSlot(STRANGER, NODE, DOOR_SLOT, Direction.INPUT, Face.UP));
+  }
 }

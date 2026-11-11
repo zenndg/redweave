@@ -16,6 +16,9 @@ final class ConfiguratorEnglishTexts {
   private static final String PASTED = "Pasted %s slots";
   private static final String CLEARED = "Copy cleared";
   private static final String PICKED_UP = "Node picked up";
+  private static final String WHO_PLACED = "Only the player who placed this node";
+  private static final String MAY_PASTE = " can paste a network on it.";
+  private static final String PASTE_NOT_PLACER = WHO_PLACED + MAY_PASTE;
   private static final String NOT_PLACER = "Only the player who placed this node can pick it up.";
   private static final String USE_TO_OPEN = "Use a Configurator to open this node.";
   private static final String COPY = "Copy: %s slots";
@@ -37,6 +40,7 @@ final class ConfiguratorEnglishTexts {
     add.accept(ConfiguratorMessages.CLEARED, CLEARED);
     add.accept(ConfiguratorMessages.PICKED_UP, PICKED_UP);
     add.accept(ConfiguratorMessages.NOT_PLACER, NOT_PLACER);
+    add.accept(ConfiguratorMessages.PASTE_NOT_PLACER, PASTE_NOT_PLACER);
     add.accept(ConfiguratorMessages.USE_TO_OPEN, USE_TO_OPEN);
     add.accept(ConfiguratorMessages.COPY, COPY);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.OPEN), HINT_OPEN);

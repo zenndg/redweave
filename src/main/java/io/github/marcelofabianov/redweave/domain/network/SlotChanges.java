@@ -19,6 +19,13 @@ final class SlotChanges {
     return node.slotAt(index).map(slot -> slot.enabled(false));
   }
 
+  /** A new direction and face on a slot that stays disabled, keeping its name (answer 237). */
+  static Optional<ChannelSlot> setUp(Node node, int index, Direction direction, Face face) {
+    Optional<String> name = node.slotAt(index).flatMap(ChannelSlot::name);
+    ChannelColor channel = ChannelColor.values()[index];
+    return Optional.of(new ChannelSlot(direction, face, channel, false, name));
+  }
+
   /** A name on a slot never enabled keeps it disabled, waiting for the owner. */
   static Optional<ChannelSlot> name(Node node, int index, Optional<String> name) {
     ChannelSlot slot = node.slotAt(index).orElseGet(() -> firstInput(node, index).enabled(false));

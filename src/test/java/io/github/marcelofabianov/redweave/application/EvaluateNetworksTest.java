@@ -34,16 +34,19 @@ class EvaluateNetworksTest {
 
   /**
    * The node of the fixture reads a lever on its input, and OTHER_NODE lights a lamp with the same
-   * channel, because a node holds one slot per channel (answer 224).
+   * channel, because a node holds one slot per channel (answer 224). Each slot is set up disabled
+   * and then enabled (answer 237).
    */
   private void leverAndLamp() {
     NetworkId network = fixture.ownersNetworkWithANode();
     ConfigureSlot configure = new ConfigureSlot(fixture.networks, fixture.networks);
+    EnableSlot enable = new EnableSlot(fixture.networks, fixture.networks);
     configure.configure(
         OWNER,
         NODE,
         INPUT_SLOT,
         new ChannelSlot(Direction.INPUT, NODE_POSITION.face(), LEVER_CHANNEL));
+    enable.enable(OWNER, NODE, INPUT_SLOT);
     fixture
         .networks
         .find(network)
@@ -54,6 +57,7 @@ class EvaluateNetworksTest {
         OTHER_NODE,
         INPUT_SLOT,
         new ChannelSlot(Direction.OUTPUT, OTHER_NODE_POSITION.face(), LEVER_CHANNEL));
+    enable.enable(OWNER, OTHER_NODE, INPUT_SLOT);
     evaluate.evaluate();
   }
 

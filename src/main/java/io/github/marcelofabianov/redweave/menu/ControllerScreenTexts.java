@@ -23,10 +23,8 @@ public final class ControllerScreenTexts {
   public static final String NO_ACTIVE_CHANNEL = PREFIX + "no_active_channel";
   public static final String SLOT_USE = PREFIX + "slot_use";
   public static final String CHANNELS_IN_USE = PREFIX + "channels_in_use";
-  public static final String UNLOADED_ONE = PREFIX + "unloaded.one";
-  public static final String UNLOADED_MANY = PREFIX + "unloaded.many";
-  public static final String OUT_OF_RANGE_ONE = PREFIX + "out_of_range.one";
-  public static final String OUT_OF_RANGE_MANY = PREFIX + "out_of_range.many";
+  public static final String UNLOADED = PREFIX + "unloaded";
+  public static final String OUT_OF_RANGE = PREFIX + "out_of_range";
   public static final String OWNER_LINE = PREFIX + "owner_line";
   public static final String OWNER = PREFIX + "owner";
   public static final String READ_ONLY = PREFIX + "read_only";

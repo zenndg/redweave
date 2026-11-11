@@ -62,9 +62,8 @@ public final class Network {
   }
 
   /**
-   * A network loaded from the saves, the same as it was, but waiting for the first tick, which
-   * applies every output again (answers 38 and 90). The limits of the config only hold for the next
-   * changes, so a node keeps its slots and a name its length (answer 93).
+   * A network loaded from the saves, as it was, waiting for the first tick to apply every output
+   * again (answers 38 and 90). A name keeps its length if the config now allows less (answer 93).
    */
   public static Network restore(NetworkSnapshot snapshot, NetworkLimits limits) {
     SnapshotRules.check(snapshot);
@@ -183,6 +182,15 @@ public final class Network {
   /** Disables a slot, which keeps its configuration, for the owner only (answer 228). */
   public Outcome disableSlot(PlayerId requester, NodeId nodeId, int index) {
     return changeSlotWith(requester, nodeId, index, SlotChanges::disable);
+  }
+
+  /** Sets up the direction and face of a slot that is not enabled, for the owner (answer 237). */
+  public Outcome setUpSlot(PlayerId requester, NodeId nodeId, int index, Direction way, Face face) {
+    if (isOwner(requester) && nodes.isEnabled(nodeId, index)) {
+      return Outcome.SLOT_ENABLED;
+    }
+    return changeSlotWith(
+        requester, nodeId, index, (node, at) -> SlotChanges.setUp(node, at, way, face));
   }
 
   /** Names a slot, for the owner only; blank takes the name away. It changes no signal (227). */

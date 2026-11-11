@@ -19,10 +19,8 @@ final class ControllerScreenEnglishTexts {
   private static final String NO_ACTIVE_CHANNEL = "No active channel";
   private static final String SLOT_USE = "%s in · %s out";
   private static final String CHANNELS_IN_USE = "%s of %s channels in use";
-  private static final String UNLOADED_ONE = "%s node unloaded";
-  private static final String UNLOADED_MANY = "%s nodes unloaded";
-  private static final String OUT_OF_RANGE_ONE = "%s node out of range";
-  private static final String OUT_OF_RANGE_MANY = "%s nodes out of range";
+  private static final String UNLOADED = "%s unloaded";
+  private static final String OUT_OF_RANGE = "%s out of range";
   private static final String OWNER_LINE = "Owner: %s";
   private static final String OWNER = "Owner";
   private static final String READ_ONLY = "Only the owner can change this network.";
@@ -59,10 +57,8 @@ final class ControllerScreenEnglishTexts {
 
   private static void addFooter(BiConsumer<String, String> add) {
     add.accept(ControllerScreenTexts.CHANNELS_IN_USE, CHANNELS_IN_USE);
-    add.accept(ControllerScreenTexts.UNLOADED_ONE, UNLOADED_ONE);
-    add.accept(ControllerScreenTexts.UNLOADED_MANY, UNLOADED_MANY);
-    add.accept(ControllerScreenTexts.OUT_OF_RANGE_ONE, OUT_OF_RANGE_ONE);
-    add.accept(ControllerScreenTexts.OUT_OF_RANGE_MANY, OUT_OF_RANGE_MANY);
+    add.accept(ControllerScreenTexts.UNLOADED, UNLOADED);
+    add.accept(ControllerScreenTexts.OUT_OF_RANGE, OUT_OF_RANGE);
     add.accept(ControllerScreenTexts.OWNER_LINE, OWNER_LINE);
     add.accept(ControllerScreenTexts.READ_ONLY, READ_ONLY);
   }

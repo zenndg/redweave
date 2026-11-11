@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.block.Faces;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
@@ -32,12 +33,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * network, the row of the 16 channels opens each one in the panel (answers 224 and 231).
  */
 public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
-  private static final int WIDTH = 312;
-  private static final int HEIGHT = 234;
+  private static final int WIDTH = 340;
+  private static final int HEIGHT = 250;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 32;
-  private static final Box PANEL = new Box(10, 62, 292, 136);
-  private static final Box CHOICE = new Box(10, 38, 292, 160);
+  private static final Box PANEL = new Box(10, 62, 320, 150);
+  private static final Box CHOICE = new Box(10, 38, 320, 174);
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
   private static final int BACK_Y = 8;
@@ -111,13 +112,13 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       NodeScreenPanel.drawName(graphics, font, panel, menu.slotName(channel()), ownsNetwork());
     }
     controls(view).forEach(control -> ControlPainter.draw(graphics, font, control, view));
-    Optional<ChannelSlot> slot = menu.slot(selected).filter(ChannelSlot::active);
+    ChannelSlot slot = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
     cube.draw(
         graphics,
         SlotEditor.cubeBox(panel),
         supportBlock(),
-        slot.map(found -> Faces.toDirection(found.face())),
-        view);
+        Optional.of(Faces.toDirection(slot.face())),
+        settableView(view, slot));
     footer.draw(
         graphics,
         font,
@@ -156,7 +157,8 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       return true;
     }
     NodeView view = view(mouseX, mouseY);
-    if (SlotEditor.isEnabled(menu.slot(selected)) && view.hovers(SlotEditor.cubeBox(panel()))) {
+    ChannelSlot open = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
+    if (SlotEditor.isSettable(view, open) && view.hovers(SlotEditor.cubeBox(panel()))) {
       cube.press();
       return true;
     }
@@ -195,16 +197,13 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
 
   @Override
   public boolean mouseReleased(double mouseX, double mouseY, int button) {
-    Optional<ChannelSlot> slot = menu.slot(selected).filter(ChannelSlot::active);
-    Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view(mouseX, mouseY));
-    if (slot.isPresent() && face.isPresent()) {
+    NodeView view = view(mouseX, mouseY);
+    ChannelSlot slot = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
+    Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view);
+    if (SlotEditor.isSettable(view, slot) && face.isPresent()) {
       ChannelSlot changed =
           new ChannelSlot(
-              slot.get().direction(),
-              Faces.of(face.get()),
-              slot.get().channel(),
-              slot.get().active(),
-              slot.get().name());
+              slot.direction(), Faces.of(face.get()), slot.channel(), false, slot.name());
       send(NodeAction.configure(selected, changed));
     }
     return super.mouseReleased(mouseX, mouseY, button);
@@ -345,7 +344,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   }
 
   private List<Control> controls(NodeView view) {
-    return SlotEditor.controls(font, view, panel(), Math.max(0, selected));
+    return SlotEditor.controls(font, view, panel(), Math.max(0, selected), stuckFace());
   }
 
   private void send(NodeAction action) {
@@ -353,6 +352,23 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       minecraft.gameMode.handleInventoryButtonClick(
           menu.containerId, NodeScreenCodes.button(action));
     }
+  }
+
+  /** The cube reacts to the mouse only while the open channel may be set up (answer 237). */
+  private static NodeView settableView(NodeView view, ChannelSlot slot) {
+    boolean settable = SlotEditor.isSettable(view, slot);
+    return new NodeView(view.menu(), view.mouseX(), view.mouseY(), settable);
+  }
+
+  /** The face the node sticks to, read from its block, or up when it cannot be read. */
+  private Face stuckFace() {
+    if (minecraft == null || minecraft.level == null) {
+      return Face.UP;
+    }
+    BlockState node = minecraft.level.getBlockState(menu.pos());
+    return node.hasProperty(SignalNodeBlock.FACING)
+        ? Faces.of(node.getValue(SignalNodeBlock.FACING))
+        : Face.UP;
   }
 
   /** The block the node sticks to, or polished deepslate for a block drawn some other way. */

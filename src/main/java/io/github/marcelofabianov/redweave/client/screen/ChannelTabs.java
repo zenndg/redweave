@@ -17,7 +17,10 @@ import net.minecraft.resources.ResourceLocation;
 final class ChannelTabs {
   static final int Y = 36;
   static final int HEIGHT = 22;
-  private static final int LEFT = 10;
+
+  /** The 16 tabs, 287 pixels wide, centered on the 340 of the window. */
+  private static final int LEFT = 26;
+
   private static final int WIDTH = 17;
   private static final int GAP = 1;
   private static final int SQUARE = 9;

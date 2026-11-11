@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
-import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
+import io.github.marcelofabianov.redweave.item.ConfiguratorCopy;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.item.NodeSlotsCodec;
 import java.util.function.Supplier;
@@ -44,8 +44,8 @@ public final class RedweaveDataComponents {
                   .networkSynchronized(
                       UUIDUtil.STREAM_CODEC.map(NetworkId::new, NetworkId::value)));
 
-  /** The slots copied by the Configurator, to paste on other nodes (answer 105). */
-  public static final Supplier<DataComponentType<NodeCopy>> NODE_SLOTS =
+  /** The slots and network copied by the Configurator, to paste on other nodes (105, 238). */
+  public static final Supplier<DataComponentType<ConfiguratorCopy>> NODE_SLOTS =
       COMPONENTS.registerComponentType(
           NODE_SLOTS_ID,
           builder ->
