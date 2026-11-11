@@ -8,14 +8,14 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import org.junit.jupiter.api.Test;
 
-/** The controller left the world without its owner, and the network goes offline (answer 49). */
+/** The controller left the world without its owner, and the network is unplaced (answer 49). */
 class LoseControllerTest {
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final LoseController loseController =
       new LoseController(fixture.networks, fixture.networks);
 
   @Test
-  void aLostControllerTakesTheNetworkOffline() {
+  void aLostControllerLeavesTheNetworkUnplaced() {
     NetworkId network = fixture.strangersNetwork();
     int savesBefore = fixture.networks.saves();
 

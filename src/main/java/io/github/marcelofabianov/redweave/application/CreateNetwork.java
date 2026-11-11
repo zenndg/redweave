@@ -8,10 +8,14 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/** A player places a Network Controller: a new network is born, owned by them (answer 129). */
+/**
+ * A player places a Network Controller: a new network is born, owned by them (answer 129), unless
+ * they already have network.max_per_player networks, whatever their state (answer 145).
+ */
 public final class CreateNetwork {
   private final IdGenerator ids;
   private final OwnerNetworkFinder owned;
@@ -26,12 +30,15 @@ public final class CreateNetwork {
     this.limits = limits;
   }
 
-  public NetworkId create(PlayerId owner, BlockLocation controller) {
+  public Optional<NetworkId> create(PlayerId owner, BlockLocation controller) {
+    if (owned.ownedBy(owner).size() >= limits.networksPerPlayer()) {
+      return Optional.empty();
+    }
     NetworkId id = new NetworkId(ids.newId());
     String name = DefaultNames.of(id.value());
     Network network = Network.create(id, owner, name, firstFreeColor(owner), controller, limits);
     saver.save(network);
-    return id;
+    return Optional.of(id);
   }
 
   /** The first color no other network of the owner uses, or white with all 16 in use (40). */

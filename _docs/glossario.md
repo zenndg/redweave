@@ -11,8 +11,8 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Última rede usada | `last_used` (save) e `LastUsedNetworkFinder` | A última rede em que o player colocou um nó. Fica destacada na escolha de rede de um nó novo (pergunta 157). Substitui a rede atual, que acabou (pergunta 139) |
 | Alcance | — | O raio em blocos a partir do Network Controller, na mesma dimensão (pergunta 23) |
 | Online | `Online` | Rede com o controlador colocado e ligada, ou nó funcionando dentro do alcance |
-| Offline | `Offline` | Rede desligada pelo dono no Network Terminal: todos os canais valem 0, e só o Terminal age sobre ela (perguntas 132 e 135) |
-| Não colocada | `Unplaced` | Rede com o controlador fora do mundo, quebrado ou perdido: todos os canais valem 0 (perguntas 135 e 146) |
+| Offline | `NetworkState.OFFLINE` | Rede desligada pelo dono no Network Terminal: todos os canais valem 0, e só o Terminal age sobre ela (perguntas 132 e 135) |
+| Não colocada | `NetworkState.UNPLACED` | Rede com o controlador fora do mundo, quebrado ou perdido: todos os canais valem 0 (perguntas 135 e 146) |
 | Descarregado | `Unloaded` | Nó num chunk descarregado: a entrada mantém o último valor (perguntas 13 e 29) |
 | Fora de alcance | `Out of range` | Nó fora do raio ou em outra dimensão: não conta e vale 0 (perguntas 23 e 29) |
 | Sem rede | `No network` | Nó sem rede, ou numa rede `Unplaced`. Um nó novo nasce assim e não pode ser configurado até ter rede (pergunta 139) |
@@ -37,6 +37,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:09 | Liga os estados `Offline` e `Unplaced` ao `NetworkState`, da #88. |
 | Zennd | 2026-11-11 13:46 | Liga a última rede usada, o nome do nó e a escolha de rede aos nomes do código, da #87. |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, os estados `Offline` e `Unplaced`, o modo e o log; troca a rede atual pela última rede usada e tira a etiqueta (perguntas 125 a 157). |
 | Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a etiqueta. |

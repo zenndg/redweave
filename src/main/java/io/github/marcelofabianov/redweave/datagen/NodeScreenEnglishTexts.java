@@ -36,6 +36,7 @@ final class NodeScreenEnglishTexts {
   private static final String STATE_UNLOADED = "Unloaded";
   private static final String STATE_OUT_OF_RANGE = "Out of range";
   private static final String STATE_NO_NETWORK = "No network";
+  private static final String STATE_OFFLINE = "Offline";
   private static final String CHOOSE_NETWORK = "Choose a network";
   private static final String NONE_ONLINE = "No network online.";
   private static final String PLACE_A_CONTROLLER = " Place a Network Controller to create one.";
@@ -109,6 +110,7 @@ final class NodeScreenEnglishTexts {
     add.accept(NodeScreenTexts.STATE_UNLOADED, STATE_UNLOADED);
     add.accept(NodeScreenTexts.STATE_OUT_OF_RANGE, STATE_OUT_OF_RANGE);
     add.accept(NodeScreenTexts.STATE_NO_NETWORK, STATE_NO_NETWORK);
+    add.accept(NodeScreenTexts.STATE_OFFLINE, STATE_OFFLINE);
   }
 
   private static void addFaces(BiConsumer<String, String> add) {

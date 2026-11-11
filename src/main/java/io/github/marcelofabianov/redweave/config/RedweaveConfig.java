@@ -13,6 +13,7 @@ public final class RedweaveConfig {
   private static final String RANGE = "range";
   private static final String NAME_LENGTH = "name_length";
   private static final String SLOTS = "slots";
+  private static final String MAX_PER_PLAYER_KEY = "max_per_player";
 
   private static final String RANGE_RADIUS = "Radius of the reach of a Network Controller,";
   private static final String RANGE_UNIT = " in blocks.";
@@ -20,6 +21,7 @@ public final class RedweaveConfig {
   private static final String RANGE_ZERO = " 0 reaches the whole dimension.";
   private static final String RANGE_COMMENT = RANGE_REACH + RANGE_ZERO;
   private static final String NETWORK_NAME_COMMENT = "Maximum length of the name of a network.";
+  private static final String MAX_PER_PLAYER_COMMENT = "Networks a player may have, of any state.";
   private static final String CHANNEL_NAME_COMMENT = "Maximum length of the name of a channel.";
   private static final String SLOTS_COMMENT = "Channel slots of a Signal Node.";
   private static final String NODE_NAME_COMMENT = "Maximum length of the name of a Signal Node.";
@@ -27,6 +29,8 @@ public final class RedweaveConfig {
   private static final int DEFAULT_RANGE = 128;
   private static final int MAX_RANGE = 30_000_000;
   private static final int DEFAULT_NETWORK_NAME = 32;
+  private static final int DEFAULT_PER_PLAYER = 10;
+  private static final int MAX_NETWORKS = 100;
   private static final int DEFAULT_CHANNEL_NAME = 16;
   private static final int DEFAULT_NODE_NAME = 16;
 
@@ -41,6 +45,7 @@ public final class RedweaveConfig {
   public static final ModConfigSpec SPEC;
   static final ModConfigSpec.IntValue RANGE_VALUE;
   static final ModConfigSpec.IntValue NETWORK_NAME_LENGTH;
+  static final ModConfigSpec.IntValue MAX_PER_PLAYER;
   static final ModConfigSpec.IntValue CHANNEL_NAME_LENGTH;
   static final ModConfigSpec.IntValue SLOTS_PER_NODE;
   static final ModConfigSpec.IntValue NODE_NAME_LENGTH;
@@ -53,6 +58,10 @@ public final class RedweaveConfig {
         builder
             .comment(NETWORK_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_NETWORK_NAME, 1, MAX_NAME);
+    MAX_PER_PLAYER =
+        builder
+            .comment(MAX_PER_PLAYER_COMMENT)
+            .defineInRange(MAX_PER_PLAYER_KEY, DEFAULT_PER_PLAYER, 1, MAX_NETWORKS);
     builder.pop();
     builder.push(CHANNEL);
     CHANNEL_NAME_LENGTH =

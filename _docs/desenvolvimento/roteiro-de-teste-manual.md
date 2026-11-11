@@ -79,12 +79,28 @@ Entregue com a issue #87 (perguntas 139 a 208). Comece com o circuito dos passos
 | 42 | Saia para o menu, abra o mundo de novo e abra a tela do nó | O nome `Lever` continua |
 | 43 | Troque o idioma para Português (Brasil) | `Escolha uma rede`, `1 nó`, `12 nós`, `Voltar` e o aviso da lista vazia em português |
 
+## Fase 1: os estados da rede e o limite de redes
+
+Entregue com a issue #88 (perguntas 132, 135, 145, 146, 160, 163, 177, 178 e 209 a 211). Até a #89, só o save desliga uma rede: com o jogo fechado, ponha `offline: 1b` na rede, dentro de `networks`, em `saves/<mundo>/data/redweave_networks.dat`, com um editor de NBT.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 44 | Desligue no save a rede do circuito dos passos 1 a 8 e abra o mundo | A lâmpada, a lente dos nós e o núcleo do controlador apagam |
+| 45 | Clique no controlador com a mão vazia; depois, no nó, com o Configurator nos modos `Open` e `Copy` | Nada abre nem copia, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` |
+| 46 | No modo `Wrench`, clique num nó da rede desligada | `Node picked up`: a Chave funciona |
+| 47 | Quebre o controlador com o dono e recoloque o item | O controlador volta com o núcleo apagado, e a rede continua desligada |
+| 48 | Tire o `offline` do save e abra o mundo | A rede volta a funcionar, e a lâmpada acende com a alavanca ligada |
+| 49 | Coloque controladores até ter 10 redes e tente colocar mais um | O bloco não é colocado, o item fica na mão, e a action bar mostra `You have reached the limit of 10 networks. Delete an unplaced one at a Network Terminal.` |
+| 50 | Quebre um dos controladores, que fica `Unplaced`, e tente colocar um controlador novo | O limite continua valendo, porque a rede `Unplaced` também conta |
+| 51 | Troque o idioma para Português (Brasil) | Os dois avisos em português |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:09 | Adiciona os passos 44 a 51, da #88. |
 | Zennd | 2026-11-11 13:46 | Ajusta os passos 2, 3, 4, 6 e 19 e adiciona os passos 34 a 43, da #87. |
 | Zennd | 2026-11-11 11:21 | Reescreve os passos do Configurator com os modos e ajusta os passos 4 e 13, da #86. |
 | Zennd | 2026-11-11 10:32 | Tira os passos 34 a 42 do Label, que saiu com a #85 (pergunta 125). |

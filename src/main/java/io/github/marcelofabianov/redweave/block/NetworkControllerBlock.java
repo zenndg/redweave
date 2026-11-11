@@ -7,6 +7,8 @@ import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -43,6 +45,12 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
     super(properties);
     registerDefaultState(
         stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LINKED, false));
+  }
+
+  /** Scheduled when the block entity loads: the core shows the state of the network (177). */
+  @Override
+  protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    RedweaveServer.running().ifPresent(server -> ControllerLink.refreshCore(server, level, pos));
   }
 
   @Override
@@ -91,7 +99,7 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
     return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
   }
 
-  /** Gone by any means, the controller leaves its network offline (answers 24 and 49). */
+  /** Gone by any means, the controller leaves its network unplaced (answers 49 and 146). */
   @Override
   protected void onRemove(
       BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
@@ -141,7 +149,7 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
     return controllerAt(level, pos).map(controller -> controller.isOwner(player)).orElse(true);
   }
 
-  /** The owner breaks it, and the network goes offline; a block without a network asks the BE. */
+  /** The owner breaks it, and the network is unplaced; a block without a network asks the BE. */
   private static boolean mayBreak(Level level, BlockPos pos, Player player) {
     Optional<RedweaveServer> server = RedweaveServer.running();
     Optional<NetworkControllerBlockEntity> controller = controllerAt(level, pos);

@@ -20,6 +20,10 @@ final class EnglishTexts {
   private static final String SIGNAL_NODE = "Signal Node";
   private static final String NETWORK_CONTROLLER = "Network Controller";
   private static final String OWNED_BY = "%s · owner: %s";
+  private static final String OFFLINE = "%s is offline. Turn it on at a Network Terminal.";
+  private static final String NETWORK_LIMIT_REACHED = "You have reached the limit of %s networks.";
+  private static final String NETWORK_LIMIT_HINT = " Delete an unplaced one at a Network Terminal.";
+  private static final String NETWORK_LIMIT = NETWORK_LIMIT_REACHED + NETWORK_LIMIT_HINT;
   private static final String NO_NETWORK = "No network";
   private static final String NOT_OWNER = "Only the owner can place this network.";
   private static final String ALREADY_PLACED = "This network already has a controller.";
@@ -34,6 +38,8 @@ final class EnglishTexts {
     ConfiguratorEnglishTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.OWNED_BY, OWNED_BY);
+    add.accept(ControllerMessages.OFFLINE, OFFLINE);
+    add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);
     add.accept(ControllerMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ControllerMessages.ALREADY_PLACED, ALREADY_PLACED);

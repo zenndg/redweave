@@ -7,7 +7,8 @@ import java.util.Optional;
 
 /**
  * Everything of a network that goes to the saves, and nothing of what it last emitted, so a
- * restored network starts pending (answers 38 and 90). Only the channels with a name are kept.
+ * restored network starts pending (answers 38 and 90). Only the channels with a name are kept, and
+ * offline tells whether its owner turned it off (answer 210).
  */
 public record NetworkSnapshot(
     NetworkId id,
@@ -15,6 +16,7 @@ public record NetworkSnapshot(
     String name,
     ChannelColor color,
     Optional<BlockLocation> controller,
+    boolean offline,
     List<Channel> channels,
     List<Node> nodes,
     List<SlotReading> readings) {

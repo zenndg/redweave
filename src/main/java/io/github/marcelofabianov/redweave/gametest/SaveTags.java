@@ -18,6 +18,7 @@ final class SaveTags {
   static final String NAME = "name";
   static final String COLOR = "color";
   static final String CONTROLLER = "controller";
+  static final String OFFLINE = "offline";
   static final String CHANNELS = "channels";
   static final String NODES = "nodes";
   static final String DIMENSION = "dimension";
@@ -89,6 +90,12 @@ final class SaveTags {
     tag.putInt(SLOT_COUNT, slotCount);
     tag.put(SLOTS, slots);
     return tag;
+  }
+
+  /** A network its owner turned off: the key goes to the saves only then (answer 210). */
+  static CompoundTag turnedOff(CompoundTag network) {
+    network.putBoolean(OFFLINE, true);
+    return network;
   }
 
   /** A node its owner renamed: the name goes to the saves only then (answer 206). */

@@ -44,6 +44,7 @@ final class StatePill {
       case UNLOADED -> Component.translatable(NodeScreenTexts.STATE_UNLOADED);
       case OUT_OF_RANGE -> Component.translatable(NodeScreenTexts.STATE_OUT_OF_RANGE);
       case NO_NETWORK -> Component.translatable(NodeScreenTexts.STATE_NO_NETWORK);
+      case OFFLINE -> Component.translatable(NodeScreenTexts.STATE_OFFLINE);
     };
   }
 
@@ -53,6 +54,7 @@ final class StatePill {
       case UNLOADED -> ScreenColors.UNLOADED;
       case OUT_OF_RANGE -> ScreenColors.OUT_OF_RANGE;
       case NO_NETWORK -> ScreenColors.NO_NETWORK;
+      case OFFLINE -> ScreenColors.OFFLINE;
     };
   }
 }

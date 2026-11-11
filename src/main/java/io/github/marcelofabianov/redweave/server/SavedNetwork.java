@@ -19,18 +19,23 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-/** A network as it is in the saves, and its way to and from the snapshot of the domain (89). */
+/**
+ * A network as it is in the saves, and its way to and from the snapshot of the domain (89). The
+ * offline key is there only when its owner turned it off (answer 210).
+ */
 record SavedNetwork(
     NetworkId id,
     PlayerId owner,
     String name,
     ChannelColor color,
     Optional<BlockLocation> controller,
+    Optional<Boolean> offline,
     List<Channel> channels,
     List<SavedNode> nodes) {
   private static final String ID = "id";
   private static final String OWNER = "owner";
   private static final String CONTROLLER = "controller";
+  private static final String OFFLINE = "offline";
   private static final String CHANNELS = "channels";
   private static final String NODES = "nodes";
   private static final String CHANNEL_PART = "channel";
@@ -48,6 +53,8 @@ record SavedNetwork(
                   SaveCodecs.CHANNEL_COLOR.fieldOf(SaveCodecs.COLOR).forGetter(SavedNetwork::color),
                   Lenient.optionalField(CONTROLLER, SaveCodecs.BLOCK, CONTROLLER)
                       .forGetter(SavedNetwork::controller),
+                  Lenient.optionalField(OFFLINE, Codec.BOOL, OFFLINE)
+                      .forGetter(SavedNetwork::offline),
                   Lenient.list(SaveCodecs.CHANNEL, CHANNEL_PART)
                       .fieldOf(CHANNELS)
                       .forGetter(SavedNetwork::channels),
@@ -78,6 +85,7 @@ record SavedNetwork(
         snapshot.name(),
         snapshot.color(),
         snapshot.controller(),
+        snapshot.offline() ? Optional.of(true) : Optional.empty(),
         snapshot.channels(),
         nodes);
   }
@@ -106,6 +114,7 @@ record SavedNetwork(
         name,
         color,
         controller,
+        offline.orElse(false),
         kept,
         keptNodes.stream().map(SavedNode::node).toList(),
         keptNodes.stream().flatMap(node -> node.readings().stream()).toList());

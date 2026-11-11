@@ -11,6 +11,7 @@ import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NetworkState;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -65,6 +66,7 @@ public final class NetworkSaveGameTests {
   private static final String NOT_ALLOWED = "The save should keep what the config no longer allows";
   private static final String NOT_DIRTY = "A saved change should mark the save as changed";
   private static final String NOT_WRITTEN = "The change should be in what the save writes";
+  private static final String NOT_OFF = "A network turned off should come back off, the same";
 
   private NetworkSaveGameTests() {}
 
@@ -94,6 +96,26 @@ public final class NetworkSaveGameTests {
         load(fullSave()).save(new CompoundTag(), helper.getLevel().registryAccess());
 
     helper.assertTrue(fullSave().equals(written), NOT_SAME);
+    helper.succeed();
+  }
+
+  /** The offline key goes to the saves only for a network turned off (answer 210). */
+  @GameTest(template = EMPTY)
+  public static void aNetworkTurnedOffComesBackOff(GameTestHelper helper) {
+    CompoundTag saved =
+        SaveTags.save(
+            VERSION,
+            SaveTags.list(
+                SaveTags.turnedOff(
+                    SaveTags.network(NETWORK, OWNER, NAME, SaveTags.list(), SaveTags.list()))),
+            SaveTags.list(SaveTags.lastUsed(OWNER, NETWORK)));
+
+    SavedDataNetworks data = load(saved);
+    CompoundTag written = data.save(new CompoundTag(), helper.getLevel().registryAccess());
+
+    Network network = data.find(new NetworkId(NETWORK)).orElseThrow();
+    helper.assertTrue(network.state() == NetworkState.OFFLINE, NOT_OFF);
+    helper.assertTrue(saved.equals(written), NOT_OFF);
     helper.succeed();
   }
 

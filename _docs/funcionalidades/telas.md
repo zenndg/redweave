@@ -42,7 +42,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Título | `Signal Node` |
 | Nome do nó | Abaixo do título, o nome, que nasce com os 8 primeiros caracteres do ID. Para o dono, vem com um lápis, e o clique o troca por um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. O texto vai num pacote próprio, e o servidor confere o dono, o alcance e o limite de `node.name_length` (perguntas 142, 144 e 204) |
 | Rede | Na linha do nome, à direita, o quadrado na cor da rede e o nome dela, em qualquer estado com rede. Para o dono, o clique abre a escolha de rede (perguntas 141 e 208) |
-| Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)) (pergunta 208) |
+| Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range`, `No network` ou `Offline`, em cinza ([estados do nó](rede-e-canais.md#estados-do-nó)) (perguntas 177 e 208) |
 | Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Slot livre aparece tracejado, com `Free slot` e `Click to use` |
 | Slot escolhido | À direita, a configuração do slot selecionado |
 | Direção | Seletor `Input` e `Output` |
@@ -101,6 +101,7 @@ O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:09 | Adiciona o estado `Offline` na pílula da Tela do Nó, da #88. |
 | Zennd | 2026-11-11 13:46 | Descreve a escolha de rede, o nome do nó e o link da rede entregues na #87 (perguntas 198 a 208). |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 179. |
 | Zennd | 2026-11-11 09:51 | Aplica a abertura pelo Configurator, a escolha de rede, o nome do nó, a lista de nós e o log no lugar do gráfico (perguntas 139 a 160). |

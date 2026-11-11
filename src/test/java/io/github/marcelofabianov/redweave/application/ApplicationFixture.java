@@ -50,6 +50,7 @@ final class ApplicationFixture {
 
   private NetworkId networkOf(PlayerId owner, UUID id) {
     return new CreateNetwork(new FixedIds(List.of(id)), networks, networks, LIMITS)
-        .create(owner, CONTROLLER);
+        .create(owner, CONTROLLER)
+        .orElseThrow();
   }
 }

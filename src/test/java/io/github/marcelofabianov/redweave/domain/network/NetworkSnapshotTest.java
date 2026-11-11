@@ -84,11 +84,24 @@ class NetworkSnapshotTest {
   }
 
   @Test
-  void anOfflineNetworkComesBackOffline() {
+  void anUnplacedNetworkComesBackUnplaced() {
     Network network = busyNetwork();
     network.removeController(OWNER);
 
-    assertFalse(restored(network).isOnline());
+    assertEquals(NetworkState.UNPLACED, restored(network).state());
+  }
+
+  /** Turned off and unplaced, it comes back with both, and off when placed again (178). */
+  @Test
+  void aNetworkTurnedOffComesBackOffEvenUnplaced() {
+    Network network = busyNetwork();
+    network.turnOff(OWNER);
+    assertEquals(NetworkState.OFFLINE, restored(network).state());
+
+    network.removeController(OWNER);
+    Network unplaced = restored(network);
+    unplaced.placeController(OWNER, NetworkFixture.CONTROLLER);
+    assertEquals(NetworkState.OFFLINE, unplaced.state());
   }
 
   @Test

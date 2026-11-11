@@ -39,11 +39,11 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 
 #### Formato do save
 
-A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato da #16 com o que a #87 trouxe, ainda na `version` 1: o `name` do nó e o `last_used`, com `player` e `network`, no lugar do `current` (perguntas 157, 174 e 206). Com a #88, a rede ganha `offline`. O Network Terminal entra numa lista `terminals`, com `player` e o bloco (pergunta 175).
+A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato da #16 com o que a #87 trouxe, ainda na `version` 1: o `name` do nó e o `last_used`, com `player` e `network`, no lugar do `current` (perguntas 157, 174 e 206). A #88 trouxe o `offline` da rede. O Network Terminal entra numa lista `terminals`, com `player` e o bloco (pergunta 175).
 
 | Parte | Chaves |
 |---|---|
-| Rede | `id`, `owner`, `name`, `color`, `controller` (opcional), `channels` e `nodes` |
+| Rede | `id`, `owner`, `name`, `color`, `controller` (opcional), `offline` (opcional), `channels` e `nodes`. O `offline: true` só entra numa rede desligada pelo dono (pergunta 210) |
 | Bloco (`controller` e o do nó) | `dimension`, `x`, `y` e `z` |
 | Canal | `color` e `name`. Só os canais renomeados entram |
 | Nó | `id`, `name` (opcional), `block`, `face`, `slot_count`, de 1 a 9 (pergunta 95), e `slots`. O `name` só entra quando o dono renomeia o nó, como o nome do canal (pergunta 206) |
@@ -59,6 +59,7 @@ A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de 
 | O nome de um nó, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome, e o nó volta ao nome padrão (perguntas 92 e 206) |
 | Um nó que aparece em duas redes | Fica só na primeira |
 | Uma rede sem ID ou dono válido, ou com um nome vazio ou de mais de 64 caracteres | A rede não é carregada |
+| Um `offline` que não é verdadeiro ou falso | Sai só a chave, e a rede fica ligada (perguntas 92 e 210) |
 | Uma entrada de `last_used` que aponta para uma rede que não existe | É descartada |
 
 O teto são as faixas do config da pergunta 66: 9 slots e 64 caracteres.
@@ -75,7 +76,7 @@ Ao quebrar o controlador, o item guarda o `NetworkId` num data component (regra 
 
 ### Limite de redes
 
-Um player tem até `network.max_per_player` redes, 10 no começo (pergunta 145 e [`limites.md`](../limites.md)). O limite é conferido ao colocar um Network Controller que cria uma rede: no limite, o bloco não é colocado, e a action bar avisa. Todas as redes do player contam, inclusive as `Offline` e as `Unplaced`.
+Um player tem até `network.max_per_player` redes, 10 no começo (pergunta 145 e [`limites.md`](../limites.md)). O limite é conferido ao colocar um Network Controller que cria uma rede: no limite, o bloco não é colocado, e a action bar mostra `You have reached the limit of <n> networks. Delete an unplaced one at a Network Terminal.` (pergunta 211). Todas as redes do player contam, inclusive as `Offline` e as `Unplaced`.
 
 ## Canais
 
@@ -133,6 +134,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | `Unloaded` | O chunk do nó descarregou | Âmbar | A entrada mantém o último valor |
 | `Out of range` | Fora do raio do controlador ou em outra dimensão | Vermelho | Não conta, e a saída emite 0 |
 | `No network` | Sem rede, ou com a rede `Unplaced` | Cinza | Não conta |
+| `Offline` | Numa rede desligada pelo dono | Cinza | Não conta, e a saída emite 0 |
 
 Um nó de uma rede `Offline` mostra o estado `Offline` em cinza nas telas, no Jade e no The One Probe, não conta e emite 0 (pergunta 177).
 
@@ -240,6 +242,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:09 | Aplica a #88: a chave `offline`, o estado `Offline` do nó e o aviso do limite de redes (perguntas 209 a 211). |
 | Zennd | 2026-11-11 13:46 | Aplica a #87: o `name` do nó e o `last_used` no save, e o nome de nó inválido (perguntas 157, 174 e 206). |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 174, 175 e 177. |
 | Zennd | 2026-11-11 09:51 | Aplica o Network Terminal, os estados `Offline` e `Unplaced`, o limite de redes, o nome do nó e o nó que escolhe a rede (perguntas 129 a 172). |

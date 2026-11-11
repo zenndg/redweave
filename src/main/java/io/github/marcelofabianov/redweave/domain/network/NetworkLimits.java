@@ -15,4 +15,7 @@ public interface NetworkLimits {
 
   /** The radius of the reach of the controller, in blocks. 0 reaches the whole dimension. */
   int range();
+
+  /** How many networks a player may have, whatever their state (answer 145). */
+  int networksPerPlayer();
 }

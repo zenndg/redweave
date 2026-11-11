@@ -41,6 +41,7 @@ public final class NodeScreenTexts {
   public static final String STATE_UNLOADED = PREFIX + "state.unloaded";
   public static final String STATE_OUT_OF_RANGE = PREFIX + "state.out_of_range";
   public static final String STATE_NO_NETWORK = PREFIX + "state.no_network";
+  public static final String STATE_OFFLINE = PREFIX + "state.offline";
   public static final String CHOOSE_NETWORK = PREFIX + "choose_network";
   public static final String NO_NETWORK_ONLINE = PREFIX + "no_network_online";
   public static final String NODE_COUNT_ONE = PREFIX + "node_count.one";

@@ -13,6 +13,7 @@ import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NetworkState;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -78,6 +79,7 @@ public final class InvalidSaveGameTests {
   private static final String WRONG_NETWORKS = "Only the valid networks should stay";
   private static final String WRONG_LAST_USED = "A last used network should be a loaded one";
   private static final String WRONG_NODE_NAME = "Only the invalid name should leave the node";
+  private static final String WRONG_OFFLINE = "An invalid offline key should leave the network on";
   private static final String NOT_BACKED_UP = "An unknown version should be kept aside";
   private static final String NOT_EMPTY = "An unknown version should start with no networks";
   private static final String NOT_KEPT_UNREADABLE = "An unreadable file should be kept aside";
@@ -112,6 +114,21 @@ public final class InvalidSaveGameTests {
     helper.assertTrue(
         network.node(new NodeId(NODE)).orElseThrow().slots().equals(expected), WRONG_SLOTS);
     helper.assertTrue(network.snapshot().readings().isEmpty(), STRAY_READING);
+    helper.succeed();
+  }
+
+  /** The smallest part goes: the network stays, turned on (answers 92 and 210). */
+  @GameTest(template = EMPTY)
+  public static void anOfflineKeyThatIsNotABooleanIsDropped(GameTestHelper helper) {
+    CompoundTag network = SaveTags.network(NETWORK, OWNER, NAME, SaveTags.list(), SaveTags.list());
+    network.putString(SaveTags.OFFLINE, SIDEWAYS);
+
+    Network loaded =
+        load(SaveTags.list(network), SaveTags.list(), NO_FILE)
+            .find(new NetworkId(NETWORK))
+            .orElseThrow();
+
+    helper.assertTrue(loaded.state() == NetworkState.ONLINE, WRONG_OFFLINE);
     helper.succeed();
   }
 
