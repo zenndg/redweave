@@ -19,6 +19,7 @@ Closes #
 - `./gradlew check --rerun-tasks`:
 - `make gametest`:
 - `make check-generated`:
+- Cobertura (JaCoCo, mínimo de 85% e meta de 95%): `domain/` e `application/`, em instruções e ramos:
 
 **Teste numa instância só com o mod e no Iron Meridian:**
 

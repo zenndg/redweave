@@ -17,6 +17,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 - **Decisões:** o resumo do que foi decidido fica em `_docs/decisoes.md`.
 - **Histórico:** todo `.md` em `_docs/` termina com uma tabela de histórico de modificações, e quem altera o arquivo adiciona uma linha no topo dela. Fora de `_docs/`, os `.md` não têm essa tabela.
 - **Imagens:** ficam em `_docs/imagens/`.
+- **Arte do mod:** toda tela, ícone, item e bloco tem textura, e o desenvolvedor gera cada imagem numa ferramenta de IA. O agente cria `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`, e escreve ali o `prompt.md`. O desenvolvedor deixa a imagem pronta no mesmo diretório, e o agente a confere (grade, paleta e silhueta) antes de levá-la ao mod (perguntas 185 e 186).
 - **Rascunhos:** conversas e ideias vão para `tmp/`, que o Git ignora.
 - **Fluxo de trabalho:** o passo a passo de uma tarefa está em [`_docs/desenvolvimento/fluxo-de-trabalho.md`](_docs/desenvolvimento/fluxo-de-trabalho.md).
 
@@ -50,7 +51,7 @@ O desenvolvedor é sênior em TypeScript, Go e PHP, e Java é secundário para e
 
 - **Modding:** explique as decisões específicas de Minecraft quando não forem óbvias.
 - **Mudança neste arquivo:** justifique por que é necessária e espere a autorização do desenvolvedor.
-- **Encerramento:** sessão que termina com trabalho pendente deixa um prompt de continuidade em `tmp/prompt/{AAAA-MM-DD_HHhMM}_continuidade_{assunto}.md`, com a leitura obrigatória, o que foi feito e o que se espera da próxima sessão.
+- **Encerramento:** só quando o contexto da sessão chega a 80% ou mais, com trabalho pendente, o agente deixa um prompt de continuidade em `tmp/prompt/{AAAA-MM-DD_HHhMM}_continuidade_{assunto}.md`, com a leitura obrigatória, o que foi feito e o que se espera da próxima sessão. Abaixo disso, o trabalho segue na mesma sessão (pergunta 187).
 
 ### Decisões bloqueantes
 
@@ -108,7 +109,7 @@ O significado de cada pilar, os checklists e a matriz de decisão estão em [`_d
 
 28. **TDD:** o teste vem antes ou junto do código. Use JUnit 5 no domínio e GameTests no que depende do mundo.
 29. **Sem mock do jogo:** nunca faça mock de `Level` ou `BlockEntity`. Comportamento de mundo se testa no mundo.
-30. **Cobertura:** mínimo de 85% em `domain/`, medido com JaCoCo. O restante se cobre com GameTests e um roteiro manual.
+30. **Cobertura:** mínimo de 85% de instruções e de ramos em `domain/` e `application/`, medido com JaCoCo e garantido pelo hook de `pre-push`, com a meta de 95%. Todo PR informa a cobertura de cada um. O restante se cobre com GameTests e um roteiro manual, porque o JaCoCo não mede os GameTests e a regra 29 proíbe mock do jogo (perguntas 196 e 197).
 31. **Teste antes da `main`:** teste numa instância só com o mod e suas dependências e, depois, numa do Iron Meridian.
 
 ### Gates

@@ -2,23 +2,23 @@ package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.application.PasteResult;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
-import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.domain.network.Network;
-import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -26,44 +26,53 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** What the Configurator does on the server, each action giving the message for the player. */
+/** What the Configurator does on a node on the server, each action giving its message, if any. */
 final class ConfiguratorActions {
   private static final String NO_NAME = "";
+  private static final boolean KEEP_DROPS = false;
+  private static final boolean NOT_THROWN = false;
 
   private ConfiguratorActions() {}
 
-  /** Only the owner keeps the network, with its name for the tooltip (answers 104 and 112). */
-  static Component store(
-      RedweaveServer server, Player player, ItemStack stack, NetworkControllerBlockEntity block) {
-    Optional<Network> network = block.network().flatMap(server::network);
-    if (network.isEmpty()) {
-      return Component.translatable(ControllerMessages.NO_NETWORK);
-    }
-    if (server.storeNetwork().store(playerOf(player), network.get().id()) != Outcome.ACCEPTED) {
-      return Component.translatable(ConfiguratorMessages.NOT_YOURS);
-    }
-    stack.set(RedweaveDataComponents.NETWORK.get(), network.get().id());
-    stack.set(RedweaveDataComponents.NETWORK_NAME.get(), network.get().name());
-    return Component.translatable(ConfiguratorMessages.STORED, network.get().name());
+  static Optional<Component> onNode(
+      RedweaveServer server,
+      Player player,
+      UseOnContext context,
+      SignalNodeBlockEntity block,
+      ConfiguratorMode mode) {
+    return switch (mode) {
+      case OPEN -> open(player, context.getClickedPos());
+      case COPY -> copyOrPaste(server, player, context, block);
+      case WRENCH -> pickUp(server, player, context.getLevel(), context.getClickedPos(), block);
+    };
   }
 
-  /** Shift + click copies; a click pastes the copy, or links the node with no copy (105, 106). */
-  static Component onNode(
-      RedweaveServer server, UseOnContext context, SignalNodeBlockEntity block) {
+  /** The only way to open the Node Screen (answers 140 and 188). */
+  private static Optional<Component> open(Player player, BlockPos pos) {
+    if (player instanceof ServerPlayer viewer) {
+      SignalNodeBlock.openScreen(viewer, pos);
+    }
+    return Optional.empty();
+  }
+
+  /** A click copies, and Shift + click pastes; with no copy, nothing happens (127, 143, 195). */
+  private static Optional<Component> copyOrPaste(
+      RedweaveServer server, Player player, UseOnContext context, SignalNodeBlockEntity block) {
     Optional<NodeId> node = block.node();
     if (node.isEmpty()) {
-      return Component.translatable(ControllerMessages.NO_NETWORK);
+      return Optional.of(Component.translatable(ControllerMessages.NO_NETWORK));
     }
-    Player player = context.getPlayer();
     ItemStack stack = context.getItemInHand();
-    if (player.isSecondaryUseActive()) {
-      return copy(server, stack, node.get());
+    if (!player.isSecondaryUseActive()) {
+      return Optional.of(copy(server, stack, node.get()));
     }
     NodeCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
-    Component message =
-        copy == null ? link(server, context, node.get()) : paste(server, player, node.get(), copy);
+    if (copy == null) {
+      return Optional.empty();
+    }
+    Component message = paste(server, player, node.get(), copy);
     refresh(server, context.getLevel(), context.getClickedPos());
-    return message;
+    return Optional.of(message);
   }
 
   private static Component copy(RedweaveServer server, ItemStack stack, NodeId node) {
@@ -79,7 +88,7 @@ final class ConfiguratorActions {
     PasteResult result = server.pasteNode().paste(playerOf(player), node, copy);
     return switch (result.outcome()) {
       case ACCEPTED -> pasted(result);
-      case NOT_OWNER -> Component.translatable(NodeScreenTexts.READ_ONLY, nameOfNode(server, node));
+      case NOT_OWNER -> notOwner(server, node);
       default -> Component.translatable(ControllerMessages.NO_NETWORK);
     };
   }
@@ -92,29 +101,35 @@ final class ConfiguratorActions {
         ConfiguratorMessages.PASTED_LEFT_OUT, result.pasted(), result.leftOut());
   }
 
-  /** Links the node to the stored network, as a node just placed (answers 25 and 42). */
-  private static Component link(RedweaveServer server, UseOnContext context, NodeId node) {
-    NetworkId stored = context.getItemInHand().get(RedweaveDataComponents.NETWORK.get());
-    if (stored == null) {
-      return Component.translatable(ConfiguratorMessages.NOTHING_STORED);
+  /**
+   * Picks the node up as a plain item, as breaking it (answers 161 to 165): only the owner of its
+   * network or, without a network, who placed it. A node with no placer saved is refused (193).
+   */
+  private static Optional<Component> pickUp(
+      RedweaveServer server,
+      Player player,
+      Level level,
+      BlockPos pos,
+      SignalNodeBlockEntity block) {
+    Optional<NodeId> node = block.node();
+    Optional<Network> network = node.flatMap(server::networkOfNode);
+    if (network.isEmpty() && !block.wasPlacedBy(player)) {
+      return Optional.of(Component.translatable(ConfiguratorMessages.NOT_PLACER));
     }
-    Level level = context.getLevel();
-    BlockPos pos = context.getClickedPos();
-    Outcome outcome =
-        server
-            .linkNode()
-            .link(
-                playerOf(context.getPlayer()),
-                node,
-                SignalNodeBlock.positionOf(level, pos, level.getBlockState(pos)),
-                stored);
-    String name = server.network(stored).map(Network::name).orElse(NO_NAME);
-    return switch (outcome) {
-      case ACCEPTED -> Component.translatable(ConfiguratorMessages.LINKED, name);
-      case ALREADY_ATTACHED -> Component.translatable(ConfiguratorMessages.ALREADY_IN, name);
-      case NOT_OWNER -> Component.translatable(ConfiguratorMessages.OWN_BOTH);
-      default -> Component.translatable(ConfiguratorMessages.GONE);
-    };
+    if (network.isPresent()
+        && server.breakNode().breakBy(playerOf(player), node.orElseThrow()) != Outcome.ACCEPTED) {
+      return Optional.of(notOwner(server, node.orElseThrow()));
+    }
+    level.removeBlock(pos, KEEP_DROPS);
+    give(player, new ItemStack(RedweaveItems.SIGNAL_NODE.get()));
+    return Optional.of(Component.translatable(ConfiguratorMessages.PICKED_UP));
+  }
+
+  /** To the inventory, or to the ground at the feet of the player when it is full (answer 161). */
+  private static void give(Player player, ItemStack item) {
+    if (!player.getInventory().add(item)) {
+      player.drop(item, NOT_THROWN);
+    }
   }
 
   /** The new inputs are read at once, as when the node is placed, and the clients see the node. */
@@ -125,8 +140,9 @@ final class ConfiguratorActions {
     level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
   }
 
-  private static String nameOfNode(RedweaveServer server, NodeId node) {
-    return server.networkOfNode(node).map(Network::name).orElse(NO_NAME);
+  private static Component notOwner(RedweaveServer server, NodeId node) {
+    return Component.translatable(
+        NodeScreenTexts.READ_ONLY, server.networkOfNode(node).map(Network::name).orElse(NO_NAME));
   }
 
   private static PlayerId playerOf(Player player) {

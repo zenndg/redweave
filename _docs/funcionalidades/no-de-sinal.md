@@ -41,7 +41,7 @@ No fim de cada tick, o servidor avalia só as redes pendentes, com o simulador, 
 
 ## Clicar
 
-A [Tela do Nó](telas.md#tela-do-nó) abre com o [Configurator](configurador.md) no modo `Open` (pergunta 140). Um clique com a mão vazia não abre nada e mostra `Use a Configurator to open this node.` na action bar (pergunta 154). A #19 entregou a abertura com a mão vazia, que muda com essas perguntas.
+A [Tela do Nó](telas.md#tela-do-nó) abre com o [Configurator](configurador.md) no modo `Open` (pergunta 140). Um clique com a mão vazia não abre nada e mostra `Use a Configurator to open this node.` na action bar (pergunta 154). A #19 entregou a abertura com a mão vazia, que a #86 trocou pela abertura com o Configurator (pergunta 188).
 
 ## Quebrar
 
@@ -86,6 +86,7 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:21 | Aplica a pergunta 188. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 177. |
 | Zennd | 2026-11-11 09:51 | Aplica o nó que nasce sem rede, o nome, quem colocou, a abertura pelo Configurator e a Chave (perguntas 139 a 172). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |

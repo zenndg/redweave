@@ -187,6 +187,18 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Recolocar uma rede Offline | Volta `Offline` | 178 |
 | Lista de nós | Nome, sinal da lente e posição, com canal e direção por slot ao expandir | 179 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
+| Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
+| Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
+| Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
+| Dono do nó | O `owner` entra na #86, com a Chave | 189 |
+| Textos dos modos | `Mode: <modo>`, `Node picked up` e as dicas por modo | 190 |
+| Testes da #86 | JUnit no ciclo dos modos e GameTests no mundo | 191 |
+| Sentido do scroll | Como a hotbar: para baixo avança | 192 |
+| Nó sem `owner` | A Chave recusa; a mão ainda quebra | 193 |
+| `LinkNode` | Fica na aplicação para a troca de rede da #87 | 194 |
+| Colar sem cópia | Nada, sem mensagem | 195 |
+| Escopo da cobertura | `domain/` e `application/`, no `pre-push` | 196 |
+| Mínimo da cobertura | 85%, com meta de 95% | 197 |
 
 Não há perguntas pendentes da concepção.
 
@@ -194,6 +206,12 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:18 | Registra as decisões 196 e 197. |
+| Zennd | 2026-11-11 11:06 | Registra a decisão 195. |
+| Zennd | 2026-11-11 11:04 | Registra a decisão 194. |
+| Zennd | 2026-11-11 11:01 | Registra as decisões 188 a 193. |
+| Zennd | 2026-11-11 10:53 | Registra a decisão 187. |
+| Zennd | 2026-11-11 10:48 | Registra a decisão 186. |
 | Zennd | 2026-11-11 10:32 | Registra a decisão 185. |
 | Zennd | 2026-11-11 10:24 | Registra as decisões 173 a 179. |
 | Zennd | 2026-11-11 10:45 | Registra a decisão 184. |
