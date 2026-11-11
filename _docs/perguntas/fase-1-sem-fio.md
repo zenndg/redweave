@@ -11,6 +11,13 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 221 | Com a #20, o dono renomeia os canais. A Tela do Nó mostra esses nomes? | Sim, na própria #20: a Tela do Nó recebe do servidor os 16 nomes de canal, só quando mudam, e mostra o nome dado, como `15 Main door`, nos slots e no canal escolhido. Sem nome próprio, continua o nome da cor (pergunta 26) |
+| 220 | O que a aba `Nodes` da Tela do Controlador mostra numa rede ainda sem nenhum nó? | A tabela vazia com `No node in this network yet.` e `Nenhum nó nesta rede ainda.` no meio, como a lista vazia da escolha de rede (pergunta 199) |
+| 219 | O que o rodapé da Tela do Controlador mostra quando nenhum nó está `Unloaded` ou `Out of range`? | As duas contagens sempre aparecem, mesmo com zero, nas cores, como `0 nodes unloaded` em âmbar e `0 nodes out of range` em vermelho, como no mockup da pergunta 214 |
+| 218 | Quantas linhas da aba `Nodes` da Tela do Controlador podem ficar abertas, com os slots à mostra, ao mesmo tempo? | Uma por vez: abrir uma linha fecha a anterior, como no mockup da pergunta 214. A linha aberta é só do cliente |
+| 217 | Como o dono põe o nome de um nó em edição na aba `Nodes`? | Com um clique no nome, que vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão, como o canal na aba `Signals`. O clique no resto da linha abre e fecha os slots. Para os outros players, a linha inteira só abre e fecha. Completa a pergunta 144 |
+| 216 | Em que ordem a aba `Nodes` da Tela do Controlador lista os nós? | Na ordem em que entraram na rede, como o domínio já guarda. Um nó novo vai para o fim |
+| 215 | O que a Tela do Controlador mostra no lugar da aba `Log` na #20, antes da #90? | Nada: a #20 entrega só as abas `Nodes`, `Signals` e `Access`, e a #90 acrescenta a aba `Log`. Nenhuma aba fica na tela sem função. Completa a pergunta 213 |
 | 214 | A prancha de arte nova da Tela do Controlador já inclui a aba `Log` da #90? | Sim: um prompt em `tmp/arte/controller_screen/` com a tela inteira, o cabeçalho, as abas `Nodes` com uma linha expandida, `Signals`, `Access` e `Log`, e a paleta de cores. A #20 e a #90 usam a mesma prancha (perguntas 185 e 186) |
 | 213 | Como a #20 é entregue, sendo a maior tela até agora? | Numa issue e num PR, com tudo: a tela, o cabeçalho com nome, cor e `Rename`, as abas `Nodes`, `Signals` e `Access` e o rodapé. A aba `Log` continua na #90 |
 | 212 | Onde o dono troca a cor da rede na Tela do Controlador? | No cabeçalho: o dono clica no quadrado da cor ao lado do nome, e abre uma paleta com as 16 cores, nos mesmos swatches da Tela do Nó. Para os outros players, o quadrado não reage. Completa a pergunta 156 |
@@ -214,6 +221,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 15:24 | Responde a pergunta 221. |
+| Zennd | 2026-11-11 15:08 | Responde as perguntas 219 e 220. |
+| Zennd | 2026-11-11 14:52 | Responde as perguntas 216 a 218. |
+| Zennd | 2026-11-11 14:40 | Responde a pergunta 215. |
 | Zennd | 2026-11-11 14:21 | Responde as perguntas 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Responde as perguntas 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Responde as perguntas 206 a 208. |

@@ -216,6 +216,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cor da rede na Tela do Controlador | Clique no quadrado da cor, com a paleta de 16 cores | 212 |
 | Entrega da #20 | Uma issue e um PR, com as abas `Nodes`, `Signals` e `Access` | 213 |
 | Prancha da Tela do Controlador | Uma só, já com a aba `Log` da #90 | 214 |
+| Aba `Log` na #20 | Não aparece; a #90 a acrescenta | 215 |
+| Ordem da aba `Nodes` | A ordem em que os nós entraram na rede | 216 |
+| Renomear o nó na aba `Nodes` | Clique no nome, para o dono; o resto da linha abre os slots | 217 |
+| Linhas abertas na aba `Nodes` | Uma por vez | 218 |
+| Contagens do rodapé com zero | Sempre aparecem, nas cores | 219 |
+| Aba `Nodes` sem nós | Texto de ajuda no meio da tabela | 220 |
+| Nome do canal na Tela do Nó | Entra na #20, com os nomes enviados só quando mudam | 221 |
 
 Não há perguntas pendentes da concepção.
 
@@ -223,6 +230,10 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 15:24 | Registra a decisão 221. |
+| Zennd | 2026-11-11 15:08 | Registra as decisões 219 e 220. |
+| Zennd | 2026-11-11 14:52 | Registra as decisões 216 a 218. |
+| Zennd | 2026-11-11 14:40 | Registra a decisão 215. |
 | Zennd | 2026-11-11 14:21 | Registra as decisões 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Registra as decisões 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Registra as decisões 206 a 208. |
