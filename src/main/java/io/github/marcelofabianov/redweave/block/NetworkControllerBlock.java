@@ -3,6 +3,9 @@ package io.github.marcelofabianov.redweave.block;
 import com.mojang.serialization.MapCodec;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
+import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -113,8 +116,8 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
   }
 
   /**
-   * Only an empty hand uses this block itself. With an item, as the Configurator, the click goes
-   * straight to the item (answer 113).
+   * An empty hand and the Configurator in the Open mode use this block itself (answers 113 and
+   * 232). With any other item, or another mode, the click goes straight to the item.
    */
   @Override
   protected ItemInteractionResult useItemOn(
@@ -125,24 +128,38 @@ public final class NetworkControllerBlock extends Block implements EntityBlock {
       Player player,
       InteractionHand hand,
       BlockHitResult hit) {
+    if (opens(stack)) {
+      click(level, pos, player);
+      return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
     if (!stack.isEmpty()) {
       return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
     }
     return super.useItemOn(stack, state, level, pos, player, hand, hit);
   }
 
+  private static boolean opens(ItemStack stack) {
+    return stack.is(RedweaveItems.CONFIGURATOR.get())
+        && ConfiguratorItem.modeOf(stack) == ConfiguratorMode.OPEN;
+  }
+
   @Override
   protected InteractionResult useWithoutItem(
       BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    click(level, pos, player);
+    return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  /** Opens the Controller Screen, or says why not, on the server (answers 158 and 160). */
+  private static void click(Level level, BlockPos pos, Player player) {
     if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
+      return;
     }
     Optional<RedweaveServer> server = RedweaveServer.running();
     Optional<NetworkControllerBlockEntity> controller = controllerAt(level, pos);
     if (server.isPresent() && controller.isPresent()) {
       ControllerClick.show(server.get(), controller.get(), player);
     }
-    return InteractionResult.CONSUME;
   }
 
   private static boolean ownedBy(BlockGetter level, BlockPos pos, Player player) {

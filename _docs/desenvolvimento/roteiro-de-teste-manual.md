@@ -101,6 +101,7 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 | # | Faça | Espere ver |
 |---|---|---|
 | 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals` e `Access`, sem `Log`, e o rodapé em duas linhas |
+| 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
 | 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o sinal de 0 a 15 ao vivo e a posição do bloco de cada nó |
 | 54 | Clique numa linha, depois em outra | A primeira abre os slots, como `Slot 1 · 01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
 | 55 | Clique uma vez no nome de um nó; depois clique duas vezes nele, digite `Lever` e aperte Enter; repita, apague o texto e aperte Enter | Um clique só abre ou fecha os slots; o duplo clique abre o campo e deixa a linha como estava; o nome muda na lista e na Tela do Nó, e vazio volta aos 8 primeiros caracteres do ID |
@@ -121,6 +122,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | Adiciona o passo 52a, do Configurator no controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:47 | Ajusta os passos 55, 58 e 62 ao duplo clique da pergunta 222. |
 | Zennd | 2026-11-11 15:40 | Ajusta o passo 2 e adiciona os passos 52 a 65, da #20. |
 | Zennd | 2026-11-11 14:09 | Adiciona os passos 44 a 51, da #88. |

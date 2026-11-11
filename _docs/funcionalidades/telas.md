@@ -78,7 +78,7 @@ O que a tela faz, decidido na issue #19.
 
 ![Tela do Controlador](../imagens/telas/tela-do-controlador.png)
 
-**Abre** com um clique no Network Controller com a mão vazia, ou pela lista do [Network Terminal](terminal-de-rede.md) (perguntas 113 e 131). O desenho tem seis variantes, com a aba `Log` da #90 (pergunta 214), e os sprites estão em [`tela-do-controlador-sprites.png`](../imagens/telas/tela-do-controlador-sprites.png).
+**Abre** com um clique no Network Controller com a mão vazia ou com o Configurator no modo `Open` (pergunta 232), ou pela lista do [Network Terminal](terminal-de-rede.md) (perguntas 113 e 131). O desenho tem seis variantes, com a aba `Log` da #90 (pergunta 214), e os sprites estão em [`tela-do-controlador-sprites.png`](../imagens/telas/tela-do-controlador-sprites.png).
 
 | Parte | O que mostra |
 |---|---|
@@ -120,6 +120,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` também abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:47 | Aplica a pergunta 222: nós e canais são renomeados com duplo clique. |
 | Zennd | 2026-11-11 15:40 | Descreve a Tela do Controlador entregue na #20, com a imagem nova e as perguntas 212 a 221. |
 | Zennd | 2026-11-11 14:09 | Adiciona o estado `Offline` na pílula da Tela do Nó, da #88. |

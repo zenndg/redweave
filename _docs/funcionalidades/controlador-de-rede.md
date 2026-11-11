@@ -23,7 +23,7 @@ O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves
 
 ## Clicar
 
-Um clique com a mão vazia abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201).
+Um clique com a mão vazia, ou com o Configurator no modo `Open`, abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201). Os modos `Copy` e `Wrench` não agem no controlador (perguntas 164 e 232).
 
 | Situação | O que acontece | Pergunta |
 |---|---|---|
@@ -98,6 +98,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:40 | O clique com a mão vazia abre a Tela do Controlador, da #20. |
 | Zennd | 2026-11-11 14:09 | Registra o aviso do limite de redes e o núcleo apagado da rede `Offline`, da #88. |
 | Zennd | 2026-11-11 13:46 | Aplica a pergunta 201, da #87: o clique mostra a mesma mensagem para todos. |

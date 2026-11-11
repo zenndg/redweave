@@ -24,7 +24,7 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Abrir
 
-É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
+É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. No Network Controller, o modo `Open` faz o mesmo que a mão vazia e abre a Tela do Controlador (pergunta 232). Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
 
 ### Copiar
 
@@ -97,6 +97,7 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | O modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 11:21 | Aplica as perguntas 188 a 195, da #86. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 173. |
 | Zennd | 2026-11-11 09:51 | Reescreve o Configurator com os modos `Open`, `Copy` e `Wrench`, sem guardar a rede e sem ligar nós (perguntas 125 a 169). |

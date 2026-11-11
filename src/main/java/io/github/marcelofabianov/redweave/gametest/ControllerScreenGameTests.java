@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenCodes;
 import io.github.marcelofabianov.redweave.menu.RenameTarget;
@@ -20,6 +21,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -61,6 +63,8 @@ public final class ControllerScreenGameTests {
   private static final String VALID_FAR = "The screen should close beyond the reach";
   private static final String VALID_OFF = "The screen should close when the network turns off";
   private static final String INVALID_NEAR = "The screen should hold within reach";
+  private static final String NOT_TAKEN = "The Configurator in Open should click the controller";
+  private static final String TAKEN = "The Configurator in Copy should not click the controller";
 
   private ControllerScreenGameTests() {}
 
@@ -98,9 +102,26 @@ public final class ControllerScreenGameTests {
     NetworkId id = placeController(helper, owner);
     networkOf(id).turnOff(new PlayerId(owner.getUUID()));
 
-    clickTheController(helper, owner);
+    clickTheControllerByHand(helper, owner);
 
     helper.assertFalse(owner.containerMenu instanceof ControllerMenu, OPENED_OFF);
+    helper.succeed();
+  }
+
+  /**
+   * The Configurator in the Open mode clicks the controller as an empty hand, and the other modes
+   * do not (answer 232). A network turned off keeps the mock player from receiving a screen.
+   */
+  @GameTest(template = EMPTY)
+  public static void onlyTheOpenModeClicksTheController(GameTestHelper helper) {
+    ServerPlayer owner = helper.makeMockServerPlayerInLevel();
+    NetworkId id = placeController(helper, owner);
+    networkOf(id).turnOff(new PlayerId(owner.getUUID()));
+
+    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
+    helper.assertTrue(clickTheController(helper, owner).consumesAction(), NOT_TAKEN);
+    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.COPY);
+    helper.assertFalse(clickTheController(helper, owner).consumesAction(), TAKEN);
     helper.succeed();
   }
 
@@ -191,12 +212,19 @@ public final class ControllerScreenGameTests {
     return NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
   }
 
-  private static void clickTheController(GameTestHelper helper, ServerPlayer player) {
+  /** A right-click on the controller with the hand empty. */
+  private static void clickTheControllerByHand(GameTestHelper helper, ServerPlayer player) {
     player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+    clickTheController(helper, player);
+  }
+
+  /** A right-click on the controller with what the player holds, as the game handles it. */
+  private static InteractionResult clickTheController(GameTestHelper helper, ServerPlayer player) {
     BlockPos pos = pos(helper);
     BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
-    player.gameMode.useItemOn(
-        player, helper.getLevel(), ItemStack.EMPTY, InteractionHand.MAIN_HAND, hit);
+    ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
+    return player.gameMode.useItemOn(
+        player, helper.getLevel(), held, InteractionHand.MAIN_HAND, hit);
   }
 
   private static BlockPos pos(GameTestHelper helper) {
