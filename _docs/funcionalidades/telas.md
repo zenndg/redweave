@@ -47,8 +47,8 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Canal escolhido | Abaixo da fileira, o painel do canal: o título, como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
 | Nome | O nome do slot, num campo, como `Redstone from lever 1`, ou `Click to name` vazio. Para o dono, vem com um lápis, e o clique o troca por um campo de texto: Enter salva, Esc cancela, e vazio tira o nome. O limite é `slot.name_length` (pergunta 227) |
 | Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
-| Direção | Seletor `Input` e `Output`, apagado num canal inativo |
-| Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e `click a face to change`, apagado num canal inativo |
+| Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
+| Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e `click a face to change`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
 | Lógica | `None`, `Invert`, `Pulse`, `Delay` e `Threshold`. Na Fase 1, só `None` fica habilitada, com o aviso `Logic arrives in Phase 2.` |
 | Rodapé | O medidor de 15 barras com o sinal do canal escolhido e quantos canais estão ativos, como `3 of 16 channels active` |
 
@@ -63,6 +63,7 @@ O que a tela faz, decidido na issue #19.
 | Desenho | Sprites em pixel art, em 9-slice como os do jogo, das folhas [`tela-do-no-sprites-a.png`](../imagens/telas/tela-do-no-sprites-a.png), [`tela-do-no-sprites-b.png`](../imagens/telas/tela-do-no-sprites-b.png) e [`tela-do-no-sprites-d.png`](../imagens/telas/tela-do-no-sprites-d.png). Os textos usam a fonte do jogo | 78 e 231 |
 | Escolher um canal | Um clique num canal da fileira o mostra no painel. A tela abre no primeiro canal ativo, ou no `01` sem nenhum ativo. A escolha é só do cliente | — |
 | Ativar e desativar | O clique na pílula `Status` troca entre `Enabled` e `Disabled`. Na primeira ativação, o canal vira `Input` na face onde o nó está grudado; desativar guarda a direção, a face e o nome | 226 e 228 |
+| Configurar | Direção e face mudam só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer. Com `Enabled`, os controles ficam travados, e o servidor recusa a mudança. Para mudar um canal ativo, o dono desativa, configura e ativa | 237 |
 | Direção | Um clique em `Input` ou `Output` troca a direção do slot | — |
 | Face do bloco | Um cubo 3D com o próprio bloco de apoio, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face | 79 |
 | Medidor | O sinal do canal escolhido: na entrada, a última leitura; na saída, o que ela emite; inativo, 0 | — |
@@ -84,7 +85,7 @@ O que a tela faz, decidido na issue #19.
 | Abas | `Nodes`, `Signals` e `Access`. A aba `Log` entra com a #90 (pergunta 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com o nome, o sinal de 0 a 15 e a posição x, y e z do bloco do nó (perguntas 179 e 216). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). A posição só aparece para o dono (pergunta 149). Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29). Um Signal Remote aparecerá com a posição `held item`, quando o Remote existir |
 | Log | Entra com a #90: uma linha por mudança de valor de uma entrada ou de uma saída, com a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
-| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero (pergunta 219). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
+| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
 
@@ -117,6 +118,8 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o canal `Disabled` (pergunta 237). |
+| Zennd | 2026-11-11 16:40 | Encurta as contagens do rodapé da Tela do Controlador (pergunta 236). |
 | Zennd | 2026-11-11 16:45 | A linha aberta da Tela do Controlador mostra só os canais ativos, com o nome do slot (pergunta 234). |
 | Zennd | 2026-11-11 16:40 | Redesenha a Tela do Nó com os 16 canais, o status e o nome do slot, e tira as abas laterais (perguntas 224 a 233). |
 | Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` também abre a Tela do Controlador (pergunta 232). |

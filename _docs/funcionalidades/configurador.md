@@ -38,7 +38,8 @@ Colar substitui os 16 slots do nó de destino pelos da cópia, com o status e o 
 |---|---|
 | Face grudada | Um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para ler o próprio bloco em qualquer orientação (pergunta 71). As outras faces ficam como estão |
 | Rede | O nó continua na rede dele. Os canais são os mesmos em toda rede, porque são as 16 cores |
-| Dono | Só o dono da rede do nó cola. Um nó sem rede recusa |
+| Dono | Só o dono da rede do nó cola. Num nó com rede, a rede não muda (pergunta 239) |
+| Nó sem rede | Colar liga o nó à rede da cópia e aplica os slots, como escolher a rede na Tela do Nó: só quem colocou o nó, sendo dono da rede da cópia, com ela `Online`, e ela vira a última rede usada (pergunta 238) |
 | Cópia | Continua no item até o Shift + clique no ar, então cola em vários nós |
 | Sem cópia | O Shift + clique não faz nada nem mostra mensagem (pergunta 195) |
 
@@ -58,7 +59,10 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Copiar | Nó sem rede | `No network` |
 | Colar | Colou | `Pasted <n> slots`, com os slots ativos |
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
-| Colar | Nó sem rede | `No network` |
+| Colar | Nó sem rede, colocado por outro player | `Only the player who placed this node can paste a network on it.` |
+| Colar | Nó sem rede, rede da cópia de outro dono | `Only the owner of <rede> can change this node.` |
+| Colar | Nó sem rede, rede da cópia desligada | `<rede> is offline. Turn it on at a Network Terminal.` |
+| Colar | Nó sem rede, rede da cópia que não existe mais | `No network` |
 | Limpar | Apagou | `Copy cleared` |
 | Trocar de modo | Trocou | `Mode: <modo>`, com o nome na cor do modo |
 | Retirar | Retirou | `Node picked up` |
@@ -80,11 +84,11 @@ O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` qu
 | Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51). A camada do visor, que mostra o modo, fica para a issue #80 (pergunta 159) |
 | Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy` ou `wrench` (pergunta 173). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
 
-O item não guarda mais a rede: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). O `redweave:network` continua no item do Network Controller.
+O item não guarda mais a rede atual: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). A cópia guarda a rede do nó copiado, para colar num nó sem rede (pergunta 238). O `redweave:network` continua no item do Network Controller.
 
 ### Formato da cópia
 
-O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction`, `face` e `name` (opcional) de cada slot já ativado alguma vez, como no save. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
+O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (pergunta 238), `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction`, `face` e `name` (opcional) de cada slot já ativado alguma vez, como no save. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
 
 ## Fora desta funcionalidade
 
@@ -95,6 +99,7 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:20 | Colar num nó sem rede o liga à rede da cópia (perguntas 238 e 239). |
 | Zennd | 2026-11-11 16:40 | A cópia leva os 16 slots, com o status e o nome (perguntas 224 e 230). |
 | Zennd | 2026-11-11 16:12 | O modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 11:21 | Aplica as perguntas 188 a 195, da #86. |
