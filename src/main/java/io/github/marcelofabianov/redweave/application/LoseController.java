@@ -5,7 +5,7 @@ import io.github.marcelofabianov.redweave.domain.network.Outcome;
 
 /**
  * The controller left the world without its owner breaking it, as in creative, by a command or by
- * another mod. The block is already gone, so the network goes offline anyway (answer 49).
+ * another mod. The block is already gone, so the network is unplaced anyway (answer 49).
  */
 public final class LoseController {
   private final NetworkFinder finder;

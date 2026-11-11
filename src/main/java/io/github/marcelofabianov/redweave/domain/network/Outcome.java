@@ -16,5 +16,9 @@ public enum Outcome {
   /** The network is not in the world, as one asked for by an old packet (answer 41). */
   UNKNOWN_NETWORK,
   /** A node only joins a network that is online, with its controller in the world (157 and 172). */
-  NETWORK_NOT_ONLINE
+  NETWORK_NOT_ONLINE,
+  /** Only an offline network turns back on; an unplaced one waits for its controller (135). */
+  NETWORK_NOT_OFFLINE,
+  /** The player already has network.max_per_player networks, so no new one is born (145). */
+  NETWORK_LIMIT
 }

@@ -8,6 +8,8 @@ public enum NodeState {
   UNLOADED,
   /** Out of the radius or in another dimension: it does not count, and its outputs emit off. */
   OUT_OF_RANGE,
-  /** Not in the network, or the network is offline. */
-  NO_NETWORK
+  /** Not in the network, or the network is unplaced (answer 146). */
+  NO_NETWORK,
+  /** Its network is turned off: it does not count, and its outputs emit off (answer 177). */
+  OFFLINE
 }

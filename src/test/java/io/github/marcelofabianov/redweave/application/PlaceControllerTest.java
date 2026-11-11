@@ -22,12 +22,18 @@ class PlaceControllerTest {
   private static final NetworkId NEW_NETWORK = new NetworkId(NEW_ID);
   private static final BlockLocation HERE = new BlockLocation(OVERWORLD, 40, 64, 12);
 
+  private static final int ONE_NETWORK = 1;
+
   private final ApplicationFixture fixture = new ApplicationFixture();
 
   private PlaceController placeController() {
+    return placeControllerWith(TestLimits.STARTING);
+  }
+
+  private PlaceController placeControllerWith(TestLimits limits) {
     CreateNetwork create =
         new CreateNetwork(
-            new FixedIds(List.of(NEW_ID)), fixture.networks, fixture.networks, TestLimits.STARTING);
+            new FixedIds(List.of(NEW_ID)), fixture.networks, fixture.networks, limits);
     return new PlaceController(create, fixture.networks, fixture.networks);
   }
 
@@ -40,7 +46,7 @@ class PlaceControllerTest {
   }
 
   @Test
-  void anItemWithAnOfflineNetworkOfThePlayerBringsItBackWhereTheBlockIs() {
+  void anItemWithAnUnplacedNetworkOfThePlayerBringsItBackWhereTheBlockIs() {
     NetworkId stored = fixture.ownersNetwork();
     fixture.networks.find(stored).orElseThrow().removeController(OWNER);
     int savesBefore = fixture.networks.saves();
@@ -84,5 +90,32 @@ class PlaceControllerTest {
     PlacedController placed = placeController().place(OWNER, Optional.of(MISSING_NETWORK), HERE);
 
     assertEquals(new PlacedController(Outcome.ACCEPTED, Optional.of(NEW_NETWORK)), placed);
+  }
+
+  /** At the limit, an item without a network is not placed (answer 145). */
+  @Test
+  void anItemWithoutANetworkAtTheLimitIsNotPlaced() {
+    PlaceController atTheLimit =
+        placeControllerWith(TestLimits.STARTING.withNetworksPerPlayer(ONE_NETWORK));
+    fixture.ownersNetwork();
+    int savesBefore = fixture.networks.saves();
+
+    PlacedController placed = atTheLimit.place(OWNER, Optional.empty(), HERE);
+
+    assertEquals(new PlacedController(Outcome.NETWORK_LIMIT, Optional.empty()), placed);
+    assertEquals(savesBefore, fixture.networks.saves());
+  }
+
+  /** Bringing a network back creates none, so the limit does not stop it (answer 145). */
+  @Test
+  void anItemWithAnUnplacedNetworkComesBackEvenAtTheLimit() {
+    PlaceController atTheLimit =
+        placeControllerWith(TestLimits.STARTING.withNetworksPerPlayer(ONE_NETWORK));
+    NetworkId stored = fixture.ownersNetwork();
+    fixture.networks.find(stored).orElseThrow().removeController(OWNER);
+
+    PlacedController placed = atTheLimit.place(OWNER, Optional.of(stored), HERE);
+
+    assertEquals(new PlacedController(Outcome.ACCEPTED, Optional.of(stored)), placed);
   }
 }

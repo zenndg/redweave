@@ -25,7 +25,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
-| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED` e `NETWORK_NOT_ONLINE`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14 e #87 |
+| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE` e `NETWORK_LIMIT`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14 e #87 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
@@ -37,7 +37,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
 | `NetworkLimits` | Os números da rede: slots por nó, tamanho dos nomes e o raio do alcance. O domínio define a interface, e o config a implementa | #10 e #11 |
 | `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
-| `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE` ou `NO_NETWORK` | #11 |
+| `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE`, `NO_NETWORK` ou `OFFLINE` | #11 e #88 |
+| `NetworkState` | O estado da rede: `ONLINE`; `OFFLINE`, desligada pelo dono; ou `UNPLACED`, sem o controlador no mundo (perguntas 135 e 146) | #88 |
+| `NetworkStatus` | Dentro da rede: onde está o controlador e se o dono a desligou. Saiu do `Network` como `Channels` | #88 |
+| `NetworkSignals` | Dentro da rede: as consultas de sinal (`channelValue`, `output`, `slotSignal`, `emission`, `nodeState` e `counts`), que só leem as partes da rede. Saiu do `Network` como `Readings` | #88 |
 | `readInput`, `channelValue` e `output` | A regra do canal, no `Network`: guarda a última leitura de cada entrada, dá o mais forte entre as que contam e o que cada saída emite | #11 |
 | `emission` | O que um nó emite no mundo: a mais forte entre as saídas dele, porque ele alimenta o bloco de apoio como uma alavanca (pergunta 71) | #15 |
 | `slotSignal` | O sinal de um slot, para o medidor da Tela do Nó: a última leitura numa entrada e o que a saída emite | #19 |
@@ -68,16 +71,17 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Esfera pelos quadrados:** o alcance compara os quadrados das distâncias, em `long`, sem raiz, sem arredondamento e sem estouro perto da borda do mundo (pergunta 36).
 - **Fora de alcance vence descarregado:** na tela, um nó fora do raio aparece como `OUT_OF_RANGE` mesmo descarregado, porque é isso que o impede de contar.
 - **Remote volta a 0:** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado (pergunta 27).
-- **Rede `Offline` zera tudo:** sem o controlador colocado, todos os canais valem 0 (pergunta 24).
+- **Só a rede `Online` conta:** numa rede `Offline` ou `Unplaced`, todos os canais valem 0, e as saídas emitem 0 (perguntas 24 e 135). As leituras das entradas continuam guardadas, então a rede religada volta com os valores de antes.
+- **Desligar é escolha do dono:** `turnOff` só vale numa rede `Online`, e `turnOn` só numa `Offline`; uma `Unplaced` espera o controlador. O `Offline` fica guardado enquanto o controlador está fora do mundo, e a rede volta desligada (perguntas 132, 135 e 178). Só o Network Terminal da #89 chama essas operações no jogo (pergunta 209).
 - **Só o dono altera:** toda operação que muda a rede recebe quem pede e confere com `isOwner`, sem exceção para operadores (perguntas 22 e 28). O controlador também: só o dono o retira e o recoloca (pergunta 30).
 - **Recusa é resultado:** um pedido de outro player ou um nome inválido são casos esperados, então a operação devolve um `Outcome` e não muda nada. Exceção fica para erro de programação, como um argumento nulo ou um nome padrão inválido na criação (perguntas 32 e 35).
 - **Agregado mutável, valores imutáveis:** a rede muda pelas operações, e as consultas devolvem listas imutáveis. `Node` e `ChannelSlot` são valores: mudar um slot troca o nó inteiro (pergunta 33).
 - **Nome aparado e recusado:** as pontas saem, e vazio ou longo demais é recusado. No canal, vazio volta ao nome da cor (pergunta 34).
-- **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Offline`, e recolocar volta na nova posição, com tudo igual (pergunta 24). Uma rede com o controlador colocado recusa outro com `ALREADY_PLACED`, para um item copiado não dar dois controladores a ela, e mover é retirar e recolocar (pergunta 56).
-- **Controlador perdido sem pedido:** quando o bloco some sem o dono quebrá-lo, como no criativo, por comando ou por outro mod, `loseController` deixa a rede `Offline` sem receber quem pede, porque não há a quem perguntar. Só `removeController`, a quebra pelo dono, confere o dono (pergunta 49).
+- **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Unplaced`, e recolocar volta na nova posição, com tudo igual, no estado que tinha (perguntas 24, 146 e 178). Uma rede com o controlador colocado recusa outro com `ALREADY_PLACED`, para um item copiado não dar dois controladores a ela, e mover é retirar e recolocar (pergunta 56).
+- **Controlador perdido sem pedido:** quando o bloco some sem o dono quebrá-lo, como no criativo, por comando ou por outro mod, `loseController` deixa a rede `Unplaced` sem receber quem pede, porque não há a quem perguntar. Só `removeController`, a quebra pelo dono, confere o dono (pergunta 49).
 - **Nó perdido sem pedido:** do mesmo jeito, `loseNode` tira da rede o nó cujo bloco sumiu ou que uma explosão levou, sem receber quem pede. Só `detachNode`, a retirada pelo dono, confere o dono (pergunta 74).
 - **Uma rede por nó, garantida fora:** o agregado não enxerga as outras redes, então o `LinkNode`, em `application/`, tira o nó da rede antiga antes de ligá-lo na nova. Ele confere tudo antes de mudar algo, e quem pede precisa ser dono das duas redes (pergunta 42).
-- **Só rede `Online` recebe nó:** `attachNode` recusa com `NETWORK_NOT_ONLINE` uma rede sem o controlador colocado, porque o player só escolhe entre as redes `Online` dele (perguntas 157 e 172).
+- **Só rede `Online` recebe nó:** `attachNode` recusa com `NETWORK_NOT_ONLINE` uma rede `Offline` ou `Unplaced`, porque o player só escolhe entre as redes `Online` dele (perguntas 157 e 172).
 - **Nome do nó opcional:** sem nome próprio, o nó mostra os 8 primeiros caracteres do ID, calculados na hora, então não há nome padrão gravado que fique velho. Renomear para vazio limpa o nome (perguntas 144 e 206). O nome é do nó, então ele o leva ao trocar de rede, mesmo que passe do limite de hoje, como na restauração (perguntas 93 e 200).
 - **Primeiro canal livre:** é o primeiro, na ordem das cores, sem nenhum slot na rede (pergunta 25).
 - **Avaliação por mudança:** uma leitura que muda o valor, ou uma mudança de estrutura aceita, deixa a rede pendente. Renomear a rede, o canal ou o nó e trocar a cor, não, porque não mudam sinal. O simulador ignora a rede que não espera e, depois de avaliar, ela para de esperar, então uma segunda chamada no mesmo tick não faz nada (regra 18).

@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.network.NetworkState;
 import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
@@ -40,6 +41,11 @@ final class ConfiguratorActions {
       UseOnContext context,
       SignalNodeBlockEntity block,
       ConfiguratorMode mode) {
+    Optional<Network> offline =
+        block.node().flatMap(server::networkOfNode).filter(ConfiguratorActions::isOff);
+    if (offline.isPresent() && mode != ConfiguratorMode.WRENCH) {
+      return Optional.of(ControllerMessages.offline(offline.get().name()));
+    }
     return switch (mode) {
       case OPEN -> open(player, context.getClickedPos());
       case COPY -> copyOrPaste(server, player, context, block);
@@ -143,6 +149,11 @@ final class ConfiguratorActions {
   private static Component notOwner(RedweaveServer server, NodeId node) {
     return Component.translatable(
         NodeScreenTexts.READ_ONLY, server.networkOfNode(node).map(Network::name).orElse(NO_NAME));
+  }
+
+  /** A network turned off takes no Open, Copy nor Paste; the Wrench still breaks (132, 163). */
+  private static boolean isOff(Network network) {
+    return network.state() == NetworkState.OFFLINE;
   }
 
   private static PlayerId playerOf(Player player) {

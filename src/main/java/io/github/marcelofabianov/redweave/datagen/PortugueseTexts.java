@@ -17,6 +17,10 @@ final class PortugueseTexts {
   private static final String SIGNAL_NODE = "Nó de Sinal";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
   private static final String OWNED_BY = "%s · dono: %s";
+  private static final String OFFLINE = "%s está desligada. Ligue-a num Terminal de Rede.";
+  private static final String NETWORK_LIMIT_REACHED = "Você chegou ao limite de %s redes.";
+  private static final String NETWORK_LIMIT_HINT = " Apague uma não colocada num Terminal de Rede.";
+  private static final String NETWORK_LIMIT = NETWORK_LIMIT_REACHED + NETWORK_LIMIT_HINT;
   private static final String NO_NETWORK = "Sem rede";
   private static final String NOT_OWNER = "Só o dono pode colocar esta rede.";
   private static final String ALREADY_PLACED = "Esta rede já tem um controlador.";
@@ -31,6 +35,8 @@ final class PortugueseTexts {
     ConfiguratorPortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.OWNED_BY, OWNED_BY);
+    add.accept(ControllerMessages.OFFLINE, OFFLINE);
+    add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);
     add.accept(ControllerMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ControllerMessages.ALREADY_PLACED, ALREADY_PLACED);

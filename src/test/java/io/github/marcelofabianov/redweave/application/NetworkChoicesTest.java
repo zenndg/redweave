@@ -44,8 +44,8 @@ class NetworkChoicesTest {
   @Test
   void onlyTheOnlineNetworksOfThePlayerAreListedWithTheirNodeCount() {
     NetworkId withANode = fixture.ownersNetworkWithANode();
-    NetworkId offline = fixture.ownersOtherNetwork();
-    network(offline).removeController(OWNER);
+    NetworkId unplaced = fixture.ownersOtherNetwork();
+    network(unplaced).removeController(OWNER);
     fixture.strangersNetwork();
 
     assertEquals(List.of(choice(withANode, ONE_NODE, true)), choices.of(OWNER));
@@ -65,7 +65,7 @@ class NetworkChoicesTest {
     assertEquals(expected, choices.of(OWNER));
   }
 
-  /** A last used network that went offline is not offered, so nothing is highlighted. */
+  /** A last used network that is no longer online is not offered, so nothing is highlighted. */
   @Test
   void aLastUsedNetworkThatIsNotOnlineIsLeftOut() {
     NetworkId mine = named(fixture.ownersNetworkWithANode(), MINE);

@@ -23,20 +23,22 @@ public final class Network {
   private final Emissions emissions = new Emissions();
   private String name;
   private ChannelColor color;
-  private Optional<BlockLocation> controller;
+  private final NetworkStatus status;
+  private final NetworkSignals signals;
 
   private Network(
       NetworkId id,
       PlayerId owner,
       String name,
       ChannelColor color,
-      Optional<BlockLocation> controller,
+      NetworkStatus status,
       NetworkLimits limits) {
     this.id = id;
     this.owner = owner;
     this.name = name;
     this.color = color;
-    this.controller = controller;
+    this.status = status;
+    this.signals = new NetworkSignals(nodes, readings, channels, status, limits);
     this.limits = limits;
   }
 
@@ -54,7 +56,8 @@ public final class Network {
     String valid =
         Names.valid(name, limits.networkNameLength())
             .orElseThrow(() -> new IllegalArgumentException(INVALID_DEFAULT_NAME));
-    return new Network(id, owner, valid, color, Optional.of(controller), limits);
+    NetworkStatus status = new NetworkStatus(Optional.of(controller), false);
+    return new Network(id, owner, valid, color, status, limits);
   }
 
   /**
@@ -70,7 +73,7 @@ public final class Network {
             snapshot.owner(),
             snapshot.name(),
             snapshot.color(),
-            snapshot.controller(),
+            new NetworkStatus(snapshot.controller(), snapshot.offline()),
             limits);
     snapshot.channels().forEach(network.channels::restore);
     snapshot.nodes().forEach(network.nodes::restore);
@@ -81,7 +84,15 @@ public final class Network {
   /** Everything that goes to the saves, without what the network last emitted (answer 38). */
   public NetworkSnapshot snapshot() {
     return new NetworkSnapshot(
-        id, owner, name, color, controller, channels.named(), nodes(), readings.all());
+        id,
+        owner,
+        name,
+        color,
+        status.controller(),
+        status.isOff(),
+        channels.named(),
+        nodes(),
+        readings.all());
   }
 
   /** Renames the network, for its owner only. */
@@ -126,11 +137,7 @@ public final class Network {
     if (!isOnline()) {
       return Outcome.NETWORK_NOT_ONLINE;
     }
-    Outcome attached = nodes.attach(nodeId, position, nodeName, limits.slotsPerNode());
-    if (attached == Outcome.ACCEPTED) {
-      emissions.markPending();
-    }
-    return attached;
+    return pendingIfAccepted(nodes.attach(nodeId, position, nodeName, limits.slotsPerNode()));
   }
 
   /** Names a node, for the owner only; blank gives back the default (144). It changes no signal. */
@@ -191,15 +198,10 @@ public final class Network {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
-    if (controller.isPresent()) {
-      return Outcome.ALREADY_PLACED;
-    }
-    controller = Optional.of(location);
-    emissions.markPending();
-    return Outcome.ACCEPTED;
+    return pendingIfAccepted(status.place(location));
   }
 
-  /** The owner broke the controller: the network goes offline until it is placed again. */
+  /** The owner broke the controller: the network is unplaced until it is placed again (146). */
   public Outcome removeController(PlayerId requester) {
     if (!isOwner(requester)) {
       return Outcome.NOT_OWNER;
@@ -210,11 +212,28 @@ public final class Network {
 
   /**
    * The controller left the world without its owner breaking it, as in creative, by a command or by
-   * another mod. There is nobody to ask, so the network just goes offline (answer 49).
+   * another mod. There is nobody to ask, so the network is just unplaced (answers 49 and 146).
    */
   public void loseController() {
-    controller = Optional.empty();
+    status.remove();
     emissions.markPending();
+  }
+
+  /** The owner turns an online network off, at a Network Terminal (answers 132 and 209). */
+  public Outcome turnOff(PlayerId requester) {
+    return isOwner(requester) ? pendingIfAccepted(status.turn(false)) : Outcome.NOT_OWNER;
+  }
+
+  /** The owner turns an offline network back on; an unplaced one waits for its controller. */
+  public Outcome turnOn(PlayerId requester) {
+    return isOwner(requester) ? pendingIfAccepted(status.turn(true)) : Outcome.NOT_OWNER;
+  }
+
+  private Outcome pendingIfAccepted(Outcome outcome) {
+    if (outcome == Outcome.ACCEPTED) {
+      emissions.markPending();
+    }
+    return outcome;
   }
 
   /** Only the owner changes the network, with no exception for operators (answers 22 and 28). */
@@ -239,11 +258,15 @@ public final class Network {
   }
 
   public Optional<BlockLocation> controller() {
-    return controller;
+    return status.controller();
+  }
+
+  public NetworkState state() {
+    return status.state();
   }
 
   public boolean isOnline() {
-    return controller.isPresent();
+    return status.state() == NetworkState.ONLINE;
   }
 
   /** The 16 channels, in the order of the colors. */
@@ -288,79 +311,29 @@ public final class Network {
     return true;
   }
 
-  /**
-   * The strongest of the inputs that count, and off with none. An offline network has every channel
-   * off, and a node out of range does not count (answers 23 and 24).
-   */
+  /** The strongest of the inputs that count, and off with none (answers 23 and 24). */
   public Signal channelValue(ChannelColor channelColor) {
-    return channelValues().get(channelColor);
+    return signals.channelValue(channelColor);
   }
 
-  private boolean inRange(Node node) {
-    return controller
-        .map(location -> new Range(limits.range()).reaches(location, node.position().block()))
-        .orElse(false);
-  }
-
-  /**
-   * What an output slot emits into its block: its channel, or off when the node is out of range or
-   * the network is offline. A slot that is not an output emits off.
-   */
+  /** What an output slot emits into its block, or off when it does not count. */
   public Signal output(NodeId nodeId, int index) {
-    Node node = nodes.at(nodeId);
-    if (node == null || !inRange(node)) {
-      return Signal.OFF;
-    }
-    return node.slotAt(index)
-        .filter(slot -> slot.direction() == Direction.OUTPUT)
-        .map(slot -> channelValue(slot.channel()))
-        .orElse(Signal.OFF);
+    return signals.output(nodeId, index);
   }
 
-  /**
-   * The signal of one slot, for the meter of the Node Screen: the last reading of an input and what
-   * an output emits. A free slot shows 0.
-   */
+  /** The signal of one slot, for the meter of the Node Screen. */
   public Signal slotSignal(NodeId nodeId, int index) {
-    Node node = nodes.at(nodeId);
-    if (node == null || !node.hasSlot(index)) {
-      return Signal.OFF;
-    }
-    if (nodes.isInput(nodeId, index)) {
-      return readings.of(new SlotRef(nodeId, index));
-    }
-    return output(nodeId, index);
+    return signals.slotSignal(nodeId, index);
   }
 
-  /**
-   * What a node emits in the world: it feeds its block like a lever, so its strongest output wins,
-   * whatever the face of each slot (answer 71).
-   */
+  /** What a node emits in the world: its strongest output, like a lever (answer 71). */
   public Signal emission(NodeId nodeId) {
-    Node node = nodes.at(nodeId);
-    if (node == null) {
-      return Signal.OFF;
-    }
-    Signal strongest = Signal.OFF;
-    for (int index = 0; index < node.slots().size(); index++) {
-      strongest = strongest.strongest(output(nodeId, index));
-    }
-    return strongest;
+    return signals.emission(nodeId);
   }
 
-  /**
-   * The state of a node for the screens. The caller tells whether its chunk is loaded, because the
-   * domain does not know the world. Out of range wins, because it is what stops the node counting.
-   */
+  /** The state of a node for the screens; the caller tells whether its chunk is loaded. */
   public NodeState nodeState(NodeId nodeId, boolean loaded) {
-    Node node = nodes.at(nodeId);
-    if (node == null || !isOnline()) {
-      return NodeState.NO_NETWORK;
-    }
-    if (!inRange(node)) {
-      return NodeState.OUT_OF_RANGE;
-    }
-    return loaded ? NodeState.ONLINE : NodeState.UNLOADED;
+    return signals.nodeState(nodeId, loaded);
   }
 
   /** Whether a signal of the network changed since the last evaluation (answer 38). */
@@ -370,22 +343,12 @@ public final class Network {
 
   /** The 16 channels in one pass over the nodes, for the simulator (_docs/limites.md, load). */
   public Map<ChannelColor, Signal> channelValues() {
-    Map<ChannelColor, Signal> values = channels.allOff();
-    if (!isOnline()) {
-      return values;
-    }
-    for (Node node : nodes.all()) {
-      if (inRange(node)) {
-        readings.addInputsOf(node, values);
-      }
-    }
-    return values;
+    return signals.channelValues();
   }
 
-  /** Whether a node counts: the network is online and the node is in range. */
+  /** Whether a node counts: the network is online and the node is in range (answer 132). */
   public boolean counts(NodeId nodeId) {
-    Node node = nodes.at(nodeId);
-    return node != null && inRange(node);
+    return signals.counts(nodeId);
   }
 
   /**

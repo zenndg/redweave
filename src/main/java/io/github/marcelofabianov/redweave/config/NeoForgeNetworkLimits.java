@@ -28,4 +28,9 @@ public final class NeoForgeNetworkLimits implements NetworkLimits {
   public int range() {
     return RedweaveConfig.RANGE_VALUE.get();
   }
+
+  @Override
+  public int networksPerPlayer() {
+    return RedweaveConfig.MAX_PER_PLAYER.get();
+  }
 }

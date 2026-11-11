@@ -4,6 +4,8 @@ import io.github.marcelofabianov.redweave.application.PlacedController;
 import io.github.marcelofabianov.redweave.block.BlockLocations;
 import io.github.marcelofabianov.redweave.block.ControllerLink;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
+import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
+import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
@@ -38,7 +40,7 @@ public final class NetworkControllerItem extends BlockItem {
     }
     PlacedController placed = decide(server.get(), context, player);
     if (placed.network().isEmpty()) {
-      ControllerMessages.refusal(placed.outcome())
+      ControllerMessages.refusal(placed.outcome(), new NeoForgeNetworkLimits().networksPerPlayer())
           .ifPresent(message -> player.displayClientMessage(message, true));
       return refuse(player);
     }
@@ -73,7 +75,7 @@ public final class NetworkControllerItem extends BlockItem {
             BlockLocations.of(context.getLevel(), context.getClickedPos()));
   }
 
-  /** If the game still refuses the block, the network goes back offline (answer 49). */
+  /** If the game still refuses the block, the network goes back to unplaced (answer 49). */
   private InteractionResult placeBlock(
       RedweaveServer server, BlockPlaceContext context, Player player, NetworkId network) {
     InteractionResult result = super.place(context);
@@ -81,7 +83,9 @@ public final class NetworkControllerItem extends BlockItem {
       server.loseController().lose(network);
       return result;
     }
-    ControllerLink.link(context.getLevel(), context.getClickedPos(), network, player.getUUID());
+    boolean online = server.network(network).map(Network::isOnline).orElse(false);
+    ControllerLink.link(
+        context.getLevel(), context.getClickedPos(), network, player.getUUID(), online);
     return result;
   }
 }

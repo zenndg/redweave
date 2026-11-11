@@ -11,14 +11,14 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import org.junit.jupiter.api.Test;
 
-/** Only the owner breaks the controller, and the network goes offline (answers 24 and 30). */
+/** Only the owner breaks the controller, and the network is unplaced (answers 30 and 146). */
 class BreakControllerTest {
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final BreakController breakController =
       new BreakController(fixture.networks, fixture.networks);
 
   @Test
-  void theOwnerBreaksTheControllerAndTheNetworkGoesOffline() {
+  void theOwnerBreaksTheControllerAndTheNetworkIsUnplaced() {
     NetworkId network = fixture.ownersNetwork();
     int savesBefore = fixture.networks.saves();
 

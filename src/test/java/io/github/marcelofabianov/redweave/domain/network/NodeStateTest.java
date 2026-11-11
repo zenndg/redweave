@@ -47,7 +47,7 @@ class NodeStateTest {
   }
 
   @Test
-  void aNodeOfAnOfflineNetworkHasNoNetwork() {
+  void aNodeOfAnUnplacedNetworkHasNoNetwork() {
     Network network = networkWithANode();
     network.removeController(OWNER);
 

@@ -23,10 +23,19 @@ class CreateNetworkTest {
 
   private static final int CHANNELS = 16;
 
+  /** The ceiling of network.max_per_player, so 17 networks fit (answer 145). */
+  private static final int MOST_NETWORKS = 100;
+
+  private static final int ONE_NETWORK = 1;
+
   private final InMemoryNetworks networks = new InMemoryNetworks();
 
   private CreateNetwork createNetworkWith(List<UUID> ids) {
-    return new CreateNetwork(new FixedIds(ids), networks, networks, TestLimits.STARTING);
+    return createNetworkWith(ids, TestLimits.STARTING);
+  }
+
+  private CreateNetwork createNetworkWith(List<UUID> ids, TestLimits limits) {
+    return new CreateNetwork(new FixedIds(ids), networks, networks, limits);
   }
 
   private static List<UUID> randomIds(int count) {
@@ -40,7 +49,7 @@ class CreateNetworkTest {
   /** The first 8 characters of the ID, like a node (answer 142). */
   @Test
   void aNewNetworkIsNamedAfterItsId() {
-    NetworkId id = createNetworkWith(List.of(FIRST_ID)).create(OWNER, CONTROLLER);
+    NetworkId id = createNetworkWith(List.of(FIRST_ID)).create(OWNER, CONTROLLER).orElseThrow();
 
     Network network = networks.find(id).orElseThrow();
     assertEquals(FIRST_NAME, network.name());
@@ -52,8 +61,8 @@ class CreateNetworkTest {
   @Test
   void eachNewNetworkTakesTheFirstColorTheOwnerDoesNotUse() {
     CreateNetwork createNetwork = createNetworkWith(randomIds(2));
-    NetworkId first = createNetwork.create(OWNER, CONTROLLER);
-    NetworkId second = createNetwork.create(OWNER, CONTROLLER);
+    NetworkId first = createNetwork.create(OWNER, CONTROLLER).orElseThrow();
+    NetworkId second = createNetwork.create(OWNER, CONTROLLER).orElseThrow();
 
     assertEquals(ChannelColor.WHITE, networks.find(first).orElseThrow().color());
     assertEquals(ChannelColor.ORANGE, networks.find(second).orElseThrow().color());
@@ -62,20 +71,43 @@ class CreateNetworkTest {
   @Test
   void theColorsOfAnotherPlayerDoNotCount() {
     CreateNetwork createNetwork = createNetworkWith(randomIds(2));
-    createNetwork.create(STRANGER, CONTROLLER);
-    NetworkId mine = createNetwork.create(OWNER, CONTROLLER);
+    createNetwork.create(STRANGER, CONTROLLER).orElseThrow();
+    NetworkId mine = createNetwork.create(OWNER, CONTROLLER).orElseThrow();
 
     assertEquals(ChannelColor.WHITE, networks.find(mine).orElseThrow().color());
   }
 
   @Test
   void withEverySixteenColorsInUseANewNetworkIsWhite() {
-    CreateNetwork createNetwork = createNetworkWith(randomIds(CHANNELS + 1));
+    CreateNetwork createNetwork =
+        createNetworkWith(
+            randomIds(CHANNELS + 1), TestLimits.STARTING.withNetworksPerPlayer(MOST_NETWORKS));
     for (int network = 0; network < CHANNELS; network++) {
-      createNetwork.create(OWNER, CONTROLLER);
+      createNetwork.create(OWNER, CONTROLLER).orElseThrow();
     }
-    NetworkId seventeenth = createNetwork.create(OWNER, CONTROLLER);
+    NetworkId seventeenth = createNetwork.create(OWNER, CONTROLLER).orElseThrow();
 
     assertEquals(ChannelColor.WHITE, networks.find(seventeenth).orElseThrow().color());
+  }
+
+  /** Every network of the player counts, online, offline or unplaced (answer 145). */
+  @Test
+  void atTheLimitNoNetworkIsCreated() {
+    CreateNetwork createNetwork =
+        createNetworkWith(randomIds(2), TestLimits.STARTING.withNetworksPerPlayer(ONE_NETWORK));
+    NetworkId first = createNetwork.create(OWNER, CONTROLLER).orElseThrow();
+    networks.find(first).orElseThrow().removeController(OWNER);
+
+    assertEquals(Optional.empty(), createNetwork.create(OWNER, CONTROLLER));
+    assertEquals(ONE_NETWORK, networks.ownedBy(OWNER).size());
+  }
+
+  @Test
+  void theNetworksOfAnotherPlayerDoNotCountForTheLimit() {
+    CreateNetwork createNetwork =
+        createNetworkWith(randomIds(2), TestLimits.STARTING.withNetworksPerPlayer(ONE_NETWORK));
+    createNetwork.create(STRANGER, CONTROLLER);
+
+    assertEquals(true, createNetwork.create(OWNER, CONTROLLER).isPresent());
   }
 }

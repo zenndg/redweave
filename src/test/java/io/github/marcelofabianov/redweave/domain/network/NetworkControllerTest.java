@@ -22,7 +22,7 @@ class NetworkControllerTest {
   }
 
   @Test
-  void removingTheControllerTakesTheNetworkOffline() {
+  void removingTheControllerLeavesTheNetworkUnplaced() {
     Network network = network();
 
     assertEquals(Outcome.ACCEPTED, network.removeController(OWNER));
@@ -60,10 +60,10 @@ class NetworkControllerTest {
 
   /**
    * The block is already gone, as in creative or by a command, so there is nobody to ask: the
-   * network goes offline anyway (answer 49).
+   * network is unplaced anyway (answer 49).
    */
   @Test
-  void losingTheControllerTakesTheNetworkOfflineWithoutAnOwner() {
+  void losingTheControllerLeavesTheNetworkUnplacedWithoutAnOwner() {
     Network network = network();
 
     network.loseController();

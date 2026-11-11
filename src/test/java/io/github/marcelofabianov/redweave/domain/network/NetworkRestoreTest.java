@@ -53,7 +53,7 @@ class NetworkRestoreTest {
   private static NetworkSnapshot snapshot(
       String name, List<Channel> channels, List<Node> nodes, List<SlotReading> readings) {
     return new NetworkSnapshot(
-        ID, OWNER, name, COLOR, Optional.of(CONTROLLER), channels, nodes, readings);
+        ID, OWNER, name, COLOR, Optional.of(CONTROLLER), false, channels, nodes, readings);
   }
 
   private static NetworkSnapshot withNodes(List<Node> nodes, List<SlotReading> readings) {

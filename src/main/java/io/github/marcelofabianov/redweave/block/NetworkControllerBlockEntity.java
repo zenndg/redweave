@@ -45,6 +45,15 @@ public final class NetworkControllerBlockEntity extends BlockEntity {
     setChanged();
   }
 
+  /** The core waits for the first tick, because the block cannot change while it loads (177). */
+  @Override
+  public void onLoad() {
+    super.onLoad();
+    if (level != null && !level.isClientSide) {
+      level.scheduleTick(worldPosition, getBlockState().getBlock(), 1);
+    }
+  }
+
   @Override
   protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);

@@ -5,7 +5,7 @@ import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 
 /**
- * A player breaks a Network Controller. Only the owner does, and the network goes offline until the
+ * A player breaks a Network Controller. Only the owner does, and the network is unplaced until the
  * item is placed again (answers 24 and 30).
  */
 public final class BreakController {

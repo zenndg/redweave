@@ -80,7 +80,7 @@ class ChannelValueTest {
 
   /** Without the controller, every channel is off (answer 24). */
   @Test
-  void anOfflineNetworkHasEveryChannelOff() {
+  void anUnplacedNetworkHasEveryChannelOff() {
     Network network = networkReadingDoorOn(NODE);
     network.readInput(NODE, SLOT, STRONG);
     network.removeController(OWNER);

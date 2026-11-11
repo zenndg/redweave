@@ -58,7 +58,7 @@ class OutputTest {
   }
 
   @Test
-  void anOutputOfAnOfflineNetworkEmitsOff() {
+  void anOutputOfAnUnplacedNetworkEmitsOff() {
     Network network = leverAndLamp();
     network.removeController(OWNER);
 
