@@ -22,7 +22,7 @@ Só sinal de redstone (pergunta 1). Itens, fluidos e energia ficam com os mods d
 
 | Fase | Tema | Entrega |
 |---|---|---|
-| 1 · Sem fio (MVP) | Sinal em qualquer lugar | Signal Node, Network Controller, Configurador, Signal Remote, simulador, Jade e The One Probe |
+| 1 · Sem fio (MVP) | Sinal em qualquer lugar | Signal Node, Network Controller, Network Terminal, Configurador, Signal Remote, simulador, Jade e The One Probe |
 | 2 · Lógica | Portas que se veem | Portas em placa, temporizador, contador e lógica por canal |
 | 3 · Chips | Programar a redstone | Bancada de Circuitos, editor com debug por tick, chips como item e livro guia |
 | 4 · Expansão | Fio físico | Fio de redstone, cabo agrupado de 16 canais, multipart, integrações e port para 26.x |
@@ -40,4 +40,5 @@ A ponte é só mais um adapter, com as portas `EventPublisher` e `CommandReceive
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal à Fase 1 (pergunta 130). |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |
