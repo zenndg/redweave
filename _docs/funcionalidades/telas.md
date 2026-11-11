@@ -78,7 +78,7 @@ O que a tela faz, decidido na issue #19.
 | Cabeçalho | A cor e o nome da rede, com o botão `Rename` para o dono (pergunta 156) |
 | Estado | `Online · <n> nodes` |
 | Abas | `Nodes`, `Signals`, `Access` e `Log` |
-| Nodes | Uma linha por nó, com o nome, o sinal de 0 a 15 e a posição x, y e z; as outras colunas e qual sinal a linha mostra dependem da pergunta 179. A posição só aparece para o dono (pergunta 149). O dono renomeia o nó na linha (pergunta 144). Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
+| Nodes | Uma linha por nó, com o nome, o sinal de 0 a 15 e a posição x, y e z. O sinal é o da lente, o mais forte entre as leituras e a emissão (pergunta 98). Ao expandir a linha, aparecem o canal e a direção de cada slot (pergunta 179). A posição só aparece para o dono (pergunta 149). O dono renomeia o nó na linha (pergunta 144). Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída: a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
 | Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho |
 
@@ -94,6 +94,7 @@ O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:24 | Aplica a pergunta 179. |
 | Zennd | 2026-11-11 09:51 | Aplica a abertura pelo Configurator, a escolha de rede, o nome do nó, a lista de nós e o log no lugar do gráfico (perguntas 139 a 160). |
 | Marcelo Fabiano | 2026-11-10 11:26 | Descreve o comportamento da Tela do Nó com as perguntas 78 a 85. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Aplica as perguntas 22 e 29 e aponta as abas `Signals` e `Access` para a página da rede. |

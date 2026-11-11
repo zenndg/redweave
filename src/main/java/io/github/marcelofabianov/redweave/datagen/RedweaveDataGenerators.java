@@ -26,8 +26,6 @@ public final class RedweaveDataGenerators {
     generator.addProvider(
         event.includeClient(), new RedweaveBlockStates(output, event.getExistingFileHelper()));
     generator.addProvider(
-        event.includeClient(), new RedweaveItemModels(output, event.getExistingFileHelper()));
-    generator.addProvider(
         event.includeServer(),
         new LootTableProvider(
             output,

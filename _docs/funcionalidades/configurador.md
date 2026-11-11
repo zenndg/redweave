@@ -75,7 +75,7 @@ O tooltip mostra o modo, com a cor e o nome, e `Copy: <n> slots` quando há cóp
 | Pilha | 1, porque cada item guarda o seu modo e a sua cópia |
 | Aba do criativo | `Redweave` (pergunta 69) |
 | Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51). A camada do visor, que mostra o modo, fica para a issue #80 (pergunta 159) |
-| Data components | `redweave:node_slots`, com a cópia, e o do modo (pergunta 173). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
+| Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy` ou `wrench` (pergunta 173). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
 
 O item não guarda mais a rede: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). O `redweave:network` continua no item do Network Controller.
 
@@ -87,7 +87,6 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Ponto | Depende de |
 |---|---|
-| O ID e os valores do componente do modo | Pergunta 173 |
 | Os textos das mensagens de trocar de modo e de retirar o nó, e as dicas do tooltip | Issue da implementação dos modos |
 
 ## Fora desta funcionalidade
@@ -99,5 +98,6 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:24 | Aplica a pergunta 173. |
 | Zennd | 2026-11-11 09:51 | Reescreve o Configurator com os modos `Open`, `Copy` e `Wrench`, sem guardar a rede e sem ligar nós (perguntas 125 a 169). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Cria o documento, com as respostas das perguntas 103 a 112. |
