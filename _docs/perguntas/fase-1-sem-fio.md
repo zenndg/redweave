@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 208 | Onde fica o nome da rede clicável que abre a troca de rede na Tela do Nó? | Numa linha própria do cabeçalho: abaixo do título, na linha do nome do nó, à direita, o quadrado na cor da rede e o nome, sobre o sprite `network_name_link`, com sublinhado de cobre no hover. Aparece sempre que o nó tem rede, em qualquer estado, porque a pílula só mostrava o nome no estado `Online`. A pílula passa a mostrar só o estado, como no mockup da pergunta 198. Completa a pergunta 141 |
+| 207 | Em quais fronteiras entram os testes do domínio e da aplicação da #87? | No agregado `Network` (`attachNode` com nome e só em rede `Online`, `renameNode`, snapshot e restauração com o nome) e nos casos de uso públicos (`PlaceNode`, `LinkNode`, a lista de escolha de rede, `RenameNode` e `CreateNetwork`), com os fakes em memória que já existem. Sem teste direto em classe interna, como `Node`, `Names` e `JoinNetwork` |
+| 206 | Como o Signal Node guarda o nome no domínio e no save? | Como o nome do canal (pergunta 26): o `Node` tem um nome opcional, e vazio é o padrão, os 8 primeiros caracteres do ID, calculado na hora de mostrar. A chave `name` só vai para o save quando o dono renomeia, e renomear para vazio limpa o nome. Completa as perguntas 142, 144 e 174 |
 | 205 | Na troca de rede pela Tela do Nó, como o player volta mantendo a rede atual? | Por um botão `Back` no rodapé da lista, que volta à configuração sem mudar nada. Só aparece na troca, não na primeira escolha. Entra na prancha da pergunta 198. Completa a pergunta 141 |
 | 204 | Como o dono renomeia o Signal Node na Tela do Nó? | Com um clique no nome, que vira um campo de texto: Enter salva, Esc cancela. O texto vai num pacote próprio, e o servidor confere o dono e o limite de `node.name_length` (regra 17); vazio volta ao nome padrão (pergunta 144). Entra na prancha da pergunta 198 |
 | 203 | Em que ordem a escolha de rede lista as redes `Online` do player? | A última usada no topo, realçada, para o caso comum ser um clique (pilar 2 de `ux.md`), e as outras em ordem alfabética |
@@ -205,6 +208,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:20 | Responde as perguntas 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Responde as perguntas 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Responde as perguntas 196 e 197. |
 | Zennd | 2026-11-11 11:06 | Responde a pergunta 195. |

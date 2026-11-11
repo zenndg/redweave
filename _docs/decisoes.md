@@ -207,6 +207,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ordem da escolha de rede | Última usada no topo, depois alfabética | 203 |
 | Renomear o nó | Clique no nome vira campo de texto | 204 |
 | Voltar da troca de rede | Botão `Back` | 205 |
+| Nome do nó no save | Opcional, como o do canal: a chave `name` só existe quando o dono renomeia | 206 |
+| Testes da #87 | No agregado `Network` e nos casos de uso públicos | 207 |
+| Link da rede na Tela do Nó | Linha própria no cabeçalho, em qualquer estado com rede; a pílula mostra só o estado | 208 |
 
 Não há perguntas pendentes da concepção.
 
@@ -214,6 +217,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:20 | Registra as decisões 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Registra as decisões 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Registra as decisões 196 e 197. |
 | Zennd | 2026-11-11 11:06 | Registra a decisão 195. |
