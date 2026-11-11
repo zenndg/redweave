@@ -14,7 +14,7 @@ O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele
 2. Quem o colocou abre o nó com o Configurator no modo `Open` e escolhe uma das redes `Online` dele (perguntas 157 e 172).
 3. O nó ganha 1 slot `Input` na face em que foi grudado, no primeiro canal livre. Com os 16 canais em uso, entra na rede sem slot (pergunta 171).
 
-A #15 e a #18 entregaram o nó entrando sozinho na rede atual (perguntas 25 e 70); a pergunta 139 troca isso pela escolha. O nó guarda o `NodeId` na BlockEntity, com a chave de NBT `node` (pergunta 76), e o UUID de quem o colocou, com a chave `owner` (pergunta 165).
+A #15 e a #18 entregaram o nó entrando sozinho na rede atual (perguntas 25 e 70); a #87 trocou isso pela escolha, na [Tela do Nó](telas.md#escolha-de-rede), e trouxe o nome do nó, que o dono troca com um clique (pergunta 204). O nó guarda o `NodeId` na BlockEntity, com a chave de NBT `node` (pergunta 76), e o UUID de quem o colocou, com a chave `owner` (pergunta 165).
 
 ## Ler
 
@@ -86,6 +86,7 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:46 | Registra a escolha de rede e o nome do nó entregues na #87. |
 | Zennd | 2026-11-11 11:21 | Aplica a pergunta 188. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 177. |
 | Zennd | 2026-11-11 09:51 | Aplica o nó que nasce sem rede, o nome, quem colocou, a abertura pelo Configurator e a Chave (perguntas 139 a 172). |

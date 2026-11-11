@@ -20,22 +20,29 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 
 ### Escolha de rede
 
-Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 139).
+Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 139). Desenho: [`tela-do-no-escolha-de-rede.png`](../imagens/telas/tela-do-no-escolha-de-rede.png), com os sprites de [`tela-do-no-sprites-c.png`](../imagens/telas/tela-do-no-sprites-c.png) (pergunta 198).
+
+![Escolha de rede](../imagens/telas/tela-do-no-escolha-de-rede.png)
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Quem escolhe | Só quem colocou o nó. Para os outros, a tela abre só para leitura, com `No network` | 172 |
 | Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
 | Escolher | Um clique numa rede liga o nó a ela, com 1 slot `Input` no primeiro canal livre, e a tela segue para a configuração | 171 |
+| Linha | O quadrado na cor da rede, o nome e a quantidade de nós, como `1 node` e `12 nodes`. A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
+| Sem redes | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` | 199 |
 | Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
+| Voltar | Na troca, o botão `Back` no rodapé volta à configuração sem mudar nada. Não aparece na primeira escolha | 205 |
+| No servidor | A tela recebe só as linhas, e o clique manda a posição na lista que o servidor guardou, nunca o ID da rede. O servidor confere de novo quem pode escolher | 172 e regra 17 |
 
 ### Configuração
 
 | Parte | O que mostra |
 |---|---|
 | Título | `Signal Node` |
-| Nome do nó | O nome, que nasce com os 8 primeiros caracteres do ID e que o dono renomeia com um clique, com o limite de `node.name_length` (perguntas 142 e 144) |
-| Estado | No canto superior direito: `Online · <rede>`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)). O clique no nome da rede abre a escolha de rede (pergunta 141) |
+| Nome do nó | Abaixo do título, o nome, que nasce com os 8 primeiros caracteres do ID. Para o dono, vem com um lápis, e o clique o troca por um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. O texto vai num pacote próprio, e o servidor confere o dono, o alcance e o limite de `node.name_length` (perguntas 142, 144 e 204) |
+| Rede | Na linha do nome, à direita, o quadrado na cor da rede e o nome dela, em qualquer estado com rede. Para o dono, o clique abre a escolha de rede (perguntas 141 e 208) |
+| Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range` ou `No network` ([estados do nó](rede-e-canais.md#estados-do-nó)) (pergunta 208) |
 | Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Slot livre aparece tracejado, com `Free slot` e `Click to use` |
 | Slot escolhido | À direita, a configuração do slot selecionado |
 | Direção | Seletor `Input` e `Output` |
@@ -62,7 +69,7 @@ O que a tela faz, decidido na issue #19.
 | Canal | Um clique numa das 16 cores troca o canal do slot | — |
 | Liberar um slot | O botão `Clear slot` pede confirmação no segundo clique, `Click again to clear` | 84 |
 | Medidor | O sinal do slot escolhido: na entrada, a última leitura; na saída, o que ela emite | — |
-| Ao vivo | O estado, a rede e o sinal de cada slot atualizam a cada tick, só quando mudam | 82 |
+| Ao vivo | O estado, a rede, os nomes, a lista de escolha e o sinal de cada slot atualizam a cada tick, só quando mudam | 82 |
 | Só leitura | Para quem não é o dono, os controles ficam apagados, e o rodapé mostra um cadeado e `Only the owner of <rede> can change this node.` | 85 |
 
 **O servidor confere cada ação (regras 16 e 17):** quem pede é o dono da rede do nó, o player está dentro do alcance de interação de blocos do jogo (pergunta 81), o slot existe e a face e o canal são válidos. Uma ação recusada não muda nada, e a tela volta a mostrar o estado do servidor.
@@ -94,6 +101,7 @@ O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:46 | Descreve a escolha de rede, o nome do nó e o link da rede entregues na #87 (perguntas 198 a 208). |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 179. |
 | Zennd | 2026-11-11 09:51 | Aplica a abertura pelo Configurator, a escolha de rede, o nome do nó, a lista de nós e o log no lugar do gráfico (perguntas 139 a 160). |
 | Marcelo Fabiano | 2026-11-10 11:26 | Descreve o comportamento da Tela do Nó com as perguntas 78 a 85. |

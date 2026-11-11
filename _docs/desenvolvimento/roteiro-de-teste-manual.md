@@ -15,11 +15,11 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | # | Faça | Espere ver |
 |---|---|---|
 | 1 | Coloque um Network Controller | A frente voltada para você e o núcleo do topo aceso (`linked`) |
-| 2 | Clique no controlador com a mão vazia | `Current network: Network xxxx` na action bar |
-| 3 | Ponha uma alavanca em cima de uma pedra e grude um Signal Node num lado da pedra | Uma placa fina de cobre, com o primeiro canto colorido na cor do canal |
-| 4 | Clique no nó com o Configurator no modo `Open` | A Tela do Nó, fiel a `tela-do-no.png`, com `● Online · Network xxxx` em verde e o slot 1 como `Input` |
+| 2 | Clique no controlador com a mão vazia | `xxxxxxxx · owner: <você>` na action bar, com os 8 primeiros caracteres do ID |
+| 3 | Ponha uma alavanca em cima de uma pedra e grude um Signal Node num lado da pedra | Uma placa fina de cobre, sem cor nos cantos, porque o nó nasce sem rede |
+| 4 | Clique no nó com o Configurator no modo `Open` e clique na rede da lista | A escolha de rede, fiel a `tela-do-no-escolha-de-rede.png`, com a rede e `0 nodes`; depois do clique, a configuração, com `● Online` em verde, a rede à direita do nome do nó e o slot 1 como `Input`, e o primeiro canto colorido |
 | 5 | Puxe a alavanca, com a tela aberta | O medidor sobe na hora até 15, e as barras brilham a partir de 12 |
-| 6 | Grude um segundo nó numa lâmpada de redstone e abra a tela dele | O slot 1 em `Input`, num canal livre |
+| 6 | Grude um segundo nó numa lâmpada de redstone, abra a tela dele e escolha a rede | A rede no topo da lista, em cobre, como a última usada, e depois o slot 1 em `Input`, num canal livre |
 | 7 | Troque o slot 1 para `Output` e escolha o mesmo canal do primeiro nó | O botão de cobre muda para `Output`, e a cor escolhida fica realçada |
 | 8 | Puxe a alavanca algumas vezes | A lâmpada acende e apaga junto, e a lente do nó acende |
 | 9 | No cubo da face, arraste o mouse e clique numa face | O bloco gira, a face sob o cursor fica em cobre, e o nome da face muda |
@@ -39,7 +39,7 @@ Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1
 |---|---|---|
 | 17 | Saia para o menu e abra o mesmo mundo de novo | A lâmpada continua acesa, e a Tela do Nó mostra a mesma rede, os mesmos slots e o mesmo sinal |
 | 18 | Puxe a alavanca | A lâmpada apaga e acende junto, como antes de sair |
-| 19 | Grude um nó novo sem clicar no controlador | O nó entra na mesma rede, porque a rede atual também foi salva |
+| 19 | Grude um nó novo e abra a tela dele | A rede usada antes de sair no topo da lista, em cobre, porque a última rede usada também foi salva |
 | 20 | Em Opções, ponha as distâncias de renderização e de simulação em 2. Monte o nó da alavanca a uns 100 blocos do controlador e da lâmpada, que ficam juntos, ligue a alavanca, vá até a lâmpada, saia e abra o mundo | A lâmpada acende assim que o mundo abre, com a última leitura do nó descarregado, e a Tela do Nó da alavanca mostra `Unloaded` em âmbar |
 | 21 | Feche o jogo, apague `saves/<mundo>/data/redweave_networks.dat` e abra o mundo | Os controladores e os nós mostram `No network`, sem o jogo travar |
 | 22 | Feche o jogo, troque o conteúdo de `redweave_networks.dat` por um texto qualquer e abra o mundo | O mundo abre sem redes, `redweave_networks.unreadable.backup.dat` aparece ao lado, e o `logs/latest.log` mostra `The Redweave save was kept in ...` (pergunta 97) |
@@ -62,12 +62,30 @@ Entregue com a issue #17 e refeito na #86 (perguntas 126 a 195). Comece com o ci
 | 32 | Clique no controlador com o Configurator | Nada acontece |
 | 33 | Troque o idioma para Português (Brasil) | `Configurador`, `Modo: Abrir`, `Modo: Copiar`, `Modo: Chave` e todas as mensagens em português |
 
+## Fase 1: a escolha de rede e o nome do nó
+
+Entregue com a issue #87 (perguntas 139 a 208). Comece com o circuito dos passos 1 a 8 montado.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 34 | Num mundo sem nenhum Network Controller, grude um nó e abra a tela dele | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` |
+| 35 | Com o segundo player, grude um nó; abra a tela dele com o dono | A tela só para leitura, com `No network`, sem lista |
+| 36 | Coloque mais dois controladores e renomeie um deles, se a tela já permitir. Grude um nó e abra a tela | A última usada no topo, em cobre, e as outras em ordem alfabética, cada uma com a quantidade de nós |
+| 37 | Na configuração, clique no nome do nó, digite `Lever`, aperte `E` e depois Enter | O campo aceita o `E` sem fechar a tela, e o nome vira `Lever` |
+| 38 | Clique no nome de novo, apague tudo e aperte Enter; depois clique, digite algo e aperte Esc | O nome volta aos 8 caracteres do ID; com Esc, nada muda e a tela continua aberta |
+| 39 | Clique no nome da rede, à direita do nome do nó, e depois em `Back` | A lista com `Back` no rodapé; `Back` volta à configuração na mesma rede |
+| 40 | Clique no nome da rede e escolha outra rede | O nó vai para a outra rede, com 1 entrada no primeiro canal livre, e mantém o nome `Lever` |
+| 41 | Com o segundo player, abra a tela de um nó do dono | O nome do nó e o da rede sem lápis nem realce, e nada muda ao clicar |
+| 42 | Saia para o menu, abra o mundo de novo e abra a tela do nó | O nome `Lever` continua |
+| 43 | Troque o idioma para Português (Brasil) | `Escolha uma rede`, `1 nó`, `12 nós`, `Voltar` e o aviso da lista vazia em português |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:46 | Ajusta os passos 2, 3, 4, 6 e 19 e adiciona os passos 34 a 43, da #87. |
 | Zennd | 2026-11-11 11:21 | Reescreve os passos do Configurator com os modos e ajusta os passos 4 e 13, da #86. |
 | Zennd | 2026-11-11 10:32 | Tira os passos 34 a 42 do Label, que saiu com a #85 (pergunta 125). |
 | Zennd | 2026-11-11 09:51 | Avisa quais passos mudam com as perguntas 125 a 172. |
