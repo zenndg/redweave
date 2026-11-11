@@ -17,6 +17,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 - **Decisões:** o resumo do que foi decidido fica em `_docs/decisoes.md`.
 - **Histórico:** todo `.md` em `_docs/` termina com uma tabela de histórico de modificações, e quem altera o arquivo adiciona uma linha no topo dela. Fora de `_docs/`, os `.md` não têm essa tabela.
 - **Imagens:** ficam em `_docs/imagens/`.
+- **Arte do mod:** toda tela, ícone, item e bloco tem textura, e o desenvolvedor gera cada imagem numa ferramenta de IA. O agente cria `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`, e escreve ali o `prompt.md`. O desenvolvedor deixa a imagem pronta no mesmo diretório, e o agente a confere (grade, paleta e silhueta) antes de levá-la ao mod (perguntas 185 e 186).
 - **Rascunhos:** conversas e ideias vão para `tmp/`, que o Git ignora.
 - **Fluxo de trabalho:** o passo a passo de uma tarefa está em [`_docs/desenvolvimento/fluxo-de-trabalho.md`](_docs/desenvolvimento/fluxo-de-trabalho.md).
 
@@ -50,7 +51,7 @@ O desenvolvedor é sênior em TypeScript, Go e PHP, e Java é secundário para e
 
 - **Modding:** explique as decisões específicas de Minecraft quando não forem óbvias.
 - **Mudança neste arquivo:** justifique por que é necessária e espere a autorização do desenvolvedor.
-- **Encerramento:** sessão que termina com trabalho pendente deixa um prompt de continuidade em `tmp/prompt/{AAAA-MM-DD_HHhMM}_continuidade_{assunto}.md`, com a leitura obrigatória, o que foi feito e o que se espera da próxima sessão.
+- **Encerramento:** só quando o contexto da sessão chega a 80% ou mais, com trabalho pendente, o agente deixa um prompt de continuidade em `tmp/prompt/{AAAA-MM-DD_HHhMM}_continuidade_{assunto}.md`, com a leitura obrigatória, o que foi feito e o que se espera da próxima sessão. Abaixo disso, o trabalho segue na mesma sessão (pergunta 187).
 
 ### Decisões bloqueantes
 

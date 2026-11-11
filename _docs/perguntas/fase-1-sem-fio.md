@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 187 | Quando o agente deixa um prompt de continuidade em `tmp/prompt/`? | Só quando o contexto da sessão chega a 80% ou mais e há trabalho pendente. Abaixo disso, o trabalho segue na mesma sessão. Vira regra no `AGENTS.md`, no lugar de "sessão que termina com trabalho pendente" |
+| 186 | Onde ficam o prompt e a imagem gerada de cada arte do mod? | Em `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`. O agente escreve ali o `prompt.md`, e o desenvolvedor deixa no mesmo diretório a imagem pronta, com o nome da textura, para o agente conferir e levar ao mod. Vira regra no `AGENTS.md`. Completa a pergunta 185 |
 | 185 | Quem faz as imagens do mod? | Toda tela, ícone, item e bloco tem a sua textura, e toda imagem é gerada pelo desenvolvedor numa ferramenta de IA, a partir de um prompt que o agente escreve na issue. O agente confere a grade, a paleta e a silhueta antes de usar a imagem. Generaliza o processo das perguntas 78, 120 e 124 |
 | 184 | Que nome as tabelas de histórico de modificações registram? | `Zennd`, o mesmo `user.name` dos commits deste repositório, a partir de 2026-11-11. As linhas anteriores continuam com o nome com que foram registradas |
 | 183 | As implementações das perguntas 125 a 172 ainda não têm issue. Como entram no roadmap? | Com issues criadas agora, uma por funcionalidade, na milestone da Fase 1: #85 remover o Label, #86 modos do Configurator, #87 nó que nasce sem rede, #88 estados `Offline` e `Unplaced` e limite de redes, #89 Network Terminal e #90 log da Tela do Controlador. O registro das decisões é a #84 |
@@ -185,6 +187,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:53 | Responde a pergunta 187. |
+| Zennd | 2026-11-11 10:48 | Responde a pergunta 186. |
 | Zennd | 2026-11-11 10:32 | Responde a pergunta 185. |
 | Zennd | 2026-11-11 10:24 | Responde as perguntas pendentes 173 a 179. |
 | Zennd | 2026-11-11 10:45 | Responde a pergunta 184. |

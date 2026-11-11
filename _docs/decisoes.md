@@ -187,6 +187,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Recolocar uma rede Offline | Volta `Offline` | 178 |
 | Lista de nós | Nome, sinal da lente e posição, com canal e direção por slot ao expandir | 179 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
+| Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
+| Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 
 Não há perguntas pendentes da concepção.
 
@@ -194,6 +196,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:53 | Registra a decisão 187. |
+| Zennd | 2026-11-11 10:48 | Registra a decisão 186. |
 | Zennd | 2026-11-11 10:32 | Registra a decisão 185. |
 | Zennd | 2026-11-11 10:24 | Registra as decisões 173 a 179. |
 | Zennd | 2026-11-11 10:45 | Registra a decisão 184. |
