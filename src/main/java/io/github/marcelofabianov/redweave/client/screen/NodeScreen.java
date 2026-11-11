@@ -2,11 +2,13 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.block.Faces;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
+import io.github.marcelofabianov.redweave.network.NodeRenamed;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * The Node Screen: _docs/funcionalidades/telas.md, _docs/imagens/telas/tela-do-no.png and
@@ -42,7 +45,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private final FaceCube cube = new FaceCube();
   private final NodeScreenFooter footer = new NodeScreenFooter();
   private final NetworkChoiceList choices = new NetworkChoiceList();
-  private final NodeNameField name = new NodeNameField();
+  private final NameField name = new NameField();
   private int selected;
   private boolean clearArmed;
   private boolean switching;
@@ -168,7 +171,11 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     if (!name.editing()) {
       return super.keyPressed(keyCode, scanCode, modifiers);
     }
-    name.keyPressed(keyCode, scanCode, modifiers, menu.pos());
+    name.keyPressed(
+        keyCode,
+        scanCode,
+        modifiers,
+        text -> PacketDistributor.sendToServer(new NodeRenamed(menu.pos(), text)));
     return true;
   }
 
@@ -207,7 +214,10 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       return false;
     }
     if (NodeHeader.nameBox(font, leftPos, topPos, menu, true).contains(mouseX, mouseY)) {
-      name.start(menu.nodeName(), this::setFocused);
+      name.start(
+          menu.nodeName(),
+          NameField.limit(NeoForgeNetworkLimits::nodeNameLength),
+          this::setFocused);
       return true;
     }
     Optional<Box> link = NodeHeader.linkBox(font, leftPos, topPos, WIDTH, menu);

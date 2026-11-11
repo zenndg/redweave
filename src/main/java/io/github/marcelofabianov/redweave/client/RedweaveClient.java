@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.client;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
@@ -27,6 +28,7 @@ public final class RedweaveClient {
   @SubscribeEvent
   public static void registerScreens(RegisterMenuScreensEvent event) {
     event.register(RedweaveMenus.NODE.get(), NodeScreen::new);
+    event.register(RedweaveMenus.CONTROLLER.get(), ControllerScreen::new);
   }
 
   @SubscribeEvent

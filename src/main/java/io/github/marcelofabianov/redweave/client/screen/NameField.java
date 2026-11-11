@@ -2,21 +2,19 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
-import io.github.marcelofabianov.redweave.network.NodeRenamed;
 import java.util.function.Consumer;
+import java.util.function.ToIntFunction;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * The name of the node while its owner renames it: Enter sends it to the server, which checks the
- * owner and node.name_length, and Esc cancels (answer 204). Blank goes back to the default (144).
+ * A name while its owner renames it: Enter hands the text on to be sent to the server, which checks
+ * the owner and the length of the config, and Esc cancels (answers 156, 204 and 217).
  */
-final class NodeNameField {
+final class NameField {
   private static final int TEXT_X = 3;
   private static final int TEXT_Y = 2;
 
@@ -25,20 +23,21 @@ final class NodeNameField {
 
   /** Creates the field again whenever the screen is laid out, hidden until a click. */
   void attach(Font font, Box where, Consumer<EditBox> add) {
-    box = where;
-    field =
-        new EditBox(
-            font,
-            where.x() + TEXT_X,
-            where.y() + TEXT_Y,
-            where.width() - 2 * TEXT_X,
-            where.height() - TEXT_Y,
-            Component.empty());
+    field = new EditBox(font, 0, 0, 0, 0, Component.empty());
     field.setBordered(false);
-    field.setMaxLength(maxLength());
     field.setTextColor(ScreenColors.TEXT);
     field.setVisible(false);
+    moveTo(where);
     add.accept(field);
+  }
+
+  /** Places the field over another name, as a row of a list. */
+  void moveTo(Box where) {
+    box = where;
+    field.setX(where.x() + TEXT_X);
+    field.setY(where.y() + TEXT_Y);
+    field.setWidth(where.width() - 2 * TEXT_X);
+    field.setHeight(where.height() - TEXT_Y);
   }
 
   Box box() {
@@ -49,7 +48,8 @@ final class NodeNameField {
     return field != null && field.isVisible();
   }
 
-  void start(String current, Consumer<EditBox> focus) {
+  void start(String current, int maxLength, Consumer<EditBox> focus) {
+    field.setMaxLength(maxLength);
     field.setValue(current);
     field.setVisible(true);
     focus.accept(field);
@@ -68,9 +68,9 @@ final class NodeNameField {
     }
   }
 
-  void keyPressed(int keyCode, int scanCode, int modifiers, BlockPos pos) {
+  void keyPressed(int keyCode, int scanCode, int modifiers, Consumer<String> submit) {
     if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
-      PacketDistributor.sendToServer(new NodeRenamed(pos, field.getValue()));
+      submit.accept(field.getValue());
       cancel();
       return;
     }
@@ -81,10 +81,10 @@ final class NodeNameField {
     field.keyPressed(keyCode, scanCode, modifiers);
   }
 
-  /** The limit of the server, which syncs its config, or the ceiling before it arrives. */
-  private static int maxLength() {
+  /** A limit of the server, which syncs its config, or the ceiling before it arrives. */
+  static int limit(ToIntFunction<NeoForgeNetworkLimits> length) {
     return RedweaveConfig.SPEC.isLoaded()
-        ? new NeoForgeNetworkLimits().nodeNameLength()
+        ? length.applyAsInt(new NeoForgeNetworkLimits())
         : RedweaveConfig.MAX_NAME;
   }
 }
