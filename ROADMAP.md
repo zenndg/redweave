@@ -66,7 +66,7 @@ Signal anywhere: networks, nodes, channels and the tools to configure them.
 Decided on 2026-11-11: each Network Controller is one network, a Network Terminal manages all of a player's networks, and the Configurator works in modes.
 
 - [x] Record the decisions and audit the documentation (#84)
-- [ ] Remove the Label (#85)
+- [x] Remove the Label (#85)
 - [ ] Configurator modes `Open`, `Copy` and `Wrench`, each with a color (#86)
 - [ ] A new node joins no network and its owner picks one; node names; switching networks from the Node Screen (#87)
 - [ ] `Offline` and `Unplaced` network states, and the per-player network limit (#88)
