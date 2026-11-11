@@ -14,7 +14,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ponte (Fase 5) | MQTT | 8 |
 | Nome | Redweave | 9 |
 | Processo | O do Cubit: regras, pilares, perguntas numeradas, Gitflow, gates e GameTests | 10, 11 |
-| Repositório | `marcelofabianov/redweave`, privado no início, com o board no GitHub | 12 |
+| Repositório | Mudada pela 170: `zenndg/redweave` | 12, 170 |
 | Chunk descarregado | O canal mantém o último valor do nó, e a Tela do Controlador marca o nó como `Unloaded` | 13, 29 |
 | Idioma do processo | Issues, PRs e commits em português. Código, IDs e o `README.md` em inglês | 14 |
 | Controle remoto | Signal Remote, com o ID `signal_remote` | 15 |
@@ -26,8 +26,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Fronteira no ArchUnit | Estrita: `domain/` só depende de si e do Java; `application/` só de si, de `domain/` e do Java | 21 |
 | Permissões | Só o dono altera a rede, sem exceção para operadores | 22, 28 |
 | Alcance | Raio em blocos a partir do controlador, no config (128; 0 é ilimitado), só na mesma dimensão | 23 |
-| Controlador quebrado | A rede fica salva no mundo; o item guarda o ID e, sem controlador, a rede fica `Offline` | 24 |
-| Nó novo | Entra na rede atual do player, com 1 slot de entrada no primeiro canal livre | 25 |
+| Controlador quebrado | A rede fica salva no mundo; o item guarda o ID e, sem controlador, a rede fica `Unplaced` (146) | 24, 135, 146 |
+| Nó novo | Nasce `No network` e escolhe a rede numa tela (139); entra com 1 entrada no primeiro canal livre (171) | 25, 139, 171 |
 | Nome do canal | Cor fixa e nome opcional, renomeado pelo dono | 26 |
 | Signal Remote | Entrada sem posição, que volta a 0 ao sair do inventário ou do alcance | 27 |
 | Estados do nó | `Unloaded` mantém o último valor; `Out of range` vale 0 | 29 |
@@ -36,23 +36,23 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Recusa no agregado | Resultado tipado `Outcome`; exceção só para erro de programação | 32 |
 | Agregado `Network` | Mutável e protegido, com nós e slots imutáveis | 33 |
 | Nome inválido | Apara as pontas e recusa vazio ou longo; no canal, vazio volta ao nome da cor | 34 |
-| Nome padrão da rede | `Network` e os 4 primeiros caracteres do ID | 35 |
+| Nome padrão da rede | Os 8 primeiros caracteres do ID (142) | 35, 142 |
 | Forma do alcance | Esfera, pela distância em linha reta | 36 |
 | Última leitura | Salva com a rede, para valer depois de reiniciar o servidor | 37 |
 | Estado do simulador | Na rede; o `Simulator` não tem estado, e o primeiro tick depois de carregar reaplica as saídas | 38 |
 | Saídas na mesma face | A face emite a mais forte | 39 |
 | Cor de rede nova | A primeira cor livre entre as redes do dono; com as 16 em uso, o branco | 40 |
 | Retorno dos casos de uso | O `Outcome` do domínio, com `UNKNOWN_NETWORK` e `NO_CURRENT_NETWORK` | 41 |
-| Trocar um nó de rede | Exige ser dono da rede antiga e da nova | 42 |
+| Trocar um nó de rede | Pelo nome da rede na Tela do Nó, sendo dono das duas redes (141) | 42, 141 |
 | Gates da CI | Os três do `pre-push` em todo push e PR para `develop`, `homolog`, `main` e `release/*` | 43 |
 | Versão das actions | Fixada pelo SHA do commit | 44 |
 | Conferência extra da CI | Só o gitleaks em todo o histórico | 45 |
 | Cache da CI | `cache: gradle` do `actions/setup-java`, sem o `gradle/actions` | 46 |
 | Versões das actions | `checkout` v7.0.1, `setup-java` v6.2.0 e `upload-artifact` v7.0.2 | 47 |
 | Ordem da Fase 1 | #14, #15, #18 e #19, o primeiro teste manual, e depois #16, #17 e o restante | 48 |
-| Controlador que some | Operação sem quem pede deixa a rede `Offline` | 49 |
+| Controlador que some | Operação sem quem pede deixa a rede `Unplaced` (146) | 49, 146 |
 | Config | `network.range`, `network.name_length`, `channel.name_length` e `node.slots`, no config do servidor | 50 |
-| Clique no controlador | Mensagem na action bar até a tela da #20 | 52 |
+| Clique no controlador | Mensagem na action bar até a tela da #20, sem rede atual (139) | 52, 139 |
 | Redes até a #16 | Num objeto por servidor, em memória | 53 |
 | Página do controlador | `controlador-de-rede.md` | 54 |
 | Item com a rede de outro player | Não coloca, com aviso na action bar | 55 |
@@ -71,12 +71,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | NBT do controlador | `network` e `owner` | 67 |
 | Nome em português | `Controlador de Rede` | 68 |
 | Aba do criativo | Aba própria `Redweave` | 69 |
-| Nó ligado ao colocar | Na #15, pelo `PlaceNode`; a #18 fecha junto | 70 |
+| Nó ligado ao colocar | Mudada pela 139: o nó nasce `No network` | 70, 139 |
 | Face do slot no mundo | Entrada lê o vizinho daquela face; saída alimenta o bloco de apoio como uma alavanca | 71 |
 | Blockstate do nó | `facing` e `powered`; o `powered` vira `signal` pela 99 | 72 |
 | Página do nó | `no-de-sinal.md` | 73 |
 | Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
-| Clique no nó | Mensagem na action bar até a tela da #19 | 75 |
+| Clique no nó | Mudada pela 154: a mão vazia mostra uma dica | 75, 154 |
 | NBT do nó | `node` | 76 |
 | Testes do nó | Domínio, aplicação e GameTests | 77 |
 | Desenho da Tela do Nó | Sprites em pixel art, 9-slice, gerados por IA | 78 |
@@ -92,7 +92,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Onde salvar as redes | Um `SavedData` único no Overworld, `redweave_networks.dat` | 88 |
 | Formato do save | Codecs sobre `NbtOps`, com `version` e chaves estáveis; a leitura fica no slot | 89 |
 | Restaurar a rede | `NetworkSnapshot` no domínio, com `snapshot()` e `Network.restore` | 90 |
-| Rede atual no save | Salva no mesmo arquivo; entrada sem rede é descartada | 91 |
+| Rede atual no save | Mudada pela 157: o save guarda a última rede usada | 91, 157 |
 | Save inválido | Descarta a menor parte com aviso; versão desconhecida vira backup e o mod começa vazio | 92 |
 | Config menor que o save | A rede volta como estava; o limite vale para as próximas mudanças, com teto nas faixas da 66 | 93 |
 | Testes da persistência | Domínio e GameTests; o reinício real no roteiro manual | 94 |
@@ -104,35 +104,91 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Luz do nó | Só a lente brilha; o nó não é fonte de luz | 100 |
 | Issue da lente | #24 | 101 |
 | Passo 20 do roteiro | Detalhado, com os passos 22 e 23 do arquivo corrompido | 102 |
-| Escopo do Configurator | Item e ações na #17; visor ao vivo e rótulo sobre os nós em issue própria | 103 |
-| Configurator no controlador | Só o dono guarda a rede; a rede atual não muda | 104 |
-| Copiar um nó | Slots em `redweave:node_slots`, com a face grudada relativa | 105 |
-| Colar | Cola várias vezes até o Shift + clique no ar; o nó fica na rede dele | 106 |
+| Escopo do Configurator | Rótulo flutuante e visor do modo na #80 (159) | 103, 159 |
+| Configurator no controlador | Revogada pela 126 | 104, 126 |
+| Copiar um nó | Slots em `redweave:node_slots`, com a face grudada relativa; o gesto é o clique no modo `Copy` (127, 143) | 105, 127 |
+| Colar | Shift + clique no modo `Copy`, várias vezes, até o Shift + clique no ar (127, 143) | 106, 127 |
 | Página do Configurator | `configurador.md` | 107 |
-| Mensagens do Configurator | Uma por resultado, na action bar, e tooltip com a rede e a cópia | 108 |
-| Testes do Configurator | Domínio, aplicação e GameTests | 109 |
-| Label | Item que guarda uma configuração de nó, renomeável e copiável | 110 |
-| Quando entra o Label | Issue própria logo depois da #17 | 111 |
-| Nome da rede no tooltip | Gravado em `redweave:network_name` ao guardar a rede | 112 |
-| Clique com item no nó e no controlador | Vai para o item; só a mão vazia abre a tela ou mostra a mensagem | 113 |
-| Nome do Label | `redweave:label`, `Label` e `Etiqueta`; página `etiqueta.md` | 114 |
-| Pilha do Label | Até 16; gravados iguais se juntam | 115 |
-| Esvaziar o Label | Sozinho na grade de crafting | 116 |
-| Receitas do Label | Cópia e esvaziar na #81; o Label vazio na #24 | 117 |
-| Gravar e aplicar o Label | Grava um da pilha com o Configurator; aplicar não gasta | 118 |
-| Tooltip do Label | Um slot por linha, na cor do canal | 119 |
-| Visual do Label | Etiqueta de papel com ilhós de cobre; `label` e `label_written` | 120 |
-| Testes do Label | GameTests, e JUnit só para regra nova | 121 |
-| Mensagem ao gravar | `Copied <n> slots to a Label`; o Configurator guarda a cópia também | 122 |
-| Tipos das receitas do Label | `redweave:label_copy` e `redweave:label_clear` | 123 |
-| Arte do Label | Gerada pelo desenvolvedor por IA; a #81 espera | 124 |
+| Mensagens do Configurator | Uma por resultado, na action bar, sem as de guardar e ligar (126, 143) | 108, 126 |
+| Testes do Configurator | Domínio, aplicação e GameTests, sem guardar e ligar (126) | 109, 126 |
+| Label | Revogada pela 125 | 110, 125 |
+| Quando entra o Label | Revogada pela 125 | 111, 125 |
+| Nome da rede no tooltip | Revogada pela 126 | 112, 126 |
+| Clique com item no nó e no controlador | Vai para o item; no controlador, só a mão vazia abre (140, 154) | 113, 154 |
+| Nome do Label | Revogada pela 125 | 114, 125 |
+| Pilha do Label | Revogada pela 125 | 115, 125 |
+| Esvaziar o Label | Revogada pela 125 | 116, 125 |
+| Receitas do Label | Revogada pela 125 | 117, 125 |
+| Gravar e aplicar o Label | Revogada pela 125 | 118, 125 |
+| Tooltip do Label | Revogada pela 125 | 119, 125 |
+| Visual do Label | Revogada pela 125 | 120, 125 |
+| Testes do Label | Revogada pela 125 | 121, 125 |
+| Mensagem ao gravar | Revogada pela 125 | 122, 125 |
+| Tipos das receitas do Label | Revogada pela 125 | 123, 125 |
+| Arte do Label | Revogada pela 125 | 124, 125 |
+| Label | Removido do mod e dos documentos | 125 |
+| Responsabilidade do Configurator | Só copiar e colar; não guarda a rede nem liga nós | 126 |
+| Gestos de copiar e colar | Clique copia, Shift + clique cola, no modo `Copy` | 127, 143 |
+| Apagar a cópia | Shift + clique no ar, em qualquer modo | 128 |
+| Controlador e rede | 1 Network Controller = 1 rede, que nasce ao colocá-lo | 129 |
+| Network Terminal | Bloco aberto com a mão vazia que administra as redes do dono; não cria redes | 130 |
+| Ações do Terminal | Listar, renomear, `Offline` e `Online`, limpar nós e abrir a tela do controlador | 131 |
+| Excluir rede | Não há: o Terminal desliga e religa; uma rede `Offline` só aceita o Terminal | 132 |
+| Limpar nós | Tira todos os nós da rede, com confirmação; eles ficam `No network` | 133 |
+| Dono do Terminal | Quem o colocou; só ele usa | 134 |
+| Estados sem sinal | `Offline`, desligada no Terminal, e `Unplaced`, sem controlador no mundo | 135, 146 |
+| Quebrar numa rede Offline | O dono quebra normalmente | 136 |
+| Terminais por player | Um, protegido como o controlador | 137 |
+| Ordem da lista do Terminal | Alfabética | 138 |
+| Entrar numa rede | Tela de escolha na primeira abertura; acaba a rede atual | 139 |
+| Abrir a Tela do Nó | Pelo Configurator, no modo `Open` | 140 |
+| Trocar de rede | Pelo nome da rede na Tela do Nó | 141 |
+| Nome padrão | Os 8 primeiros caracteres do ID, no nó e na rede | 142 |
+| Modos do Configurator | `Open`, `Copy` e `Wrench`, trocados com Shift + scroll | 143, 161, 164 |
+| Nome do nó | Renomeado na Tela do Nó e na lista do controlador; `node.name_length` | 144 |
+| Limite de redes | `network.max_per_player`, 10, conferido ao colocar o controlador | 145 |
+| Nome do estado sem controlador | `Unplaced`, `Não colocada` | 146 |
+| Log do controlador | Só mudanças, em buffer de `log.size` linhas, só em memória | 147 |
+| Hora do log | Data e hora reais do servidor, por uma porta | 148 |
+| Posição dos nós | Só o dono vê | 149 |
+| Gráfico de 30 segundos | Substituído pelo log | 150 |
+| Quando entra o Terminal | Fase 1, antes da 0.1, depois da #20 | 151 |
+| Alcance do Terminal | Todas as redes do dono, em qualquer lugar | 152 |
+| Terminal de outro player | Mensagem na action bar | 153 |
+| Mão vazia no nó | Dica `Use a Configurator to open this node.` | 154 |
+| Nome do Terminal | `redweave:network_terminal`, `Terminal de Rede`; página `terminal-de-rede.md` | 155 |
+| Renomear a rede | No Terminal e na tela do controlador | 156 |
+| Redes na escolha | Só as `Online`; a última usada fica salva | 157 |
+| Rede Offline no Terminal | Só a linha da lista | 158 |
+| Issue #80 | Rótulo flutuante e visor do modo | 159 |
+| Aviso de rede Offline | Na action bar | 160 |
+| Modo Chave | Retira o nó como item limpo, que vai ao inventário ou ao chão | 161 |
+| Quem usa a Chave | Só o dono: da rede, ou quem colocou o nó sem rede | 162, 165 |
+| Chave numa rede Offline | Funciona | 163 |
+| Blocos da Chave | Só o Signal Node | 164 |
+| Dono do nó sem rede | Quem o colocou, na chave de NBT `owner` | 165 |
+| Apagar rede | Só as `Unplaced`, pelo Terminal | 166 |
+| Cores dos modos | `Open` azul, `Copy` verde, `Wrench` vermelho | 167 |
+| Uso da cor do modo | Sempre com o nome escrito, em tons próprios | 168 |
+| Tons dos modos | `#5B9BF0`, `#3FAE5A` e `#D94A64` | 169 |
+| Repositório | `zenndg/redweave`, com o host `github.com-zenndg` | 170 |
+| Slot do nó ao entrar | 1 entrada no primeiro canal livre | 171 |
+| Quem escolhe a rede do nó | Só quem o colocou | 172 |
+| Roadmap | `ROADMAP.md` na raiz, em inglês | 180 |
+| Nascimento da v0.1.0 | No fim da Fase 1, depois da #26 e do roteiro manual, pela #27 | 181 |
+| Papel do roadmap | Visão por fase; o GitHub Projects continua a fonte da verdade | 182 |
+| Issues do novo modelo | #85 a #90, e a #84 do registro | 183 |
+| Nome no histórico | `Zennd`, como nos commits | 184 |
 
-Não há perguntas pendentes da concepção.
+Não há perguntas pendentes da concepção. As perguntas 173 a 179, da Fase 1, estão pendentes em [`fase-1-sem-fio.md`](perguntas/fase-1-sem-fio.md).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:45 | Registra a decisão 184. |
+| Zennd | 2026-11-11 10:40 | Registra as decisões 180 a 183. |
+| Zennd | 2026-11-11 09:51 | Registra as decisões 125 a 172 e atualiza as que elas mudam. |
 | Marcelo Fabiano | 2026-11-10 16:42 | Registra a decisão 124. |
 | Marcelo Fabiano | 2026-11-10 16:30 | Registra as decisões 122 e 123. |
 | Marcelo Fabiano | 2026-11-10 16:28 | Registra as decisões 118 a 121. |
