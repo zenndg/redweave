@@ -241,6 +241,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Configurar um canal | Só com `Disabled`; `Enabled` trava a direção e a face | 237 |
 | Colar num nó sem rede | Liga o nó à rede da cópia, para quem o colocou e é dono dela | 238 |
 | Colar num nó com rede | Só aplica os slots, sem trocar a rede | 239 |
+| Contagem da cópia | Todos os canais configurados | 240 |
+| Modo `Toggle` do Configurator | Clique ativa os configurados; Shift + clique desativa | 241 |
 
 Não há perguntas pendentes da concepção.
 
@@ -248,6 +250,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:30 | Registra as decisões 240 e 241. |
 | Zennd | 2026-11-11 17:08 | Registra as decisões 238 e 239. |
 | Zennd | 2026-11-11 16:52 | Registra a decisão 237. |
 | Zennd | 2026-11-11 16:40 | Registra a decisão 236. |

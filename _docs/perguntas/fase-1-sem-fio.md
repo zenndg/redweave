@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 241 | Como o Configurator ativa e desativa canais sem abrir a Tela do Nó? | Com um modo novo, `Toggle` (`Alternar`), em âmbar, na ordem `Open`, `Copy`, `Toggle` e `Wrench`. O clique num nó ativa todos os canais configurados dele, e o Shift + clique desativa todos; um canal nunca configurado fica como está. Só o dono da rede, com ela `Online`. A action bar mostra `Enabled <n> channels` ou `Disabled <n> channels`. Completa a pergunta 143 |
+| 240 | O que contam `Copied <n> slots`, `Pasted <n> slots` e o tooltip da cópia? | Todos os canais configurados, ativos ou não, que é o que vai na cópia. Muda a pergunta 230 |
 | 239 | Colar num nó que já tem outra rede troca a rede dele para a da cópia? | Não: num nó com rede, colar só aplica os slots. A rede só vem junto num nó sem rede, e trocar de rede continua sendo pela Tela do Nó (pergunta 141) |
 | 238 | Colar num nó sem rede, hoje recusado, passa a ligá-lo à rede da cópia? | Sim: a cópia guarda o ID da rede de origem, e colar num nó sem rede o liga a ela e aplica os slots, contando como a última rede usada (pergunta 157). Só quem pode escolher a rede daquele nó, quem o colocou (pergunta 172), sendo dono da rede da cópia, com ela `Online`. Se a rede não existe mais, não está `Online` ou o player não é dono, recusa com o motivo, e o nó fica sem rede. Muda as perguntas 126 e 230 |
 | 237 | Em que estado do canal o dono muda a direção e a face? | Só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer; `Enabled` trava a configuração, e o servidor recusa configurar um canal ativo. Para mudar um canal ativo, o dono desativa, configura e ativa. Um canal nunca ativado já pode ser configurado e fica `Disabled`, nascendo como `Input` na face grudada. O nome muda nos dois estados, porque não mexe em sinal. Muda a pergunta 228 |
@@ -239,6 +241,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:30 | Responde as perguntas 240 e 241. |
 | Zennd | 2026-11-11 17:08 | Responde as perguntas 238 e 239. |
 | Zennd | 2026-11-11 16:52 | Responde a pergunta 237. |
 | Zennd | 2026-11-11 16:40 | Responde a pergunta 236. |
