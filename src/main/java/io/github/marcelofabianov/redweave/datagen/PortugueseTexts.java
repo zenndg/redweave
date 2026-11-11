@@ -16,7 +16,6 @@ final class PortugueseTexts {
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
-  private static final String OWNED_BY = "%s · dono: %s";
   private static final String OFFLINE = "%s está desligada. Ligue-a num Terminal de Rede.";
   private static final String NETWORK_LIMIT_REACHED = "Você chegou ao limite de %s redes.";
   private static final String NETWORK_LIMIT_HINT = " Apague uma não colocada num Terminal de Rede.";
@@ -32,9 +31,9 @@ final class PortugueseTexts {
     add.accept(RedweaveBlocks.NETWORK_CONTROLLER.get().getDescriptionId(), NETWORK_CONTROLLER);
     add.accept(RedweaveCreativeTabs.TITLE, TAB);
     NodeScreenPortugueseTexts.addTo(add);
+    ControllerScreenPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
-    add.accept(ControllerMessages.OWNED_BY, OWNED_BY);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

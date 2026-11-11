@@ -1,16 +1,19 @@
 package io.github.marcelofabianov.redweave.network;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenRows;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenSignals;
 import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
 import io.github.marcelofabianov.redweave.menu.NodeScreenNames;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 /**
  * The packets of the mod. The actions of the screens go as button clicks; the packets of the client
- * are the Shift + scroll of the Configurator and the name of a node, which do not fit a button,
- * both checked on the server (rule 17).
+ * are the Shift + scroll of the Configurator and the names typed on the screens, which do not fit a
+ * button, all checked on the server (rule 17).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class RedweavePayloads {
@@ -20,8 +23,14 @@ public final class RedweavePayloads {
 
   @SubscribeEvent
   public static void register(RegisterPayloadHandlersEvent event) {
-    event
-        .registrar(VERSION)
+    PayloadRegistrar registrar = event.registrar(VERSION);
+    registerScreens(registrar);
+    registerActions(registrar);
+  }
+
+  /** What the server sends to the open screens. */
+  private static void registerScreens(PayloadRegistrar registrar) {
+    registrar
         .playToClient(
             NodeScreenNames.TYPE,
             NodeScreenNames.STREAM_CODEC,
@@ -30,6 +39,23 @@ public final class RedweavePayloads {
             NodeScreenChoices.TYPE,
             NodeScreenChoices.STREAM_CODEC,
             (choices, context) -> NodeScreenChoices.receive(choices, context.player()))
+        .playToClient(
+            ControllerScreenRows.TYPE,
+            ControllerScreenRows.STREAM_CODEC,
+            (rows, context) -> ControllerScreenRows.receive(rows, context.player()))
+        .playToClient(
+            ControllerScreenSignals.TYPE,
+            ControllerScreenSignals.STREAM_CODEC,
+            (signals, context) -> ControllerScreenSignals.receive(signals, context.player()));
+  }
+
+  /** What the client asks, checked on the server. */
+  private static void registerActions(PayloadRegistrar registrar) {
+    registrar
+        .playToServer(
+            ControllerRenamed.TYPE,
+            ControllerRenamed.STREAM_CODEC,
+            (renamed, context) -> ControllerRenamed.receive(renamed, context.player()))
         .playToServer(
             NodeRenamed.TYPE,
             NodeRenamed.STREAM_CODEC,

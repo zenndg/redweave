@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
@@ -12,12 +13,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /** The menus of the mod, behind its screens. */
 public final class RedweaveMenus {
   private static final String NODE_ID = "signal_node";
+  private static final String CONTROLLER_ID = "network_controller";
 
   private static final DeferredRegister<MenuType<?>> MENUS =
       DeferredRegister.create(Registries.MENU, RedweaveMod.MOD_ID);
 
   public static final Supplier<MenuType<NodeMenu>> NODE =
       MENUS.register(NODE_ID, () -> IMenuTypeExtension.create(NodeMenu::new));
+
+  public static final Supplier<MenuType<ControllerMenu>> CONTROLLER =
+      MENUS.register(CONTROLLER_ID, () -> IMenuTypeExtension.create(ControllerMenu::new));
 
   private RedweaveMenus() {}
 
