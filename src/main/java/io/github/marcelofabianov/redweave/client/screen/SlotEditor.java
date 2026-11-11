@@ -119,7 +119,11 @@ final class SlotEditor {
               : Optional.empty();
       swatches.add(
           Control.swatch(
-              box, chosen, ChannelColors.argb(channel), action, ChannelNames.of(channel)));
+              box,
+              chosen,
+              ChannelColors.argb(channel),
+              action,
+              ChannelNames.of(channel, view.menu().channelName(channel))));
     }
     return swatches;
   }

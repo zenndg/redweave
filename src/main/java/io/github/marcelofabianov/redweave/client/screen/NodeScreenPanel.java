@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.Optional;
 import net.minecraft.client.gui.Font;
@@ -42,10 +43,11 @@ final class NodeScreenPanel {
         panel.y() + SlotEditor.TITLE_Y,
         ScreenColors.TEXT,
         false);
-    view.menu().slot(index).ifPresent(slot -> drawRows(graphics, font, panel, slot));
+    view.menu().slot(index).ifPresent(slot -> drawRows(graphics, font, panel, slot, view.menu()));
   }
 
-  private static void drawRows(GuiGraphics graphics, Font font, Box panel, ChannelSlot slot) {
+  private static void drawRows(
+      GuiGraphics graphics, Font font, Box panel, ChannelSlot slot, NodeMenu menu) {
     label(graphics, font, panel, NodeScreenTexts.DIRECTION, SlotEditor.DIRECTION_Y);
     label(graphics, font, panel, NodeScreenTexts.BLOCK_FACE, FACE_NAME_Y - LABEL_OFFSET);
     label(graphics, font, panel, NodeScreenTexts.CHANNEL, SlotEditor.CHANNEL_Y);
@@ -54,7 +56,7 @@ final class NodeScreenPanel {
     int faceY = panel.y() + FACE_NAME_Y - LABEL_OFFSET;
     graphics.drawString(font, face, panel.x() + FACE_NAME_X, faceY, ScreenColors.TEXT, false);
     int nameWidth = SlotEditor.CONTROL_X - SlotEditor.LABEL_X - LABEL_OFFSET;
-    Component channel = ChannelNames.of(slot.channel());
+    Component channel = ChannelNames.of(slot.channel(), menu.channelName(slot.channel()));
     text(
         graphics,
         font,

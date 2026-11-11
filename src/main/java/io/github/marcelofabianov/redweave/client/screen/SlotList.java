@@ -87,7 +87,7 @@ final class SlotList {
       return;
     }
     drawSwatch(graphics, box, slot.get());
-    Component first = ChannelNames.of(slot.get().channel());
+    Component first = ChannelNames.of(slot.get().channel(), menu.channelName(slot.get().channel()));
     Component second =
         Component.translatable(
             NodeScreenTexts.SLOT_LINE, directionOf(slot.get()), menu.signal(index));

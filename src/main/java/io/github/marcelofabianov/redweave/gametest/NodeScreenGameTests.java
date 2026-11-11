@@ -60,6 +60,8 @@ public final class NodeScreenGameTests {
   private static final String NO_LIVE_DATA = "The menu should show the slots of the node";
   private static final String NO_RING = "A node out of range should show the ring";
   private static final String NO_CORNER = "The first corner should show the channel";
+  private static final String CHANNEL_NAME = "Main door";
+  private static final String NO_CHANNEL_NAME = "The Node Screen should show the channel name";
 
   private NodeScreenGameTests() {}
 
@@ -115,6 +117,20 @@ public final class NodeScreenGameTests {
 
     helper.assertTrue(menu.slot(FIRST_SLOT).equals(slot(node, FIRST_SLOT)), NO_LIVE_DATA);
     helper.assertTrue(menu.viewerIsOwner(), NO_LIVE_DATA);
+    helper.succeed();
+  }
+
+  /** A slot shows the name the owner gave its channel on the Controller Screen (221). */
+  @GameTest(template = EMPTY)
+  public static void theMenuShowsTheNameOfTheChannel(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeId node = nodeOf(helper, owner);
+    ChannelColor channel = slot(node, FIRST_SLOT).orElseThrow().channel();
+    networkOf(node).renameChannel(new PlayerId(owner.getUUID()), channel, CHANNEL_NAME);
+
+    NodeMenu menu = menuOf(helper, owner.getUUID(), OWNER_NAME);
+
+    helper.assertTrue(menu.channelName(channel).equals(CHANNEL_NAME), NO_CHANNEL_NAME);
     helper.succeed();
   }
 

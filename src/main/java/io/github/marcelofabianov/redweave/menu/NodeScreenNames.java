@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
+import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,9 +23,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
 /**
  * The names the Node Screen shows, which do not fit the numbers of the data slots: the node, the
  * network, its color and its owner. Sent when the screen opens and again when they change (82). A
- * node with no network has the default name and no color (answers 142 and 208).
+ * node with no network has the default name and no color (answers 142 and 208). The names the owner
+ * gave the channels come along, so a slot shows `15 Main door` (answer 221).
  */
-public record NodeScreenNames(int menu, String node, String network, int color, String owner)
+public record NodeScreenNames(
+    int menu, String node, String network, int color, String owner, List<String> channels)
     implements CustomPacketPayload {
   private static final String ID = "node_screen_names";
   private static final String NONE = "";
@@ -47,7 +50,13 @@ public record NodeScreenNames(int menu, String node, String network, int color, 
           NodeScreenNames::color,
           ByteBufCodecs.STRING_UTF8,
           NodeScreenNames::owner,
+          ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()),
+          NodeScreenNames::channels,
           NodeScreenNames::new);
+
+  public NodeScreenNames {
+    channels = List.copyOf(channels);
+  }
 
   @Override
   public Type<NodeScreenNames> type() {
@@ -71,8 +80,14 @@ public record NodeScreenNames(int menu, String node, String network, int color, 
                 node,
                 found.name(),
                 found.color().ordinal(),
-                PlayerNames.of(player.getServer(), found.owner().value())))
-        .orElse(new NodeScreenNames(menu, node, NONE, NO_COLOR, NONE));
+                PlayerNames.of(player.getServer(), found.owner().value()),
+                channelNamesOf(found)))
+        .orElse(new NodeScreenNames(menu, node, NONE, NO_COLOR, NONE, List.of()));
+  }
+
+  /** The name of each channel, empty for the name of the color (answers 26 and 221). */
+  private static List<String> channelNamesOf(Network network) {
+    return network.channels().stream().map(channel -> channel.name().orElse(NONE)).toList();
   }
 
   static void send(ServerPlayer player, NodeScreenNames names) {
