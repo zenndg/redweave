@@ -18,6 +18,7 @@ Não cria redes. A rede nasce ao colocar um Network Controller, e cada controlad
 | Quantidade | Um por player no servidor. Colocar um segundo é recusado, com aviso na action bar | 137 |
 | Quebrar | Só o dono, no survival. Explosões não o destroem. No criativo, quebra, como o Network Controller (pergunta 30) | 137 |
 | Chave do Configurator | Não retira o Terminal | 164 |
+| Registro | O servidor guarda o Terminal de cada player no save das redes, numa lista `terminals` com `player` e o bloco, e a BlockEntity guarda o dono com a chave de NBT `owner`, para o limite valer também com o chunk descarregado | 175 |
 
 ## Clicar
 
@@ -35,10 +36,10 @@ Uma lista das redes do dono, em ordem alfabética pelo nome, com o estado de cad
 | Ação | Em quais redes | O que faz | Pergunta |
 |---|---|---|---|
 | Abrir | `Online` | Abre a tela do Network Controller da rede | 131 e 158 |
-| Renomear | `Online` e `Offline` | Troca o nome, com o limite de `network.name_length` | 156 e 158 |
+| Renomear | Todas | Troca o nome, com o limite de `network.name_length` | 156, 158 e 176 |
 | `Offline` | `Online` | Desliga a rede | 132 |
 | `Online` | `Offline` | Religa a rede | 132 e 135 |
-| Limpar nós | `Online` e `Offline` | Tira todos os nós da rede, que perdem os slots e ficam `No network` no mundo. Pede confirmação no segundo clique, como o `Clear slot` | 133 |
+| Limpar nós | Todas | Tira todos os nós da rede, que perdem os slots e ficam `No network` no mundo. Pede confirmação no segundo clique, como o `Clear slot` | 133 |
 | `Delete` | `Unplaced` | Apaga a rede de vez, com confirmação. Os nós dela ficam `No network` | 166 |
 
 Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela não abre, nem pelo Terminal (pergunta 158). Uma rede `Unplaced` não pode ser religada até o controlador voltar ao mundo (pergunta 135).
@@ -63,8 +64,6 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Ponto | Depende de |
 |---|---|
-| A chave de NBT do dono e onde o servidor guarda o Terminal de cada player | Pergunta 175 |
-| Se uma rede `Unplaced` também pode ser renomeada e ter os nós limpos | Pergunta 176 |
 | O visual do bloco e da tela | Issue do Terminal, como as pranchas das perguntas 51 e 78 |
 | A receita | Issue #24 |
 
@@ -72,4 +71,5 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:24 | Aplica as perguntas 175 e 176. |
 | Zennd | 2026-11-11 09:51 | Cria o documento, com as respostas das perguntas 129 a 166. |

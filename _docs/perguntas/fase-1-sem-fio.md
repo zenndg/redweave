@@ -6,23 +6,24 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Opções | Recomendação |
 |---|---|---|---|
-| 179 | Quais colunas a lista de nós da tela do Network Controller mostra, e qual sinal? | a) Nome, sinal e posição, mais o canal e a direção de cada slot ao expandir a linha; b) só nome, sinal e posição; c) nome, canal, bloco, direção, posição e sinal, como no `telas.md` antes; d) Nenhuma das opções | a), com o sinal da lente do nó, o mais forte entre leituras e emissão (pergunta 98) |
-| 178 | Uma rede `Offline` cujo Network Controller é quebrado e recolocado volta em qual estado? | a) `Offline`, como o dono a deixou; b) `Online`; c) Nenhuma das opções | a), porque desligar é escolha do dono e só o Terminal religa (pergunta 132) |
-| 177 | Como aparecem o Signal Node e o Network Controller de uma rede `Offline`? | a) Estado `Offline` em cinza nas telas e no Jade, lente do nó apagada e núcleo do controlador apagado; b) como `No network`; c) Nenhuma das opções | a), para o player saber que a rede existe e só está desligada |
-| 176 | Uma rede `Unplaced` também pode ser renomeada e ter os nós limpos pelo Network Terminal? | a) Sim, as duas, além do `Delete`; b) só o `Delete`; c) Nenhuma das opções | a), porque não dependem do controlador no mundo |
-| 175 | Onde o servidor guarda o Network Terminal de cada player, para valer o limite de um por player? | a) No save das redes, numa lista `terminals` com `player` e o bloco, e o dono na BlockEntity com a chave de NBT `owner`; b) só na BlockEntity, conferindo os Terminais carregados; c) Nenhuma das opções | a), porque a b) não vê um Terminal num chunk descarregado (regra 6) |
-| 174 | Que chaves o save das redes ganha com as perguntas 132, 142 e 157? | a) `name` no nó, `offline` na rede, e `last_used` com `player` e `network` no lugar de `current`, ainda na `version` 1, porque nada foi publicado; b) as mesmas chaves, subindo para a `version` 2 com migração; c) Nenhuma das opções | a), porque a regra 15 vale para o que foi publicado, e não há tag |
-| 173 | Qual é o ID e quais são os valores do data component do modo do Configurator? | a) `redweave:configurator_mode`, com `open`, `copy` e `wrench`; b) `redweave:mode`, com os mesmos valores; c) Nenhuma das opções | a), porque o nome diz de qual item é, e os valores seguem o `snake_case` da pergunta 89 |
 
 ## Respondidas
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 185 | Quem faz as imagens do mod? | Toda tela, ícone, item e bloco tem a sua textura, e toda imagem é gerada pelo desenvolvedor numa ferramenta de IA, a partir de um prompt que o agente escreve na issue. O agente confere a grade, a paleta e a silhueta antes de usar a imagem. Generaliza o processo das perguntas 78, 120 e 124 |
 | 184 | Que nome as tabelas de histórico de modificações registram? | `Zennd`, o mesmo `user.name` dos commits deste repositório, a partir de 2026-11-11. As linhas anteriores continuam com o nome com que foram registradas |
 | 183 | As implementações das perguntas 125 a 172 ainda não têm issue. Como entram no roadmap? | Com issues criadas agora, uma por funcionalidade, na milestone da Fase 1: #85 remover o Label, #86 modos do Configurator, #87 nó que nasce sem rede, #88 estados `Offline` e `Unplaced` e limite de redes, #89 Network Terminal e #90 log da Tela do Controlador. O registro das decisões é a #84 |
 | 182 | Qual é o papel do roadmap, se o GitHub Projects é a fonte da verdade do backlog (pergunta 16)? | É a visão por fase em checklist, com o número de cada issue. O GitHub Projects continua a fonte da verdade, e uma divergência se resolve por ele. O roadmap é atualizado no encerramento de cada PR (regra 41) |
 | 181 | Em que momento nasce a v0.1.0? | No fim da Fase 1: depois das issues abertas da fase (#20, #22 a #25 e #80), das #85 a #90 e das perguntas pendentes 173 a 179. Então a #26 fixa os IDs, o roteiro manual roda numa instância só com o mod e numa do Iron Meridian (regra 31), e a #27 publica a tag `v0.1.0` pelo fluxo de release. Segue as releases já previstas: 0.2 no fim da Fase 2 (#35), 0.3 no fim da Fase 3 (#43) e 1.0 no fim da Fase 4 (#51) |
 | 180 | Como se chama, onde fica e em que idioma é o roadmap? | `ROADMAP.md`, na raiz, em inglês, como vitrine junto do `README.md`, sem tabela de histórico. Entra nas exceções de nome e de idioma da regra 21 do `AGENTS.md` |
+| 179 | Quais colunas a lista de nós da tela do Network Controller mostra, e qual sinal? | Nome, sinal e posição, esta só para o dono (pergunta 149), e o canal e a direção de cada slot ao expandir a linha. O sinal é o da lente do nó, o mais forte entre as leituras e a emissão (pergunta 98) |
+| 178 | Uma rede `Offline` cujo Network Controller é quebrado e recolocado volta em qual estado? | `Offline`, como o dono a deixou: desligar é escolha do dono, e só o Network Terminal religa (pergunta 132). O save guarda o `offline` também enquanto a rede está `Unplaced` |
+| 177 | Como aparecem o Signal Node e o Network Controller de uma rede `Offline`? | Com o estado `Offline` em cinza nas telas, no Jade e no The One Probe, a lente do nó apagada e o núcleo do controlador apagado, para o player saber que a rede existe e só está desligada |
+| 176 | Uma rede `Unplaced` também pode ser renomeada e ter os nós limpos pelo Network Terminal? | Sim: renomear e limpar os nós, além do `Delete`, porque não dependem do controlador no mundo |
+| 175 | Onde o servidor guarda o Network Terminal de cada player, para valer o limite de um por player? | No save das redes, numa lista `terminals` com `player` e o bloco, e o dono na BlockEntity, com a chave de NBT `owner`. Assim o limite vale também com o Terminal num chunk descarregado (regra 6). As chaves ficam fixadas na #26 |
+| 174 | Que chaves o save das redes ganha com as perguntas 132, 142 e 157? | `name` no nó, `offline` na rede e `last_used`, com `player` e `network`, no lugar de `current`, ainda na `version` 1, porque nada foi publicado e a regra 15 vale para o que foi publicado. As chaves ficam fixadas na #26 |
+| 173 | Qual é o ID e quais são os valores do data component do modo do Configurator? | `redweave:configurator_mode`, com os valores `open`, `copy` e `wrench`. O nome diz de qual item é, e os valores seguem o `snake_case` da pergunta 89. Fica fixado na #26 |
 | 172 | Quem pode escolher a rede de um Signal Node que está `No network`? | Só quem colocou o nó, o `owner` gravado no bloco (pergunta 165), e só entre as redes `Online` dele (pergunta 157). Para os outros players, a Tela do Nó abre só para leitura, com `No network` |
 | 171 | Quando o player escolhe a rede de um Signal Node recém-colocado, o nó já entra com algum slot? | Sim: 1 slot `Input` na face onde está grudado, no primeiro canal livre, como antes (perguntas 25 e 83), e a tela de configuração abre já com esse slot selecionado. Com os 16 canais em uso, entra sem slot e mostra `Free slot`. Completa a pergunta 139 |
 | 170 | A decisão 12 diz que o repositório é `marcelofabianov/redweave`, mas ele está em `zenndg/redweave`. Onde fica o projeto? | Em `zenndg/redweave`, privado, no GitHub, com o host SSH `github.com-zenndg` e a conta `zenndg` no `gh`. O pacote Java `io.github.marcelofabianov.redweave` não muda, porque é contrato (regra 15). Muda a pergunta 12 |
@@ -184,6 +185,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:32 | Responde a pergunta 185. |
+| Zennd | 2026-11-11 10:24 | Responde as perguntas pendentes 173 a 179. |
 | Zennd | 2026-11-11 10:45 | Responde a pergunta 184. |
 | Zennd | 2026-11-11 10:40 | Responde as perguntas 180 a 183. |
 | Zennd | 2026-11-11 09:51 | Registra as perguntas 173 a 179 como pendentes. |

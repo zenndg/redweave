@@ -39,7 +39,7 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 
 #### Formato do save
 
-A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato que a #16 entregou. As chaves do nome do nó, do estado `Offline` e da última rede usada, que substitui o `current` (pergunta 157), dependem da pergunta 174.
+A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato que a #16 entregou. Com as #87 e #88, ainda na `version` 1, o nó ganha `name`, a rede ganha `offline`, e `last_used`, com `player` e `network`, substitui o `current` (perguntas 157 e 174). O Network Terminal entra numa lista `terminals`, com `player` e o bloco (pergunta 175).
 
 | Parte | Chaves |
 |---|---|
@@ -133,7 +133,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | `Out of range` | Fora do raio do controlador ou em outra dimensão | Vermelho | Não conta, e a saída emite 0 |
 | `No network` | Sem rede, ou com a rede `Unplaced` | Cinza | Não conta |
 
-Como aparece um nó de uma rede `Offline` depende da pergunta 177.
+Um nó de uma rede `Offline` mostra o estado `Offline` em cinza nas telas, no Jade e no The One Probe, não conta e emite 0 (pergunta 177).
 
 O nó `Unloaded` não aparece no mundo, porque o chunk dele não está carregado. Por isso o âmbar só aparece nas telas.
 
@@ -239,6 +239,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:24 | Aplica as perguntas 174, 175 e 177. |
 | Zennd | 2026-11-11 09:51 | Aplica o Network Terminal, os estados `Offline` e `Unplaced`, o limite de redes, o nome do nó e o nó que escolhe a rede (perguntas 129 a 172). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 13:10 | Descreve a gravação da rede com as perguntas 88 a 93, 95 e 97. |

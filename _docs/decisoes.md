@@ -179,13 +179,23 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Papel do roadmap | Visão por fase; o GitHub Projects continua a fonte da verdade | 182 |
 | Issues do novo modelo | #85 a #90, e a #84 do registro | 183 |
 | Nome no histórico | `Zennd`, como nos commits | 184 |
+| Componente do modo | `redweave:configurator_mode`: `open`, `copy` e `wrench` | 173 |
+| Chaves novas do save | `name` no nó, `offline` na rede e `last_used` no lugar de `current`, na `version` 1 | 174 |
+| Registro do Terminal | Lista `terminals` no save, e `owner` na BlockEntity | 175 |
+| Rede Unplaced no Terminal | Renomear, limpar nós e `Delete` | 176 |
+| Visual da rede Offline | Estado `Offline` em cinza, lente e núcleo apagados | 177 |
+| Recolocar uma rede Offline | Volta `Offline` | 178 |
+| Lista de nós | Nome, sinal da lente e posição, com canal e direção por slot ao expandir | 179 |
+| Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
 
-Não há perguntas pendentes da concepção. As perguntas 173 a 179, da Fase 1, estão pendentes em [`fase-1-sem-fio.md`](perguntas/fase-1-sem-fio.md).
+Não há perguntas pendentes da concepção.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 10:32 | Registra a decisão 185. |
+| Zennd | 2026-11-11 10:24 | Registra as decisões 173 a 179. |
 | Zennd | 2026-11-11 10:45 | Registra a decisão 184. |
 | Zennd | 2026-11-11 10:40 | Registra as decisões 180 a 183. |
 | Zennd | 2026-11-11 09:51 | Registra as decisões 125 a 172 e atualiza as que elas mudam. |
