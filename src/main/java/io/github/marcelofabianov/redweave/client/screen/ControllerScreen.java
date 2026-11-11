@@ -6,10 +6,10 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenCodes;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenTexts;
-import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.menu.RenameTarget;
 import io.github.marcelofabianov.redweave.network.ControllerRenamed;
 import java.util.Optional;
+import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * The Controller Screen: _docs/funcionalidades/telas.md and _docs/imagens/telas/
  * tela-do-controlador.png. It only shows what the server sends and asks for actions; the server
  * decides (rule 16). Anyone may look, and only the owner sees the Rename button, the palette and
- * the names to click (answers 22, 156, 212 and 217).
+ * the names to double-click (answers 22, 156, 212, 217 and 222).
  */
 public final class ControllerScreen extends AbstractContainerScreen<ControllerMenu> {
   private static final int WIDTH = 340;
@@ -34,6 +34,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
 
   private final NodeTable table = new NodeTable();
   private final NameField name = new NameField();
+  private final DoubleClick clicks = new DoubleClick(Util::getMillis);
   private Tab tab = Tab.NODES;
   private boolean paletteOpen;
   private RenameTarget target = RenameTarget.NETWORK;
@@ -133,7 +134,10 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     };
   }
 
-  /** A click on the name renames the node, for the owner; elsewhere it opens the row (217). */
+  /**
+   * A click opens or closes the row; a double click on the name renames the node, for the owner,
+   * and its second click undoes the first, so the row stays as it was (answers 217 and 222).
+   */
   private boolean clickNodes(double mouseX, double mouseY) {
     Optional<NodeTable.Placed> row = table.rowAt(content(), menu, mouseX, mouseY);
     if (row.isEmpty()) {
@@ -141,23 +145,31 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     }
     int index = row.get().item().row();
     Box nameBox = NodeTable.nameBox(row.get().box());
-    if (owner() && nameBox.contains(mouseX, mouseY)) {
-      edit(
-          RenameTarget.NODE,
-          index,
-          nameBox,
-          menu.nodes().get(index).name(),
-          NameField.limit(NeoForgeNetworkLimits::nodeNameLength));
+    table.toggle(index);
+    if (!owner() || !nameBox.contains(mouseX, mouseY)) {
+      clicks.reset();
       return true;
     }
-    table.toggle(index);
+    if (!clicks.click(index)) {
+      return true;
+    }
+    edit(
+        RenameTarget.NODE,
+        index,
+        nameBox,
+        menu.nodes().get(index).name(),
+        NameField.limit(NeoForgeNetworkLimits::nodeNameLength));
     return true;
   }
 
   private boolean clickChannels(double mouseX, double mouseY) {
     Optional<ChannelColor> channel = ChannelGrid.nameAt(content(), mouseX, mouseY);
     if (!owner() || channel.isEmpty()) {
+      clicks.reset();
       return false;
+    }
+    if (!clicks.click(channel.get())) {
+      return true;
     }
     edit(
         RenameTarget.CHANNEL,
@@ -223,7 +235,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
           case ACCESS -> false;
         };
     return overName
-        ? Optional.of(Component.translatable(NodeScreenTexts.RENAME_TOOLTIP))
+        ? Optional.of(Component.translatable(ControllerScreenTexts.RENAME_TOOLTIP))
         : Optional.empty();
   }
 

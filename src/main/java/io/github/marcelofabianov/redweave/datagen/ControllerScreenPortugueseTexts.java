@@ -10,6 +10,9 @@ final class ControllerScreenPortugueseTexts {
   private static final String TAB_ACCESS = "Acesso";
   private static final String RENAME = "Renomear";
   private static final String RECOLOR_TOOLTIP = "Clique para trocar a cor.";
+  private static final String DOUBLE_CLICK = "Clique duas vezes para renomear.";
+  private static final String ENTER_OR_ESC = " Enter salva, Esc cancela.";
+  private static final String RENAME_TOOLTIP = DOUBLE_CLICK + ENTER_OR_ESC;
   private static final String COLUMN_NODE = "Nó";
   private static final String COLUMN_SIGNAL = "Sinal";
   private static final String COLUMN_POSITION = "Posição";
@@ -39,6 +42,7 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.TAB_ACCESS, TAB_ACCESS);
     add.accept(ControllerScreenTexts.RENAME, RENAME);
     add.accept(ControllerScreenTexts.RECOLOR_TOOLTIP, RECOLOR_TOOLTIP);
+    add.accept(ControllerScreenTexts.RENAME_TOOLTIP, RENAME_TOOLTIP);
   }
 
   private static void addRows(BiConsumer<String, String> add) {

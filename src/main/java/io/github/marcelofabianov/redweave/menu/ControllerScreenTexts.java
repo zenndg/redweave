@@ -14,6 +14,7 @@ public final class ControllerScreenTexts {
   public static final String TAB_ACCESS = PREFIX + "tab.access";
   public static final String RENAME = PREFIX + "rename";
   public static final String RECOLOR_TOOLTIP = PREFIX + "recolor_tooltip";
+  public static final String RENAME_TOOLTIP = PREFIX + "rename_tooltip";
   public static final String COLUMN_NODE = PREFIX + "column.node";
   public static final String COLUMN_SIGNAL = PREFIX + "column.signal";
   public static final String COLUMN_POSITION = PREFIX + "column.position";

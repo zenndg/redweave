@@ -97,12 +97,12 @@ O que a tela faz, decidido na issue #20.
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
-| Quem abre | Qualquer player, com a mão vazia. Para quem não é o dono, a tela é só leitura: sem `Rename`, sem paleta e sem nomes clicáveis | 22 |
+| Quem abre | Qualquer player, com a mão vazia. Para quem não é o dono, a tela é só leitura: sem `Rename`, sem paleta e sem renomear nós e canais | 22 |
 | Rede `Offline` | Nada abre, e a action bar mostra o aviso. Uma tela aberta fecha se a rede for desligada | 158 e 160 |
 | Linha aberta | O clique numa linha mostra os slots em uso abaixo dela, com o ícone de entrada ou de saída, a cor, o canal e a direção, como `Slot 1 · 15 Red · Input`. Abrir uma linha fecha a anterior | 179 e 218 |
-| Renomear um nó | Para o dono, o clique no nome vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. O clique no resto da linha abre e fecha os slots | 144 e 217 |
+| Renomear um nó | Para o dono, o duplo clique no nome vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. Um clique, no nome ou no resto da linha, abre e fecha os slots, e o duplo clique deixa a linha como estava | 144, 217 e 222 |
 | Renomear a rede | O botão `Rename` troca o nome por um campo de texto. Um nome vazio é recusado, e o nome continua o mesmo | 156 |
-| Renomear um canal | Na aba `Signals`, o clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26 e 34 |
+| Renomear um canal | Na aba `Signals`, o duplo clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26, 34 e 222 |
 | Trocar a cor | A paleta abre sob o quadrado da cor, com as 16 cores em duas fileiras de 8 e a atual destacada. O clique numa cor a escolhe e fecha a paleta | 212 |
 | Lista vazia | A aba `Nodes` de uma rede sem nós mostra `No node in this network yet.` no meio da tabela | 220 |
 | Rolagem | A roda do mouse rola a lista de nós quando ela não cabe | — |
@@ -120,6 +120,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 15:47 | Aplica a pergunta 222: nós e canais são renomeados com duplo clique. |
 | Zennd | 2026-11-11 15:40 | Descreve a Tela do Controlador entregue na #20, com a imagem nova e as perguntas 212 a 221. |
 | Zennd | 2026-11-11 14:09 | Adiciona o estado `Offline` na pílula da Tela do Nó, da #88. |
 | Zennd | 2026-11-11 13:46 | Descreve a escolha de rede, o nome do nó e o link da rede entregues na #87 (perguntas 198 a 208). |

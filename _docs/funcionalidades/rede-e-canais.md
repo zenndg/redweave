@@ -199,7 +199,7 @@ Completam a [Tela do Controlador](telas.md#tela-do-controlador).
 
 | Aba | O que mostra |
 |---|---|
-| `Signals` | Os 16 canais, cada um com a cor, o nome, o valor atual e quantas entradas e saídas usa. O dono renomeia um canal com um clique no nome |
+| `Signals` | Os 16 canais, cada um com a cor, o nome, o valor atual e quantas entradas e saídas usa. O dono renomeia um canal com um duplo clique no nome (pergunta 222) |
 | `Access` | O dono da rede e o aviso `Only the owner can change this network.` |
 
 ## Config
@@ -242,6 +242,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 15:47 | Aplica a pergunta 222: o canal é renomeado com duplo clique. |
 | Zennd | 2026-11-11 14:09 | Aplica a #88: a chave `offline`, o estado `Offline` do nó e o aviso do limite de redes (perguntas 209 a 211). |
 | Zennd | 2026-11-11 13:46 | Aplica a #87: o `name` do nó e o `last_used` no save, e o nome de nó inválido (perguntas 157, 174 e 206). |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 174, 175 e 177. |

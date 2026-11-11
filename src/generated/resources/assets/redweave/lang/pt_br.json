@@ -32,6 +32,7 @@
   "screen.redweave.controller.read_only": "Só o dono pode alterar esta rede.",
   "screen.redweave.controller.recolor_tooltip": "Clique para trocar a cor.",
   "screen.redweave.controller.rename": "Renomear",
+  "screen.redweave.controller.rename_tooltip": "Clique duas vezes para renomear. Enter salva, Esc cancela.",
   "screen.redweave.controller.slot_row": "Slot %s · %s · %s",
   "screen.redweave.controller.slot_use": "%s ent. · %s saí.",
   "screen.redweave.controller.tab.access": "Acesso",
