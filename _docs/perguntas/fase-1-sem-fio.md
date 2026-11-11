@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 214 | A prancha de arte nova da Tela do Controlador já inclui a aba `Log` da #90? | Sim: um prompt em `tmp/arte/controller_screen/` com a tela inteira, o cabeçalho, as abas `Nodes` com uma linha expandida, `Signals`, `Access` e `Log`, e a paleta de cores. A #20 e a #90 usam a mesma prancha (perguntas 185 e 186) |
+| 213 | Como a #20 é entregue, sendo a maior tela até agora? | Numa issue e num PR, com tudo: a tela, o cabeçalho com nome, cor e `Rename`, as abas `Nodes`, `Signals` e `Access` e o rodapé. A aba `Log` continua na #90 |
+| 212 | Onde o dono troca a cor da rede na Tela do Controlador? | No cabeçalho: o dono clica no quadrado da cor ao lado do nome, e abre uma paleta com as 16 cores, nos mesmos swatches da Tela do Nó. Para os outros players, o quadrado não reage. Completa a pergunta 156 |
 | 211 | Que texto a action bar mostra quando o player já tem `network.max_per_player` redes e tenta colocar um Network Controller que criaria outra? | `You have reached the limit of <n> networks. Delete an unplaced one at a Network Terminal.` e `Você chegou ao limite de <n> redes. Apague uma não colocada num Terminal de Rede.`, com o número do config, para ensinar como liberar espaço (pilar 5 de `ux.md` e pergunta 166). Completa a pergunta 145 |
 | 210 | Como a chave `offline` da rede vai para o save? | Só numa rede desligada, como `offline: true`; sem a chave, a rede está ligada. Segue o padrão do save, em que `reading`, o `name` do nó e o `controller` só aparecem quando existem, e um save da #87 abre sem migração. Completa a pergunta 174 |
 | 209 | Como entra o estado `Offline` na #88, antes de o Network Terminal existir? | No domínio: o estado, o desligar e o religar no `Network`, só para o dono e com teste, o save e todos os efeitos de uma rede `Offline` (Configurator, controlador, lente, núcleo e tela), cobertos por GameTests. Só o Terminal da #89 chama o desligar e o religar no jogo; até lá, o roteiro manual testa o `Offline` com a chave editada no save |
@@ -211,6 +214,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:21 | Responde as perguntas 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Responde as perguntas 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Responde as perguntas 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Responde as perguntas 198 a 205. |

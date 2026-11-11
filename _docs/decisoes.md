@@ -213,6 +213,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Offline` antes do Terminal | No domínio, no save e nos efeitos, com GameTests; o Terminal da #89 liga o botão | 209 |
 | Chave `offline` no save | Só numa rede desligada | 210 |
 | Aviso do limite de redes | O limite e como liberar espaço, no Terminal | 211 |
+| Cor da rede na Tela do Controlador | Clique no quadrado da cor, com a paleta de 16 cores | 212 |
+| Entrega da #20 | Uma issue e um PR, com as abas `Nodes`, `Signals` e `Access` | 213 |
+| Prancha da Tela do Controlador | Uma só, já com a aba `Log` da #90 | 214 |
 
 Não há perguntas pendentes da concepção.
 
@@ -220,6 +223,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 14:21 | Registra as decisões 212 a 214. |
 | Zennd | 2026-11-11 13:59 | Registra as decisões 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Registra as decisões 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Registra as decisões 198 a 205. |
