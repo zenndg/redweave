@@ -237,6 +237,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Aba `Slots` da Tela do Nó | Sai; a tela fica sem abas laterais | 233 |
 | Linha aberta no controlador | Só os canais ativos, com o nome do slot | 234 |
 | Saves de teste no formato antigo | Sem conversão; a rede é descartada e o teste usa um mundo novo | 235 |
+| Contagens do rodapé do controlador | Sem a palavra "nodes", para caber na linha | 236 |
+| Configurar um canal | Só com `Disabled`; `Enabled` trava a direção e a face | 237 |
+| Colar num nó sem rede | Liga o nó à rede da cópia, para quem o colocou e é dono dela | 238 |
+| Colar num nó com rede | Só aplica os slots, sem trocar a rede | 239 |
 
 Não há perguntas pendentes da concepção.
 
@@ -244,6 +248,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:08 | Registra as decisões 238 e 239. |
+| Zennd | 2026-11-11 16:52 | Registra a decisão 237. |
+| Zennd | 2026-11-11 16:40 | Registra a decisão 236. |
 | Zennd | 2026-11-11 16:34 | Registra a decisão 235. |
 | Zennd | 2026-11-11 16:30 | Registra as decisões 233 e 234. |
 | Zennd | 2026-11-11 16:12 | Registra a decisão 232. |

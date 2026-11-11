@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 239 | Colar num nó que já tem outra rede troca a rede dele para a da cópia? | Não: num nó com rede, colar só aplica os slots. A rede só vem junto num nó sem rede, e trocar de rede continua sendo pela Tela do Nó (pergunta 141) |
+| 238 | Colar num nó sem rede, hoje recusado, passa a ligá-lo à rede da cópia? | Sim: a cópia guarda o ID da rede de origem, e colar num nó sem rede o liga a ela e aplica os slots, contando como a última rede usada (pergunta 157). Só quem pode escolher a rede daquele nó, quem o colocou (pergunta 172), sendo dono da rede da cópia, com ela `Online`. Se a rede não existe mais, não está `Online` ou o player não é dono, recusa com o motivo, e o nó fica sem rede. Muda as perguntas 126 e 230 |
+| 237 | Em que estado do canal o dono muda a direção e a face? | Só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer; `Enabled` trava a configuração, e o servidor recusa configurar um canal ativo. Para mudar um canal ativo, o dono desativa, configura e ativa. Um canal nunca ativado já pode ser configurado e fica `Disabled`, nascendo como `Input` na face grudada. O nome muda nos dois estados, porque não mexe em sinal. Muda a pergunta 228 |
+| 236 | Como encurtar as contagens do rodapé da Tela do Controlador, que passavam da borda? | Sem a palavra "nodes": `0 unloaded` e `0 out of range`, e `0 descarregados` e `0 fora de alcance` em português, sem singular e plural. O ponto âmbar e o vermelho seguem indicando o estado. Muda a pergunta 219 |
 | 235 | O que acontece com os mundos de teste que têm nós no formato antigo de até 4 slots? | Nada converte: um nó fora do formato novo é inválido, e a rede dele é descartada com aviso no log, como na pergunta 92. Para testar, cria-se um mundo novo, e o save continua na versão 1, porque nada foi publicado (pergunta 224) |
 | 234 | Com 16 slots por cor, o que a linha aberta de um nó mostra na Tela do Controlador? | Só os canais ativos, um por sub-linha, como `15 Red · Input · Redstone from lever 1`, e `15 Red · Input` sem nome. Um nó sem canal ativo mostra `No active channel`. Muda a pergunta 179 |
 | 233 | A aba lateral `Slots` da Tela do Nó continua sem os upgrades? | Não: a tela fica sem abas laterais, como no mockup da pergunta 231. A aba `Info` volta quando tiver conteúdo. Muda a pergunta 80 |
@@ -235,6 +239,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:08 | Responde as perguntas 238 e 239. |
+| Zennd | 2026-11-11 16:52 | Responde a pergunta 237. |
+| Zennd | 2026-11-11 16:40 | Responde a pergunta 236. |
 | Zennd | 2026-11-11 16:34 | Responde a pergunta 235. |
 | Zennd | 2026-11-11 16:30 | Responde as perguntas 233 e 234. |
 | Zennd | 2026-11-11 16:12 | Responde a pergunta 232. |
