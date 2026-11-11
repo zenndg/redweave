@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 235 | O que acontece com os mundos de teste que têm nós no formato antigo de até 4 slots? | Nada converte: um nó fora do formato novo é inválido, e a rede dele é descartada com aviso no log, como na pergunta 92. Para testar, cria-se um mundo novo, e o save continua na versão 1, porque nada foi publicado (pergunta 224) |
+| 234 | Com 16 slots por cor, o que a linha aberta de um nó mostra na Tela do Controlador? | Só os canais ativos, um por sub-linha, como `15 Red · Input · Redstone from lever 1`, e `15 Red · Input` sem nome. Um nó sem canal ativo mostra `No active channel`. Muda a pergunta 179 |
+| 233 | A aba lateral `Slots` da Tela do Nó continua sem os upgrades? | Não: a tela fica sem abas laterais, como no mockup da pergunta 231. A aba `Info` volta quando tiver conteúdo. Muda a pergunta 80 |
 | 232 | O clique direito com o Configurator no Network Controller abre a Tela do Controlador? | Só no modo `Open`, com o mesmo comportamento da mão vazia, inclusive os avisos de rede `Offline` e de controlador sem rede. `Copy` e `Wrench` continuam sem ação no controlador (pergunta 164). Completa a pergunta 113 |
 | 231 | Como fica a arte da Tela do Nó com a fileira das 16 cores? | Numa prancha nova, em `tmp/arte/node_screen_channels/`, com o mockup da tela e uma folha só com os sprites que faltam. Enquanto a arte não chega, o domínio, o save e o servidor andam com TDD, e a tela espera a arte aprovada (perguntas 185 e 186) |
 | 230 | O que a cópia do Configurator (`Copy` e `Paste`) leva no modelo de 16 slots? | Tudo dos 16: status, direção, face e nome de cada cor, com a regra da face grudada da pergunta 105. Colar substitui os 16 slots do nó de destino. Muda as perguntas 105 e 106 |
@@ -232,6 +235,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:34 | Responde a pergunta 235. |
+| Zennd | 2026-11-11 16:30 | Responde as perguntas 233 e 234. |
 | Zennd | 2026-11-11 16:12 | Responde a pergunta 232. |
 | Zennd | 2026-11-11 16:08 | Responde a pergunta 231. |
 | Zennd | 2026-11-11 16:06 | Responde a pergunta 229. |

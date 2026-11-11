@@ -234,6 +234,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cópia do Configurator | Os 16 slots inteiros, com o nome | 230 |
 | Arte da Tela do Nó com 16 cores | Prancha nova; a tela espera a arte | 231 |
 | Configurator no controlador | O modo `Open` abre a tela, como a mão vazia | 232 |
+| Aba `Slots` da Tela do Nó | Sai; a tela fica sem abas laterais | 233 |
+| Linha aberta no controlador | Só os canais ativos, com o nome do slot | 234 |
+| Saves de teste no formato antigo | Sem conversão; a rede é descartada e o teste usa um mundo novo | 235 |
 
 Não há perguntas pendentes da concepção.
 
@@ -241,6 +244,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:34 | Registra a decisão 235. |
+| Zennd | 2026-11-11 16:30 | Registra as decisões 233 e 234. |
 | Zennd | 2026-11-11 16:12 | Registra a decisão 232. |
 | Zennd | 2026-11-11 16:08 | Registra a decisão 231. |
 | Zennd | 2026-11-11 16:06 | Registra a decisão 229. |
