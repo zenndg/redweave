@@ -210,6 +210,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome do nó no save | Opcional, como o do canal: a chave `name` só existe quando o dono renomeia | 206 |
 | Testes da #87 | No agregado `Network` e nos casos de uso públicos | 207 |
 | Link da rede na Tela do Nó | Linha própria no cabeçalho, em qualquer estado com rede; a pílula mostra só o estado | 208 |
+| `Offline` antes do Terminal | No domínio, no save e nos efeitos, com GameTests; o Terminal da #89 liga o botão | 209 |
+| Chave `offline` no save | Só numa rede desligada | 210 |
+| Aviso do limite de redes | O limite e como liberar espaço, no Terminal | 211 |
 
 Não há perguntas pendentes da concepção.
 
@@ -217,6 +220,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:59 | Registra as decisões 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Registra as decisões 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Registra as decisões 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Registra as decisões 196 e 197. |

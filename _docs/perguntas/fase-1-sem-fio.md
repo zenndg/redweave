@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 211 | Que texto a action bar mostra quando o player já tem `network.max_per_player` redes e tenta colocar um Network Controller que criaria outra? | `You have reached the limit of <n> networks. Delete an unplaced one at a Network Terminal.` e `Você chegou ao limite de <n> redes. Apague uma não colocada num Terminal de Rede.`, com o número do config, para ensinar como liberar espaço (pilar 5 de `ux.md` e pergunta 166). Completa a pergunta 145 |
+| 210 | Como a chave `offline` da rede vai para o save? | Só numa rede desligada, como `offline: true`; sem a chave, a rede está ligada. Segue o padrão do save, em que `reading`, o `name` do nó e o `controller` só aparecem quando existem, e um save da #87 abre sem migração. Completa a pergunta 174 |
+| 209 | Como entra o estado `Offline` na #88, antes de o Network Terminal existir? | No domínio: o estado, o desligar e o religar no `Network`, só para o dono e com teste, o save e todos os efeitos de uma rede `Offline` (Configurator, controlador, lente, núcleo e tela), cobertos por GameTests. Só o Terminal da #89 chama o desligar e o religar no jogo; até lá, o roteiro manual testa o `Offline` com a chave editada no save |
 | 208 | Onde fica o nome da rede clicável que abre a troca de rede na Tela do Nó? | Numa linha própria do cabeçalho: abaixo do título, na linha do nome do nó, à direita, o quadrado na cor da rede e o nome, sobre o sprite `network_name_link`, com sublinhado de cobre no hover. Aparece sempre que o nó tem rede, em qualquer estado, porque a pílula só mostrava o nome no estado `Online`. A pílula passa a mostrar só o estado, como no mockup da pergunta 198. Completa a pergunta 141 |
 | 207 | Em quais fronteiras entram os testes do domínio e da aplicação da #87? | No agregado `Network` (`attachNode` com nome e só em rede `Online`, `renameNode`, snapshot e restauração com o nome) e nos casos de uso públicos (`PlaceNode`, `LinkNode`, a lista de escolha de rede, `RenameNode` e `CreateNetwork`), com os fakes em memória que já existem. Sem teste direto em classe interna, como `Node`, `Names` e `JoinNetwork` |
 | 206 | Como o Signal Node guarda o nome no domínio e no save? | Como o nome do canal (pergunta 26): o `Node` tem um nome opcional, e vazio é o padrão, os 8 primeiros caracteres do ID, calculado na hora de mostrar. A chave `name` só vai para o save quando o dono renomeia, e renomear para vazio limpa o nome. Completa as perguntas 142, 144 e 174 |
@@ -208,6 +211,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 13:59 | Responde as perguntas 209 a 211. |
 | Zennd | 2026-11-11 13:20 | Responde as perguntas 206 a 208. |
 | Zennd | 2026-11-11 11:52 | Responde as perguntas 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Responde as perguntas 196 e 197. |
