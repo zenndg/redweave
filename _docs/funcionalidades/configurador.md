@@ -8,12 +8,13 @@ Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do
 
 ## Modos
 
-O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy` e `Wrench`. Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
+O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy`, `Toggle` e `Wrench` (pergunta 241). Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
 
 | Modo | Em português | Cor | Clique num nó | Shift + clique num nó | Pergunta |
 |---|---|---|---|---|---|
 | `Open` | `Abrir` | Azul | Abre a Tela do Nó | — | 140 e 143 |
 | `Copy` | `Copiar` | Verde | Copia a configuração dos slots | Cola a cópia | 127 e 143 |
+| `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
 Em qualquer modo, o Shift + clique no ar apaga a cópia (pergunta 128). O clique em qualquer outro bloco não faz nada, para um Shift + clique num bloco não apagar a cópia por engano.
@@ -55,9 +56,12 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 
 | Ação | Resultado | Mensagem |
 |---|---|---|
-| Copiar | Copiou | `Copied <n> slots`, com os slots ativos |
+| Copiar | Copiou | `Copied <n> slots`, com todos os canais configurados, ativos ou não (pergunta 240) |
 | Copiar | Nó sem rede | `No network` |
-| Colar | Colou | `Pasted <n> slots`, com os slots ativos |
+| Colar | Colou | `Pasted <n> slots`, com todos os canais configurados (pergunta 240) |
+| Alternar | Clique | `Enabled <n> channels` |
+| Alternar | Shift + clique | `Disabled <n> channels` |
+| Alternar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Nó sem rede, colocado por outro player | `Only the player who placed this node can paste a network on it.` |
 | Colar | Nó sem rede, rede da cópia de outro dono | `Only the owner of <rede> can change this node.` |
@@ -99,6 +103,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:45 | Adiciona o modo `Toggle` e conta todos os canais configurados na cópia (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Colar num nó sem rede o liga à rede da cópia (perguntas 238 e 239). |
 | Zennd | 2026-11-11 16:40 | A cópia leva os 16 slots, com o status e o nome (perguntas 224 e 230). |
 | Zennd | 2026-11-11 16:12 | O modo `Open` abre a Tela do Controlador (pergunta 232). |

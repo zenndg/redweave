@@ -129,7 +129,8 @@ Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os sav
 | 70 | Desative o canal `15`, troque a direção e a face, e ative de novo | Com `Enabled`, a direção e o cubo não mudam; desativado, mudam; ativo de novo, vale a configuração nova, com o nome |
 | 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `15 Red · Input · Redstone from lever 1`; um nó sem canal ativo mostra `No active channel` |
 | 72a | Coloque um nó novo, sem escolher rede, e cole nele a cópia | O nó entra na rede da cópia com os mesmos canais, sem passar pela escolha de rede; colado por outro player, a action bar recusa |
-| 72 | Copie o nó com o Configurator e cole noutro | `Copied 5 slots` e `Pasted 5 slots`; o outro nó fica com os mesmos canais ativos, nomes e direções |
+| 72b | Com o Configurator no modo `Toggle`, em âmbar, dê um clique e depois um Shift + clique num nó com canais configurados | `Enabled <n> channels` ativa todos; `Disabled <n> channels` desativa todos, sem abrir a tela; com outro player, a action bar recusa |
+| 72 | Copie o nó com o Configurator e cole noutro | `Copied <n> slots` e `Pasted <n> slots`, contando todos os canais configurados, ativos ou não; o outro nó fica com os mesmos canais ativos, nomes e direções |
 | 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
 | 74 | Troque o idioma para Português (Brasil) | `Nome`, `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
 
@@ -139,6 +140,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 17:45 | Adiciona o passo 72b, do modo `Toggle`, e ajusta a contagem do passo 72 (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Adiciona o passo 72a, de colar num nó sem rede (pergunta 238). |
 | Zennd | 2026-11-11 17:05 | Ajusta os passos 7 e 70: configurar só com o canal desativado (pergunta 237). |
 | Zennd | 2026-11-11 16:40 | Ajusta o passo 61 às contagens curtas do rodapé (pergunta 236). |
