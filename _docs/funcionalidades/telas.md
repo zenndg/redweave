@@ -43,7 +43,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Nome do nó | Abaixo do título, o nome, que nasce com os 8 primeiros caracteres do ID. Para o dono, vem com um lápis, e o clique o troca por um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. O texto vai num pacote próprio, e o servidor confere o dono, o alcance e o limite de `node.name_length` (perguntas 142, 144 e 204) |
 | Rede | Na linha do nome, à direita, o quadrado na cor da rede e o nome dela, em qualquer estado com rede. Para o dono, o clique abre a escolha de rede (perguntas 141 e 208) |
 | Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range`, `No network` ou `Offline`, em cinza ([estados do nó](rede-e-canais.md#estados-do-nó)) (perguntas 177 e 208) |
-| Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Slot livre aparece tracejado, com `Free slot` e `Click to use` |
+| Slots | À esquerda, um botão por slot de canal: a cor e o nome do canal, a direção e o sinal, como `15 Red` e `Output · signal 12`. Um canal renomeado na Tela do Controlador aparece com o nome dado, como `15 Main door` (pergunta 221). Slot livre aparece tracejado, com `Free slot` e `Click to use` |
 | Slot escolhido | À direita, a configuração do slot selecionado |
 | Direção | Seletor `Input` e `Output` |
 | Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e `click a face to change` |
@@ -78,18 +78,37 @@ O que a tela faz, decidido na issue #19.
 
 ![Tela do Controlador](../imagens/telas/tela-do-controlador.png)
 
-**Abre** com um clique no Network Controller com a mão vazia, ou pela lista do [Network Terminal](terminal-de-rede.md) (perguntas 113 e 131). A imagem é anterior às perguntas 144 a 150 e ainda mostra o gráfico dos últimos 30 segundos, que saiu.
+**Abre** com um clique no Network Controller com a mão vazia, ou pela lista do [Network Terminal](terminal-de-rede.md) (perguntas 113 e 131). O desenho tem seis variantes, com a aba `Log` da #90 (pergunta 214), e os sprites estão em [`tela-do-controlador-sprites.png`](../imagens/telas/tela-do-controlador-sprites.png).
 
 | Parte | O que mostra |
 |---|---|
-| Cabeçalho | A cor e o nome da rede, com o botão `Rename` para o dono (pergunta 156) |
+| Cabeçalho | O quadrado na cor da rede e o nome dela. Para o dono, o clique no quadrado abre a paleta, e o botão `Rename` troca o nome por um campo de texto (perguntas 156 e 212) |
 | Estado | `Online · <n> nodes` |
-| Abas | `Nodes`, `Signals`, `Access` e `Log` |
-| Nodes | Uma linha por nó, com o nome, o sinal de 0 a 15 e a posição x, y e z. O sinal é o da lente, o mais forte entre as leituras e a emissão (pergunta 98). Ao expandir a linha, aparecem o canal e a direção de cada slot (pergunta 179). A posição só aparece para o dono (pergunta 149). O dono renomeia o nó na linha (pergunta 144). Um Signal Remote aparece com a posição `held item`. Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29) |
-| Log | Uma linha por mudança de valor de uma entrada ou de uma saída: a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
-| Rodapé | Canais em uso, como `3 of 16 channels in use`, o dono e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho |
+| Abas | `Nodes`, `Signals` e `Access`. A aba `Log` entra com a #90 (pergunta 215) |
+| Nodes | Uma linha por nó, na ordem em que entraram na rede, com o nome, o sinal de 0 a 15 e a posição x, y e z do bloco do nó (perguntas 179 e 216). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). A posição só aparece para o dono (pergunta 149). Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29). Um Signal Remote aparecerá com a posição `held item`, quando o Remote existir |
+| Log | Entra com a #90: uma linha por mudança de valor de uma entrada ou de uma saída, com a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
+| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero (pergunta 219). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
+
+### Comportamento
+
+O que a tela faz, decidido na issue #20.
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Quem abre | Qualquer player, com a mão vazia. Para quem não é o dono, a tela é só leitura: sem `Rename`, sem paleta e sem nomes clicáveis | 22 |
+| Rede `Offline` | Nada abre, e a action bar mostra o aviso. Uma tela aberta fecha se a rede for desligada | 158 e 160 |
+| Linha aberta | O clique numa linha mostra os slots em uso abaixo dela, com o ícone de entrada ou de saída, a cor, o canal e a direção, como `Slot 1 · 15 Red · Input`. Abrir uma linha fecha a anterior | 179 e 218 |
+| Renomear um nó | Para o dono, o clique no nome vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. O clique no resto da linha abre e fecha os slots | 144 e 217 |
+| Renomear a rede | O botão `Rename` troca o nome por um campo de texto. Um nome vazio é recusado, e o nome continua o mesmo | 156 |
+| Renomear um canal | Na aba `Signals`, o clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26 e 34 |
+| Trocar a cor | A paleta abre sob o quadrado da cor, com as 16 cores em duas fileiras de 8 e a atual destacada. O clique numa cor a escolhe e fecha a paleta | 212 |
+| Lista vazia | A aba `Nodes` de uma rede sem nós mostra `No node in this network yet.` no meio da tabela | 220 |
+| Rolagem | A roda do mouse rola a lista de nós quando ela não cabe | — |
+| Ao vivo | Os nomes e as linhas vão ao cliente só quando mudam, e os sinais e os estados vão à parte, também só quando mudam, para um circuito rápido não reenviar a lista inteira (regra 18) | 82 |
+
+**O servidor confere cada ação (regras 16 e 17):** a ação só chega da tela aberta daquele controlador, ao alcance de interação de blocos do jogo e com a rede `Online`, e o domínio confere o dono e o tamanho do nome. O cliente aponta um nó pela posição dele na lista que o servidor guardou, nunca pelo ID, e a posição dos nós nem sai do servidor para quem não é o dono.
 
 ## Pendências
 
@@ -101,6 +120,7 @@ O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 15:40 | Descreve a Tela do Controlador entregue na #20, com a imagem nova e as perguntas 212 a 221. |
 | Zennd | 2026-11-11 14:09 | Adiciona o estado `Offline` na pílula da Tela do Nó, da #88. |
 | Zennd | 2026-11-11 13:46 | Descreve a escolha de rede, o nome do nó e o link da rede entregues na #87 (perguntas 198 a 208). |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 179. |
