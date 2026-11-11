@@ -15,7 +15,6 @@ import io.github.marcelofabianov.redweave.application.PasteNode;
 import io.github.marcelofabianov.redweave.application.PlaceController;
 import io.github.marcelofabianov.redweave.application.PlaceNode;
 import io.github.marcelofabianov.redweave.application.ReadInput;
-import io.github.marcelofabianov.redweave.application.StoreNetwork;
 import io.github.marcelofabianov.redweave.application.UseFreeSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -47,7 +46,6 @@ public final class RedweaveServer {
   private final UseFreeSlot useFreeSlot;
   private final ConfigureSlot configureSlot;
   private final ClearSlot clearSlot;
-  private final StoreNetwork storeNetwork;
   private final LinkNode linkNode;
   private final CopyNode copyNode;
   private final PasteNode pasteNode;
@@ -68,7 +66,6 @@ public final class RedweaveServer {
     useFreeSlot = new UseFreeSlot(networks, networks);
     configureSlot = new ConfigureSlot(networks, networks);
     clearSlot = new ClearSlot(networks, networks);
-    storeNetwork = new StoreNetwork(networks);
     linkNode = new LinkNode(networks, networks, networks);
     copyNode = new CopyNode(networks);
     pasteNode = new PasteNode(networks, networks);
@@ -133,10 +130,6 @@ public final class RedweaveServer {
 
   public ClearSlot clearSlot() {
     return clearSlot;
-  }
-
-  public StoreNetwork storeNetwork() {
-    return storeNetwork;
   }
 
   public LinkNode linkNode() {

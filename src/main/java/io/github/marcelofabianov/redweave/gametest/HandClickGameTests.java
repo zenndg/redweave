@@ -38,6 +38,7 @@ public final class HandClickGameTests {
   private static final BlockPos STONE = new BlockPos(0, 1, 0);
   private static final BlockPos NODE = STONE.east();
   private static final String OPENED = "A click with an item should not open the Node Screen";
+  private static final String OPENED_BY_HAND = "An empty hand should not open the Node Screen";
   private static final String CHANGED = "A click with an item should keep the current network";
   private static final String NOT_CHANGED = "A click with an empty hand should choose the network";
 
@@ -59,6 +60,21 @@ public final class HandClickGameTests {
 
     helper.assertFalse(result.consumesAction(), OPENED);
     helper.assertFalse(owner.containerMenu instanceof NodeMenu, OPENED);
+    helper.succeed();
+  }
+
+  /** Only the Configurator in the Open mode opens the node (answers 154 and 188). */
+  @GameTest(template = EMPTY)
+  public static void anEmptyHandDoesNotOpenTheNodeScreen(GameTestHelper helper) {
+    ServerPlayer owner = helper.makeMockServerPlayerInLevel();
+    placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    helper.setBlock(STONE, Blocks.STONE);
+    GameTestActions.placeOn(
+        helper, owner, new ItemStack(RedweaveItems.SIGNAL_NODE.get()), STONE, Direction.EAST);
+
+    click(helper, owner, ItemStack.EMPTY, NODE);
+
+    helper.assertFalse(owner.containerMenu instanceof NodeMenu, OPENED_BY_HAND);
     helper.succeed();
   }
 

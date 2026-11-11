@@ -1,11 +1,11 @@
 # Roteiro de teste manual
 
-O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. As perguntas 126 a 172 mudam os passos 2, 4, 19 e 24 a 33, que são reescritos junto com as issues que as implementam. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
+O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. As perguntas 139 a 172 mudam os passos 2 e 19, que são reescritos junto com as issues que as implementam. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
 
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller e o Signal Node (pergunta 69).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller, o Signal Node e o Configurator (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -17,7 +17,7 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 1 | Coloque um Network Controller | A frente voltada para você e o núcleo do topo aceso (`linked`) |
 | 2 | Clique no controlador com a mão vazia | `Current network: Network xxxx` na action bar |
 | 3 | Ponha uma alavanca em cima de uma pedra e grude um Signal Node num lado da pedra | Uma placa fina de cobre, com o primeiro canto colorido na cor do canal |
-| 4 | Clique no nó com a mão vazia | A Tela do Nó, fiel a `tela-do-no.png`, com `● Online · Network xxxx` em verde e o slot 1 como `Input` |
+| 4 | Clique no nó com o Configurator no modo `Open` | A Tela do Nó, fiel a `tela-do-no.png`, com `● Online · Network xxxx` em verde e o slot 1 como `Input` |
 | 5 | Puxe a alavanca, com a tela aberta | O medidor sobe na hora até 15, e as barras brilham a partir de 12 |
 | 6 | Grude um segundo nó numa lâmpada de redstone e abra a tela dele | O slot 1 em `Input`, num canal livre |
 | 7 | Troque o slot 1 para `Output` e escolha o mesmo canal do primeiro nó | O botão de cobre muda para `Output`, e a cor escolhida fica realçada |
@@ -26,7 +26,7 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 10 | Clique em `Free slot` e depois em `Clear slot` duas vezes | O slot vira uma entrada no próximo canal livre; o primeiro clique em `Clear slot` pede confirmação, e o segundo libera |
 | 11 | Abra a tela com o segundo player | Tudo visível e ao vivo, mas os controles apagados e o cadeado com `Only the owner of ...` no rodapé |
 | 12 | Com o segundo player, tente quebrar o controlador e um nó no survival | Nenhum dos dois quebra, e nada racha |
-| 13 | Quebre o controlador com o dono, no survival | O item cai, a lâmpada apaga, e o nó, ao ser clicado, mostra `No network` em cinza |
+| 13 | Quebre o controlador com o dono, no survival | O item cai, a lâmpada apaga, e o nó, aberto com o Configurator, mostra `No network` em cinza |
 | 14 | Recoloque o item do controlador a mais de 128 blocos dos nós | A rede volta, e os nós longe mostram a lente apagada com o anel tracejado vermelho, além de `Out of range` na tela |
 | 15 | Quebre a pedra de um nó | O nó cai como item e sai da rede |
 | 16 | Troque o idioma para Português (Brasil) | Todos os textos da tela e dos itens em português, sem nada passando da borda |
@@ -47,20 +47,20 @@ Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1
 
 ## Fase 1: o Configurator
 
-Entregue com a issue #17 (perguntas 103 a 112). Comece com o circuito dos passos 1 a 8 montado, e com um segundo controlador colocado, que vira a rede atual.
+Entregue com a issue #17 e refeito na #86 (perguntas 126 a 195). Comece com o circuito dos passos 1 a 8 montado.
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 24 | Pegue o Configurator na aba `Redweave` e passe o mouse sobre ele | O nome `Configurator`, `No network stored` e as duas dicas em cinza |
-| 25 | Clique com ele no primeiro controlador | `Configurator: Network xxxx` na action bar, e o tooltip mostra `Network: Network xxxx` |
-| 26 | Grude um nó novo, que entra na rede do segundo controlador, e clique nele com o Configurator | `Linked to Network xxxx`, e a Tela do Nó, aberta com a mão vazia, mostra a primeira rede |
-| 27 | Clique de novo no mesmo nó | `This node is already in Network xxxx.`, sem mudar nada |
-| 28 | Shift + clique no nó da lâmpada | `Copied 1 slots`, e o tooltip mostra `Copy: 1 slots` |
-| 29 | Grude um nó num lado de outra lâmpada e clique nele | `Pasted 1 slots`, e a lâmpada nova acende e apaga junto com a alavanca |
-| 30 | Shift + clique no ar | `Copy cleared`, e o tooltip perde a linha da cópia |
-| 31 | Com o segundo player, clique com um Configurator no controlador e cole uma cópia num nó do dono | `Only the owner can use this network.` e `Only the owner of ... can change this node.`, sem mudar nada |
-| 32 | Troque o idioma para Português (Brasil) | `Configurador` e todas as mensagens em português |
-| 33 | Clique num nó e no controlador segurando um graveto | Nada acontece: a Tela do Nó não abre, e a rede atual não muda (pergunta 113) |
+| 24 | Pegue um Configurator novo e passe o mouse sobre ele | `Mode: Open` com `Open` em azul, `Click a node to open it.` e `Shift + scroll to change the mode.` em cinza |
+| 25 | Agachado, gire a roda do mouse para baixo duas vezes e depois para cima uma vez | `Mode: Copy` em verde, `Mode: Wrench` em vermelho e de novo `Mode: Copy` na action bar; o slot da hotbar não muda |
+| 26 | Clique no nó da lâmpada com a mão vazia | A tela não abre, e a action bar mostra `Use a Configurator to open this node.` |
+| 27 | No modo `Copy`, clique no nó da lâmpada | `Copied 1 slots`, e o tooltip mostra `Copy: 1 slots` |
+| 28 | Grude um nó num lado de outra lâmpada e dê Shift + clique nele | `Pasted 1 slots`, e a lâmpada nova acende e apaga junto com a alavanca |
+| 29 | Shift + clique no ar | `Copy cleared`, e o tooltip perde a linha da cópia |
+| 30 | No modo `Wrench`, clique no nó da lâmpada nova | `Node picked up`, o nó some e vai para o inventário, e a lâmpada apaga |
+| 31 | Com o segundo player, no modo `Wrench`, clique num nó do dono; no modo `Copy`, copie um nó e cole noutro do dono | `Only the owner of ... can change this node.`, sem mudar nada |
+| 32 | Clique no controlador com o Configurator | Nada acontece |
+| 33 | Troque o idioma para Português (Brasil) | `Configurador`, `Modo: Abrir`, `Modo: Copiar`, `Modo: Chave` e todas as mensagens em português |
 
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
@@ -68,6 +68,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:21 | Reescreve os passos do Configurator com os modos e ajusta os passos 4 e 13, da #86. |
 | Zennd | 2026-11-11 10:32 | Tira os passos 34 a 42 do Label, que saiu com a #85 (pergunta 125). |
 | Zennd | 2026-11-11 09:51 | Avisa quais passos mudam com as perguntas 125 a 172. |
 | Marcelo Fabiano | 2026-11-10 16:38 | Adiciona os passos do Label, da #81. |

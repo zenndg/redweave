@@ -23,11 +23,18 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class SignalNodeBlockEntity extends BlockEntity {
   private static final String NODE_TAG = "node";
-  private static final String OWNER_TAG = "owner";
+
+  /** Who placed the node, saved: the owner of a node without a network (answers 165 and 189). */
+  private static final String PLACER_TAG = "owner";
+
+  /** The owner of the network, only sent to the client, never saved. */
+  private static final String NETWORK_OWNER_TAG = "network_owner";
+
   private static final String CORNERS_TAG = "corners";
 
   private Optional<NodeId> node = Optional.empty();
   private Optional<UUID> ownerOnClient = Optional.empty();
+  private Optional<UUID> placer = Optional.empty();
   private int emitted;
   private int[] corners = {NodeLook.FREE, NodeLook.FREE, NodeLook.FREE, NodeLook.FREE};
 
@@ -42,6 +49,16 @@ public final class SignalNodeBlockEntity extends BlockEntity {
   void setNode(NodeId id) {
     node = Optional.of(id);
     setChanged();
+  }
+
+  void setPlacer(UUID player) {
+    placer = Optional.of(player);
+    setChanged();
+  }
+
+  /** A node saved before the placer was kept has none, and nobody counts as its placer (193). */
+  public boolean wasPlacedBy(Player player) {
+    return placer.map(player.getUUID()::equals).orElse(false);
   }
 
   int emitted() {
@@ -94,13 +111,18 @@ public final class SignalNodeBlockEntity extends BlockEntity {
   protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);
     node.ifPresent(id -> tag.putUUID(NODE_TAG, id.value()));
+    placer.ifPresent(id -> tag.putUUID(PLACER_TAG, id));
   }
 
   @Override
   protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
     node = tag.hasUUID(NODE_TAG) ? Optional.of(new NodeId(tag.getUUID(NODE_TAG))) : node;
-    ownerOnClient = tag.hasUUID(OWNER_TAG) ? Optional.of(tag.getUUID(OWNER_TAG)) : ownerOnClient;
+    placer = tag.hasUUID(PLACER_TAG) ? Optional.of(tag.getUUID(PLACER_TAG)) : placer;
+    ownerOnClient =
+        tag.hasUUID(NETWORK_OWNER_TAG)
+            ? Optional.of(tag.getUUID(NETWORK_OWNER_TAG))
+            : ownerOnClient;
     if (tag.contains(CORNERS_TAG) && tag.getIntArray(CORNERS_TAG).length == NodeLook.CORNERS) {
       corners = tag.getIntArray(CORNERS_TAG);
       redrawOnClient();
@@ -119,7 +141,7 @@ public final class SignalNodeBlockEntity extends BlockEntity {
   @Override
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag tag = saveCustomOnly(registries);
-    owner().ifPresent(id -> tag.putUUID(OWNER_TAG, id));
+    owner().ifPresent(id -> tag.putUUID(NETWORK_OWNER_TAG, id));
     tag.putIntArray(CORNERS_TAG, corners);
     return tag;
   }

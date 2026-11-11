@@ -8,7 +8,7 @@ Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do
 
 ## Modos
 
-O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy` e `Wrench`. O modo fica num data component do item, e o servidor confere o pacote da troca (regras 16 e 17, perguntas 143 e 164).
+O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy` e `Wrench`. Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
 
 | Modo | Em português | Cor | Clique num nó | Shift + clique num nó | Pergunta |
 |---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Abrir
 
-É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (pergunta 154). Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
+É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
 
 ### Copiar
 
@@ -41,12 +41,13 @@ Colar troca todos os slots do nó de destino: os da cópia são configurados, e 
 | Rede | O nó continua na rede dele. Os canais são os mesmos em toda rede, porque são as 16 cores |
 | Dono | Só o dono da rede do nó cola. Um nó sem rede recusa |
 | Cópia | Continua no item até o Shift + clique no ar, então cola em vários nós |
+| Sem cópia | O Shift + clique não faz nada nem mostra mensagem (pergunta 195) |
 
 ### Retirar
 
 No modo `Wrench`, o clique num nó o retira como item, que vai para o inventário, ou cai no chão se o inventário estiver cheio. É como quebrar o nó (pergunta 74): ele sai da rede, perde os slots e o nome, e o item é um Signal Node comum, que empilha. Recolocado, nasce `No network` (perguntas 139 e 161).
 
-Só o dono usa a Chave: o dono da rede do nó e, num nó sem rede, quem o colocou, gravado no bloco (perguntas 162 e 165). A Chave vale só para o Signal Node: o Network Controller e o Network Terminal saem só quebrando (pergunta 164).
+Só o dono usa a Chave: o dono da rede do nó e, num nó sem rede, quem o colocou, gravado no bloco com a chave de NBT `owner` (perguntas 162, 165 e 189). Um nó colocado antes do `owner` não tem quem o colocou, e a Chave recusa para todos; a mão ainda o quebra (perguntas 74 e 193). A Chave vale só para o Signal Node: o Network Controller e o Network Terminal saem só quebrando (pergunta 164).
 
 ## Mensagens
 
@@ -61,10 +62,14 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Nó sem rede | `No network` |
 | Limpar | Apagou | `Copy cleared` |
-| Retirar | Não é dono | `Only the owner of <rede> can change this node.` |
+| Trocar de modo | Trocou | `Mode: <modo>`, com o nome na cor do modo |
+| Retirar | Retirou | `Node picked up` |
+| Retirar | Não é dono da rede | `Only the owner of <rede> can change this node.` |
+| Retirar | Nó sem rede, de outro player | `Only the player who placed this node can pick it up.` |
+| Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
-O tooltip mostra o modo, com a cor e o nome, e `Copy: <n> slots` quando há cópia.
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click a node to open it.`, `Click a node to copy it, Shift + click to paste.` ou `Click a node to pick it up.`) e `Shift + scroll to change the mode.` (pergunta 190).
 
 ## Item
 
@@ -83,12 +88,6 @@ O item não guarda mais a rede: os componentes `redweave:network` e `redweave:ne
 
 O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem estava grudado, e `slots`, com `index`, `direction`, `face` e `channel` de cada slot em uso. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
 
-## Pendências
-
-| Ponto | Depende de |
-|---|---|
-| Os textos das mensagens de trocar de modo e de retirar o nó, e as dicas do tooltip | Issue da implementação dos modos |
-
 ## Fora desta funcionalidade
 
 - O visor do modo e o rótulo flutuante sobre os nós (issue #80, pergunta 159).
@@ -98,6 +97,7 @@ O componente `redweave:node_slots` tem `attached`, a face onde o nó de origem e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:21 | Aplica as perguntas 188 a 195, da #86. |
 | Zennd | 2026-11-11 10:24 | Aplica a pergunta 173. |
 | Zennd | 2026-11-11 09:51 | Reescreve o Configurator com os modos `Open`, `Copy` e `Wrench`, sem guardar a rede e sem ligar nós (perguntas 125 a 169). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Cria o documento, com as respostas das perguntas 103 a 112. |

@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -42,10 +43,10 @@ final class NodeScene {
   }
 
   /** What the game does when the player right-clicks the block with the item in the hand. */
-  static void click(GameTestHelper helper, Player player, BlockPos relative) {
+  static InteractionResult click(GameTestHelper helper, Player player, BlockPos relative) {
     BlockPos pos = helper.absolutePos(relative);
     BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
-    player
+    return player
         .getItemInHand(InteractionHand.MAIN_HAND)
         .useOn(new UseOnContext(player, InteractionHand.MAIN_HAND, hit));
   }

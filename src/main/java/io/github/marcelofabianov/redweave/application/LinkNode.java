@@ -9,8 +9,9 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import java.util.Optional;
 
 /**
- * The Configurator moves a node to another network. The node leaves the old one, so it has one
- * network at most, and the player must own both, so nobody takes a node of another (answer 42).
+ * Moves a node to another network, from the Node Screen in #87 (answers 141 and 194). The node
+ * leaves the old one, so it has one network at most, and the player must own both, so nobody takes
+ * a node of another (answer 42).
  */
 public final class LinkNode {
   private final NetworkFinder finder;

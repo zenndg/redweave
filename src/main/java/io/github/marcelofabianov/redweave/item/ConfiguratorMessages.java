@@ -2,27 +2,33 @@ package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 
-/** The keys of the texts of the Configurator, in the action bar and the tooltip (answer 108). */
+/** The keys of the texts of the Configurator, in the action bar and the tooltip (190). */
 public final class ConfiguratorMessages {
   private static final String PREFIX = "message." + RedweaveMod.MOD_ID + ".configurator.";
   private static final String TOOLTIP = "tooltip." + RedweaveMod.MOD_ID + ".configurator.";
+  private static final String MODE_NAME = PREFIX + "mode.";
+  private static final String MODE_HINT = TOOLTIP + "hint.";
 
-  public static final String STORED = PREFIX + "stored";
-  public static final String NOT_YOURS = PREFIX + "not_yours";
-  public static final String LINKED = PREFIX + "linked";
-  public static final String NOTHING_STORED = PREFIX + "nothing_stored";
-  public static final String ALREADY_IN = PREFIX + "already_in";
-  public static final String OWN_BOTH = PREFIX + "own_both";
-  public static final String GONE = PREFIX + "gone";
+  public static final String MODE = PREFIX + "mode";
   public static final String COPIED = PREFIX + "copied";
   public static final String PASTED = PREFIX + "pasted";
   public static final String PASTED_LEFT_OUT = PREFIX + "pasted_left_out";
   public static final String CLEARED = PREFIX + "cleared";
-  public static final String NETWORK = TOOLTIP + "network";
-  public static final String NO_NETWORK_STORED = TOOLTIP + "no_network";
+  public static final String PICKED_UP = PREFIX + "picked_up";
+  public static final String NOT_PLACER = PREFIX + "not_placer";
+  public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String COPY = TOOLTIP + "copy";
-  public static final String HINT_STORE = TOOLTIP + "hint_store";
-  public static final String HINT_COPY = TOOLTIP + "hint_copy";
+  public static final String HINT_SCROLL = TOOLTIP + "hint_scroll";
 
   private ConfiguratorMessages() {}
+
+  /** The name of a mode, such as "Open", shown in its color (answer 168). */
+  public static String nameOf(ConfiguratorMode mode) {
+    return MODE_NAME + mode.serializedName();
+  }
+
+  /** The hint of the tooltip for a mode (answer 190). */
+  public static String hintOf(ConfiguratorMode mode) {
+    return MODE_HINT + mode.serializedName();
+  }
 }

@@ -5,11 +5,14 @@ import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.item.ConfiguratorMessages;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
+import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -113,7 +116,10 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
     return new SignalNodeBlockEntity(pos, state);
   }
 
-  /** The node joins the current network of the player who placed it (answers 25 and 70). */
+  /**
+   * The node joins the current network of the player who placed it (answers 25 and 70), and keeps
+   * who placed it, the owner of a node without a network for the Wrench (answers 165 and 189).
+   */
   @Override
   public void setPlacedBy(
       Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
@@ -124,6 +130,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
     }
     if (level.getBlockEntity(pos) instanceof SignalNodeBlockEntity node) {
       PlayerId owner = new PlayerId(player.getUUID());
+      node.setPlacer(player.getUUID());
       node.setNode(server.get().placeNode().place(owner, positionOf(level, pos, state)).node());
       NodeSignals.read(server.get(), level, pos, state);
       NodeLook.refresh(server.get(), level, pos);
@@ -245,19 +252,25 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
     return super.useItemOn(stack, state, level, pos, player, hand, hit);
   }
 
-  /** A click with an empty hand opens the Node Screen (telas.md and answer 75). */
+  /**
+   * An empty hand does not open the node: only the Configurator in the Open mode does, and the
+   * action bar teaches it (answers 154 and 188).
+   */
   @Override
   protected InteractionResult useWithoutItem(
       BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-    if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
+    if (!level.isClientSide) {
+      player.displayClientMessage(Component.translatable(ConfiguratorMessages.USE_TO_OPEN), true);
     }
-    if (player instanceof ServerPlayer viewer) {
-      viewer.openMenu(
-          new SimpleMenuProvider(
-              (id, inventory, opener) -> new NodeMenu(id, viewer, pos), getName()),
-          extra -> NodeMenu.writeOpening(extra, viewer, pos));
-    }
-    return InteractionResult.CONSUME;
+    return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  /** Opens the Node Screen, from the Configurator in the Open mode (answer 140). */
+  public static void openScreen(ServerPlayer viewer, BlockPos pos) {
+    viewer.openMenu(
+        new SimpleMenuProvider(
+            (id, inventory, opener) -> new NodeMenu(id, viewer, pos),
+            RedweaveBlocks.SIGNAL_NODE.get().getName()),
+        extra -> NodeMenu.writeOpening(extra, viewer, pos));
   }
 }
