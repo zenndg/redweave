@@ -19,7 +19,7 @@ Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a b
 v0.1.0 is the first public version. It is cut only when all of these are true:
 
 - [ ] Every Phase 1 item below is merged, including the new network model (#84 to #90).
-- [ ] The pending Phase 1 decisions (questions 173 to 179) are answered.
+- [x] The pending Phase 1 decisions (questions 173 to 179) are answered.
 - [ ] Block, item, data component, NBT and config IDs are frozen (#26). From here on, they only change with a migration.
 - [ ] The 1,000-node load test shows no visible MSPT impact (#25).
 - [ ] The manual test script passes in an instance with only the mod and in Iron Meridian.
@@ -65,7 +65,7 @@ Signal anywhere: networks, nodes, channels and the tools to configure them.
 
 Decided on 2026-11-11: each Network Controller is one network, a Network Terminal manages all of a player's networks, and the Configurator works in modes.
 
-- [ ] Record the decisions and audit the documentation (#84)
+- [x] Record the decisions and audit the documentation (#84)
 - [ ] Remove the Label (#85)
 - [ ] Configurator modes `Open`, `Copy` and `Wrench`, each with a color (#86)
 - [ ] A new node joins no network and its owner picks one; node names; switching networks from the Node Screen (#87)
@@ -75,15 +75,15 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [ ] Network Terminal: list, rename, turn off and on, clear nodes and delete unplaced networks (#89)
 - [ ] Configurator mode display and floating labels over nodes (#80)
 
-### Pending decisions
+### Phase 1 decisions answered after the audit
 
-- [ ] 173 · ID and values of the Configurator mode component
-- [ ] 174 · New save keys: node name, `Offline` state and last network used
-- [ ] 175 · Where the server keeps each player's Network Terminal
-- [ ] 176 · Rename and clear nodes on an `Unplaced` network
-- [ ] 177 · How nodes and controllers of an `Offline` network look
-- [ ] 178 · State of an `Offline` network whose controller is broken and placed again
-- [ ] 179 · Columns of the node list on the Controller Screen
+- [x] 173 · ID and values of the Configurator mode component
+- [x] 174 · New save keys: node name, `Offline` state and last network used
+- [x] 175 · Where the server keeps each player's Network Terminal
+- [x] 176 · Rename and clear nodes on an `Unplaced` network
+- [x] 177 · How nodes and controllers of an `Offline` network look
+- [x] 178 · State of an `Offline` network whose controller is broken and placed again
+- [x] 179 · Columns of the node list on the Controller Screen
 
 ### Toward v0.1.0
 
