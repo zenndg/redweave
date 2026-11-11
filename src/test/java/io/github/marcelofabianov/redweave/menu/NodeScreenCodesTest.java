@@ -52,8 +52,8 @@ class NodeScreenCodesTest {
   @Test
   void everyActionComesBackAsItWent() {
     NodeAction configure = NodeAction.configure(LAST_SLOT, RED_OUTPUT);
-    NodeAction use = NodeAction.use(LAST_SLOT);
-    NodeAction clear = NodeAction.clear(0);
+    NodeAction use = NodeAction.enable(LAST_SLOT);
+    NodeAction clear = NodeAction.disable(0);
     NodeAction choose = NodeAction.choose(LAST_CHOICE);
 
     assertEquals(

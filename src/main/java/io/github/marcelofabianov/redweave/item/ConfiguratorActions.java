@@ -87,7 +87,7 @@ final class ConfiguratorActions {
       return Component.translatable(ControllerMessages.NO_NETWORK);
     }
     stack.set(RedweaveDataComponents.NODE_SLOTS.get(), copy.get());
-    return Component.translatable(ConfiguratorMessages.COPIED, copy.get().slots().size());
+    return Component.translatable(ConfiguratorMessages.COPIED, copy.get().enabled());
   }
 
   private static Component paste(RedweaveServer server, Player player, NodeId node, NodeCopy copy) {
@@ -100,11 +100,7 @@ final class ConfiguratorActions {
   }
 
   private static Component pasted(PasteResult result) {
-    if (result.leftOut() == 0) {
-      return Component.translatable(ConfiguratorMessages.PASTED, result.pasted());
-    }
-    return Component.translatable(
-        ConfiguratorMessages.PASTED_LEFT_OUT, result.pasted(), result.leftOut());
+    return Component.translatable(ConfiguratorMessages.PASTED, result.pasted());
   }
 
   /**

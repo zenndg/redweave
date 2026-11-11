@@ -1,11 +1,13 @@
 package io.github.marcelofabianov.redweave.menu;
 
+import io.github.marcelofabianov.redweave.domain.network.Node;
+
 /**
- * Where each live value of the Node Screen sits among the data slots of the menu. The slots go up
- * to 9, the most a node has with upgrades (answer 66).
+ * Where each live value of the Node Screen sits among the data slots of the menu: a node has one
+ * slot per channel color (answer 224).
  */
 final class NodeScreenLayout {
-  static final int MAX_SLOTS = 9;
+  static final int MAX_SLOTS = Node.SLOT_COUNT;
   static final int SLOT_COUNT = 0;
   static final int STATE = 1;
   static final int VIEWER_IS_OWNER = 2;

@@ -4,11 +4,13 @@ import io.github.marcelofabianov.redweave.block.Faces;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeRenamed;
+import io.github.marcelofabianov.redweave.network.SlotRenamed;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,28 +28,27 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * The Node Screen: _docs/funcionalidades/telas.md, _docs/imagens/telas/tela-do-no.png and
  * tela-do-no-escolha-de-rede.png. It only shows what the server sends and asks for actions; the
  * server decides (rule 16). A node with no network opens on the network choice for whoever placed
- * it, and its owner goes back to it with a click on the network (answers 139, 141 and 172).
+ * it, and its owner goes back to it with a click on the network (answers 139, 141 and 172). With a
+ * network, the row of the 16 channels opens each one in the panel (answers 224 and 231).
  */
 public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int WIDTH = 312;
   private static final int HEIGHT = 234;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 32;
-  private static final int LIST_LABEL_Y = 40;
-  private static final int LIST_Y = 52;
-  private static final int LIST_WIDTH = 118;
-  private static final Box PANEL = new Box(136, 38, 166, 160);
+  private static final Box PANEL = new Box(10, 62, 292, 136);
+  private static final Box CHOICE = new Box(10, 38, 292, 160);
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
   private static final int BACK_Y = 8;
+  private static final int NONE = -1;
 
-  private final SlotList list = new SlotList();
   private final FaceCube cube = new FaceCube();
   private final NodeScreenFooter footer = new NodeScreenFooter();
   private final NetworkChoiceList choices = new NetworkChoiceList();
   private final NameField name = new NameField();
-  private int selected;
-  private boolean clearArmed;
+  private final NameField slotName = new NameField();
+  private int selected = NONE;
   private boolean switching;
 
   public NodeScreen(NodeMenu menu, Inventory inventory, Component title) {
@@ -60,6 +61,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   protected void init() {
     super.init();
     name.attach(font, NodeHeader.fieldBox(leftPos, topPos), this::addRenderableWidget);
+    slotName.attach(font, SlotEditor.nameBox(panel()), this::addRenderableWidget);
   }
 
   @Override
@@ -75,6 +77,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     NodeView view = view(mouseX, mouseY);
     NodeScreenFrame.draw(graphics, font, leftPos, topPos, WIDTH, HEIGHT, title, menu);
     name.drawBackground(graphics);
+    slotName.drawBackground(graphics);
     if (!name.editing()) {
       NodeHeader.drawName(graphics, font, leftPos, topPos, menu, ownsNetwork());
     }
@@ -95,20 +98,26 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   }
 
   private void drawConfiguration(GuiGraphics graphics, NodeView view) {
-    selected = Math.max(0, Math.min(selected, menu.slotCount() - 1));
-    NodeScreenFrame.label(graphics, font, leftPos + PADDING, topPos + LIST_LABEL_Y);
-    list.draw(graphics, font, view, listArea(), selected);
+    openFirstChannel();
+    ChannelTabs.draw(
+        graphics, font, leftPos, topPos, menu, selected, new Mouse(view.mouseX(), view.mouseY()));
     Box panel = panel();
-    NodeScreenPanel.draw(graphics, font, view, panel, selected, menu.slotCount() > 0);
+    boolean inNetwork = menu.state().isPresent();
+    NodeScreenPanel.draw(graphics, font, view, panel, selected, inNetwork);
+    if (!inNetwork) {
+      return;
+    }
+    if (!slotName.editing()) {
+      NodeScreenPanel.drawName(graphics, font, panel, menu.slotName(channel()), ownsNetwork());
+    }
     controls(view).forEach(control -> ControlPainter.draw(graphics, font, control, view));
-    menu.slot(selected)
-        .ifPresent(slot ->
-            cube.draw(
-                graphics,
-                SlotEditor.cubeBox(panel),
-                supportBlock(),
-                Optional.of(Faces.toDirection(slot.face())),
-                view));
+    Optional<ChannelSlot> slot = menu.slot(selected).filter(ChannelSlot::active);
+    cube.draw(
+        graphics,
+        SlotEditor.cubeBox(panel),
+        supportBlock(),
+        slot.map(found -> Faces.toDirection(found.face())),
+        view);
     footer.draw(
         graphics,
         font,
@@ -118,32 +127,63 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         selected);
   }
 
+  /** The screen opens on the first enabled channel, or on the first one with none (telas.md). */
+  private void openFirstChannel() {
+    if (selected != NONE) {
+      return;
+    }
+    selected = 0;
+    for (int index = 0; index < menu.slotCount(); index++) {
+      if (SlotEditor.isEnabled(menu.slot(index))) {
+        selected = index;
+        return;
+      }
+    }
+  }
+
   /** Every text is drawn in renderBg, so the game does not draw its own labels on top. */
   @Override
   protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {}
 
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
-    if (name.editing() && !name.box().contains(mouseX, mouseY)) {
-      name.cancel();
-    }
+    cancelOutside(name, mouseX, mouseY);
+    cancelOutside(slotName, mouseX, mouseY);
     if (showsChoice()) {
       return clickChoice(mouseX, mouseY) || super.mouseClicked(mouseX, mouseY, button);
     }
-    if (clickHeader(mouseX, mouseY)) {
+    if (clickHeader(mouseX, mouseY) || clickChannel(mouseX, mouseY)) {
       return true;
     }
     NodeView view = view(mouseX, mouseY);
-    Optional<Integer> row = list.slotAt(listArea(), menu.slotCount(), mouseX, mouseY);
-    if (row.isPresent()) {
-      choose(row.get(), view);
-      return true;
-    }
-    if (menu.slot(selected).isPresent() && view.hovers(SlotEditor.cubeBox(panel()))) {
+    if (SlotEditor.isEnabled(menu.slot(selected)) && view.hovers(SlotEditor.cubeBox(panel()))) {
       cube.press();
       return true;
     }
     return clickControl(view) || super.mouseClicked(mouseX, mouseY, button);
+  }
+
+  private static void cancelOutside(NameField field, double mouseX, double mouseY) {
+    if (field.editing() && !field.box().contains(mouseX, mouseY)) {
+      field.cancel();
+    }
+  }
+
+  /** A click on a channel of the row opens it; the owner names the open one (answer 227). */
+  private boolean clickChannel(double mouseX, double mouseY) {
+    Optional<ChannelColor> clicked = ChannelTabs.at(leftPos, topPos, mouseX, mouseY);
+    if (clicked.isPresent()) {
+      selected = clicked.get().ordinal();
+      return true;
+    }
+    if (ownsNetwork() && SlotEditor.nameBox(panel()).contains(mouseX, mouseY)) {
+      slotName.start(
+          menu.slotName(channel()),
+          NameField.limit(NeoForgeNetworkLimits::slotNameLength),
+          this::setFocused);
+      return true;
+    }
+    return false;
   }
 
   @Override
@@ -155,11 +195,16 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
 
   @Override
   public boolean mouseReleased(double mouseX, double mouseY, int button) {
-    Optional<ChannelSlot> slot = menu.slot(selected);
+    Optional<ChannelSlot> slot = menu.slot(selected).filter(ChannelSlot::active);
     Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view(mouseX, mouseY));
     if (slot.isPresent() && face.isPresent()) {
       ChannelSlot changed =
-          new ChannelSlot(slot.get().direction(), Faces.of(face.get()), slot.get().channel());
+          new ChannelSlot(
+              slot.get().direction(),
+              Faces.of(face.get()),
+              slot.get().channel(),
+              slot.get().active(),
+              slot.get().name());
       send(NodeAction.configure(selected, changed));
     }
     return super.mouseReleased(mouseX, mouseY, button);
@@ -168,25 +213,29 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   /** Enter saves the name, Esc cancels it, and no key closes the screen while typing (204). */
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    if (!name.editing()) {
-      return super.keyPressed(keyCode, scanCode, modifiers);
+    if (name.editing()) {
+      name.keyPressed(
+          keyCode,
+          scanCode,
+          modifiers,
+          text -> PacketDistributor.sendToServer(new NodeRenamed(menu.pos(), text)));
+      return true;
     }
-    name.keyPressed(
-        keyCode,
-        scanCode,
-        modifiers,
-        text -> PacketDistributor.sendToServer(new NodeRenamed(menu.pos(), text)));
-    return true;
+    if (slotName.editing()) {
+      slotName.keyPressed(
+          keyCode,
+          scanCode,
+          modifiers,
+          text -> PacketDistributor.sendToServer(new SlotRenamed(menu.pos(), selected, text)));
+      return true;
+    }
+    return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
   @Override
   public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
     if (showsChoice() && choiceArea().contains(mouseX, mouseY)) {
       choices.scroll(scrollY, choiceArea(), menu.choices().size());
-      return true;
-    }
-    if (listArea().contains(mouseX, mouseY)) {
-      list.scroll(scrollY);
       return true;
     }
     return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
@@ -198,7 +247,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     if (row.isPresent()) {
       send(NodeAction.choose(row.get()));
       switching = false;
-      selected = 0;
+      selected = NONE;
       return true;
     }
     if (switching && backButton().box().contains(mouseX, mouseY)) {
@@ -228,30 +277,18 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     return false;
   }
 
-  /** A click on a free slot uses it at once (answer 83); on a used one, selects it. */
-  private void choose(int index, NodeView view) {
-    selected = index;
-    clearArmed = false;
-    list.reveal(index);
-    if (menu.slot(index).isEmpty() && view.editable()) {
-      send(NodeAction.use(index));
-    }
-  }
-
   private boolean clickControl(NodeView view) {
     for (Control control : controls(view)) {
       if (control.clickable() && view.hovers(control.box())) {
-        clearArmed = control.look() == Control.Look.ARMS_CLEAR;
         control.action().ifPresent(this::send);
         return true;
       }
     }
-    clearArmed = false;
     return false;
   }
 
   private Optional<Component> tooltipAt(NodeView view) {
-    if (showsChoice()) {
+    if (showsChoice() || menu.state().isEmpty()) {
       return Optional.empty();
     }
     Optional<Component> header = headerTooltipAt(view);
@@ -263,8 +300,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         return control.tooltip();
       }
     }
-    return NodeScreenPanel.tooltipAt(font, view, panel(), selected)
-        .or(() -> footer.tooltipAt(view));
+    return NodeScreenPanel.tooltipAt(view, panel(), selected).or(() -> footer.tooltipAt(view));
   }
 
   private Optional<Component> headerTooltipAt(NodeView view) {
@@ -292,6 +328,10 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     return menu.state().isPresent() && menu.viewerIsOwner();
   }
 
+  private ChannelColor channel() {
+    return ChannelColor.values()[Math.max(0, selected)];
+  }
+
   private Control backButton() {
     Box box =
         new Box(
@@ -301,11 +341,11 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   }
 
   private Box choiceArea() {
-    return new Box(leftPos + PADDING, topPos + PANEL.y(), WIDTH - 2 * PADDING, PANEL.height());
+    return new Box(leftPos + CHOICE.x(), topPos + CHOICE.y(), CHOICE.width(), CHOICE.height());
   }
 
   private List<Control> controls(NodeView view) {
-    return SlotEditor.controls(font, view, panel(), selected, clearArmed);
+    return SlotEditor.controls(font, view, panel(), Math.max(0, selected));
   }
 
   private void send(NodeAction action) {
@@ -332,10 +372,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
 
   private NodeView view(double mouseX, double mouseY) {
     return new NodeView(menu, mouseX, mouseY, menu.viewerIsOwner());
-  }
-
-  private Box listArea() {
-    return new Box(leftPos + PADDING, topPos + LIST_Y, LIST_WIDTH, SlotList.height());
   }
 
   private Box panel() {

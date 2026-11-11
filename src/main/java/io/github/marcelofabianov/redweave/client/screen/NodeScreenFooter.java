@@ -30,7 +30,7 @@ final class NodeScreenFooter {
     graphics.fill(footer.x(), y, footer.right(), y + 1, ScreenColors.SEPARATOR);
     Component signal = Component.translatable(NodeScreenTexts.SIGNAL);
     graphics.drawString(font, signal, footer.x(), footer.y() + TEXT_Y, ScreenColors.LABEL, false);
-    int strength = view.menu().slot(index).isPresent() ? view.menu().signal(index) : 0;
+    int strength = SlotEditor.isEnabled(view.menu().slot(index)) ? view.menu().signal(index) : 0;
     SignalMeter.draw(graphics, footer.x() + METER_X, footer.y() + BASELINE, strength);
     int numberX = footer.x() + METER_X + SignalMeter.WIDTH + NUMBER_GAP;
     graphics.drawString(
@@ -58,13 +58,14 @@ final class NodeScreenFooter {
     }
   }
 
+  /** How many of the 16 channels of the node are enabled, as `3 of 16 channels active`. */
   private static Component inUse(NodeView view) {
     int count = view.menu().slotCount();
-    int used = 0;
+    int enabled = 0;
     for (int index = 0; index < count; index++) {
-      used += view.menu().slot(index).isPresent() ? 1 : 0;
+      enabled += SlotEditor.isEnabled(view.menu().slot(index)) ? 1 : 0;
     }
-    return Component.translatable(NodeScreenTexts.SLOTS_IN_USE, used, count);
+    return Component.translatable(NodeScreenTexts.CHANNELS_ACTIVE, enabled, count);
   }
 
   /** A text cut with an ellipsis shows whole on hover (telas.md). */

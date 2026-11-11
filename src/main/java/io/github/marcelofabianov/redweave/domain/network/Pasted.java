@@ -3,17 +3,14 @@ package io.github.marcelofabianov.redweave.domain.network;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Every slot of a node after a paste, and how many copied slots did not fit it (answer 106). An
- * empty slot is a free one.
- */
-public record Pasted(List<Optional<ChannelSlot>> slots, int leftOut) {
+/** The 16 slots of a node after a paste (answers 106 and 230). An empty slot was never enabled. */
+public record Pasted(List<Optional<ChannelSlot>> slots) {
   public Pasted {
     slots = List.copyOf(slots);
   }
 
-  /** How many slots of the node are in use after the paste. */
+  /** How many slots of the node are enabled after the paste. */
   public int inUse() {
-    return (int) slots.stream().filter(Optional::isPresent).count();
+    return (int) slots.stream().flatMap(Optional::stream).filter(ChannelSlot::active).count();
   }
 }

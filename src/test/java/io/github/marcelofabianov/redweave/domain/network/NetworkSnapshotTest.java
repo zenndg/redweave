@@ -19,13 +19,13 @@ import org.junit.jupiter.api.Test;
 
 /** A network goes to the save as a snapshot and comes back the same (answers 37, 38 and 90). */
 class NetworkSnapshotTest {
-  private static final int INPUT_SLOT = 0;
-  private static final int OUTPUT_SLOT = 1;
   private static final String RENAMED = "Base door";
   private static final String CHANNEL_NAME = "Door";
   private static final String NODE_NAME = "Lever";
   private static final ChannelColor NEW_COLOR = ChannelColor.ORANGE;
   private static final ChannelColor CHANNEL = ChannelColor.RED;
+  private static final int INPUT_SLOT = CHANNEL.ordinal();
+  private static final int OUTPUT_SLOT = CHANNEL.ordinal();
   private static final Signal READ = new Signal(11);
 
   private static Network busyNetwork() {

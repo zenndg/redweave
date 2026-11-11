@@ -23,19 +23,22 @@ import org.junit.jupiter.api.Test;
 
 /**
  * What the Controller Screen shows of a network: the header, the node list in the order the nodes
- * joined, the 16 channels and the counts of the footer (telas.md, answers 149, 179 and 216).
+ * joined, with only the enabled slots, the 16 channels and the counts of the footer (telas.md,
+ * answers 149, 179, 216 and 234).
  */
 class ShowNetworkTest {
   private static final LoadedNodes ALL_LOADED = node -> true;
   private static final LoadedNodes ONLY_NODE_LOADED = node -> node.equals(NODE_POSITION);
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
   private static final int CHANNELS = ChannelColor.values().length;
   private static final int NONE = 0;
   private static final int ONE = 1;
   private static final ChannelColor DOOR = ChannelColor.RED;
+  private static final int FIRST_SLOT = DOOR.ordinal();
+  private static final int SECOND_SLOT = DOOR.ordinal();
   private static final String DOOR_NAME = "Main door";
   private static final String LEVER = "Lever";
+  private static final String SLOT_NAME = "Redstone from lever 1";
+  private static final int DISABLED_SLOT = ChannelColor.ORANGE.ordinal();
   private static final Signal READ = new Signal(12);
 
   private final ApplicationFixture fixture = new ApplicationFixture();
@@ -58,6 +61,9 @@ class ShowNetworkTest {
         SECOND_SLOT,
         new ChannelSlot(Direction.OUTPUT, OTHER_NODE_POSITION.face(), DOOR));
     network.readInput(NODE, FIRST_SLOT, READ);
+    network.renameSlot(OWNER, NODE, FIRST_SLOT, SLOT_NAME);
+    network.enableSlot(OWNER, NODE, DISABLED_SLOT);
+    network.disableSlot(OWNER, NODE, DISABLED_SLOT);
     network.renameNode(OWNER, NODE, LEVER);
     network.renameChannel(OWNER, DOOR, DOOR_NAME);
     return id;
@@ -95,7 +101,7 @@ class ShowNetworkTest {
             READ,
             NodeState.ONLINE,
             Optional.of(NODE_POSITION),
-            List.of(new SlotRow(FIRST_SLOT, DOOR, Direction.INPUT)));
+            List.of(new SlotRow(FIRST_SLOT, DOOR, Direction.INPUT, Optional.of(SLOT_NAME))));
     NodeRow other =
         new NodeRow(
             OTHER_NODE,
@@ -103,7 +109,7 @@ class ShowNetworkTest {
             READ,
             NodeState.UNLOADED,
             Optional.of(OTHER_NODE_POSITION),
-            List.of(new SlotRow(SECOND_SLOT, DOOR, Direction.OUTPUT)));
+            List.of(new SlotRow(SECOND_SLOT, DOOR, Direction.OUTPUT, Optional.empty())));
     assertEquals(List.of(lever, other), rows);
   }
 

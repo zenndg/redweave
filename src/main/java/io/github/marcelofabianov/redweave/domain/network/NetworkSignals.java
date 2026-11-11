@@ -57,7 +57,7 @@ final class NetworkSignals {
       return Signal.OFF;
     }
     return node.slotAt(index)
-        .filter(slot -> slot.direction() == Direction.OUTPUT)
+        .filter(ChannelSlot::emits)
         .map(slot -> channelValue(slot.channel()))
         .orElse(Signal.OFF);
   }

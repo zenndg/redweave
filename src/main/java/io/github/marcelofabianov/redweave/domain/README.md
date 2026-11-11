@@ -30,12 +30,13 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
 | `NodePosition` | Onde o nó está: o bloco e a face | #10 |
-| `Node` | Um nó, com o nome opcional, a posição e os slots. Slot vazio é slot livre, e nome vazio é o padrão, que `displayName` calcula (pergunta 206) | #10 e #87 |
+| `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229) | #10, #87 e #20 |
 | `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
 | `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
-| `ChannelSlot` | A configuração de um nó para um canal: direção, face e canal. A lógica entra na Fase 2 | #10 |
+| `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal, status ativo ou inativo e nome opcional. Só um slot ativo lê (`reads`) ou emite (`emits`). A lógica entra na Fase 2 | #10 e #20 |
+| `SlotChanges` | Dentro da rede: o que ativar, desativar e dar nome fazem a um slot. Na primeira ativação, o slot vira `Input` na face grudada; desativar guarda direção, face e nome (pergunta 228) | #20 |
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
-| `NetworkLimits` | Os números da rede: slots por nó, tamanho dos nomes e o raio do alcance. O domínio define a interface, e o config a implementa | #10 e #11 |
+| `NetworkLimits` | Os números da rede: tamanho dos nomes, inclusive o do slot, o raio do alcance e as redes por player. O domínio define a interface, e o config a implementa | #10 e #11 |
 | `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
 | `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE`, `NO_NETWORK` ou `OFFLINE` | #11 e #88 |
 | `NetworkState` | O estado da rede: `ONLINE`; `OFFLINE`, desligada pelo dono; ou `UNPLACED`, sem o controlador no mundo (perguntas 135 e 146) | #88 |
@@ -50,12 +51,12 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `OutputFace` | Uma face onde um nó emite: o nó, o bloco e a face. Todas as saídas do nó nessa face emitem por ela | #12 |
 | `OutputChange` | Uma face cujo sinal mudou, que o jogo aplica antes de avisar os vizinhos | #12 |
 | `Emissions` | Dentro da rede: se ela espera uma avaliação e o que emitiu por último. Não vai para o save | #12 |
-| `Channels` | Dentro da rede: os 16 canais, o nome de cada um e o primeiro canal livre. Saiu do `Network` como `Readings` | #16 |
+| `Channels` | Dentro da rede: os 16 canais e o nome de cada um. Saiu do `Network` como `Readings` | #16 |
 | `NetworkSnapshot` | Tudo da rede que vai para o save: nome, cor, dono, controlador, os canais com nome, os nós e as leituras. `snapshot()` o tira da rede, e `Network.restore` refaz a rede a partir dele (pergunta 90) | #16 |
 | `SlotReading` | A última leitura de um slot de entrada, como vai para o save | #16 |
-| `NodeCopy` | Os slots em uso de um nó, copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
+| `NodeCopy` | Os slots já ativados de um nó, com o status e o nome (pergunta 230), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
 | `CopiedSlot` | Um slot da cópia: a posição no nó e a configuração | #17 |
-| `Pasted` | Os slots de um nó depois de colar e quantos slots da cópia ficaram de fora (pergunta 106) | #17 |
+| `Pasted` | Os 16 slots de um nó depois de colar e quantos ficaram ativos (perguntas 106 e 230) | #17 e #20 |
 
 ## Regras e porquês
 
@@ -76,6 +77,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Desligar é escolha do dono:** `turnOff` só vale numa rede `Online`, e `turnOn` só numa `Offline`; uma `Unplaced` espera o controlador. O `Offline` fica guardado enquanto o controlador está fora do mundo, e a rede volta desligada (perguntas 132, 135 e 178). Só o Network Terminal da #89 chama essas operações no jogo (pergunta 209).
 - **Só o dono altera:** toda operação que muda a rede recebe quem pede e confere com `isOwner`, sem exceção para operadores (perguntas 22 e 28). O controlador também: só o dono o retira e o recoloca (pergunta 30).
 - **Recusa é resultado:** um pedido de outro player ou um nome inválido são casos esperados, então a operação devolve um `Outcome` e não muda nada. Exceção fica para erro de programação, como um argumento nulo ou um nome padrão inválido na criação (perguntas 32 e 35).
+- **Um slot por cor:** o canal é a posição do slot, então um nó nunca lê e emite na mesma cor ao mesmo tempo, e o `Node` recusa slots fora da ordem das cores (pergunta 224).
 - **Agregado mutável, valores imutáveis:** a rede muda pelas operações, e as consultas devolvem listas imutáveis. `Node` e `ChannelSlot` são valores: mudar um slot troca o nó inteiro (pergunta 33).
 - **Nome aparado e recusado:** as pontas saem, e vazio ou longo demais é recusado. No canal, vazio volta ao nome da cor (pergunta 34).
 - **Controlador liga e desliga:** criar a rede é colocar o controlador, então ela nasce `Online`. Retirar o deixa `Unplaced`, e recolocar volta na nova posição, com tudo igual, no estado que tinha (perguntas 24, 146 e 178). Uma rede com o controlador colocado recusa outro com `ALREADY_PLACED`, para um item copiado não dar dois controladores a ela, e mover é retirar e recolocar (pergunta 56).
@@ -91,12 +93,12 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Primeiro tick reaplica tudo:** uma face nunca emitida sempre muda, até para `OFF`, porque, depois de carregar o mundo, o bloco pode ter qualquer valor (pergunta 38).
 - **Mesma face, o mais forte:** duas saídas do mesmo nó na mesma face emitem a mais forte, como dois fios de redstone no mesmo bloco (pergunta 39).
 - **Canais numa passada:** `channelValues` percorre os nós uma vez para os 16 canais, para a meta de 1.000 nós de `limites.md` não virar uma conta por saída.
-- **Números por interface:** limites como slots por nó e tamanho dos nomes vêm de `NetworkLimits`, nunca de constantes no domínio (regra 3).
+- **Números por interface:** limites como o tamanho dos nomes vêm de `NetworkLimits`, nunca de constantes no domínio (regra 3).
 - **Restaurar sem setters:** a rede salva volta por `Network.restore`, uma fábrica que recebe o `NetworkSnapshot`, e não por métodos que mudam campos, para nenhuma regra ficar de fora (pergunta 90). A fronteira descarta o que está inválido no save antes do domínio, então um snapshot que quebra as regras do `SnapshotRules`, como um nó repetido ou uma leitura fora de uma entrada, é erro de programação (pergunta 92).
 - **Limites valem para as próximas mudanças:** a rede restaurada mantém os slots de cada nó e o tamanho dos nomes, mesmo que o config agora permita menos, para uma troca de config não apagar o trabalho do player (pergunta 93).
 - **Restaurada, a rede espera o primeiro tick:** o snapshot não leva o que a rede emitiu, então a rede restaurada começa pendente e reaplica todas as saídas (pergunta 38).
 - **Leitura 0 não vai para o save:** é o mesmo que uma entrada nunca lida, então o snapshot só leva as leituras ligadas, e a ida e volta pelo save sai igual (pergunta 89).
 - **A face grudada acompanha o nó:** ao colar, um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para continuar lendo o próprio bloco (perguntas 71 e 105). As outras faces ficam como estão.
-- **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Um slot que passa do tamanho do nó de destino fica de fora (pergunta 106).
+- **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Os 16 slots vão com o status e o nome (perguntas 106 e 230).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

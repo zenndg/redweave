@@ -5,13 +5,14 @@ package io.github.marcelofabianov.redweave.domain.network;
  * never fixed in the logic (AGENTS.md, rule 3).
  */
 public interface NetworkLimits {
-  int slotsPerNode();
-
   int networkNameLength();
 
   int channelNameLength();
 
   int nodeNameLength();
+
+  /** The longest name of a slot (answer 227). */
+  int slotNameLength();
 
   /** The radius of the reach of the controller, in blocks. 0 reaches the whole dimension. */
   int range();

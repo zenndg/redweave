@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * The aggregate: every change to the name, the channels and the nodes goes through it, and it keeps
@@ -137,7 +138,7 @@ public final class Network {
     if (!isOnline()) {
       return Outcome.NETWORK_NOT_ONLINE;
     }
-    return pendingIfAccepted(nodes.attach(nodeId, position, nodeName, limits.slotsPerNode()));
+    return pendingIfAccepted(nodes.attach(nodeId, position, nodeName));
   }
 
   /** Names a node, for the owner only; blank gives back the default (144). It changes no signal. */
@@ -172,6 +173,39 @@ public final class Network {
   /** Configures one slot of a node, for the owner only. */
   public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
     return changeSlot(requester, nodeId, index, Optional.of(slot));
+  }
+
+  /** Enables the slot of a color, for the owner only (answers 226 and 228). */
+  public Outcome enableSlot(PlayerId requester, NodeId nodeId, int index) {
+    return changeSlotWith(requester, nodeId, index, SlotChanges::enable);
+  }
+
+  /** Disables a slot, which keeps its configuration, for the owner only (answer 228). */
+  public Outcome disableSlot(PlayerId requester, NodeId nodeId, int index) {
+    return changeSlotWith(requester, nodeId, index, SlotChanges::disable);
+  }
+
+  /** Names a slot, for the owner only; blank takes the name away. It changes no signal (227). */
+  public Outcome renameSlot(PlayerId requester, NodeId nodeId, int index, String newName) {
+    Optional<Optional<String>> name = SlotChanges.validName(newName, limits.slotNameLength());
+    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
+    if (found != Outcome.ACCEPTED || name.isEmpty()) {
+      return found == Outcome.ACCEPTED ? Outcome.INVALID_NAME : found;
+    }
+    return nodes.changeSlot(nodeId, index, SlotChanges.name(nodes.at(nodeId), index, name.get()));
+  }
+
+  private Outcome changeSlotWith(
+      PlayerId requester,
+      NodeId nodeId,
+      int index,
+      BiFunction<Node, Integer, Optional<ChannelSlot>> change) {
+    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
+    if (found != Outcome.ACCEPTED) {
+      return found;
+    }
+    Optional<ChannelSlot> changed = change.apply(nodes.at(nodeId), index);
+    return changed.isEmpty() ? Outcome.INVALID_SLOT : changeSlot(requester, nodeId, index, changed);
   }
 
   /** Frees one slot of a node, for the owner only. */
@@ -285,14 +319,6 @@ public final class Network {
 
   public Optional<Node> node(NodeId nodeId) {
     return Optional.ofNullable(nodes.at(nodeId));
-  }
-
-  /**
-   * The first channel, in the order of the colors, with no slot in the network. A node placed by
-   * its owner starts on it (answer 25).
-   */
-  public Optional<ChannelColor> firstFreeChannel() {
-    return channels.firstFreeAmong(nodes.all());
   }
 
   /**

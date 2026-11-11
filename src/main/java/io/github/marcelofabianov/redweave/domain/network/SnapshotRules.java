@@ -17,7 +17,7 @@ final class SnapshotRules {
   private static final String INVALID_NAME = "A saved name is never blank nor padded";
   private static final String REPEATED_CHANNEL = "A saved channel appears only once";
   private static final String REPEATED_NODE = "A saved node appears only once";
-  private static final String STRAY_READING = "A saved reading belongs to an input slot";
+  private static final String STRAY_READING = "A saved reading belongs to an enabled input";
 
   private SnapshotRules() {}
 
@@ -51,6 +51,9 @@ final class SnapshotRules {
         throw new IllegalArgumentException(REPEATED_NODE);
       }
       node.name().ifPresent(SnapshotRules::requireName);
+      node.slots().stream()
+          .flatMap(Optional::stream)
+          .forEach(slot -> slot.name().ifPresent(SnapshotRules::requireName));
     }
     return byId;
   }
@@ -59,10 +62,7 @@ final class SnapshotRules {
     boolean input =
         node != null
             && node.hasSlot(reading.index())
-            && node.slots()
-                .get(reading.index())
-                .map(ChannelSlot::direction)
-                .equals(Optional.of(Direction.INPUT));
+            && node.slots().get(reading.index()).filter(ChannelSlot::reads).isPresent();
     if (!input) {
       throw new IllegalArgumentException(STRAY_READING);
     }

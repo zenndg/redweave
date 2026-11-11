@@ -42,7 +42,7 @@ class NetworkNodesTest {
         Outcome.ACCEPTED, network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty()));
     Node node = network.node(NODE).orElseThrow();
     assertEquals(NODE_POSITION, node.position());
-    assertEquals(TestLimits.STARTING.slotsPerNode(), node.slots().size());
+    assertEquals(Node.SLOT_COUNT, node.slots().size());
     assertTrue(node.slots().stream().allMatch(Optional::isEmpty));
   }
 

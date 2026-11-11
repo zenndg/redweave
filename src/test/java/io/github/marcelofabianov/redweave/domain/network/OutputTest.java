@@ -16,10 +16,11 @@ import org.junit.jupiter.api.Test;
 
 /** An output repeats its channel in the block, and emits off when it does not count. */
 class OutputTest {
-  private static final int SLOT = 0;
-  private static final int FREE_SLOT = 1;
-  private static final int PAST_THE_LAST_SLOT = 4;
   private static final ChannelColor LAMP = ChannelColor.YELLOW;
+  private static final ChannelColor UNUSED = ChannelColor.BLACK;
+  private static final int SLOT = LAMP.ordinal();
+  private static final int FREE_SLOT = ChannelColor.BLUE.ordinal();
+  private static final int PAST_THE_LAST_SLOT = Node.SLOT_COUNT;
   private static final Signal LEVER = new Signal(13);
 
   /** 122 blocks from the lever at x = 8, inside the radius, and 138 from the lamp at x = -8. */
@@ -87,12 +88,7 @@ class OutputTest {
   void aNodeEmitsItsStrongestOutput() {
     Network network = leverAndLamp();
     network.configureSlot(
-        OWNER, OTHER_NODE, SLOT, new ChannelSlot(Direction.OUTPUT, Face.UP, ChannelColor.BLACK));
-    network.configureSlot(
-        OWNER,
-        OTHER_NODE,
-        FREE_SLOT,
-        new ChannelSlot(Direction.OUTPUT, OTHER_NODE_POSITION.face(), LAMP));
+        OWNER, OTHER_NODE, UNUSED.ordinal(), new ChannelSlot(Direction.OUTPUT, Face.UP, UNUSED));
 
     assertEquals(LEVER, network.emission(OTHER_NODE));
   }

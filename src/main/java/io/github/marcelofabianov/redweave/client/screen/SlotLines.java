@@ -10,14 +10,12 @@ import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import net.minecraft.network.chat.Component;
 
 /**
- * A slot under an open row of the node list, as `Slot 1 · 15 Red · Input` (answer 179). The numbers
- * come from the server, so one outside the colors or directions shows the first one.
+ * An enabled slot under an open row of the node list, as `15 Red · Input · Redstone from lever 1`
+ * (answers 179 and 234). The numbers come from the server, so one outside the colors or directions
+ * shows the first one.
  */
 final class SlotLines {
   private static final String NO_NAME = "";
-
-  /** The screens count slots from 1. */
-  private static final int FIRST_NUMBER = 1;
 
   private SlotLines() {}
 
@@ -36,6 +34,7 @@ final class SlotLines {
     return ChannelColors.argb(channelOf(slot));
   }
 
+  /** As `15 Red · Input`, with the name of the slot at the end when it has one (answer 234). */
   static Component text(SlotLine slot, ControllerMenu menu) {
     ChannelColor channel = channelOf(slot);
     String name =
@@ -44,10 +43,11 @@ final class SlotLines {
             : NO_NAME;
     Component direction =
         Component.translatable(isInput(slot) ? NodeScreenTexts.INPUT : NodeScreenTexts.OUTPUT);
+    Component shown = ChannelNames.of(channel, name);
+    if (slot.name().isEmpty()) {
+      return Component.translatable(ControllerScreenTexts.SLOT_ROW, shown, direction);
+    }
     return Component.translatable(
-        ControllerScreenTexts.SLOT_ROW,
-        slot.index() + FIRST_NUMBER,
-        ChannelNames.of(channel, name),
-        direction);
+        ControllerScreenTexts.SLOT_ROW_NAMED, shown, direction, slot.name());
   }
 }

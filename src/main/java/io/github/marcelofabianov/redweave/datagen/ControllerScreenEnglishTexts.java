@@ -14,7 +14,9 @@ final class ControllerScreenEnglishTexts {
   private static final String COLUMN_NODE = "Node";
   private static final String COLUMN_SIGNAL = "Signal";
   private static final String COLUMN_POSITION = "Position";
-  private static final String SLOT_ROW = "Slot %s · %s · %s";
+  private static final String SLOT_ROW = "%s · %s";
+  private static final String SLOT_ROW_NAMED = "%s · %s · %s";
+  private static final String NO_ACTIVE_CHANNEL = "No active channel";
   private static final String SLOT_USE = "%s in · %s out";
   private static final String CHANNELS_IN_USE = "%s of %s channels in use";
   private static final String UNLOADED_ONE = "%s node unloaded";
@@ -48,6 +50,8 @@ final class ControllerScreenEnglishTexts {
     add.accept(ControllerScreenTexts.COLUMN_SIGNAL, COLUMN_SIGNAL);
     add.accept(ControllerScreenTexts.COLUMN_POSITION, COLUMN_POSITION);
     add.accept(ControllerScreenTexts.SLOT_ROW, SLOT_ROW);
+    add.accept(ControllerScreenTexts.SLOT_ROW_NAMED, SLOT_ROW_NAMED);
+    add.accept(ControllerScreenTexts.NO_ACTIVE_CHANNEL, NO_ACTIVE_CHANNEL);
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
     add.accept(ControllerScreenTexts.NO_NODES, NO_NODES);
     add.accept(ControllerScreenTexts.OWNER, OWNER);

@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 
 /** Each network is evaluated at most once a tick, and only when a signal of it changed. */
 class SimulatorTest {
-  private static final int SLOT = 0;
   private static final ChannelColor LAMP = ChannelColor.YELLOW;
+  private static final int SLOT = LAMP.ordinal();
   private static final Signal LEVER = new Signal(13);
   private static final Signal LEVER_LOWER = new Signal(6);
   private static final OutputFace LAMP_FACE =

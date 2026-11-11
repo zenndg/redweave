@@ -1,10 +1,10 @@
 package io.github.marcelofabianov.redweave.block;
 
-import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
@@ -15,13 +15,14 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * What a node looks like in the world: the ring when it is out of range (answer 86) and the color
- * of its first 4 slots on the corners (answer 87). Only a change reaches the clients.
+ * of its first 4 enabled channels on the corners (answers 87 and 229). Only a change reaches the
+ * clients.
  */
 public final class NodeLook {
-  /** The corners of the plate show the first 4 slots. */
+  /** The corners of the plate show the first 4 enabled channels. */
   static final int CORNERS = 4;
 
-  /** A corner of a free slot, or of a node without a network. */
+  /** A corner with no enabled channel, or of a node without a network. */
   public static final int FREE = -1;
 
   private NodeLook() {}
@@ -47,9 +48,9 @@ public final class NodeLook {
 
   private static int[] corners(Optional<Node> node) {
     int[] corners = {FREE, FREE, FREE, FREE};
-    List<Optional<ChannelSlot>> slots = node.map(Node::slots).orElse(List.of());
-    for (int corner = 0; corner < Math.min(CORNERS, slots.size()); corner++) {
-      corners[corner] = slots.get(corner).map(slot -> slot.channel().ordinal()).orElse(FREE);
+    List<ChannelColor> enabled = node.map(Node::enabledChannels).orElse(List.of());
+    for (int corner = 0; corner < Math.min(CORNERS, enabled.size()); corner++) {
+      corners[corner] = enabled.get(corner).ordinal();
     }
     return corners;
   }

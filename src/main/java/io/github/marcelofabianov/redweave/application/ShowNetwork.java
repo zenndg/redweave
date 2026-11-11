@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.application;
 
 import io.github.marcelofabianov.redweave.domain.network.Channel;
+import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -51,7 +52,9 @@ public final class ShowNetwork {
       int at = index;
       node.slots()
           .get(index)
-          .ifPresent(slot -> rows.add(new SlotRow(at, slot.channel(), slot.direction())));
+          .filter(ChannelSlot::active)
+          .ifPresent(
+              slot -> rows.add(new SlotRow(at, slot.channel(), slot.direction(), slot.name())));
     }
     return rows;
   }

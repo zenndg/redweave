@@ -27,9 +27,8 @@ final class SaveTags {
   static final String Z = "z";
   static final String BLOCK = "block";
   static final String FACE = "face";
-  static final String SLOT_COUNT = "slot_count";
   static final String SLOTS = "slots";
-  static final String INDEX = "index";
+  static final String ACTIVE = "active";
   static final String DIRECTION = "direction";
   static final String CHANNEL = "channel";
   static final String READING = "reading";
@@ -42,6 +41,7 @@ final class SaveTags {
   static final String WEST = "west";
   static final String CYAN = "cyan";
   static final String RED = "red";
+  static final String BLACK = "black";
   static final int HEIGHT = 64;
 
   private SaveTags() {}
@@ -81,13 +81,12 @@ final class SaveTags {
     return tag;
   }
 
-  /** A node on the block at x, on the east face of it. */
-  static CompoundTag node(UUID id, int x, int slotCount, ListTag slots) {
+  /** A node on the block at x, on the east face of it, with the slots ever enabled (224). */
+  static CompoundTag node(UUID id, int x, ListTag slots) {
     CompoundTag tag = new CompoundTag();
     tag.put(ID, NbtUtils.createUUID(id));
     tag.put(BLOCK, block(x));
     tag.putString(FACE, EAST);
-    tag.putInt(SLOT_COUNT, slotCount);
     tag.put(SLOTS, slots);
     return tag;
   }
@@ -98,19 +97,28 @@ final class SaveTags {
     return network;
   }
 
-  /** A node its owner renamed: the name goes to the saves only then (answer 206). */
+  /**
+   * A node or a slot its owner renamed: the name goes to the saves only then (answers 206 and 227).
+   */
   static CompoundTag named(CompoundTag node, String name) {
     node.putString(NAME, name);
     return node;
   }
 
-  static CompoundTag slot(int index, String direction, String face, String channel) {
+  /** An enabled slot: its channel is its place on the node (answer 224). */
+  static CompoundTag slot(String channel, String direction, String face) {
     CompoundTag tag = new CompoundTag();
-    tag.putInt(INDEX, index);
+    tag.putString(CHANNEL, channel);
+    tag.putBoolean(ACTIVE, true);
     tag.putString(DIRECTION, direction);
     tag.putString(FACE, face);
-    tag.putString(CHANNEL, channel);
     return tag;
+  }
+
+  /** A slot its owner disabled, which keeps its configuration (answer 228). */
+  static CompoundTag disabled(CompoundTag slot) {
+    slot.putBoolean(ACTIVE, false);
+    return slot;
   }
 
   static CompoundTag reading(CompoundTag slot, int reading) {

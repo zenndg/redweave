@@ -50,10 +50,13 @@ final class NodeTable {
   private int scroll;
   private int expanded = NONE;
 
-  /** One line of the list: a node row, or one of the slots under the open row. */
-  record Item(int row, Optional<SlotLine> slot) {
+  /**
+   * One line of the list: a node row, or a line under the open row, with one of its enabled slots
+   * or, with none, the notice `No active channel` (answer 234).
+   */
+  record Item(int row, Optional<SlotLine> slot, boolean under) {
     int height() {
-      return slot.isPresent() ? SLOT_HEIGHT : ROW_HEIGHT;
+      return under ? SLOT_HEIGHT : ROW_HEIGHT;
     }
   }
 
@@ -70,8 +73,8 @@ final class NodeTable {
       return;
     }
     for (Placed placed : placed(area, menu)) {
-      if (placed.item().slot().isPresent()) {
-        drawSlot(graphics, font, placed, menu);
+      if (placed.item().under()) {
+        drawUnder(graphics, font, placed, menu);
       } else {
         drawRow(graphics, font, placed, menu, mouse);
       }
@@ -132,11 +135,18 @@ final class NodeTable {
     return hover ? ControllerSprites.NODE_ROW_HOVER : ControllerSprites.NODE_ROW;
   }
 
-  private static void drawSlot(
+  private static void drawUnder(
       GuiGraphics graphics, Font font, Placed placed, ControllerMenu menu) {
     Box box = placed.box();
-    SlotLine slot = placed.item().slot().orElseThrow();
     graphics.blitSprite(ControllerSprites.SLOT_LINE, box.x(), box.y(), box.width(), box.height());
+    Optional<SlotLine> found = placed.item().slot();
+    if (found.isEmpty()) {
+      Component none = Component.translatable(ControllerScreenTexts.NO_ACTIVE_CHANNEL);
+      graphics.drawString(
+          font, none, box.x() + SLOT_ICON_X, box.y() + SLOT_TEXT_Y, ScreenColors.DIM, false);
+      return;
+    }
+    SlotLine slot = found.get();
     graphics.blitSprite(
         SlotLines.isInput(slot) ? ControllerSprites.ICON_INPUT : ControllerSprites.ICON_OUTPUT,
         box.x() + SLOT_ICON_X,
@@ -167,7 +177,7 @@ final class NodeTable {
       if (y + item.height() > area.bottom()) {
         break;
       }
-      int indent = item.slot().isPresent() ? SLOT_INDENT : 0;
+      int indent = item.under() ? SLOT_INDENT : 0;
       placed.add(
           new Placed(item, new Box(area.x() + indent, y, area.width() - indent, item.height())));
       y += item.height() + GAP;
@@ -181,10 +191,14 @@ final class NodeTable {
     }
     List<Item> items = new ArrayList<>();
     for (int row = 0; row < menu.nodes().size(); row++) {
-      items.add(new Item(row, Optional.empty()));
+      items.add(new Item(row, Optional.empty(), false));
       if (row == expanded) {
         int open = row;
-        menu.nodes().get(row).slots().forEach(slot -> items.add(new Item(open, Optional.of(slot))));
+        List<SlotLine> slots = menu.nodes().get(row).slots();
+        slots.forEach(slot -> items.add(new Item(open, Optional.of(slot), true)));
+        if (slots.isEmpty()) {
+          items.add(new Item(open, Optional.empty(), true));
+        }
       }
     }
     return items;
@@ -193,7 +207,7 @@ final class NodeTable {
   /** The node row under the mouse, if any. */
   Optional<Placed> rowAt(Box area, ControllerMenu menu, double mouseX, double mouseY) {
     return placed(area, menu).stream()
-        .filter(placed -> placed.item().slot().isEmpty())
+        .filter(placed -> !placed.item().under())
         .filter(placed -> placed.box().contains(mouseX, mouseY))
         .findFirst();
   }

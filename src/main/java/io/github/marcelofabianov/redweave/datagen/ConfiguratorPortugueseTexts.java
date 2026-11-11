@@ -14,7 +14,6 @@ final class ConfiguratorPortugueseTexts {
   private static final String WRENCH = "Chave";
   private static final String COPIED = "%s slots copiados";
   private static final String PASTED = "%s slots colados";
-  private static final String PASTED_LEFT_OUT = "%s slots colados, %s de fora";
   private static final String CLEARED = "Cópia apagada";
   private static final String PICKED_UP = "Nó retirado";
   private static final String NOT_PLACER = "Só quem colocou este nó pode retirá-lo.";
@@ -35,7 +34,6 @@ final class ConfiguratorPortugueseTexts {
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.WRENCH), WRENCH);
     add.accept(ConfiguratorMessages.COPIED, COPIED);
     add.accept(ConfiguratorMessages.PASTED, PASTED);
-    add.accept(ConfiguratorMessages.PASTED_LEFT_OUT, PASTED_LEFT_OUT);
     add.accept(ConfiguratorMessages.CLEARED, CLEARED);
     add.accept(ConfiguratorMessages.PICKED_UP, PICKED_UP);
     add.accept(ConfiguratorMessages.NOT_PLACER, NOT_PLACER);

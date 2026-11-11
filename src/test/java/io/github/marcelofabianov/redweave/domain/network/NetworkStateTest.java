@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
  * the world. Off and Unplaced, every channel is off (answers 132, 135, 146, 178 and 209).
  */
 class NetworkStateTest {
-  private static final int SLOT = 0;
   private static final ChannelColor CHANNEL = ChannelColor.RED;
+  private static final int SLOT = CHANNEL.ordinal();
   private static final Signal READ = new Signal(9);
 
   /** A network with an input on CHANNEL that reads READ, already evaluated. */

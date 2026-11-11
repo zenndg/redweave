@@ -25,6 +25,11 @@ public record NodeCopy(Face attached, List<CopiedSlot> slots) {
     }
   }
 
+  /** How many slots of the copy are enabled, as `Copied <n> slots` shows. */
+  public int enabled() {
+    return (int) slots.stream().filter(copied -> copied.slot().active()).count();
+  }
+
   public static NodeCopy of(Node node) {
     List<CopiedSlot> used = new ArrayList<>();
     for (int index = 0; index < node.slots().size(); index++) {
@@ -36,28 +41,23 @@ public record NodeCopy(Face attached, List<CopiedSlot> slots) {
 
   /**
    * Every slot of the target after the paste. A slot on the face the source stuck to goes to the
-   * face the target sticks to, so it still reads its own block (answer 71), and the slots past the
-   * end of the target are left out.
+   * face the target sticks to, so it still reads its own block (answer 71). Every copied slot fits,
+   * because each sits at the place of its color (answers 224 and 230).
    */
   public Pasted onto(Node target) {
-    int size = target.slots().size();
     List<Optional<ChannelSlot>> pasted =
-        new ArrayList<>(Collections.nCopies(size, Optional.empty()));
-    int leftOut = 0;
+        new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
     for (CopiedSlot copied : slots) {
-      if (copied.index() >= size) {
-        leftOut++;
-        continue;
-      }
       pasted.set(copied.index(), Optional.of(facing(copied.slot(), target.position().face())));
     }
-    return new Pasted(pasted, leftOut);
+    return new Pasted(pasted);
   }
 
   private ChannelSlot facing(ChannelSlot slot, Face targetAttached) {
     if (slot.face() != attached) {
       return slot;
     }
-    return new ChannelSlot(slot.direction(), targetAttached, slot.channel());
+    return new ChannelSlot(
+        slot.direction(), targetAttached, slot.channel(), slot.active(), slot.name());
   }
 }

@@ -20,18 +20,21 @@ import org.junit.jupiter.api.Test;
  * 177 and 179).
  */
 class NodeSignalTest {
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
   private static final ChannelColor DOOR = ChannelColor.RED;
+  private static final ChannelColor LAMP = ChannelColor.YELLOW;
+  private static final int FIRST_SLOT = DOOR.ordinal();
+  private static final int SECOND_SLOT = LAMP.ordinal();
   private static final Signal WEAK = new Signal(4);
   private static final Signal MIDDLE = new Signal(9);
   private static final Signal STRONG = new Signal(11);
   private static final int FAR = 500;
   private static final BlockLocation FAR_CONTROLLER = new BlockLocation(OVERWORLD, FAR, 64, FAR);
 
-  private static void slot(Network network, NodeId node, int index, Direction direction) {
+  private static void slot(
+      Network network, NodeId node, ChannelColor channel, Direction direction) {
     NodePosition position = node.equals(NODE) ? NODE_POSITION : OTHER_NODE_POSITION;
-    network.configureSlot(OWNER, node, index, new ChannelSlot(direction, position.face(), DOOR));
+    network.configureSlot(
+        OWNER, node, channel.ordinal(), new ChannelSlot(direction, position.face(), channel));
   }
 
   private static Network networkWithNode() {
@@ -40,15 +43,15 @@ class NodeSignalTest {
     return network;
   }
 
-  /** NODE reads WEAK on its first slot, and emits the channel, set by OTHER_NODE, on the second. */
+  /** NODE reads WEAK into DOOR, and emits LAMP, set by OTHER_NODE, on its second slot. */
   private static Network networkWhereNodeReadsAndEmits(Signal emitted) {
     Network network = networkWithNode();
     network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
-    slot(network, NODE, FIRST_SLOT, Direction.INPUT);
-    slot(network, NODE, SECOND_SLOT, Direction.OUTPUT);
-    slot(network, OTHER_NODE, FIRST_SLOT, Direction.INPUT);
+    slot(network, NODE, DOOR, Direction.INPUT);
+    slot(network, NODE, LAMP, Direction.OUTPUT);
+    slot(network, OTHER_NODE, LAMP, Direction.INPUT);
     network.readInput(NODE, FIRST_SLOT, WEAK);
-    network.readInput(OTHER_NODE, FIRST_SLOT, emitted);
+    network.readInput(OTHER_NODE, SECOND_SLOT, emitted);
     return network;
   }
 
@@ -66,7 +69,7 @@ class NodeSignalTest {
   @Test
   void anInputShowsItsLastReading() {
     Network network = networkWithNode();
-    slot(network, NODE, FIRST_SLOT, Direction.INPUT);
+    slot(network, NODE, DOOR, Direction.INPUT);
     network.readInput(NODE, FIRST_SLOT, MIDDLE);
 
     assertEquals(MIDDLE, network.nodeSignal(NODE));
@@ -89,7 +92,7 @@ class NodeSignalTest {
   @Test
   void aNodeOutOfRangeIsOff() {
     Network network = networkWithNode();
-    slot(network, NODE, FIRST_SLOT, Direction.INPUT);
+    slot(network, NODE, DOOR, Direction.INPUT);
     network.readInput(NODE, FIRST_SLOT, MIDDLE);
     network.removeController(OWNER);
     network.placeController(OWNER, FAR_CONTROLLER);

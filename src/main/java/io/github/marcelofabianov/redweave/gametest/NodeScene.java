@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
+import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
@@ -90,6 +91,14 @@ final class NodeScene {
     player.setShiftKeyDown(true);
     click(helper, player, relative);
     player.setShiftKeyDown(false);
+  }
+
+  /**
+   * Enables a slot as its owner does on the Node Screen. A node joins with every slot empty, and
+   * the first time a slot is enabled it becomes an input on the face the node sticks to (224, 226).
+   */
+  static void enableSlot(Player owner, NodeId node, int index) {
+    networkOf(node).enableSlot(new PlayerId(owner.getUUID()), node, index);
   }
 
   static Network networkOf(NodeId node) {

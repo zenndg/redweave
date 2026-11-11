@@ -45,7 +45,7 @@ public final class SaveCodecs {
   static final Codec<PlayerId> PLAYER_ID = UUIDUtil.CODEC.xmap(PlayerId::new, PlayerId::value);
 
   /** A name kept as it was given, up to the ceiling of the config (answer 93). */
-  static final Codec<String> SAVED_NAME = Codec.STRING.validate(SaveCodecs::checkName);
+  public static final Codec<String> SAVED_NAME = Codec.STRING.validate(SaveCodecs::checkName);
 
   static final Codec<BlockLocation> BLOCK =
       RecordCodecBuilder.create(instance ->

@@ -36,8 +36,10 @@ public final class ConfiguratorGameTests {
   private static final BlockPos SOURCE_NODE = SOURCE_STONE.east();
   private static final BlockPos TARGET_STONE = new BlockPos(2, 1, 2);
   private static final BlockPos TARGET_NODE = TARGET_STONE.north();
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
+  private static final int FIRST_SLOT = ChannelColor.WHITE.ordinal();
+  private static final ChannelColor SECOND_CHANNEL = ChannelColor.ORANGE;
+  private static final int SECOND_SLOT = SECOND_CHANNEL.ordinal();
+  private static final int TARGET_ONLY_SLOT = ChannelColor.RED.ordinal();
   private static final double SCROLL_DOWN = -1;
   private static final double SCROLL_UP = 1;
   private static final String NOT_SWITCHED = "Shift + scroll should switch the mode";
@@ -45,6 +47,7 @@ public final class ConfiguratorGameTests {
   private static final String NOT_OPENED = "The Open mode should take the click and copy nothing";
   private static final String NOT_COPIED = "A click in the Copy mode should copy the node";
   private static final String NOT_PASTED = "The copy should follow the face of the target";
+  private static final String NOT_REPLACED = "The paste should replace every slot of the target";
   private static final String PASTED = "Another player should not paste";
   private static final String NOT_CLEARED = "Shift + click in the air should clear the copy";
   private static final String REACTED = "The controller should not take the Configurator";
@@ -97,13 +100,17 @@ public final class ConfiguratorGameTests {
     helper.succeed();
   }
 
-  /** A slot on the face the source sticks to goes to the face of the target (answer 105). */
+  /**
+   * A slot on the face the source sticks to goes to the face of the target (answer 105), and the
+   * paste replaces all 16 slots, so a slot only the target had is gone.
+   */
   @GameTest(template = EMPTY)
   public static void aPasteFollowsTheFaceTheTargetSticksTo(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     NodeId source = configuredSource(helper, owner);
     NodeId target = NodeScene.placeNode(helper, owner, TARGET_STONE, Direction.NORTH);
+    NodeScene.enableSlot(owner, target, TARGET_ONLY_SLOT);
     ItemStack configurator = holdConfigurator(owner, ConfiguratorMode.COPY);
 
     NodeScene.click(helper, owner, SOURCE_NODE);
@@ -120,6 +127,7 @@ public final class ConfiguratorGameTests {
         NOT_PASTED);
     helper.assertTrue(
         slots.get(SECOND_SLOT).equals(NodeScene.slotsOf(source).get(SECOND_SLOT)), NOT_PASTED);
+    helper.assertTrue(slots.get(TARGET_ONLY_SLOT).isEmpty(), NOT_REPLACED);
     helper.succeed();
   }
 
@@ -171,6 +179,7 @@ public final class ConfiguratorGameTests {
   /** A node with an input on the face it sticks to and an output on another face. */
   private static NodeId configuredSource(GameTestHelper helper, Player owner) {
     NodeId node = NodeScene.placeNode(helper, owner, SOURCE_STONE, Direction.EAST);
+    NodeScene.enableSlot(owner, node, FIRST_SLOT);
     NodeScene.networkOf(node)
         .configureSlot(
             new PlayerId(owner.getUUID()),
@@ -179,7 +188,7 @@ public final class ConfiguratorGameTests {
             new ChannelSlot(
                 io.github.marcelofabianov.redweave.domain.network.Direction.OUTPUT,
                 Face.UP,
-                ChannelColor.RED));
+                SECOND_CHANNEL));
     return node;
   }
 

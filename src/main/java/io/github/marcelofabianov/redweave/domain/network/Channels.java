@@ -2,13 +2,10 @@ package io.github.marcelofabianov.redweave.domain.network;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
-import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * The 16 channels of a network, one per color, from its creation on. It left the network for the
@@ -57,19 +54,6 @@ final class Channels {
 
   Channel of(ChannelColor color) {
     return byColor.get(color);
-  }
-
-  /**
-   * The first channel, in the order of the colors, that no slot of these nodes uses (answer 25).
-   */
-  Optional<ChannelColor> firstFreeAmong(Collection<Node> nodes) {
-    Set<ChannelColor> used =
-        nodes.stream()
-            .flatMap(node -> node.slots().stream())
-            .flatMap(Optional::stream)
-            .map(ChannelSlot::channel)
-            .collect(Collectors.toSet());
-    return byColor.keySet().stream().filter(color -> !used.contains(color)).findFirst();
   }
 
   /** Every channel off, the start of the strongest value of each one. */

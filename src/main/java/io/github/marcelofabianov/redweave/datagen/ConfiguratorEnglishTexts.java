@@ -14,7 +14,6 @@ final class ConfiguratorEnglishTexts {
   private static final String WRENCH = "Wrench";
   private static final String COPIED = "Copied %s slots";
   private static final String PASTED = "Pasted %s slots";
-  private static final String PASTED_LEFT_OUT = "Pasted %s slots, %s left out";
   private static final String CLEARED = "Copy cleared";
   private static final String PICKED_UP = "Node picked up";
   private static final String NOT_PLACER = "Only the player who placed this node can pick it up.";
@@ -35,7 +34,6 @@ final class ConfiguratorEnglishTexts {
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.WRENCH), WRENCH);
     add.accept(ConfiguratorMessages.COPIED, COPIED);
     add.accept(ConfiguratorMessages.PASTED, PASTED);
-    add.accept(ConfiguratorMessages.PASTED_LEFT_OUT, PASTED_LEFT_OUT);
     add.accept(ConfiguratorMessages.CLEARED, CLEARED);
     add.accept(ConfiguratorMessages.PICKED_UP, PICKED_UP);
     add.accept(ConfiguratorMessages.NOT_PLACER, NOT_PLACER);

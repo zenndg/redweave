@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.menu;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.PlayerNames;
+import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.DefaultNames;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
@@ -24,10 +25,11 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * The names the Node Screen shows, which do not fit the numbers of the data slots: the node, the
  * network, its color and its owner. Sent when the screen opens and again when they change (82). A
  * node with no network has the default name and no color (answers 142 and 208). The names the owner
- * gave the channels come along, so a slot shows `15 Main door` (answer 221).
+ * gave the channels and the slots come along, so a slot shows `15 Main door` and its own name
+ * (answers 221 and 227).
  */
 public record NodeScreenNames(
-    int menu, String node, String network, int color, String owner, List<String> channels)
+    int menu, String node, String network, int color, String owner, Labels labels)
     implements CustomPacketPayload {
   private static final String ID = "node_screen_names";
   private static final String NONE = "";
@@ -50,12 +52,29 @@ public record NodeScreenNames(
           NodeScreenNames::color,
           ByteBufCodecs.STRING_UTF8,
           NodeScreenNames::owner,
-          ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()),
-          NodeScreenNames::channels,
+          Labels.STREAM_CODEC,
+          NodeScreenNames::labels,
           NodeScreenNames::new);
 
-  public NodeScreenNames {
-    channels = List.copyOf(channels);
+  /**
+   * The names of the 16 channels of the network and of the 16 slots of the node, in color order,
+   * empty where there is none.
+   */
+  public record Labels(List<String> channels, List<String> slots) {
+    static final Labels NONE = new Labels(List.of(), List.of());
+
+    static final StreamCodec<RegistryFriendlyByteBuf, Labels> STREAM_CODEC =
+        StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()),
+            Labels::channels,
+            ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()),
+            Labels::slots,
+            Labels::new);
+
+    public Labels {
+      channels = List.copyOf(channels);
+      slots = List.copyOf(slots);
+    }
   }
 
   @Override
@@ -81,13 +100,19 @@ public record NodeScreenNames(
                 found.name(),
                 found.color().ordinal(),
                 PlayerNames.of(player.getServer(), found.owner().value()),
-                channelNamesOf(found)))
-        .orElse(new NodeScreenNames(menu, node, NONE, NO_COLOR, NONE, List.of()));
+                labelsOf(found, id.get())))
+        .orElse(new NodeScreenNames(menu, node, NONE, NO_COLOR, NONE, Labels.NONE));
   }
 
-  /** The name of each channel, empty for the name of the color (answers 26 and 221). */
-  private static List<String> channelNamesOf(Network network) {
-    return network.channels().stream().map(channel -> channel.name().orElse(NONE)).toList();
+  /** The name of each channel and each slot, empty where the owner gave none (221 and 227). */
+  private static Labels labelsOf(Network network, NodeId id) {
+    List<String> channels =
+        network.channels().stream().map(channel -> channel.name().orElse(NONE)).toList();
+    List<String> slots =
+        network.node(id).map(Node::slots).orElse(List.of()).stream()
+            .map(slot -> slot.flatMap(ChannelSlot::name).orElse(NONE))
+            .toList();
+    return new Labels(channels, slots);
   }
 
   static void send(ServerPlayer player, NodeScreenNames names) {

@@ -60,12 +60,12 @@ final class NodeScreenActions {
 
   private static void run(RedweaveServer server, PlayerId player, NodeId node, NodeAction action) {
     switch (action.kind()) {
-      case USE -> server.useFreeSlot().use(player, node, action.index());
+      case ENABLE -> server.enableSlot().enable(player, node, action.index());
       case CONFIGURE ->
           server
               .configureSlot()
               .configure(player, node, action.index(), action.slot().orElseThrow());
-      case CLEAR -> server.clearSlot().clear(player, node, action.index());
+      case DISABLE -> server.disableSlot().disable(player, node, action.index());
     }
   }
 }

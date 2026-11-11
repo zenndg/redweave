@@ -40,14 +40,18 @@ public final class SignalNodeGameTests {
   private static final BlockPos LAMP = new BlockPos(2, 1, 2);
   private static final BlockPos OUTPUT_NODE = LAMP.above();
   private static final BlockPos LAMP_BESIDE_THE_STONE = LAMP.north();
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
+  private static final ChannelColor LEVER_CHANNEL = ChannelColor.WHITE;
+  private static final ChannelColor ECHO_CHANNEL = ChannelColor.ORANGE;
+  private static final int LEVER_SLOT = LEVER_CHANNEL.ordinal();
+  private static final int ECHO_SLOT = ECHO_CHANNEL.ordinal();
+  private static final int SETTLE_TICKS = 10;
   private static final String NO_NODE = "The node should keep its ID";
   private static final String STILL_IN = "The node should have left its network";
   private static final String STRANGER_BREAKS = "Only the owner should break the node";
   private static final String NOT_IN = "The node should stay in its network";
   private static final String HAS_NETWORK = "A node with no network to pick has none";
   private static final String NOT_ON = "The channel should follow the lever";
+  private static final String ECHO = "An input should not read the output of its own node";
 
   private SignalNodeGameTests() {}
 
@@ -66,29 +70,34 @@ public final class SignalNodeGameTests {
         .thenSucceed();
   }
 
-  /** An output of a node feeds its block, and its input on that face must not read it back. */
+  /**
+   * An output of a node feeds its block, and an input of that node on the same face must not read
+   * it back: one node reads the lever into a channel, and the other emits that channel into its
+   * stone while one of its inputs reads the stone.
+   */
   @GameTest(template = EMPTY)
   public static void aNodeDoesNotReadItsOwnOutput(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     placeController(helper, owner);
     placeLever(helper);
-    NodeId node = placeNode(helper, owner, LEVER_BLOCK, net.minecraft.core.Direction.EAST);
+    NodeId reader = placeNode(helper, owner, LEVER_BLOCK, net.minecraft.core.Direction.EAST);
+    NodeScene.enableSlot(owner, reader, LEVER_SLOT);
+    helper.setBlock(LAMP, Blocks.STONE);
+    NodeId node = placeNode(helper, owner, LAMP, net.minecraft.core.Direction.UP);
     Network network = networkOf(node);
-    ChannelColor channel =
-        network.node(node).orElseThrow().slots().get(FIRST_SLOT).orElseThrow().channel();
+    PlayerId ownerId = new PlayerId(owner.getUUID());
     network.configureSlot(
-        new PlayerId(owner.getUUID()),
-        node,
-        SECOND_SLOT,
-        new ChannelSlot(Direction.OUTPUT, Face.EAST, channel));
+        ownerId, node, LEVER_SLOT, new ChannelSlot(Direction.OUTPUT, Face.UP, LEVER_CHANNEL));
+    network.configureSlot(
+        ownerId, node, ECHO_SLOT, new ChannelSlot(Direction.INPUT, Face.UP, ECHO_CHANNEL));
 
     helper
         .startSequence()
         .thenExecute(() -> helper.pullLever(LEVER))
-        .thenWaitUntil(() -> helper.assertTrue(network.channelValue(channel).isOn(), NOT_ON))
-        .thenWaitUntil(() -> helper.assertBlockProperty(INPUT_NODE, SignalNodeBlock.POWERED, true))
-        .thenExecute(() -> helper.pullLever(LEVER))
-        .thenWaitUntil(() -> helper.assertFalse(network.channelValue(channel).isOn(), NOT_ON))
+        .thenWaitUntil(() -> helper.assertTrue(network.channelValue(LEVER_CHANNEL).isOn(), NOT_ON))
+        .thenWaitUntil(() -> helper.assertBlockProperty(OUTPUT_NODE, SignalNodeBlock.POWERED, true))
+        .thenIdle(SETTLE_TICKS)
+        .thenExecute(() -> helper.assertFalse(network.channelValue(ECHO_CHANNEL).isOn(), ECHO))
         .thenSucceed();
   }
 
@@ -159,16 +168,15 @@ public final class SignalNodeGameTests {
     placeController(helper, owner);
     placeLever(helper);
     NodeId input = placeNode(helper, owner, LEVER_BLOCK, net.minecraft.core.Direction.EAST);
+    NodeScene.enableSlot(owner, input, LEVER_SLOT);
     helper.setBlock(LAMP, Blocks.REDSTONE_LAMP);
     NodeId output = placeNode(helper, owner, LAMP, net.minecraft.core.Direction.UP);
-    Network network = networkOf(input);
-    ChannelColor channel =
-        network.node(input).orElseThrow().slots().get(FIRST_SLOT).orElseThrow().channel();
-    network.configureSlot(
-        new PlayerId(owner.getUUID()),
-        output,
-        FIRST_SLOT,
-        new ChannelSlot(Direction.OUTPUT, Face.UP, channel));
+    networkOf(input)
+        .configureSlot(
+            new PlayerId(owner.getUUID()),
+            output,
+            LEVER_SLOT,
+            new ChannelSlot(Direction.OUTPUT, Face.UP, LEVER_CHANNEL));
   }
 
   private static void placeController(GameTestHelper helper, Player owner) {

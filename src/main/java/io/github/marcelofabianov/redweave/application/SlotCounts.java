@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** How many input and output slots use each channel, as in "2 in · 1 out" of the Signals tab. */
+/** How many enabled input and output slots use each channel, as "2 in · 1 out" of Signals. */
 final class SlotCounts {
   private final Map<Direction, int[]> byDirection = new EnumMap<>(Direction.class);
 
@@ -22,7 +22,10 @@ final class SlotCounts {
   static SlotCounts of(List<Node> nodes) {
     SlotCounts counts = new SlotCounts();
     for (Node node : nodes) {
-      node.slots().stream().flatMap(Optional::stream).forEach(counts::add);
+      node.slots().stream()
+          .flatMap(Optional::stream)
+          .filter(ChannelSlot::active)
+          .forEach(counts::add);
     }
     return counts;
   }

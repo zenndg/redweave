@@ -1,5 +1,7 @@
 package io.github.marcelofabianov.redweave.gametest;
 
+import static io.github.marcelofabianov.redweave.gametest.SaveTags.BLACK;
+import static io.github.marcelofabianov.redweave.gametest.SaveTags.CYAN;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.EAST;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.INPUT;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.OUTPUT;
@@ -9,9 +11,12 @@ import static io.github.marcelofabianov.redweave.gametest.SaveTags.WEST;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
+import io.github.marcelofabianov.redweave.config.RedweaveConfig;
+import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -52,10 +57,9 @@ public final class NetworkSaveGameTests {
   private static final String NODE_NAME = "Lever";
   private static final String LETTER = "x";
   private static final int VERSION = 1;
-  private static final int SLOTS = 4;
-  private static final int UPGRADED_SLOTS = 9;
-  private static final int LAST_UPGRADED_SLOT = 8;
-  private static final int LONG_NAME_LENGTH = 40;
+  private static final String SLOT_NAME = "Door lever";
+  private static final int RED_SLOT = ChannelColor.RED.ordinal();
+  private static final int LONG_NAME_LENGTH = RedweaveConfig.MAX_NAME;
   private static final int NODE_X = 8;
   private static final int IDLE_NODE_X = -8;
   private static final int READ = 12;
@@ -73,12 +77,13 @@ public final class NetworkSaveGameTests {
   private static CompoundTag fullSave() {
     ListTag slots =
         SaveTags.list(
-            SaveTags.reading(SaveTags.slot(0, INPUT, EAST, RED), READ),
-            SaveTags.slot(1, OUTPUT, WEST, RED));
+            SaveTags.disabled(SaveTags.slot(CYAN, OUTPUT, EAST)),
+            SaveTags.named(SaveTags.reading(SaveTags.slot(RED, INPUT, EAST), READ), SLOT_NAME),
+            SaveTags.slot(BLACK, OUTPUT, WEST));
     ListTag nodes =
         SaveTags.list(
-            SaveTags.named(SaveTags.node(NODE, NODE_X, SLOTS, slots), NODE_NAME),
-            SaveTags.node(IDLE_NODE, IDLE_NODE_X, SLOTS, SaveTags.list()));
+            SaveTags.named(SaveTags.node(NODE, NODE_X, slots), NODE_NAME),
+            SaveTags.node(IDLE_NODE, IDLE_NODE_X, SaveTags.list()));
     ListTag channels = SaveTags.list(SaveTags.channel(RED, CHANNEL_NAME));
     return SaveTags.save(
         VERSION,
@@ -128,8 +133,12 @@ public final class NetworkSaveGameTests {
     helper.assertTrue(network.name().equals(NAME), NOT_KEPT);
     helper.assertTrue(
         network.channel(ChannelColor.RED).name().equals(Optional.of(CHANNEL_NAME)), NOT_KEPT);
-    helper.assertTrue(
-        network.node(new NodeId(NODE)).orElseThrow().displayName().equals(NODE_NAME), NOT_KEPT);
+    Node node = network.node(new NodeId(NODE)).orElseThrow();
+    helper.assertTrue(node.displayName().equals(NODE_NAME), NOT_KEPT);
+    ChannelSlot named = node.slots().get(ChannelColor.RED.ordinal()).orElseThrow();
+    helper.assertTrue(named.name().equals(Optional.of(SLOT_NAME)), NOT_KEPT);
+    helper.assertFalse(
+        node.slots().get(ChannelColor.CYAN.ordinal()).orElseThrow().active(), NOT_KEPT);
     helper.assertTrue(network.isPending(), NOT_KEPT);
     helper.assertTrue(
         data.lastUsedOf(new PlayerId(OWNER)).equals(Optional.of(network.id())), NOT_KEPT);
@@ -140,8 +149,8 @@ public final class NetworkSaveGameTests {
   @GameTest(template = EMPTY)
   public static void aNetworkKeepsWhatTheConfigNoLongerAllows(GameTestHelper helper) {
     String longName = LETTER.repeat(LONG_NAME_LENGTH);
-    ListTag slots = SaveTags.list(SaveTags.slot(LAST_UPGRADED_SLOT, INPUT, EAST, RED));
-    ListTag nodes = SaveTags.list(SaveTags.node(NODE, NODE_X, UPGRADED_SLOTS, slots));
+    ListTag slots = SaveTags.list(SaveTags.named(SaveTags.slot(RED, INPUT, EAST), longName));
+    ListTag nodes = SaveTags.list(SaveTags.node(NODE, NODE_X, slots));
     CompoundTag tag =
         SaveTags.save(
             VERSION,
@@ -151,8 +160,9 @@ public final class NetworkSaveGameTests {
     Network network = load(tag).find(new NetworkId(NETWORK)).orElseThrow();
 
     helper.assertTrue(network.name().equals(longName), NOT_ALLOWED);
-    helper.assertTrue(
-        network.node(new NodeId(NODE)).orElseThrow().slots().size() == UPGRADED_SLOTS, NOT_ALLOWED);
+    ChannelSlot slot =
+        network.node(new NodeId(NODE)).orElseThrow().slots().get(RED_SLOT).orElseThrow();
+    helper.assertTrue(slot.name().equals(Optional.of(longName)), NOT_ALLOWED);
     helper.succeed();
   }
 

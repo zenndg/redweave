@@ -24,10 +24,10 @@ import org.junit.jupiter.api.Test;
 
 /** NODE reads two levers into two channels, and OTHER_NODE emits them. */
 class OutputFacesTest {
-  private static final int FIRST_SLOT = 0;
-  private static final int SECOND_SLOT = 1;
   private static final ChannelColor DOOR = ChannelColor.RED;
-  private static final ChannelColor LAMP = ChannelColor.YELLOW;
+  private static final ChannelColor LAMP = ChannelColor.BLACK;
+  private static final int FIRST_SLOT = DOOR.ordinal();
+  private static final int SECOND_SLOT = LAMP.ordinal();
   private static final Signal WEAK = new Signal(5);
   private static final Signal STRONG = new Signal(12);
   private static final Face WEST = OTHER_NODE_POSITION.face();

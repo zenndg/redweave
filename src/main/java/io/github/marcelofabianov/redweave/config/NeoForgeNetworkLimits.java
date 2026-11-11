@@ -5,8 +5,8 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
 /** The limits of a network, read from the server config every time, so an edit holds at once. */
 public final class NeoForgeNetworkLimits implements NetworkLimits {
   @Override
-  public int slotsPerNode() {
-    return RedweaveConfig.SLOTS_PER_NODE.get();
+  public int slotNameLength() {
+    return RedweaveConfig.SLOT_NAME_LENGTH.get();
   }
 
   @Override

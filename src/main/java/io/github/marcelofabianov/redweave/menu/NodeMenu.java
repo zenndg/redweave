@@ -62,7 +62,7 @@ public final class NodeMenu extends AbstractContainerMenu {
             opening.network(),
             opening.color(),
             opening.owner(),
-            opening.channels());
+            opening.labels());
     addDataSlots(data);
   }
 
@@ -161,8 +161,16 @@ public final class NodeMenu extends AbstractContainerMenu {
 
   /** The name the owner gave a channel, or empty for the name of its color (answer 221). */
   public String channelName(ChannelColor channel) {
-    List<String> channels = names.channels();
-    return channel.ordinal() < channels.size() ? channels.get(channel.ordinal()) : NO_NAME;
+    return nameAt(names.labels().channels(), channel);
+  }
+
+  /** The name the owner gave the slot of a color on this node, or empty (answer 227). */
+  public String slotName(ChannelColor channel) {
+    return nameAt(names.labels().slots(), channel);
+  }
+
+  private static String nameAt(List<String> names, ChannelColor channel) {
+    return channel.ordinal() < names.size() ? names.get(channel.ordinal()) : NO_NAME;
   }
 
   public String ownerName() {

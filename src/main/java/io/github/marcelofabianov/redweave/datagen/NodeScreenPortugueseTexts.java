@@ -6,19 +6,13 @@ import java.util.function.BiConsumer;
 
 /** The Brazilian Portuguese texts of the Node Screen, with the same keys as English. */
 final class NodeScreenPortugueseTexts {
-  private static final String CHANNEL_SLOTS = "Slots de canal";
-  private static final String SLOT = "Slot %s";
-  private static final String FREE_SLOT = "Slot livre";
-  private static final String CLICK_TO_USE = "Clique para usar";
   private static final String INPUT = "Entrada";
   private static final String OUTPUT = "Saída";
-  private static final String SLOT_LINE = "%s · sinal %s";
   private static final String DIRECTION = "Direção";
   private static final String BLOCK_FACE = "Face do bloco";
   private static final String FACE_CLICK = "Clique numa face para escolhê-la.";
   private static final String FACE_DRAG = " Arraste para girar o bloco.";
   private static final String FACE_TOOLTIP = FACE_CLICK + FACE_DRAG;
-  private static final String CHANNEL = "Canal";
   private static final String LOGIC = "Lógica";
   private static final String LOGIC_NONE = "Nenhuma";
   private static final String LOGIC_INVERT = "Inverter";
@@ -27,13 +21,15 @@ final class NodeScreenPortugueseTexts {
   private static final String LOGIC_THRESHOLD = "Limiar";
   private static final String LOGIC_LATER = "A lógica chega na Fase 2.";
   private static final String LOGIC_TOOLTIP = "Até lá, a saída repete o canal como ele está.";
-  private static final String CLEAR = "Liberar slot";
-  private static final String CLEAR_CONFIRM = "Clique de novo para liberar";
+  private static final String CHANNELS_ACTIVE = "%s de %s canais ativos";
+  private static final String NAME = "Nome";
+  private static final String CLICK_TO_NAME = "Clique para dar um nome";
+  private static final String STATUS = "Status";
+  private static final String ENABLED = "Ativo";
+  private static final String DISABLED = "Inativo";
   private static final String SIGNAL = "Sinal";
-  private static final String SLOTS_IN_USE = "%s de %s slots em uso";
   private static final String READ_ONLY = "Só o dono de %s pode alterar este nó.";
   private static final String NOT_IN_A_NETWORK = "Este nó não está numa rede.";
-  private static final String TAB_SLOTS = "Slots";
   private static final String STATE_ONLINE = "Online";
   private static final String STATE_UNLOADED = "Descarregado";
   private static final String STATE_OUT_OF_RANGE = "Fora de alcance";
@@ -77,17 +73,11 @@ final class NodeScreenPortugueseTexts {
   }
 
   private static void addLabels(BiConsumer<String, String> add) {
-    add.accept(NodeScreenTexts.CHANNEL_SLOTS, CHANNEL_SLOTS);
-    add.accept(NodeScreenTexts.SLOT, SLOT);
-    add.accept(NodeScreenTexts.FREE_SLOT, FREE_SLOT);
-    add.accept(NodeScreenTexts.CLICK_TO_USE, CLICK_TO_USE);
     add.accept(NodeScreenTexts.INPUT, INPUT);
     add.accept(NodeScreenTexts.OUTPUT, OUTPUT);
-    add.accept(NodeScreenTexts.SLOT_LINE, SLOT_LINE);
     add.accept(NodeScreenTexts.DIRECTION, DIRECTION);
     add.accept(NodeScreenTexts.BLOCK_FACE, BLOCK_FACE);
     add.accept(NodeScreenTexts.FACE_TOOLTIP, FACE_TOOLTIP);
-    add.accept(NodeScreenTexts.CHANNEL, CHANNEL);
     add.accept(NodeScreenTexts.LOGIC, LOGIC);
   }
 
@@ -99,16 +89,18 @@ final class NodeScreenPortugueseTexts {
     add.accept(NodeScreenTexts.LOGIC_THRESHOLD, LOGIC_THRESHOLD);
     add.accept(NodeScreenTexts.LOGIC_LATER, LOGIC_LATER);
     add.accept(NodeScreenTexts.LOGIC_TOOLTIP, LOGIC_TOOLTIP);
-    add.accept(NodeScreenTexts.CLEAR, CLEAR);
-    add.accept(NodeScreenTexts.CLEAR_CONFIRM, CLEAR_CONFIRM);
   }
 
   private static void addStates(BiConsumer<String, String> add) {
     add.accept(NodeScreenTexts.SIGNAL, SIGNAL);
-    add.accept(NodeScreenTexts.SLOTS_IN_USE, SLOTS_IN_USE);
+    add.accept(NodeScreenTexts.CHANNELS_ACTIVE, CHANNELS_ACTIVE);
+    add.accept(NodeScreenTexts.NAME, NAME);
+    add.accept(NodeScreenTexts.CLICK_TO_NAME, CLICK_TO_NAME);
+    add.accept(NodeScreenTexts.STATUS, STATUS);
+    add.accept(NodeScreenTexts.ENABLED, ENABLED);
+    add.accept(NodeScreenTexts.DISABLED, DISABLED);
     add.accept(NodeScreenTexts.READ_ONLY, READ_ONLY);
     add.accept(NodeScreenTexts.NOT_IN_A_NETWORK, NOT_IN_A_NETWORK);
-    add.accept(NodeScreenTexts.TAB_SLOTS, TAB_SLOTS);
     add.accept(NodeScreenTexts.STATE_ONLINE, STATE_ONLINE);
     add.accept(NodeScreenTexts.STATE_UNLOADED, STATE_UNLOADED);
     add.accept(NodeScreenTexts.STATE_OUT_OF_RANGE, STATE_OUT_OF_RANGE);
