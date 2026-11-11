@@ -150,14 +150,16 @@ jacoco {
     toolVersion = project.jacoco_version
 }
 
-// Coverage only targets the domain: the rest is validated by GameTests and a manual script.
-def domainClasses = sourceSets.main.output.asFileTree.matching {
+// Coverage targets the pure Java code, the domain and the application (rule 30): the rest is
+// validated by GameTests and a manual script, which JaCoCo does not measure.
+def coveredClasses = sourceSets.main.output.asFileTree.matching {
     include "${modPath}/domain/**"
+    include "${modPath}/application/**"
 }
 
 tasks.named('jacocoTestReport', JacocoReport) {
     dependsOn 'test'
-    classDirectories.setFrom(domainClasses)
+    classDirectories.setFrom(coveredClasses)
     reports {
         html.required = true
         xml.required = true
@@ -166,7 +168,7 @@ tasks.named('jacocoTestReport', JacocoReport) {
 
 tasks.named('jacocoTestCoverageVerification', JacocoCoverageVerification) {
     dependsOn 'test'
-    classDirectories.setFrom(domainClasses)
+    classDirectories.setFrom(coveredClasses)
     violationRules {
         rule {
             limit {

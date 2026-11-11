@@ -11,7 +11,7 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 | `make setup` | Instala as ferramentas de desenvolvimento e ativa os hooks ([`hooks-do-git.md`](hooks-do-git.md)) |
 | `make check` | Roda todos os gates: build, testes, arquitetura, cobertura, formatação e análise estática |
 | `make test` | Roda os testes de unidade e de arquitetura |
-| `make coverage` | Confere a cobertura de `domain/` e mostra onde está o relatório |
+| `make coverage` | Confere a cobertura de `domain/` e `application/` e mostra onde está o relatório |
 | `make format` | Formata o código Java |
 | `make format-check` | Confere a formatação sem alterar arquivos |
 | `make build` | Roda os gates e gera o jar em `build/libs/` |
@@ -26,7 +26,7 @@ Os comandos ficam no `Makefile`. Rode `make` para ver a lista. Receita com mais 
 
 O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 
-**Cobertura:** enquanto `domain/` não tiver classes, o `jacocoTestCoverageVerification` roda e passa, porque não há o que medir. Ele passa a reprovar quando o domínio chega, na issue #9.
+**Cobertura:** o `jacocoTestCoverageVerification` mede só `domain/` e `application/`, porque o JaCoCo não enxerga os GameTests (regra 30).
 
 **`make gametest`:** o jogo termina com sucesso mesmo quando o mod falha ao carregar, então `scripts/development/run-gametests.sh` só aprova se o log trouxer `All N required tests passed`. Foi conferido que o comando falha com uma GameTest reprovada e com uma classe de cliente no código comum. O log fica em `build/gametest.log`. O servidor roda em `run/gametest/`, separado do `run/` do `make client`, para um config editado à mão não mudar o resultado. O mundo `run/gametest/world` é apagado antes de cada execução, porque ele guarda as redes salvas, e assim nenhum teste depende do que outra execução deixou, como na CI (pergunta 96).
 
@@ -55,7 +55,7 @@ O primeiro build leva alguns minutos, porque baixa o JDK e prepara o Minecraft.
 | JDK 21 Adoptium | 21 | Compila o mod e o Minecraft | O foojay-resolver o baixa sozinho, porque o Java do sistema pode não ter o pacote de desenvolvimento |
 | JUnit | 6.1.3 | Roda os testes do domínio sem subir o jogo | É o padrão em Java e está na regra 28 do `AGENTS.md` |
 | ArchUnit | 1.5.1 | Isola `domain/` e `application/`, separa o código comum do cliente, proíbe `get*` no domínio e deixa só `compat.jade` e `compat.top` importarem o Jade e o The One Probe | Garante as regras 10, 11, 19 e 20 do `AGENTS.md` e a pergunta 21 no build |
-| JaCoCo | 0.8.16 | Mede a cobertura de `domain/`, com mínimo de 85% de instruções e de ramos | Garante a regra 30 do `AGENTS.md` |
+| JaCoCo | 0.8.16 | Mede a cobertura de `domain/` e `application/`, com mínimo de 85% de instruções e de ramos e meta de 95% | Garante a regra 30 do `AGENTS.md` |
 | Spotless com google-java-format | 8.9.0 e 2.0.0 | Formata o código Java, com recuo de 2 espaços, e remove imports não usados | É o padrão mais comum em Java, sem opções para discutir |
 | Checkstyle | 14.4.0 | Confere as regras de forma do código | Reprova no build o que antes dependia da revisão |
 
@@ -94,7 +94,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
   - `commonCodeDoesNotUseTheClient`: código comum citou uma classe de cliente. Mova a referência para `client/`.
   - `onlyThePluginUsesJade` ou `onlyThePluginUsesTheOneProbe`: uma classe fora de `compat.jade` ou de `compat.top` importou o mod opcional. Mova a referência para o plugin, porque sem ele essa classe quebraria o mod.
   - `theDomainHasNoGetters`: troque `getStrength()` por `strength()`.
-- **`jacocoTestCoverageVerification`:** faltam testes no domínio. Abra `build/reports/jacoco/test/html/index.html` para ver o que falta.
+- **`jacocoTestCoverageVerification`:** faltam testes no domínio ou na aplicação. Abra `build/reports/jacoco/test/html/index.html` para ver o que falta.
 - **`spotlessJavaCheck`:** o código não está formatado. Rode `make format`.
 - **`checkstyleMain` ou `checkstyleTest`:** uma regra de forma do código foi violada. Corrija a causa, sem suprimir a regra. O relatório fica em `build/reports/checkstyle/`.
 - **`Verification of Gradle distribution failed`:** o arquivo baixado não bate com o `distributionSha256Sum`. Não apague o hash: confira a versão e o valor publicado, porque o download pode estar alterado.
@@ -105,6 +105,7 @@ O `src/main/templates/META-INF/neoforge.mods.toml` recebe as propriedades do `gr
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:18 | Estende a cobertura à aplicação e tira a frase sobre o domínio vazio (pergunta 196). |
 | Marcelo Fabiano | 2026-11-10 14:07 | Apaga o mundo dos GameTests antes de cada execução. |
 | Marcelo Fabiano | 2026-11-10 10:20 | Aponta a `GameTestActions` nas GameTests. |
 | Marcelo Fabiano | 2026-11-10 09:31 | Atualiza o que a geração produz e explica o item na mão nas GameTests. |

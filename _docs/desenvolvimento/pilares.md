@@ -87,7 +87,7 @@ As regras numeradas citadas aqui são as do [`AGENTS.md`](../../AGENTS.md). Os p
 **O teste define o comportamento esperado antes da implementação.**
 
 - O ciclo é teste falhando, código mínimo e refatoração (regra 28).
-- A cobertura mínima de `domain/` é de 85% (regra 30).
+- A cobertura mínima de `domain/` e `application/` é de 85%, garantida no `pre-push`, com a meta de 95% (regra 30).
 - Comportamento de mundo se testa no mundo, com GameTests, sem mock de `Level` (regra 29).
 - Os testes não dependem de ordem, de relógio real nem de `sleep`.
 - A correção de um bug começa pelo teste que o reproduz.
@@ -103,7 +103,7 @@ As regras numeradas citadas aqui são as do [`AGENTS.md`](../../AGENTS.md). Os p
 ### Checklist
 
 - [ ] O teste veio antes do código?
-- [ ] A cobertura está em 85% ou mais?
+- [ ] A cobertura de `domain/` e `application/` está em 85% ou mais, perto da meta de 95%?
 - [ ] Sucesso, erro e bordas estão cobertos?
 
 ## 6. Design sólido
@@ -216,4 +216,5 @@ Isso não autoriza refatorar um arquivo inteiro nem mudar o comportamento de out
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:18 | Estende a cobertura à aplicação, com a meta de 95% (perguntas 196 e 197). |
 | Marcelo Fabiano | 2026-11-09 10:05 | Adota os pilares do Cubit, adaptados ao Redweave. |
