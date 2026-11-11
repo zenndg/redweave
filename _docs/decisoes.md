@@ -199,6 +199,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Colar sem cópia | Nada, sem mensagem | 195 |
 | Escopo da cobertura | `domain/` e `application/`, no `pre-push` | 196 |
 | Mínimo da cobertura | 85%, com meta de 95% | 197 |
+| Desenho da escolha de rede | Prancha nova de arte | 198 |
+| Sem redes Online | Aviso com o próximo passo | 199 |
+| Nome do nó na troca de rede | Continua | 200 |
+| Clique do dono no controlador | `<nome> · owner: <dono>`, como os outros | 201 |
+| Linha da escolha de rede | Cor, nome e quantidade de nós | 202 |
+| Ordem da escolha de rede | Última usada no topo, depois alfabética | 203 |
+| Renomear o nó | Clique no nome vira campo de texto | 204 |
+| Voltar da troca de rede | Botão `Back` | 205 |
 
 Não há perguntas pendentes da concepção.
 
@@ -206,6 +214,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 11:52 | Registra as decisões 198 a 205. |
 | Zennd | 2026-11-11 11:18 | Registra as decisões 196 e 197. |
 | Zennd | 2026-11-11 11:06 | Registra a decisão 195. |
 | Zennd | 2026-11-11 11:04 | Registra a decisão 194. |
