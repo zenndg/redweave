@@ -218,11 +218,22 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Prancha da Tela do Controlador | Uma só, já com a aba `Log` da #90 | 214 |
 | Aba `Log` na #20 | Não aparece; a #90 a acrescenta | 215 |
 | Ordem da aba `Nodes` | A ordem em que os nós entraram na rede | 216 |
-| Renomear o nó na aba `Nodes` | Clique no nome, para o dono; o resto da linha abre os slots | 217 |
+| Renomear o nó na aba `Nodes` | Duplo clique no nome, para o dono; o clique abre os slots (muda a 217) | 217 e 222 |
 | Linhas abertas na aba `Nodes` | Uma por vez | 218 |
 | Contagens do rodapé com zero | Sempre aparecem, nas cores | 219 |
 | Aba `Nodes` sem nós | Texto de ajuda no meio da tabela | 220 |
 | Nome do canal na Tela do Nó | Entra na #20, com os nomes enviados só quando mudam | 221 |
+| Renomear na Tela do Controlador | Duplo clique no nome do nó e do canal | 222 |
+| Nome do slot | Entra na #20, com decisões próprias antes do código | 223 |
+| Slots do Signal Node | 16 fixos, um por cor, com status ativo ou inativo; saem `node.slots` e os upgrades | 224 |
+| Redesenho dos slots | Dentro da #20 | 225 |
+| Nó novo | Todos os canais inativos; o player ativa cada um | 226 |
+| Nome do slot | Do slot no nó, com `slot.name_length` de 32 | 227 |
+| Ativar e desativar | Desativar guarda direção, face e nome | 228 |
+| Cantos da placa | Os 4 primeiros canais ativos | 229 |
+| Cópia do Configurator | Os 16 slots inteiros, com o nome | 230 |
+| Arte da Tela do Nó com 16 cores | Prancha nova; a tela espera a arte | 231 |
+| Configurator no controlador | O modo `Open` abre a tela, como a mão vazia | 232 |
 
 Não há perguntas pendentes da concepção.
 
@@ -230,6 +241,13 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | Registra a decisão 232. |
+| Zennd | 2026-11-11 16:08 | Registra a decisão 231. |
+| Zennd | 2026-11-11 16:06 | Registra a decisão 229. |
+| Zennd | 2026-11-11 16:02 | Registra as decisões 227, 228 e 230. |
+| Zennd | 2026-11-11 15:58 | Registra as decisões 224 a 226. |
+| Zennd | 2026-11-11 15:52 | Registra a decisão 223. |
+| Zennd | 2026-11-11 15:47 | Registra a decisão 222. |
 | Zennd | 2026-11-11 15:24 | Registra a decisão 221. |
 | Zennd | 2026-11-11 15:08 | Registra as decisões 219 e 220. |
 | Zennd | 2026-11-11 14:52 | Registra as decisões 216 a 218. |

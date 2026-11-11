@@ -11,6 +11,17 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 232 | O clique direito com o Configurator no Network Controller abre a Tela do Controlador? | Só no modo `Open`, com o mesmo comportamento da mão vazia, inclusive os avisos de rede `Offline` e de controlador sem rede. `Copy` e `Wrench` continuam sem ação no controlador (pergunta 164). Completa a pergunta 113 |
+| 231 | Como fica a arte da Tela do Nó com a fileira das 16 cores? | Numa prancha nova, em `tmp/arte/node_screen_channels/`, com o mockup da tela e uma folha só com os sprites que faltam. Enquanto a arte não chega, o domínio, o save e o servidor andam com TDD, e a tela espera a arte aprovada (perguntas 185 e 186) |
+| 230 | O que a cópia do Configurator (`Copy` e `Paste`) leva no modelo de 16 slots? | Tudo dos 16: status, direção, face e nome de cada cor, com a regra da face grudada da pergunta 105. Colar substitui os 16 slots do nó de destino. Muda as perguntas 105 e 106 |
+| 229 | Com 0 a 16 canais ativos por nó, o que mostram os 4 pontos nos cantos da placa? | Os 4 primeiros canais ativos, na ordem das cores. Os outros aparecem só nas telas, no Jade e no The One Probe, e um nó sem canal ativo fica com os 4 pontos escuros. O modelo e a textura do bloco não mudam. Muda a pergunta 87 |
+| 228 | O que acontece ao ativar e ao desativar um slot? | Na primeira ativação, o slot vira `Input` na face onde o nó está grudado, como na pergunta 83. Desativar para de ler e de emitir, mas guarda a direção, a face e o nome, para reativar como estava |
+| 227 | O nome que o player dá a um slot é de quê? | Do slot no nó: cada nó tem o próprio nome por cor, editado na Tela do Nó. O nome do canal da rede, da aba `Signals`, continua separado. O limite fica no config, `slot.name_length`: 32 caracteres, de 1 a 64. Vazio volta a mostrar só o canal |
+| 226 | Como um Signal Node nasce no modelo de 16 slots, e quantos canais ele pode ter ativos? | De 0 a 16. Todos nascem inativos, e o player ativa cada canal na configuração, trocando o status para `Enabled`. O slot é a cor, e o player pode dar um nome a ele. Muda as perguntas 25, 83 e 171 |
+| 225 | Onde entra o redesenho dos slots, junto com o nome do slot? | Dentro da #20, na mesma branch e antes do push. Completa a pergunta 223 |
+| 224 | Qual é o modelo novo dos slots do Signal Node? | 16 slots fixos, um por cor de canal, cada um com status ativo ou inativo, direção, face e nome. Um nó não lê e emite na mesma cor ao mesmo tempo. A Tela do Nó perde a lista de slots da esquerda e ganha uma fileira com as 16 cores, as ativas marcadas, mantendo o estilo da tela. Saem a chave `node.slots` e os upgrades de slot, sem migração porque nada foi publicado (regras 15 e 38). Muda as perguntas 50, 66, 84 e 93 |
+| 223 | Como entra o nome do slot, como `Redstone acionado pela leve 1`, além do canal? | Dentro da #20, na mesma branch e antes do push, com uma rodada de decisões própria antes do código, porque muda o save, o Configurator e as duas telas |
+| 222 | Na Tela do Controlador, o dono renomeia com um clique ou com dois cliques no nome? | Com duplo clique, no nó da aba `Nodes` e no canal da aba `Signals`, para um clique solto não abrir a edição sem querer. Na aba `Nodes`, um clique no nome abre e fecha os slots, como o resto da linha, e o duplo clique deixa a linha como estava. O cabeçalho continua com o botão `Rename`. Muda a pergunta 217 |
 | 221 | Com a #20, o dono renomeia os canais. A Tela do Nó mostra esses nomes? | Sim, na própria #20: a Tela do Nó recebe do servidor os 16 nomes de canal, só quando mudam, e mostra o nome dado, como `15 Main door`, nos slots e no canal escolhido. Sem nome próprio, continua o nome da cor (pergunta 26) |
 | 220 | O que a aba `Nodes` da Tela do Controlador mostra numa rede ainda sem nenhum nó? | A tabela vazia com `No node in this network yet.` e `Nenhum nó nesta rede ainda.` no meio, como a lista vazia da escolha de rede (pergunta 199) |
 | 219 | O que o rodapé da Tela do Controlador mostra quando nenhum nó está `Unloaded` ou `Out of range`? | As duas contagens sempre aparecem, mesmo com zero, nas cores, como `0 nodes unloaded` em âmbar e `0 nodes out of range` em vermelho, como no mockup da pergunta 214 |
@@ -221,6 +232,13 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 16:12 | Responde a pergunta 232. |
+| Zennd | 2026-11-11 16:08 | Responde a pergunta 231. |
+| Zennd | 2026-11-11 16:06 | Responde a pergunta 229. |
+| Zennd | 2026-11-11 16:02 | Responde as perguntas 227, 228 e 230. |
+| Zennd | 2026-11-11 15:58 | Responde as perguntas 224 a 226. |
+| Zennd | 2026-11-11 15:52 | Responde a pergunta 223. |
+| Zennd | 2026-11-11 15:47 | Responde a pergunta 222. |
 | Zennd | 2026-11-11 15:24 | Responde a pergunta 221. |
 | Zennd | 2026-11-11 15:08 | Responde as perguntas 219 e 220. |
 | Zennd | 2026-11-11 14:52 | Responde as perguntas 216 a 218. |
