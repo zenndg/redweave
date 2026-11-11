@@ -13,6 +13,10 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Alcance do nó | 128 blocos a partir do controlador, na mesma dimensão; 0 é ilimitado, até 30.000.000 (perguntas 23 e 66) | `network.range` | 1 |
 | Tamanho do nome da rede | 32 caracteres, de 1 a 64 | `network.name_length` | 1 |
 | Tamanho do nome do canal | 16 caracteres, de 1 a 64 (perguntas 26 e 66) | `channel.name_length` | 1 |
+| Tamanho do nome do nó | 16 caracteres, de 1 a 64 (pergunta 144) | `node.name_length` | 1 |
+| Redes por player | 10, de 1 a 100; todas contam, inclusive as `Offline` e as `Unplaced` (pergunta 145) | `network.max_per_player` | 1 |
+| Linhas do log por rede | 100, de 10 a 1000, só em memória (pergunta 147) | `log.size` | 1 |
+| Network Terminals por player | 1 (pergunta 137) | fixo, regra do bloco | 1 |
 | Mensagens por segundo por canal na ponte | a definir | a definir | 5 |
 
 As chaves de config entram junto com o código que as lê e, depois de publicadas, só mudam com migração (regra 15). Ficam no config do servidor, `redweave-server.toml`, e um valor fora da faixa volta ao padrão, com um aviso no log (perguntas 50 e 66).
@@ -21,6 +25,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Adiciona o nome do nó, as redes por player, o log e os Terminais por player. |
 | Marcelo Fabiano | 2026-11-10 09:20 | Preenche as chaves de config e as faixas. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Define o alcance do nó e os tamanhos dos nomes. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

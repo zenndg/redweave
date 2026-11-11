@@ -13,10 +13,10 @@ A rede (`Network`) é o agregado: toda mudança nos nós, nos slots e nos canais
 | Parte | O que é |
 |---|---|
 | ID | `NetworkId`, um UUID único no servidor e que nunca muda. É o que o item do controlador guarda (perguntas 24 e 31) |
-| Nome | Escolhido pelo dono, com um limite de caracteres no config. Nasce com um nome padrão e pode ser renomeado |
+| Nome | Escolhido pelo dono, com um limite de caracteres no config. Nasce com os 8 primeiros caracteres do ID, como `3f2a9c1b` (pergunta 142), e o dono o renomeia no Network Terminal e na tela do controlador (pergunta 156) |
 | Cor | Uma das 16 cores de lã, a mesma paleta dos canais. Identifica a rede nas telas, no Jade e no The One Probe. Nasce com a primeira cor que nenhuma outra rede do dono usa, ou branca com as 16 em uso (pergunta 40) |
 | Dono | O player que criou a rede. Na Fase 1, o dono não muda |
-| Controlador | A posição e a dimensão do Network Controller, quando ele está colocado |
+| Controlador | A posição e a dimensão do Network Controller, quando ele está colocado. Cada controlador é uma rede, que nasce quando ele é colocado (pergunta 129) |
 | Canais | Sempre 16, um por cor de lã, existindo desde a criação |
 | Nós | Os Signal Nodes ligados à rede |
 | Fontes sem posição | Os Signal Remotes ligados à rede (pergunta 27) |
@@ -29,7 +29,7 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 |---|---|---|
 | Arquivo | Um só para o servidor inteiro, `data/redweave_networks.dat`, no armazenamento do Overworld, onde o jogo guarda o scoreboard. A rede não pertence a uma dimensão | 88 |
 | Quando grava | Toda mudança aceita marca o arquivo como alterado, e o jogo grava no salvamento automático e ao fechar o mundo | — |
-| O que vai | A rede inteira, os nós, os slots, os nomes dos canais e a última leitura de cada entrada, além da rede atual de cada player | 37, 89 e 91 |
+| O que vai | A rede inteira, os nós, os slots, os nomes dos canais e a última leitura de cada entrada, além da última rede usada por cada player | 37, 89 e 157 |
 | O que não vai | O último valor emitido por cada saída. Ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas | 38 |
 | Formato | Contrato de save (regra 15), com versão e chaves estáveis, descrito abaixo e fixado na #26 | 89 |
 | Dado inválido | Descartado na menor parte possível, com aviso no log | 92 |
@@ -39,7 +39,7 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 
 #### Formato do save
 
-A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`.
+A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de enum usam chaves `snake_case`, como `input`, `north` e `red`. A tabela mostra o formato que a #16 entregou. As chaves do nome do nó, do estado `Offline` e da última rede usada, que substitui o `current` (pergunta 157), dependem da pergunta 174.
 
 | Parte | Chaves |
 |---|---|
@@ -58,18 +58,23 @@ A raiz tem `version`, que começa em 1, `networks` e `current`. Os valores de en
 | Um nó, como sem ID ou com `slot_count` fora de 1 a 9 | O nó sai da rede |
 | Um nó que aparece em duas redes | Fica só na primeira |
 | Uma rede sem ID ou dono válido, ou com um nome vazio ou de mais de 64 caracteres | A rede não é carregada |
-| Uma rede atual que aponta para uma rede que não existe | É descartada |
+| Uma entrada de `current` que aponta para uma rede que não existe | É descartada |
 
 O teto são as faixas do config da pergunta 66: 9 slots e 64 caracteres.
 
 ### Estado da rede
 
-| Estado | Quando | Efeito |
-|---|---|---|
-| `Online` | O controlador está colocado no mundo | Os canais funcionam |
-| `Offline` | O controlador foi quebrado e está como item | Todos os canais valem 0, e os nós mostram `No network` |
+| Estado | Quando | Efeito | Pergunta |
+|---|---|---|---|
+| `Online` | O controlador está colocado no mundo, e a rede está ligada | Os canais funcionam | 135 |
+| `Offline` | O dono desligou a rede no [Network Terminal](terminal-de-rede.md) | Todos os canais valem 0. O controlador e os nós dela não aceitam interação do player, e o Configurator não abre, não copia e não cola neles. O dono ainda quebra os blocos | 132, 135 e 136 |
+| `Unplaced` | O controlador foi quebrado ou sumiu do mundo | Todos os canais valem 0, e os nós mostram `No network`. O Terminal não a religa | 135 e 146 |
 
-Ao quebrar o controlador, o item guarda o `NetworkId` num data component (regra 7). Recolocado, a rede volta `Online`, igual ao que era, e o alcance passa a ser medido da nova posição. Uma rede cujo item se perdeu fica salva `Offline`. A limpeza dessas redes fica para uma fase seguinte.
+Ao quebrar o controlador, o item guarda o `NetworkId` num data component (regra 7). Recolocado, a rede volta ao estado de antes, igual ao que era, e o alcance passa a ser medido da nova posição. Uma rede cujo item se perdeu fica salva `Unplaced`, e o dono a apaga pelo Terminal, com `Delete` (pergunta 166).
+
+### Limite de redes
+
+Um player tem até `network.max_per_player` redes, 10 no começo (pergunta 145 e [`limites.md`](../limites.md)). O limite é conferido ao colocar um Network Controller que cria uma rede: no limite, o bloco não é colocado, e a action bar avisa. Todas as redes do player contam, inclusive as `Offline` e as `Unplaced`.
 
 ## Canais
 
@@ -96,7 +101,7 @@ O mais forte vence porque é a regra da própria redstone: um fio ligado a duas 
 
 ### Saídas
 
-Um slot de saída emite o valor do canal no bloco onde o nó está grudado, alimentando-o com força como uma alavanca, então todas as saídas de um nó emitem a mais forte (pergunta 71). Na Fase 1, a lógica do slot é sempre `None`, então a saída repete o canal como ele está. As outras lógicas chegam na Fase 2. Um nó `Out of range` ou numa rede `Offline` emite 0.
+Um slot de saída emite o valor do canal no bloco onde o nó está grudado, alimentando-o com força como uma alavanca, então todas as saídas de um nó emitem a mais forte (pergunta 71). Na Fase 1, a lógica do slot é sempre `None`, então a saída repete o canal como ele está. As outras lógicas chegam na Fase 2. Um nó `Out of range` ou numa rede `Offline` ou `Unplaced` emite 0.
 
 ## Nós
 
@@ -105,6 +110,8 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Parte | O que é |
 |---|---|
 | ID | `NodeId`, um UUID (pergunta 31) |
+| Nome | Nasce com os 8 primeiros caracteres do ID (pergunta 142). O dono o renomeia na Tela do Nó e na lista da tela do controlador, com o limite de `node.name_length` (pergunta 144) |
+| Quem colocou | O player que colocou o bloco, gravado na BlockEntity. Num nó sem rede, é o dono para a escolha da rede e para a Chave do Configurator (perguntas 165 e 172) |
 | Posição | A dimensão, o bloco e a face onde o nó está grudado |
 | Slots | Até o limite do config: 4, ou 9 com upgrade. Cada slot é um `ChannelSlot` |
 
@@ -124,7 +131,9 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | `Online` | Na rede, com o chunk carregado e dentro do raio | Verde | Conta normalmente |
 | `Unloaded` | O chunk do nó descarregou | Âmbar | A entrada mantém o último valor |
 | `Out of range` | Fora do raio do controlador ou em outra dimensão | Vermelho | Não conta, e a saída emite 0 |
-| `No network` | Sem rede, ou com a rede `Offline` | Cinza | Não conta |
+| `No network` | Sem rede, ou com a rede `Unplaced` | Cinza | Não conta |
+
+Como aparece um nó de uma rede `Offline` depende da pergunta 177.
 
 O nó `Unloaded` não aparece no mundo, porque o chunk dele não está carregado. Por isso o âmbar só aparece nas telas.
 
@@ -134,13 +143,14 @@ O alcance é uma esfera com um raio em blocos a partir do Network Controller, na
 
 ### Nó recém-colocado
 
-O player tem uma **rede atual**: a última que ele criou ou abriu no Network Controller como dono, guardada no servidor (pergunta 25). Um Signal Node colocado por ele:
+Não há rede atual: o player escolhe a rede de cada nó (pergunta 139).
 
-1. entra na rede atual;
-2. ganha 1 slot `Input` na face em que foi grudado;
-3. usa o **primeiro canal livre**, ou seja, o primeiro canal, na ordem das cores, sem nenhum slot na rede.
+1. O Signal Node nasce `No network` e não pode ser configurado até ter rede.
+2. Aberto pela primeira vez, com o [Configurator](configurador.md) no modo `Open`, a Tela do Nó mostra a lista das redes `Online` de quem colocou o nó, com a última usada destacada (perguntas 157 e 172). Para os outros players, a tela abre só para leitura, com `No network`.
+3. Escolhida a rede, o nó ganha 1 slot `Input` na face em que foi grudado, no **primeiro canal livre**, ou seja, o primeiro canal, na ordem das cores, sem nenhum slot na rede (pergunta 171).
+4. A tela segue para a configuração, que é onde ela abre nas próximas vezes.
 
-Sem rede atual, o nó fica `No network`. Com os 16 canais em uso, o nó entra na rede sem slot, e a Tela do Nó mostra `Free slot`. O [Configurator](configurador.md) troca a rede depois.
+Com os 16 canais em uso, o nó entra na rede sem slot, e a Tela do Nó mostra `Free slot`. Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 ## Signal Remote
 
@@ -152,13 +162,17 @@ Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 2
 
 | Ação | Dono | Outros players |
 |---|---|---|
-| Ver a Tela do Controlador e a Tela do Nó | Sim | Sim, só leitura |
-| Ligar e desligar nós da rede | Sim | Não |
-| Trocar um nó de rede | Sim, sendo dono da rede antiga e da nova (pergunta 42) | Não |
-| Configurar slots | Sim | Não |
+| Ver a Tela do Controlador e a Tela do Nó | Sim | Sim, só leitura, sem a posição dos nós (pergunta 149) |
+| Escolher a rede de um nó sem rede | Quem colocou o nó, entre as redes `Online` dele (pergunta 172) | Não |
+| Trocar um nó de rede | Sim, sendo dono da rede antiga e da nova, pela Tela do Nó (perguntas 42 e 141) | Não |
+| Configurar slots e renomear nós | Sim | Não |
+| Copiar, colar e retirar nós com o Configurator | Sim (perguntas 106 e 162) | Não |
 | Renomear a rede e os canais, e trocar a cor da rede | Sim | Não |
+| Desligar, religar, limpar os nós e apagar a rede, no Network Terminal | Sim (perguntas 131 a 134 e 166) | Não |
 | Ligar um Signal Remote à rede | Sim | Não |
 | Quebrar o Network Controller | Sim | Não (pergunta 30) |
+
+Numa rede `Offline`, nem o dono usa as telas da rede ou o Configurator, menos a Chave: só o Network Terminal age sobre ela, e o dono ainda quebra os blocos (perguntas 132, 136 e 163).
 
 - **O servidor confere tudo:** todo pacote do cliente é validado no servidor, com o dono e a distância (regras 16 e 17).
 - **Controlador protegido:** para quem não é o dono, o bloco não quebra no survival, e explosões não o destroem. No criativo, quebra normalmente (pergunta 30).
@@ -168,7 +182,7 @@ Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 2
 
 O simulador (`Simulator`) avalia cada rede no máximo uma vez por tick, e só quando a entrada de algum canal mudou (regra 18).
 
-1. Ao longo do tick, uma leitura que muda o valor de uma entrada deixa a rede pendente. Ligar ou desligar um nó, configurar ou liberar um slot e colocar ou retirar o controlador também deixam. Renomear e trocar a cor, não, porque não mudam sinal nenhum.
+1. Ao longo do tick, uma leitura que muda o valor de uma entrada deixa a rede pendente. Ligar ou desligar um nó, configurar ou liberar um slot, colocar ou retirar o controlador e desligar ou religar a rede no Network Terminal também deixam. Renomear e trocar a cor, não, porque não mudam sinal nenhum.
 2. No fim do tick, o simulador avalia só as redes pendentes: calcula os 16 canais numa passada e depois as saídas, e a rede deixa de estar pendente (pergunta 38).
 3. Só as faces cujo valor mudou atualizam o bloco. Uma saída só avisa os blocos vizinhos quando o valor emitido muda, para não haver block updates em cascata. A saída de um nó desligado, ou de um slot liberado, volta a 0.
 4. Duas saídas do mesmo nó na mesma face emitem a mais forte (pergunta 39). No mundo, o nó emite a mais forte entre todas as faces dele (pergunta 71).
@@ -196,6 +210,9 @@ As chaves entram com o código que as lê (issue do config) e, depois de publica
 | Slots por nó com upgrade | 9 |
 | Tamanho do nome da rede | 32 caracteres |
 | Tamanho do nome do canal | 16 caracteres |
+| Tamanho do nome do nó | 16 caracteres (pergunta 144) |
+| Redes por player | 10 (pergunta 145) |
+| Linhas do log por rede | 100 (pergunta 147) |
 
 ## Regras que o domínio garante
 
@@ -206,7 +223,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 3. Um nó pertence a no máximo uma rede, e não passa do limite de slots ao ser ligado. Uma rede restaurada do save mantém os slots que tinha (pergunta 93).
 4. Um slot sempre aponta para um canal da própria rede.
 5. O valor de um canal é o mais forte entre as entradas que contam, e 0 sem entradas.
-6. Uma rede `Offline` tem todos os canais em 0.
+6. Uma rede `Offline` ou `Unplaced` tem todos os canais em 0.
 7. Toda alteração confere se quem pede é o dono.
 8. O nome da rede e o do canal respeitam o limite do config ao serem dados e nunca ficam vazios. Uma rede restaurada do save mantém os nomes que tinha (pergunta 93).
 9. Uma rede só é avaliada quando um canal mudou, uma vez por tick.
@@ -216,12 +233,13 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 - Lógicas de slot além de `None`, portas, temporizador e contador (Fase 2).
 - Circuitos e chips (Fase 3).
-- Transferir a rede para outro dono e limpar redes perdidas.
+- Transferir a rede para outro dono.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-11 09:51 | Aplica o Network Terminal, os estados `Offline` e `Unplaced`, o limite de redes, o nome do nó e o nó que escolhe a rede (perguntas 129 a 172). |
 | Marcelo Fabiano | 2026-11-10 15:52 | Aponta para a página do configurador. |
 | Marcelo Fabiano | 2026-11-10 13:10 | Descreve a gravação da rede com as perguntas 88 a 93, 95 e 97. |
 | Marcelo Fabiano | 2026-11-10 09:45 | Aplica a pergunta 71 à face do slot e às saídas. |
