@@ -23,7 +23,7 @@ O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves
 
 ## Clicar
 
-Um clique com a mão vazia, ou com o Configurator no modo `Open`, abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201). Os modos `Copy` e `Wrench` não agem no controlador (perguntas 164 e 232).
+Um clique com a mão vazia, ou com o Configurator no modo `Open`, abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201). Os modos `Copy`, `Toggle` e `Wrench` não agem no controlador (perguntas 164, 232 e 241).
 
 | Situação | O que acontece | Pergunta |
 |---|---|---|
@@ -68,7 +68,9 @@ As chaves que a rede e a Tela do Controlador leem ficam no config do servidor, `
 | `network.name_length` | 32 | Tamanho máximo do nome da rede |
 | `network.max_per_player` | 10 | Redes por player, de qualquer estado (pergunta 145) |
 | `channel.name_length` | 16 | Tamanho máximo do nome do canal |
+| `node.name_length` | 16 | Tamanho máximo do nome do nó (pergunta 144) |
 | `log.size` | 100 | Linhas do log de cada rede, só em memória (pergunta 147) |
+| `configurator.label_range` | 16 | Raio em blocos do rótulo sobre os nós, de 4 a 64 (pergunta 268) |
 
 As faixas são as da pergunta 66, com as que vieram depois: o alcance vai de 0 a 30.000.000, os nomes de 1 a 64 caracteres, as redes por player de 1 a 100 e o log de 10 a 1000 linhas. A chave `node.slots` saiu com os 16 slots fixos do Signal Node (pergunta 224). Um valor fora da faixa volta ao padrão, com um aviso no log.
 
@@ -78,17 +80,17 @@ As texturas são as da prancha [`texturas.png`](../imagens/conceito/texturas.png
 
 | Face | Textura |
 |---|---|
-| Topo | `network_controller_top`, sem rede; `network_controller_top_on`, com rede |
+| Topo | `network_controller_top`, sem rede; `network_controller_top_on`, com a rede `Online` |
 | Frente | `network_controller_front`, voltada para o player que colocou o bloco |
 
-O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro quando o bloco tem rede, que escolhe o topo (pergunta 64). Os dois são contrato de save e ficam fixados na issue #26.
+O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro quando a rede do bloco está `Online`, que escolhe o topo (perguntas 64 e 177). Os dois são contrato de save e ficam fixados na issue #26.
 | Laterais e fundo | `network_controller_side` e `network_controller_bottom` |
 
 | Estado | Visual | Pergunta |
 |---|---|---|
 | `Online` | `top_on` com a camada emissiva `top_glow`, e um LED aceso por canal ligado (issue #24) | 51 |
 | Sem nós | `top_on` sem a camada emissiva, então o núcleo fica fraco no escuro | 60 |
-| Sem rede | `top`, com o núcleo apagado | 51 |
+| Sem rede ou rede `Offline` | `top`, com o núcleo apagado | 51, 177 |
 
 ## Fora desta funcionalidade
 
@@ -99,6 +101,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Inclui o `Toggle`, o topo aceso só com a rede `Online` e as chaves `node.name_length` e `configurator.label_range` (perguntas 144, 177, 241 e 268). |
 | Zennd | 2026-11-12 09:39 | Atualiza as chaves do config: sai `node.slots` e entram `network.max_per_player` e `log.size` (perguntas 145, 147 e 224). |
 | Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:40 | O clique com a mão vazia abre a Tela do Controlador, da #20. |

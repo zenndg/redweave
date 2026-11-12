@@ -29,13 +29,13 @@ A rede fica salva no mundo, no servidor, e não no bloco do controlador (pergunt
 |---|---|---|
 | Arquivo | Um só para o servidor inteiro, `data/redweave_networks.dat`, no armazenamento do Overworld, onde o jogo guarda o scoreboard. A rede não pertence a uma dimensão | 88 |
 | Quando grava | Toda mudança aceita marca o arquivo como alterado, e o jogo grava no salvamento automático e ao fechar o mundo | — |
-| O que vai | A rede inteira, os nós, os slots, os nomes dos canais e a última leitura de cada entrada, além da última rede usada por cada player | 37, 89 e 157 |
+| O que vai | A rede inteira, os nós, os slots, os nomes dos canais e a última leitura de cada entrada, além da última rede usada por cada player e do Network Terminal de cada player | 37, 89, 157 e 175 |
 | O que não vai | O último valor emitido por cada saída. Ao carregar, a rede começa pendente, e o primeiro tick reaplica todas as saídas | 38 |
 | Formato | Contrato de save (regra 15), com versão e chaves estáveis, descrito abaixo e fixado na #26 | 89 |
 | Dado inválido | Descartado na menor parte possível, com aviso no log | 92 |
 | Versão desconhecida | O arquivo é copiado para `redweave_networks.v<N>.backup.dat`, e o mod começa sem redes, com um erro no log | 92 |
 | Arquivo corrompido | Quando nem o jogo consegue ler o arquivo, ele é copiado para `redweave_networks.unreadable.backup.dat`, e o mod começa sem redes, com um erro no log | 97 |
-| Config menor | Uma rede salva com mais slots ou nomes mais longos do que o config atual permite volta como estava, com aviso no log. O limite novo vale para as próximas mudanças | 93 |
+| Config menor | Uma rede salva com nomes mais longos do que o config atual permite volta como estava, com aviso no log. O limite novo vale para as próximas mudanças | 93 e 224 |
 
 #### Formato do save
 
@@ -47,7 +47,7 @@ A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de 
 | Bloco (`controller` e o do nó) | `dimension`, `x`, `y` e `z` |
 | Canal | `color` e `name`. Só os canais renomeados entram |
 | Nó | `id`, `name` (opcional), `block`, `face` e `slots`. O `name` só entra quando o dono renomeia o nó, como o nome do canal (pergunta 206) |
-| Slot | `channel`, `active`, `direction`, `face`, `name` (opcional) e `reading`. O canal é a posição do slot no nó (pergunta 224). Entra todo slot já ativado alguma vez, mesmo desativado, porque ele guarda a direção, a face e o nome (pergunta 228); `name` só entra quando o dono dá um nome, e `reading` fica de fora quando é 0 |
+| Slot | `channel`, `active`, `direction`, `face` e `reading`. O canal é a posição do slot no nó (pergunta 224). Entra todo slot já ativado alguma vez, mesmo desativado, porque ele guarda a direção e a face (pergunta 228), e `reading` fica de fora quando é 0. O slot não tem nome (pergunta 277) |
 | Última rede usada (`last_used`) | `player` e `network` |
 
 #### Dado inválido
@@ -55,7 +55,6 @@ A raiz tem `version`, que começa em 1, `networks` e `last_used`. Os valores de 
 | O que está inválido | O que acontece |
 |---|---|
 | Um slot, como com uma direção, face ou canal desconhecido, ou um `channel` repetido no nó | O slot volta a nunca ativado |
-| O nome de um slot, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome (pergunta 227) |
 | Um nó, como sem ID ou no formato antigo, com `slot_count` ou slot com `index` | O nó sai da rede; um mundo de teste anterior aos 16 slots é recriado (pergunta 235) |
 | O nome de um nó, vazio, com espaço nas pontas ou de mais de 64 caracteres | Sai só o nome, e o nó volta ao nome padrão (perguntas 92 e 206) |
 | Um nó que aparece em duas redes | Fica só na primeira |
@@ -70,7 +69,7 @@ O teto são as faixas do config da pergunta 66: 64 caracteres.
 | Estado | Quando | Efeito | Pergunta |
 |---|---|---|---|
 | `Online` | O controlador está colocado no mundo, e a rede está ligada | Os canais funcionam | 135 |
-| `Offline` | O dono desligou a rede no [Network Terminal](terminal-de-rede.md) | Todos os canais valem 0. O controlador e os nós dela não aceitam interação do player, e o Configurator não abre, não copia e não cola neles. O dono ainda quebra os blocos | 132, 135 e 136 |
+| `Offline` | O dono desligou a rede no [Network Terminal](terminal-de-rede.md) | Todos os canais valem 0. O controlador e os nós dela não aceitam interação do player, e o Configurator não abre, não copia, não cola e não alterna neles. O dono ainda quebra os blocos | 132, 135, 136 e 241 |
 | `Unplaced` | O controlador foi quebrado ou sumiu do mundo | Todos os canais valem 0, e os nós mostram `No network`. O Terminal não a religa | 135 e 146 |
 
 Ao quebrar o controlador, o item guarda o `NetworkId` num data component (regra 7). Recolocado, a rede volta ao estado de antes, igual ao que era, e o alcance passa a ser medido da nova posição. Uma rede cujo item se perdeu fica salva `Unplaced`, e o dono a apaga pelo Terminal, com `Delete` (pergunta 166).
@@ -97,14 +96,14 @@ O valor do canal é o **sinal mais forte entre as entradas que contam**. Um cana
 | Slot de entrada de um nó `Online` | Sim | O sinal de redstone que o nó lê no bloco, na face configurada |
 | Slot de entrada de um nó `Unloaded` | Sim | O último valor lido antes de o chunk descarregar, salvo com a rede, então vale também depois de reiniciar o servidor (perguntas 13, 29 e 37) |
 | Slot de entrada de um nó `Out of range` | Não | Vale 0 (perguntas 23 e 29) |
-| Signal Remote ligado | Sim | O valor que o player escolheu no item |
+| Signal Remote ligado | Sim | O valor do disparo do tablet, nos modos alavanca e botão, decidido no refinamento da #22 (perguntas 288 e 318) |
 | Signal Remote fora do inventário ou do alcance | Não | Vale 0, para o canal não ficar preso ligado (pergunta 27) |
 
 O mais forte vence porque é a regra da própria redstone: um fio ligado a duas fontes fica com a mais forte.
 
 ### Saídas
 
-Um slot de saída emite o valor do canal no bloco onde o nó está grudado, alimentando-o com força como uma alavanca, então todas as saídas de um nó emitem a mais forte (pergunta 71). Na Fase 1, a lógica do slot é sempre `None`, então a saída repete o canal como ele está. As outras lógicas chegam na Fase 2. Um nó `Out of range` ou numa rede `Offline` ou `Unplaced` emite 0.
+Um slot de saída emite o valor do canal no bloco onde o nó está grudado, alimentando-o com força como uma alavanca, então todas as saídas de um nó emitem a mais forte (pergunta 71). A saída repete o canal como ele está: o slot não tem lógica, que fica toda nos Signal Modules (pergunta 308). Um nó `Out of range` ou numa rede `Offline` ou `Unplaced` emite 0.
 
 ## Nós
 
@@ -126,7 +125,6 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Status | `Enabled` ou `Disabled`. Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face (pergunta 228). A direção e a face só mudam com o slot `Disabled`, e um slot `Enabled` fica travado (pergunta 237) |
 | Direção | `Input`, quando o nó lê o bloco, ou `Output`, quando emite no bloco |
 | Face do bloco | Uma das 6 faces do bloco onde o nó está. Na entrada, escolhe de qual vizinho o nó lê; na saída, o nó sempre alimenta o bloco onde está grudado, como uma alavanca (pergunta 71) |
-| Lógica | Na Fase 1, só `None` |
 
 ### Estados do nó
 
@@ -159,7 +157,7 @@ Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 ## Signal Remote
 
-O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio, ligada a um canal da rede (pergunta 27). Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. O item, os modos de alavanca e de botão e a tela ficam na issue do Remote.
+O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. O item, os modos de alavanca e de botão e a tela ficam na issue do Remote.
 
 ## Permissões
 
@@ -232,9 +230,9 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 9. Uma rede só é avaliada quando um canal mudou, uma vez por tick.
 10. Uma rede restaurada do save volta igual ao que foi salvo, menos o último valor emitido, e começa pendente (perguntas 38 e 90).
 
-## Fora da Fase 1
+## Fora desta página
 
-- Lógicas de slot além de `None`, portas, temporizador e contador (Fase 2).
+- Os Signal Modules, da Fase 2, que sai junto com a Fase 1 na v0.1.0 (perguntas 297, 303 e 308).
 - Circuitos e chips (Fase 3).
 - Transferir a rede para outro dono.
 
@@ -242,6 +240,9 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:27 | Marca o valor do disparo do Signal Remote como decisão da #22 (pergunta 318). |
+| Zennd | 2026-11-12 17:18 | Corrige o save sem `name` do slot e com o Terminal, o `Toggle` numa rede `Offline`, o Signal Remote e a seção final (perguntas 175, 224, 241, 277, 279, 287 e 303). |
+| Zennd | 2026-11-12 16:50 | Tira a lógica do slot, que fica nos Signal Modules (pergunta 308). |
 | Zennd | 2026-11-12 12:00 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o slot desativado (pergunta 237). |
 | Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor, o status e o nome do slot (perguntas 224 a 228 e 235). |

@@ -4,7 +4,7 @@ Os mods que inspiram o Redweave e o que se aproveita de cada um. Código de mods
 
 | Mod | O que inspira | Licença |
 |---|---|---|
-| [Logistics Network](https://www.curseforge.com/minecraft/mc-mods/logistics-network) | Nó grudado em qualquer bloco, invisível; 9 canais por nó; lado de entrada e saída por canal; upgrades; tags de blacklist para quem monta pack | All Rights Reserved: só UX |
+| [Logistics Network](https://www.curseforge.com/minecraft/mc-mods/logistics-network) | Nó grudado em qualquer bloco, invisível; 9 canais por nó; lado de entrada e saída por canal; tags de blacklist para quem monta pack | All Rights Reserved: só UX |
 | [XNet](https://www.curseforge.com/minecraft/mc-mods/xnet) | Controlador central; redes enormes sem lag | MIT |
 | [Flux Networks](https://www.curseforge.com/minecraft/mc-mods/flux-networks) | Redes com nome e cor, permissões, edição remota, como no Network Terminal | All Rights Reserved: só UX |
 | [RFTools: Redstone Transmitter](https://ftb.fandom.com/wiki/Redstone_Transmitter_(RFTools)) | Canal atribuído sozinho | A conferir |
@@ -23,5 +23,6 @@ Os mods que inspiram o Redweave e o que se aproveita de cada um. Código de mods
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:27 | Tira os upgrades da inspiração do Logistics Network (perguntas 224 e 319). |
 | Zennd | 2026-11-11 09:51 | Tira o parear e a grade de crafting, que saíram com as perguntas 125 e 126, e liga a edição remota ao Network Terminal. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

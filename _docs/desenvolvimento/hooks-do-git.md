@@ -22,9 +22,9 @@ O comando chama o `scripts/development/setup-dev.sh`, que baixa o gitleaks para 
 | `pre-commit` | gitleaks | Segredo nas alterações preparadas para o commit |
 | `commit-msg` | Mensagem | Título fora do Conventional Commits |
 | `commit-msg` | Autoria | Coautoria ou atribuição a uma IA. Citar uma ferramenta de IA como assunto da mudança é permitido |
-| `pre-push` | Build | Compilação, testes, arquitetura, cobertura, formatação ou análise estática reprovados, por meio de `make check` |
-| `pre-push` | GameTests | GameTest reprovada, ou mod que não carrega no servidor, como com uma classe de cliente, por meio de `make gametest` |
-| `pre-push` | Datagen | `src/generated` diferente do que a geração produz, por meio de `make check-generated` |
+| `pre-push` | Build | Compilação, testes, arquitetura, cobertura, formatação ou análise estática reprovados, pelo `./gradlew check`, o mesmo do `make check` |
+| `pre-push` | GameTests | GameTest reprovada, ou mod que não carrega no servidor, como com uma classe de cliente, pelo `scripts/development/run-gametests.sh`, o mesmo do `make gametest` |
+| `pre-push` | Datagen | `src/generated` diferente do que a geração produz, pelo `scripts/development/check-generated.sh`, o mesmo do `make check-generated` |
 
 O `pre-push` roda todos os gates também ao apagar uma branch remota, porque o script não diferencia esse caso.
 
@@ -57,6 +57,7 @@ Ele exigiria aceitar o EULA em cada clone. Os GameTests usam o mesmo alvo de ser
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | O `pre-push` chama o Gradle e os scripts direto, os mesmos do `Makefile`. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Aponta a CI. |
 | Marcelo Fabiano | 2026-11-09 14:08 | Adiciona os GameTests e o datagen ao gate de push. |
 | Marcelo Fabiano | 2026-11-09 13:52 | Inclui a arquitetura no gate de push. |

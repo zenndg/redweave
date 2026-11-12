@@ -5,7 +5,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | Fase | Funcionalidades |
 |---|---|
 | 1 · Sem fio | Rede e canais, Signal Node, Network Controller, Network Terminal, Configurador, Signal Remote, telas do nó e do controlador, Jade e The One Probe |
-| 2 · Lógica | Portas em placa, lógica por canal, temporizador e contador |
+| 2 · Lógica | Signal Modules: timer, inversor, porta, contador e os outros módulos (perguntas 297 e 308 a 310) |
 | 3 · Chips | Circuitos, chips, Bancada de Circuitos, editor e livro guia |
 | 4 · Expansão | Fio físico, cabo agrupado, multipart, integrações e port para 26.x |
 | 5 · Ponte | Ponte MQTT, segurança, protótipos com ESP32 e dashboard |
@@ -23,6 +23,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 16:50 | Troca a lógica por canal e as portas em placa pelos Signal Modules (perguntas 308 a 310). |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, atualiza o Configurator e tira a página da etiqueta (perguntas 125 e 155). |
 | Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a página da etiqueta. |
 | Marcelo Fabiano | 2026-11-10 15:52 | Adiciona a página do configurador. |

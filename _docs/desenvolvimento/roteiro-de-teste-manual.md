@@ -1,11 +1,11 @@
 # Roteiro de teste manual
 
-O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. As perguntas 139 a 172 mudam os passos 2 e 19, que são reescritos junto com as issues que as implementam. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
+O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
 
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller, o Signal Node e o Configurator (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller, o Signal Node, o Configurator e o Network Terminal (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -33,7 +33,7 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 
 ## Fase 1: as redes depois de reiniciar
 
-Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1 a 8 montado, com a lâmpada acesa e um canal renomeado, se a tela já permitir.
+Entregue com a issue #16 (perguntas 88 a 97). Comece com o circuito dos passos 1 a 8 montado, com a lâmpada acesa e um canal renomeado.
 
 | # | Faça | Espere ver |
 |---|---|---|
@@ -52,7 +52,7 @@ Entregue com a issue #17 e refeito na #86 (perguntas 126 a 195). Comece com o ci
 | # | Faça | Espere ver |
 |---|---|---|
 | 24 | Pegue um Configurator novo e passe o mouse sobre ele | `Mode: Open` com `Open` em azul, `Click a node to open it.` e `Shift + scroll to change the mode.` em cinza |
-| 25 | Agachado, gire a roda do mouse para baixo duas vezes e depois para cima uma vez | `Mode: Copy` em verde, `Mode: Wrench` em vermelho e de novo `Mode: Copy` na action bar; o slot da hotbar não muda |
+| 25 | Agachado, gire a roda do mouse para baixo duas vezes e depois para cima uma vez | `Mode: Copy` em verde, `Mode: Toggle` em âmbar e de novo `Mode: Copy` na action bar; o slot da hotbar não muda |
 | 26 | Clique no nó da lâmpada com a mão vazia | A tela não abre, e a action bar mostra `Use a Configurator to open this node.` |
 | 27 | No modo `Copy`, clique no nó da lâmpada | `Copied 1 slots`, e o tooltip mostra `Copy: 1 slots` |
 | 28 | Grude um nó num lado de outra lâmpada e dê Shift + clique nele | `Pasted 1 slots`, e a lâmpada nova acende e apaga junto com a alavanca |
@@ -60,7 +60,7 @@ Entregue com a issue #17 e refeito na #86 (perguntas 126 a 195). Comece com o ci
 | 30 | No modo `Wrench`, clique no nó da lâmpada nova | `Node picked up`, o nó some e vai para o inventário, e a lâmpada apaga |
 | 31 | Com o segundo player, no modo `Wrench`, clique num nó do dono; no modo `Copy`, copie um nó e cole noutro do dono | `Only the owner of ... can change this node.`, sem mudar nada |
 | 32 | Clique no controlador com o Configurator | Nada acontece |
-| 33 | Troque o idioma para Português (Brasil) | `Configurador`, `Modo: Abrir`, `Modo: Copiar`, `Modo: Chave` e todas as mensagens em português |
+| 33 | Troque o idioma para Português (Brasil) | `Configurador`, `Modo: Abrir`, `Modo: Copiar`, `Modo: Alternar`, `Modo: Chave` e todas as mensagens em português |
 
 ## Fase 1: a escolha de rede e o nome do nó
 
@@ -70,11 +70,11 @@ Entregue com a issue #87 (perguntas 139 a 208). Comece com o circuito dos passos
 |---|---|---|
 | 34 | Num mundo sem nenhum Network Controller, grude um nó e abra a tela dele | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` |
 | 35 | Com o segundo player, grude um nó; abra a tela dele com o dono | A tela só para leitura, com `No network`, sem lista |
-| 36 | Coloque mais dois controladores e renomeie um deles, se a tela já permitir. Grude um nó e abra a tela | A última usada no topo, em cobre, e as outras em ordem alfabética, cada uma com a quantidade de nós |
+| 36 | Coloque mais dois controladores e renomeie um deles. Grude um nó e abra a tela | A última usada no topo, em cobre, e as outras em ordem alfabética, cada uma com a quantidade de nós |
 | 37 | Na configuração, clique no nome do nó, digite `Lever`, aperte `E` e depois Enter | O campo aceita o `E` sem fechar a tela, e o nome vira `Lever` |
 | 38 | Clique no nome de novo, apague tudo e aperte Enter; depois clique, digite algo e aperte Esc | O nome volta aos 8 caracteres do ID; com Esc, nada muda e a tela continua aberta |
 | 39 | Clique no nome da rede, à direita do nome do nó, e depois em `Back` | A lista com `Back` no rodapé; `Back` volta à configuração na mesma rede |
-| 40 | Clique no nome da rede e escolha outra rede | O nó vai para a outra rede, com 1 entrada no primeiro canal livre, e mantém o nome `Lever` |
+| 40 | Clique no nome da rede e escolha outra rede | O nó vai para a outra rede, com os 16 canais inativos, e mantém o nome `Lever` |
 | 41 | Com o segundo player, abra a tela de um nó do dono | O nome do nó e o da rede sem lápis nem realce, e nada muda ao clicar |
 | 42 | Saia para o menu, abra o mundo de novo e abra a tela do nó | O nome `Lever` continua |
 | 43 | Troque o idioma para Português (Brasil) | `Escolha uma rede`, `1 nó`, `12 nós`, `Voltar` e o aviso da lista vazia em português |
@@ -100,10 +100,10 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals` e `Access`, sem `Log`, e o rodapé em duas linhas |
-| 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
+| 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals`, `Access` e `Log`, e o rodapé em duas linhas |
+| 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy`, `Toggle` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
 | 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o sinal de 0 a 15 ao vivo e a posição do bloco de cada nó |
-| 54 | Clique numa linha, depois em outra | A primeira abre os slots, como `Slot 1 · 01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
+| 54 | Clique numa linha, depois em outra | A primeira abre os slots, como `01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
 | 55 | Clique uma vez no nome de um nó; depois clique duas vezes nele, digite `Lever` e aperte Enter; repita, apague o texto e aperte Enter | Um clique só abre ou fecha os slots; o duplo clique abre o campo e deixa a linha como estava; o nome muda na lista e na Tela do Nó, e vazio volta aos 8 primeiros caracteres do ID |
 | 56 | Clique em `Rename`, digite `Factory` e aperte Enter; depois repita e aperte Esc | O nome da rede muda no cabeçalho e na escolha de rede; o Esc não muda nada |
 | 57 | Clique no quadrado da cor e escolha o verde-limão | A paleta abre sob o quadrado, com a cor atual em cobre; o clique troca a cor e fecha a paleta |
@@ -132,7 +132,7 @@ Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os sav
 | 72b | Com o Configurator no modo `Toggle`, em âmbar, dê um clique e depois um Shift + clique num nó com canais configurados | `Enabled <n> channels` ativa todos; `Disabled <n> channels` desativa todos, sem abrir a tela; com outro player, a action bar recusa |
 | 72 | Copie o nó com o Configurator e cole noutro | `Copied <n> slots` e `Pasted <n> slots`, contando todos os canais configurados, ativos ou não; o outro nó fica com os mesmos canais ativos e direções |
 | 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
-| 74 | Troque o idioma para Português (Brasil) | `Nome`, `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
+| 74 | Troque o idioma para Português (Brasil) | `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
 
 ## Fase 1: o log da Tela do Controlador
 
@@ -189,6 +189,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Atualiza a aba criativa, os modos com o `Toggle`, a aba `Log`, o nó que nasce inativo e as linhas de slot (perguntas 226, 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot dos passos 69 a 72 (pergunta 277). |
 | Zennd | 2026-11-12 11:46 | Ajusta os passos 96 a 98 e 102 ao rótulo de duas linhas (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:26 | Adiciona os passos 93 a 102, da #80 (perguntas 262 a 272). |
