@@ -33,13 +33,14 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Configurador | `configurator` | Ferramenta com quatro modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item (perguntas 143, 161 e 241) |
 | Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
 | Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
-| Signal Remote | `signal_remote` | Item de mão com aparência de tablet, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot (perguntas 15, 279, 282 e 288). Na rede, é uma entrada sem posição (pergunta 27) |
+| Signal Remote | `signal_remote` | Item de mão com aparência de tablet, `Controle de Sinal` em português, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot, sempre com 15 (perguntas 15, 279, 282, 288, 352 e 368). Na rede, é uma entrada sem posição, a parte `RemoteInputs` (perguntas 27 e 360) |
 | Ponte | `Bridge` | Na Fase 5, o nó que liga canais a um broker MQTT |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 20:48 | Detalha o Signal Remote, da #22 (perguntas 352, 360 e 368). |
 | Zennd | 2026-11-12 19:01 | Adiciona o tipo do nó, da #107 (perguntas 337 e 339). |
 | Zennd | 2026-11-12 18:26 | Detalha a porta e adiciona a regra NOT, da #28 (perguntas 321 a 324). |
 | Zennd | 2026-11-12 17:20 | Corrige o Configurator para quatro modos, com o `Toggle` (pergunta 241). |

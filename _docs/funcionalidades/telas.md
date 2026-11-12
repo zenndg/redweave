@@ -87,7 +87,7 @@ O que a tela faz, decidido na issue #19.
 | Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). Se e como o Signal Remote aparece na lista, e o estado de um nó numa rede `Offline` nas listas, são decididos no refinamento da #22 (perguntas 318 e 338) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída, a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
-| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
+| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236), e quantos Signal Remotes contam agora na rede, como `1 remotes on` (perguntas 361 e 364). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
 
 **Prancha:** a `tela-do-controlador.png` é anterior às perguntas 277 e 335 a 340 e ainda mostra a coluna `Position`, sem `Type` e `State`, e o nome do slot nas linhas abertas. Uma prancha nova, gerada por IA, a substitui (pergunta 342); até lá, vale esta página.
 
@@ -118,6 +118,19 @@ O que a tela faz, decidido na issue #20.
 
 **O servidor confere cada ação (regras 16 e 17):** a ação só chega da tela aberta daquele controlador, ao alcance de interação de blocos do jogo e com a rede `Online`, e o domínio confere o dono e o tamanho do nome. O cliente aponta um nó pela posição dele na lista que o servidor guardou, nunca pelo ID, e a posição dos nós nem sai do servidor para quem não é o dono.
 
+## Tela do vínculo do Signal Remote
+
+Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão, a qualquer momento (perguntas 279 e 291).
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | O vínculo atual, como `■ Base Norte · Alavanca do portão · 15 Red`, ou `No link`, e o seletor `Lever` e `Button` | 365 |
+| Passo 1, redes | As redes `Online` do player, no componente da lista do Network Terminal | 279 e 359 |
+| Passo 2, nós | A tabela de nós da rede, só com os nós que têm slot de input ativo, com as colunas `Node`, `Type`, `Signal` e `State`; `Unloaded` e `Out of range` aparecem | 282, 285 e 335 |
+| Passo 3, slots | Os slots de input ativos do nó, pela cor e pelo nome do canal; pulado quando há um só | 286 |
+| Rodapé | `Back`, que volta um passo | 365 |
+| No servidor | O cliente aponta cada escolha pela posição na lista que o servidor guardou, e o servidor confere o dono a cada passo | 357 e regras 16 e 17 |
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -128,6 +141,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 20:49 | Adiciona a tela do vínculo do Signal Remote e a contagem `remotes on` no rodapé do controlador (perguntas 361, 364 e 365). |
 | Zennd | 2026-11-12 19:51 | Reorganiza a Tela do Nó em duas colunas, com o medidor no painel e o rodapé de uma linha, da #122 (perguntas 346 a 350). |
 | Zennd | 2026-11-12 19:01 | Troca as colunas da aba `Nodes` por `Node`, `Type`, `Signal` e `State` e leva a posição para a linha aberta, da #107 (perguntas 335 a 340), e marca a prancha do controlador para substituição (pergunta 342). |
 | Zennd | 2026-11-12 18:45 | Encolhe a Tela do Nó e a escolha de rede, tira a dica da Fase 2 e marca a prancha como anterior às perguntas 277 e 308 (perguntas 329 a 333). |

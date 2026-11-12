@@ -16,6 +16,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Redes por player | 10, de 1 a 100; todas contam, inclusive as `Offline` e as `Unplaced` (pergunta 145) | `network.max_per_player` | 1 |
 | Linhas do log por rede | 100, de 10 a 1000, só em memória (pergunta 147) | `log.size` | 1 |
 | Raio do rótulo sobre os nós | 16 blocos, de 4 a 64 (pergunta 268) | `configurator.label_range` | 1 |
+| Pulso do Signal Remote no modo botão | 20 ticks, de 2 a 200 (perguntas 353 e 318) | `remote.pulse_ticks` | 1 |
 | Network Terminals por player | 1 (pergunta 137) | fixo, regra do bloco | 1 |
 | Mensagens por segundo por canal na ponte | a definir | a definir | 5 |
 
@@ -25,6 +26,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 20:48 | Adiciona o pulso do Signal Remote (pergunta 353). |
 | Zennd | 2026-11-12 11:58 | Tira o `slot.name_length` (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | Adiciona o raio do rótulo sobre os nós (pergunta 268). |
 | Zennd | 2026-11-11 16:40 | Troca `node.slots` pelos 16 slots fixos e adiciona `slot.name_length` (perguntas 224 e 227). |
