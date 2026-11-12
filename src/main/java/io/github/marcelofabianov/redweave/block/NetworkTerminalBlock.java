@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.block;
 
 import com.mojang.serialization.MapCodec;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.menu.TerminalMenu;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
@@ -105,7 +106,10 @@ public final class NetworkTerminalBlock extends Block implements EntityBlock {
     super.onRemove(state, level, pos, newState, movedByPiston);
   }
 
-  /** Only an empty hand uses the terminal; any item goes straight to its own use (answer 130). */
+  /**
+   * An empty hand and the Configurator in the Open mode use the terminal (answers 130 and 343).
+   * With any other item, or another mode, the click goes straight to the item.
+   */
   @Override
   protected ItemInteractionResult useItemOn(
       ItemStack stack,
@@ -115,6 +119,10 @@ public final class NetworkTerminalBlock extends Block implements EntityBlock {
       Player player,
       InteractionHand hand,
       BlockHitResult hit) {
+    if (ConfiguratorItem.opensBlocks(stack)) {
+      useWithoutItem(state, level, pos, player, hit);
+      return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
     if (!stack.isEmpty()) {
       return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
     }

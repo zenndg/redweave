@@ -1,5 +1,7 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
+import io.github.marcelofabianov.redweave.domain.network.NodeKind;
+import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.NodeLine;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.SlotLine;
@@ -9,15 +11,17 @@ import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * The Nodes tab: one row per node, in the order they joined (answer 216), with the name, the signal
- * and, for the owner, the position (answers 149 and 179). A click opens the slots of a row, one row
- * at a time (answer 218), and the owner renames a node with a click on its name (answer 217). The
- * mouse wheel scrolls when the rows do not fit.
+ * The Nodes tab: one row per node, in the order they joined (answer 216), with the name, the kind,
+ * the signal and the state, only the state in its color (answers 179, 335 to 337). A click opens a
+ * row, one at a time (answer 218): the position, for the owner, and then the enabled slots (answers
+ * 149, 234 and 340). The owner renames a node with a click on its name (answer 217). The mouse
+ * wheel scrolls when the rows do not fit.
  */
 final class NodeTable {
   private static final int NONE = -1;
@@ -35,9 +39,11 @@ final class NodeTable {
   private static final int NAME_X = 16;
   private static final int NAME_FIELD_Y = 3;
   private static final int NAME_FIELD_HEIGHT = 14;
-  private static final int SIGNAL_X = 150;
-  private static final int POSITION_X = 196;
+  private static final int TYPE_X = 140;
+  private static final int SIGNAL_X = 190;
+  private static final int STATE_X = 228;
   private static final int COLUMN_GAP = 6;
+  private static final int RIGHT_PADDING = 4;
   private static final int SLOT_INDENT = 14;
   private static final int SLOT_ICON_X = 4;
   private static final int SLOT_ICON_Y = 2;
@@ -50,13 +56,22 @@ final class NodeTable {
   private int scroll;
   private int expanded = NONE;
 
-  /**
-   * One line of the list: a node row, or a line under the open row, with one of its enabled slots
-   * or, with none, the notice `No active channel` (answer 234).
-   */
-  record Item(int row, Optional<SlotLine> slot, boolean under) {
+  /** What a line of the list shows: a node, or, under the open one, one of its lines. */
+  enum Line {
+    NODE,
+    POSITION,
+    SLOT,
+    NO_CHANNEL
+  }
+
+  /** One line of the list, with the row of its node and, on a slot line, the slot. */
+  record Item(int row, Line line, Optional<SlotLine> slot) {
+    boolean under() {
+      return line != Line.NODE;
+    }
+
     int height() {
-      return under ? SLOT_HEIGHT : ROW_HEIGHT;
+      return under() ? SLOT_HEIGHT : ROW_HEIGHT;
     }
   }
 
@@ -64,7 +79,7 @@ final class NodeTable {
   record Placed(Item item, Box box) {}
 
   void draw(GuiGraphics graphics, Font font, Box area, ControllerMenu menu, Mouse mouse) {
-    drawHeader(graphics, font, area, menu.header().viewerIsOwner());
+    drawHeader(graphics, font, area);
     if (menu.nodes().isEmpty()) {
       Component empty = Component.translatable(ControllerScreenTexts.NO_NODES);
       int x = area.x() + (area.width() - font.width(empty)) / 2;
@@ -81,15 +96,14 @@ final class NodeTable {
     }
   }
 
-  private static void drawHeader(GuiGraphics graphics, Font font, Box area, boolean owner) {
+  private static void drawHeader(GuiGraphics graphics, Font font, Box area) {
     graphics.blitSprite(
         ControllerSprites.TABLE_HEADER, area.x(), area.y(), area.width(), HEADER_HEIGHT);
     int y = area.y() + HEADER_TEXT_Y;
     label(graphics, font, ControllerScreenTexts.COLUMN_NODE, area.x() + NAME_X, y);
+    label(graphics, font, ControllerScreenTexts.COLUMN_TYPE, area.x() + TYPE_X, y);
     label(graphics, font, ControllerScreenTexts.COLUMN_SIGNAL, area.x() + SIGNAL_X, y);
-    if (owner) {
-      label(graphics, font, ControllerScreenTexts.COLUMN_POSITION, area.x() + POSITION_X, y);
-    }
+    label(graphics, font, ControllerScreenTexts.COLUMN_STATE, area.x() + STATE_X, y);
   }
 
   private static void label(GuiGraphics graphics, Font font, String key, int x, int y) {
@@ -110,22 +124,42 @@ final class NodeTable {
         box.y() + ICON_Y,
         ICON_SIZE,
         ICON_SIZE);
-    int color = NodeStates.colorOf(menu.nodeState(row));
-    int y = box.y() + TEXT_Y;
-    String name =
-        FittedText.fit(font, Component.literal(node.name()), SIGNAL_X - NAME_X - COLUMN_GAP);
-    graphics.drawString(font, name, box.x() + NAME_X, y, color, false);
+    cell(graphics, font, Component.literal(node.name()), box, NAME_X, TYPE_X);
+    cell(graphics, font, kindOf(node.nodeKind()), box, TYPE_X, SIGNAL_X);
+    cell(
+        graphics,
+        font,
+        Component.literal(String.valueOf(menu.nodeSignal(row))),
+        box,
+        SIGNAL_X,
+        STATE_X);
+    drawState(graphics, font, box, menu.nodeState(row));
+  }
+
+  /** A text from one column, cut to fit before the next, in the normal color (answer 336). */
+  private static void cell(
+      GuiGraphics graphics, Font font, Component text, Box box, int column, int next) {
+    String shown = FittedText.fit(font, text, next - column - COLUMN_GAP);
+    graphics.drawString(font, shown, box.x() + column, box.y() + TEXT_Y, ScreenColors.TEXT, false);
+  }
+
+  /** The state in text and in its color, so it never depends on the color alone (answer 284). */
+  private static void drawState(GuiGraphics graphics, Font font, Box box, NodeState state) {
+    Optional<NodeState> shown = Optional.of(state);
+    int width = box.width() - STATE_X - RIGHT_PADDING;
+    String text = FittedText.fit(font, StatePill.textOf(shown), width);
     graphics.drawString(
-        font, String.valueOf(menu.nodeSignal(row)), box.x() + SIGNAL_X, y, color, false);
-    node.position()
-        .ifPresent(pos ->
-            graphics.drawString(
-                font,
-                String.format(POSITION, pos.getX(), pos.getY(), pos.getZ()),
-                box.x() + POSITION_X,
-                y,
-                color,
-                false));
+        font, text, box.x() + STATE_X, box.y() + TEXT_Y, StatePill.colorOf(shown), false);
+  }
+
+  static Component kindOf(NodeKind kind) {
+    return Component.translatable(
+        switch (kind) {
+          case INPUT -> ControllerScreenTexts.KIND_INPUT;
+          case OUTPUT -> ControllerScreenTexts.KIND_OUTPUT;
+          case BOTH -> ControllerScreenTexts.KIND_BOTH;
+          case NONE -> ControllerScreenTexts.KIND_NONE;
+        });
   }
 
   private static ResourceLocation spriteOf(boolean open, boolean hover) {
@@ -139,14 +173,39 @@ final class NodeTable {
       GuiGraphics graphics, Font font, Placed placed, ControllerMenu menu) {
     Box box = placed.box();
     graphics.blitSprite(ControllerSprites.SLOT_LINE, box.x(), box.y(), box.width(), box.height());
-    Optional<SlotLine> found = placed.item().slot();
-    if (found.isEmpty()) {
-      Component none = Component.translatable(ControllerScreenTexts.NO_ACTIVE_CHANNEL);
-      graphics.drawString(
-          font, none, box.x() + SLOT_ICON_X, box.y() + SLOT_TEXT_Y, ScreenColors.DIM, false);
-      return;
+    switch (placed.item().line()) {
+      case POSITION -> drawPosition(graphics, font, box, menu.nodes().get(placed.item().row()));
+      case SLOT ->
+          placed.item().slot().ifPresent(slot -> drawSlot(graphics, font, box, slot, menu));
+      default -> {
+        Component none = Component.translatable(ControllerScreenTexts.NO_ACTIVE_CHANNEL);
+        dim(graphics, font, none, box);
+      }
     }
-    SlotLine slot = found.get();
+  }
+
+  /** The block of the node, only in the rows the owner receives (answers 149 and 340). */
+  private static void drawPosition(GuiGraphics graphics, Font font, Box box, NodeLine node) {
+    node.position()
+        .ifPresent(pos ->
+            dim(
+                graphics,
+                font,
+                Component.translatable(ControllerScreenTexts.POSITION_LINE, positionOf(pos)),
+                box));
+  }
+
+  private static String positionOf(BlockPos pos) {
+    return String.format(POSITION, pos.getX(), pos.getY(), pos.getZ());
+  }
+
+  private static void dim(GuiGraphics graphics, Font font, Component text, Box box) {
+    graphics.drawString(
+        font, text, box.x() + SLOT_ICON_X, box.y() + SLOT_TEXT_Y, ScreenColors.DIM, false);
+  }
+
+  private static void drawSlot(
+      GuiGraphics graphics, Font font, Box box, SlotLine slot, ControllerMenu menu) {
     graphics.blitSprite(
         SlotLines.isInput(slot) ? ControllerSprites.ICON_INPUT : ControllerSprites.ICON_OUTPUT,
         box.x() + SLOT_ICON_X,
@@ -191,17 +250,25 @@ final class NodeTable {
     }
     List<Item> items = new ArrayList<>();
     for (int row = 0; row < menu.nodes().size(); row++) {
-      items.add(new Item(row, Optional.empty(), false));
+      items.add(new Item(row, Line.NODE, Optional.empty()));
       if (row == expanded) {
-        int open = row;
-        List<SlotLine> slots = menu.nodes().get(row).slots();
-        slots.forEach(slot -> items.add(new Item(open, Optional.of(slot), true)));
-        if (slots.isEmpty()) {
-          items.add(new Item(open, Optional.empty(), true));
-        }
+        items.addAll(openLines(row, menu.nodes().get(row)));
       }
     }
     return items;
+  }
+
+  /** Under the open row: the position for the owner, then each enabled slot (234 and 340). */
+  private static List<Item> openLines(int row, NodeLine node) {
+    List<Item> lines = new ArrayList<>();
+    if (node.position().isPresent()) {
+      lines.add(new Item(row, Line.POSITION, Optional.empty()));
+    }
+    node.slots().forEach(slot -> lines.add(new Item(row, Line.SLOT, Optional.of(slot))));
+    if (node.slots().isEmpty()) {
+      lines.add(new Item(row, Line.NO_CHANNEL, Optional.empty()));
+    }
+    return lines;
   }
 
   /** The node row under the mouse, if any. */
@@ -217,7 +284,7 @@ final class NodeTable {
     return new Box(
         row.x() + NAME_X - NAME_FIELD_Y,
         row.y() + NAME_FIELD_Y,
-        SIGNAL_X - NAME_X,
+        TYPE_X - NAME_X,
         NAME_FIELD_HEIGHT);
   }
 

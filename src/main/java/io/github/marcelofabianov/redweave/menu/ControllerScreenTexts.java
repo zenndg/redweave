@@ -18,7 +18,13 @@ public final class ControllerScreenTexts {
   public static final String RENAME_TOOLTIP = PREFIX + "rename_tooltip";
   public static final String COLUMN_NODE = PREFIX + "column.node";
   public static final String COLUMN_SIGNAL = PREFIX + "column.signal";
-  public static final String COLUMN_POSITION = PREFIX + "column.position";
+  public static final String COLUMN_TYPE = PREFIX + "column.type";
+  public static final String COLUMN_STATE = PREFIX + "column.state";
+  public static final String KIND_INPUT = PREFIX + "kind.input";
+  public static final String KIND_OUTPUT = PREFIX + "kind.output";
+  public static final String KIND_BOTH = PREFIX + "kind.both";
+  public static final String KIND_NONE = PREFIX + "kind.none";
+  public static final String POSITION_LINE = PREFIX + "position_line";
   public static final String SLOT_ROW = PREFIX + "slot_row";
   public static final String NO_ACTIVE_CHANNEL = PREFIX + "no_active_channel";
   public static final String SLOT_USE = PREFIX + "slot_use";

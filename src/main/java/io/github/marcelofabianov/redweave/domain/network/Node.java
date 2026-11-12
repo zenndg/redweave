@@ -52,6 +52,17 @@ public record Node(
         .toList();
   }
 
+  /** Whether it reads, emits, both or neither, by its enabled slots only (answer 337). */
+  public NodeKind kind() {
+    List<Direction> directions =
+        slots.stream()
+            .flatMap(Optional::stream)
+            .filter(ChannelSlot::active)
+            .map(ChannelSlot::direction)
+            .toList();
+    return NodeKind.of(directions.contains(Direction.INPUT), directions.contains(Direction.OUTPUT));
+  }
+
   static Node withFreeSlots(NodeId id, NodePosition position) {
     return new Node(
         id, Optional.empty(), position, Collections.nCopies(SLOT_COUNT, Optional.empty()));

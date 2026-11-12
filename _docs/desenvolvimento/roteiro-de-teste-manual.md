@@ -102,16 +102,16 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 |---|---|---|
 | 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals`, `Access` e `Log`, e o rodapé em duas linhas |
 | 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy`, `Toggle` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
-| 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o sinal de 0 a 15 ao vivo e a posição do bloco de cada nó |
-| 54 | Clique numa linha, depois em outra | A primeira abre os slots, como `01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
+| 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o tipo, o sinal de 0 a 15 ao vivo e o estado `Online` |
+| 54 | Clique numa linha, depois em outra | A primeira abre a posição do bloco e os slots, como `01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
 | 55 | Clique uma vez no nome de um nó; depois clique duas vezes nele, digite `Lever` e aperte Enter; repita, apague o texto e aperte Enter | Um clique só abre ou fecha os slots; o duplo clique abre o campo e deixa a linha como estava; o nome muda na lista e na Tela do Nó, e vazio volta aos 8 primeiros caracteres do ID |
 | 56 | Clique em `Rename`, digite `Factory` e aperte Enter; depois repita e aperte Esc | O nome da rede muda no cabeçalho e na escolha de rede; o Esc não muda nada |
 | 57 | Clique no quadrado da cor e escolha o verde-limão | A paleta abre sob o quadrado, com a cor atual em cobre; o clique troca a cor e fecha a paleta |
 | 58 | Na aba `Signals`, clique duas vezes no nome do canal da alavanca, digite `Main door` e aperte Enter | O canal mostra o número e `Main door`, em claro, com `1 in · 1 out` e o valor ao vivo; os canais sem uso ficam apagados |
 | 59 | Abra o nó da alavanca com o Configurator no modo `Open` | O slot e o nome do canal escolhido mostram `Main door` com o número do canal |
 | 60 | Na aba `Access` | O dono num campo e o cadeado com `Only the owner can change this network.` |
-| 61 | Com a distância de renderização em 2 chunks, ligue à rede um nó a uns 100 blocos do controlador, com uma entrada recebendo sinal, volte ao controlador e abra a tela | O nó distante em âmbar, com o último sinal, e o rodapé com `1 unloaded` em âmbar e `0 out of range` em vermelho |
-| 62 | Abra a tela com o segundo player | Tudo visível e ao vivo, sem a coluna `Position`, sem `Rename`, sem paleta, sem renomear com duplo clique, e o rodapé com o cadeado |
+| 61 | Com a distância de renderização em 2 chunks, ligue à rede um nó a uns 100 blocos do controlador, com uma entrada recebendo sinal, volte ao controlador e abra a tela | O nó distante com `Unloaded` em âmbar na coluna de estado, com o último sinal, e o rodapé com `1 unloaded` em âmbar e `0 out of range` em vermelho |
+| 62 | Abra a tela com o segundo player | Tudo visível e ao vivo, sem a posição na linha aberta, sem `Rename`, sem paleta, sem renomear com duplo clique, e o rodapé com o cadeado |
 | 63 | Afaste-se do controlador com a tela aberta | A tela fecha ao passar do alcance de interação |
 | 64 | Com 20 nós ou mais, role a lista com a roda do mouse | A lista rola, e nada passa da borda |
 | 65 | Troque o idioma para Português (Brasil) | Todos os textos da tela em português, sem nada passando da borda |
@@ -156,6 +156,7 @@ Entregue com a issue #89 (perguntas 130 a 166 e 250 a 261). Use dois players, co
 | 81 | Coloque um Network Terminal | O bloco fiel a `network-terminal.png`: o visor com as linhas coloridas virado para você, a grelha nas laterais e a moldura de cobre igual à do controlador |
 | 82 | Tente colocar um segundo Terminal | Nada é colocado, o item fica, e a action bar mostra `You already have a Network Terminal at <x>, <y>, <z>.` com a posição do primeiro |
 | 83 | Com o segundo player, clique no Terminal com a mão vazia e tente quebrá-lo | Nada abre, a action bar mostra `Only the owner can use this terminal.`, e o bloco não quebra |
+| 83a | Como dono, clique no Terminal com o Configurator no modo `Open`; depois, nos modos `Copy`, `Toggle` e `Wrench` | O modo `Open` abre a tela do Terminal, como a mão vazia; os outros não fazem nada |
 | 84 | Abra o Terminal com três redes, uma `Online`, uma `Offline` e uma `Unplaced` | A tela fiel a `tela-do-terminal.png`: as redes em ordem alfabética, com a cor, o nome, a pílula do estado e os nós; `3 networks` no topo |
 | 85 | Selecione cada rede | Só os botões do estado: `Open`, `Turn off` e `Clear nodes`; `Turn on` e `Clear nodes`; `Clear nodes` e `Delete` |
 | 86 | Dê duplo clique no nome de uma rede, digite um nome e aperte Enter | O nome muda na lista e na Tela do Controlador; Esc cancela |
@@ -174,6 +175,7 @@ Entregue com a issue #80 (perguntas 262 a 272).
 |---|---|---|
 | 93 | Ponha duas lâmpadas com 1 bloco de espaço entre elas e um nó de saída nesse espaço, grudado numa delas; ligue o canal | Só a lâmpada onde o nó está grudado acende; a outra fica apagada |
 | 94 | Troque o modo do Configurator com Shift + scroll | O visor do item muda de cor: azul no `Open`, verde no `Copy`, âmbar no `Toggle` e vermelho no `Wrench`; o nome continua na action bar e no tooltip |
+| 94a | No macOS, com uma roda de mouse, troque o modo do Configurator com Shift + scroll, para baixo e para cima | O modo avança para baixo e volta para cima, e o slot da hotbar não muda |
 | 95 | Copie um nó com o modo `Copy` e depois apague a cópia com Shift + clique no ar | O pixel de cima da direita do visor acende com a cópia e apaga sem ela |
 | 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo em duas linhas: em cima, pequena, `■ <rede>` com o quadradinho na cor da rede; embaixo, um pouco maior, o nome do nó; atrás de parede, mais apagado; legível sem cobrir a vista |
 | 97 | Renomeie um nó e a rede pelas telas, com o rótulo à vista | Os nomes no rótulo mudam na hora |
@@ -194,12 +196,27 @@ Entregue com a issue #106 (perguntas 308 e 329 a 333).
 | 105 | Coloque um nó novo com o dono de 5 redes ou mais e abra a escolha de rede | 4 redes por vez, e a roda do mouse rola a lista até a última |
 | 106 | Troque o idioma para Português (Brasil) | Sem `Lógica` e sem `A lógica chega na Fase 2.`, e nada passando da borda |
 
+## Fase 1: as colunas de tipo e estado da lista de nós
+
+Entregue com a issue #107 (perguntas 283, 284 e 335 a 341). Use o circuito dos passos 1 a 8 e o nó distante do passo 61.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 107 | Abra a aba `Nodes` da Tela do Controlador | As colunas `Node`, `Type`, `Signal` e `State`, sem a coluna `Position`; o nó da alavanca com `In`, o da lâmpada com `Out` |
+| 108 | Ative no nó da alavanca um slot de saída, e desative todos os slots de outro nó | O nó da alavanca passa a `In/Out`, e o nó sem slot ativo mostra `—` |
+| 109 | Olhe o nó distante do passo 61 e afaste-se até um nó passar do raio do controlador | `Unloaded` em âmbar e `Out of range` em vermelho só na coluna de estado; nome, tipo e sinal na cor normal |
+| 110 | Como dono, clique numa linha; depois abra a tela com o segundo player e clique na mesma linha | Para o dono, `Position: x, y, z` em cinza acima dos canais; para o segundo player, só os canais |
+| 111 | Troque o idioma para Português (Brasil) | `Tipo`, `Estado`, `Ent`, `Saí`, `Ent/Saí`, `Descarregado`, `Fora de alcance` e `Posição:`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:39 | Adiciona o passo 94a, do Shift + scroll no macOS (pergunta 351). |
+| Zennd | 2026-11-12 19:23 | Adiciona o passo 83a, do Terminal aberto com o Configurator no modo `Open` (pergunta 343). |
+| Zennd | 2026-11-12 19:01 | Ajusta os passos 53, 54, 61 e 62 às colunas novas e adiciona os passos 107 a 111, da #107 (pergunta 341). |
 | Zennd | 2026-11-12 18:45 | Adiciona os passos 103 a 106, da Tela do Nó sem a lógica (pergunta 332). |
 | Zennd | 2026-11-12 17:18 | Atualiza a aba criativa, os modos com o `Toggle`, a aba `Log`, o nó que nasce inativo e as linhas de slot (perguntas 226, 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot dos passos 69 a 72 (pergunta 277). |

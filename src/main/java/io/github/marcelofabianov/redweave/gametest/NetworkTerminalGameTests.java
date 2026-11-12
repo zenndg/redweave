@@ -1,23 +1,31 @@
 package io.github.marcelofabianov.redweave.gametest;
 
+import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.TerminalCheck;
 import io.github.marcelofabianov.redweave.block.BlockLocations;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -36,6 +44,9 @@ public final class NetworkTerminalGameTests {
   private static final BlockPos NOTHING_THERE = new BlockPos(2, 1, 2);
   private static final float EXPLOSION_POWER = 4.0F;
   private static final double CENTER = 0.5;
+  private static final String STRANGER_NAME = "stranger";
+  private static final String NOT_TAKEN = "The Configurator in Open should click the terminal";
+  private static final String TAKEN = "The Configurator in Copy should not click the terminal";
   private static final String NOT_KEPT = "The saves should keep the terminal of its owner";
   private static final String SECOND = "A player should have only one terminal";
   private static final String STRANGER_BREAKS = "Only the owner should break the terminal";
@@ -133,6 +144,32 @@ public final class NetworkTerminalGameTests {
     helper.assertBlockPresent(RedweaveBlocks.NETWORK_TERMINAL.get(), TERMINAL);
     helper.assertTrue(terminalOf(owner).equals(Optional.of(at(helper, TERMINAL))), NOT_REPLACED);
     helper.succeed();
+  }
+
+  /**
+   * The Configurator in the Open mode clicks the terminal as an empty hand, and the other modes do
+   * not (answer 343). A stranger keeps the mock player from receiving a screen (answer 153).
+   */
+  @GameTest(template = EMPTY)
+  public static void onlyTheOpenModeClicksTheTerminal(GameTestHelper helper) {
+    Player owner = helper.makeMockServerPlayerInLevel();
+    place(helper, owner, FLOOR);
+    ServerPlayer stranger =
+        FakePlayerFactory.get(helper.getLevel(), new GameProfile(UUID.randomUUID(), STRANGER_NAME));
+
+    ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.OPEN);
+    helper.assertTrue(clickTheTerminal(helper, stranger).consumesAction(), NOT_TAKEN);
+    ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.COPY);
+    helper.assertFalse(clickTheTerminal(helper, stranger).consumesAction(), TAKEN);
+    helper.succeed();
+  }
+
+  private static InteractionResult clickTheTerminal(GameTestHelper helper, ServerPlayer player) {
+    BlockPos pos = helper.absolutePos(TERMINAL);
+    BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
+    ItemStack held = player.getItemInHand(InteractionHand.MAIN_HAND);
+    return player.gameMode.useItemOn(
+        player, helper.getLevel(), held, InteractionHand.MAIN_HAND, hit);
   }
 
   private static void place(GameTestHelper helper, Player player, BlockPos floor) {

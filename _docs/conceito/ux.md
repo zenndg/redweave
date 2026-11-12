@@ -25,7 +25,7 @@ Segue a das telas do Cubit, para os dois mods conversarem no mesmo pack:
 |---|---|---|
 | Tela do Nó | Clique no nó com o Configurator no modo `Open` | Na primeira vez, a escolha de rede; depois, o nome do nó e a rede no cabeçalho, a fileira das 16 cores e, no painel do canal, `Status`, direção e face do bloco em 3D; medidor do sinal ao vivo no rodapé |
 | Tela do Controlador | Clique no Network Controller com a mão vazia ou com o Configurator no modo `Open` | Nome, cor e dono; abas `Nodes`, `Signals` (nomes dos canais), `Access` e `Log`, com `Clear log` para o dono |
-| Tela do Terminal | Clique no Network Terminal com a mão vazia | As redes do dono, em ordem alfabética, com estado e quantidade de nós; abrir, renomear, desligar, religar, limpar nós e apagar as redes `Unplaced` |
+| Tela do Terminal | Clique no Network Terminal com a mão vazia ou com o Configurator no modo `Open` | As redes do dono, em ordem alfabética, com estado e quantidade de nós; abrir, renomear, desligar, religar, limpar nós e apagar as redes `Unplaced` |
 | Editor de Chip | Bancada de Circuitos, na Fase 3 | Grid de arrastar e soltar, fios animados, modo teste com pausar e avançar um tick, gravação com nome e ícone |
 | Livro Guia | Item | Capítulos por fase, com exemplos prontos para copiar para um chip |
 
@@ -33,6 +33,7 @@ Segue a das telas do Cubit, para os dois mods conversarem no mesmo pack:
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:23 | O Network Terminal abre também com o Configurator no modo `Open` (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Atualiza o nó que nasce inativo, as abas e as telas do Nó, do Controlador e do Terminal (perguntas 166, 224, 226, 232 e 233). |
 | Zennd | 2026-11-12 16:50 | Tira a lógica da Tela do Nó (pergunta 308). |
 | Zennd | 2026-11-11 09:51 | Aplica a escolha de rede, os modos do Configurator, o log e a Tela do Terminal (perguntas 130 a 150). |

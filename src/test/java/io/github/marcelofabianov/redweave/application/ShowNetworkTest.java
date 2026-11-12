@@ -14,6 +14,7 @@ import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NodeKind;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
@@ -98,6 +99,7 @@ class ShowNetworkTest {
             LEVER,
             READ,
             NodeState.ONLINE,
+            NodeKind.INPUT,
             Optional.of(NODE_POSITION),
             List.of(new SlotRow(FIRST_SLOT, DOOR, Direction.INPUT)));
     NodeRow other =
@@ -106,6 +108,7 @@ class ShowNetworkTest {
             network(id).node(OTHER_NODE).orElseThrow().displayName(),
             READ,
             NodeState.UNLOADED,
+            NodeKind.OUTPUT,
             Optional.of(OTHER_NODE_POSITION),
             List.of(new SlotRow(SECOND_SLOT, DOOR, Direction.OUTPUT)));
     assertEquals(List.of(lever, other), rows);

@@ -185,7 +185,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Rede Unplaced no Terminal | Renomear, limpar nós e `Delete` | 176 |
 | Visual da rede Offline | Estado `Offline` em cinza, lente e núcleo apagados | 177 |
 | Recolocar uma rede Offline | Volta `Offline` | 178 |
-| Lista de nós | Nome, sinal da lente, posição, estado e tipo; ao expandir, só os canais ativos (234, 281) | 179, 234, 281 |
+| Lista de nós | Nome, tipo, sinal da lente e estado; ao expandir, a posição, só para o dono, e os canais ativos (234, 281, 335) | 179, 234, 281, 335 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
 | Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
@@ -314,6 +314,17 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Dica da Fase 2 no painel | Sai sem substituta | 330 |
 | Prancha da Tela do Nó | Nova, gerada por IA a partir de `tmp/arte/tela_do_no/` | 331 |
 | Testes da #106 | Paridade, `check-generated` e os passos 103 a 106 do roteiro manual | 332, 334 |
+| Colunas da lista de nós | Nó, Tipo, Sinal e Estado; a posição vai para o topo da linha aberta, só para o dono | 335 |
+| Cor do estado na lista | Só no texto da coluna de estado | 336 |
+| Tipo do nó | `NodeKind` no domínio, por `Node.kind()` | 337 |
+| Nó de rede `Offline` nas listas | Decidido na #22; o componente já exibe `Offline` em cinza | 338 |
+| Textos das colunas novas | `Type` e `State`; `In`, `Out`, `In/Out` e `—`, e `Ent`, `Saí`, `Ent/Saí` e `—` | 339 |
+| Posição na linha aberta | Sub-linha cinza `Position: x, y, z`, só para o dono | 340 |
+| Testes da #107 | JUnit do `NodeKind` e do `NodeRow`, GameTest do menu e roteiro manual | 341 |
+| Prancha da Tela do Controlador | Nova, gerada por IA a partir de `tmp/arte/tela_do_controlador/` | 342 |
+| Terminal com o Configurator | Abre no modo `Open`, como a mão vazia, como o controlador; entra no PR #121 | 343, 344 |
+| Slots do Signal Node | Continuam 16; o layout da Tela do Nó melhora numa issue própria | 345 |
+| Shift + scroll no macOS | Sem rolagem vertical, vale a horizontal invertida, como a hotbar; corrigido no PR #121 | 351 |
 
 Não há perguntas pendentes da concepção.
 
@@ -321,6 +332,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:38 | Registra a decisão 351. |
+| Zennd | 2026-11-12 19:21 | Registra as decisões 343 a 345. |
+| Zennd | 2026-11-12 19:02 | Registra a decisão 342. |
+| Zennd | 2026-11-12 18:57 | Registra as decisões 339 a 341. |
+| Zennd | 2026-11-12 18:56 | Registra as decisões 335 a 338 e atualiza a lista de nós. |
 | Zennd | 2026-11-12 18:47 | Registra a decisão 334. |
 | Zennd | 2026-11-12 18:43 | Registra a decisão 333. |
 | Zennd | 2026-11-12 18:42 | Registra as decisões 329 a 332. |
