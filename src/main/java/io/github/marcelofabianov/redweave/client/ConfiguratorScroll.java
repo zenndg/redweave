@@ -25,14 +25,15 @@ public final class ConfiguratorScroll {
   public static void onScroll(InputEvent.MouseScrollingEvent event) {
     Minecraft game = Minecraft.getInstance();
     LocalPlayer player = game.player;
+    double delta = ScrollDelta.of(event.getScrollDeltaX(), event.getScrollDeltaY());
     if (game.screen != null
         || player == null
         || !player.isShiftKeyDown()
-        || event.getScrollDeltaY() == STILL
+        || delta == STILL
         || !player.getMainHandItem().is(RedweaveItems.CONFIGURATOR.get())) {
       return;
     }
     event.setCanceled(true);
-    PacketDistributor.sendToServer(new ConfiguratorScrolled(event.getScrollDeltaY() < STILL));
+    PacketDistributor.sendToServer(new ConfiguratorScrolled(delta < STILL));
   }
 }
