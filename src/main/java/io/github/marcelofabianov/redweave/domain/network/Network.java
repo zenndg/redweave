@@ -170,6 +170,29 @@ public final class Network {
     return Outcome.ACCEPTED;
   }
 
+  /**
+   * Takes every node out, for the owner only, in any state, at a Network Terminal: the nodes stay
+   * in the world with no network, and their slots and readings go (answers 133 and 176).
+   */
+  public Outcome clearNodes(PlayerId requester) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    nodes.all().stream().map(Node::id).toList().forEach(this::loseNode);
+    return Outcome.ACCEPTED;
+  }
+
+  /**
+   * Whether the owner may delete the network at a Network Terminal: only an unplaced one goes, so a
+   * network with its controller in the world never does (answer 166). The saves remove it.
+   */
+  public Outcome deletion(PlayerId requester) {
+    if (!isOwner(requester)) {
+      return Outcome.NOT_OWNER;
+    }
+    return state() == NetworkState.UNPLACED ? Outcome.ACCEPTED : Outcome.NETWORK_NOT_UNPLACED;
+  }
+
   /** Configures one slot of a node, for the owner only. */
   public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
     return isOwner(requester)

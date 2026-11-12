@@ -21,6 +21,10 @@ public enum Outcome {
   NETWORK_NOT_ONLINE,
   /** Only an offline network turns back on; an unplaced one waits for its controller (135). */
   NETWORK_NOT_OFFLINE,
+  /** Only an unplaced network is deleted, so one in the world never goes (answer 166). */
+  NETWORK_NOT_UNPLACED,
+  /** The player already has a Network Terminal, one per player (answer 137). */
+  TERMINAL_LIMIT,
   /** The player already has network.max_per_player networks, so no new one is born (145). */
   NETWORK_LIMIT
 }
