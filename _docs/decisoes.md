@@ -324,6 +324,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Prancha da Tela do Controlador | Nova, gerada por IA a partir de `tmp/arte/tela_do_controlador/` | 342 |
 | Terminal com o Configurator | Abre no modo `Open`, como a mão vazia, como o controlador; entra no PR #121 | 343, 344 |
 | Slots do Signal Node | Continuam 16; o layout da Tela do Nó melhora numa issue própria | 345 |
+| Shift + scroll no macOS | Sem rolagem vertical, vale a horizontal invertida, como a hotbar; corrigido no PR #121 | 351 |
 
 Não há perguntas pendentes da concepção.
 
@@ -331,6 +332,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:38 | Registra a decisão 351. |
 | Zennd | 2026-11-12 19:21 | Registra as decisões 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a decisão 342. |
 | Zennd | 2026-11-12 18:57 | Registra as decisões 339 a 341. |

@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 351 | No macOS, o Shift + roda do mouse vira rolagem horizontal, e o Configurator não troca de modo. Onde entra a correção? | No PR #121, a pedido do desenvolvedor: sem rolagem vertical, vale a horizontal invertida, como a hotbar do jogo faz em `MouseHandler.onScroll`. Para baixo continua avançando (pergunta 241). Completa a pergunta 143 |
 | 345 | O Signal Node passa de 16 para 10 slots, com a Tela do Nó reorganizada para aproveitar melhor o espaço? | Não: continuam os 16 slots, um por cor de canal (pergunta 224 e regra 3). A melhoria do layout da Tela do Nó entra numa issue própria, depois de o desenvolvedor dizer o que incomoda |
 | 344 | Em que PR entra a abertura do Network Terminal com o Configurator (pergunta 343)? | No PR #121, da #107, como um commit a mais na mesma branch, a pedido do desenvolvedor |
 | 343 | O Network Terminal, que abre com a mão vazia, passa a abrir também com o Configurator? | Sim, só no modo `Open`, que age como a mão vazia, com o mesmo aviso para quem não é o dono, como no Network Controller (pergunta 232). `Copy`, `Toggle` e `Wrench` continuam sem ação no Terminal (pergunta 164). Completa a pergunta 130 |
@@ -345,6 +346,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:38 | Registra a resposta 351. |
 | Zennd | 2026-11-12 19:21 | Registra as respostas 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a resposta 342, da #107. |
 | Zennd | 2026-11-12 18:57 | Registra as respostas 339 a 341, da #107. |
