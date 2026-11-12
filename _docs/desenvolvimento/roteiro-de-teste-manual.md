@@ -134,12 +134,26 @@ Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os sav
 | 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
 | 74 | Troque o idioma para Português (Brasil) | `Nome`, `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
 
+## Fase 1: o log da Tela do Controlador
+
+Entregue com a issue #90 (perguntas 147, 148 e 242 a 249).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 75 | Reinicie o servidor e abra a aba `Log` da Tela do Controlador | `No signal change yet.` no meio da tabela, sem linhas da reaplicação das saídas ao carregar |
+| 76 | Com a tela aberta, puxe a alavanca que acende a lâmpada pela rede | Duas linhas novas no topo, sem reabrir a tela: a da lâmpada, `Output 15`, acima da da alavanca, `Input 15`, com a data e a hora do servidor em cinza e o quadrado da cor antes do canal |
+| 77 | Renomeie o nó da lâmpada e puxe a alavanca de novo | As linhas novas trazem o nome novo; as antigas continuam com o nome de antes |
+| 78 | Desative e ative o canal de saída da lâmpada na Tela do Nó | `Output 0` ao desativar e `Output 15` ao ativar |
+| 79 | Puxe a alavanca mais vezes do que cabe na tela e role a roda do mouse | A lista rola; com mais de `log.size` linhas, as mais antigas somem |
+| 80 | Troque o idioma para Português (Brasil) | A aba `Registro`, `Entrada` e `Saída` nas linhas e `Nenhuma mudança de sinal ainda.` no log vazio, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:32 | Adiciona os passos 75 a 80, do log da Tela do Controlador (perguntas 242 a 249). |
 | Zennd | 2026-11-11 17:45 | Adiciona o passo 72b, do modo `Toggle`, e ajusta a contagem do passo 72 (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Adiciona o passo 72a, de colar num nó sem rede (pergunta 238). |
 | Zennd | 2026-11-11 17:05 | Ajusta os passos 7 e 70: configurar só com o canal desativado (pergunta 237). |

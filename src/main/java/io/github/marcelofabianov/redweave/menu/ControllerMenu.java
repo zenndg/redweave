@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.network.SignalLog;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
@@ -31,12 +32,16 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * within reach of the controller and with the network online (answer 158).
  */
 public final class ControllerMenu extends AbstractContainerMenu {
+  private static final long NO_LINE_SEEN = 0;
+
   private final BlockPos pos;
   private final ContainerLevelAccess access;
   private final Optional<ServerPlayer> viewer;
   private final Optional<NetworkId> network;
   private ControllerScreenRows rows;
   private ControllerScreenSignals signals;
+  private ControllerScreenLog log;
+  private long logSeen;
   private Optional<NetworkView> view;
 
   /** On the server, for a player who opened the controller of an online network. */
@@ -49,6 +54,8 @@ public final class ControllerMenu extends AbstractContainerMenu {
     this.view = read(player, network);
     this.rows = rowsOf(player, view, id);
     this.signals = signalsOf(view, id);
+    this.log = ControllerScreenLog.NONE;
+    this.logSeen = lastSequenceOf(logOf(network, NO_LINE_SEEN));
   }
 
   /** On the client, with the position and the rows the server sent when opening. */
@@ -61,6 +68,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
     this.view = Optional.empty();
     this.rows = ControllerScreenRows.STREAM_CODEC.decode(extra).forMenu(id);
     this.signals = ControllerScreenSignals.STREAM_CODEC.decode(extra).forMenu(id);
+    this.log = ControllerScreenLog.STREAM_CODEC.decode(extra).forMenu(id);
   }
 
   /** What the server writes when it opens the screen; the client puts its own menu ID. */
@@ -70,6 +78,39 @@ public final class ControllerMenu extends AbstractContainerMenu {
     extra.writeBlockPos(pos);
     ControllerScreenRows.STREAM_CODEC.encode(extra, rowsOf(player, opening, 0));
     ControllerScreenSignals.STREAM_CODEC.encode(extra, signalsOf(opening, 0));
+    ControllerScreenLog.STREAM_CODEC.encode(
+        extra, ControllerScreenLog.of(0, logSize(), logOf(network, NO_LINE_SEEN)));
+  }
+
+  /** The lines of the log of a network newer than a sequence, newest first (answer 147). */
+  private static List<SignalLog.Line> logOf(NetworkId network, long sequence) {
+    return RedweaveServer.running()
+        .map(server -> server.signalLogs().after(network, sequence))
+        .orElse(List.of());
+  }
+
+  private static int logSize() {
+    return RedweaveServer.running().map(server -> server.signalLogs().size()).orElse(0);
+  }
+
+  private static long lastSequenceOf(List<SignalLog.Line> newestFirst) {
+    return newestFirst.isEmpty() ? NO_LINE_SEEN : newestFirst.get(0).sequence();
+  }
+
+  /**
+   * The lines the open screen has not received yet, once: the server sends them with the other
+   * changes, and only to the players with the screen open (answer 147 and rule 18).
+   */
+  public Optional<ControllerScreenLog> newLog() {
+    if (network.isEmpty()) {
+      return Optional.empty();
+    }
+    List<SignalLog.Line> lines = logOf(network.get(), logSeen);
+    if (lines.isEmpty()) {
+      return Optional.empty();
+    }
+    logSeen = lastSequenceOf(lines);
+    return Optional.of(ControllerScreenLog.of(containerId, logSize(), lines));
   }
 
   private static Optional<NetworkView> read(ServerPlayer player, NetworkId network) {
@@ -116,6 +157,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
         PacketDistributor.sendToPlayer(player, nowSignals);
       }
     });
+    newLog().ifPresent(lines -> PacketDistributor.sendToPlayer(player, lines));
   }
 
   /** A button is a color of the palette: the owner recolors the network (answer 212). */
@@ -184,6 +226,15 @@ public final class ControllerMenu extends AbstractContainerMenu {
 
   void acceptSignals(ControllerScreenSignals received) {
     signals = received;
+  }
+
+  void acceptLog(ControllerScreenLog received) {
+    log = log.then(received);
+  }
+
+  /** The lines of the log, newest first, as the server sent them (answer 147). */
+  public List<ControllerScreenLog.LogLine> log() {
+    return log.lines();
   }
 
   public BlockPos pos() {
