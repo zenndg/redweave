@@ -84,4 +84,12 @@ class TerminalRegistryTest {
 
     assertEquals(Optional.of(FIRST), terminals.terminalOf(OWNER));
   }
+
+  /** Placing again where the registered terminal is keeps it, without asking the world. */
+  @Test
+  void theSamePlaceIsTheSameTerminal() {
+    place.place(OWNER, FIRST, STANDING);
+
+    assertEquals(Outcome.ACCEPTED, place.place(OWNER, FIRST, UNLOADED).outcome());
+  }
 }

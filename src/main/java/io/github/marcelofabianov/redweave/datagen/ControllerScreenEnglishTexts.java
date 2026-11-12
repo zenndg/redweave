@@ -27,6 +27,8 @@ final class ControllerScreenEnglishTexts {
   private static final String READ_ONLY = "Only the owner can change this network.";
   private static final String NO_NODES = "No node in this network yet.";
   private static final String NO_LOG = "No signal change yet.";
+  private static final String CLEAR_LOG = "Clear log";
+  private static final String CONFIRM_CLEAR_LOG = "Click again to clear";
 
   private ControllerScreenEnglishTexts() {}
 
@@ -56,6 +58,8 @@ final class ControllerScreenEnglishTexts {
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
     add.accept(ControllerScreenTexts.NO_NODES, NO_NODES);
     add.accept(ControllerScreenTexts.NO_LOG, NO_LOG);
+    add.accept(ControllerScreenTexts.CLEAR_LOG, CLEAR_LOG);
+    add.accept(ControllerScreenTexts.CONFIRM_CLEAR_LOG, CONFIRM_CLEAR_LOG);
     add.accept(ControllerScreenTexts.OWNER, OWNER);
   }
 

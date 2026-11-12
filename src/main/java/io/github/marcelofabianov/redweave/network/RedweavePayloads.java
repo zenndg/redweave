@@ -27,6 +27,7 @@ public final class RedweavePayloads {
   public static void register(RegisterPayloadHandlersEvent event) {
     PayloadRegistrar registrar = event.registrar(VERSION);
     registerScreens(registrar);
+    registerWorld(registrar);
     registerActions(registrar);
   }
 
@@ -57,6 +58,14 @@ public final class RedweavePayloads {
             TerminalScreenRows.TYPE,
             TerminalScreenRows.STREAM_CODEC,
             (rows, context) -> TerminalScreenRows.receive(rows, context.player()));
+  }
+
+  /** What the server sends about the world, as the labels over the nodes (answer 269). */
+  private static void registerWorld(PayloadRegistrar registrar) {
+    registrar.playToClient(
+        NodeLabelsUpdate.TYPE,
+        NodeLabelsUpdate.STREAM_CODEC,
+        (update, context) -> ReceivedLabels.accept(update));
   }
 
   /** What the client asks, checked on the server. */

@@ -46,6 +46,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
   private ControllerScreenSignals signals;
   private ControllerScreenLog log;
   private long logSeen;
+  private long logClears;
   private Optional<NetworkView> view;
 
   /** On the server, for a player who opened the controller of an online network. */
@@ -84,6 +85,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
     this.signals = signalsOf(view, id);
     this.log = ControllerScreenLog.NONE;
     this.logSeen = lastSequenceOf(logOf(network, NO_LINE_SEEN));
+    this.logClears = clearsOf(network);
   }
 
   /** On the client, with the position and the rows the server sent when opening. */
@@ -118,6 +120,10 @@ public final class ControllerMenu extends AbstractContainerMenu {
         .orElse(List.of());
   }
 
+  private static long clearsOf(NetworkId network) {
+    return RedweaveServer.running().map(server -> server.signalLogs().clearsOf(network)).orElse(0L);
+  }
+
   private static int logSize() {
     return RedweaveServer.running().map(server -> server.signalLogs().size()).orElse(0);
   }
@@ -133,6 +139,13 @@ public final class ControllerMenu extends AbstractContainerMenu {
   public Optional<ControllerScreenLog> newLog() {
     if (network.isEmpty()) {
       return Optional.empty();
+    }
+    long clears = clearsOf(network.get());
+    if (clears != logClears) {
+      logClears = clears;
+      List<SignalLog.Line> all = logOf(network.get(), NO_LINE_SEEN);
+      logSeen = Math.max(logSeen, lastSequenceOf(all));
+      return Optional.of(ControllerScreenLog.restart(containerId, logSize(), all));
     }
     List<SignalLog.Line> lines = logOf(network.get(), logSeen);
     if (lines.isEmpty()) {
@@ -189,9 +202,18 @@ public final class ControllerMenu extends AbstractContainerMenu {
     newLog().ifPresent(lines -> PacketDistributor.sendToPlayer(player, lines));
   }
 
-  /** A button is a color of the palette: the owner recolors the network (answer 212). */
+  /**
+   * A button is a color of the palette, which recolors the network, or the Clear log, which clears
+   * its log; the domain refuses anyone but the owner (answers 212 and 264).
+   */
   @Override
   public boolean clickMenuButton(Player player, int button) {
+    if (button == ControllerScreenCodes.CLEAR_LOG && network.isPresent()) {
+      RedweaveServer.running()
+          .ifPresent(
+              server -> server.clearLog().clear(new PlayerId(player.getUUID()), network.get()));
+      return true;
+    }
     Optional<ChannelColor> color = ControllerScreenCodes.colorOf(button);
     if (color.isEmpty() || network.isEmpty()) {
       return false;

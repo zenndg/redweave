@@ -1,6 +1,15 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "redweave:item/configurator_copy",
+      "predicate": {
+        "redweave:copy": 1.0
+      }
+    }
+  ],
   "textures": {
-    "layer0": "redweave:item/configurator"
+    "layer0": "redweave:item/configurator",
+    "layer1": "redweave:item/configurator_display"
   }
 }

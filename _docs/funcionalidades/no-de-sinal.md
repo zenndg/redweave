@@ -4,7 +4,7 @@ O Signal Node (`redweave:signal_node`) é a peça que gruda numa face de qualque
 
 ## Em uma frase
 
-Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, ele ganha uma entrada num canal livre. A entrada lê a redstone que chega ao bloco, e a saída alimenta o bloco como uma alavanca.
+Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, ele ganha uma entrada num canal livre. A entrada lê a redstone que chega ao bloco, e a saída energiza só o bloco onde o nó está grudado.
 
 ## Colocar
 
@@ -29,7 +29,7 @@ O nó lê quando é colocado, quando um vizinho muda e quando o chunk dele carre
 
 ## Emitir
 
-Um slot `Output` alimenta com força o bloco de apoio, como uma alavanca grudada nele, qualquer que seja a face do slot. Assim, uma lâmpada com um nó grudado acende, e o bloco de apoio liga os vizinhos dele (pergunta 71).
+Um slot `Output` energiza com força só o bloco de apoio, qualquer que seja a face do slot, e o resto segue a redstone do jogo a partir desse bloco: uma lâmpada com um nó grudado acende, e o bloco de apoio liga o que encosta nele. Diferente de uma alavanca, o nó não manda sinal fraco para os vizinhos do espaço dele, então duas lâmpadas separadas por 1 bloco, com o nó entre elas, acendem só a do apoio (perguntas 71 e 262).
 
 - O nó emite o mais forte entre as saídas dele (perguntas 39 e 71).
 - Um nó `Out of range`, `No network` ou numa rede `Offline` ou `Unplaced` emite 0.
@@ -86,6 +86,7 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:11 | A saída energiza só o bloco de apoio, sem o sinal fraco da alavanca (pergunta 262). |
 | Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor e os cantos da placa (perguntas 224, 226 e 229). |
 | Zennd | 2026-11-11 13:46 | Registra a escolha de rede e o nome do nó entregues na #87. |
 | Zennd | 2026-11-11 11:21 | Aplica a pergunta 188. |

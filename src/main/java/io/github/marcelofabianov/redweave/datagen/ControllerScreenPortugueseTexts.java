@@ -29,6 +29,8 @@ final class ControllerScreenPortugueseTexts {
   private static final String READ_ONLY = "Só o dono pode alterar esta rede.";
   private static final String NO_NODES = "Nenhum nó nesta rede ainda.";
   private static final String NO_LOG = "Nenhuma mudança de sinal ainda.";
+  private static final String CLEAR_LOG = "Limpar log";
+  private static final String CONFIRM_CLEAR_LOG = "Clique de novo para limpar";
 
   private ControllerScreenPortugueseTexts() {}
 
@@ -58,6 +60,8 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
     add.accept(ControllerScreenTexts.NO_NODES, NO_NODES);
     add.accept(ControllerScreenTexts.NO_LOG, NO_LOG);
+    add.accept(ControllerScreenTexts.CLEAR_LOG, CLEAR_LOG);
+    add.accept(ControllerScreenTexts.CONFIRM_CLEAR_LOG, CONFIRM_CLEAR_LOG);
     add.accept(ControllerScreenTexts.OWNER, OWNER);
   }
 

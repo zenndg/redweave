@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "redweave:item/configurator",
+    "layer1": "redweave:item/configurator_display",
+    "layer2": "redweave:item/configurator_copy"
+  }
+}

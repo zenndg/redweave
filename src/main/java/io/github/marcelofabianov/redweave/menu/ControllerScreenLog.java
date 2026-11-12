@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  * then only the new lines, to the players with the screen open (answer 147 and rule 18). The size
  * of the log of the server goes along, so the screen keeps as many lines.
  */
-public record ControllerScreenLog(int menu, int size, List<LogLine> lines)
+public record ControllerScreenLog(int menu, int size, boolean reset, List<LogLine> lines)
     implements CustomPacketPayload {
   private static final String ID = "controller_screen_log";
   private static final String DEFAULT_NAME = "";
@@ -65,31 +65,44 @@ public record ControllerScreenLog(int menu, int size, List<LogLine> lines)
           ControllerScreenLog::menu,
           ByteBufCodecs.VAR_INT,
           ControllerScreenLog::size,
+          ByteBufCodecs.BOOL,
+          ControllerScreenLog::reset,
           LogLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
           ControllerScreenLog::lines,
           ControllerScreenLog::new);
 
   /** Before the log arrives, and for a network that is gone, the screen shows no line. */
-  static final ControllerScreenLog NONE = new ControllerScreenLog(0, 0, List.of());
+  static final ControllerScreenLog NONE = new ControllerScreenLog(0, 0, false, List.of());
 
   public ControllerScreenLog {
     lines = List.copyOf(lines);
   }
 
   static ControllerScreenLog of(int menu, int size, List<SignalLog.Line> lines) {
-    return new ControllerScreenLog(
-        menu, size, lines.stream().map(line -> LogLine.of(line.change())).toList());
+    return new ControllerScreenLog(menu, size, false, linesOf(lines));
+  }
+
+  /** The whole log after the owner cleared it, which takes the place of what the screen had. */
+  static ControllerScreenLog restart(int menu, int size, List<SignalLog.Line> lines) {
+    return new ControllerScreenLog(menu, size, true, linesOf(lines));
+  }
+
+  private static List<LogLine> linesOf(List<SignalLog.Line> lines) {
+    return lines.stream().map(line -> LogLine.of(line.change())).toList();
   }
 
   ControllerScreenLog forMenu(int other) {
-    return new ControllerScreenLog(other, size, lines);
+    return new ControllerScreenLog(other, size, reset, lines);
   }
 
   /** The new lines on top of the ones the screen has, keeping only the size of the log. */
   ControllerScreenLog then(ControllerScreenLog newer) {
+    if (newer.reset) {
+      return new ControllerScreenLog(menu, newer.size, false, newer.lines);
+    }
     List<LogLine> all =
         Stream.concat(newer.lines.stream(), lines.stream()).limit(newer.size).toList();
-    return new ControllerScreenLog(menu, newer.size, all);
+    return new ControllerScreenLog(menu, newer.size, false, all);
   }
 
   /** On the client: only the open Controller Screen of the same menu takes the lines. */

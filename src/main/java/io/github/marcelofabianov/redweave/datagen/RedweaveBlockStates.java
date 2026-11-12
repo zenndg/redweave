@@ -17,6 +17,16 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 final class RedweaveBlockStates extends BlockStateProvider {
   private static final String CONTROLLER = "network_controller";
   private static final String TERMINAL = "network_terminal";
+  private static final String CONFIGURATOR = "configurator";
+  private static final String DISPLAY_SUFFIX = "_display";
+  private static final String COPY_SUFFIX = "_copy";
+  private static final String COPY_PROPERTY = "copy";
+  private static final String ITEM_FOLDER = "item/";
+  private static final String ITEM_GENERATED = "item/generated";
+  private static final String LAYER_0 = "layer0";
+  private static final String LAYER_1 = "layer1";
+  private static final String LAYER_2 = "layer2";
+  private static final float WITH_COPY = 1;
   private static final String LINKED_SUFFIX = "_linked";
   private static final String BLOCK_FOLDER = "block/";
   private static final String TOP = "_top";
@@ -76,7 +86,35 @@ final class RedweaveBlockStates extends BlockStateProvider {
           return state.getValue(SignalNodeBlock.POWERED) ? on : off;
         });
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
-    itemModels().basicItem(RedweaveItems.CONFIGURATOR.get());
+    configuratorModels();
+  }
+
+  /**
+   * The Configurator with its display layer, tinted by the mode, and a second model with the copy
+   * pixel, picked by the item property `copy` (answer 271).
+   */
+  private void configuratorModels() {
+    ModelFile generated = new ModelFile.UncheckedModelFile(mcLoc(ITEM_GENERATED));
+    ModelFile withCopy =
+        itemModels()
+            .getBuilder(CONFIGURATOR + COPY_SUFFIX)
+            .parent(generated)
+            .texture(LAYER_0, itemTexture(CONFIGURATOR))
+            .texture(LAYER_1, itemTexture(CONFIGURATOR + DISPLAY_SUFFIX))
+            .texture(LAYER_2, itemTexture(CONFIGURATOR + COPY_SUFFIX));
+    itemModels()
+        .getBuilder(CONFIGURATOR)
+        .parent(generated)
+        .texture(LAYER_0, itemTexture(CONFIGURATOR))
+        .texture(LAYER_1, itemTexture(CONFIGURATOR + DISPLAY_SUFFIX))
+        .override()
+        .predicate(modLoc(COPY_PROPERTY), WITH_COPY)
+        .model(withCopy)
+        .end();
+  }
+
+  private ResourceLocation itemTexture(String name) {
+    return modLoc(ITEM_FOLDER + name);
   }
 
   /** A thin plate on the floor of the block, turned to each face by the blockstate (answer 72). */

@@ -31,6 +31,8 @@ public final class ControllerScreenTexts {
   public static final String READ_ONLY = PREFIX + "read_only";
   public static final String NO_NODES = PREFIX + "no_nodes";
   public static final String NO_LOG = PREFIX + "no_log";
+  public static final String CLEAR_LOG = PREFIX + "clear_log";
+  public static final String CONFIRM_CLEAR_LOG = PREFIX + "confirm_clear_log";
 
   private ControllerScreenTexts() {}
 }

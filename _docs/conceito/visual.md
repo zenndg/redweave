@@ -166,17 +166,18 @@ Ferramenta, `redweave:configurator`. Abre, copia, cola e retira Signal Nodes, co
 | Parte | Como é |
 |---|---|
 | Cabo | Cobre, com sulcos de pegada |
-| Visor | Uma faixa com a cor e o nome do modo atual e a marca de que há cópia (issue #80, pergunta 159) |
+| Visor | A tela de 3×2 pixels na cor do modo atual, com o pixel de cima da direita aceso quando há cópia (perguntas 159 e 271) |
 | Ponta | Ponta de prova com redstone na extremidade |
-| Na mão | Um rótulo flutuante sobre cada nó, com canal, direção e sinal, e a linha da rede e dos slots em uso |
+| Na mão | Um rótulo flutuante sobre cada nó, com o nome do nó e da rede e até 4 canais ativos, com canal, direção e sinal (perguntas 268 a 270) |
 
 | Modo | Em português | Cor | Tom | Uso |
 |---|---|---|---|---|
 | `Open` | `Abrir` | Azul | `#5B9BF0` | Clique num nó abre a Tela do Nó |
 | `Copy` | `Copiar` | Verde | `#3FAE5A` | Clique num nó copia; Shift + clique cola |
+| `Toggle` | `Alternar` | Âmbar | `#E3A33B` | Clique num nó ativa os canais configurados; Shift + clique desativa (pergunta 241) |
 | `Wrench` | `Chave` | Vermelho | `#D94A64` | Clique num nó o retira como item |
 
-A cor do modo aparece sempre com o nome escrito, na action bar, no tooltip e no visor, para não ser confundida com as cores dos canais, com o `Online` (`#6BD48F`) ou com o vermelho de redstone (`#E2392F`), nem depender só da cor para quem tem daltonismo. O rótulo flutuante sobre os nós não usa a cor do modo (perguntas 167 a 169).
+A cor do modo aparece com o nome escrito na action bar e no tooltip, e sozinha no visor, que é pequeno demais para texto (pergunta 271), para não ser confundida com as cores dos canais, com o `Online` (`#6BD48F`) ou com o vermelho de redstone (`#E2392F`), nem depender só da cor para quem tem daltonismo. O rótulo flutuante sobre os nós não usa a cor do modo (perguntas 167 a 169).
 
 O modo e a configuração copiada ficam em data components do item (regra 7 do `AGENTS.md`).
 
@@ -201,6 +202,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:11 | Aplica o visor só com a cor, o rótulo sobre os nós e o modo `Toggle` (perguntas 241 e 267 a 271). |
 | Zennd | 2026-11-12 09:49 | Adiciona o conceito e a prancha do Network Terminal (perguntas 251 e 258). |
 | Zennd | 2026-11-11 09:51 | Troca as ações do Configurator pelos modos, com as cores e os tons (perguntas 143 e 159 a 169). |
 | Marcelo Fabiano | 2026-11-10 09:05 | Corrige o estado Sem rede do Network Controller. |

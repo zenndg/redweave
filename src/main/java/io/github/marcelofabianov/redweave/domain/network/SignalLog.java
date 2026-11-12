@@ -16,6 +16,7 @@ public final class SignalLog {
   private final int capacity;
   private final Deque<Line> lines = new ArrayDeque<>();
   private long lastSequence = NONE;
+  private long clears = NONE;
 
   /** A line of the log and its place in the order of the changes. */
   public record Line(long sequence, SignalChange change) {}
@@ -34,6 +35,20 @@ public final class SignalLog {
     if (lines.size() > capacity) {
       lines.removeLast();
     }
+  }
+
+  /**
+   * The owner clears the log (answer 264): every line goes, and the sequence goes on, so a screen
+   * that already had lines receives none of them again. The count tells the open screens.
+   */
+  public void clear() {
+    lines.clear();
+    clears++;
+  }
+
+  /** How many times the log was cleared, so an open screen knows to start over. */
+  public long clears() {
+    return clears;
   }
 
   public List<Line> newestFirst() {

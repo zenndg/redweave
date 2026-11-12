@@ -174,16 +174,23 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
     return true;
   }
 
-  /** Like a lever: every neighbor of the node gets its signal (answer 71). */
+  /**
+   * Only the block the node sticks to gets its signal, unlike a lever, so the neighbors of the
+   * space of the node stay off (answer 262). The game asks with the side seen from the asker, which
+   * for the block of support is the face the node sticks to.
+   */
   @Override
   protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+    if (side != state.getValue(FACING)) {
+      return 0;
+    }
     return level.getBlockEntity(pos) instanceof SignalNodeBlockEntity node ? node.emitted() : 0;
   }
 
-  /** Like a lever: the block it sticks to gets the signal with strength (answer 71). */
+  /** The block it sticks to gets the signal with strength and powers what touches it (71). */
   @Override
   protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
-    return side == state.getValue(FACING) ? getSignal(state, level, pos, side) : 0;
+    return getSignal(state, level, pos, side);
   }
 
   /** In survival, only the owner of its network breaks the node (answer 74). */

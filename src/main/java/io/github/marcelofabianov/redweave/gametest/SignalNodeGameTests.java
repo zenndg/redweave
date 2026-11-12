@@ -40,6 +40,7 @@ public final class SignalNodeGameTests {
   private static final BlockPos LAMP = new BlockPos(2, 1, 2);
   private static final BlockPos OUTPUT_NODE = LAMP.above();
   private static final BlockPos LAMP_BESIDE_THE_STONE = LAMP.north();
+  private static final BlockPos LAMP_BESIDE_THE_NODE = OUTPUT_NODE.north();
   private static final ChannelColor LEVER_CHANNEL = ChannelColor.WHITE;
   private static final ChannelColor ECHO_CHANNEL = ChannelColor.ORANGE;
   private static final int LEVER_SLOT = LEVER_CHANNEL.ordinal();
@@ -102,11 +103,11 @@ public final class SignalNodeGameTests {
   }
 
   /**
-   * Like a lever, the node feeds its block with strength, so the block lights a lamp next to it,
-   * which the node does not touch (answer 71).
+   * The node feeds its block with strength, so the block lights a lamp next to it, which the node
+   * does not touch (answers 71 and 262).
    */
   @GameTest(template = EMPTY)
-  public static void aNodeFeedsItsBlockLikeALever(GameTestHelper helper) {
+  public static void aNodeFeedsItsBlock(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     leverAndLamp(helper, owner);
     helper.setBlock(LAMP, Blocks.STONE);
@@ -117,6 +118,30 @@ public final class SignalNodeGameTests {
         .thenExecute(() -> helper.pullLever(LEVER))
         .thenWaitUntil(
             () -> helper.assertBlockProperty(LAMP_BESIDE_THE_STONE, RedstoneLampBlock.LIT, true))
+        .thenSucceed();
+  }
+
+  /**
+   * Unlike a lever, the node gives no weak signal to the neighbors of its own space: a lamp next to
+   * the node that does not touch its block stays off, as two lamps with a node between them (answer
+   * 262).
+   */
+  @GameTest(template = EMPTY)
+  public static void aNodePowersOnlyItsBlock(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    leverAndLamp(helper, owner);
+    helper.setBlock(LAMP, Blocks.STONE);
+    helper.setBlock(LAMP_BESIDE_THE_STONE, Blocks.REDSTONE_LAMP);
+    helper.setBlock(LAMP_BESIDE_THE_NODE, Blocks.REDSTONE_LAMP);
+
+    helper
+        .startSequence()
+        .thenExecute(() -> helper.pullLever(LEVER))
+        .thenWaitUntil(
+            () -> helper.assertBlockProperty(LAMP_BESIDE_THE_STONE, RedstoneLampBlock.LIT, true))
+        .thenIdle(SETTLE_TICKS)
+        .thenExecute(
+            () -> helper.assertBlockProperty(LAMP_BESIDE_THE_NODE, RedstoneLampBlock.LIT, false))
         .thenSucceed();
   }
 

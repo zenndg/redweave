@@ -19,7 +19,18 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy
 
 Em qualquer modo, o Shift + clique no ar apaga a cópia (pergunta 128). O clique em qualquer outro bloco não faz nada, para um Shift + clique num bloco não apagar a cópia por engano.
 
-A cor de cada modo aparece sempre com o nome escrito: na action bar ao trocar, no tooltip e numa faixa do visor. Os tons ficam no [`visual.md`](../conceito/visual.md#configurator) (perguntas 167 a 169).
+A cor de cada modo aparece com o nome escrito na action bar ao trocar e no tooltip. O visor do item mostra só a cor do modo, porque a tela dele tem 3×2 pixels: os 2×2 da esquerda na cor do modo, e o pixel de cima da direita aceso quando há cópia (perguntas 167 a 169 e 271). Os tons ficam no [`visual.md`](../conceito/visual.md#configurator).
+
+### Rótulo sobre os nós
+
+Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `configurator.label_range` blocos do player mostra um rótulo flutuante, mais apagado atrás de parede, como a etiqueta de nome do jogo (pergunta 268). O rótulo não usa a cor do modo (pergunta 168).
+
+| Linha | O que mostra |
+|---|---|
+| Primeira | O nome do nó e o da rede, como `Lampada 2 · Rede Base`; sem rede, `No network`; numa rede `Offline` ou `Unplaced`, o estado |
+| Canais | Até 4 canais ativos, como `15 Red · Output · 12`, na ordem das cores, os mesmos dos pontos da placa (pergunta 229); com mais, `+3 more` |
+
+O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
 Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância é a de interação com blocos do jogo, a mesma da Tela do Nó (pergunta 81). Num nó de uma rede `Offline`, `Open` e `Copy` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (perguntas 132 e 160). O `Wrench` funciona (pergunta 163).
 
@@ -85,8 +96,8 @@ O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` qu
 | Nome | `Configurator`, e `Configurador` em português |
 | Pilha | 1, porque cada item guarda o seu modo e a sua cópia |
 | Aba do criativo | `Redweave` (pergunta 69) |
-| Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51). A camada do visor, que mostra o modo, fica para a issue #80 (pergunta 159) |
-| Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy` ou `wrench` (pergunta 173). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
+| Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51), com as camadas do visor: `configurator_display`, os 2×2 pixels pintados na cor do modo, e `configurator_copy`, o pixel aceso quando há cópia (pergunta 271) |
+| Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy`, `toggle` ou `wrench` (perguntas 173 e 241). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
 
 O item não guarda mais a rede atual: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). A cópia guarda a rede do nó copiado, para colar num nó sem rede (pergunta 238). O `redweave:network` continua no item do Network Controller.
 
@@ -96,13 +107,13 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 ## Fora desta funcionalidade
 
-- O visor do modo e o rótulo flutuante sobre os nós (issue #80, pergunta 159).
 - A receita (issue #24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:11 | Descreve o visor do modo e o rótulo sobre os nós da #80 (perguntas 267 a 271). |
 | Zennd | 2026-11-11 17:45 | Adiciona o modo `Toggle` e conta todos os canais configurados na cópia (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Colar num nó sem rede o liga à rede da cópia (perguntas 238 e 239). |
 | Zennd | 2026-11-11 16:40 | A cópia leva os 16 slots, com o status e o nome (perguntas 224 e 230). |
