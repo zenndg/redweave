@@ -225,6 +225,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome do canal na Tela do Nó | Entra na #20, com os nomes enviados só quando mudam | 221 |
 | Renomear na Tela do Controlador | Duplo clique no nome do nó e do canal | 222 |
 | Nome do slot | Entra na #20, com decisões próprias antes do código | 223 |
+| Painel da Tela do Nó sem o nome | As linhas sobem e fecham o espaço | 278 |
 | Slots do Signal Node | 16 fixos, um por cor, com status ativo ou inativo; saem `node.slots` e os upgrades | 224 |
 | Redesenho dos slots | Dentro da #20 | 225 |
 | Nó novo | Todos os canais inativos; o player ativa cada um | 226 |
@@ -269,7 +270,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Visor do Configurator | Só a cor do modo e o pixel da cópia; o nome na action bar e no tooltip | 267 e 271 |
 | Rótulo sobre os nós: quando | Mão principal, até `configurator.label_range` (16) | 268 |
 | Rótulo sobre os nós: sincronia | Pacote só para quem segura, só o que mudou | 269 |
-| Rótulo sobre os nós: conteúdo | Nó e rede, até 4 canais e `+n more` | 270 |
+| Rótulo sobre os nós: conteúdo | Duas linhas: `■ rede`, pequena, e o nome do nó, um pouco maior; sem canais nem estado | 270, 274 a 276 |
+| Nome do slot | Sai antes da v0.1; ficam o nome do canal da rede e o do nó | 277 |
 | Testes da #80 | JUnit no conteúdo, nas mudanças e no `Clear log`; GameTests no mundo | 272 |
 | Textura `configurator_channel` | Removida | 273 |
 
@@ -279,6 +281,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 12:01 | Registra a decisão 278. |
+| Zennd | 2026-11-12 11:51 | Registra a decisão 277. |
+| Zennd | 2026-11-12 11:45 | Registra as decisões 274 a 276. |
 | Zennd | 2026-11-12 11:27 | Registra a decisão 273. |
 | Zennd | 2026-11-12 11:11 | Registra a decisão 272. |
 | Zennd | 2026-11-12 11:10 | Registra a decisão 271. |
