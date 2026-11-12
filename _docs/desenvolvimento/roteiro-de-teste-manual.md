@@ -183,12 +183,24 @@ Entregue com a issue #80 (perguntas 262 a 272).
 | 101 | Abra a aba `Log` com o segundo player | Sem o botão `Clear log` |
 | 102 | Troque o idioma para Português (Brasil) | `Limpar log`, `Clique de novo para limpar` e `Sem rede` no rótulo, sem nada passando da borda |
 
+## Fase 2: a Tela do Nó sem a lógica
+
+Entregue com a issue #106 (perguntas 308 e 329 a 333).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 103 | Abra um nó com rede e escolha um canal | O painel termina logo abaixo do cubo da face, sem a linha `Logic` e sem a dica `Logic arrives in Phase 2.`; o rodapé vem logo abaixo do painel, sem espaço vazio |
+| 104 | Passe o mouse no pé do painel | Nenhum tooltip |
+| 105 | Coloque um nó novo com o dono de 5 redes ou mais e abra a escolha de rede | 4 redes por vez, e a roda do mouse rola a lista até a última |
+| 106 | Troque o idioma para Português (Brasil) | Sem `Lógica` e sem `A lógica chega na Fase 2.`, e nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:45 | Adiciona os passos 103 a 106, da Tela do Nó sem a lógica (pergunta 332). |
 | Zennd | 2026-11-12 17:18 | Atualiza a aba criativa, os modos com o `Toggle`, a aba `Log`, o nó que nasce inativo e as linhas de slot (perguntas 226, 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot dos passos 69 a 72 (pergunta 277). |
 | Zennd | 2026-11-12 11:46 | Ajusta os passos 96 a 98 e 102 ao rótulo de duas linhas (perguntas 274 a 276). |
