@@ -28,7 +28,17 @@ final class ChannelTabs {
   private static final int NUMBER_Y = 13;
   private static final String NUMBER = "%02d";
 
+  /** The font of the game counts one blank pixel after the last letter, which is not seen. */
+  private static final int TRAILING_SPACE = 1;
+
+  private static final int ROUND_UP = 1;
+
   private ChannelTabs() {}
+
+  /** The width the number shows, so it centers under the square of the color. */
+  private static int visibleWidth(Font font, String number) {
+    return font.width(number) - TRAILING_SPACE;
+  }
 
   static void draw(
       GuiGraphics graphics, Font font, int left, int top, NodeMenu menu, int open, Mouse mouse) {
@@ -42,7 +52,7 @@ final class ChannelTabs {
       graphics.fill(
           squareX, squareY, squareX + SQUARE, squareY + SQUARE, ChannelColors.argb(channel));
       String number = String.format(NUMBER, channel.number());
-      int numberX = box.x() + (box.width() - font.width(number)) / 2;
+      int numberX = box.x() + (box.width() - visibleWidth(font, number) + ROUND_UP) / 2;
       int color = enabled ? ScreenColors.TEXT : ScreenColors.DIM;
       graphics.drawString(font, number, numberX, box.y() + NUMBER_Y, color, false);
     }

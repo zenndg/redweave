@@ -27,7 +27,6 @@ final class SlotEditor {
   static final int CUBE_SIZE = 24;
   static final int LOGIC_Y = 88;
   static final int ROW_HEIGHT = 14;
-  private static final int STATUS_WIDTH = 50;
   private static final int BUTTON_PADDING = 12;
   private static final int SPACING = 2;
   private static final int RIGHT_PADDING = 6;
@@ -43,7 +42,7 @@ final class SlotEditor {
   static List<Control> controls(Font font, NodeView view, Box panel, int index, Face stuck) {
     List<Control> controls = new ArrayList<>();
     Optional<ChannelSlot> slot = view.menu().slot(index);
-    controls.add(statusButton(view, panel, index, slot));
+    controls.add(statusButton(font, view, panel, index, slot));
     controls.addAll(directionButtons(font, view, panel, index, setUpOf(slot, index, stuck)));
     controls.addAll(logicButtons(font, panel));
     return controls;
@@ -59,11 +58,12 @@ final class SlotEditor {
 
   /** Enabled or Disabled; the owner's click turns it the other way (answers 226 and 228). */
   private static Control statusButton(
-      NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
+      Font font, NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
     boolean enabled = isEnabled(slot);
     Component label =
         Component.translatable(enabled ? NodeScreenTexts.ENABLED : NodeScreenTexts.DISABLED);
-    Box box = new Box(panel.x() + CONTROL_X, panel.y() + STATUS_Y, STATUS_WIDTH, ROW_HEIGHT);
+    int width = ControlPainter.statusWidth(font, label);
+    Box box = new Box(panel.x() + CONTROL_X, panel.y() + STATUS_Y, width, ROW_HEIGHT);
     Optional<NodeAction> action =
         view.editable()
             ? Optional.of(enabled ? NodeAction.disable(index) : NodeAction.enable(index))

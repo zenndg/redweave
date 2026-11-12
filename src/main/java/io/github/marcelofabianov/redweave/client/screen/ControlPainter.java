@@ -12,6 +12,9 @@ final class ControlPainter {
   private static final int ICON_Y = 4;
   private static final int ICON_GAP = 4;
 
+  /** The font of the game counts one blank pixel after the last letter, which is not seen. */
+  private static final int TRAILING_SPACE = 1;
+
   private ControlPainter() {}
 
   static void draw(GuiGraphics graphics, Font font, Control control, NodeView view) {
@@ -37,6 +40,14 @@ final class ControlPainter {
     }
     int x = box.x() + (box.width() - font.width(label)) / 2;
     graphics.drawString(font, label, x, box.y() + LABEL_Y, color, false);
+  }
+
+  /**
+   * The width of the status badge: the dot, the gap, the text and the same margin on both sides, so
+   * the box fits `Enabled`, `Disabled` and their translations.
+   */
+  static int statusWidth(Font font, Component label) {
+    return ICON_X + Dots.SIZE + ICON_GAP + font.width(label) - TRAILING_SPACE + ICON_X;
   }
 
   private static boolean isStatus(Control.Look look) {
