@@ -6,8 +6,8 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 ## Estado atual
 
-- **Etapa atual:** Fase 1, sem fio, em andamento. Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88) a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, e o log da Tela do Controlador (#90). O trabalho entra por issue, na milestone da fase.
-- **Próximos:** o Network Terminal (#89), o visor do modo do Configurator e os rótulos sobre os nós (#80) e, depois, as issues #22 a #27.
+- **Etapa atual:** Fase 1, sem fio, em andamento. Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88) a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90) e o Network Terminal (#89). O trabalho entra por issue, na milestone da fase.
+- **Próximos:** o visor do modo do Configurator e os rótulos sobre os nós (#80) e, depois, as issues #22 a #27.
 - **Limite:** não avance para as fases seguintes sem pedido explícito.
 
 ## Documentação
