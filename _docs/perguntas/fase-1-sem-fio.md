@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 328 | Onde fica o documento das portas e da regra NOT (regra 9)? | Numa página nova, `_docs/funcionalidades/portas-logicas.md`, com as regras das portas e do NOT, que a #31 e a #105 completam com o lado do módulo (#28) |
+| 327 | Como os testes cobrem as tabelas-verdade? | Cada porta e o NOT com a tabela-verdade escrita linha a linha, desligado e ligado, aplicada às forças 0, 1 e 15, e a saída conferida como 0 ou 15. O teste não repete a regra (#28) |
+| 326 | A ordem do `enum Gate` vira a ordem do Shift + scroll (#32). Qual é ela? | `AND`, `OR`, `XOR` e `NAND`, a ordem que os documentos já usam (#28) |
+| 325 | A chave estável do `Gate` no save (`and`, `or`, `xor` e `nand`, com `fromKey` devolvendo vazio para chave desconhecida, como o `ChannelColor`) entra em que issue? | Na #31, com o módulo de porta, o primeiro a gravar o modo no save. A #28 entrega só a regra, sem código sem consumidor. Completa a pergunta 324 |
+| 324 | Que forma as portas e a regra NOT têm no código do domínio? | Um `enum Gate` com `AND`, `OR`, `XOR` e `NAND` e o método `output(Signal a, Signal b)`, cuja chave estável serve ao save e cuja ordem serve ao Shift + scroll (#32). **Completada pela pergunta 325:** a chave entra na #31. O NOT, de uma entrada, fica numa classe própria, `Not`, com `output(Signal)`, no mesmo pacote. Sem interface selada, porque nenhum consumidor precisa dela hoje (#28) |
+| 323 | Em que pacote do domínio ficam as portas e a base dos Signal Modules? | As portas e o NOT em `domain/circuit/`, já reservado e reaproveitado pelos chips da Fase 3. A base e as regras dos módulos em `domain/module/`, criado só na #103 (#28) |
+| 322 | Com que força sai o resultado ligado de uma porta e do NOT? | Sempre 15, o `Signal.MAX`, e o desligado é 0, como a tocha do jogo e o Signal Inverter (pergunta 296) (#28) |
+| 321 | Como uma porta e a regra NOT tratam uma entrada de 0 a 15? | Como binária: ligada acima de 0 e desligada em 0, como as portas do Project Red e a tocha do jogo, para todas as portas seguirem a mesma regra e o XOR e o NAND terem sentido (#28) |
 | 320 | Em que arquivo ficam as perguntas da Fase 2, que sai junto com a Fase 1 na v0.1.0? | Em `fase-1-sem-fio.md`, junto com as da Fase 1, porque as duas formam a v0.1.0 (pergunta 303). O `fase-2-logica.md` ganha um aviso apontando para lá, e o README das perguntas registra a convenção |
 | 319 | Quatro textos ficaram sem resposta explícita: o botão `Clear slot` em `decisoes.md`, a linha da lógica citada na pergunta 278, os upgrades nas referências e o controlador "sem nós" com o núcleo aceso fraco no `visual.md`. Como ficam? | O `Clear slot` saiu com os 16 slots fixos (224); a 278 ganha o ponteiro para a 308; os upgrades saem das referências; e os estados do controlador seguem o código: `Online` com o núcleo aceso, `Offline` ou sem rede com o núcleo apagado, e os LEDs e o brilho chegam com a #24 |
 | 318 | Como tratar os textos que descrevem como pronto o que ainda não foi feito ou decidido? | Marcar como planejado: o Simulator compila o grafo só na Fase 3; a regra "Remote volta a 0" é da #22; o valor do disparo do Remote e a presença dele na lista do controlador são decididos no refinamento da #22. O `limites.md` ganha a linha do pulso do Remote só quando a #22 decidir a chave |
@@ -320,6 +328,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:24 | Registra as respostas 325 a 328, da #28. |
+| Zennd | 2026-11-12 18:22 | Registra as respostas 321 a 324, da #28. |
 | Zennd | 2026-11-12 17:18 | Aponta as respostas antigas para as que as mudaram, como as 99, 126, 224, 226, 229, 233, 237, 238 e 303. |
 | Zennd | 2026-11-12 17:27 | Responde as perguntas 304 a 320. |
 | Zennd | 2026-11-12 13:25 | Responde as perguntas 279 a 303. |
