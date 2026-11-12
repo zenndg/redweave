@@ -12,7 +12,7 @@ O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele
 
 1. O nó nasce `No network`, com o nome padrão, os 8 primeiros caracteres do ID, e não pode ser configurado até ter rede (perguntas 139 e 142).
 2. Quem o colocou abre o nó com o Configurator no modo `Open` e escolhe uma das redes `Online` dele (perguntas 157 e 172).
-3. O nó entra com os 16 slots, um por cor, todos inativos, e o dono ativa os canais na Tela do Nó (perguntas 224 e 226).
+3. O nó entra com os 16 slots, um por cor, todos inativos, e o dono ativa os canais na Tela do Nó (perguntas 224 e 226). O slot não tem nome próprio: o nome do canal da rede e o do nó já o identificam (pergunta 277).
 
 A #15 e a #18 entregaram o nó entrando sozinho na rede atual (perguntas 25 e 70); a #87 trocou isso pela escolha, na [Tela do Nó](telas.md#escolha-de-rede), e trouxe o nome do nó, que o dono troca com um clique (pergunta 204). O nó guarda o `NodeId` na BlockEntity, com a chave de NBT `node` (pergunta 76), e o UUID de quem o colocou, com a chave `owner` (pergunta 165).
 
@@ -86,6 +86,7 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:58 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | A saída energiza só o bloco de apoio, sem o sinal fraco da alavanca (pergunta 262). |
 | Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor e os cantos da placa (perguntas 224, 226 e 229). |
 | Zennd | 2026-11-11 13:46 | Registra a escolha de rede e o nome do nó entregues na #87. |

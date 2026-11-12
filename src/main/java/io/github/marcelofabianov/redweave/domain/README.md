@@ -33,10 +33,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229) | #10, #87 e #20 |
 | `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
 | `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
-| `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal, status ativo ou inativo e nome opcional. Só um slot ativo lê (`reads`) ou emite (`emits`). A lógica entra na Fase 2 | #10 e #20 |
-| `SlotChanges` | Dentro da rede: o que ativar, desativar e dar nome fazem a um slot. Na primeira ativação, o slot vira `Input` na face grudada; desativar guarda direção, face e nome (pergunta 228) | #20 |
+| `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal e status ativo ou inativo, sem nome próprio (pergunta 277). Só um slot ativo lê (`reads`) ou emite (`emits`). A lógica entra na Fase 2 | #10 e #20 |
+| `SlotChanges` | Dentro da rede: o que ativar, desativar e preparar fazem a um slot. Na primeira ativação, o slot vira `Input` na face grudada; desativar guarda direção e face (perguntas 228 e 237) | #20 |
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
-| `NetworkLimits` | Os números da rede: tamanho dos nomes, inclusive o do slot, o raio do alcance e as redes por player. O domínio define a interface, e o config a implementa | #10 e #11 |
+| `NetworkLimits` | Os números da rede: tamanho dos nomes da rede, do canal e do nó, o raio do alcance e as redes por player. O domínio define a interface, e o config a implementa | #10 e #11 |
 | `Range` | O alcance do controlador: uma esfera com o raio em blocos, na mesma dimensão. Raio 0 alcança a dimensão inteira | #11 |
 | `NodeState` | O que as telas mostram de um nó: `ONLINE`, `UNLOADED`, `OUT_OF_RANGE`, `NO_NETWORK` ou `OFFLINE` | #11 e #88 |
 | `NetworkState` | O estado da rede: `ONLINE`; `OFFLINE`, desligada pelo dono; ou `UNPLACED`, sem o controlador no mundo (perguntas 135 e 146) | #88 |
@@ -54,10 +54,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Channels` | Dentro da rede: os 16 canais e o nome de cada um. Saiu do `Network` como `Readings` | #16 |
 | `NetworkSnapshot` | Tudo da rede que vai para o save: nome, cor, dono, controlador, os canais com nome, os nós e as leituras. `snapshot()` o tira da rede, e `Network.restore` refaz a rede a partir dele (pergunta 90) | #16 |
 | `SlotReading` | A última leitura de um slot de entrada, como vai para o save | #16 |
-| `NodeCopy` | Os slots já ativados de um nó, com o status e o nome (pergunta 230), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
+| `NodeCopy` | Os slots já ativados de um nó, com o status (perguntas 230 e 277), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
 | `CopiedSlot` | Um slot da cópia: a posição no nó e a configuração | #17 |
 | `Pasted` | Os 16 slots de um nó depois de colar e quantos ficaram ativos (perguntas 106 e 230) | #17 e #20 |
-| `SlotEdits` | Dentro da rede: como um slot muda (configurar, ativar, desativar, preparar, dar nome e liberar), depois de o `Network` conferir o dono. Saiu do `Network` como `SlotChanges` | #89 |
+| `SlotEdits` | Dentro da rede: como um slot muda (configurar, ativar, desativar, preparar e liberar), depois de o `Network` conferir o dono. Saiu do `Network` como `SlotChanges` | #89 |
 | `clearNodes` e `deletion` | O que o Network Terminal faz numa rede: tirar todos os nós, que ficam no mundo sem rede, e conferir se ela pode ser apagada, só `Unplaced`. A rede apagada sai do save pela aplicação (perguntas 133, 166 e 176) | #89 |
 | `SignalChange` | Uma linha do log da Tela do Controlador: a data e a hora, os nomes do nó e do canal do momento, o canal, a direção e o valor (perguntas 147 e 245) | #90 |
 | `SignalLog` | O log de uma rede: um buffer circular com o tamanho do config, só em memória, a linha mais nova primeiro. Cada linha tem uma sequência crescente, para a tela aberta receber só as novas (perguntas 147 e 242) | #90 |

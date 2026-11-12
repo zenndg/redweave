@@ -27,8 +27,10 @@ Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `c
 
 | Linha | O que mostra |
 |---|---|
-| Primeira | O nome do nó e o da rede, como `Lampada 2 · Rede Base`; sem rede, `No network`; numa rede `Offline` ou `Unplaced`, o estado |
-| Canais | Até 4 canais ativos, como `15 Red · Output · 12`, na ordem das cores, os mesmos dos pontos da placa (pergunta 229); com mais, `+3 more` |
+| De cima, com metade do tamanho da etiqueta de nome do jogo | Um quadradinho na cor da rede e o nome dela, como `■ Rede Base`; sem rede, o quadradinho cinza e `No network` |
+| De baixo, com 70% desse tamanho | O nome do nó, como `Lampada 2` |
+
+Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276).
 
 O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
@@ -40,11 +42,11 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Copiar
 
-A cópia leva os 16 slots, cada um com o canal, o status, a direção, a face e o nome, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão (perguntas 105 e 230). Copiar um nó sem rede é recusado, porque ele não tem slots.
+A cópia leva os 16 slots, cada um com o canal, o status, a direção e a face, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão, e o slot não tem nome (perguntas 105, 230 e 277). Copiar um nó sem rede é recusado, porque ele não tem slots.
 
 ### Colar
 
-Colar substitui os 16 slots do nó de destino pelos da cópia, com o status e o nome (perguntas 106 e 230). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
+Colar substitui os 16 slots do nó de destino pelos da cópia, com o status (perguntas 106 e 230). As leituras do nó de destino são descartadas, como em toda reconfiguração de slot.
 
 | Regra | Como é |
 |---|---|
@@ -113,6 +115,8 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:58 | Tira o nome do slot da cópia (pergunta 277). |
+| Zennd | 2026-11-12 11:46 | O rótulo sobre os nós passa a ter duas linhas, a rede e o nó (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:11 | Descreve o visor do modo e o rótulo sobre os nós da #80 (perguntas 267 a 271). |
 | Zennd | 2026-11-11 17:45 | Adiciona o modo `Toggle` e conta todos os canais configurados na cópia (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Colar num nó sem rede o liga à rede da cópia (perguntas 238 e 239). |

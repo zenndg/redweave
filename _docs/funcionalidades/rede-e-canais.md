@@ -123,8 +123,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Parte | Valores |
 |---|---|
 | Canal | A cor do slot: o slot 15 é sempre o canal `15 Red`. Um nó não lê e emite na mesma cor ao mesmo tempo (pergunta 224) |
-| Status | `Enabled` ou `Disabled`. Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção, a face e o nome (pergunta 228). A direção e a face só mudam com o slot `Disabled`, e um slot `Enabled` fica travado (pergunta 237) |
-| Nome | Opcional, dado pelo dono na Tela do Nó, como `Redstone from lever 1`, com o limite de `slot.name_length`. É do slot no nó, separado do nome do canal da rede (pergunta 227) |
+| Status | `Enabled` ou `Disabled`. Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face (pergunta 228). A direção e a face só mudam com o slot `Disabled`, e um slot `Enabled` fica travado (pergunta 237) |
 | Direção | `Input`, quando o nó lê o bloco, ou `Output`, quando emite no bloco |
 | Face do bloco | Uma das 6 faces do bloco onde o nó está. Na entrada, escolhe de qual vizinho o nó lê; na saída, o nó sempre alimenta o bloco onde está grudado, como uma alavanca (pergunta 71) |
 | Lógica | Na Fase 1, só `None` |
@@ -212,7 +211,6 @@ As chaves entram com o código que as lê (issue do config) e, depois de publica
 | Número | Valor inicial |
 |---|---|
 | Raio do alcance | 128 blocos, 0 é ilimitado |
-| Tamanho do nome do slot | 32 caracteres |
 | Tamanho do nome da rede | 32 caracteres |
 | Tamanho do nome do canal | 16 caracteres |
 | Tamanho do nome do nó | 16 caracteres (pergunta 144) |
@@ -244,6 +242,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 12:00 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o slot desativado (pergunta 237). |
 | Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor, o status e o nome do slot (perguntas 224 a 228 e 235). |
 | Zennd | 2026-11-11 15:47 | Aplica a pergunta 222: o canal é renomeado com duplo clique. |
