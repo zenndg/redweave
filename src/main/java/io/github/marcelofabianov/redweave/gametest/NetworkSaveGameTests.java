@@ -9,9 +9,11 @@ import static io.github.marcelofabianov.redweave.gametest.SaveTags.RED;
 import static io.github.marcelofabianov.redweave.gametest.SaveTags.WEST;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.block.BlockLocations;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
+import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -101,6 +103,24 @@ public final class NetworkSaveGameTests {
         load(fullSave()).save(new CompoundTag(), helper.getLevel().registryAccess());
 
     helper.assertTrue(fullSave().equals(written), NOT_SAME);
+    helper.succeed();
+  }
+
+  /**
+   * The terminal of each player goes to the saves, so the limit of one holds after the server
+   * restarts, with its chunk unloaded (answers 137 and 175).
+   */
+  @GameTest(template = EMPTY)
+  public static void theTerminalOfAPlayerComesBack(GameTestHelper helper) {
+    SavedDataNetworks data = load(SaveTags.save(VERSION, SaveTags.list(), SaveTags.list()));
+    PlayerId owner = new PlayerId(OWNER);
+    BlockLocation terminal = BlockLocations.of(helper.getLevel(), helper.absolutePos(FLOOR));
+    data.record(owner, terminal);
+
+    SavedDataNetworks again =
+        load(data.save(new CompoundTag(), helper.getLevel().registryAccess()));
+
+    helper.assertTrue(again.terminalOf(owner).equals(Optional.of(terminal)), NOT_SAME);
     helper.succeed();
   }
 

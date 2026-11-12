@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.menu.ControllerScreenRows;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenSignals;
 import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
 import io.github.marcelofabianov.redweave.menu.NodeScreenNames;
+import io.github.marcelofabianov.redweave.menu.TerminalScreenRows;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -51,12 +52,20 @@ public final class RedweavePayloads {
         .playToClient(
             ControllerScreenLog.TYPE,
             ControllerScreenLog.STREAM_CODEC,
-            (log, context) -> ControllerScreenLog.receive(log, context.player()));
+            (log, context) -> ControllerScreenLog.receive(log, context.player()))
+        .playToClient(
+            TerminalScreenRows.TYPE,
+            TerminalScreenRows.STREAM_CODEC,
+            (rows, context) -> TerminalScreenRows.receive(rows, context.player()));
   }
 
   /** What the client asks, checked on the server. */
   private static void registerActions(PayloadRegistrar registrar) {
     registrar
+        .playToServer(
+            TerminalRenamed.TYPE,
+            TerminalRenamed.STREAM_CODEC,
+            (renamed, context) -> TerminalRenamed.receive(renamed, context.player()))
         .playToServer(
             ControllerRenamed.TYPE,
             ControllerRenamed.STREAM_CODEC,

@@ -4,9 +4,14 @@ import io.github.marcelofabianov.redweave.application.AllNetworksFinder;
 import io.github.marcelofabianov.redweave.application.LastUsedNetworkFinder;
 import io.github.marcelofabianov.redweave.application.LastUsedNetworkRecorder;
 import io.github.marcelofabianov.redweave.application.NetworkFinder;
+import io.github.marcelofabianov.redweave.application.NetworkRemover;
 import io.github.marcelofabianov.redweave.application.NetworkSaver;
 import io.github.marcelofabianov.redweave.application.NodeNetworkFinder;
 import io.github.marcelofabianov.redweave.application.OwnerNetworkFinder;
+import io.github.marcelofabianov.redweave.application.TerminalFinder;
+import io.github.marcelofabianov.redweave.application.TerminalForgetter;
+import io.github.marcelofabianov.redweave.application.TerminalRecorder;
+import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
@@ -34,15 +39,21 @@ public final class SavedDataNetworks extends SavedData
         NodeNetworkFinder,
         OwnerNetworkFinder,
         LastUsedNetworkFinder,
-        LastUsedNetworkRecorder {
+        LastUsedNetworkRecorder,
+        NetworkRemover,
+        TerminalFinder,
+        TerminalRecorder,
+        TerminalForgetter {
   public static final String NAME = "redweave_networks";
 
   private final Map<NetworkId, Network> networks;
   private final Map<PlayerId, NetworkId> lastUsed;
+  private final Map<PlayerId, BlockLocation> terminals;
 
   private SavedDataNetworks(NetworkSave.Contents contents) {
     networks = contents.networks();
     lastUsed = contents.lastUsed();
+    terminals = contents.terminals();
   }
 
   /** The data of the save of this server, read from its file once and kept by the game. */
@@ -81,7 +92,7 @@ public final class SavedDataNetworks extends SavedData
 
   @Override
   public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-    return NetworkSave.write(tag, networks.values(), lastUsed);
+    return new NetworkSave.Contents(networks, lastUsed, terminals).writeInto(tag);
   }
 
   @Override
@@ -118,6 +129,31 @@ public final class SavedDataNetworks extends SavedData
   @Override
   public void record(PlayerId player, NetworkId network) {
     lastUsed.put(player, network);
+    setDirty();
+  }
+
+  /** A deleted network leaves the saves, and the players who last used it lose it (166). */
+  @Override
+  public void remove(NetworkId id) {
+    networks.remove(id);
+    lastUsed.values().removeIf(id::equals);
+    setDirty();
+  }
+
+  @Override
+  public Optional<BlockLocation> terminalOf(PlayerId player) {
+    return Optional.ofNullable(terminals.get(player));
+  }
+
+  @Override
+  public void record(PlayerId player, BlockLocation terminal) {
+    terminals.put(player, terminal);
+    setDirty();
+  }
+
+  @Override
+  public void forget(PlayerId player) {
+    terminals.remove(player);
     setDirty();
   }
 }

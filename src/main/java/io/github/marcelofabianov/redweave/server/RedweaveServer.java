@@ -67,6 +67,7 @@ public final class RedweaveServer {
   private final RecolorNetwork recolorNetwork;
   private final RenameChannel renameChannel;
   private final SignalLogs signalLogs;
+  private final TerminalServices terminal;
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -79,6 +80,7 @@ public final class RedweaveServer {
     signalLogs = new SignalLogs(new NeoForgeLogLimits());
     ServerClock clock = new SystemServerClock();
     readInput = new ReadInput(networks, networks, signalLogs, clock);
+    terminal = new TerminalServices(networks, signalLogs);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
     evaluateNetworks = new EvaluateNetworks(networks, new Simulator(), signalLogs, clock);
@@ -215,6 +217,11 @@ public final class RedweaveServer {
 
   public Optional<Network> network(NetworkId id) {
     return networks.find(id);
+  }
+
+  /** The use cases of the Network Terminal (terminal-de-rede.md). */
+  public TerminalServices terminal() {
+    return terminal;
   }
 
   public Optional<NetworkId> lastUsedOf(PlayerId player) {

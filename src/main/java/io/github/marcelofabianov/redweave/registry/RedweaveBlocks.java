@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
+import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import java.util.Collection;
 import net.minecraft.world.level.block.Block;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class RedweaveBlocks {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
   private static final String SIGNAL_NODE_ID = "signal_node";
+  private static final String NETWORK_TERMINAL_ID = "network_terminal";
 
   /** As fragile as a button. */
   private static final float NODE_HARDNESS = 0.5F;
@@ -36,6 +38,17 @@ public final class RedweaveBlocks {
           NETWORK_CONTROLLER_ID,
           () ->
               new NetworkControllerBlock(
+                  BlockBehaviour.Properties.of()
+                      .mapColor(MapColor.DEEPSLATE)
+                      .sound(SoundType.POLISHED_DEEPSLATE)
+                      .strength(CONTROLLER_HARDNESS, CONTROLLER_EXPLOSION_RESISTANCE)));
+
+  /** Protected as the controller: as long to break and not destroyed by explosions (137). */
+  public static final DeferredBlock<NetworkTerminalBlock> NETWORK_TERMINAL =
+      BLOCKS.register(
+          NETWORK_TERMINAL_ID,
+          () ->
+              new NetworkTerminalBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.POLISHED_DEEPSLATE)

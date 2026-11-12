@@ -251,6 +251,18 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes do log | JUnit no domínio e nos casos de uso, GameTests no mundo | 247 |
 | Log vazio | `No signal change yet.` no meio da tabela | 248 |
 | Aba `Log` em português | `Registro` | 249 |
+| Entrega do Network Terminal | Um PR; a arte vem primeiro, e a tela espera por ela | 250 |
+| Visual do Network Terminal | Console de bloco cheio com visor na frente, um estado só | 251 |
+| Ações na tela do Terminal | Rede selecionada e barra de botões; confirmação no segundo clique | 252 |
+| Terminal perdido | Conferido ao colocar outro, só com o chunk carregado | 253 |
+| Segundo Terminal | Aviso com a posição do Terminal do player | 254 |
+| Textos da tela do Terminal | `Open`, `Turn off`, `Turn on`, `Clear nodes`, `Delete`, confirmação, contagem e dica | 255 |
+| Terminal sem redes | Texto que ensina a criar uma rede | 256 |
+| Testes do Terminal | JUnit no domínio e na aplicação, GameTests no mundo | 257 |
+| Cobre das texturas do Terminal | Igual ao do Network Controller | 258 |
+| `Open` do Terminal | A Tela do Controlador fica ancorada no Terminal | 259 |
+| Fechar a tela aberta pelo Terminal | Esc fecha tudo | 260 |
+| Contagem do topo do Terminal | Singular e plural | 261 |
 
 Não há perguntas pendentes da concepção.
 
@@ -258,6 +270,13 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 10:30 | Registra a decisão 261. |
+| Zennd | 2026-11-12 10:25 | Registra as decisões 259 e 260. |
+| Zennd | 2026-11-12 10:07 | Registra a decisão 258. |
+| Zennd | 2026-11-12 09:54 | Registra a decisão 257. |
+| Zennd | 2026-11-12 09:52 | Registra as decisões 253 a 256. |
+| Zennd | 2026-11-12 09:49 | Registra as decisões 251 e 252. |
+| Zennd | 2026-11-12 09:48 | Registra a decisão 250. |
 | Zennd | 2026-11-12 09:30 | Registra a decisão 249. |
 | Zennd | 2026-11-12 09:25 | Registra a decisão 248. |
 | Zennd | 2026-11-12 09:20 | Registra as decisões 246 e 247. |

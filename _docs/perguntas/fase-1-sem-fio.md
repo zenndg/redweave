@@ -11,6 +11,18 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 261 | Com uma rede só, a contagem do topo da tela do Terminal vira `1 networks`. Como tratar? | Com singular e plural: `1 network` e `1 rede`, e `<n> networks` e `<n> redes`, como a contagem de nós da escolha de rede. Muda a pergunta 255 |
+| 260 | O que acontece ao fechar a Tela do Controlador aberta pelo Network Terminal? | Esc fecha a tela e volta ao mundo, como hoje. Para ver a lista, o player clica no Terminal de novo |
+| 259 | Como vale a Tela do Controlador aberta pelo `Open` do Network Terminal, com o controlador longe ou em outra dimensão? | Ancorada no Terminal: vale enquanto o dono está ao alcance do Terminal e a rede segue `Online`, e renomear e recolorir são conferidos nessa âncora (regra 17). Aberta no controlador, segue como antes. Completa as perguntas 131, 152 e 158 |
+| 258 | As texturas geradas do Network Terminal usam na moldura o cobre do prompt (`#E0A070` e `#8E5534`), diferente do Network Controller (`#E0975F` e `#8E5226`). O que fazer? | Igualar ao controlador: só essas duas cores são trocadas, pixel a pixel, nas três texturas, para os dois blocos serem da mesma família lado a lado. Os originais ficam em `tmp/arte/network_terminal/`. Completa a pergunta 251 |
+| 257 | Em que fronteiras entram os testes da #89? | JUnit no domínio: limpar os nós de uma rede, só pelo dono, e apagar uma rede só `Unplaced`. JUnit na aplicação: listar as redes do dono em ordem alfabética com estado e nós; desligar, religar, renomear, limpar e apagar conferindo o dono; e o registro de Terminais (um por player, liberar ao quebrar e conferir o perdido, pergunta 253). GameTests: o segundo Terminal recusado com a posição, outro player não abre nem quebra, a explosão não destrói, limpar deixa os nós `No network`, o `Delete` de uma `Unplaced` e o menu com `FakePlayerFactory` executando as ações e recusando quem não é dono ou está longe. A tela fica no roteiro manual |
+| 256 | O que a lista do Network Terminal mostra quando o dono ainda não tem nenhuma rede? | `No network yet. Place a Network Controller to create one.` e `Nenhuma rede ainda. Coloque um Controlador de Rede para criar uma.` no meio da lista, como a escolha de rede vazia (pergunta 199), e a barra sem botões |
+| 255 | Quais são os textos da tela do Network Terminal? | Botões `Open`, `Turn off`, `Turn on`, `Clear nodes` e `Delete`, e `Abrir`, `Desligar`, `Ligar`, `Limpar nós` e `Apagar`. Confirmação: `Click again to clear` e `Click again to delete`, e `Clique de novo para limpar` e `Clique de novo para apagar`. Topo: `<n> networks` e `<n> redes`. Dica: `Double-click a name to rename it.` e `Clique duas vezes num nome para renomear.` Completa a pergunta 252 |
+| 254 | Que texto a action bar mostra ao tentar colocar um segundo Network Terminal? | `You already have a Network Terminal at <x>, <y>, <z>.` e `Você já tem um Terminal de Rede em <x>, <y>, <z>.`, com a posição do Terminal do próprio player, para ele achar o que tem. Completa a pergunta 137 |
+| 253 | Se o bloco do Network Terminal some sem ser quebrado, como por comando, o registro em `terminals` impede o dono de colocar outro? | Não para sempre: ao colocar um novo, o servidor confere o registrado. Se o chunk dele está carregado e o bloco não é mais um Terminal, o registro cai e o novo entra. Com o chunk descarregado, recusa com a posição, sem carregar o chunk (regra 6). Completa as perguntas 137 e 175 |
+| 252 | Na tela do Network Terminal, onde ficam as ações de cada rede? | Numa barra de botões embaixo da lista: um clique seleciona a linha (quadrado da cor, nome, pílula de estado e quantidade de nós), e a barra mostra só as ações que valem para o estado dela. Limpar nós e `Delete` confirmam no segundo clique, no próprio botão, como o `Clear slot` (perguntas 84, 133 e 166). O duplo clique no nome renomeia, como na Tela do Controlador (pergunta 222) |
+| 251 | Qual é o conceito visual do bloco Network Terminal? | Um console de bloco cheio, como o Network Controller: corpo de deepslate polido com moldura de cobre, a frente com um visor escuro (`#0E1116`) com linhas curtas coloridas, uma por rede, e as laterais com a grelha do controlador. A frente vira para o player ao colocar. Um estado só, sem textura acesa; a camada emissiva fica com a #24, como no controlador |
+| 250 | Como a #89, o Network Terminal, é entregue, sendo a maior issue da fase? | Numa issue e num PR, como a #20 (pergunta 213). Os prompts de arte do bloco e da tela vêm primeiro; o domínio, o save e o bloco andam com TDD enquanto a arte não chega, e a tela espera a arte aprovada (perguntas 185, 186 e 231) |
 | 249 | Como fica em português o nome da aba `Log` da Tela do Controlador? | `Registro`, traduzida como as outras abas (`Nós`, `Sinais` e `Acesso`) |
 | 248 | O que a aba `Log` da Tela do Controlador mostra quando ainda não há nenhuma mudança de sinal? | A tabela vazia com `No signal change yet.` e `Nenhuma mudança de sinal ainda.` no meio, como a aba `Nodes` sem nós (pergunta 220) |
 | 247 | Em que fronteiras entram os testes do log da #90? | JUnit no domínio: o `SignalLog` (a mais nova primeiro, descarta a mais antiga no limite, linhas depois de um número de sequência) e o acompanhamento das saídas por slot (o primeiro tick não gera linha, a mudança gera, slot desativado vale 0). JUnit nos casos de uso `ReadInput` e `EvaluateNetworks`, com relógio e config falsos. GameTests no mundo: a alavanca gera a linha de entrada e a de saída, e o menu montado com `FakePlayerFactory` recebe as linhas. A tela fica no roteiro manual |
@@ -249,6 +261,13 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 10:30 | Responde a pergunta 261. |
+| Zennd | 2026-11-12 10:25 | Responde as perguntas 259 e 260. |
+| Zennd | 2026-11-12 10:07 | Responde a pergunta 258. |
+| Zennd | 2026-11-12 09:54 | Responde a pergunta 257. |
+| Zennd | 2026-11-12 09:52 | Responde as perguntas 253 a 256. |
+| Zennd | 2026-11-12 09:49 | Responde as perguntas 251 e 252. |
+| Zennd | 2026-11-12 09:48 | Responde a pergunta 250. |
 | Zennd | 2026-11-12 09:30 | Responde a pergunta 249. |
 | Zennd | 2026-11-12 09:25 | Responde a pergunta 248. |
 | Zennd | 2026-11-12 09:20 | Responde as perguntas 246 e 247. |

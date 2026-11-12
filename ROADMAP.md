@@ -73,7 +73,7 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [x] Controller Screen: node list with name, signal and position, rename and access (#20)
 - [x] Signal Node with 16 fixed slots, one per channel color, each enabled or disabled and named (#20)
 - [x] Configurator `Toggle` mode: enable or disable every configured channel of a node (#20)
-- [ ] Signal change log on the Controller Screen (#90)
+- [x] Signal change log on the Controller Screen (#90)
 - [ ] Network Terminal: list, rename, turn off and on, clear nodes and delete unplaced networks (#89)
 - [ ] Configurator mode display and floating labels over nodes (#80)
 

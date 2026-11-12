@@ -25,7 +25,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
-| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE` e `NETWORK_LIMIT`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14 e #87 |
+| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE`, `NETWORK_LIMIT`, `NETWORK_NOT_UNPLACED` e `TERMINAL_LIMIT`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14, #87 e #89 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
@@ -57,6 +57,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeCopy` | Os slots já ativados de um nó, com o status e o nome (pergunta 230), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
 | `CopiedSlot` | Um slot da cópia: a posição no nó e a configuração | #17 |
 | `Pasted` | Os 16 slots de um nó depois de colar e quantos ficaram ativos (perguntas 106 e 230) | #17 e #20 |
+| `SlotEdits` | Dentro da rede: como um slot muda (configurar, ativar, desativar, preparar, dar nome e liberar), depois de o `Network` conferir o dono. Saiu do `Network` como `SlotChanges` | #89 |
+| `clearNodes` e `deletion` | O que o Network Terminal faz numa rede: tirar todos os nós, que ficam no mundo sem rede, e conferir se ela pode ser apagada, só `Unplaced`. A rede apagada sai do save pela aplicação (perguntas 133, 166 e 176) | #89 |
 | `SignalChange` | Uma linha do log da Tela do Controlador: a data e a hora, os nomes do nó e do canal do momento, o canal, a direção e o valor (perguntas 147 e 245) | #90 |
 | `SignalLog` | O log de uma rede: um buffer circular com o tamanho do config, só em memória, a linha mais nova primeiro. Cada linha tem uma sequência crescente, para a tela aberta receber só as novas (perguntas 147 e 242) | #90 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |

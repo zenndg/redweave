@@ -147,12 +147,32 @@ Entregue com a issue #90 (perguntas 147, 148 e 242 a 249).
 | 79 | Puxe a alavanca mais vezes do que cabe na tela e role a roda do mouse | A lista rola; com mais de `log.size` linhas, as mais antigas somem |
 | 80 | Troque o idioma para Português (Brasil) | A aba `Registro`, `Entrada` e `Saída` nas linhas e `Nenhuma mudança de sinal ainda.` no log vazio, sem nada passando da borda |
 
+## Fase 1: o Network Terminal
+
+Entregue com a issue #89 (perguntas 130 a 166 e 250 a 261). Use dois players, como nos passos anteriores.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 81 | Coloque um Network Terminal | O bloco fiel a `network-terminal.png`: o visor com as linhas coloridas virado para você, a grelha nas laterais e a moldura de cobre igual à do controlador |
+| 82 | Tente colocar um segundo Terminal | Nada é colocado, o item fica, e a action bar mostra `You already have a Network Terminal at <x>, <y>, <z>.` com a posição do primeiro |
+| 83 | Com o segundo player, clique no Terminal com a mão vazia e tente quebrá-lo | Nada abre, a action bar mostra `Only the owner can use this terminal.`, e o bloco não quebra |
+| 84 | Abra o Terminal com três redes, uma `Online`, uma `Offline` e uma `Unplaced` | A tela fiel a `tela-do-terminal.png`: as redes em ordem alfabética, com a cor, o nome, a pílula do estado e os nós; `3 networks` no topo |
+| 85 | Selecione cada rede | Só os botões do estado: `Open`, `Turn off` e `Clear nodes`; `Turn on` e `Clear nodes`; `Clear nodes` e `Delete` |
+| 86 | Dê duplo clique no nome de uma rede, digite um nome e aperte Enter | O nome muda na lista e na Tela do Controlador; Esc cancela |
+| 87 | Desligue e religue uma rede | A pílula vira `Offline` e volta a `Online`; os nós e o controlador apagam e acendem |
+| 88 | `Open` numa rede com o controlador longe ou em outra dimensão | A Tela do Controlador abre; afastando-se do Terminal, ela fecha; Esc volta ao mundo |
+| 89 | `Clear nodes` uma vez e depois de novo | O primeiro clique troca o botão por `Click again to clear`; o segundo tira os nós, que ficam `No network` no mundo |
+| 90 | `Delete` numa rede `Unplaced`, com os dois cliques | A rede some da lista, e os nós dela ficam `No network` |
+| 91 | Quebre o Terminal e coloque outro em outro lugar; reinicie o servidor e tente colocar mais um | O primeiro libera o player; depois de reiniciar, o limite continua valendo |
+| 92 | Troque o idioma para Português (Brasil) | `Terminal de Rede`, `Abrir`, `Desligar`, `Ligar`, `Limpar nós`, `Apagar`, `Não colocada` e `1 rede` ou `3 redes`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 10:33 | Adiciona os passos 81 a 92, do Network Terminal (perguntas 250 a 261). |
 | Zennd | 2026-11-12 09:32 | Adiciona os passos 75 a 80, do log da Tela do Controlador (perguntas 242 a 249). |
 | Zennd | 2026-11-11 17:45 | Adiciona o passo 72b, do modo `Toggle`, e ajusta a contagem do passo 72 (perguntas 240 e 241). |
 | Zennd | 2026-11-11 17:20 | Adiciona o passo 72a, de colar num nó sem rede (pergunta 238). |

@@ -101,7 +101,7 @@ O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 b
 
 ## Blocos e itens da Fase 1
 
-Os quatro elementos da primeira interação. O Network Terminal, que entrou depois (pergunta 130), ganha a prancha na issue dele. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
+Os quatro elementos da primeira interação e o Network Terminal, que entrou depois (pergunta 130) e ganha a prancha na #89. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
 
 ### Network Controller
 
@@ -121,6 +121,23 @@ Bloco, `redweave:network_controller`. Onde a rede nasce: guarda nome, cor, dono 
 | Online | Núcleo aceso; cada canal ligado acende o seu LED |
 | Sem nós | Núcleo aceso fraco, painel apagado |
 | Sem rede | Controlador sem rede, como o que sobra depois de reiniciar o servidor antes da #16: núcleo apagado (perguntas 53 e 57) |
+
+### Network Terminal
+
+![Network Terminal](../imagens/conceito/network-terminal.png)
+
+Bloco, `redweave:network_terminal`. Administra todas as redes do dono, de onde ele as renomeia, desliga, religa, limpa e abre (pergunta 131). A prancha veio da #89 (perguntas 185, 186 e 251), e as texturas usam na moldura o mesmo cobre do Network Controller (pergunta 258).
+
+| Parte | Como é |
+|---|---|
+| Corpo | Deepslate polido, com moldura de cobre em todas as faces, como o Network Controller |
+| Frente | Visor escuro (`#0E1116`) com linhas curtas coloridas, uma por rede, como uma lista. A frente vira para o player ao colocar |
+| Lateral | A grelha de ventilação do controlador |
+| Topo e base | Deepslate com moldura de cobre, sem núcleo |
+
+| Estado | Visual |
+|---|---|
+| Único | O Terminal não tem estado próprio. A camada emissiva do visor chega com a #24, como no controlador |
 
 ### Signal Node
 
@@ -184,6 +201,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:49 | Adiciona o conceito e a prancha do Network Terminal (perguntas 251 e 258). |
 | Zennd | 2026-11-11 09:51 | Troca as ações do Configurator pelos modos, com as cores e os tons (perguntas 143 e 159 a 169). |
 | Marcelo Fabiano | 2026-11-10 09:05 | Corrige o estado Sem rede do Network Controller. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Separa os estados `Unloaded` e `Out of range` (pergunta 29). |

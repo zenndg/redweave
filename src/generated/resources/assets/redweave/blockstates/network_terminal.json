@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "redweave:block/network_terminal",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "redweave:block/network_terminal"
+    },
+    "facing=south": {
+      "model": "redweave:block/network_terminal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "redweave:block/network_terminal",
+      "y": 270
+    }
+  }
+}

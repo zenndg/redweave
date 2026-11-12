@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.registry;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
+import io.github.marcelofabianov.redweave.menu.TerminalMenu;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
@@ -14,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class RedweaveMenus {
   private static final String NODE_ID = "signal_node";
   private static final String CONTROLLER_ID = "network_controller";
+  private static final String TERMINAL_ID = "network_terminal";
 
   private static final DeferredRegister<MenuType<?>> MENUS =
       DeferredRegister.create(Registries.MENU, RedweaveMod.MOD_ID);
@@ -23,6 +25,9 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<ControllerMenu>> CONTROLLER =
       MENUS.register(CONTROLLER_ID, () -> IMenuTypeExtension.create(ControllerMenu::new));
+
+  public static final Supplier<MenuType<TerminalMenu>> TERMINAL =
+      MENUS.register(TERMINAL_ID, () -> IMenuTypeExtension.create(TerminalMenu::new));
 
   private RedweaveMenus() {}
 

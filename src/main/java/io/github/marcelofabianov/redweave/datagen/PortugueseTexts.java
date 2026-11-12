@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
+import io.github.marcelofabianov.redweave.block.TerminalMessages;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
 import java.util.function.BiConsumer;
@@ -16,6 +17,9 @@ final class PortugueseTexts {
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
+  private static final String NETWORK_TERMINAL = "Terminal de Rede";
+  private static final String TERMINAL_NOT_OWNER = "Só o dono pode usar este terminal.";
+  private static final String TERMINAL_LIMIT = "Você já tem um Terminal de Rede em %s, %s, %s.";
   private static final String OFFLINE = "%s está desligada. Ligue-a num Terminal de Rede.";
   private static final String NETWORK_LIMIT_REACHED = "Você chegou ao limite de %s redes.";
   private static final String NETWORK_LIMIT_HINT = " Apague uma não colocada num Terminal de Rede.";
@@ -29,9 +33,13 @@ final class PortugueseTexts {
   static void addTo(BiConsumer<String, String> add) {
     add.accept(RedweaveLanguageProvider.MOD_DESCRIPTION_KEY, MOD_DESCRIPTION);
     add.accept(RedweaveBlocks.NETWORK_CONTROLLER.get().getDescriptionId(), NETWORK_CONTROLLER);
+    add.accept(RedweaveBlocks.NETWORK_TERMINAL.get().getDescriptionId(), NETWORK_TERMINAL);
+    add.accept(TerminalMessages.NOT_OWNER, TERMINAL_NOT_OWNER);
+    add.accept(TerminalMessages.LIMIT, TERMINAL_LIMIT);
     add.accept(RedweaveCreativeTabs.TITLE, TAB);
     NodeScreenPortugueseTexts.addTo(add);
     ControllerScreenPortugueseTexts.addTo(add);
+    TerminalPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);

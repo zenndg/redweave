@@ -14,6 +14,7 @@ final class InMemoryNetworks
     implements AllNetworksFinder,
         NetworkFinder,
         NetworkSaver,
+        NetworkRemover,
         NodeNetworkFinder,
         OwnerNetworkFinder {
   private final Map<NetworkId, Network> networks = new LinkedHashMap<>();
@@ -33,6 +34,11 @@ final class InMemoryNetworks
   public void save(Network network) {
     networks.put(network.id(), network);
     saves++;
+  }
+
+  @Override
+  public void remove(NetworkId id) {
+    networks.remove(id);
   }
 
   @Override

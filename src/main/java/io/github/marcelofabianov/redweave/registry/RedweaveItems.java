@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.registry;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
+import io.github.marcelofabianov.redweave.item.NetworkTerminalItem;
 import java.util.Collection;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -16,6 +17,7 @@ public final class RedweaveItems {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
   private static final String SIGNAL_NODE_ID = "signal_node";
   private static final String CONFIGURATOR_ID = "configurator";
+  private static final String NETWORK_TERMINAL_ID = "network_terminal";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -34,6 +36,14 @@ public final class RedweaveItems {
   public static final DeferredItem<ConfiguratorItem> CONFIGURATOR =
       ITEMS.register(
           CONFIGURATOR_ID, () -> new ConfiguratorItem(new Item.Properties().stacksTo(1)));
+
+  /** One per player in the world, so the stack is the usual one (answer 137). */
+  public static final DeferredItem<NetworkTerminalItem> NETWORK_TERMINAL =
+      ITEMS.register(
+          NETWORK_TERMINAL_ID,
+          () ->
+              new NetworkTerminalItem(
+                  RedweaveBlocks.NETWORK_TERMINAL.get(), new Item.Properties()));
 
   private RedweaveItems() {}
 
