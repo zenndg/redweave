@@ -75,7 +75,7 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [x] Configurator `Toggle` mode: enable or disable every configured channel of a node (#20)
 - [x] Signal change log on the Controller Screen (#90)
 - [x] Network Terminal: list, rename, turn off and on, clear nodes and delete unplaced networks (#89)
-- [ ] Configurator mode display and floating labels over nodes (#80)
+- [x] Configurator mode display and floating labels over nodes (#80)
 
 ### Phase 1 decisions answered after the audit
 
