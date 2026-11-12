@@ -303,6 +303,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | O que ainda não existe | Marcado como planejado: grafo na Fase 3, detalhes do Remote na #22 | 318 |
 | Ajustes da auditoria | `Clear slot` saiu, ponteiro da 278, sem upgrades, estados do controlador pelo código | 319 |
 | Arquivo das perguntas da Fase 2 | `fase-1-sem-fio.md`, porque as Fases 1 e 2 formam a v0.1.0 | 320 |
+| Entrada das portas | Binária: ligada acima de 0 | 321 |
+| Saída das portas | Ligada emite 15, desligada 0 | 322 |
+| Pacote das portas e dos módulos | Portas e NOT em `domain/circuit/`; módulos em `domain/module/`, na #103 | 323 |
+| Forma das portas | `enum Gate` com `output(a, b)`; o NOT na classe `Not`; a chave do save entra na #31 | 324, 325 |
+| Ordem das portas | `AND`, `OR`, `XOR`, `NAND`, também a do Shift + scroll | 326 |
+| Testes das portas | Tabela literal com as forças 0, 1 e 15 | 327 |
+| Documento das portas | `_docs/funcionalidades/portas-logicas.md` | 328 |
 
 Não há perguntas pendentes da concepção.
 
@@ -310,6 +317,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:24 | Registra as decisões 325 a 328. |
+| Zennd | 2026-11-12 18:22 | Registra as decisões 321 a 324. |
 | Zennd | 2026-11-12 17:18 | Atualiza os resumos mudados por respostas novas, como o `Toggle`, os 16 canais inativos e a saída do nome do slot (perguntas 166, 224, 226, 229, 233, 237, 238, 241, 262, 271, 277, 281, 303, 308, 310 e 313). |
 | Zennd | 2026-11-12 17:27 | Registra as decisões 304 a 320. |
 | Zennd | 2026-11-12 13:25 | Registra as decisões 279 a 303. |

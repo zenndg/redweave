@@ -123,7 +123,8 @@ src/main/java/io/github/marcelofabianov/redweave/
 ├── domain/                  # pure Java, no Minecraft imports
 │   ├── signal/              # Signal (0–15), ChannelColor
 │   ├── network/             # Network aggregate, Node, Channel, permissions
-│   ├── circuit/             # gates, connections, chips (planned, phases 2 and 3)
+│   ├── circuit/             # AND, OR, XOR and NAND gates and the NOT rule; chips in phase 3
+│   ├── module/              # Signal Module base and rules (planned, #103)
 │   └── simulation/          # tick evaluator, loop and oscillation detection
 ├── application/             # use cases (one per player action) and their ports
 ├── config/                  # server config, implements the domain limits

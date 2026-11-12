@@ -18,11 +18,13 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`no-de-sinal.md`](no-de-sinal.md) | 1 | O Signal Node: colocar, ler, emitir, clicar e quebrar |
 | [`terminal-de-rede.md`](terminal-de-rede.md) | 1 | O Network Terminal: as redes do player, desligar, religar, limpar e apagar |
 | [`configurador.md`](configurador.md) | 1 | O Configurator: os modos de abrir, copiar e colar, e retirar nós |
+| [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:26 | Adiciona a página das portas lógicas (pergunta 328). |
 | Zennd | 2026-11-12 16:50 | Troca a lógica por canal e as portas em placa pelos Signal Modules (perguntas 308 a 310). |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, atualiza o Configurator e tira a página da etiqueta (perguntas 125 e 155). |
 | Marcelo Fabiano | 2026-11-10 16:29 | Adiciona a página da etiqueta. |
