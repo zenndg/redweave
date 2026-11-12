@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.server;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
@@ -31,6 +32,8 @@ final class NetworkSave {
   private static final String VERSION_KEY = "version";
   private static final String NETWORKS = "networks";
   private static final String LAST_USED = "last_used";
+  private static final String TERMINALS = "terminals";
+  private static final String TERMINAL_PART = "network terminal";
   private static final String NETWORK_PART = "network";
   private static final String LAST_USED_PART = "last used network";
   private static final String REPEATED = "repeated in the save";
@@ -50,30 +53,49 @@ final class NetworkSave {
                       .forGetter(Root::networks),
                   Lenient.list(LastUsedChoice.CODEC, LAST_USED_PART)
                       .optionalFieldOf(LAST_USED, List.of())
-                      .forGetter(Root::lastUsed))
+                      .forGetter(Root::lastUsed),
+                  Lenient.list(SavedTerminal.CODEC, TERMINAL_PART)
+                      .optionalFieldOf(TERMINALS, List.of())
+                      .forGetter(Root::terminals))
               .apply(instance, Root::new));
 
   private NetworkSave() {}
 
   /** What the save holds, in the order it was written. */
-  record Contents(Map<NetworkId, Network> networks, Map<PlayerId, NetworkId> lastUsed) {
+  record Contents(
+      Map<NetworkId, Network> networks,
+      Map<PlayerId, NetworkId> lastUsed,
+      Map<PlayerId, BlockLocation> terminals) {
     static Contents empty() {
-      return new Contents(new LinkedHashMap<>(), new LinkedHashMap<>());
+      return new Contents(new LinkedHashMap<>(), new LinkedHashMap<>(), new LinkedHashMap<>());
+    }
+
+    /** What goes to the file, in the order it was written. */
+    CompoundTag writeInto(CompoundTag tag) {
+      return write(tag, networks.values(), lastUsed, terminals);
     }
   }
 
-  private record Root(List<SavedNetwork> networks, List<LastUsedChoice> lastUsed) {}
+  private record Root(
+      List<SavedNetwork> networks, List<LastUsedChoice> lastUsed, List<SavedTerminal> terminals) {}
 
   static CompoundTag write(
-      CompoundTag tag, Collection<Network> networks, Map<PlayerId, NetworkId> lastUsed) {
+      CompoundTag tag,
+      Collection<Network> networks,
+      Map<PlayerId, NetworkId> lastUsed,
+      Map<PlayerId, BlockLocation> terminals) {
     List<SavedNetwork> saved =
         networks.stream().map(network -> SavedNetwork.of(network.snapshot())).toList();
     List<LastUsedChoice> choices =
         lastUsed.entrySet().stream()
             .map(entry -> new LastUsedChoice(entry.getKey(), entry.getValue()))
             .toList();
-    tag.merge(
-        (CompoundTag) ROOT.encodeStart(NbtOps.INSTANCE, new Root(saved, choices)).getOrThrow());
+    List<SavedTerminal> placed =
+        terminals.entrySet().stream()
+            .map(entry -> new SavedTerminal(entry.getKey(), entry.getValue()))
+            .toList();
+    Root root = new Root(saved, choices, placed);
+    tag.merge((CompoundTag) ROOT.encodeStart(NbtOps.INSTANCE, root).getOrThrow());
     tag.putInt(VERSION_KEY, VERSION);
     return tag;
   }
@@ -96,7 +118,8 @@ final class NetworkSave {
       return Contents.empty();
     }
     Map<NetworkId, Network> networks = restore(root.get().networks(), limits);
-    return new Contents(networks, lastUsed(root.get().lastUsed(), networks));
+    return new Contents(
+        networks, lastUsed(root.get().lastUsed(), networks), terminals(root.get().terminals()));
   }
 
   private static Map<NetworkId, Network> restore(List<SavedNetwork> saved, NetworkLimits limits) {
@@ -138,5 +161,16 @@ final class NetworkSave {
       }
     }
     return lastUsed;
+  }
+
+  /** One Network Terminal per player, so a repeated one is dropped (answers 137 and 175). */
+  private static Map<PlayerId, BlockLocation> terminals(List<SavedTerminal> saved) {
+    Map<PlayerId, BlockLocation> terminals = new LinkedHashMap<>();
+    for (SavedTerminal terminal : saved) {
+      if (terminals.putIfAbsent(terminal.player(), terminal.block()) != null) {
+        Lenient.dropped(TERMINAL_PART, REPEATED);
+      }
+    }
+    return terminals;
   }
 }
