@@ -11,6 +11,7 @@ import java.util.Map;
 final class NetworkSignals {
   private final Nodes nodes;
   private final Readings readings;
+  private final RemoteInputs remotes;
   private final Channels channels;
   private final NetworkStatus status;
   private final NetworkLimits limits;
@@ -18,11 +19,13 @@ final class NetworkSignals {
   NetworkSignals(
       Nodes nodes,
       Readings readings,
+      RemoteInputs remotes,
       Channels channels,
       NetworkStatus status,
       NetworkLimits limits) {
     this.nodes = nodes;
     this.readings = readings;
+    this.remotes = remotes;
     this.channels = channels;
     this.status = status;
     this.limits = limits;
@@ -139,7 +142,13 @@ final class NetworkSignals {
         readings.addInputsOf(node, values);
       }
     }
+    remotes.addTo(nodes, values);
     return values;
+  }
+
+  /** The Signal Remotes that count now, for the Controller Screen; none when not online (364). */
+  int remotesOn() {
+    return isOnline() ? remotes.count(nodes) : 0;
   }
 
   /** Whether a node counts: the network is online and the node is in range (answer 132). */
