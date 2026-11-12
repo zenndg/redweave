@@ -310,7 +310,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ordem das portas | `AND`, `OR`, `XOR`, `NAND`, também a do Shift + scroll | 326 |
 | Testes das portas | Tabela literal com as forças 0, 1 e 15 | 327 |
 | Documento das portas | `_docs/funcionalidades/portas-logicas.md` | 328 |
-| Espaço da linha `Logic` | O painel e a Tela do Nó encolhem 60 px, para 90 e 190 px; a escolha de rede mostra 4 redes | 329, 333 |
+| Espaço da linha `Logic` | O painel e a Tela do Nó encolhem 60 px, para 90 e 190 px; a escolha de rede mostra 4 redes. Mudado pela 348 | 329, 333, 348 |
 | Dica da Fase 2 no painel | Sai sem substituta | 330 |
 | Prancha da Tela do Nó | Nova, gerada por IA a partir de `tmp/arte/tela_do_no/` | 331 |
 | Testes da #106 | Paridade, `check-generated` e os passos 103 a 106 do roteiro manual | 332, 334 |
@@ -324,6 +324,11 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Prancha da Tela do Controlador | Nova, gerada por IA a partir de `tmp/arte/tela_do_controlador/` | 342 |
 | Terminal com o Configurator | Abre no modo `Open`, como a mão vazia, como o controlador; entra no PR #121 | 343, 344 |
 | Slots do Signal Node | Continuam 16; o layout da Tela do Nó melhora numa issue própria | 345 |
+| Layout da Tela do Nó | Painel em duas colunas: controles e medidor à esquerda, cubo de 40 px à direita | 346 |
+| Rodapé da Tela do Nó | Canais ativos à esquerda; cadeado só para os outros, à direita | 347 |
+| Tamanho da Tela do Nó | Painel de 76 px, rodapé de 20 px, tela de 168 px; escolha de rede com 3 redes | 348 |
+| Ordem da reorganização da Tela do Nó | Issue nova, logo depois da #107 e antes da #22 | 349 |
+| Prancha da Tela do Nó | Uma só, já com o layout novo | 350 |
 | Shift + scroll no macOS | Sem rolagem vertical, vale a horizontal invertida, como a hotbar; corrigido no PR #121 | 351 |
 
 Não há perguntas pendentes da concepção.
@@ -333,6 +338,8 @@ Não há perguntas pendentes da concepção.
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
 | Zennd | 2026-11-12 19:38 | Registra a decisão 351. |
+| Zennd | 2026-11-12 19:33 | Registra as decisões 347 a 350. |
+| Zennd | 2026-11-12 19:31 | Registra a decisão 346. |
 | Zennd | 2026-11-12 19:21 | Registra as decisões 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a decisão 342. |
 | Zennd | 2026-11-12 18:57 | Registra as decisões 339 a 341. |

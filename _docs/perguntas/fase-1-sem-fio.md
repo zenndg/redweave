@@ -12,6 +12,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | # | Pergunta | Resposta |
 |---|---|---|
 | 351 | No macOS, o Shift + roda do mouse vira rolagem horizontal, e o Configurator não troca de modo. Onde entra a correção? | No PR #121, a pedido do desenvolvedor: sem rolagem vertical, vale a horizontal invertida, como a hotbar do jogo faz em `MouseHandler.onScroll`. Para baixo continua avançando (pergunta 241). Completa a pergunta 143 |
+| 350 | A prancha nova da Tela do Nó (pergunta 331) ainda não foi gerada. Como fica o prompt? | O `tmp/arte/tela_do_no/prompt.md` é reescrito com o layout novo, para uma prancha só, já no formato final. Completa a pergunta 331 |
+| 349 | Quando entra a reorganização da Tela do Nó? | Numa issue nova, na milestone da Fase 1 e com a label de UX, como passo do roadmap logo depois da #107 e antes da #22. A branch sai da `develop` depois do merge do PR #121 |
+| 348 | Qual o tamanho da Tela do Nó com o painel em duas colunas? | O painel passa de 90 para 76 px, com as quatro linhas da esquerda e o cubo de 40 px, e o rodapé fica com uma linha, de 20 px. A tela passa de 190 para 168 px, e a escolha de rede, de 114 para 92 px, mostra 3 redes por vez, com a rolagem. Muda a pergunta 333 (regra 38) |
+| 347 | Com o medidor no painel, o que fica no rodapé da Tela do Nó? | À esquerda, os canais ativos, como `3 of 16 channels active`; à direita, só para quem não é o dono, o cadeado e `Only the owner of <rede> can change this node.`, como hoje (pergunta 85). Nada de texto novo. Completa a pergunta 346 |
+| 346 | Como se reorganiza a Tela do Nó, cujo painel do canal deixa a metade direita vazia? | Em duas colunas: à esquerda, o título do canal, o `Status`, a direção e o medidor do canal escolhido, que sai do rodapé; à direita, o cubo da face, maior, com 40 px, e o nome da face. O rodapé fica com os canais ativos. Completa a pergunta 345 |
 | 345 | O Signal Node passa de 16 para 10 slots, com a Tela do Nó reorganizada para aproveitar melhor o espaço? | Não: continuam os 16 slots, um por cor de canal (pergunta 224 e regra 3). A melhoria do layout da Tela do Nó entra numa issue própria, depois de o desenvolvedor dizer o que incomoda |
 | 344 | Em que PR entra a abertura do Network Terminal com o Configurator (pergunta 343)? | No PR #121, da #107, como um commit a mais na mesma branch, a pedido do desenvolvedor |
 | 343 | O Network Terminal, que abre com a mão vazia, passa a abrir também com o Configurator? | Sim, só no modo `Open`, que age como a mão vazia, com o mesmo aviso para quem não é o dono, como no Network Controller (pergunta 232). `Copy`, `Toggle` e `Wrench` continuam sem ação no Terminal (pergunta 164). Completa a pergunta 130 |
@@ -24,7 +29,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 336 | Com a coluna de estado, onde fica a cor âmbar e vermelha, que hoje pinta a linha inteira? | Só no texto da coluna de estado. Nome, tipo e sinal ficam na cor normal (#107) |
 | 335 | A tabela de nós tem 324 px. Com as colunas de estado e tipo, como ficam as colunas? | Nó, Tipo, Sinal e Estado, nessa ordem, com o nome até cerca de 150 px e espaço para `Fora de alcance`. A posição x, y e z sai da linha e aparece, só para o dono, no topo da linha aberta, acima dos canais. Muda a pergunta 179 (regra 38) (#107) |
 | 334 | A pergunta 332 pede um passo novo no roteiro manual, mas a conferência ficou com quatro: o painel sem `Logic` e sem a dica, o pé do painel sem tooltip, a escolha de rede com 4 redes e rolagem (pergunta 333) e o português. Como fica? | Ficam os quatro passos, de 103 a 106. Completa a pergunta 332 (#106) |
-| 333 | Quanto o painel do canal e a Tela do Nó encolhem? | 60 px: o painel passa de 150 para 90 px, com 8 px abaixo do cubo da face; a tela passa de 250 para 190 px; e a escolha de rede, de 174 para 114 px, mostra 4 redes por vez em vez de 6, com a rolagem que já existe. Completa a pergunta 329 (#106) |
+| 333 | Quanto o painel do canal e a Tela do Nó encolhem? | 60 px: o painel passa de 150 para 90 px, com 8 px abaixo do cubo da face; a tela passa de 250 para 190 px; e a escolha de rede, de 174 para 114 px, mostra 4 redes por vez em vez de 6, com a rolagem que já existe. Completa a pergunta 329 (#106) **Mudada pela pergunta 348:** o painel tem 76 px, a tela 168 px, e a escolha mostra 3 redes |
 | 332 | Como a remoção da linha `Logic` é conferida, se o GameTest não abre telas? | Pelos gates, com o teste de paridade das traduções e o `check-generated`, e por um passo novo no roteiro manual: a Tela do Nó, em inglês e em português, sem a linha `Logic` e sem a dica, com o painel encolhido (#106) **Completada pela pergunta 334:** quatro passos, de 103 a 106 |
 | 331 | A prancha `tela-do-no.png` mostra a linha `Logic`, a dica da Fase 2 e o campo `Name` do slot, que saiu pela pergunta 277. Como fica? | Uma prancha nova, gerada por IA: o agente escreve o `prompt.md` em `tmp/arte/tela_do_no/`, o desenvolvedor gera a imagem, e o agente a confere antes de substituir a antiga (perguntas 185 e 186) (#106) |
 | 330 | A dica no pé do painel do canal, `Logic arrives in Phase 2.`, com o tooltip `Until then, Output repeats the channel as it is.`, sai. Entra algo no lugar? | Nada: a dica sai sem substituta, como o `telas.md` já descreve a tela (#106) |
@@ -347,6 +352,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
 | Zennd | 2026-11-12 19:38 | Registra a resposta 351. |
+| Zennd | 2026-11-12 19:33 | Registra as respostas 347 a 350 e aponta a 333 para a 348. |
+| Zennd | 2026-11-12 19:31 | Registra a resposta 346. |
 | Zennd | 2026-11-12 19:21 | Registra as respostas 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a resposta 342, da #107. |
 | Zennd | 2026-11-12 18:57 | Registra as respostas 339 a 341, da #107. |

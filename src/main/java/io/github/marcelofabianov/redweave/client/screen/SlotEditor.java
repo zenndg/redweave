@@ -13,9 +13,10 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 
 /**
- * The panel of the open channel: its status, direction and block face (telas.md). It builds the
- * controls of a frame; drawing and clicking both use the same list, so they never disagree. An
- * enabled channel is locked, and a disabled one is set up (answers 228 and 237).
+ * The panel of the open channel, in two columns: the status, direction and signal on the left, and
+ * the block face on the right (telas.md and answer 346). It builds the controls of a frame; drawing
+ * and clicking both use the same list, so they never disagree. An enabled channel is locked, and a
+ * disabled one is set up (answers 228 and 237).
  */
 final class SlotEditor {
   static final int LABEL_X = 8;
@@ -23,8 +24,10 @@ final class SlotEditor {
   static final int TITLE_Y = 7;
   static final int STATUS_Y = 22;
   static final int DIRECTION_Y = 40;
-  static final int FACE_Y = 58;
-  static final int CUBE_SIZE = 24;
+  static final int SIGNAL_Y = 58;
+  static final int RIGHT_COLUMN_X = 196;
+  static final int CUBE_Y = 18;
+  static final int CUBE_SIZE = 40;
   static final int ROW_HEIGHT = 14;
   private static final int BUTTON_PADDING = 12;
 
@@ -39,7 +42,7 @@ final class SlotEditor {
   }
 
   static Box cubeBox(Box panel) {
-    return new Box(panel.x() + CONTROL_X, panel.y() + FACE_Y, CUBE_SIZE, CUBE_SIZE);
+    return new Box(panel.x() + RIGHT_COLUMN_X, panel.y() + CUBE_Y, CUBE_SIZE, CUBE_SIZE);
   }
 
   static boolean isEnabled(Optional<ChannelSlot> slot) {

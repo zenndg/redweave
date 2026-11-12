@@ -85,7 +85,7 @@ O canal 15 usa o vermelho da lã. O vermelho de redstone, `#E2392F`, fica para o
 
 ## Sinal
 
-O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 barras, que crescem em altura e intensidade. Sinal 0 fica apagado. A partir de 12, as barras brilham. O medidor aparece na Tela do Nó, no rodapé. O visor do Configurator mostra só a cor do modo (pergunta 271).
+O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 barras, que crescem em altura e intensidade. Sinal 0 fica apagado. A partir de 12, as barras brilham. O medidor aparece na Tela do Nó, no painel do canal escolhido (pergunta 346). O visor do Configurator mostra só a cor do modo (pergunta 271).
 
 ## Elementos de interface
 
@@ -188,6 +188,7 @@ Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift +
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:51 | O medidor da Tela do Nó vai para o painel do canal (pergunta 346). |
 | Zennd | 2026-11-12 19:23 | O modo `Open` abre também as telas do controlador e do Terminal (perguntas 232 e 343). |
 | Zennd | 2026-11-12 17:27 | Alinha os estados do controlador ao código (perguntas 177 e 319). |
 | Zennd | 2026-11-12 17:18 | Atualiza o medidor, os estados `Offline` e `Unplaced`, as abas, os cantos do nó, o Configurator e o Signal Remote em tablet (perguntas 135, 146, 177, 224, 229, 233, 241, 271, 279 e 282 a 291). |
