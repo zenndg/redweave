@@ -13,8 +13,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 
 /**
- * The panel of the open channel: its status, direction, block face and logic (telas.md). It builds
- * the controls of a frame; drawing and clicking both use the same list, so they never disagree. An
+ * The panel of the open channel: its status, direction and block face (telas.md). It builds the
+ * controls of a frame; drawing and clicking both use the same list, so they never disagree. An
  * enabled channel is locked, and a disabled one is set up (answers 228 and 237).
  */
 final class SlotEditor {
@@ -25,17 +25,8 @@ final class SlotEditor {
   static final int DIRECTION_Y = 40;
   static final int FACE_Y = 58;
   static final int CUBE_SIZE = 24;
-  static final int LOGIC_Y = 88;
   static final int ROW_HEIGHT = 14;
   private static final int BUTTON_PADDING = 12;
-  private static final int SPACING = 2;
-  private static final int RIGHT_PADDING = 6;
-  private static final List<String> LATER_LOGIC =
-      List.of(
-          NodeScreenTexts.LOGIC_INVERT,
-          NodeScreenTexts.LOGIC_PULSE,
-          NodeScreenTexts.LOGIC_DELAY,
-          NodeScreenTexts.LOGIC_THRESHOLD);
 
   private SlotEditor() {}
 
@@ -44,7 +35,6 @@ final class SlotEditor {
     Optional<ChannelSlot> slot = view.menu().slot(index);
     controls.add(statusButton(font, view, panel, index, slot));
     controls.addAll(directionButtons(font, view, panel, index, setUpOf(slot, index, stuck)));
-    controls.addAll(logicButtons(font, panel));
     return controls;
   }
 
@@ -105,22 +95,6 @@ final class SlotEditor {
         direction == Direction.INPUT ? NodeScreenTexts.INPUT : NodeScreenTexts.OUTPUT);
   }
 
-  /** Only None works in Phase 1; the others show what arrives in Phase 2 (telas.md). */
-  private static List<Control> logicButtons(Font font, Box panel) {
-    List<Control> buttons = new ArrayList<>();
-    Component none = Component.translatable(NodeScreenTexts.LOGIC_NONE);
-    Flow flow = new Flow(panel.x() + CONTROL_X, panel.y() + LOGIC_Y, panel.right() - RIGHT_PADDING);
-    buttons.add(Control.button(flow.next(font, none), Control.Look.CHOSEN, none, Optional.empty()));
-    Component later = Component.translatable(NodeScreenTexts.LOGIC_TOOLTIP);
-    for (String key : LATER_LOGIC) {
-      Component label = Component.translatable(key);
-      Control disabled =
-          Control.button(flow.next(font, label), Control.Look.DISABLED, label, Optional.empty());
-      buttons.add(disabled.withTooltip(later));
-    }
-    return buttons;
-  }
-
   private static Control choice(
       Box box, Component label, boolean chosen, NodeView view, int index, ChannelSlot changed) {
     if (chosen) {
@@ -139,31 +113,5 @@ final class SlotEditor {
 
   static Box button(Font font, Component label, int x, int y) {
     return new Box(x, y, font.width(label) + BUTTON_PADDING, ROW_HEIGHT);
-  }
-
-  /** Places buttons left to right and wraps them to a new row at the edge of the panel. */
-  private static final class Flow {
-    private final int left;
-    private final int right;
-    private int x;
-    private int y;
-
-    Flow(int left, int y, int right) {
-      this.left = left;
-      this.x = left;
-      this.y = y;
-      this.right = right;
-    }
-
-    Box next(Font font, Component label) {
-      Box box = button(font, label, x, y);
-      if (box.right() > right && x > left) {
-        x = left;
-        y += ROW_HEIGHT + SPACING;
-        box = button(font, label, x, y);
-      }
-      x = box.right() + SPACING;
-      return box;
-    }
   }
 }

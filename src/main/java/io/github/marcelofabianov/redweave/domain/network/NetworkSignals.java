@@ -78,8 +78,8 @@ final class NetworkSignals {
   }
 
   /**
-   * What a node emits in the world: it feeds its block like a lever, so its strongest output wins,
-   * whatever the face of each slot (answer 71).
+   * What a node emits in the world: it strongly powers only the block it sticks to, so its
+   * strongest output wins, whatever the face of each slot (answers 71 and 262).
    */
   Signal emission(NodeId nodeId) {
     Node node = nodes.at(nodeId);

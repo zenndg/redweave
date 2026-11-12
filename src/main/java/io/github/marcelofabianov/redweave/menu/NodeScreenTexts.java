@@ -16,14 +16,6 @@ public final class NodeScreenTexts {
   public static final String DIRECTION = PREFIX + "direction";
   public static final String BLOCK_FACE = PREFIX + "block_face";
   public static final String FACE_TOOLTIP = PREFIX + "face_tooltip";
-  public static final String LOGIC = PREFIX + "logic";
-  public static final String LOGIC_NONE = PREFIX + "logic.none";
-  public static final String LOGIC_INVERT = PREFIX + "logic.invert";
-  public static final String LOGIC_PULSE = PREFIX + "logic.pulse";
-  public static final String LOGIC_DELAY = PREFIX + "logic.delay";
-  public static final String LOGIC_THRESHOLD = PREFIX + "logic.threshold";
-  public static final String LOGIC_LATER = PREFIX + "logic_later";
-  public static final String LOGIC_TOOLTIP = PREFIX + "logic_tooltip";
   public static final String SIGNAL = PREFIX + "signal";
   public static final String CHANNELS_ACTIVE = PREFIX + "channels_active";
   public static final String STATUS = PREFIX + "status";

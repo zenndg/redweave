@@ -11,6 +11,12 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 334 | A pergunta 332 pede um passo novo no roteiro manual, mas a conferência ficou com quatro: o painel sem `Logic` e sem a dica, o pé do painel sem tooltip, a escolha de rede com 4 redes e rolagem (pergunta 333) e o português. Como fica? | Ficam os quatro passos, de 103 a 106. Completa a pergunta 332 (#106) |
+| 333 | Quanto o painel do canal e a Tela do Nó encolhem? | 60 px: o painel passa de 150 para 90 px, com 8 px abaixo do cubo da face; a tela passa de 250 para 190 px; e a escolha de rede, de 174 para 114 px, mostra 4 redes por vez em vez de 6, com a rolagem que já existe. Completa a pergunta 329 (#106) |
+| 332 | Como a remoção da linha `Logic` é conferida, se o GameTest não abre telas? | Pelos gates, com o teste de paridade das traduções e o `check-generated`, e por um passo novo no roteiro manual: a Tela do Nó, em inglês e em português, sem a linha `Logic` e sem a dica, com o painel encolhido (#106) **Completada pela pergunta 334:** quatro passos, de 103 a 106 |
+| 331 | A prancha `tela-do-no.png` mostra a linha `Logic`, a dica da Fase 2 e o campo `Name` do slot, que saiu pela pergunta 277. Como fica? | Uma prancha nova, gerada por IA: o agente escreve o `prompt.md` em `tmp/arte/tela_do_no/`, o desenvolvedor gera a imagem, e o agente a confere antes de substituir a antiga (perguntas 185 e 186) (#106) |
+| 330 | A dica no pé do painel do canal, `Logic arrives in Phase 2.`, com o tooltip `Until then, Output repeats the channel as it is.`, sai. Entra algo no lugar? | Nada: a dica sai sem substituta, como o `telas.md` já descreve a tela (#106) |
+| 329 | Sem a linha `Logic`, sobram cerca de 66 px no painel do canal da Tela do Nó. O que fazer com o espaço? | Encolher o painel e a tela, e o rodapé sobe. A escolha de rede, que usa a mesma altura, também encolhe (#106) **Completada pela pergunta 333:** as medidas |
 | 328 | Onde fica o documento das portas e da regra NOT (regra 9)? | Numa página nova, `_docs/funcionalidades/portas-logicas.md`, com as regras das portas e do NOT, que a #31 e a #105 completam com o lado do módulo (#28) |
 | 327 | Como os testes cobrem as tabelas-verdade? | Cada porta e o NOT com a tabela-verdade escrita linha a linha, desligado e ligado, aplicada às forças 0, 1 e 15, e a saída conferida como 0 ou 15. O teste não repete a regra (#28) |
 | 326 | A ordem do `enum Gate` vira a ordem do Shift + scroll (#32). Qual é ela? | `AND`, `OR`, `XOR` e `NAND`, a ordem que os documentos já usam (#28) |
@@ -328,6 +334,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:47 | Registra a resposta 334, da #106. |
+| Zennd | 2026-11-12 18:43 | Registra a resposta 333, da #106. |
+| Zennd | 2026-11-12 18:42 | Registra as respostas 329 a 332, da #106. |
 | Zennd | 2026-11-12 18:24 | Registra as respostas 325 a 328, da #28. |
 | Zennd | 2026-11-12 18:22 | Registra as respostas 321 a 324, da #28. |
 | Zennd | 2026-11-12 17:18 | Aponta as respostas antigas para as que as mudaram, como as 99, 126, 224, 226, 229, 233, 237, 238 e 303. |

@@ -30,6 +30,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
 | Escolher | Um clique numa rede liga o nó a ela, com os 16 canais inativos, e a tela segue para a configuração | 171 e 226 |
 | Linha | O quadrado na cor da rede, o nome e a quantidade de nós, como `1 node` e `12 nodes`. A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
+| Rolagem | A lista mostra 4 redes por vez e rola com a roda do mouse quando há mais | 333 |
 | Sem redes | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` | 199 |
 | Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
 | Voltar | Na troca, o botão `Back` no rodapé volta à configuração sem mudar nada. Não aparece na primeira escolha | 205 |
@@ -50,7 +51,9 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
 | Rodapé | O medidor de 15 barras com o sinal do canal escolhido e quantos canais estão ativos, como `3 of 16 channels active` |
 
-A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233).
+A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308). Sem a linha `Logic` e a dica da Fase 2, o painel tem 90 px de altura e a tela, 190 px (perguntas 329, 330 e 333).
+
+**Prancha:** a `tela-do-no.png` é anterior às perguntas 277 e 308 e ainda mostra o campo `Name` do slot, a linha `Logic` e a dica da Fase 2. Uma prancha nova, gerada por IA, a substitui (pergunta 331); até lá, vale esta página.
 
 ### Comportamento
 
@@ -122,6 +125,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:45 | Encolhe a Tela do Nó e a escolha de rede, tira a dica da Fase 2 e marca a prancha como anterior às perguntas 277 e 308 (perguntas 329 a 333). |
 | Zennd | 2026-11-12 17:27 | Deixa a presença do Signal Remote na lista para a #22 e cita as colunas da #107 (perguntas 311 e 318). |
 | Zennd | 2026-11-12 17:18 | Corrige a escolha de rede com os canais inativos, o tooltip do cubo e a pendência da aba `Info` (perguntas 226 e 233). |
 | Zennd | 2026-11-12 16:50 | Tira a linha `Lógica` da Tela do Nó, porque a lógica fica nos Signal Modules (pergunta 308). |
