@@ -243,6 +243,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Colar num nó com rede | Só aplica os slots, sem trocar a rede | 239 |
 | Contagem da cópia | Todos os canais configurados | 240 |
 | Modo `Toggle` do Configurator | Clique ativa os configurados; Shift + clique desativa | 241 |
+| Buffer do log | Fora do agregado: `SignalLog` no domínio e um registro por rede na aplicação | 242 |
+| Linha de saída do log | Por slot de saída, inclusive a queda para 0 por `Offline`, `Unplaced` ou fora de alcance | 243 |
+| Log ao carregar a rede | O primeiro tick não gera linhas | 244 |
+| Nomes no log | Os do momento da mudança | 245 |
+| Ativar e desativar uma saída no log | Gera linha, porque o valor emitido muda | 246 |
+| Testes do log | JUnit no domínio e nos casos de uso, GameTests no mundo | 247 |
+| Log vazio | `No signal change yet.` no meio da tabela | 248 |
+| Aba `Log` em português | `Registro` | 249 |
 
 Não há perguntas pendentes da concepção.
 
@@ -250,6 +258,10 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:30 | Registra a decisão 249. |
+| Zennd | 2026-11-12 09:25 | Registra a decisão 248. |
+| Zennd | 2026-11-12 09:20 | Registra as decisões 246 e 247. |
+| Zennd | 2026-11-12 09:18 | Registra as decisões 242 a 245. |
 | Zennd | 2026-11-11 17:30 | Registra as decisões 240 e 241. |
 | Zennd | 2026-11-11 17:08 | Registra as decisões 238 e 239. |
 | Zennd | 2026-11-11 16:52 | Registra a decisão 237. |
