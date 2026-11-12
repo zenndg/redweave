@@ -12,6 +12,8 @@ Alinhamento → Issue → Branch → Trabalho → Validação → Plano de commi
 
 Ao iniciar uma feature, o agente descreve em poucas linhas o que vamos fazer e pergunta ao desenvolvedor se tem algo mais para acrescentar. Só depois vêm a rodada de decisões, a issue e a branch (regra 40).
 
+**Refinamento máximo:** todo módulo ou funcionalidade nova passa por rodadas de perguntas até não restar dúvida nem furo, antes da documentação em `_docs/funcionalidades/` e do código. As rodadas cobrem, no mínimo, casos de borda, save e data components, config, permissões, chunk descarregado, rede `Offline` e `Unplaced`, visual e testes. Cada resposta entra em `_docs/perguntas/` (pergunta 307).
+
 ### 2. Issue
 
 Toda tarefa começa por uma issue, atribuída ao desenvolvedor, na milestone da fase e com a label da área, com o que entra e o que fica fora do escopo. Issues e PRs dividem a mesma numeração, então confirme o número antes de nomear a branch.
@@ -101,6 +103,7 @@ Só para um problema no que já foi publicado: issue, `hotfix/{issue}-{slug}` a 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 16:25 | Exige o refinamento máximo de todo módulo novo no alinhamento (pergunta 307). |
 | Zennd | 2026-11-11 10:40 | Marca o roadmap no encerramento de cada PR. |
 | Marcelo Fabiano | 2026-11-09 13:30 | Aponta os hooks no passo dos commits. |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

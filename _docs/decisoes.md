@@ -27,7 +27,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Permissões | Só o dono altera a rede, sem exceção para operadores | 22, 28 |
 | Alcance | Raio em blocos a partir do controlador, no config (128; 0 é ilimitado), só na mesma dimensão | 23 |
 | Controlador quebrado | A rede fica salva no mundo; o item guarda o ID e, sem controlador, a rede fica `Unplaced` (146) | 24, 135, 146 |
-| Nó novo | Nasce `No network` e escolhe a rede numa tela (139); entra com 1 entrada no primeiro canal livre (171) | 25, 139, 171 |
+| Nó novo | Nasce `No network` e escolhe a rede numa tela (139); todos os canais nascem inativos (226) | 25, 139, 226 |
 | Nome do canal | Cor fixa e nome opcional, renomeado pelo dono | 26 |
 | Signal Remote | Entrada sem posição, que volta a 0 ao sair do inventário ou do alcance | 27 |
 | Estados do nó | `Unloaded` mantém o último valor; `Out of range` vale 0 | 29 |
@@ -51,7 +51,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Versões das actions | `checkout` v7.0.1, `setup-java` v6.2.0 e `upload-artifact` v7.0.2 | 47 |
 | Ordem da Fase 1 | #14, #15, #18 e #19, o primeiro teste manual, e depois #16, #17 e o restante | 48 |
 | Controlador que some | Operação sem quem pede deixa a rede `Unplaced` (146) | 49, 146 |
-| Config | `network.range`, `network.name_length`, `channel.name_length` e `node.slots`, no config do servidor | 50 |
+| Config | `network.range`, `network.name_length` e `channel.name_length`, no config do servidor; `node.slots` saiu (224) | 50, 224 |
 | Clique no controlador | Mensagem na action bar até a tela da #20, sem rede atual (139) | 52, 139 |
 | Redes até a #16 | Num objeto por servidor, em memória | 53 |
 | Página do controlador | `controlador-de-rede.md` | 54 |
@@ -67,12 +67,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Estado por servidor | Pacote `server/`, com o `RedweaveServer` | 63 |
 | Blockstate do controlador | `facing` e `linked` | 64 |
 | Componente da rede | `redweave:network` | 65 |
-| Faixas do config | Alcance de 0 a 30.000.000, nomes de 1 a 64 e slots de 1 a 9 | 66 |
+| Faixas do config | Alcance de 0 a 30.000.000 e nomes de 1 a 64 | 66, 224 |
 | NBT do controlador | `network` e `owner` | 67 |
 | Nome em português | `Controlador de Rede` | 68 |
 | Aba do criativo | Aba própria `Redweave` | 69 |
 | Nó ligado ao colocar | Mudada pela 139: o nó nasce `No network` | 70, 139 |
-| Face do slot no mundo | Entrada lê o vizinho daquela face; saída alimenta o bloco de apoio como uma alavanca | 71 |
+| Face do slot no mundo | Entrada lê o vizinho daquela face; saída energiza só o bloco de apoio, com força (262) | 71, 262 |
 | Blockstate do nó | `facing` e `powered`; o `powered` vira `signal` pela 99 | 72 |
 | Página do nó | `no-de-sinal.md` | 73 |
 | Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
@@ -81,14 +81,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes do nó | Domínio, aplicação e GameTests | 77 |
 | Desenho da Tela do Nó | Sprites em pixel art, 9-slice, gerados por IA | 78 |
 | Cubo da face | 3D com o bloco de apoio real, girável | 79 |
-| Abas da Tela do Nó | Só `Slots` por enquanto | 80 |
+| Abas da Tela do Nó | Sem abas laterais (233) | 80, 233 |
 | Distância da tela | O alcance de interação do jogo | 81 |
 | Atualização ao vivo | A cada tick, só o que mudou | 82 |
-| Usar um slot livre | Entrada no primeiro canal livre | 83 |
-| Liberar um slot | Botão `Clear slot` com confirmação | 84 |
+| Usar um slot livre | Na primeira ativação, o canal vira entrada na face grudada (226, 228) | 83, 226, 228 |
+| Liberar um slot | Saiu com os 16 slots fixos; o canal é desativado | 84, 224, 319 |
 | Modo só leitura | Controles apagados e aviso com cadeado | 85 |
 | Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate | 86 |
-| Pontos dos slots | Os 4 primeiros slots, tingidos pelo canal | 87 |
+| Pontos dos slots | Os 4 primeiros canais ativos, na ordem das cores (229) | 87, 229 |
 | Onde salvar as redes | Um `SavedData` único no Overworld, `redweave_networks.dat` | 88 |
 | Formato do save | Codecs sobre `NbtOps`, com `version` e chaves estáveis; a leitura fica no slot | 89 |
 | Restaurar a rede | `NetworkSnapshot` no domínio, com `snapshot()` e `Network.restore` | 90 |
@@ -96,7 +96,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Save inválido | Descarta a menor parte com aviso; versão desconhecida vira backup e o mod começa vazio | 92 |
 | Config menor que o save | A rede volta como estava; o limite vale para as próximas mudanças, com teto nas faixas da 66 | 93 |
 | Testes da persistência | Domínio e GameTests; o reinício real no roteiro manual | 94 |
-| Slots do nó no save | Chave `slot_count`, de 1 a 9; `slots` só com os em uso | 95 |
+| Slots do nó no save | Os 16 slots fixos; `slot_count` saiu (224) | 95, 224 |
 | Mundo dos GameTests | Apagado antes de cada execução | 96 |
 | Save corrompido | Copiado para `redweave_networks.unreadable.backup.dat` | 97 |
 | Valor da lente do nó | O mais forte entre leituras e emissão | 98 |
@@ -127,13 +127,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Tipos das receitas do Label | Revogada pela 125 | 123, 125 |
 | Arte do Label | Revogada pela 125 | 124, 125 |
 | Label | Removido do mod e dos documentos | 125 |
-| Responsabilidade do Configurator | Só copiar e colar; não guarda a rede nem liga nós | 126 |
+| Responsabilidade do Configurator | Não guarda a rede; tem os modos `Open`, `Copy`, `Toggle` e `Wrench`, e colar num nó sem rede o liga à rede da cópia (238) | 126, 238, 241 |
 | Gestos de copiar e colar | Clique copia, Shift + clique cola, no modo `Copy` | 127, 143 |
 | Apagar a cópia | Shift + clique no ar, em qualquer modo | 128 |
 | Controlador e rede | 1 Network Controller = 1 rede, que nasce ao colocá-lo | 129 |
 | Network Terminal | Bloco aberto com a mão vazia que administra as redes do dono; não cria redes | 130 |
 | Ações do Terminal | Listar, renomear, `Offline` e `Online`, limpar nós e abrir a tela do controlador | 131 |
-| Excluir rede | Não há: o Terminal desliga e religa; uma rede `Offline` só aceita o Terminal | 132 |
+| Excluir rede | Não há para rede com controlador: o Terminal desliga e religa; `Delete` só para `Unplaced` (166) | 132, 166 |
 | Limpar nós | Tira todos os nós da rede, com confirmação; eles ficam `No network` | 133 |
 | Dono do Terminal | Quem o colocou; só ele usa | 134 |
 | Estados sem sinal | `Offline`, desligada no Terminal, e `Unplaced`, sem controlador no mundo | 135, 146 |
@@ -144,7 +144,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Abrir a Tela do Nó | Pelo Configurator, no modo `Open` | 140 |
 | Trocar de rede | Pelo nome da rede na Tela do Nó | 141 |
 | Nome padrão | Os 8 primeiros caracteres do ID, no nó e na rede | 142 |
-| Modos do Configurator | `Open`, `Copy` e `Wrench`, trocados com Shift + scroll | 143, 161, 164 |
+| Modos do Configurator | `Open`, `Copy`, `Toggle` e `Wrench`, trocados com Shift + scroll | 143, 161, 164, 241 |
 | Nome do nó | Renomeado na Tela do Nó e na lista do controlador; `node.name_length` | 144 |
 | Limite de redes | `network.max_per_player`, 10, conferido ao colocar o controlador | 145 |
 | Nome do estado sem controlador | `Unplaced`, `Não colocada` | 146 |
@@ -168,24 +168,24 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Blocos da Chave | Só o Signal Node | 164 |
 | Dono do nó sem rede | Quem o colocou, na chave de NBT `owner` | 165 |
 | Apagar rede | Só as `Unplaced`, pelo Terminal | 166 |
-| Cores dos modos | `Open` azul, `Copy` verde, `Wrench` vermelho | 167 |
-| Uso da cor do modo | Sempre com o nome escrito, em tons próprios | 168 |
-| Tons dos modos | `#5B9BF0`, `#3FAE5A` e `#D94A64` | 169 |
+| Cores dos modos | `Open` azul, `Copy` verde, `Toggle` âmbar, `Wrench` vermelho | 167, 241 |
+| Uso da cor do modo | Com o nome escrito na action bar e no tooltip; no visor, só a cor (271) | 168, 271 |
+| Tons dos modos | `#5B9BF0`, `#3FAE5A`, `#E3A33B` (âmbar, `Toggle`) e `#D94A64` | 169, 241 |
 | Repositório | `zenndg/redweave`, com o host `github.com-zenndg` | 170 |
-| Slot do nó ao entrar | 1 entrada no primeiro canal livre | 171 |
+| Slot do nó ao entrar | Na primeira ativação, o canal vira entrada na face grudada (226, 228) | 171, 226, 228 |
 | Quem escolhe a rede do nó | Só quem o colocou | 172 |
 | Roadmap | `ROADMAP.md` na raiz, em inglês | 180 |
-| Nascimento da v0.1.0 | No fim da Fase 1, depois da #26 e do roteiro manual, pela #27 | 181 |
+| Nascimento da v0.1.0 | No fim das Fases 1 e 2, que formam uma fase só (303), depois da #26 e do roteiro manual, pela #27 | 181, 303 |
 | Papel do roadmap | Visão por fase; o GitHub Projects continua a fonte da verdade | 182 |
 | Issues do novo modelo | #85 a #90, e a #84 do registro | 183 |
 | Nome no histórico | `Zennd`, como nos commits | 184 |
-| Componente do modo | `redweave:configurator_mode`: `open`, `copy` e `wrench` | 173 |
+| Componente do modo | `redweave:configurator_mode`: `open`, `copy`, `toggle` e `wrench` | 173, 241 |
 | Chaves novas do save | `name` no nó, `offline` na rede e `last_used` no lugar de `current`, na `version` 1 | 174 |
 | Registro do Terminal | Lista `terminals` no save, e `owner` na BlockEntity | 175 |
 | Rede Unplaced no Terminal | Renomear, limpar nós e `Delete` | 176 |
 | Visual da rede Offline | Estado `Offline` em cinza, lente e núcleo apagados | 177 |
 | Recolocar uma rede Offline | Volta `Offline` | 178 |
-| Lista de nós | Nome, sinal da lente e posição, com canal e direção por slot ao expandir | 179 |
+| Lista de nós | Nome, sinal da lente, posição, estado e tipo; ao expandir, só os canais ativos (234, 281) | 179, 234, 281 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
 | Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
@@ -224,19 +224,19 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Aba `Nodes` sem nós | Texto de ajuda no meio da tabela | 220 |
 | Nome do canal na Tela do Nó | Entra na #20, com os nomes enviados só quando mudam | 221 |
 | Renomear na Tela do Controlador | Duplo clique no nome do nó e do canal | 222 |
-| Nome do slot | Entra na #20, com decisões próprias antes do código | 223 |
+| Nome do slot | Revogada pela 277 | 223, 277 |
 | Painel da Tela do Nó sem o nome | As linhas sobem e fecham o espaço | 278 |
 | Slots do Signal Node | 16 fixos, um por cor, com status ativo ou inativo; saem `node.slots` e os upgrades | 224 |
 | Redesenho dos slots | Dentro da #20 | 225 |
 | Nó novo | Todos os canais inativos; o player ativa cada um | 226 |
-| Nome do slot | Do slot no nó, com `slot.name_length` de 32 | 227 |
-| Ativar e desativar | Desativar guarda direção, face e nome | 228 |
+| Nome do slot | Revogada pela 277 | 227, 277 |
+| Ativar e desativar | Desativar guarda direção e face; só com `Disabled` se configura (237) | 228, 237 |
 | Cantos da placa | Os 4 primeiros canais ativos | 229 |
-| Cópia do Configurator | Os 16 slots inteiros, com o nome | 230 |
+| Cópia do Configurator | Os 16 slots inteiros e o ID da rede de origem (238, 277) | 230, 238, 277 |
 | Arte da Tela do Nó com 16 cores | Prancha nova; a tela espera a arte | 231 |
 | Configurator no controlador | O modo `Open` abre a tela, como a mão vazia | 232 |
 | Aba `Slots` da Tela do Nó | Sai; a tela fica sem abas laterais | 233 |
-| Linha aberta no controlador | Só os canais ativos, com o nome do slot | 234 |
+| Linha aberta no controlador | Só os canais ativos (277) | 234, 277 |
 | Saves de teste no formato antigo | Sem conversão; a rede é descartada e o teste usa um mundo novo | 235 |
 | Contagens do rodapé do controlador | Sem a palavra "nodes", para caber na linha | 236 |
 | Configurar um canal | Só com `Disabled`; `Enabled` trava a direção e a face | 237 |
@@ -274,6 +274,35 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome do slot | Sai antes da v0.1; ficam o nome do canal da rede e o do nó | 277 |
 | Testes da #80 | JUnit no conteúdo, nas mudanças e no `Clear log`; GameTests no mundo | 272 |
 | Textura `configurator_channel` | Removida | 273 |
+| Signal Remote: forma e fluxo | Tablet; Shift + clique direito escolhe a rede e o nó; clique direito dispara | 279 |
+| Signal Remote: lista de nós | Só nós com slot de input ativo; o tablet copia o papel desse input | 280, 282 |
+| Colunas das listas de nós | Estado em texto e cor; tipo `In`, `Out`, `In/Out` ou `—`; na Tela do Controlador e no Remote, num PR próprio antes da #22 | 281, 283, 284, 290, 311 |
+| Signal Remote: filtro e slot | Mostra também `Unloaded` e `Out of range`; com vários inputs, um passo escolhe o slot | 285, 286 |
+| Signal Remote: vínculo | Rede, nó e slot no item; `Link lost` quando quebra; troca a qualquer momento, e o canal antigo volta a 0 | 287, 291 |
+| Signal Remote: modos | Alavanca e botão, num seletor na tela; pulso no config | 288 |
+| Signal Remote: sinal mais forte | Aviso no tooltip e na action bar | 289 |
+| Timer vinculado | Na v0.1.0, em issue própria depois da #22; placa grudada, com textura, tela e visual de relógio moderno | 292, 293, 313 |
+| Inversor de sinal | Na v0.1.0, em issue própria; placa binária como a tocha, com entrada e saída por lado físico ou canal | 294, 296, 313 |
+| Loop de sinal | Cancelado: repete o papel do timer | 295 |
+| Família de módulos | `Signal Modules`: placas grudadas com base comum, que nasce na #103; entrada e saída por lado físico ou canal | 297, 300, 301, 313 |
+| Módulos da Fase 2 | Agenda, Detector de player, Clima, Aleatório, Memória, Limiar, Atraso longo, Extensor de pulso, Detector de borda e Trava, com issues criadas já | 297 a 299, 302 |
+| Fases 1 e 2 na v0.1.0 | Uma fase só, com ordem única por dependência e dificuldade; uma issue e um PR por item; #35 fechada e versões renumeradas | 303 |
+| Ordem dos módulos | Os outros módulos dependem do Signal Inverter, que prova a base logo depois do Signal Timer | 304 |
+| Divisão da #30 | Contador cedo e sem dependência, como Signal Module; o temporizador da lógica por canal sai, coberto pelo Signal Timer | 305, 308 |
+| Posição da #23 | Depois de todos os blocos novos, antes das receitas | 306 |
+| Refinamento máximo | Todo módulo novo passa por rodadas de perguntas até não restar furo, antes dos docs e do código | 307 |
+| Lógica de sinal | Só nos Signal Modules; sai o campo `Logic` do nó; #29 cancelada; Contador vira módulo | 308 |
+| Portas lógicas | Viram Signal Module de duas entradas (AND, OR, XOR, NAND), com o modo por Shift + scroll e pela tela | 309, 310, 313 |
+| Porta NOT | É o Signal Inverter, que usa a regra NOT do domínio | 310 |
+| Nó invisível | Sai do README; ideia para depois da v0.1.0 | 312 |
+| Forma dos módulos | Placa grudada em qualquer face, como o Signal Node | 313 |
+| Lado físico dos módulos | As 4 bordas da placa, com a face e 4 rotações, como no Project Red | 314 |
+| Módulos e multipart | Cada placa no seu espaço na v0.1.0; a #44 considera os módulos e a migração | 315 |
+| Documentação atualizada | Regra 42, crítica: toda mudança atualiza no mesmo PR os `.md` afetados | 316 |
+| Regra 3 | No config: alcance, nomes, intervalos e carga; 16 canais e 16 slots fixos | 317 |
+| O que ainda não existe | Marcado como planejado: grafo na Fase 3, detalhes do Remote na #22 | 318 |
+| Ajustes da auditoria | `Clear slot` saiu, ponteiro da 278, sem upgrades, estados do controlador pelo código | 319 |
+| Arquivo das perguntas da Fase 2 | `fase-1-sem-fio.md`, porque as Fases 1 e 2 formam a v0.1.0 | 320 |
 
 Não há perguntas pendentes da concepção.
 
@@ -281,6 +310,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Atualiza os resumos mudados por respostas novas, como o `Toggle`, os 16 canais inativos e a saída do nome do slot (perguntas 166, 224, 226, 229, 233, 237, 238, 241, 262, 271, 277, 281, 303, 308, 310 e 313). |
+| Zennd | 2026-11-12 17:27 | Registra as decisões 304 a 320. |
+| Zennd | 2026-11-12 13:25 | Registra as decisões 279 a 303. |
 | Zennd | 2026-11-12 12:01 | Registra a decisão 278. |
 | Zennd | 2026-11-12 11:51 | Registra a decisão 277. |
 | Zennd | 2026-11-12 11:45 | Registra as decisões 274 a 276. |
