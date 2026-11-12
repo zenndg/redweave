@@ -24,7 +24,7 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 8 | Puxe a alavanca algumas vezes | A lâmpada acende e apaga junto, e a lente do nó acende |
 | 9 | No cubo da face, arraste o mouse e clique numa face | O bloco gira, a face sob o cursor fica em cobre, e o nome da face muda |
 | 10 | Clique em `Status` para desativar o canal `01` e depois para ativá-lo | `Disabled` apaga a lâmpada e a barra verde; `Enabled` volta como estava, em `Output` |
-| 11 | Abra a tela com o segundo player | Tudo visível e ao vivo, mas os controles apagados e o cadeado com `Only the owner of ...` no rodapé |
+| 11 | Abra a tela com o segundo player | Tudo visível e ao vivo, mas os controles apagados e o cadeado com `Only the owner of ...` à direita do rodapé |
 | 12 | Com o segundo player, tente quebrar o controlador e um nó no survival | Nenhum dos dois quebra, e nada racha |
 | 13 | Quebre o controlador com o dono, no survival | O item cai, a lâmpada apaga, e o nó, aberto com o Configurator, mostra `No network` em cinza |
 | 14 | Recoloque o item do controlador a mais de 128 blocos dos nós | A rede volta, e os nós longe mostram a lente apagada com o anel tracejado vermelho, além de `Out of range` na tela |
@@ -191,9 +191,9 @@ Entregue com a issue #106 (perguntas 308 e 329 a 333).
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 103 | Abra um nó com rede e escolha um canal | O painel termina logo abaixo do cubo da face, sem a linha `Logic` e sem a dica `Logic arrives in Phase 2.`; o rodapé vem logo abaixo do painel, sem espaço vazio |
+| 103 | Abra um nó com rede e escolha um canal | O painel termina logo abaixo do medidor e do cubo da face, sem a linha `Logic` e sem a dica `Logic arrives in Phase 2.`; o rodapé vem logo abaixo do painel, sem espaço vazio |
 | 104 | Passe o mouse no pé do painel | Nenhum tooltip |
-| 105 | Coloque um nó novo com o dono de 5 redes ou mais e abra a escolha de rede | 4 redes por vez, e a roda do mouse rola a lista até a última |
+| 105 | Coloque um nó novo com o dono de 5 redes ou mais e abra a escolha de rede | 3 redes por vez, e a roda do mouse rola a lista até a última |
 | 106 | Troque o idioma para Português (Brasil) | Sem `Lógica` e sem `A lógica chega na Fase 2.`, e nada passando da borda |
 
 ## Fase 1: as colunas de tipo e estado da lista de nós
@@ -208,12 +208,25 @@ Entregue com a issue #107 (perguntas 283, 284 e 335 a 341). Use o circuito dos p
 | 110 | Como dono, clique numa linha; depois abra a tela com o segundo player e clique na mesma linha | Para o dono, `Position: x, y, z` em cinza acima dos canais; para o segundo player, só os canais |
 | 111 | Troque o idioma para Português (Brasil) | `Tipo`, `Estado`, `Ent`, `Saí`, `Ent/Saí`, `Descarregado`, `Fora de alcance` e `Posição:`, sem nada passando da borda |
 
+## Fase 1: a Tela do Nó em duas colunas
+
+Entregue com a issue #122 (perguntas 346 a 348). Use o circuito dos passos 1 a 8.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 112 | Abra o nó da alavanca e escolha o canal dela | O painel em duas colunas, com uma linha entre elas: à esquerda, o título, `Status`, `Direction` e `Signal` com o medidor e o número; à direita, o cubo de 40 px com `Block face` e o nome da face ao lado; nada sobrando à direita |
+| 113 | Puxe a alavanca com a tela aberta | O medidor do painel sobe até 15, e as barras brilham a partir de 12 |
+| 114 | Desative o canal, gire o cubo arrastando e escolha outra face | O cubo maior gira e escolhe a face como antes; o medidor mostra 0 |
+| 115 | Olhe o rodapé, como dono e com o segundo player | Uma linha só: `<n> of 16 channels active` à esquerda; para o segundo player, também o cadeado à direita |
+| 116 | Troque o idioma para Português (Brasil) | `Sinal`, `Face do bloco` e `<n> de 16 canais ativos`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:51 | Ajusta os passos 11, 103 e 105 e adiciona os passos 112 a 116, da Tela do Nó em duas colunas (perguntas 346 a 348). |
 | Zennd | 2026-11-12 19:39 | Adiciona o passo 94a, do Shift + scroll no macOS (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | Adiciona o passo 83a, do Terminal aberto com o Configurator no modo `Open` (pergunta 343). |
 | Zennd | 2026-11-12 19:01 | Ajusta os passos 53, 54, 61 e 62 às colunas novas e adiciona os passos 107 a 111, da #107 (pergunta 341). |

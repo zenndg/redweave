@@ -30,7 +30,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
 | Escolher | Um clique numa rede liga o nó a ela, com os 16 canais inativos, e a tela segue para a configuração | 171 e 226 |
 | Linha | O quadrado na cor da rede, o nome e a quantidade de nós, como `1 node` e `12 nodes`. A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
-| Rolagem | A lista mostra 4 redes por vez e rola com a roda do mouse quando há mais | 333 |
+| Rolagem | A lista mostra 3 redes por vez e rola com a roda do mouse quando há mais | 333 e 348 |
 | Sem redes | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` | 199 |
 | Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
 | Voltar | Na troca, o botão `Back` no rodapé volta à configuração sem mudar nada. Não aparece na primeira escolha | 205 |
@@ -45,15 +45,16 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Rede | Na linha do nome, à direita, o quadrado na cor da rede e o nome dela, em qualquer estado com rede. Para o dono, o clique abre a escolha de rede (perguntas 141 e 208) |
 | Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range`, `No network` ou `Offline`, em cinza ([estados do nó](rede-e-canais.md#estados-do-nó)) (perguntas 177 e 208) |
 | Canais | Abaixo do nome, uma fileira com os 16 canais, cada um com a cor e o número, de `01` a `16`. Os ativos têm uma barra verde embaixo, e o escolhido tem o contorno de cobre (perguntas 224 e 231) |
-| Canal escolhido | Abaixo da fileira, o painel do canal: o título, como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
+| Canal escolhido | Abaixo da fileira, o painel do canal, em duas colunas: à esquerda, o título, o `Status`, a direção e o sinal; à direita, a face do bloco (pergunta 346). O título é como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
 | Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
 | Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
-| Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
-| Rodapé | O medidor de 15 barras com o sinal do canal escolhido e quantos canais estão ativos, como `3 of 16 channels active` |
+| Sinal | Na coluna da esquerda, o medidor de 15 barras com o sinal do canal escolhido e o número; um canal inativo mostra 0 (pergunta 346) |
+| Face do bloco | Na coluna da direita, separada por uma linha, um cubo de 40 px com a face escolhida em cobre e, ao lado, `Block face` e o nome da face, como `East`, e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
+| Rodapé | Uma linha: à esquerda, quantos canais estão ativos, como `3 of 16 channels active`; à direita, só para quem não é o dono, o cadeado (pergunta 347) |
 
-A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308). Sem a linha `Logic` e a dica da Fase 2, o painel tem 90 px de altura e a tela, 190 px (perguntas 329, 330 e 333).
+A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308). O painel tem 76 px de altura, o rodapé 20 px e a tela 168 px, e a escolha de rede usa a mesma altura (perguntas 329, 330, 333 e 348).
 
-**Prancha:** a `tela-do-no.png` é anterior às perguntas 277 e 308 e ainda mostra o campo `Name` do slot, a linha `Logic` e a dica da Fase 2. Uma prancha nova, gerada por IA, a substitui (pergunta 331); até lá, vale esta página.
+**Prancha:** a `tela-do-no.png` é anterior às perguntas 277, 308 e 346 e ainda mostra o campo `Name` do slot, a linha `Logic`, a dica da Fase 2 e o painel numa coluna só. Uma prancha nova, gerada por IA, já no layout de duas colunas, a substitui (perguntas 331 e 350); até lá, vale esta página.
 
 ### Comportamento
 
@@ -69,7 +70,7 @@ O que a tela faz, decidido na issue #19.
 | Face do bloco | Um cubo 3D com o próprio bloco de apoio, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face | 79 |
 | Medidor | O sinal do canal escolhido: na entrada, a última leitura; na saída, o que ela emite; inativo, 0 | — |
 | Ao vivo | O estado, a rede, os nomes, a lista de escolha e o sinal de cada slot atualizam a cada tick, só quando mudam | 82 |
-| Só leitura | Para quem não é o dono, os controles ficam apagados, e o rodapé mostra um cadeado e `Only the owner of <rede> can change this node.` | 85 |
+| Só leitura | Para quem não é o dono, os controles ficam apagados, e o rodapé mostra, à direita, um cadeado e `Only the owner of <rede> can change this node.` | 85 e 347 |
 
 **O servidor confere cada ação (regras 16 e 17):** quem pede é o dono da rede do nó, o player está dentro do alcance de interação de blocos do jogo (pergunta 81), o canal existe e a face é válida. Uma ação recusada não muda nada, e a tela volta a mostrar o estado do servidor.
 
@@ -127,6 +128,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:51 | Reorganiza a Tela do Nó em duas colunas, com o medidor no painel e o rodapé de uma linha, da #122 (perguntas 346 a 350). |
 | Zennd | 2026-11-12 19:01 | Troca as colunas da aba `Nodes` por `Node`, `Type`, `Signal` e `State` e leva a posição para a linha aberta, da #107 (perguntas 335 a 340), e marca a prancha do controlador para substituição (pergunta 342). |
 | Zennd | 2026-11-12 18:45 | Encolhe a Tela do Nó e a escolha de rede, tira a dica da Fase 2 e marca a prancha como anterior às perguntas 277 e 308 (perguntas 329 a 333). |
 | Zennd | 2026-11-12 17:27 | Deixa a presença do Signal Remote na lista para a #22 e cita as colunas da #107 (perguntas 311 e 318). |
