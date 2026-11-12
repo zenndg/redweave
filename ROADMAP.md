@@ -100,7 +100,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 
 ### Work order
 
-1. [ ] Record decisions 279 to 320, audit every Markdown file, reorganize the roadmap, create the new issues and close #29 and #35 (#104)
+1. [x] Record decisions 279 to 320, audit every Markdown file, reorganize the roadmap, create the new issues and close #29 and #35 (#104)
 2. [ ] AND, OR, XOR and NAND gates and the NOT rule in the domain, with tested truth tables (#28)
 3. [ ] Remove the `Logic` row from the Node Screen (#106 · question 308)
 4. [ ] Status and type columns in the node lists (#107 · question 311)
