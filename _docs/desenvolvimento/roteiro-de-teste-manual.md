@@ -166,12 +166,30 @@ Entregue com a issue #89 (perguntas 130 a 166 e 250 a 261). Use dois players, co
 | 91 | Quebre o Terminal e coloque outro em outro lugar; reinicie o servidor e tente colocar mais um | O primeiro libera o player; depois de reiniciar, o limite continua valendo |
 | 92 | Troque o idioma para Português (Brasil) | `Terminal de Rede`, `Abrir`, `Desligar`, `Ligar`, `Limpar nós`, `Apagar`, `Não colocada` e `1 rede` ou `3 redes`, sem nada passando da borda |
 
+## Fase 1: o visor e o rótulo do Configurator, a emissão do nó e o `Clear log`
+
+Entregue com a issue #80 (perguntas 262 a 272).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 93 | Ponha duas lâmpadas com 1 bloco de espaço entre elas e um nó de saída nesse espaço, grudado numa delas; ligue o canal | Só a lâmpada onde o nó está grudado acende; a outra fica apagada |
+| 94 | Troque o modo do Configurator com Shift + scroll | O visor do item muda de cor: azul no `Open`, verde no `Copy`, âmbar no `Toggle` e vermelho no `Wrench`; o nome continua na action bar e no tooltip |
+| 95 | Copie um nó com o modo `Copy` e depois apague a cópia com Shift + clique no ar | O pixel de cima da direita do visor acende com a cópia e apaga sem ela |
+| 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo: `<nó> · <rede>` e até 4 canais, como `15 Red · Output · 12`, e `+n more` com mais; atrás de parede, mais apagado |
+| 97 | Puxe a alavanca com o rótulo à vista | O sinal no rótulo muda na hora |
+| 98 | Olhe um nó sem rede e um de uma rede `Offline` | `<nó> · No network`; `<nó> · <rede> · Offline` |
+| 99 | Troque para outro item na mão | Todos os rótulos somem |
+| 100 | Na aba `Log` da Tela do Controlador, como dono, clique em `Clear log` uma vez e depois de novo | O botão vira `Click again to clear`; no segundo clique, o log fica vazio, também na tela aberta do segundo player |
+| 101 | Abra a aba `Log` com o segundo player | Sem o botão `Clear log` |
+| 102 | Troque o idioma para Português (Brasil) | `Limpar log`, `Clique de novo para limpar` e `+n mais`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:26 | Adiciona os passos 93 a 102, da #80 (perguntas 262 a 272). |
 | Zennd | 2026-11-12 10:33 | Adiciona os passos 81 a 92, do Network Terminal (perguntas 250 a 261). |
 | Zennd | 2026-11-12 09:32 | Adiciona os passos 75 a 80, do log da Tela do Controlador (perguntas 242 a 249). |
 | Zennd | 2026-11-11 17:45 | Adiciona o passo 72b, do modo `Toggle`, e ajusta a contagem do passo 72 (perguntas 240 e 241). |
