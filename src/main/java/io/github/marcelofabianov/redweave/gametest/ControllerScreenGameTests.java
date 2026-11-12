@@ -4,6 +4,9 @@ import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NodeId;
+import io.github.marcelofabianov.redweave.domain.network.NodeKind;
+import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
@@ -43,8 +46,11 @@ public final class ControllerScreenGameTests {
   private static final BlockPos CONTROLLER_FLOOR = new BlockPos(0, 0, 2);
   private static final BlockPos CONTROLLER = CONTROLLER_FLOOR.above();
   private static final BlockPos STONE = new BlockPos(1, 1, 1);
+  private static final BlockPos OTHER_STONE = new BlockPos(2, 1, 0);
   private static final int MENU_ID = 1;
   private static final int FIRST_ROW = 0;
+  private static final int SECOND_ROW = 1;
+  private static final int FIRST_SLOT = 0;
   private static final int MISSING_ROW = 7;
   private static final double FAR_AWAY = 64;
   private static final String NEW_NAME = "Factory";
@@ -56,6 +62,9 @@ public final class ControllerScreenGameTests {
   private static final String OPENED_OFF = "A network turned off should not open its screen";
   private static final String NO_POSITION = "The owner should see the position of the node";
   private static final String SEES_POSITION = "Another player should not see the position";
+  private static final String NOT_INPUT = "A node with an enabled input should be an input";
+  private static final String NOT_NONE = "A node with no enabled slot should have no kind";
+  private static final String NOT_ONLINE = "A loaded node in range should be online";
   private static final String NOT_RECOLORED = "The owner should recolor the network";
   private static final String STRANGER_RECOLORED = "Only the owner should recolor the network";
   private static final String NOT_RENAMED = "The owner should rename the network, channel and node";
@@ -137,6 +146,24 @@ public final class ControllerScreenGameTests {
 
     helper.assertTrue(ownerMenu.nodes().get(FIRST_ROW).position().isPresent(), NO_POSITION);
     helper.assertTrue(strangerMenu.nodes().get(FIRST_ROW).position().isEmpty(), SEES_POSITION);
+    helper.succeed();
+  }
+
+  /** Each row carries the kind of the node and its state, for the new columns (337 and 341). */
+  @GameTest(template = EMPTY)
+  public static void theRowsCarryTheKindAndTheState(GameTestHelper helper) {
+    ServerPlayer owner = helper.makeMockServerPlayerInLevel();
+    NetworkId id = placeController(helper, owner);
+    NodeId input = NodeScene.placeNode(helper, owner, STONE, Direction.UP);
+    NodeScene.placeNode(helper, owner, OTHER_STONE, Direction.UP);
+    NodeScene.enableSlot(owner, input, FIRST_SLOT);
+
+    ControllerMenu menu = menuOf(helper, owner.getUUID(), OWNER_NAME, id);
+
+    NodeKind first = menu.nodes().get(FIRST_ROW).nodeKind();
+    helper.assertTrue(first == NodeKind.INPUT, NOT_INPUT);
+    helper.assertTrue(menu.nodes().get(SECOND_ROW).nodeKind() == NodeKind.NONE, NOT_NONE);
+    helper.assertTrue(menu.nodeState(FIRST_ROW) == NodeState.ONLINE, NOT_ONLINE);
     helper.succeed();
   }
 

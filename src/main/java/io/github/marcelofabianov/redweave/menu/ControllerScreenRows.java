@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.application.NetworkView;
 import io.github.marcelofabianov.redweave.application.NodeRow;
 import io.github.marcelofabianov.redweave.application.SlotRow;
 import io.github.marcelofabianov.redweave.block.NodeBlocks;
+import io.github.marcelofabianov.redweave.domain.network.NodeKind;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
@@ -62,12 +63,17 @@ public record ControllerScreenRows(
     }
   }
 
-  /** A row of the node list: the name, the block of the node for the owner, and its slots. */
-  public record NodeLine(String name, Optional<BlockPos> position, List<SlotLine> slots) {
+  /**
+   * A row of the node list: the name, the kind as the ordinal of {@link NodeKind}, the block of the
+   * node for the owner, and its slots (answers 335 and 337).
+   */
+  public record NodeLine(String name, int kind, Optional<BlockPos> position, List<SlotLine> slots) {
     static final StreamCodec<RegistryFriendlyByteBuf, NodeLine> STREAM_CODEC =
         StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
             NodeLine::name,
+            ByteBufCodecs.VAR_INT,
+            NodeLine::kind,
             ByteBufCodecs.optional(BlockPos.STREAM_CODEC),
             NodeLine::position,
             SlotLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
@@ -78,9 +84,16 @@ public record ControllerScreenRows(
       slots = List.copyOf(slots);
     }
 
+    /** The kind sent by the server, or none for an unknown ordinal, which never breaks the game. */
+    public NodeKind nodeKind() {
+      NodeKind[] kinds = NodeKind.values();
+      return kind >= 0 && kind < kinds.length ? kinds[kind] : NodeKind.NONE;
+    }
+
     static NodeLine of(NodeRow row) {
       return new NodeLine(
           row.name(),
+          row.kind().ordinal(),
           row.position().map(NodeBlocks::posOf),
           row.slots().stream().map(SlotLine::of).toList());
     }

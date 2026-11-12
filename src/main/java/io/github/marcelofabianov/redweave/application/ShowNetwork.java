@@ -42,6 +42,7 @@ public final class ShowNetwork {
         node.displayName(),
         network.nodeSignal(node.id()),
         network.nodeState(node.id(), loaded.isLoaded(node.position())),
+        node.kind(),
         owner ? Optional.of(node.position()) : Optional.empty(),
         slotsOf(node));
   }

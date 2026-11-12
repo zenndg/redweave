@@ -14,7 +14,13 @@ final class ControllerScreenEnglishTexts {
   private static final String RENAME_TOOLTIP = "Double-click to rename. Enter saves, Esc cancels.";
   private static final String COLUMN_NODE = "Node";
   private static final String COLUMN_SIGNAL = "Signal";
-  private static final String COLUMN_POSITION = "Position";
+  private static final String COLUMN_TYPE = "Type";
+  private static final String COLUMN_STATE = "State";
+  private static final String KIND_INPUT = "In";
+  private static final String KIND_OUTPUT = "Out";
+  private static final String KIND_BOTH = "In/Out";
+  private static final String KIND_NONE = "\u2014";
+  private static final String POSITION_LINE = "Position: %s";
   private static final String SLOT_ROW = "%s · %s";
   private static final String NO_ACTIVE_CHANNEL = "No active channel";
   private static final String SLOT_USE = "%s in · %s out";
@@ -50,7 +56,13 @@ final class ControllerScreenEnglishTexts {
   private static void addRows(BiConsumer<String, String> add) {
     add.accept(ControllerScreenTexts.COLUMN_NODE, COLUMN_NODE);
     add.accept(ControllerScreenTexts.COLUMN_SIGNAL, COLUMN_SIGNAL);
-    add.accept(ControllerScreenTexts.COLUMN_POSITION, COLUMN_POSITION);
+    add.accept(ControllerScreenTexts.COLUMN_TYPE, COLUMN_TYPE);
+    add.accept(ControllerScreenTexts.COLUMN_STATE, COLUMN_STATE);
+    add.accept(ControllerScreenTexts.KIND_INPUT, KIND_INPUT);
+    add.accept(ControllerScreenTexts.KIND_OUTPUT, KIND_OUTPUT);
+    add.accept(ControllerScreenTexts.KIND_BOTH, KIND_BOTH);
+    add.accept(ControllerScreenTexts.KIND_NONE, KIND_NONE);
+    add.accept(ControllerScreenTexts.POSITION_LINE, POSITION_LINE);
     add.accept(ControllerScreenTexts.SLOT_ROW, SLOT_ROW);
     add.accept(ControllerScreenTexts.NO_ACTIVE_CHANNEL, NO_ACTIVE_CHANNEL);
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
