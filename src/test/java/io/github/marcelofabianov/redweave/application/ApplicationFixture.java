@@ -9,6 +9,7 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.network.TestLimits;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,9 +23,15 @@ final class ApplicationFixture {
   static final NetworkId MISSING_NETWORK = new NetworkId(UUID.fromString(SECOND_NETWORK_UUID));
 
   private static final TestLimits LIMITS = TestLimits.STARTING;
+  private static final int LOG_SIZE = 100;
+
+  /** The time of the server clock in every test, as the log shows it (answer 148). */
+  static final LocalDateTime NOW = LocalDateTime.of(2026, 11, 11, 14, 32, 5);
 
   final InMemoryNetworks networks = new InMemoryNetworks();
   final InMemoryLastUsedNetworks lastUsed = new InMemoryLastUsedNetworks();
+  final SignalLogs logs = new SignalLogs(() -> LOG_SIZE);
+  final ServerClock clock = () -> NOW;
 
   /** Creates the network of OWNER, online, with its controller at CONTROLLER. */
   NetworkId ownersNetwork() {
