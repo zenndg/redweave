@@ -4,13 +4,14 @@ Everything planned for Redweave, phase by phase. A checked box is merged into `d
 
 ## Versions
 
-Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every phase ends with a playable release, tested in an instance with only the mod and in the [Iron Meridian](https://github.com/marcelofabianov/iron-meridian) modpack.
+Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every release is playable, tested in an instance with only the mod and in the [Iron Meridian](https://github.com/marcelofabianov/iron-meridian) modpack.
+
+Decided on 2026-11-12: Phases 1 and 2 ship together in v0.1.0, as a single phase with one work order (question 303). The Phase 2 release (#35) is closed, and the later versions move down by one, with Phase 3 as v0.2.0.
 
 | Version | When | Release issue |
 | --- | --- | --- |
-| **v0.1.0** | End of Phase 1 · Wireless | #27 |
-| v0.2.0 | End of Phase 2 · Logic | #35 |
-| v0.3.0 | End of Phase 3 · Chips | #43 |
+| **v0.1.0** | End of Phase 1 · Wireless and Phase 2 · Logic | #27 |
+| v0.2.0 | End of Phase 3 · Chips | #43 |
 | v1.0.0 | End of Phase 4 · Expansion | #51 |
 | — | Phase 5 · Bridge, after 1.0 | to be planned |
 
@@ -18,10 +19,11 @@ Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a b
 
 v0.1.0 is the first public version. It is cut only when all of these are true:
 
-- [ ] Every Phase 1 item below is merged, including the new network model (#84 to #90).
+- [ ] Every item of Phases 1 and 2 below is merged, in the order of [Toward v0.1.0](#toward-v010).
 - [x] The pending Phase 1 decisions (questions 173 to 179) are answered.
-- [ ] Block, item, data component, NBT and config IDs are frozen (#26). From here on, they only change with a migration.
-- [ ] The 1,000-node load test shows no visible MSPT impact (#25).
+- [ ] Each new module is fully refined, with every question answered, before its work starts (question 307).
+- [ ] Block, item, data component, NBT and config IDs are frozen, with every module inside (#26). From here on, they only change with a migration.
+- [ ] The 1,000-node load test, with modules and gates, shows no visible MSPT impact (#25).
 - [ ] The manual test script passes in an instance with only the mod and in Iron Meridian.
 - [ ] The release goes through `develop` → `homolog` → `release/0.1.0` → `main`, with the annotated tag `v0.1.0` (#27).
 
@@ -33,7 +35,7 @@ Signal anywhere: networks, nodes, channels and the tools to configure them.
 
 - [x] NeoForge 1.21.1 project with ModDevGradle and Java 21 (#1)
 - [x] GitHub Actions CI: build and tests on every push (#2)
-- [x] Makefile, git hooks and gates: Spotless, Checkstyle and 85% JaCoCo coverage on the domain (#3)
+- [x] Makefile, git hooks and gates: Spotless, Checkstyle and 85% JaCoCo coverage on the domain and the application (#3)
 - [x] ArchUnit test: domain and application without Minecraft imports (#4)
 - [x] GameTests on a dedicated server, including one without Jade and The One Probe (#5)
 - [x] Translation key parity between `en_us` and `pt_br` (#6)
@@ -71,11 +73,12 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [x] A new node joins no network and its owner picks one; node names; switching networks from the Node Screen (#87)
 - [x] `Offline` and `Unplaced` network states, and the per-player network limit (#88)
 - [x] Controller Screen: node list with name, signal and position, rename and access (#20)
-- [x] Signal Node with 16 fixed slots, one per channel color, each enabled or disabled and named (#20)
+- [x] Signal Node with 16 fixed slots, one per channel color, each enabled or disabled (#20) — slot names removed by #101
 - [x] Configurator `Toggle` mode: enable or disable every configured channel of a node (#20)
 - [x] Signal change log on the Controller Screen (#90)
 - [x] Network Terminal: list, rename, turn off and on, clear nodes and delete unplaced networks (#89)
 - [x] Configurator mode display and floating labels over nodes (#80)
+- [x] Two-line node labels, and slot names removed (#101)
 
 ### Phase 1 decisions answered after the audit
 
@@ -87,27 +90,50 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 - [x] 178 · State of an `Offline` network whose controller is broken and placed again
 - [x] 179 · Columns of the node list on the Controller Screen
 
-### Toward v0.1.0
+## Toward v0.1.0
 
-- [ ] Signal Remote: lever or button on a channel (#22)
-- [ ] Optional Jade and The One Probe integration (#23)
-- [ ] Vanilla recipes and emissive textures (#24)
-- [ ] Load test with spark: a 1,000-node network (#25)
-- [ ] Freeze block, item, data component and config IDs (#26)
-- [ ] Release v0.1.0 and test in Iron Meridian (#27)
+Phases 1 and 2 as one phase. The order follows dependencies first and then difficulty, easiest first (questions 303 and 304). Each line is one issue and one pull request.
 
-## Phase 2 · Logic
+### Signal Modules
 
-Gates you can see.
+All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer and the Signal Inverter, are still open.
 
-- [ ] AND, OR, XOR, NOT and NAND gates with tested truth tables (#28)
-- [ ] Per-channel logic: invert, pulse only, delay and threshold (#29)
-- [ ] Timer and Counter in the domain (#30)
-- [ ] Plate-shaped gate blocks: floor, wall and ceiling (#31)
-- [ ] Shift + scroll changes a gate's mode (#32)
-- [ ] Placement preview before the block exists (#33)
-- [ ] Tooltip with each gate's truth table (#34)
-- [ ] Release v0.2.0 (#35)
+### Work order
+
+1. [ ] Record decisions 279 to 320, audit every Markdown file, reorganize the roadmap, create the new issues and close #29 and #35 (#104)
+2. [ ] AND, OR, XOR and NAND gates and the NOT rule in the domain, with tested truth tables (#28)
+3. [ ] Remove the `Logic` row from the Node Screen (#106 · question 308)
+4. [ ] Status and type columns in the node lists (#107 · question 311)
+5. [ ] Signal Remote: a tablet linked to a node input slot (#22)
+6. [ ] Signal Timer and the shared base of the Signal Modules (#103)
+7. [ ] Signal Inverter, the NOT of the mod (#105 · questions 296 and 310)
+8. [ ] Weather detector module (#108)
+9. [ ] Random module (#109)
+10. [ ] Memory module, a T flip-flop (#110)
+11. [ ] Latch module, an SR latch (#111)
+12. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)
+13. [ ] Shift + scroll changes a gate's mode (#32)
+14. [ ] Tooltip with each gate's truth table (#34)
+15. [ ] Schedule module, by the time of day in the game (#112)
+16. [ ] Pulse extender module (#113)
+17. [ ] Edge detector module (#114)
+18. [ ] Threshold module, with hysteresis (#115)
+19. [ ] Long delay module (#116)
+20. [ ] Player detector module (#117)
+21. [ ] Counter module (#30 · question 308)
+22. [ ] Placement preview of the modules before the block exists (#33)
+23. [ ] Optional Jade and The One Probe integration, covering every block (#23 · question 306)
+24. [ ] Vanilla recipes and emissive textures (#24)
+25. [ ] Load test with spark: a 1,000-node network with modules and gates (#25)
+26. [ ] Freeze block, item, data component and config IDs (#26)
+27. [ ] Release v0.1.0 and test in Iron Meridian (#27)
+
+### Dropped from Phase 2
+
+- Per-channel logic on the node slots (#29): replaced by the Signal Modules (question 308).
+- Gate blocks as a family of their own: the gate is a Signal Module, a plate like the others (questions 309 and 313).
+- The NOT gate: the Signal Inverter covers it (question 310).
+- Phase 2 release v0.2.0 (#35): Phase 2 ships in v0.1.0 (question 303).
 
 ## Phase 3 · Chips
 
@@ -120,7 +146,7 @@ Program your redstone.
 - [ ] Drag-and-drop editor with animated wires (#40)
 - [ ] Test mode: pause, step one tick and undo (#41)
 - [ ] Guide book with ready-to-copy examples (#42)
-- [ ] Release v0.3.0 (#43)
+- [ ] Release v0.2.0 (#43)
 
 ## Phase 4 · Expansion
 

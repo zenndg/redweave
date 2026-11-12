@@ -6,9 +6,9 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 ## Estado atual
 
-- **Etapa atual:** Fase 1, sem fio, em andamento. Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88) a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80). O novo modelo de rede está completo. O trabalho entra por issue, na milestone da fase.
-- **Próximos:** as issues #22 a #27, rumo à `v0.1.0`.
-- **Limite:** não avance para as fases seguintes sem pedido explícito.
+- **Etapa atual:** Fases 1 e 2, juntas rumo à `v0.1.0`, como uma fase só (pergunta 303). Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88), a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80), e o rótulo em duas linhas, sem o nome do slot (#101). O novo modelo de rede está completo. Toda lógica de sinal fica nos Signal Modules (pergunta 308). O trabalho entra por issue, na ordem do `ROADMAP.md`.
+- **Próximos:** a ordem de trabalho da seção "Toward v0.1.0" do `ROADMAP.md`, a partir da #104.
+- **Limite:** não avance para a Fase 3 ou as seguintes sem pedido explícito.
 
 ## Documentação
 
@@ -25,7 +25,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 1. **Idioma:** o inglês é o idioma base. O que entra no jar, aparece no jogo ou acompanha o download do mod fica em inglês, como nome, IDs, comandos, config, logs e licença, e o `en_us.json` é a referência. O `pt_br.json` usa as mesmas chaves, conferidas por um teste.
 2. **Só sinal:** o Redweave transporta sinal de redstone. Itens, fluidos e energia ficam com os mods de logística.
-3. **Números em config:** alcance, slots por nó, canais, intervalos e limites de carga nunca ficam fixos na lógica.
+3. **Números em config:** alcance, tamanhos de nomes, intervalos e limites de carga nunca ficam fixos na lógica. Os 16 canais e os 16 slots por nó são fixos, ligados às cores de lã (pergunta 224).
 4. **Receitas:** os materiais são só do jogo puro, e uma receita pode combinar itens do próprio mod. Ficam em datapack JSON, para o pack poder sobrescrever com KubeJS.
 5. **Sinal é 0 a 15:** o valor de um canal é sempre um `Signal`, com o mesmo intervalo da redstone do jogo.
 6. **Sem forçar chunk:** nunca carregue um chunk à força nem leia um bloco sem confirmar que ele está carregado. O que acontece com um canal cujo nó está num chunk descarregado é a pergunta 13.
@@ -142,6 +142,10 @@ O significado de cada pilar, os checklists e a matriz de decisão estão em [`_d
 
 40. **Alinhamento:** ao iniciar uma feature, o agente descreve em poucas linhas o que vamos fazer e pergunta ao desenvolvedor se tem algo mais para acrescentar, antes da rodada de decisões, da issue e da branch.
 41. **Encerramento do PR:** depois do merge de um PR, nesta ordem, o agente pede autorização para apagar a branch local e a remota, apresenta no que vai atuar em seguida e pergunta se o desenvolvedor quer algum ajuste no roteiro das próximas tarefas.
+
+### Documentação atualizada
+
+42. **CRÍTICO: sempre mantenha a documentação atualizada.** Informação desatualizada leva a grandes prejuízos. Toda decisão, mudança de código ou de escopo atualiza, no mesmo PR, todos os `.md` que ela torna errados, imprecisos ou desatualizados, incluindo `README.md`, `ROADMAP.md`, `AGENTS.md`, `_docs/` e o README do domínio. Antes de abrir o PR, o agente procura nos `.md` os termos afetados pela mudança e corrige cada ocorrência (pergunta 316).
 
 ## Git
 
