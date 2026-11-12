@@ -12,7 +12,6 @@ public final class RedweaveConfig {
   private static final String NODE = "node";
   private static final String RANGE = "range";
   private static final String NAME_LENGTH = "name_length";
-  private static final String SLOT = "slot";
   private static final String MAX_PER_PLAYER_KEY = "max_per_player";
   private static final String LOG = "log";
   private static final String SIZE = "size";
@@ -27,7 +26,6 @@ public final class RedweaveConfig {
   private static final String NETWORK_NAME_COMMENT = "Maximum length of the name of a network.";
   private static final String MAX_PER_PLAYER_COMMENT = "Networks a player may have, of any state.";
   private static final String CHANNEL_NAME_COMMENT = "Maximum length of the name of a channel.";
-  private static final String SLOT_NAME_COMMENT = "Maximum length of the name of a slot.";
   private static final String NODE_NAME_COMMENT = "Maximum length of the name of a Signal Node.";
   private static final String LOG_SIZE_COMMENT = "Lines the log of each network keeps in memory.";
   private static final String LABEL_RANGE_COMMENT = "Blocks within which the node labels show.";
@@ -43,7 +41,6 @@ public final class RedweaveConfig {
   /** The longest name the config allows, also the ceiling of a name in the saves (answer 93). */
   public static final int MAX_NAME = 64;
 
-  private static final int DEFAULT_SLOT_NAME = 32;
   private static final int DEFAULT_LOG_SIZE = 100;
   private static final int MIN_LOG_SIZE = 10;
   private static final int MAX_LOG_SIZE = 1000;
@@ -56,7 +53,6 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue NETWORK_NAME_LENGTH;
   static final ModConfigSpec.IntValue MAX_PER_PLAYER;
   static final ModConfigSpec.IntValue CHANNEL_NAME_LENGTH;
-  static final ModConfigSpec.IntValue SLOT_NAME_LENGTH;
   static final ModConfigSpec.IntValue NODE_NAME_LENGTH;
   static final ModConfigSpec.IntValue LOG_SIZE;
   static final ModConfigSpec.IntValue LABEL_RANGE;
@@ -85,12 +81,6 @@ public final class RedweaveConfig {
         builder
             .comment(NODE_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_NODE_NAME, 1, MAX_NAME);
-    builder.pop();
-    builder.push(SLOT);
-    SLOT_NAME_LENGTH =
-        builder
-            .comment(SLOT_NAME_COMMENT)
-            .defineInRange(NAME_LENGTH, DEFAULT_SLOT_NAME, 1, MAX_NAME);
     builder.pop();
     builder.push(LOG);
     LOG_SIZE =

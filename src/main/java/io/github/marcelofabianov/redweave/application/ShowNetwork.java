@@ -53,8 +53,7 @@ public final class ShowNetwork {
       node.slots()
           .get(index)
           .filter(ChannelSlot::active)
-          .ifPresent(
-              slot -> rows.add(new SlotRow(at, slot.channel(), slot.direction(), slot.name())));
+          .ifPresent(slot -> rows.add(new SlotRow(at, slot.channel(), slot.direction())));
     }
     return rows;
   }

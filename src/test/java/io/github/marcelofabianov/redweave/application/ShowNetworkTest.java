@@ -37,7 +37,6 @@ class ShowNetworkTest {
   private static final int SECOND_SLOT = DOOR.ordinal();
   private static final String DOOR_NAME = "Main door";
   private static final String LEVER = "Lever";
-  private static final String SLOT_NAME = "Redstone from lever 1";
   private static final int DISABLED_SLOT = ChannelColor.ORANGE.ordinal();
   private static final Signal READ = new Signal(12);
 
@@ -61,7 +60,6 @@ class ShowNetworkTest {
         SECOND_SLOT,
         new ChannelSlot(Direction.OUTPUT, OTHER_NODE_POSITION.face(), DOOR));
     network.readInput(NODE, FIRST_SLOT, READ);
-    network.renameSlot(OWNER, NODE, FIRST_SLOT, SLOT_NAME);
     network.enableSlot(OWNER, NODE, DISABLED_SLOT);
     network.disableSlot(OWNER, NODE, DISABLED_SLOT);
     network.renameNode(OWNER, NODE, LEVER);
@@ -101,7 +99,7 @@ class ShowNetworkTest {
             READ,
             NodeState.ONLINE,
             Optional.of(NODE_POSITION),
-            List.of(new SlotRow(FIRST_SLOT, DOOR, Direction.INPUT, Optional.of(SLOT_NAME))));
+            List.of(new SlotRow(FIRST_SLOT, DOOR, Direction.INPUT)));
     NodeRow other =
         new NodeRow(
             OTHER_NODE,
@@ -109,7 +107,7 @@ class ShowNetworkTest {
             READ,
             NodeState.UNLOADED,
             Optional.of(OTHER_NODE_POSITION),
-            List.of(new SlotRow(SECOND_SLOT, DOOR, Direction.OUTPUT, Optional.empty())));
+            List.of(new SlotRow(SECOND_SLOT, DOOR, Direction.OUTPUT)));
     assertEquals(List.of(lever, other), rows);
   }
 

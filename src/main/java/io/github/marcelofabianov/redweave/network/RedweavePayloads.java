@@ -80,10 +80,6 @@ public final class RedweavePayloads {
             ControllerRenamed.STREAM_CODEC,
             (renamed, context) -> ControllerRenamed.receive(renamed, context.player()))
         .playToServer(
-            SlotRenamed.TYPE,
-            SlotRenamed.STREAM_CODEC,
-            (renamed, context) -> SlotRenamed.receive(renamed, context.player()))
-        .playToServer(
             NodeRenamed.TYPE,
             NodeRenamed.STREAM_CODEC,
             (renamed, context) -> NodeRenamed.receive(renamed, context.player()))

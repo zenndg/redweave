@@ -22,8 +22,6 @@ final class NodeScreenPortugueseTexts {
   private static final String LOGIC_LATER = "A lógica chega na Fase 2.";
   private static final String LOGIC_TOOLTIP = "Até lá, a saída repete o canal como ele está.";
   private static final String CHANNELS_ACTIVE = "%s de %s canais ativos";
-  private static final String NAME = "Nome";
-  private static final String CLICK_TO_NAME = "Clique para dar um nome";
   private static final String STATUS = "Status";
   private static final String ENABLED = "Ativo";
   private static final String DISABLED = "Inativo";
@@ -94,8 +92,6 @@ final class NodeScreenPortugueseTexts {
   private static void addStates(BiConsumer<String, String> add) {
     add.accept(NodeScreenTexts.SIGNAL, SIGNAL);
     add.accept(NodeScreenTexts.CHANNELS_ACTIVE, CHANNELS_ACTIVE);
-    add.accept(NodeScreenTexts.NAME, NAME);
-    add.accept(NodeScreenTexts.CLICK_TO_NAME, CLICK_TO_NAME);
     add.accept(NodeScreenTexts.STATUS, STATUS);
     add.accept(NodeScreenTexts.ENABLED, ENABLED);
     add.accept(NodeScreenTexts.DISABLED, DISABLED);

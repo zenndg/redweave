@@ -8,15 +8,15 @@ import java.util.Optional;
 
 /**
  * A slot as it is in the saves: its channel, which is its place on the node, whether it is enabled,
- * its direction, face and name, and the last reading, left out when it is off (answers 37, 89, 224
- * and 227). A slot never enabled is not saved.
+ * its direction and face, and the last reading, left out when it is off (answers 37, 89 and 224). A
+ * slot never enabled is not saved. A slot has no name (answer 277), and the codec ignores the
+ * {@code name} key an older save may still carry, like any other unknown key.
  */
 record SavedSlot(ChannelSlot slot, Signal reading) {
   private static final String DIRECTION = "direction";
   private static final String FACE = "face";
   private static final String CHANNEL = "channel";
   private static final String ACTIVE = "active";
-  private static final String NAME_PART = "slot name";
   private static final String READING = "reading";
 
   static final Codec<SavedSlot> CODEC =
@@ -31,15 +31,13 @@ record SavedSlot(ChannelSlot slot, Signal reading) {
                       .fieldOf(DIRECTION)
                       .forGetter(saved -> saved.slot().direction()),
                   SaveCodecs.FACE.fieldOf(FACE).forGetter(saved -> saved.slot().face()),
-                  Lenient.optionalField(SaveCodecs.NAME, SaveCodecs.SAVED_NAME, NAME_PART)
-                      .forGetter(saved -> saved.slot().name()),
                   Lenient.optionalField(READING, SaveCodecs.SIGNAL, READING)
                       .forGetter(saved -> Optional.of(saved.reading()).filter(Signal::isOn)))
               .apply(
                   instance,
-                  (channel, active, direction, face, name, reading) ->
+                  (channel, active, direction, face, reading) ->
                       new SavedSlot(
-                          new ChannelSlot(direction, face, channel, active, name),
+                          new ChannelSlot(direction, face, channel, active),
                           reading.orElse(Signal.OFF))));
 
   /** The place of the slot on the node is its channel (answer 224). */

@@ -219,13 +219,6 @@ public final class Network {
     return isOwner(requester) ? slotEdits.setUp(nodeId, index, way, face) : Outcome.NOT_OWNER;
   }
 
-  /** Names a slot, for the owner only; blank takes the name away. It changes no signal (227). */
-  public Outcome renameSlot(PlayerId requester, NodeId nodeId, int index, String newName) {
-    return isOwner(requester)
-        ? slotEdits.rename(nodeId, index, newName, limits.slotNameLength())
-        : Outcome.NOT_OWNER;
-  }
-
   /** Frees one slot of a node, for the owner only. */
   public Outcome clearSlot(PlayerId requester, NodeId nodeId, int index) {
     return isOwner(requester)

@@ -20,8 +20,6 @@ final class NodeScreenEnglishTexts {
   private static final String LOGIC_LATER = "Logic arrives in Phase 2.";
   private static final String LOGIC_TOOLTIP = "Until then, Output repeats the channel as it is.";
   private static final String CHANNELS_ACTIVE = "%s of %s channels active";
-  private static final String NAME = "Name";
-  private static final String CLICK_TO_NAME = "Click to name";
   private static final String STATUS = "Status";
   private static final String ENABLED = "Enabled";
   private static final String DISABLED = "Disabled";
@@ -91,8 +89,6 @@ final class NodeScreenEnglishTexts {
   private static void addStates(BiConsumer<String, String> add) {
     add.accept(NodeScreenTexts.SIGNAL, SIGNAL);
     add.accept(NodeScreenTexts.CHANNELS_ACTIVE, CHANNELS_ACTIVE);
-    add.accept(NodeScreenTexts.NAME, NAME);
-    add.accept(NodeScreenTexts.CLICK_TO_NAME, CLICK_TO_NAME);
     add.accept(NodeScreenTexts.STATUS, STATUS);
     add.accept(NodeScreenTexts.ENABLED, ENABLED);
     add.accept(NodeScreenTexts.DISABLED, DISABLED);

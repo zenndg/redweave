@@ -57,7 +57,6 @@ public record NodeCopy(Face attached, List<CopiedSlot> slots) {
     if (slot.face() != attached) {
       return slot;
     }
-    return new ChannelSlot(
-        slot.direction(), targetAttached, slot.channel(), slot.active(), slot.name());
+    return new ChannelSlot(slot.direction(), targetAttached, slot.channel(), slot.active());
   }
 }

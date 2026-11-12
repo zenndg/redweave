@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -51,9 +50,6 @@ final class SnapshotRules {
         throw new IllegalArgumentException(REPEATED_NODE);
       }
       node.name().ifPresent(SnapshotRules::requireName);
-      node.slots().stream()
-          .flatMap(Optional::stream)
-          .forEach(slot -> slot.name().ifPresent(SnapshotRules::requireName));
     }
     return byId;
   }

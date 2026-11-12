@@ -34,7 +34,7 @@ final class SlotLines {
     return ChannelColors.argb(channelOf(slot));
   }
 
-  /** As `15 Red · Input`, with the name of the slot at the end when it has one (answer 234). */
+  /** As `15 Red · Input` (answers 234 and 277). */
   static Component text(SlotLine slot, ControllerMenu menu) {
     ChannelColor channel = channelOf(slot);
     String name =
@@ -43,11 +43,7 @@ final class SlotLines {
             : NO_NAME;
     Component direction =
         Component.translatable(isInput(slot) ? NodeScreenTexts.INPUT : NodeScreenTexts.OUTPUT);
-    Component shown = ChannelNames.of(channel, name);
-    if (slot.name().isEmpty()) {
-      return Component.translatable(ControllerScreenTexts.SLOT_ROW, shown, direction);
-    }
     return Component.translatable(
-        ControllerScreenTexts.SLOT_ROW_NAMED, shown, direction, slot.name());
+        ControllerScreenTexts.SLOT_ROW, ChannelNames.of(channel, name), direction);
   }
 }

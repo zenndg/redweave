@@ -164,11 +164,6 @@ public final class NodeMenu extends AbstractContainerMenu {
     return nameAt(names.labels().channels(), channel);
   }
 
-  /** The name the owner gave the slot of a color on this node, or empty (answer 227). */
-  public String slotName(ChannelColor channel) {
-    return nameAt(names.labels().slots(), channel);
-  }
-
   private static String nameAt(List<String> names, ChannelColor channel) {
     return channel.ordinal() < names.size() ? names.get(channel.ordinal()) : NO_NAME;
   }

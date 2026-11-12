@@ -11,9 +11,6 @@ public interface NetworkLimits {
 
   int nodeNameLength();
 
-  /** The longest name of a slot (answer 227). */
-  int slotNameLength();
-
   /** The radius of the reach of the controller, in blocks. 0 reaches the whole dimension. */
   int range();
 

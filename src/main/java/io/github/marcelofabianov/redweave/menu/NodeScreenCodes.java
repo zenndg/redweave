@@ -50,8 +50,7 @@ public final class NodeScreenCodes {
     Direction direction = Direction.values()[code >> DIRECTION_SHIFT & USED];
     ChannelColor channel = ChannelColor.values()[code >> CHANNEL_SHIFT & CHANNEL_MASK];
     boolean active = (code >> ACTIVE_SHIFT & USED) == USED;
-    return Optional.of(
-        new ChannelSlot(direction, Face.values()[face], channel, active, Optional.empty()));
+    return Optional.of(new ChannelSlot(direction, Face.values()[face], channel, active));
   }
 
   /** A choice carries only its position, which takes every bit above the kind (answer 145). */

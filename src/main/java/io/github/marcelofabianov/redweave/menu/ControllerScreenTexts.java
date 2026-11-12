@@ -20,7 +20,6 @@ public final class ControllerScreenTexts {
   public static final String COLUMN_SIGNAL = PREFIX + "column.signal";
   public static final String COLUMN_POSITION = PREFIX + "column.position";
   public static final String SLOT_ROW = PREFIX + "slot_row";
-  public static final String SLOT_ROW_NAMED = PREFIX + "slot_row_named";
   public static final String NO_ACTIVE_CHANNEL = PREFIX + "no_active_channel";
   public static final String SLOT_USE = PREFIX + "slot_use";
   public static final String CHANNELS_IN_USE = PREFIX + "channels_in_use";
