@@ -33,14 +33,14 @@ import net.neoforged.neoforge.network.PacketDistributor;
  */
 public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int WIDTH = 340;
-  private static final int HEIGHT = 190;
+  private static final int HEIGHT = 168;
   private static final int PADDING = 10;
-  private static final int FOOTER_HEIGHT = 32;
-  private static final Box PANEL = new Box(10, 62, 320, 90);
-  private static final Box CHOICE = new Box(10, 38, 320, 114);
+  private static final int FOOTER_HEIGHT = 20;
+  private static final Box PANEL = new Box(10, 62, 320, 76);
+  private static final Box CHOICE = new Box(10, 38, 320, 92);
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
-  private static final int BACK_Y = 8;
+  private static final int BACK_Y = 2;
   private static final int NONE = -1;
 
   private final FaceCube cube = new FaceCube();
@@ -117,8 +117,10 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         font,
         view,
         new Box(
-            leftPos + PADDING, topPos + HEIGHT - FOOTER_HEIGHT, WIDTH - 2 * PADDING, FOOTER_HEIGHT),
-        selected);
+            leftPos + PADDING,
+            topPos + HEIGHT - FOOTER_HEIGHT,
+            WIDTH - 2 * PADDING,
+            FOOTER_HEIGHT));
   }
 
   /** The screen opens on the first enabled channel, or on the first one with none (telas.md). */
