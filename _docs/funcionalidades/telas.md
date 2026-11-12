@@ -28,7 +28,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 |---|---|---|
 | Quem escolhe | Só quem colocou o nó. Para os outros, a tela abre só para leitura, com `No network` | 172 |
 | Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
-| Escolher | Um clique numa rede liga o nó a ela, com 1 slot `Input` no primeiro canal livre, e a tela segue para a configuração | 171 |
+| Escolher | Um clique numa rede liga o nó a ela, com os 16 canais inativos, e a tela segue para a configuração | 171 e 226 |
 | Linha | O quadrado na cor da rede, o nome e a quantidade de nós, como `1 node` e `12 nodes`. A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
 | Sem redes | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` | 199 |
 | Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
@@ -47,8 +47,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Canal escolhido | Abaixo da fileira, o painel do canal: o título, como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
 | Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
 | Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
-| Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e `click a face to change`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
-| Lógica | `None`, `Invert`, `Pulse`, `Delay` e `Threshold`. Na Fase 1, só `None` fica habilitada, com o aviso `Logic arrives in Phase 2.` |
+| Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
 | Rodapé | O medidor de 15 barras com o sinal do canal escolhido e quantos canais estão ativos, como `3 of 16 channels active` |
 
 A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233).
@@ -82,7 +81,7 @@ O que a tela faz, decidido na issue #19.
 | Cabeçalho | O quadrado na cor da rede e o nome dela. Para o dono, o clique no quadrado abre a paleta, e o botão `Rename` troca o nome por um campo de texto (perguntas 156 e 212) |
 | Estado | `Online · <n> nodes` |
 | Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
-| Nodes | Uma linha por nó, na ordem em que entraram na rede, com o nome, o sinal de 0 a 15 e a posição x, y e z do bloco do nó (perguntas 179 e 216). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). A posição só aparece para o dono (pergunta 149). Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29). Um Signal Remote aparecerá com a posição `held item`, quando o Remote existir |
+| Nodes | Uma linha por nó, na ordem em que entraram na rede, com o nome, o sinal de 0 a 15 e a posição x, y e z do bloco do nó (perguntas 179 e 216). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). A posição só aparece para o dono (pergunta 149). Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29). Se e como o Signal Remote aparece na lista é decidido no refinamento da #22 (pergunta 318). As colunas de estado e tipo chegam com a #107 (pergunta 311) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída, a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
 | Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
 
@@ -117,12 +116,15 @@ O que a tela faz, decidido na issue #20.
 
 | Ponto | Depende de |
 |---|---|
-| Conteúdo das abas `Upgrades` e `Info`, que por enquanto não aparecem (pergunta 80) | Issue dos upgrades |
+| A aba `Info` da Tela do Nó, que volta quando tiver conteúdo (pergunta 233) | A definir |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:27 | Deixa a presença do Signal Remote na lista para a #22 e cita as colunas da #107 (perguntas 311 e 318). |
+| Zennd | 2026-11-12 17:18 | Corrige a escolha de rede com os canais inativos, o tooltip do cubo e a pendência da aba `Info` (perguntas 226 e 233). |
+| Zennd | 2026-11-12 16:50 | Tira a linha `Lógica` da Tela do Nó, porque a lógica fica nos Signal Modules (pergunta 308). |
 | Zennd | 2026-11-12 11:58 | Tira o campo de nome do slot da Tela do Nó e o nome da linha aberta da Tela do Controlador (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | Adiciona o `Clear log` da aba `Log` (perguntas 264 e 265). |
 | Zennd | 2026-11-12 09:22 | Descreve a aba `Log` da Tela do Controlador, da #90 (perguntas 242 a 248). |

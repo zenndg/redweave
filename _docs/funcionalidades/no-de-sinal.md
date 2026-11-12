@@ -4,7 +4,7 @@ O Signal Node (`redweave:signal_node`) é a peça que gruda numa face de qualque
 
 ## Em uma frase
 
-Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, ele ganha uma entrada num canal livre. A entrada lê a redstone que chega ao bloco, e a saída energiza só o bloco onde o nó está grudado.
+Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, ele entra com os 16 canais inativos, e o dono ativa os que quiser. A entrada lê a redstone que chega ao bloco, e a saída energiza só o bloco onde o nó está grudado.
 
 ## Colocar
 
@@ -79,13 +79,14 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 ## Fora desta funcionalidade
 
-- A Tela do Nó e a configuração dos slots (issue #19).
+- A Tela do Nó e a configuração dos slots ([`telas.md`](telas.md#tela-do-nó)).
 - As camadas emissivas e a receita (issue #24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Corrige o resumo com os canais inativos e aponta a Tela do Nó para `telas.md` (pergunta 226). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | A saída energiza só o bloco de apoio, sem o sinal fraco da alavanca (pergunta 262). |
 | Zennd | 2026-11-11 16:40 | Aplica os 16 slots por cor e os cantos da placa (perguntas 224, 226 e 229). |

@@ -43,16 +43,16 @@ Redweave brings those ideas together, focused on **signal only** (items, fluids 
 | Concept | What it is |
 | --- | --- |
 | **Network** | Created by placing a Network Controller: each controller is one network. Has a name, a color and an owner, who is the only one allowed to change it. Every network shares **16 channels**, colored like wool. A Network Terminal lists all of a player's networks. |
-| **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and starts with 4 channel slots (upgradable to 9). Can be made invisible. |
-| **Channel** | Per slot: direction (input or output), block face, and which of the 16 network channels it uses. Several inputs on one channel → the strongest signal wins. |
-| **Logic** | Each output slot can transform the signal: invert, pulse only, delay, threshold. |
-| **Chip** | A circuit of gates designed in the Circuit Editor and saved into an item, with a name and icon. Placed in a node slot, it runs as a single high-performance piece. |
+| **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and has 16 channel slots, one per channel color, each enabled or disabled. |
+| **Channel** | One of the 16 signal lines of a network, each with a wool color and an optional name. Each node slot is tied to one channel and sets its direction (input or output) and block face. Several inputs on one channel → the strongest signal wins. |
+| **Signal Module** | A plate that attaches to any face of any block, like a node, and holds signal logic: timer, inverter, gate, counter, memory, latch and more. Its inputs and output are the edges of the plate or network channels. |
+| **Chip** | A circuit of gates designed in the Circuit Editor and saved into an item, with a name and icon. It runs as a single high-performance piece. |
 
 ```mermaid
 flowchart LR
     A[Source block<br/>lever, sensor, machine] --> B[Input node<br/>Red channel]
     B --> C((Network<br/>16 channels))
-    C --> D[Channel logic<br/>gate, timer or chip]
+    C --> D[Signal Module<br/>gate, timer or inverter]
     D --> E[Output node<br/>Red channel]
     E --> F[Target block<br/>door, piston, lamp]
 ```
@@ -61,13 +61,13 @@ flowchart LR
 
 | Phase | Theme | Delivers |
 | --- | --- | --- |
-| **1 · Wireless** (MVP) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
-| **2 · Logic** | Gates you can see | Plate-shaped AND / OR / XOR / NOT / NAND gates (floor, wall, ceiling), Timer and Counter, per-channel logic |
+| **1 · Wireless** (MVP, v0.1.0) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
+| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Physical wiring | Redstone wire and 16-channel bundled cable, multipart, more mod integrations |
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |
 
-Every phase ends with a playable release.
+Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work order is in the [roadmap](ROADMAP.md).
 
 ## UX principles
 
@@ -106,7 +106,7 @@ flowchart TB
 **Rules**
 
 - Dependencies point inward only. No `net.minecraft` or `net.neoforged` import is allowed in `domain` or `application`; an ArchUnit test enforces it.
-- The **Network** aggregate owns its nodes, channels and permissions. The **Circuit** is a graph of gates. The **Simulator** compiles that graph in topological order, and detects loops and oscillation with the exact location so the UI can show it.
+- The **Network** aggregate owns its nodes, channels and permissions. The **Circuit** is a graph of gates. The **Simulator** evaluates each network once per tick; in Phase 3, it also compiles that graph in topological order and detects loops and oscillation with the exact location so the UI can show it.
 - Adapters translate between the world and the domain, and nothing else.
 
 **Performance**
@@ -160,7 +160,7 @@ Phase 5 adds a **Bridge Node** that publishes channel changes to an **MQTT** bro
 
 - **External dashboards** — every channel change becomes an event (server, network, channel, value, tick, time) on a topic such as `redweave/<server>/<network>/<channel>`.
 - **Linked electrical systems** — an ESP32 with a relay follows a channel; a real sensor publishes into one.
-- **Physical toys** — the in-game Remote Control drives a toy car through an ESP32 and an H-bridge.
+- **Physical toys** — the in-game Signal Remote drives a toy car through an ESP32 and an H-bridge.
 
 The bridge is just another adapter (`EventPublisher` and `CommandReceiver` ports); the core does not change. Safety is a requirement, not an option: disabled by default, server-side only, authenticated broker, rate limits per channel, and a failsafe that stops hardware when commands stop arriving.
 
@@ -179,12 +179,12 @@ Redweave stands on ideas from great mods. Code from MIT-licensed projects may be
 
 ## Contributing
 
-Redweave is in development, in Phase 1; issues with ideas and feedback are very welcome.
+Redweave is in development, working toward v0.1.0 (Phases 1 and 2); issues with ideas and feedback are very welcome.
 
 When contributing code:
 
 - **Tests first** for anything in `domain` and `application`.
-- Keep the dependency rule: if a class needs Minecraft, it belongs in `adapter`.
+- Keep the dependency rule: if a class needs Minecraft, it belongs outside `domain` and `application`, in the adapter packages (`block`, `item`, `menu`, `network`, `server`, `client`).
 - Small, focused pull requests with a clear description of the player-facing change.
 
 ## License

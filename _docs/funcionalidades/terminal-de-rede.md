@@ -47,7 +47,7 @@ O topo mostra a contagem, como `1 network` ou `4 networks` (pergunta 261), e a d
 | Renomear | Todas | Troca o nome, com o limite de `network.name_length` | 156, 158 e 176 |
 | `Offline` | `Online` | Desliga a rede | 132 |
 | `Online` | `Offline` | Religa a rede | 132 e 135 |
-| Limpar nós | Todas | Tira todos os nós da rede, que perdem os slots e ficam `No network` no mundo. Pede confirmação no segundo clique, como o `Clear slot` | 133 |
+| Limpar nós | Todas | Tira todos os nós da rede, que perdem os slots e ficam `No network` no mundo. Pede confirmação no segundo clique, como o `Clear log` da Tela do Controlador | 133 |
 | `Delete` | `Unplaced` | Apaga a rede de vez, com confirmação. Os nós dela ficam `No network` | 166 |
 
 Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela não abre, nem pelo Terminal (pergunta 158). Uma rede `Unplaced` não pode ser religada até o controlador voltar ao mundo (pergunta 135).
@@ -57,7 +57,7 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 | Estado | Quando | Efeito | Pergunta |
 |---|---|---|---|
 | `Online` | Controlador no mundo e rede ligada | A rede funciona | 135 |
-| `Offline` | Desligada no Terminal | Todos os canais valem 0. O controlador e os nós dela não aceitam interação do player, e o Configurator não abre, não copia e não cola neles. O dono ainda quebra os blocos, e a Chave funciona | 132, 136 e 163 |
+| `Offline` | Desligada no Terminal | Todos os canais valem 0. O controlador e os nós dela não aceitam interação do player, e o Configurator não abre, não copia, não cola e não alterna neles. O dono ainda quebra os blocos, e a Chave funciona | 132, 136, 163 e 241 |
 | `Unplaced` | O controlador saiu do mundo | Todos os canais valem 0. Só sai pelo controlador recolocado ou pelo `Delete` | 135, 146 e 166 |
 
 ## Item
@@ -78,6 +78,7 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Aponta a confirmação para o `Clear log` e inclui o `Toggle` na rede `Offline` (pergunta 241). |
 | Zennd | 2026-11-12 09:49 | Aplica as perguntas 251 a 256: o conceito do bloco, a barra de ações, os textos e o Terminal perdido; adiciona o desenho da tela. |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 175 e 176. |
 | Zennd | 2026-11-11 09:51 | Cria o documento, com as respostas das perguntas 129 a 166. |

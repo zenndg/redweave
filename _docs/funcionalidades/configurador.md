@@ -4,7 +4,7 @@ O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e
 
 ## Em uma frase
 
-Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, e `Wrench` retira o nó como item.
+Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item.
 
 ## Modos
 
@@ -34,7 +34,7 @@ Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Ja
 
 O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
-Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância é a de interação com blocos do jogo, a mesma da Tela do Nó (pergunta 81). Num nó de uma rede `Offline`, `Open` e `Copy` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (perguntas 132 e 160). O `Wrench` funciona (pergunta 163).
+Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância é a de interação com blocos do jogo, a mesma da Tela do Nó (pergunta 81). Num nó de uma rede `Offline`, `Open`, `Copy` e `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` (perguntas 132, 160 e 241). O `Wrench` funciona (pergunta 163).
 
 ### Abrir
 
@@ -74,6 +74,7 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Colar | Colou | `Pasted <n> slots`, com todos os canais configurados (pergunta 240) |
 | Alternar | Clique | `Enabled <n> channels` |
 | Alternar | Shift + clique | `Disabled <n> channels` |
+| Alternar | Nó sem rede | `No network` |
 | Alternar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Não é dono | `Only the owner of <rede> can change this node.` |
 | Colar | Nó sem rede, colocado por outro player | `Only the player who placed this node can paste a network on it.` |
@@ -88,7 +89,7 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
-O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click a node to open it.`, `Click a node to copy it, Shift + click to paste.` ou `Click a node to pick it up.`) e `Shift + scroll to change the mode.` (pergunta 190).
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click a node to open it.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` ou `Click a node to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190 e 241).
 
 ## Item
 
@@ -105,7 +106,7 @@ O item não guarda mais a rede atual: os componentes `redweave:network` e `redwe
 
 ### Formato da cópia
 
-O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (pergunta 238), `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction`, `face` e `name` (opcional) de cada slot já ativado alguma vez, como no save. Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
+O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (pergunta 238), `attached`, a face onde o nó de origem estava grudado, e `slots`, com `channel`, `active`, `direction` e `face` de cada slot já ativado alguma vez, como no save (pergunta 277). Os valores usam as mesmas chaves do save das redes, como `input`, `east` e `red` (pergunta 89).
 
 ## Fora desta funcionalidade
 
@@ -115,6 +116,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Inclui o `Toggle` no resumo, na rede `Offline`, nas mensagens e no tooltip, e tira o `name` do formato da cópia (perguntas 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot da cópia (pergunta 277). |
 | Zennd | 2026-11-12 11:46 | O rótulo sobre os nós passa a ter duas linhas, a rede e o nó (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:11 | Descreve o visor do modo e o rótulo sobre os nós da #80 (perguntas 267 a 271). |

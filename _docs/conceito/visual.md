@@ -55,7 +55,7 @@ O símbolo perde detalhe conforme diminui: os nós somem em 64 px, e em 16 px el
 | Deepslate polido | `#3A3E45` | Corpo dos blocos e itens |
 | Cobre | `#C27B4C` | Molduras, cabos e botões |
 | Redstone | `#E2392F` | Sinal ativo, núcleo e lentes |
-| Âmbar | `#E3A33B` | Nó `Unloaded`, nas telas (perguntas 13 e 29) |
+| Âmbar | `#E3A33B` | Nó `Unloaded`, rede `Unplaced` e modo `Toggle` (perguntas 13, 29, 146 e 241) |
 | Tela | `#0E1116` | Visores e painéis de LED |
 
 ## Canais
@@ -85,23 +85,23 @@ O canal 15 usa o vermelho da lã. O vermelho de redstone, `#E2392F`, fica para o
 
 ## Sinal
 
-O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 barras, que crescem em altura e intensidade. Sinal 0 fica apagado. A partir de 12, as barras brilham. O medidor aparece no Network Controller, no Configurator e nas telas.
+O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 barras, que crescem em altura e intensidade. Sinal 0 fica apagado. A partir de 12, as barras brilham. O medidor aparece na Tela do Nó, no rodapé. O visor do Configurator mostra só a cor do modo (pergunta 271).
 
 ## Elementos de interface
 
 | Elemento | Como é |
 |---|---|
-| Estado | Etiqueta com ponto colorido: `Online` em verde, `Unloaded` em âmbar, `Out of range` em vermelho e `No network` em cinza (pergunta 29) |
+| Estado | Etiqueta com ponto colorido: `Online` em verde, `Unloaded` em âmbar, `Out of range` em vermelho, `No network` em cinza, `Offline` em cinza e `Unplaced` em âmbar, no Terminal (perguntas 29, 146 e 177) |
 | Canal | Quadrado na cor do canal, com o número e o nome em inglês, como `15 Red` |
 | Sinal | O medidor de 15 barras e o número |
 | Direção | Seletor de duas opções, `Input` e `Output`, com a escolhida em cobre |
 | Botões | Principal em cobre, secundário em metal escuro, os dois com sombra interna embaixo |
 | Janela | Metal escuro com chanfro claro em cima e à esquerda e escuro embaixo e à direita, como no Cubit |
-| Abas | À direita da janela, como estado só do cliente |
+| Abas | Na Tela do Controlador, uma fileira horizontal sob o cabeçalho, como estado só do cliente; a Tela do Nó não tem abas laterais (pergunta 233) |
 
 ## Blocos e itens da Fase 1
 
-Os quatro elementos da primeira interação e o Network Terminal, que entrou depois (pergunta 130) e ganha a prancha na #89. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
+Os quatro elementos da primeira interação e o Network Terminal, que entrou depois (pergunta 130) e ganhou a prancha na #89. Cada prancha tem a ilustração, os estados e os detalhes, e a ilustração também está em SVG, em [`conceito/svg/`](../imagens/conceito/svg/).
 
 ### Network Controller
 
@@ -118,9 +118,8 @@ Bloco, `redweave:network_controller`. Onde a rede nasce: guarda nome, cor, dono 
 
 | Estado | Visual |
 |---|---|
-| Online | Núcleo aceso; cada canal ligado acende o seu LED |
-| Sem nós | Núcleo aceso fraco, painel apagado |
-| Sem rede | Controlador sem rede, como o que sobra depois de reiniciar o servidor antes da #16: núcleo apagado (perguntas 53 e 57) |
+| Online | Núcleo aceso (`linked`). Os LEDs por canal e o brilho do topo chegam com a #24 |
+| Offline ou sem rede | Núcleo apagado: rede desligada no Terminal, ou controlador sem rede, como quando o save se perde (perguntas 53, 57, 177 e 319) |
 
 ### Network Terminal
 
@@ -149,11 +148,11 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 |---|---|
 | Placa | Fina, com cerca de 2 pixels de espessura, presa à face como um botão do jogo, com moldura de cobre |
 | Lente | No centro, acende na cor do sinal |
-| Slots | Quatro pontos nos cantos, cada um na cor do canal configurado. Apagado é slot livre |
+| Slots | Quatro pontos nos cantos, com os 4 primeiros canais ativos, na ordem das cores; sem canal ativo, os quatro ficam escuros (perguntas 224 e 229) |
 
 | Estado | Visual |
 |---|---|
-| Desligado | Lente escura: sem rede ou com sinal 0 |
+| Desligado | Lente escura: sem rede, rede `Offline` ou `Unplaced`, ou sinal 0 (perguntas 135 e 177) |
 | Ativo | Lente acesa, mais forte quanto maior o sinal |
 | Fora de alcance | Lente apagada e anel tracejado vermelho: o nó está fora do raio do controlador e não conta (perguntas 23 e 29). O nó `Unloaded` não aparece no mundo, porque o chunk dele não está carregado |
 
@@ -161,12 +160,12 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 
 ![Configurator](../imagens/conceito/configurator.png)
 
-Ferramenta, `redweave:configurator`. Abre, copia, cola e retira Signal Nodes, com três modos ([`configurador.md`](../funcionalidades/configurador.md)). A prancha é anterior às perguntas 126 a 169 e mostra o visor do canal guardado, que deu lugar ao visor do modo.
+Ferramenta, `redweave:configurator`. Abre, copia, cola, ativa e desativa canais e retira Signal Nodes, com quatro modos ([`configurador.md`](../funcionalidades/configurador.md)). A prancha é anterior às perguntas 126 a 169 e mostra o visor do canal guardado, que deu lugar ao visor do modo.
 
 | Parte | Como é |
 |---|---|
 | Cabo | Cobre, com sulcos de pegada |
-| Visor | A tela de 3×2 pixels na cor do modo atual, com o pixel de cima da direita aceso quando há cópia (perguntas 159 e 271) |
+| Visor | Visor de 3×2 pixels: os 2×2 da esquerda na cor do modo, e o pixel de cima da direita aceso quando há cópia (pergunta 271) |
 | Ponta | Ponta de prova com redstone na extremidade |
 | Na mão | Um rótulo flutuante sobre cada nó, em duas linhas: em cima, menor, `■ rede` na cor dela; embaixo, um pouco maior, o nome do nó (perguntas 268 e 274 a 276) |
 
@@ -183,25 +182,14 @@ O modo e a configuração copiada ficam em data components do item (regra 7 do `
 
 ### Signal Remote
 
-![Signal Remote](../imagens/conceito/signal-remote.png)
-
-Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca de bolso: liga um canal da rede sem voltar até o circuito.
-
-| Modo | Visual e uso |
-|---|---|
-| Alavanca | Haste de cobre que sobe e desce; um clique liga, outro desliga, e o LED acende com o canal ligado |
-| Botão | Botão redondo de cobre; cada clique manda um pulso curto |
-
-| Parte | Como é |
-|---|---|
-| Faixa | Na cor do canal, para reconhecer o controle no inventário |
-| Antena | Ponta de redstone, que acende junto com o LED |
-| Troca | Shift + clique troca o modo; clicar no Network Controller escolhe a rede e o canal |
+Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift + clique direito abre a lista de redes, depois a de nós com slot de input ativo e, se houver mais de um, a de slots (perguntas 282 e 286); o clique direito dispara. Modos alavanca e botão, num seletor na tela do vínculo (pergunta 288). Guarda rede, nó e slot; se o vínculo quebra, mostra `Link lost` e não dispara (pergunta 287). Shift + clique direito troca o vínculo a qualquer momento (pergunta 291). O visual do tablet é decidido no refinamento da #22, e a prancha [`signal-remote.png`](../imagens/conceito/signal-remote.png) e as texturas `signal_remote_*` são do conceito antigo, a alavanca de bolso.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:27 | Alinha os estados do controlador ao código (perguntas 177 e 319). |
+| Zennd | 2026-11-12 17:18 | Atualiza o medidor, os estados `Offline` e `Unplaced`, as abas, os cantos do nó, o Configurator e o Signal Remote em tablet (perguntas 135, 146, 177, 224, 229, 233, 241, 271, 279 e 282 a 291). |
 | Zennd | 2026-11-12 11:46 | O rótulo sobre os nós em duas linhas (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:11 | Aplica o visor só com a cor, o rótulo sobre os nós e o modo `Toggle` (perguntas 241 e 267 a 271). |
 | Zennd | 2026-11-12 09:49 | Adiciona o conceito e a prancha do Network Terminal (perguntas 251 e 258). |

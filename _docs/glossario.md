@@ -18,25 +18,28 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Sem rede | `No network` | Nó sem rede, ou numa rede `Unplaced`. Um nó novo nasce assim e não pode ser configurado até ter rede (pergunta 139) |
 | Nó | `Node` | Peça grudada numa face de um bloco. Lê ou emite redstone ali, por slots de canal. Tem um nome, que nasce com os 8 primeiros caracteres do ID (perguntas 142 e 144); sem nome próprio, mostra esse padrão (`displayName`, pergunta 206) |
 | Escolha de rede | `NetworkChoices` | A lista das redes `Online` de um player na Tela do Nó, com a última usada no topo, para quem colocou um nó novo e para o dono que troca o nó de rede (perguntas 139, 141 e 203) |
-| Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: direção, face do bloco, canal da rede e lógica |
+| Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: status, direção, face do bloco e canal da rede. Não tem lógica: o nó só lê e emite (pergunta 308) |
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
-| Lógica | `Logic` | Transformação de um slot de saída: inverter, só pulso, atraso, limiar |
-| Porta | `Gate` | AND, OR, XOR, NOT ou NAND, como bloco em placa ou dentro de um chip |
+| Signal Modules | — | A família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. A entrada e a saída de cada módulo são uma borda da placa ou um canal da rede, e cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313 e 314) |
+| Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`) e o `Signal Inverter` (`signal_inverter`) (pergunta 300) |
+| Porta | `Gate` | AND, OR, XOR ou NAND, de duas entradas, como Signal Module ou dentro de um chip. O NOT é o Signal Inverter (perguntas 309 e 310) |
 | Circuito | `Circuit` | Um grafo de portas, avaliado em ordem topológica |
 | Chip | `Chip` | Um circuito gravado num item, com nome e ícone, que roda como uma peça só |
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
 | Network Controller | `network_controller` | O bloco que é uma rede: colocá-lo cria a rede, e a tela dele a gerencia, com a lista de nós e o log |
 | Network Terminal | `network_terminal` | O bloco que administra todas as redes do dono: renomear, desligar, religar, limpar os nós e apagar as `Unplaced`. Não cria redes (perguntas 130 e 131) |
-| Configurador | `configurator` | Ferramenta com três modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, e `Wrench` retira o nó como item (perguntas 143 e 161) |
+| Configurador | `configurator` | Ferramenta com quatro modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item (perguntas 143, 161 e 241) |
 | Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
 | Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
-| Signal Remote | `signal_remote` | Item de mão que age como alavanca ou botão num canal (pergunta 15). Na rede, é uma entrada sem posição (pergunta 27) |
+| Signal Remote | `signal_remote` | Item de mão com aparência de tablet, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot (perguntas 15, 279, 282 e 288). Na rede, é uma entrada sem posição (pergunta 27) |
 | Ponte | `Bridge` | Na Fase 5, o nó que liga canais a um broker MQTT |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:20 | Corrige o Configurator para quatro modos, com o `Toggle` (pergunta 241). |
+| Zennd | 2026-11-12 16:50 | Tira a `Logic`, adiciona os Signal Modules em placa, muda a porta e o Signal Remote (perguntas 279, 282, 297 a 310, 313 e 314). |
 | Zennd | 2026-11-11 14:09 | Liga os estados `Offline` e `Unplaced` ao `NetworkState`, da #88. |
 | Zennd | 2026-11-11 13:46 | Liga a última rede usada, o nome do nó e a escolha de rede aos nomes do código, da #87. |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal, os estados `Offline` e `Unplaced`, o modo e o log; troca a rede atual pela última rede usada e tira a etiqueta (perguntas 125 a 157). |

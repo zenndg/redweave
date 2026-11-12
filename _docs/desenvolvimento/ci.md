@@ -14,7 +14,7 @@ O repositório é privado, e o plano gratuito dá 2.000 minutos por mês. Nesse 
 |---|---|---|---|
 | Gates | Check | `make check` | Compilação, testes, arquitetura, cobertura, formatação ou análise estática |
 | Gates | GameTests | `make gametest` | GameTest reprovada ou mod que não carrega no servidor |
-| Gates | Datagen | `make check-generated` | `src/generated` diferente do que a geração produz |
+| Gates | Generated files | `make check-generated` | `src/generated` diferente do que a geração produz |
 | Secrets | gitleaks | `make setup` e `make scan-secrets` | Segredo em qualquer commit do histórico (pergunta 45) |
 
 Os comandos são os mesmos do `Makefile` (regra 35 do `AGENTS.md`), então o que passa na máquina passa na CI. Quando o job Gates reprova, o `build/gametest.log` e os relatórios de `build/reports/` ficam no artefato `reports` da execução.
@@ -37,7 +37,7 @@ O `gradle/actions` ficou de fora: o cache padrão da v6 dele é proprietário, e
 
 ## Quando algo reprova
 
-- **Check, GameTests ou Datagen:** rode o mesmo comando na máquina e veja [`ferramentas-de-build.md`](ferramentas-de-build.md#quando-algo-reprova). O log e os relatórios estão no artefato `reports` da execução.
+- **Check, GameTests ou Generated files:** rode o mesmo comando na máquina e veja [`ferramentas-de-build.md`](ferramentas-de-build.md#quando-algo-reprova). O log e os relatórios estão no artefato `reports` da execução.
 - **Passa na máquina e reprova na CI:** confira se o arquivo que falta está no commit, como um arquivo de `src/generated`, e se o `git status` está limpo.
 - **gitleaks:** o relatório oculta o valor e mostra o commit e o arquivo. Troque o segredo, porque ele já foi exposto, e só então pense em reescrever o histórico, que exige autorização. Em caso de falso positivo, consulte o desenvolvedor antes de criar qualquer exceção.
 - **Primeira execução lenta ou cache perdido:** a chave do cache muda com qualquer `*.gradle*` ou com o wrapper, e aí o Minecraft é preparado de novo. É esperado.
@@ -46,4 +46,5 @@ O `gradle/actions` ficou de fora: o cache padrão da v6 dele é proprietário, e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 17:18 | Usa o nome `Generated files` do passo da CI, como no `ci.yml` (pergunta 43). |
 | Marcelo Fabiano | 2026-11-10 08:09 | Cria o documento, com a CI no GitHub Actions. |

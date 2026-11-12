@@ -25,7 +25,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
-| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `ALREADY_PLACED`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE`, `NETWORK_LIMIT`, `NETWORK_NOT_UNPLACED` e `TERMINAL_LIMIT`. Os casos de uso de `application/` usam o mesmo vocabulário, com `UNKNOWN_NETWORK` (pergunta 41) | #10, #13, #14, #87 e #89 |
+| `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `SLOT_ENABLED`, `ALREADY_PLACED`, `UNKNOWN_NETWORK`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE`, `NETWORK_LIMIT`, `NETWORK_NOT_UNPLACED` e `TERMINAL_LIMIT`. `UNKNOWN_NETWORK` serve aos casos de uso de `application/` (pergunta 41) | #10, #13, #14, #87, #89 e #20 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
@@ -33,7 +33,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229) | #10, #87 e #20 |
 | `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
 | `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
-| `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal e status ativo ou inativo, sem nome próprio (pergunta 277). Só um slot ativo lê (`reads`) ou emite (`emits`). A lógica entra na Fase 2 | #10 e #20 |
+| `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal e status ativo ou inativo, sem nome próprio (pergunta 277). Só um slot ativo lê (`reads`) ou emite (`emits`). Não tem lógica: toda lógica de sinal fica nos Signal Modules (pergunta 308) | #10 e #20 |
 | `SlotChanges` | Dentro da rede: o que ativar, desativar e preparar fazem a um slot. Na primeira ativação, o slot vira `Input` na face grudada; desativar guarda direção e face (perguntas 228 e 237) | #20 |
 | `Direction` | `INPUT` ou `OUTPUT` | #10 |
 | `NetworkLimits` | Os números da rede: tamanho dos nomes da rede, do canal e do nó, o raio do alcance e as redes por player. O domínio define a interface, e o config a implementa | #10 e #11 |
@@ -43,7 +43,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NetworkStatus` | Dentro da rede: onde está o controlador e se o dono a desligou. Saiu do `Network` como `Channels` | #88 |
 | `NetworkSignals` | Dentro da rede: as consultas de sinal (`channelValue`, `output`, `slotSignal`, `emission`, `nodeSignal`, `nodeState` e `counts`), que só leem as partes da rede. Saiu do `Network` como `Readings` | #88 |
 | `readInput`, `channelValue` e `output` | A regra do canal, no `Network`: guarda a última leitura de cada entrada, dá o mais forte entre as que contam e o que cada saída emite | #11 |
-| `emission` | O que um nó emite no mundo: a mais forte entre as saídas dele, porque ele alimenta o bloco de apoio como uma alavanca (pergunta 71) | #15 |
+| `emission` | O que um nó emite no mundo: a mais forte entre as saídas dele, porque ele energiza com força só o bloco de apoio (perguntas 71 e 262) | #15 |
 | `slotSignal` | O sinal de um slot, para o medidor da Tela do Nó: a última leitura numa entrada e o que a saída emite | #19 |
 | `nodeSignal` | O sinal de um nó, para a lista da Tela do Controlador e, na #24, para a lente: o mais forte entre as últimas leituras e o que ele emite, então uma entrada recebendo sinal também acende. Um nó que não conta, fora do alcance ou numa rede que não está `Online`, vale 0 (perguntas 98, 177 e 179) | #20 |
 | `Readings` | Dentro da rede: a última leitura de cada entrada e a soma das entradas por canal. Saiu do `Network` para o agregado manter uma responsabilidade por parte | #19 |
@@ -78,7 +78,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Fora de alcance não conta:** um nó fora do raio ou em outra dimensão vale 0, e as saídas dele emitem 0 (pergunta 23). O raio vem de `NetworkLimits`, porque o domínio não lê o config.
 - **Esfera pelos quadrados:** o alcance compara os quadrados das distâncias, em `long`, sem raiz, sem arredondamento e sem estouro perto da borda do mundo (pergunta 36).
 - **Fora de alcance vence descarregado:** na tela, um nó fora do raio aparece como `OUT_OF_RANGE` mesmo descarregado, porque é isso que o impede de contar.
-- **Remote volta a 0:** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado (pergunta 27).
+- **Remote volta a 0 (planejado na #22):** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado (pergunta 27).
 - **Só a rede `Online` conta:** numa rede `Offline` ou `Unplaced`, todos os canais valem 0, e as saídas emitem 0 (perguntas 24 e 135). As leituras das entradas continuam guardadas, então a rede religada volta com os valores de antes.
 - **Desligar é escolha do dono:** `turnOff` só vale numa rede `Online`, e `turnOn` só numa `Offline`; uma `Unplaced` espera o controlador. O `Offline` fica guardado enquanto o controlador está fora do mundo, e a rede volta desligada (perguntas 132, 135 e 178). Só o Network Terminal da #89 chama essas operações no jogo (pergunta 209).
 - **Só o dono altera:** toda operação que muda a rede recebe quem pede e confere com `isOwner`, sem exceção para operadores (perguntas 22 e 28). O controlador também: só o dono o retira e o recoloca (pergunta 30).
@@ -105,6 +105,6 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Restaurada, a rede espera o primeiro tick:** o snapshot não leva o que a rede emitiu, então a rede restaurada começa pendente e reaplica todas as saídas (pergunta 38).
 - **Leitura 0 não vai para o save:** é o mesmo que uma entrada nunca lida, então o snapshot só leva as leituras ligadas, e a ida e volta pelo save sai igual (pergunta 89).
 - **A face grudada acompanha o nó:** ao colar, um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para continuar lendo o próprio bloco (perguntas 71 e 105). As outras faces ficam como estão.
-- **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Os 16 slots vão com o status e o nome (perguntas 106 e 230).
+- **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Os 16 slots vão com o status (perguntas 106, 230 e 277).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
