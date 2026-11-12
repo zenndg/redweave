@@ -12,6 +12,7 @@ public final class ControllerScreenTexts {
   public static final String TAB_NODES = PREFIX + "tab.nodes";
   public static final String TAB_SIGNALS = PREFIX + "tab.signals";
   public static final String TAB_ACCESS = PREFIX + "tab.access";
+  public static final String TAB_LOG = PREFIX + "tab.log";
   public static final String RENAME = PREFIX + "rename";
   public static final String RECOLOR_TOOLTIP = PREFIX + "recolor_tooltip";
   public static final String RENAME_TOOLTIP = PREFIX + "rename_tooltip";
@@ -29,6 +30,7 @@ public final class ControllerScreenTexts {
   public static final String OWNER = PREFIX + "owner";
   public static final String READ_ONLY = PREFIX + "read_only";
   public static final String NO_NODES = PREFIX + "no_nodes";
+  public static final String NO_LOG = PREFIX + "no_log";
 
   private ControllerScreenTexts() {}
 }

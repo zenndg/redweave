@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.network;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenLog;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenSignals;
 import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
@@ -46,7 +47,11 @@ public final class RedweavePayloads {
         .playToClient(
             ControllerScreenSignals.TYPE,
             ControllerScreenSignals.STREAM_CODEC,
-            (signals, context) -> ControllerScreenSignals.receive(signals, context.player()));
+            (signals, context) -> ControllerScreenSignals.receive(signals, context.player()))
+        .playToClient(
+            ControllerScreenLog.TYPE,
+            ControllerScreenLog.STREAM_CODEC,
+            (log, context) -> ControllerScreenLog.receive(log, context.player()));
   }
 
   /** What the client asks, checked on the server. */

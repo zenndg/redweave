@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-/** The tabs of the Controller Screen. The Log tab arrives with issue #90 (answer 215). */
+/** The tabs of the Controller Screen, with the Log of issue #90 (answers 214 and 215). */
 final class ControllerTabs {
   private static final int LEFT = 8;
   private static final int Y = 28;
@@ -20,7 +20,8 @@ final class ControllerTabs {
   enum Tab {
     NODES(ControllerScreenTexts.TAB_NODES),
     SIGNALS(ControllerScreenTexts.TAB_SIGNALS),
-    ACCESS(ControllerScreenTexts.TAB_ACCESS);
+    ACCESS(ControllerScreenTexts.TAB_ACCESS),
+    LOG(ControllerScreenTexts.TAB_LOG);
 
     private final String key;
 

@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 249 | Como fica em português o nome da aba `Log` da Tela do Controlador? | `Registro`, traduzida como as outras abas (`Nós`, `Sinais` e `Acesso`) |
+| 248 | O que a aba `Log` da Tela do Controlador mostra quando ainda não há nenhuma mudança de sinal? | A tabela vazia com `No signal change yet.` e `Nenhuma mudança de sinal ainda.` no meio, como a aba `Nodes` sem nós (pergunta 220) |
+| 247 | Em que fronteiras entram os testes do log da #90? | JUnit no domínio: o `SignalLog` (a mais nova primeiro, descarta a mais antiga no limite, linhas depois de um número de sequência) e o acompanhamento das saídas por slot (o primeiro tick não gera linha, a mudança gera, slot desativado vale 0). JUnit nos casos de uso `ReadInput` e `EvaluateNetworks`, com relógio e config falsos. GameTests no mundo: a alavanca gera a linha de entrada e a de saída, e o menu montado com `FakePlayerFactory` recebe as linhas. A tela fica no roteiro manual |
+| 246 | Ativar ou desativar um slot de saída gera linha no log? | Sim: um slot desativado emite 0, então ativar gera `Output <valor>` e desativar gera `Output 0`, como qualquer mudança do valor emitido. Mudar para o mesmo valor não gera linha. Completa a pergunta 243 |
+| 245 | Que nomes a linha do log da Tela do Controlador mostra para o nó e para o canal? | Os do momento da mudança: a linha guarda o nome do nó e o do canal como estavam, como um registro histórico. Renomear depois não muda as linhas antigas, e um nó removido continua com o nome na linha. Completa a pergunta 147 |
+| 244 | A reaplicação de todas as faces no primeiro tick depois de carregar a rede vira linha de log? | Não: o log começa vazio e só registra mudanças reais de valor depois do carregamento, para não encher o buffer com o estado que já existia. Completa a pergunta 147 |
+| 243 | Quando o log da Tela do Controlador registra uma linha de saída, se o simulador assenta as saídas por face? | Uma linha por slot de saída quando o valor que ele emite muda, inclusive quando cai para 0 porque a rede ficou `Offline` ou `Unplaced`, ou porque o nó saiu do alcance, como `Iron Door · 15 Red · Output · 12` no mockup da pergunta 214. Completa a pergunta 147 |
+| 242 | Onde fica o buffer do log de cada rede? | Fora do agregado `Network`: um value object `SignalLog` no domínio, com o buffer circular, o tamanho e a ordem, testado com JUnit, e um registro por rede na aplicação, só em memória. O `Network` não cresce nem vai para o save. Completa a pergunta 147 |
 | 241 | Como o Configurator ativa e desativa canais sem abrir a Tela do Nó? | Com um modo novo, `Toggle` (`Alternar`), em âmbar, na ordem `Open`, `Copy`, `Toggle` e `Wrench`. O clique num nó ativa todos os canais configurados dele, e o Shift + clique desativa todos; um canal nunca configurado fica como está. Só o dono da rede, com ela `Online`. A action bar mostra `Enabled <n> channels` ou `Disabled <n> channels`. Completa a pergunta 143 |
 | 240 | O que contam `Copied <n> slots`, `Pasted <n> slots` e o tooltip da cópia? | Todos os canais configurados, ativos ou não, que é o que vai na cópia. Muda a pergunta 230 |
 | 239 | Colar num nó que já tem outra rede troca a rede dele para a da cópia? | Não: num nó com rede, colar só aplica os slots. A rede só vem junto num nó sem rede, e trocar de rede continua sendo pela Tela do Nó (pergunta 141) |
@@ -241,6 +249,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:30 | Responde a pergunta 249. |
+| Zennd | 2026-11-12 09:25 | Responde a pergunta 248. |
+| Zennd | 2026-11-12 09:20 | Responde as perguntas 246 e 247. |
+| Zennd | 2026-11-12 09:18 | Responde as perguntas 242 a 245. |
 | Zennd | 2026-11-11 17:30 | Responde as perguntas 240 e 241. |
 | Zennd | 2026-11-11 17:08 | Responde as perguntas 238 e 239. |
 | Zennd | 2026-11-11 16:52 | Responde a pergunta 237. |

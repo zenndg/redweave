@@ -33,6 +33,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
   private static final int NO_INDEX = 0;
 
   private final NodeTable table = new NodeTable();
+  private final LogTable log = new LogTable();
   private final NameField name = new NameField();
   private final DoubleClick clicks = new DoubleClick(Util::getMillis);
   private Tab tab = Tab.NODES;
@@ -71,6 +72,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
       case NODES -> table.draw(graphics, font, content(), menu, mouse);
       case SIGNALS -> ChannelGrid.draw(graphics, font, content(), menu, mouse);
       case ACCESS -> AccessPanel.draw(graphics, font, content(), menu.header());
+      case LOG -> log.draw(graphics, font, content(), menu);
     }
     ControllerFooter.draw(
         graphics, font, new Box(panel.x(), topPos + FOOTER_Y, panel.width(), HEIGHT), menu);
@@ -130,7 +132,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     return switch (tab) {
       case NODES -> clickNodes(mouseX, mouseY);
       case SIGNALS -> clickChannels(mouseX, mouseY);
-      case ACCESS -> false;
+      case ACCESS, LOG -> false;
     };
   }
 
@@ -214,6 +216,10 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
       table.scroll(scrollY);
       return true;
     }
+    if (tab == Tab.LOG && content().contains(mouseX, mouseY)) {
+      log.scroll(scrollY);
+      return true;
+    }
     return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
   }
 
@@ -232,7 +238,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
                   .filter(row -> NodeTable.nameBox(row.box()).contains(mouseX, mouseY))
                   .isPresent();
           case SIGNALS -> ChannelGrid.nameAt(content(), mouseX, mouseY).isPresent();
-          case ACCESS -> false;
+          case ACCESS, LOG -> false;
         };
     return overName
         ? Optional.of(Component.translatable(ControllerScreenTexts.RENAME_TOOLTIP))

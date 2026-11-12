@@ -8,6 +8,7 @@ final class ControllerScreenPortugueseTexts {
   private static final String TAB_NODES = "Nós";
   private static final String TAB_SIGNALS = "Sinais";
   private static final String TAB_ACCESS = "Acesso";
+  private static final String TAB_LOG = "Registro";
   private static final String RENAME = "Renomear";
   private static final String RECOLOR_TOOLTIP = "Clique para trocar a cor.";
   private static final String DOUBLE_CLICK = "Clique duas vezes para renomear.";
@@ -27,6 +28,7 @@ final class ControllerScreenPortugueseTexts {
   private static final String OWNER = "Dono";
   private static final String READ_ONLY = "Só o dono pode alterar esta rede.";
   private static final String NO_NODES = "Nenhum nó nesta rede ainda.";
+  private static final String NO_LOG = "Nenhuma mudança de sinal ainda.";
 
   private ControllerScreenPortugueseTexts() {}
 
@@ -40,6 +42,7 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.TAB_NODES, TAB_NODES);
     add.accept(ControllerScreenTexts.TAB_SIGNALS, TAB_SIGNALS);
     add.accept(ControllerScreenTexts.TAB_ACCESS, TAB_ACCESS);
+    add.accept(ControllerScreenTexts.TAB_LOG, TAB_LOG);
     add.accept(ControllerScreenTexts.RENAME, RENAME);
     add.accept(ControllerScreenTexts.RECOLOR_TOOLTIP, RECOLOR_TOOLTIP);
     add.accept(ControllerScreenTexts.RENAME_TOOLTIP, RENAME_TOOLTIP);
@@ -54,6 +57,7 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.NO_ACTIVE_CHANNEL, NO_ACTIVE_CHANNEL);
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
     add.accept(ControllerScreenTexts.NO_NODES, NO_NODES);
+    add.accept(ControllerScreenTexts.NO_LOG, NO_LOG);
     add.accept(ControllerScreenTexts.OWNER, OWNER);
   }
 

@@ -19,6 +19,7 @@ final class ControllerSprites {
   static final ResourceLocation NODE_ROW_EXPANDED = of("node_row_expanded");
   static final ResourceLocation SLOT_LINE = of("slot_line");
   static final ResourceLocation CHANNEL_ROW = of("channel_row");
+  static final ResourceLocation LOG_ROW = of("log_row");
   static final ResourceLocation PALETTE_PANEL = of("palette_panel");
   static final ResourceLocation COLOR_SQUARE = of("color_square");
   static final ResourceLocation COLOR_SQUARE_HOVER = of("color_square_hover");

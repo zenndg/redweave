@@ -82,9 +82,9 @@ O que a tela faz, decidido na issue #19.
 |---|---|
 | Cabeçalho | O quadrado na cor da rede e o nome dela. Para o dono, o clique no quadrado abre a paleta, e o botão `Rename` troca o nome por um campo de texto (perguntas 156 e 212) |
 | Estado | `Online · <n> nodes` |
-| Abas | `Nodes`, `Signals` e `Access`. A aba `Log` entra com a #90 (pergunta 215) |
+| Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com o nome, o sinal de 0 a 15 e a posição x, y e z do bloco do nó (perguntas 179 e 216). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). A posição só aparece para o dono (pergunta 149). Um nó `Unloaded` aparece em âmbar, e um `Out of range`, em vermelho (pergunta 29). Um Signal Remote aparecerá com a posição `held item`, quando o Remote existir |
-| Log | Entra com a #90: uma linha por mudança de valor de uma entrada ou de uma saída, com a data e a hora reais do servidor, o nome do nó, o canal, a direção e o valor. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147 e 148) |
+| Log | Uma linha por mudança de valor de uma entrada ou de uma saída, a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
 | Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
@@ -103,8 +103,13 @@ O que a tela faz, decidido na issue #20.
 | Renomear um canal | Na aba `Signals`, o duplo clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26, 34 e 222 |
 | Trocar a cor | A paleta abre sob o quadrado da cor, com as 16 cores em duas fileiras de 8 e a atual destacada. O clique numa cor a escolhe e fecha a paleta | 212 |
 | Lista vazia | A aba `Nodes` de uma rede sem nós mostra `No node in this network yet.` no meio da tabela | 220 |
-| Rolagem | A roda do mouse rola a lista de nós quando ela não cabe | — |
-| Ao vivo | Os nomes e as linhas vão ao cliente só quando mudam, e os sinais e os estados vão à parte, também só quando mudam, para um circuito rápido não reenviar a lista inteira (regra 18) | 82 |
+| Log vazio | A aba `Log` sem nenhuma mudança mostra `No signal change yet.` no meio da tabela | 248 |
+| Rolagem | A roda do mouse rola a lista de nós e o log quando não cabem | — |
+| Linha de entrada do log | Nasce quando a leitura de um slot de entrada muda | 147 |
+| Linha de saída do log | Nasce por slot de saída quando o valor que ele emite muda, inclusive quando cai para 0 porque a rede ficou `Offline` ou `Unplaced` ou o nó saiu do alcance. Ativar ou desativar um slot de saída também gera linha, porque um slot desativado emite 0 | 243 e 246 |
+| Log ao carregar | O log começa vazio, e a reaplicação das faces no primeiro tick depois de carregar a rede não gera linhas | 147 e 244 |
+| Nomes no log | Os do nó e do canal no momento da mudança: renomear depois não muda as linhas antigas, e um nó removido continua com o nome na linha | 245 |
+| Ao vivo | Os nomes e as linhas vão ao cliente só quando mudam, e os sinais e os estados vão à parte, também só quando mudam, para um circuito rápido não reenviar a lista inteira (regra 18). O log vai inteiro ao abrir a tela e, depois, só as linhas novas | 82 e 147 |
 
 **O servidor confere cada ação (regras 16 e 17):** a ação só chega da tela aberta daquele controlador, ao alcance de interação de blocos do jogo e com a rede `Online`, e o domínio confere o dono e o tamanho do nome. O cliente aponta um nó pela posição dele na lista que o servidor guardou, nunca pelo ID, e a posição dos nós nem sai do servidor para quem não é o dono.
 
@@ -118,6 +123,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:22 | Descreve a aba `Log` da Tela do Controlador, da #90 (perguntas 242 a 248). |
 | Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o canal `Disabled` (pergunta 237). |
 | Zennd | 2026-11-11 16:40 | Encurta as contagens do rodapé da Tela do Controlador (pergunta 236). |
 | Zennd | 2026-11-11 16:45 | A linha aberta da Tela do Controlador mostra só os canais ativos, com o nome do slot (pergunta 234). |

@@ -21,8 +21,11 @@ import io.github.marcelofabianov.redweave.application.RenameChannel;
 import io.github.marcelofabianov.redweave.application.RenameNetwork;
 import io.github.marcelofabianov.redweave.application.RenameNode;
 import io.github.marcelofabianov.redweave.application.RenameSlot;
+import io.github.marcelofabianov.redweave.application.ServerClock;
 import io.github.marcelofabianov.redweave.application.ShowNetwork;
+import io.github.marcelofabianov.redweave.application.SignalLogs;
 import io.github.marcelofabianov.redweave.application.ToggleSlots;
+import io.github.marcelofabianov.redweave.config.NeoForgeLogLimits;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkLimits;
@@ -63,6 +66,7 @@ public final class RedweaveServer {
   private final RenameNetwork renameNetwork;
   private final RecolorNetwork recolorNetwork;
   private final RenameChannel renameChannel;
+  private final SignalLogs signalLogs;
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -72,10 +76,12 @@ public final class RedweaveServer {
     breakController = new BreakController(networks, networks);
     loseController = new LoseController(networks, networks);
     placeNode = new PlaceNode(ids);
-    readInput = new ReadInput(networks, networks);
+    signalLogs = new SignalLogs(new NeoForgeLogLimits());
+    ServerClock clock = new SystemServerClock();
+    readInput = new ReadInput(networks, networks, signalLogs, clock);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
-    evaluateNetworks = new EvaluateNetworks(networks, new Simulator());
+    evaluateNetworks = new EvaluateNetworks(networks, new Simulator(), signalLogs, clock);
     enableSlot = new EnableSlot(networks, networks);
     configureSlot = new ConfigureSlot(networks, networks);
     disableSlot = new DisableSlot(networks, networks);
@@ -191,6 +197,11 @@ public final class RedweaveServer {
 
   public RenameChannel renameChannel() {
     return renameChannel;
+  }
+
+  /** The log of each network, only in memory, for the Controller Screen (answer 147). */
+  public SignalLogs signalLogs() {
+    return signalLogs;
   }
 
   /** The networks waiting for the next tick, read before it evaluates them. */

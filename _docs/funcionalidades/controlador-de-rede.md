@@ -60,16 +60,17 @@ No save do mundo, num arquivo único para o servidor, com as redes e a última r
 
 ## Config
 
-As quatro chaves que o `NetworkLimits` lê entram com este bloco, no config do servidor, `redweave-server.toml`, que vale por mundo e é enviado aos clientes (pergunta 50). Os valores iniciais estão em [`limites.md`](../limites.md).
+As chaves que a rede e a Tela do Controlador leem ficam no config do servidor, `redweave-server.toml`, que vale por mundo e é enviado aos clientes (pergunta 50). Os valores iniciais estão em [`limites.md`](../limites.md).
 
 | Chave | Valor inicial | O que é |
 |---|---|---|
 | `network.range` | 128 | Raio do alcance, em blocos. 0 é ilimitado |
 | `network.name_length` | 32 | Tamanho máximo do nome da rede |
+| `network.max_per_player` | 10 | Redes por player, de qualquer estado (pergunta 145) |
 | `channel.name_length` | 16 | Tamanho máximo do nome do canal |
-| `node.slots` | 4 | Slots por nó |
+| `log.size` | 100 | Linhas do log de cada rede, só em memória (pergunta 147) |
 
-As faixas são as da pergunta 66: o alcance vai de 0 a 30.000.000, os nomes de 1 a 64 caracteres e os slots de 1 a 9. Um valor fora da faixa volta ao padrão, com um aviso no log.
+As faixas são as da pergunta 66, com as que vieram depois: o alcance vai de 0 a 30.000.000, os nomes de 1 a 64 caracteres, as redes por player de 1 a 100 e o log de 10 a 1000 linhas. A chave `node.slots` saiu com os 16 slots fixos do Signal Node (pergunta 224). Um valor fora da faixa volta ao padrão, com um aviso no log.
 
 ## Visual
 
@@ -98,6 +99,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:39 | Atualiza as chaves do config: sai `node.slots` e entram `network.max_per_player` e `log.size` (perguntas 145, 147 e 224). |
 | Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` abre a Tela do Controlador (pergunta 232). |
 | Zennd | 2026-11-11 15:40 | O clique com a mão vazia abre a Tela do Controlador, da #20. |
 | Zennd | 2026-11-11 14:09 | Registra o aviso do limite de redes e o núcleo apagado da rede `Offline`, da #88. |
