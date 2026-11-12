@@ -11,14 +11,6 @@ final class NodeScreenEnglishTexts {
   private static final String DIRECTION = "Direction";
   private static final String BLOCK_FACE = "Block face";
   private static final String FACE_TOOLTIP = "Click a face to choose it. Drag to turn the block.";
-  private static final String LOGIC = "Logic";
-  private static final String LOGIC_NONE = "None";
-  private static final String LOGIC_INVERT = "Invert";
-  private static final String LOGIC_PULSE = "Pulse";
-  private static final String LOGIC_DELAY = "Delay";
-  private static final String LOGIC_THRESHOLD = "Threshold";
-  private static final String LOGIC_LATER = "Logic arrives in Phase 2.";
-  private static final String LOGIC_TOOLTIP = "Until then, Output repeats the channel as it is.";
   private static final String CHANNELS_ACTIVE = "%s of %s channels active";
   private static final String STATUS = "Status";
   private static final String ENABLED = "Enabled";
@@ -51,7 +43,6 @@ final class NodeScreenEnglishTexts {
 
   static void addTo(BiConsumer<String, String> add) {
     addLabels(add);
-    addActions(add);
     addStates(add);
     addFaces(add);
     addNetworkChoice(add);
@@ -73,17 +64,6 @@ final class NodeScreenEnglishTexts {
     add.accept(NodeScreenTexts.DIRECTION, DIRECTION);
     add.accept(NodeScreenTexts.BLOCK_FACE, BLOCK_FACE);
     add.accept(NodeScreenTexts.FACE_TOOLTIP, FACE_TOOLTIP);
-    add.accept(NodeScreenTexts.LOGIC, LOGIC);
-  }
-
-  private static void addActions(BiConsumer<String, String> add) {
-    add.accept(NodeScreenTexts.LOGIC_NONE, LOGIC_NONE);
-    add.accept(NodeScreenTexts.LOGIC_INVERT, LOGIC_INVERT);
-    add.accept(NodeScreenTexts.LOGIC_PULSE, LOGIC_PULSE);
-    add.accept(NodeScreenTexts.LOGIC_DELAY, LOGIC_DELAY);
-    add.accept(NodeScreenTexts.LOGIC_THRESHOLD, LOGIC_THRESHOLD);
-    add.accept(NodeScreenTexts.LOGIC_LATER, LOGIC_LATER);
-    add.accept(NodeScreenTexts.LOGIC_TOOLTIP, LOGIC_TOOLTIP);
   }
 
   private static void addStates(BiConsumer<String, String> add) {

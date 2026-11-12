@@ -21,10 +21,8 @@ final class NodeScreenPanel {
   private static final int TITLE_X = 18;
   private static final int FACE_NAME_X = 90;
   private static final int FACE_NAME_Y = 66;
-  private static final int HINT_BOTTOM = 13;
   private static final int MESSAGE_Y = 24;
   private static final int SIDE_PADDING = 16;
-  private static final String SPACE = " ";
 
   private NodeScreenPanel() {}
 
@@ -41,11 +39,8 @@ final class NodeScreenPanel {
     label(graphics, font, panel, NodeScreenTexts.STATUS, SlotEditor.STATUS_Y);
     label(graphics, font, panel, NodeScreenTexts.DIRECTION, SlotEditor.DIRECTION_Y);
     label(graphics, font, panel, NodeScreenTexts.BLOCK_FACE, FACE_NAME_Y - LABEL_OFFSET);
-    label(graphics, font, panel, NodeScreenTexts.LOGIC, SlotEditor.LOGIC_Y);
     Optional<ChannelSlot> slot = view.menu().slot(index);
     slot.ifPresent(found -> drawFace(graphics, font, panel, found));
-    int hintY = panel.height() - HINT_BOTTOM;
-    text(graphics, font, hint(), panel, SlotEditor.LABEL_X, hintY, ScreenColors.DIM);
   }
 
   private static void drawTitle(
@@ -64,26 +59,13 @@ final class NodeScreenPanel {
     graphics.drawString(font, face, panel.x() + FACE_NAME_X, faceY, color, false);
   }
 
-  /** The block face explains itself on hover, and the logic hint shows what comes next. */
+  /** The block face explains itself on hover. */
   static Optional<Component> tooltipAt(NodeView view, Box panel, int index) {
     boolean settable = view.editable() && !SlotEditor.isEnabled(view.menu().slot(index));
     if (settable && SlotEditor.cubeBox(panel).contains(view.mouseX(), view.mouseY())) {
       return Optional.of(Component.translatable(NodeScreenTexts.FACE_TOOLTIP));
     }
-    Box hint =
-        new Box(panel.x(), panel.bottom() - HINT_BOTTOM - LABEL_OFFSET, panel.width(), HINT_BOTTOM);
-    if (hint.contains(view.mouseX(), view.mouseY())) {
-      return Optional.of(
-          hint()
-              .copy()
-              .append(SPACE)
-              .append(Component.translatable(NodeScreenTexts.LOGIC_TOOLTIP)));
-    }
     return Optional.empty();
-  }
-
-  private static Component hint() {
-    return Component.translatable(NodeScreenTexts.LOGIC_LATER);
   }
 
   private static void label(GuiGraphics graphics, Font font, Box panel, String key, int controlY) {
