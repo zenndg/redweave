@@ -310,6 +310,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ordem das portas | `AND`, `OR`, `XOR`, `NAND`, também a do Shift + scroll | 326 |
 | Testes das portas | Tabela literal com as forças 0, 1 e 15 | 327 |
 | Documento das portas | `_docs/funcionalidades/portas-logicas.md` | 328 |
+| Espaço da linha `Logic` | O painel e a Tela do Nó encolhem 60 px, para 90 e 190 px; a escolha de rede mostra 4 redes | 329, 333 |
+| Dica da Fase 2 no painel | Sai sem substituta | 330 |
+| Prancha da Tela do Nó | Nova, gerada por IA a partir de `tmp/arte/tela_do_no/` | 331 |
+| Testes da #106 | Paridade, `check-generated` e os passos 103 a 106 do roteiro manual | 332, 334 |
 
 Não há perguntas pendentes da concepção.
 
@@ -317,6 +321,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:47 | Registra a decisão 334. |
+| Zennd | 2026-11-12 18:43 | Registra a decisão 333. |
+| Zennd | 2026-11-12 18:42 | Registra as decisões 329 a 332. |
 | Zennd | 2026-11-12 18:24 | Registra as decisões 325 a 328. |
 | Zennd | 2026-11-12 18:22 | Registra as decisões 321 a 324. |
 | Zennd | 2026-11-12 17:18 | Atualiza os resumos mudados por respostas novas, como o `Toggle`, os 16 canais inativos e a saída do nome do slot (perguntas 166, 224, 226, 229, 233, 237, 238, 241, 262, 271, 277, 281, 303, 308, 310 e 313). |
