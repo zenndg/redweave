@@ -15,7 +15,7 @@ Não cria redes. A rede nasce ao colocar um Network Controller, e cada controlad
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Dono | Quem colocou o bloco. Só ele usa o Terminal | 134 |
-| Quantidade | Um por player no servidor. Colocar um segundo é recusado, com aviso na action bar | 137 |
+| Quantidade | Um por player no servidor. Colocar um segundo é recusado, e a action bar mostra `You already have a Network Terminal at <x>, <y>, <z>.` Se o Terminal registrado sumiu sem ser quebrado e o chunk dele está carregado, o registro cai e o novo entra; com o chunk descarregado, recusa (regra 6) | 137, 253 e 254 |
 | Quebrar | Só o dono, no survival. Explosões não o destroem. No criativo, quebra, como o Network Controller (pergunta 30) | 137 |
 | Chave do Configurator | Não retira o Terminal | 164 |
 | Registro | O servidor guarda o Terminal de cada player no save das redes, numa lista `terminals` com `player` e o bloco, e a BlockEntity guarda o dono com a chave de NBT `owner`, para o limite valer também com o chunk descarregado | 175 |
@@ -31,11 +31,19 @@ O Terminal alcança todas as redes do dono, em qualquer dimensão e a qualquer d
 
 ## Tela
 
+![Tela do Terminal](../imagens/telas/tela-do-terminal.png)
+
+O desenho tem quatro variantes, e os sprites novos estão em [`tela-do-terminal-sprites.png`](../imagens/telas/tela-do-terminal-sprites.png): a linha selecionada e os botões de perigo, de hover e de confirmação. O resto reaproveita os sprites da Tela do Nó.
+
 Uma lista das redes do dono, em ordem alfabética pelo nome, com o estado de cada uma ao lado e a quantidade de nós (perguntas 131 e 138).
+
+Um clique seleciona uma rede, e a barra de botões embaixo da lista mostra só as ações que valem para o estado dela. Limpar nós e `Delete` confirmam no segundo clique, no próprio botão, e o duplo clique no nome renomeia, como na Tela do Controlador (perguntas 222 e 252).
+
+O topo mostra a contagem, como `1 network` ou `4 networks` (pergunta 261), e a dica `Double-click a name to rename it.` fica no rodapé. Os botões são `Open`, `Turn off`, `Turn on`, `Clear nodes` e `Delete`, e a confirmação mostra `Click again to clear` ou `Click again to delete` (pergunta 255). Sem nenhuma rede, a lista mostra `No network yet. Place a Network Controller to create one.` (pergunta 256).
 
 | Ação | Em quais redes | O que faz | Pergunta |
 |---|---|---|---|
-| Abrir | `Online` | Abre a tela do Network Controller da rede | 131 e 158 |
+| Abrir | `Online` | Abre a tela do Network Controller da rede, a qualquer distância e em qualquer dimensão. Ela fica ancorada no Terminal: vale enquanto o dono está ao alcance dele e a rede segue `Online`, e o Esc fecha tudo | 131, 158, 259 e 260 |
 | Renomear | Todas | Troca o nome, com o limite de `network.name_length` | 156, 158 e 176 |
 | `Offline` | `Online` | Desliga a rede | 132 |
 | `Online` | `Offline` | Religa a rede | 132 e 135 |
@@ -64,12 +72,12 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Ponto | Depende de |
 |---|---|
-| O visual do bloco e da tela | Issue do Terminal, como as pranchas das perguntas 51 e 78 |
 | A receita | Issue #24 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 09:49 | Aplica as perguntas 251 a 256: o conceito do bloco, a barra de ações, os textos e o Terminal perdido; adiciona o desenho da tela. |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 175 e 176. |
 | Zennd | 2026-11-11 09:51 | Cria o documento, com as respostas das perguntas 129 a 166. |
