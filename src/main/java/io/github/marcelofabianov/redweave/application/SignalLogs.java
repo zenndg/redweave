@@ -36,6 +36,12 @@ public final class SignalLogs {
     logs.computeIfAbsent(network, id -> new SignalLog(limits.logSize())).record(change);
   }
 
+  /** A deleted network takes its log and what its outputs emitted along (answer 166). */
+  void forget(NetworkId network) {
+    logs.remove(network);
+    outputs.remove(network);
+  }
+
   SlotOutputs outputsOf(NetworkId network) {
     return outputs.computeIfAbsent(network, id -> new SlotOutputs());
   }
