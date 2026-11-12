@@ -6,8 +6,8 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 ## Estado atual
 
-- **Etapa atual:** Fases 1 e 2, juntas rumo à `v0.1.0`, como uma fase só (pergunta 303). Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88), a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80), e o rótulo em duas linhas, sem o nome do slot (#101). O novo modelo de rede está completo. Toda lógica de sinal fica nos Signal Modules (pergunta 308). O trabalho entra por issue, na ordem do `ROADMAP.md`.
-- **Próximos:** a ordem de trabalho da seção "Toward v0.1.0" do `ROADMAP.md`, a partir da #104.
+- **Etapa atual:** Fases 1 e 2, juntas rumo à `v0.1.0`, como uma fase só (pergunta 303). Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88), a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80), e o rótulo em duas linhas, sem o nome do slot (#101). O novo modelo de rede está completo. Rumo à `v0.1.0`, já entraram o roadmap (#104) e as portas e a regra NOT no domínio (#28). Toda lógica de sinal fica nos Signal Modules (pergunta 308). O trabalho entra por issue, na ordem do `ROADMAP.md`.
+- **Próximos:** a ordem de trabalho da seção "Toward v0.1.0" do `ROADMAP.md`, a partir da #106.
 - **Limite:** não avance para a Fase 3 ou as seguintes sem pedido explícito.
 
 ## Documentação
@@ -188,7 +188,8 @@ io.github.marcelofabianov.redweave
 ├── domain/                 // Java puro, testado com JUnit
 │   ├── signal/             // Signal (0 a 15), ChannelColor
 │   ├── network/            // Network (agregado), Node, Channel, permissões, NetworkLimits (interface)
-│   ├── circuit/            // portas, ligações, chips (Fases 2 e 3)
+│   ├── circuit/            // portas e a regra NOT (#28), chips (Fase 3)
+│   ├── module/             // base e regras dos Signal Modules (planejado, #103)
 │   └── simulation/         // compilação do grafo, avaliação por tick, loops e oscilação
 ├── application/            // casos de uso, um por ação do player, e as portas
 ├── config/                 // ModConfigSpec → implementa NetworkLimits
@@ -201,7 +202,8 @@ io.github.marcelofabianov.redweave
 ├── compat/jade/            // só este pacote importa o Jade
 ├── compat/top/             // só este pacote importa o The One Probe
 ├── client/                 // telas, renderers
-└── datagen/                // receitas, loot, traduções
+├── datagen/                // receitas, loot, traduções
+└── gametest/               // GameTests, testes no mundo
 ```
 
 Os testes ficam em `src/test` (JUnit) e os GameTests num pacote `gametest`.

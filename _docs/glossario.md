@@ -22,7 +22,8 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
 | Signal Modules | — | A família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. A entrada e a saída de cada módulo são uma borda da placa ou um canal da rede, e cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313 e 314) |
 | Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`) e o `Signal Inverter` (`signal_inverter`) (pergunta 300) |
-| Porta | `Gate` | AND, OR, XOR ou NAND, de duas entradas, como Signal Module ou dentro de um chip. O NOT é o Signal Inverter (perguntas 309 e 310) |
+| Porta | `Gate` | AND, OR, XOR ou NAND, de duas entradas, como Signal Module ou dentro de um chip. Cada entrada conta como ligada acima de 0, e a saída é 15 ou 0. O NOT é o Signal Inverter (perguntas 309, 310, 321 e 322) |
+| Regra NOT | `Not` | A regra de uma entrada que o Signal Inverter usa: 15 sem sinal e 0 com qualquer sinal, como a tocha do jogo. Não é uma porta (perguntas 310, 321 e 322) |
 | Circuito | `Circuit` | Um grafo de portas, avaliado em ordem topológica |
 | Chip | `Chip` | Um circuito gravado num item, com nome e ícone, que roda como uma peça só |
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
@@ -38,6 +39,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 18:26 | Detalha a porta e adiciona a regra NOT, da #28 (perguntas 321 a 324). |
 | Zennd | 2026-11-12 17:20 | Corrige o Configurator para quatro modos, com o `Toggle` (pergunta 241). |
 | Zennd | 2026-11-12 16:50 | Tira a `Logic`, adiciona os Signal Modules em placa, muda a porta e o Signal Remote (perguntas 279, 282, 297 a 310, 313 e 314). |
 | Zennd | 2026-11-11 14:09 | Liga os estados `Offline` e `Unplaced` ao `NetworkState`, da #88. |

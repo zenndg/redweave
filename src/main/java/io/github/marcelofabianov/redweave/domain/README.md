@@ -11,7 +11,8 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `signal/` | O sinal e as cores |
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
-| `circuit/` | Portas e chips, nas Fases 2 e 3 |
+| `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
+| `module/` | A base e as regras dos Signal Modules, planejado na #103 (pergunta 323) |
 
 ## Linguagem
 
@@ -61,6 +62,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `clearNodes` e `deletion` | O que o Network Terminal faz numa rede: tirar todos os nós, que ficam no mundo sem rede, e conferir se ela pode ser apagada, só `Unplaced`. A rede apagada sai do save pela aplicação (perguntas 133, 166 e 176) | #89 |
 | `SignalChange` | Uma linha do log da Tela do Controlador: a data e a hora, os nomes do nó e do canal do momento, o canal, a direção e o valor (perguntas 147 e 245) | #90 |
 | `SignalLog` | O log de uma rede: um buffer circular com o tamanho do config, só em memória, a linha mais nova primeiro. Cada linha tem uma sequência crescente, para a tela aberta receber só as novas (perguntas 147 e 242) | #90 |
+| `Gate` | Uma porta de duas entradas: `AND`, `OR`, `XOR` e `NAND`, nessa ordem, a do Shift + scroll (pergunta 326). `output` dá o resultado de duas entradas (perguntas 321 a 324) | #28 |
+| `Not` | A regra NOT, de uma entrada, que o Signal Inverter usa: `output` dá 15 sem sinal e 0 com sinal (perguntas 310 e 324) | #28 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 
 ## Regras e porquês
@@ -106,5 +109,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Leitura 0 não vai para o save:** é o mesmo que uma entrada nunca lida, então o snapshot só leva as leituras ligadas, e a ida e volta pelo save sai igual (pergunta 89).
 - **A face grudada acompanha o nó:** ao colar, um slot na face onde o nó de origem estava grudado vai para a face onde o nó de destino está grudado, para continuar lendo o próprio bloco (perguntas 71 e 105). As outras faces ficam como estão.
 - **Colar troca tudo, pelas operações do agregado:** colar configura ou libera cada slot pelo `configureSlot` e pelo `clearSlot`, então o dono é conferido e as leituras caem, sem uma operação nova no `Network`. Os 16 slots vão com o status (perguntas 106, 230 e 277).
+- **Portas binárias:** uma entrada conta como ligada acima de 0, como a tocha do jogo, para todas as portas seguirem a mesma regra e o XOR e o NAND terem sentido. A saída é 15 ou 0, e a conversão fica num lugar só, `BinaryOutput` (perguntas 321 e 322).
+- **NOT fora do `Gate`:** o NOT tem uma entrada só, então é a classe `Not`, e não uma constante do `Gate` com uma entrada ignorada (pergunta 324).
+- **Chave da porta com o save:** o `Gate` ainda não tem `key` nem `fromKey`, que entram na #31, com o primeiro módulo que grava o modo (pergunta 325).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
