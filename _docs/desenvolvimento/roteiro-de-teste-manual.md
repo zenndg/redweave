@@ -125,12 +125,12 @@ Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os sav
 | 66 | Abra um nó com rede | A tela fiel a `tela-do-no.png`: a fileira dos 16 canais, de `01` a `16`, sem a lista de slots à esquerda e sem abas laterais |
 | 67 | Ative os canais `15`, `02` e `09`, nessa ordem | Cada um ganha a barra verde, o rodapé mostra `3 of 16 channels active`, e os cantos da placa mostram laranja, cinza-claro e vermelho, na ordem das cores |
 | 68 | Ative mais dois canais | Os cantos continuam com os 4 primeiros ativos, na ordem das cores |
-| 69 | No canal `15`, clique no nome, digite `Redstone from lever 1` e aperte Enter | O nome aparece no campo; vazio volta a `Click to name` |
-| 70 | Desative o canal `15`, troque a direção e a face, e ative de novo | Com `Enabled`, a direção e o cubo não mudam; desativado, mudam; ativo de novo, vale a configuração nova, com o nome |
-| 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `15 Red · Input · Redstone from lever 1`; um nó sem canal ativo mostra `No active channel` |
+| 69 | No canal `15`, olhe o painel do canal | Sem campo de nome: o título mostra a cor e o nome do canal da rede, e logo abaixo vem o `Status` |
+| 70 | Desative o canal `15`, troque a direção e a face, e ative de novo | Com `Enabled`, a direção e o cubo não mudam; desativado, mudam; ativo de novo, vale a configuração nova |
+| 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `15 Red · Input`, sem nome do slot; um nó sem canal ativo mostra `No active channel` |
 | 72a | Coloque um nó novo, sem escolher rede, e cole nele a cópia | O nó entra na rede da cópia com os mesmos canais, sem passar pela escolha de rede; colado por outro player, a action bar recusa |
 | 72b | Com o Configurator no modo `Toggle`, em âmbar, dê um clique e depois um Shift + clique num nó com canais configurados | `Enabled <n> channels` ativa todos; `Disabled <n> channels` desativa todos, sem abrir a tela; com outro player, a action bar recusa |
-| 72 | Copie o nó com o Configurator e cole noutro | `Copied <n> slots` e `Pasted <n> slots`, contando todos os canais configurados, ativos ou não; o outro nó fica com os mesmos canais ativos, nomes e direções |
+| 72 | Copie o nó com o Configurator e cole noutro | `Copied <n> slots` e `Pasted <n> slots`, contando todos os canais configurados, ativos ou não; o outro nó fica com os mesmos canais ativos e direções |
 | 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
 | 74 | Troque o idioma para Português (Brasil) | `Nome`, `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
 
@@ -175,13 +175,13 @@ Entregue com a issue #80 (perguntas 262 a 272).
 | 93 | Ponha duas lâmpadas com 1 bloco de espaço entre elas e um nó de saída nesse espaço, grudado numa delas; ligue o canal | Só a lâmpada onde o nó está grudado acende; a outra fica apagada |
 | 94 | Troque o modo do Configurator com Shift + scroll | O visor do item muda de cor: azul no `Open`, verde no `Copy`, âmbar no `Toggle` e vermelho no `Wrench`; o nome continua na action bar e no tooltip |
 | 95 | Copie um nó com o modo `Copy` e depois apague a cópia com Shift + clique no ar | O pixel de cima da direita do visor acende com a cópia e apaga sem ela |
-| 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo: `<nó> · <rede>` e até 4 canais, como `15 Red · Output · 12`, e `+n more` com mais; atrás de parede, mais apagado |
-| 97 | Puxe a alavanca com o rótulo à vista | O sinal no rótulo muda na hora |
-| 98 | Olhe um nó sem rede e um de uma rede `Offline` | `<nó> · No network`; `<nó> · <rede> · Offline` |
+| 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo em duas linhas: em cima, pequena, `■ <rede>` com o quadradinho na cor da rede; embaixo, um pouco maior, o nome do nó; atrás de parede, mais apagado; legível sem cobrir a vista |
+| 97 | Renomeie um nó e a rede pelas telas, com o rótulo à vista | Os nomes no rótulo mudam na hora |
+| 98 | Olhe um nó sem rede | Em cima, o quadradinho cinza e `No network`; embaixo, o nome do nó |
 | 99 | Troque para outro item na mão | Todos os rótulos somem |
 | 100 | Na aba `Log` da Tela do Controlador, como dono, clique em `Clear log` uma vez e depois de novo | O botão vira `Click again to clear`; no segundo clique, o log fica vazio, também na tela aberta do segundo player |
 | 101 | Abra a aba `Log` com o segundo player | Sem o botão `Clear log` |
-| 102 | Troque o idioma para Português (Brasil) | `Limpar log`, `Clique de novo para limpar` e `+n mais`, sem nada passando da borda |
+| 102 | Troque o idioma para Português (Brasil) | `Limpar log`, `Clique de novo para limpar` e `Sem rede` no rótulo, sem nada passando da borda |
 
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
@@ -189,6 +189,8 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:58 | Tira o nome do slot dos passos 69 a 72 (pergunta 277). |
+| Zennd | 2026-11-12 11:46 | Ajusta os passos 96 a 98 e 102 ao rótulo de duas linhas (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:26 | Adiciona os passos 93 a 102, da #80 (perguntas 262 a 272). |
 | Zennd | 2026-11-12 10:33 | Adiciona os passos 81 a 92, do Network Terminal (perguntas 250 a 261). |
 | Zennd | 2026-11-12 09:32 | Adiciona os passos 75 a 80, do log da Tela do Controlador (perguntas 242 a 249). |

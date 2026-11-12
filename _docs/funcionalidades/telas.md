@@ -45,7 +45,6 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range`, `No network` ou `Offline`, em cinza ([estados do nó](rede-e-canais.md#estados-do-nó)) (perguntas 177 e 208) |
 | Canais | Abaixo do nome, uma fileira com os 16 canais, cada um com a cor e o número, de `01` a `16`. Os ativos têm uma barra verde embaixo, e o escolhido tem o contorno de cobre (perguntas 224 e 231) |
 | Canal escolhido | Abaixo da fileira, o painel do canal: o título, como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
-| Nome | O nome do slot, num campo, como `Redstone from lever 1`, ou `Click to name` vazio. Para o dono, vem com um lápis, e o clique o troca por um campo de texto: Enter salva, Esc cancela, e vazio tira o nome. O limite é `slot.name_length` (pergunta 227) |
 | Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
 | Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
 | Face do bloco | Um cubo com a face escolhida em cobre, o nome da face, como `East`, e `click a face to change`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
@@ -62,7 +61,7 @@ O que a tela faz, decidido na issue #19.
 |---|---|---|
 | Desenho | Sprites em pixel art, em 9-slice como os do jogo, das folhas [`tela-do-no-sprites-a.png`](../imagens/telas/tela-do-no-sprites-a.png), [`tela-do-no-sprites-b.png`](../imagens/telas/tela-do-no-sprites-b.png) e [`tela-do-no-sprites-d.png`](../imagens/telas/tela-do-no-sprites-d.png). Os textos usam a fonte do jogo | 78 e 231 |
 | Escolher um canal | Um clique num canal da fileira o mostra no painel. A tela abre no primeiro canal ativo, ou no `01` sem nenhum ativo. A escolha é só do cliente | — |
-| Ativar e desativar | O clique na pílula `Status` troca entre `Enabled` e `Disabled`. Na primeira ativação, o canal vira `Input` na face onde o nó está grudado; desativar guarda a direção, a face e o nome | 226 e 228 |
+| Ativar e desativar | O clique na pílula `Status` troca entre `Enabled` e `Disabled`. Na primeira ativação, o canal vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face | 226 e 228 |
 | Configurar | Direção e face mudam só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer. Com `Enabled`, os controles ficam travados, e o servidor recusa a mudança. Para mudar um canal ativo, o dono desativa, configura e ativa | 237 |
 | Direção | Um clique em `Input` ou `Output` troca a direção do slot | — |
 | Face do bloco | Um cubo 3D com o próprio bloco de apoio, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face | 79 |
@@ -97,7 +96,7 @@ O que a tela faz, decidido na issue #20.
 |---|---|---|
 | Quem abre | Qualquer player, com a mão vazia. Para quem não é o dono, a tela é só leitura: sem `Rename`, sem paleta e sem renomear nós e canais | 22 |
 | Rede `Offline` | Nada abre, e a action bar mostra o aviso. Uma tela aberta fecha se a rede for desligada | 158 e 160 |
-| Linha aberta | O clique numa linha mostra os canais ativos do nó abaixo dela, com o ícone de entrada ou de saída, a cor, o canal, a direção e o nome do slot, como `15 Red · Input · Redstone from lever 1`. Um nó sem canal ativo mostra `No active channel`. Abrir uma linha fecha a anterior | 179, 218 e 234 |
+| Linha aberta | O clique numa linha mostra os canais ativos do nó abaixo dela, com o ícone de entrada ou de saída, a cor, o canal e a direção, como `15 Red · Input`, sem nome do slot (pergunta 277). Um nó sem canal ativo mostra `No active channel`. Abrir uma linha fecha a anterior | 179, 218, 234 e 277 |
 | Renomear um nó | Para o dono, o duplo clique no nome vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. Um clique, no nome ou no resto da linha, abre e fecha os slots, e o duplo clique deixa a linha como estava | 144, 217 e 222 |
 | Renomear a rede | O botão `Rename` troca o nome por um campo de texto. Um nome vazio é recusado, e o nome continua o mesmo | 156 |
 | Renomear um canal | Na aba `Signals`, o duplo clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26, 34 e 222 |
@@ -124,6 +123,7 @@ O que a tela faz, decidido na issue #20.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:58 | Tira o campo de nome do slot da Tela do Nó e o nome da linha aberta da Tela do Controlador (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | Adiciona o `Clear log` da aba `Log` (perguntas 264 e 265). |
 | Zennd | 2026-11-12 09:22 | Descreve a aba `Log` da Tela do Controlador, da #90 (perguntas 242 a 248). |
 | Zennd | 2026-11-11 17:05 | A direção e a face só mudam com o canal `Disabled` (pergunta 237). |

@@ -35,20 +35,7 @@ final class SlotEdits {
     if (nodes.isEnabled(nodeId, index)) {
       return Outcome.SLOT_ENABLED;
     }
-    return changeWith(nodeId, index, (node, at) -> SlotChanges.setUp(node, at, way, face));
-  }
-
-  /** Names a slot; blank takes the name away. It changes no signal, so nothing waits (227). */
-  Outcome rename(NodeId nodeId, int index, String newName, int maxLength) {
-    Outcome found = nodes.slotOf(nodeId, index);
-    if (found != Outcome.ACCEPTED) {
-      return found;
-    }
-    Optional<Optional<String>> name = SlotChanges.validName(newName, maxLength);
-    if (name.isEmpty()) {
-      return Outcome.INVALID_NAME;
-    }
-    return nodes.changeSlot(nodeId, index, SlotChanges.name(nodes.at(nodeId), index, name.get()));
+    return changeWith(nodeId, index, (node, at) -> SlotChanges.setUp(at, way, face));
   }
 
   /** Puts a slot, or frees it with empty, forgetting the last reading of the old one. */

@@ -68,25 +68,6 @@ class NetworkRestoreTest {
   }
 
   @Test
-  void aSlotKeepsANameLongerThanTheConfigNowAllows() {
-    Optional<String> longName = Optional.of(LETTER.repeat(LONG_NAME_LENGTH));
-    ChannelSlot named = new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL).named(longName);
-
-    Network restored =
-        Network.restore(withNodes(List.of(withSlot(named)), List.of()), TestLimits.STARTING);
-
-    assertEquals(Optional.of(named), restored.node(NODE).orElseThrow().slots().get(SLOT));
-  }
-
-  @Test
-  void aSlotWithABlankOrPaddedNameIsRejected() {
-    ChannelSlot input = new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL);
-
-    assertRejected(withNodes(List.of(withSlot(input.named(Optional.of(BLANK)))), List.of()));
-    assertRejected(withNodes(List.of(withSlot(input.named(Optional.of(PADDED_NAME)))), List.of()));
-  }
-
-  @Test
   void aNameKeepsItsLengthWhenTheConfigNowAllowsLess() {
     String longName = LETTER.repeat(LONG_NAME_LENGTH);
 

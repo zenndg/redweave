@@ -15,6 +15,7 @@ import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
@@ -59,7 +60,12 @@ public final class NetworkSaveGameTests {
   private static final String NODE_NAME = "Lever";
   private static final String LETTER = "x";
   private static final int VERSION = 1;
-  private static final String SLOT_NAME = "Door lever";
+  private static final String OLD_SLOT_NAME = "Door lever";
+  private static final ChannelSlot OLD_SLOT =
+      new ChannelSlot(
+          io.github.marcelofabianov.redweave.domain.network.Direction.INPUT,
+          Face.EAST,
+          ChannelColor.RED);
   private static final int RED_SLOT = ChannelColor.RED.ordinal();
   private static final int LONG_NAME_LENGTH = RedweaveConfig.MAX_NAME;
   private static final int NODE_X = 8;
@@ -70,6 +76,7 @@ public final class NetworkSaveGameTests {
   private static final String NOT_SAME = "The save should come back as it was written";
   private static final String NOT_KEPT = "The network should keep its reading, names, last used";
   private static final String NOT_ALLOWED = "The save should keep what the config no longer allows";
+  private static final String NOT_IGNORED = "A slot should load without the name of an older save";
   private static final String NOT_DIRTY = "A saved change should mark the save as changed";
   private static final String NOT_WRITTEN = "The change should be in what the save writes";
   private static final String NOT_OFF = "A network turned off should come back off, the same";
@@ -80,7 +87,7 @@ public final class NetworkSaveGameTests {
     ListTag slots =
         SaveTags.list(
             SaveTags.disabled(SaveTags.slot(CYAN, OUTPUT, EAST)),
-            SaveTags.named(SaveTags.reading(SaveTags.slot(RED, INPUT, EAST), READ), SLOT_NAME),
+            SaveTags.reading(SaveTags.slot(RED, INPUT, EAST), READ),
             SaveTags.slot(BLACK, OUTPUT, WEST));
     ListTag nodes =
         SaveTags.list(
@@ -155,8 +162,6 @@ public final class NetworkSaveGameTests {
         network.channel(ChannelColor.RED).name().equals(Optional.of(CHANNEL_NAME)), NOT_KEPT);
     Node node = network.node(new NodeId(NODE)).orElseThrow();
     helper.assertTrue(node.displayName().equals(NODE_NAME), NOT_KEPT);
-    ChannelSlot named = node.slots().get(ChannelColor.RED.ordinal()).orElseThrow();
-    helper.assertTrue(named.name().equals(Optional.of(SLOT_NAME)), NOT_KEPT);
     helper.assertFalse(
         node.slots().get(ChannelColor.CYAN.ordinal()).orElseThrow().active(), NOT_KEPT);
     helper.assertTrue(network.isPending(), NOT_KEPT);
@@ -169,20 +174,37 @@ public final class NetworkSaveGameTests {
   @GameTest(template = EMPTY)
   public static void aNetworkKeepsWhatTheConfigNoLongerAllows(GameTestHelper helper) {
     String longName = LETTER.repeat(LONG_NAME_LENGTH);
-    ListTag slots = SaveTags.list(SaveTags.named(SaveTags.slot(RED, INPUT, EAST), longName));
-    ListTag nodes = SaveTags.list(SaveTags.node(NODE, NODE_X, slots));
     CompoundTag tag =
         SaveTags.save(
             VERSION,
-            SaveTags.list(SaveTags.network(NETWORK, OWNER, longName, SaveTags.list(), nodes)),
+            SaveTags.list(
+                SaveTags.network(NETWORK, OWNER, longName, SaveTags.list(), SaveTags.list())),
             SaveTags.list());
 
     Network network = load(tag).find(new NetworkId(NETWORK)).orElseThrow();
 
     helper.assertTrue(network.name().equals(longName), NOT_ALLOWED);
-    ChannelSlot slot =
-        network.node(new NodeId(NODE)).orElseThrow().slots().get(RED_SLOT).orElseThrow();
-    helper.assertTrue(slot.name().equals(Optional.of(longName)), NOT_ALLOWED);
+    helper.succeed();
+  }
+
+  /**
+   * A slot has no name (answer 277), and nothing was published, so there is no migration: the codec
+   * ignores the key an older save carries, and the slot loads as it was.
+   */
+  @GameTest(template = EMPTY)
+  public static void aSlotOfAnOlderSaveLoadsWithoutItsName(GameTestHelper helper) {
+    ListTag slots = SaveTags.list(SaveTags.named(SaveTags.slot(RED, INPUT, EAST), OLD_SLOT_NAME));
+    ListTag nodes = SaveTags.list(SaveTags.node(NODE, NODE_X, slots));
+    CompoundTag tag =
+        SaveTags.save(
+            VERSION,
+            SaveTags.list(SaveTags.network(NETWORK, OWNER, NAME, SaveTags.list(), nodes)),
+            SaveTags.list());
+
+    Network network = load(tag).find(new NetworkId(NETWORK)).orElseThrow();
+
+    Optional<ChannelSlot> slot = network.node(new NodeId(NODE)).orElseThrow().slots().get(RED_SLOT);
+    helper.assertTrue(slot.equals(Optional.of(OLD_SLOT)), NOT_IGNORED);
     helper.succeed();
   }
 

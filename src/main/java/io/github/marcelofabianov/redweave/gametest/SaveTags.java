@@ -98,7 +98,8 @@ final class SaveTags {
   }
 
   /**
-   * A node or a slot its owner renamed: the name goes to the saves only then (answers 206 and 227).
+   * A node its owner renamed: the name goes to the saves only then (answer 206). On a slot, it is
+   * the key an older save may still carry (answer 277).
    */
   static CompoundTag named(CompoundTag node, String name) {
     node.putString(NAME, name);

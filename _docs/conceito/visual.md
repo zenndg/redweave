@@ -168,7 +168,7 @@ Ferramenta, `redweave:configurator`. Abre, copia, cola e retira Signal Nodes, co
 | Cabo | Cobre, com sulcos de pegada |
 | Visor | A tela de 3×2 pixels na cor do modo atual, com o pixel de cima da direita aceso quando há cópia (perguntas 159 e 271) |
 | Ponta | Ponta de prova com redstone na extremidade |
-| Na mão | Um rótulo flutuante sobre cada nó, com o nome do nó e da rede e até 4 canais ativos, com canal, direção e sinal (perguntas 268 a 270) |
+| Na mão | Um rótulo flutuante sobre cada nó, em duas linhas: em cima, menor, `■ rede` na cor dela; embaixo, um pouco maior, o nome do nó (perguntas 268 e 274 a 276) |
 
 | Modo | Em português | Cor | Tom | Uso |
 |---|---|---|---|---|
@@ -202,6 +202,7 @@ Item, `redweave:signal_remote`, com o nome confirmado na pergunta 15. A alavanca
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:46 | O rótulo sobre os nós em duas linhas (perguntas 274 a 276). |
 | Zennd | 2026-11-12 11:11 | Aplica o visor só com a cor, o rótulo sobre os nós e o modo `Toggle` (perguntas 241 e 267 a 271). |
 | Zennd | 2026-11-12 09:49 | Adiciona o conceito e a prancha do Network Terminal (perguntas 251 e 258). |
 | Zennd | 2026-11-11 09:51 | Troca as ações do Configurator pelos modos, com as cores e os tons (perguntas 143 e 159 a 169). |

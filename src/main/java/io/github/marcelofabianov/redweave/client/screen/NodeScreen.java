@@ -11,7 +11,6 @@ import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeRenamed;
-import io.github.marcelofabianov.redweave.network.SlotRenamed;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,7 +47,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private final NodeScreenFooter footer = new NodeScreenFooter();
   private final NetworkChoiceList choices = new NetworkChoiceList();
   private final NameField name = new NameField();
-  private final NameField slotName = new NameField();
   private int selected = NONE;
   private boolean switching;
 
@@ -62,7 +60,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   protected void init() {
     super.init();
     name.attach(font, NodeHeader.fieldBox(leftPos, topPos), this::addRenderableWidget);
-    slotName.attach(font, SlotEditor.nameBox(panel()), this::addRenderableWidget);
   }
 
   @Override
@@ -78,7 +75,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     NodeView view = view(mouseX, mouseY);
     NodeScreenFrame.draw(graphics, font, leftPos, topPos, WIDTH, HEIGHT, title, menu);
     name.drawBackground(graphics);
-    slotName.drawBackground(graphics);
     if (!name.editing()) {
       NodeHeader.drawName(graphics, font, leftPos, topPos, menu, ownsNetwork());
     }
@@ -107,9 +103,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     NodeScreenPanel.draw(graphics, font, view, panel, selected, inNetwork);
     if (!inNetwork) {
       return;
-    }
-    if (!slotName.editing()) {
-      NodeScreenPanel.drawName(graphics, font, panel, menu.slotName(channel()), ownsNetwork());
     }
     controls(view).forEach(control -> ControlPainter.draw(graphics, font, control, view));
     ChannelSlot slot = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
@@ -149,7 +142,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   @Override
   public boolean mouseClicked(double mouseX, double mouseY, int button) {
     cancelOutside(name, mouseX, mouseY);
-    cancelOutside(slotName, mouseX, mouseY);
     if (showsChoice()) {
       return clickChoice(mouseX, mouseY) || super.mouseClicked(mouseX, mouseY, button);
     }
@@ -171,21 +163,11 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     }
   }
 
-  /** A click on a channel of the row opens it; the owner names the open one (answer 227). */
+  /** A click on a channel of the row opens it. */
   private boolean clickChannel(double mouseX, double mouseY) {
     Optional<ChannelColor> clicked = ChannelTabs.at(leftPos, topPos, mouseX, mouseY);
-    if (clicked.isPresent()) {
-      selected = clicked.get().ordinal();
-      return true;
-    }
-    if (ownsNetwork() && SlotEditor.nameBox(panel()).contains(mouseX, mouseY)) {
-      slotName.start(
-          menu.slotName(channel()),
-          NameField.limit(NeoForgeNetworkLimits::slotNameLength),
-          this::setFocused);
-      return true;
-    }
-    return false;
+    clicked.ifPresent(channel -> selected = channel.ordinal());
+    return clicked.isPresent();
   }
 
   @Override
@@ -202,8 +184,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view);
     if (SlotEditor.isSettable(view, slot) && face.isPresent()) {
       ChannelSlot changed =
-          new ChannelSlot(
-              slot.direction(), Faces.of(face.get()), slot.channel(), false, slot.name());
+          new ChannelSlot(slot.direction(), Faces.of(face.get()), slot.channel(), false);
       send(NodeAction.configure(selected, changed));
     }
     return super.mouseReleased(mouseX, mouseY, button);
@@ -218,14 +199,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
           scanCode,
           modifiers,
           text -> PacketDistributor.sendToServer(new NodeRenamed(menu.pos(), text)));
-      return true;
-    }
-    if (slotName.editing()) {
-      slotName.keyPressed(
-          keyCode,
-          scanCode,
-          modifiers,
-          text -> PacketDistributor.sendToServer(new SlotRenamed(menu.pos(), selected, text)));
       return true;
     }
     return super.keyPressed(keyCode, scanCode, modifiers);
@@ -325,10 +298,6 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   /** Only the owner of the network of the node renames it and switches it (answer 141). */
   private boolean ownsNetwork() {
     return menu.state().isPresent() && menu.viewerIsOwner();
-  }
-
-  private ChannelColor channel() {
-    return ChannelColor.values()[Math.max(0, selected)];
   }
 
   private Control backButton() {

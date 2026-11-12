@@ -18,7 +18,6 @@ final class ControllerScreenPortugueseTexts {
   private static final String COLUMN_SIGNAL = "Sinal";
   private static final String COLUMN_POSITION = "Posição";
   private static final String SLOT_ROW = "%s · %s";
-  private static final String SLOT_ROW_NAMED = "%s · %s · %s";
   private static final String NO_ACTIVE_CHANNEL = "Nenhum canal ativo";
   private static final String SLOT_USE = "%s ent. · %s saí.";
   private static final String CHANNELS_IN_USE = "%s de %s canais em uso";
@@ -55,7 +54,6 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.COLUMN_SIGNAL, COLUMN_SIGNAL);
     add.accept(ControllerScreenTexts.COLUMN_POSITION, COLUMN_POSITION);
     add.accept(ControllerScreenTexts.SLOT_ROW, SLOT_ROW);
-    add.accept(ControllerScreenTexts.SLOT_ROW_NAMED, SLOT_ROW_NAMED);
     add.accept(ControllerScreenTexts.NO_ACTIVE_CHANNEL, NO_ACTIVE_CHANNEL);
     add.accept(ControllerScreenTexts.SLOT_USE, SLOT_USE);
     add.accept(ControllerScreenTexts.NO_NODES, NO_NODES);

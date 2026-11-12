@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 class ChangeSlotTest {
   private static final ChannelColor LAMP = ChannelColor.YELLOW;
   private static final int SLOT = LAMP.ordinal();
-  private static final String NAME = "Lamp of the hall";
   private static final NodeId NODE = new NodeId(NODE_ID);
   private static final NodeId UNKNOWN = new NodeId(UUID.randomUUID());
   private static final ChannelSlot LIGHT_THE_LAMP =
@@ -31,7 +30,6 @@ class ChangeSlotTest {
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final ConfigureSlot configureSlot = new ConfigureSlot(fixture.networks, fixture.networks);
   private final DisableSlot disableSlot = new DisableSlot(fixture.networks, fixture.networks);
-  private final RenameSlot renameSlot = new RenameSlot(fixture.networks, fixture.networks);
   private final EnableSlot enableSlot = new EnableSlot(fixture.networks, fixture.networks);
 
   /** The network of OWNER with the node in it, and how many saves that took. */
@@ -73,7 +71,6 @@ class ChangeSlotTest {
     assertEquals(
         Outcome.UNKNOWN_NODE, configureSlot.configure(OWNER, UNKNOWN, SLOT, LIGHT_THE_LAMP));
     assertEquals(Outcome.UNKNOWN_NODE, disableSlot.disable(OWNER, UNKNOWN, SLOT));
-    assertEquals(Outcome.UNKNOWN_NODE, renameSlot.rename(OWNER, UNKNOWN, SLOT, NAME));
   }
 
   @Test
@@ -97,14 +94,13 @@ class ChangeSlotTest {
     assertEquals(Outcome.SLOT_ENABLED, configureSlot.configure(OWNER, NODE, SLOT, LIGHT_THE_LAMP));
   }
 
-  /** The screen sends only the direction and the face, so the status and the name stay (228). */
+  /** The screen sends only the direction and the face, so the status stays (answer 228). */
   @Test
-  void configuringKeepsTheStatusAndTheName() {
+  void configuringKeepsTheStatus() {
     placedNode();
-    renameSlot.rename(OWNER, NODE, SLOT, NAME);
 
     configureSlot.configure(OWNER, NODE, SLOT, LIGHT_THE_LAMP);
 
-    assertEquals(Optional.of(LIGHT_THE_LAMP.enabled(false).named(Optional.of(NAME))), theSlot());
+    assertEquals(Optional.of(LIGHT_THE_LAMP.enabled(false)), theSlot());
   }
 }

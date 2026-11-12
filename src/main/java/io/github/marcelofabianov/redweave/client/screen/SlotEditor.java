@@ -13,23 +13,20 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 
 /**
- * The panel of the open channel: its name, status, direction, block face and logic (telas.md). It
- * builds the controls of a frame; drawing and clicking both use the same list, so they never
- * disagree. An enabled channel is locked, and a disabled one is set up (answers 228 and 237).
+ * The panel of the open channel: its status, direction, block face and logic (telas.md). It builds
+ * the controls of a frame; drawing and clicking both use the same list, so they never disagree. An
+ * enabled channel is locked, and a disabled one is set up (answers 228 and 237).
  */
 final class SlotEditor {
   static final int LABEL_X = 8;
   static final int CONTROL_X = 58;
   static final int TITLE_Y = 7;
-  static final int NAME_Y = 22;
-  static final int STATUS_Y = 40;
-  static final int DIRECTION_Y = 58;
-  static final int FACE_Y = 76;
+  static final int STATUS_Y = 22;
+  static final int DIRECTION_Y = 40;
+  static final int FACE_Y = 58;
   static final int CUBE_SIZE = 24;
-  static final int LOGIC_Y = 106;
-  static final int NAME_WIDTH = 150;
+  static final int LOGIC_Y = 88;
   static final int ROW_HEIGHT = 14;
-  private static final int STATUS_WIDTH = 50;
   private static final int BUTTON_PADDING = 12;
   private static final int SPACING = 2;
   private static final int RIGHT_PADDING = 6;
@@ -45,7 +42,7 @@ final class SlotEditor {
   static List<Control> controls(Font font, NodeView view, Box panel, int index, Face stuck) {
     List<Control> controls = new ArrayList<>();
     Optional<ChannelSlot> slot = view.menu().slot(index);
-    controls.add(statusButton(view, panel, index, slot));
+    controls.add(statusButton(font, view, panel, index, slot));
     controls.addAll(directionButtons(font, view, panel, index, setUpOf(slot, index, stuck)));
     controls.addAll(logicButtons(font, panel));
     return controls;
@@ -55,22 +52,18 @@ final class SlotEditor {
     return new Box(panel.x() + CONTROL_X, panel.y() + FACE_Y, CUBE_SIZE, CUBE_SIZE);
   }
 
-  /** Where the name of the slot is, which its owner clicks to rename (answer 227). */
-  static Box nameBox(Box panel) {
-    return new Box(panel.x() + CONTROL_X, panel.y() + NAME_Y, NAME_WIDTH, ROW_HEIGHT);
-  }
-
   static boolean isEnabled(Optional<ChannelSlot> slot) {
     return slot.filter(ChannelSlot::active).isPresent();
   }
 
   /** Enabled or Disabled; the owner's click turns it the other way (answers 226 and 228). */
   private static Control statusButton(
-      NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
+      Font font, NodeView view, Box panel, int index, Optional<ChannelSlot> slot) {
     boolean enabled = isEnabled(slot);
     Component label =
         Component.translatable(enabled ? NodeScreenTexts.ENABLED : NodeScreenTexts.DISABLED);
-    Box box = new Box(panel.x() + CONTROL_X, panel.y() + STATUS_Y, STATUS_WIDTH, ROW_HEIGHT);
+    int width = ControlPainter.statusWidth(font, label);
+    Box box = new Box(panel.x() + CONTROL_X, panel.y() + STATUS_Y, width, ROW_HEIGHT);
     Optional<NodeAction> action =
         view.editable()
             ? Optional.of(enabled ? NodeAction.disable(index) : NodeAction.enable(index))
@@ -84,9 +77,8 @@ final class SlotEditor {
    * sticks to, as enabling it would make (answer 228).
    */
   static ChannelSlot setUpOf(Optional<ChannelSlot> slot, int index, Face stuck) {
-    return slot.orElseGet(() ->
-        new ChannelSlot(
-            Direction.INPUT, stuck, ChannelColor.values()[index], false, Optional.empty()));
+    return slot.orElseGet(
+        () -> new ChannelSlot(Direction.INPUT, stuck, ChannelColor.values()[index], false));
   }
 
   /** An enabled slot is locked; the owner sets up a disabled one (answer 237). */
@@ -142,7 +134,7 @@ final class SlotEditor {
   }
 
   private static ChannelSlot withDirection(ChannelSlot slot, Direction direction) {
-    return new ChannelSlot(direction, slot.face(), slot.channel(), slot.active(), slot.name());
+    return new ChannelSlot(direction, slot.face(), slot.channel(), slot.active());
   }
 
   static Box button(Font font, Component label, int x, int y) {

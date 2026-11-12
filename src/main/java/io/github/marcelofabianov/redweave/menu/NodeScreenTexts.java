@@ -26,8 +26,6 @@ public final class NodeScreenTexts {
   public static final String LOGIC_TOOLTIP = PREFIX + "logic_tooltip";
   public static final String SIGNAL = PREFIX + "signal";
   public static final String CHANNELS_ACTIVE = PREFIX + "channels_active";
-  public static final String NAME = PREFIX + "name";
-  public static final String CLICK_TO_NAME = PREFIX + "click_to_name";
   public static final String STATUS = PREFIX + "status";
   public static final String ENABLED = PREFIX + "enabled";
   public static final String DISABLED = PREFIX + "disabled";
@@ -42,7 +40,6 @@ public final class NodeScreenTexts {
   public static final String NO_NETWORK_ONLINE = PREFIX + "no_network_online";
   public static final String NODE_COUNT_ONE = PREFIX + "node_count.one";
   public static final String NODE_COUNT_MANY = PREFIX + "node_count.many";
-  public static final String LABEL_MORE = PREFIX + "label_more";
   public static final String BACK = PREFIX + "back";
   public static final String RENAME_TOOLTIP = PREFIX + "rename_tooltip";
   public static final String SWITCH_NETWORK_TOOLTIP = PREFIX + "switch_network_tooltip";

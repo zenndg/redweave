@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
  */
 class NodeCopyTest {
   private static final int NEGATIVE = -1;
-  private static final String NAME = "Redstone from lever 1";
   private static final BlockLocation BLOCK = new BlockLocation(NetworkFixture.OVERWORLD, 0, 0, 0);
   private static final ChannelSlot OWN_BLOCK =
       new ChannelSlot(Direction.INPUT, Face.EAST, ChannelColor.RED);
@@ -76,16 +75,15 @@ class NodeCopyTest {
     assertEquals(slots(moved, NEIGHBOR, LAST), pasted.slots());
   }
 
-  /** A disabled, named slot on the attached face keeps its status and name (answer 230). */
+  /** A disabled slot on the attached face keeps its status (answers 230 and 277). */
   @Test
-  void aSlotOnTheAttachedFaceKeepsItsStatusAndName() {
-    Optional<String> name = Optional.of(NAME);
-    ChannelSlot disabled = OWN_BLOCK.enabled(false).named(name);
+  void aSlotOnTheAttachedFaceKeepsItsStatus() {
+    ChannelSlot disabled = OWN_BLOCK.enabled(false);
     Node source = node(NODE, Face.EAST).withSlot(OWN_BLOCK_SLOT, Optional.of(disabled));
 
     Pasted pasted = NodeCopy.of(source).onto(node(OTHER_NODE, Face.NORTH));
 
-    ChannelSlot moved = new ChannelSlot(Direction.INPUT, Face.NORTH, ChannelColor.RED, false, name);
+    ChannelSlot moved = new ChannelSlot(Direction.INPUT, Face.NORTH, ChannelColor.RED, false);
     assertEquals(slots(moved), pasted.slots());
   }
 

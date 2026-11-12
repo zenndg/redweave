@@ -27,9 +27,6 @@ class SlotsByColorTest {
   private static final ChannelColor DOOR = ChannelColor.RED;
   private static final int DOOR_SLOT = DOOR.ordinal();
   private static final int FIRST_SLOTS = 4;
-  private static final String LEVER = "Redstone from lever 1";
-  private static final String BLANK = "  ";
-  private static final String TOO_LONG = "x".repeat(TestLimits.STARTING.slotNameLength() + 1);
   private static final Signal READ = new Signal(9);
 
   private static Network networkWithNode() {
@@ -82,20 +79,18 @@ class SlotsByColorTest {
     assertEquals(Optional.of(input), slot(network, DOOR_SLOT));
   }
 
-  /** Disabling keeps the direction, the face and the name, to enable it as it was (228). */
+  /** Disabling keeps the direction and the face, to enable it as it was (228). */
   @Test
   void disablingKeepsTheSlotAndEnablingBringsItBack() {
     Network network = networkWithNode();
     ChannelSlot output = new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR);
     network.configureSlot(OWNER, NODE, DOOR_SLOT, output);
-    network.renameSlot(OWNER, NODE, DOOR_SLOT, LEVER);
 
     assertEquals(Outcome.ACCEPTED, network.disableSlot(OWNER, NODE, DOOR_SLOT));
     ChannelSlot kept = slot(network, DOOR_SLOT).orElseThrow();
-    assertFalse(kept.active());
-    assertEquals(Optional.of(LEVER), kept.name());
+    assertEquals(output.enabled(false), kept);
     network.enableSlot(OWNER, NODE, DOOR_SLOT);
-    assertEquals(output.named(Optional.of(LEVER)), slot(network, DOOR_SLOT).orElseThrow());
+    assertEquals(output, slot(network, DOOR_SLOT).orElseThrow());
   }
 
   /** A disabled input does not count, and its reading is forgotten. */
@@ -127,26 +122,14 @@ class SlotsByColorTest {
     assertEquals(Signal.OFF, network.emission(NODE));
   }
 
-  /** The name is the slot's, blank takes it away, and the limit comes from the config (227). */
-  @Test
-  void theOwnerNamesASlot() {
-    Network network = networkWithNode();
-
-    assertEquals(Outcome.ACCEPTED, network.renameSlot(OWNER, NODE, DOOR_SLOT, LEVER));
-    assertEquals(Optional.of(LEVER), slot(network, DOOR_SLOT).orElseThrow().name());
-    assertFalse(slot(network, DOOR_SLOT).orElseThrow().active());
-    assertEquals(Outcome.INVALID_NAME, network.renameSlot(OWNER, NODE, DOOR_SLOT, TOO_LONG));
-    assertEquals(Outcome.ACCEPTED, network.renameSlot(OWNER, NODE, DOOR_SLOT, BLANK));
-    assertEquals(Optional.empty(), slot(network, DOOR_SLOT).orElseThrow().name());
-  }
-
   @Test
   void onlyTheOwnerChangesASlot() {
     Network network = networkWithNode();
 
     assertEquals(Outcome.NOT_OWNER, network.enableSlot(STRANGER, NODE, DOOR_SLOT));
     assertEquals(Outcome.NOT_OWNER, network.disableSlot(STRANGER, NODE, DOOR_SLOT));
-    assertEquals(Outcome.NOT_OWNER, network.renameSlot(STRANGER, NODE, DOOR_SLOT, LEVER));
+    assertEquals(
+        Outcome.NOT_OWNER, network.setUpSlot(STRANGER, NODE, DOOR_SLOT, Direction.INPUT, Face.UP));
   }
 
   @Test
@@ -166,7 +149,7 @@ class SlotsByColorTest {
     for (ChannelColor color : List.of(ChannelColor.BLACK, DOOR, ChannelColor.WHITE)) {
       network.enableSlot(OWNER, NODE, color.ordinal());
     }
-    network.renameSlot(OWNER, NODE, ChannelColor.ORANGE.ordinal(), LEVER);
+    network.setUpSlot(OWNER, NODE, ChannelColor.ORANGE.ordinal(), Direction.INPUT, Face.UP);
 
     List<ChannelColor> enabled = network.node(NODE).orElseThrow().enabledChannels();
 
@@ -193,22 +176,20 @@ class SlotsByColorTest {
     assertEquals(
         Outcome.ACCEPTED, network.setUpSlot(OWNER, NODE, DOOR_SLOT, Direction.OUTPUT, Face.DOWN));
 
-    ChannelSlot expected =
-        new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false, Optional.empty());
+    ChannelSlot expected = new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false);
     assertEquals(Optional.of(expected), slot(network, DOOR_SLOT));
   }
 
+  /** A slot enabled once and disabled again is set up like a new one (answer 237). */
   @Test
-  void aDisabledSlotKeepsItsNameWhenSetUp() {
+  void aDisabledSlotIsSetUpAgain() {
     Network network = networkWithNode();
-    network.renameSlot(OWNER, NODE, DOOR_SLOT, LEVER);
+    network.enableSlot(OWNER, NODE, DOOR_SLOT);
+    network.disableSlot(OWNER, NODE, DOOR_SLOT);
 
     network.setUpSlot(OWNER, NODE, DOOR_SLOT, Direction.OUTPUT, Face.DOWN);
 
-    ChannelSlot expected =
-        new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false, Optional.of(LEVER));
+    ChannelSlot expected = new ChannelSlot(Direction.OUTPUT, Face.DOWN, DOOR, false);
     assertEquals(Optional.of(expected), slot(network, DOOR_SLOT));
-    assertEquals(
-        Outcome.NOT_OWNER, network.setUpSlot(STRANGER, NODE, DOOR_SLOT, Direction.INPUT, Face.UP));
   }
 }

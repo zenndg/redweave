@@ -45,8 +45,8 @@ public record ControllerScreenRows(
             Header::new);
   }
 
-  /** An enabled slot of a node: its index, channel and direction, as ordinals, and its name. */
-  public record SlotLine(int index, int channel, int direction, String name) {
+  /** An enabled slot of a node: its index, channel and direction, as ordinals (answer 277). */
+  public record SlotLine(int index, int channel, int direction) {
     static final StreamCodec<RegistryFriendlyByteBuf, SlotLine> STREAM_CODEC =
         StreamCodec.composite(
             ByteBufCodecs.VAR_INT,
@@ -55,16 +55,10 @@ public record ControllerScreenRows(
             SlotLine::channel,
             ByteBufCodecs.VAR_INT,
             SlotLine::direction,
-            ByteBufCodecs.STRING_UTF8,
-            SlotLine::name,
             SlotLine::new);
 
     static SlotLine of(SlotRow row) {
-      return new SlotLine(
-          row.index(),
-          row.channel().ordinal(),
-          row.direction().ordinal(),
-          row.name().orElse(DEFAULT_NAME));
+      return new SlotLine(row.index(), row.channel().ordinal(), row.direction().ordinal());
     }
   }
 

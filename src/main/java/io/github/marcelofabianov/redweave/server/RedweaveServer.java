@@ -21,7 +21,6 @@ import io.github.marcelofabianov.redweave.application.RecolorNetwork;
 import io.github.marcelofabianov.redweave.application.RenameChannel;
 import io.github.marcelofabianov.redweave.application.RenameNetwork;
 import io.github.marcelofabianov.redweave.application.RenameNode;
-import io.github.marcelofabianov.redweave.application.RenameSlot;
 import io.github.marcelofabianov.redweave.application.ServerClock;
 import io.github.marcelofabianov.redweave.application.ShowNetwork;
 import io.github.marcelofabianov.redweave.application.SignalLogs;
@@ -56,7 +55,6 @@ public final class RedweaveServer {
   private final EnableSlot enableSlot;
   private final ConfigureSlot configureSlot;
   private final DisableSlot disableSlot;
-  private final RenameSlot renameSlot;
   private final LinkNode linkNode;
   private final NetworkChoices networkChoices;
   private final RenameNode renameNode;
@@ -89,7 +87,6 @@ public final class RedweaveServer {
     enableSlot = new EnableSlot(networks, networks);
     configureSlot = new ConfigureSlot(networks, networks);
     disableSlot = new DisableSlot(networks, networks);
-    renameSlot = new RenameSlot(networks, networks);
     linkNode = new LinkNode(networks, networks, networks, networks);
     networkChoices = new NetworkChoices(networks, networks);
     renameNode = new RenameNode(networks, networks);
@@ -157,10 +154,6 @@ public final class RedweaveServer {
 
   public DisableSlot disableSlot() {
     return disableSlot;
-  }
-
-  public RenameSlot renameSlot() {
-    return renameSlot;
   }
 
   public LinkNode linkNode() {

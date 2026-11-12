@@ -11,15 +11,14 @@ import java.util.List;
 
 /**
  * The copy of the Configurator as it is in the item: the network of the node (answer 238), the face
- * it stuck to, and the channel, status, direction, face and name of each slot ever enabled, with
- * the keys of the save of the networks (answers 105 and 230).
+ * it stuck to, and the channel, status, direction and face of each slot ever enabled, with the keys
+ * of the save of the networks (answers 105, 230 and 277).
  */
 public final class NodeSlotsCodec {
   private static final String NETWORK = "network";
   private static final String ATTACHED = "attached";
   private static final String SLOTS = "slots";
   private static final String ACTIVE = "active";
-  private static final String NAME = "name";
   private static final String DIRECTION = "direction";
   private static final String FACE = "face";
   private static final String CHANNEL = "channel";
@@ -36,16 +35,12 @@ public final class NodeSlotsCodec {
                   SaveCodecs.DIRECTION
                       .fieldOf(DIRECTION)
                       .forGetter(copied -> copied.slot().direction()),
-                  SaveCodecs.FACE.fieldOf(FACE).forGetter(copied -> copied.slot().face()),
-                  SaveCodecs.SAVED_NAME
-                      .optionalFieldOf(NAME)
-                      .forGetter(copied -> copied.slot().name()))
+                  SaveCodecs.FACE.fieldOf(FACE).forGetter(copied -> copied.slot().face()))
               .apply(
                   instance,
-                  (channel, active, direction, face, name) ->
+                  (channel, active, direction, face) ->
                       new CopiedSlot(
-                          channel.ordinal(),
-                          new ChannelSlot(direction, face, channel, active, name))));
+                          channel.ordinal(), new ChannelSlot(direction, face, channel, active))));
 
   /** A repeated slot would break the domain, so the codec refuses the copy first (rule 14). */
   private static final Codec<List<CopiedSlot>> SLOTS_CODEC =
