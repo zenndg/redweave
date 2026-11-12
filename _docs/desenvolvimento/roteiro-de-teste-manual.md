@@ -175,6 +175,7 @@ Entregue com a issue #80 (perguntas 262 a 272).
 |---|---|---|
 | 93 | Ponha duas lâmpadas com 1 bloco de espaço entre elas e um nó de saída nesse espaço, grudado numa delas; ligue o canal | Só a lâmpada onde o nó está grudado acende; a outra fica apagada |
 | 94 | Troque o modo do Configurator com Shift + scroll | O visor do item muda de cor: azul no `Open`, verde no `Copy`, âmbar no `Toggle` e vermelho no `Wrench`; o nome continua na action bar e no tooltip |
+| 94a | No macOS, com uma roda de mouse, troque o modo do Configurator com Shift + scroll, para baixo e para cima | O modo avança para baixo e volta para cima, e o slot da hotbar não muda |
 | 95 | Copie um nó com o modo `Copy` e depois apague a cópia com Shift + clique no ar | O pixel de cima da direita do visor acende com a cópia e apaga sem ela |
 | 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo em duas linhas: em cima, pequena, `■ <rede>` com o quadradinho na cor da rede; embaixo, um pouco maior, o nome do nó; atrás de parede, mais apagado; legível sem cobrir a vista |
 | 97 | Renomeie um nó e a rede pelas telas, com o rótulo à vista | Os nomes no rótulo mudam na hora |
@@ -213,6 +214,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:39 | Adiciona o passo 94a, do Shift + scroll no macOS (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | Adiciona o passo 83a, do Terminal aberto com o Configurator no modo `Open` (pergunta 343). |
 | Zennd | 2026-11-12 19:01 | Ajusta os passos 53, 54, 61 e 62 às colunas novas e adiciona os passos 107 a 111, da #107 (pergunta 341). |
 | Zennd | 2026-11-12 18:45 | Adiciona os passos 103 a 106, da Tela do Nó sem a lógica (pergunta 332). |

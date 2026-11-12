@@ -8,7 +8,7 @@ Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do
 
 ## Modos
 
-O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy`, `Toggle` e `Wrench` (pergunta 241). Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
+O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy`, `Toggle` e `Wrench` (pergunta 241). Para baixo avança e para cima volta, como a hotbar, e um Configurator novo começa no `Open` (pergunta 192). No macOS, o Shift transforma a roda vertical em horizontal; sem rolagem vertical, vale a horizontal invertida, como a hotbar do jogo faz (pergunta 351). O scroll só existe no cliente, que manda o sentido num pacote; o servidor confere que o item na mão principal é o Configurator e grava o modo num data component (regras 16 e 17, perguntas 143 e 164).
 
 | Modo | Em português | Cor | Clique num nó | Shift + clique num nó | Pergunta |
 |---|---|---|---|---|---|
@@ -116,6 +116,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:39 | O Shift + scroll funciona no macOS, com a roda horizontal (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | O modo `Open` abre também o Network Terminal (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle` no resumo, na rede `Offline`, nas mensagens e no tooltip, e tira o `name` do formato da cópia (perguntas 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot da cópia (pergunta 277). |
