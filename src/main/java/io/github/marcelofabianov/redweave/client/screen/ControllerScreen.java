@@ -34,6 +34,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
 
   private final NodeTable table = new NodeTable();
   private final LogTable log = new LogTable();
+  private final ClearLogButton clearLog = new ClearLogButton();
   private final NameField name = new NameField();
   private final DoubleClick clicks = new DoubleClick(Util::getMillis);
   private Tab tab = Tab.NODES;
@@ -72,7 +73,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
       case NODES -> table.draw(graphics, font, content(), menu, mouse);
       case SIGNALS -> ChannelGrid.draw(graphics, font, content(), menu, mouse);
       case ACCESS -> AccessPanel.draw(graphics, font, content(), menu.header());
-      case LOG -> log.draw(graphics, font, content(), menu);
+      case LOG -> drawLog(graphics, mouse);
     }
     ControllerFooter.draw(
         graphics, font, new Box(panel.x(), topPos + FOOTER_Y, panel.width(), HEIGHT), menu);
@@ -80,6 +81,16 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     if (paletteOpen) {
       ColorPalette.draw(graphics, palette(), ControllerHeader.colorOf(menu.header()), mouse);
     }
+  }
+
+  /** The owner has the Clear log button under the rows (answers 264 and 265). */
+  private void drawLog(GuiGraphics graphics, Mouse mouse) {
+    if (!owner()) {
+      log.draw(graphics, font, content(), menu);
+      return;
+    }
+    log.draw(graphics, font, ClearLogButton.rowsOf(content()), menu);
+    clearLog.draw(graphics, font, content(), mouse);
   }
 
   /** Every text is drawn in renderBg, so the game does not draw its own labels on top. */
@@ -132,8 +143,24 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     return switch (tab) {
       case NODES -> clickNodes(mouseX, mouseY);
       case SIGNALS -> clickChannels(mouseX, mouseY);
-      case ACCESS, LOG -> false;
+      case ACCESS -> false;
+      case LOG -> clickLog(mouseX, mouseY);
     };
+  }
+
+  /** The second click on Clear log asks the server, which checks the owner (rule 17). */
+  private boolean clickLog(double mouseX, double mouseY) {
+    if (!owner()) {
+      return false;
+    }
+    boolean onButton = clearLog.contains(font, content(), mouseX, mouseY);
+    if (clearLog.click(font, content(), mouseX, mouseY)
+        && minecraft != null
+        && minecraft.gameMode != null) {
+      minecraft.gameMode.handleInventoryButtonClick(
+          menu.containerId, ControllerScreenCodes.CLEAR_LOG);
+    }
+    return onButton;
   }
 
   /**

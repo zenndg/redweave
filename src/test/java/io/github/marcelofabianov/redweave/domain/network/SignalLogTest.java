@@ -70,6 +70,20 @@ class SignalLogTest {
     assertEquals(NO_LINES, log.after(log.lastSequence()).size());
   }
 
+  /** The owner clears the log; the sequence goes on, so no old line comes back (answer 264). */
+  @Test
+  void clearingTakesEveryLineAndCountsTheClearing() {
+    SignalLog log = new SignalLog(CAPACITY);
+    log.record(change(LEVER));
+    long clearsBefore = log.clears();
+
+    log.clear();
+    log.record(change(DOOR));
+
+    assertEquals(List.of(DOOR), nodes(log.newestFirst()));
+    assertEquals(clearsBefore + 1, log.clears());
+  }
+
   @Test
   void aLogHoldsAtLeastOneLine() {
     assertThrows(IllegalArgumentException.class, () -> new SignalLog(NO_LINES));

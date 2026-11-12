@@ -11,6 +11,7 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenCodes;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenLog;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenLog.LogLine;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -67,6 +68,7 @@ public final class ControllerLogGameTests {
   private static final String NOT_INPUT = "The older line should be the lever, an input";
   private static final String NOT_EMPTY = "The log should start empty";
   private static final String SENT_AGAIN = "A line should reach the open screen only once";
+  private static final String NOT_CLEARED = "The owner should clear the log of the screen";
 
   private ControllerLogGameTests() {}
 
@@ -107,6 +109,51 @@ public final class ControllerLogGameTests {
         .thenExecute(() -> assertLeverAndLamp(helper, client.log()))
         .thenExecute(() -> helper.assertTrue(server.newLog().isEmpty(), SENT_AGAIN))
         .thenSucceed();
+  }
+
+  /** The owner clears the log, and an open screen starts over with no line (answer 264). */
+  @GameTest(template = EMPTY)
+  public static void theOwnerClearsTheLog(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+    NetworkId network = leverAndLamp(helper, owner);
+    ServerPlayer viewer = viewer(helper, owner.getUUID(), VIEWER_NAME);
+    ControllerMenu server = new ControllerMenu(MENU_ID, viewer, pos(helper), network);
+    ControllerMenu client = opened(helper, owner, network);
+    ServerPlayer clientPlayer = viewer(helper, UUID.randomUUID(), CLIENT_NAME);
+    clientPlayer.containerMenu = client;
+
+    helper
+        .startSequence()
+        .thenIdle(SETTLE_TICKS)
+        .thenExecute(() -> helper.pullLever(LEVER))
+        .thenWaitUntil(() -> helper.assertBlockProperty(LAMP, RedstoneLampBlock.LIT, true))
+        .thenExecute(() -> deliver(server, clientPlayer))
+        .thenExecute(() -> server.clickMenuButton(viewer, ControllerScreenCodes.CLEAR_LOG))
+        .thenExecute(() -> deliver(server, clientPlayer))
+        .thenExecute(() -> helper.assertTrue(client.log().size() == NO_LINES, NOT_CLEARED))
+        .thenSucceed();
+  }
+
+  /** Only the owner clears the log (answers 22 and 264). */
+  @GameTest(template = EMPTY)
+  public static void anotherPlayerCannotClearTheLog(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+    NetworkId network = leverAndLamp(helper, owner);
+    ServerPlayer stranger = viewer(helper, UUID.randomUUID(), CLIENT_NAME);
+    ControllerMenu server = new ControllerMenu(MENU_ID, stranger, pos(helper), network);
+
+    helper
+        .startSequence()
+        .thenIdle(SETTLE_TICKS)
+        .thenExecute(() -> helper.pullLever(LEVER))
+        .thenWaitUntil(() -> helper.assertBlockProperty(LAMP, RedstoneLampBlock.LIT, true))
+        .thenExecute(() -> server.clickMenuButton(stranger, ControllerScreenCodes.CLEAR_LOG))
+        .thenExecute(() -> assertLeverAndLamp(helper, opened(helper, owner, network).log()))
+        .thenSucceed();
+  }
+
+  private static void deliver(ControllerMenu server, ServerPlayer clientPlayer) {
+    server.newLog().ifPresent(log -> ControllerScreenLog.receive(log, clientPlayer));
   }
 
   private static void assertLeverAndLamp(GameTestHelper helper, List<LogLine> log) {

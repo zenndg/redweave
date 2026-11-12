@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.server;
 
 import io.github.marcelofabianov.redweave.application.BreakController;
 import io.github.marcelofabianov.redweave.application.BreakNode;
+import io.github.marcelofabianov.redweave.application.ClearLog;
 import io.github.marcelofabianov.redweave.application.ConfigureSlot;
 import io.github.marcelofabianov.redweave.application.CopyNode;
 import io.github.marcelofabianov.redweave.application.CreateNetwork;
@@ -223,6 +224,11 @@ public final class RedweaveServer {
   /** The labels over the nodes of each player with the Configurator in hand (answer 269). */
   public LabelWatch labelWatch() {
     return labelWatch;
+  }
+
+  /** The owner clears the log of a network (answer 264). */
+  public ClearLog clearLog() {
+    return new ClearLog(networks, signalLogs);
   }
 
   /** The use cases of the Network Terminal (terminal-de-rede.md). */

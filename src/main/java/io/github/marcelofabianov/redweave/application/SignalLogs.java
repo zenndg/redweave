@@ -27,6 +27,16 @@ public final class SignalLogs {
     return log == null ? List.of() : log.after(sequence);
   }
 
+  /** How many times the log of a network was cleared; 0 for a network with no log yet. */
+  public long clearsOf(NetworkId network) {
+    SignalLog log = logs.get(network);
+    return log == null ? 0 : log.clears();
+  }
+
+  void clear(NetworkId network) {
+    logs.computeIfAbsent(network, id -> new SignalLog(limits.logSize())).clear();
+  }
+
   /** How many lines a log keeps, as the config says now (answer 147). */
   public int size() {
     return limits.logSize();

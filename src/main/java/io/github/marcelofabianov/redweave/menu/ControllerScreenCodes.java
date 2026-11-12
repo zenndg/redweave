@@ -8,6 +8,9 @@ import java.util.Optional;
  * palette (answer 212); anything else is refused, because a client can send any number (rule 16).
  */
 public final class ControllerScreenCodes {
+  /** The button that clears the log, after the 16 colors of the palette (answer 264). */
+  public static final int CLEAR_LOG = ChannelColor.values().length;
+
   private ControllerScreenCodes() {}
 
   public static int button(ChannelColor color) {
