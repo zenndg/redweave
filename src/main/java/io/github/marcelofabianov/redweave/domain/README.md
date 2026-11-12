@@ -32,6 +32,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
 | `NodePosition` | Onde o nó está: o bloco e a face | #10 |
 | `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229) | #10, #87 e #20 |
+| `NodeKind` | O tipo de um nó pelos slots ativos: `INPUT`, `OUTPUT`, `BOTH` ou `NONE`, que `Node.kind` calcula para a coluna `Type` das listas (perguntas 283 e 337) | #107 |
 | `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
 | `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
 | `ChannelSlot` | A configuração de um nó para um canal: direção, face, canal e status ativo ou inativo, sem nome próprio (pergunta 277). Só um slot ativo lê (`reads`) ou emite (`emits`). Não tem lógica: toda lógica de sinal fica nos Signal Modules (pergunta 308) | #10 e #20 |
@@ -112,5 +113,6 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Portas binárias:** uma entrada conta como ligada acima de 0, como a tocha do jogo, para todas as portas seguirem a mesma regra e o XOR e o NAND terem sentido. A saída é 15 ou 0, e a conversão fica num lugar só, `BinaryOutput` (perguntas 321 e 322).
 - **NOT fora do `Gate`:** o NOT tem uma entrada só, então é a classe `Not`, e não uma constante do `Gate` com uma entrada ignorada (pergunta 324).
 - **Chave da porta com o save:** o `Gate` ainda não tem `key` nem `fromKey`, que entram na #31, com o primeiro módulo que grava o modo (pergunta 325).
+- **Tipo só pelos slots ativos:** um slot desativado não lê nem emite, então não conta para o `NodeKind` (perguntas 228 e 337).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

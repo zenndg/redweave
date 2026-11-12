@@ -17,6 +17,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Fora de alcance | `Out of range` | Nó fora do raio ou em outra dimensão: não conta e vale 0 (perguntas 23 e 29) |
 | Sem rede | `No network` | Nó sem rede, ou numa rede `Unplaced`. Um nó novo nasce assim e não pode ser configurado até ter rede (pergunta 139) |
 | Nó | `Node` | Peça grudada numa face de um bloco. Lê ou emite redstone ali, por slots de canal. Tem um nome, que nasce com os 8 primeiros caracteres do ID (perguntas 142 e 144); sem nome próprio, mostra esse padrão (`displayName`, pergunta 206) |
+| Tipo do nó | `NodeKind` | O que um nó faz pelos slots ativos: `In`, `Out`, `In/Out` ou `—`, na coluna `Type` das listas de nós (perguntas 283, 337 e 339) |
 | Escolha de rede | `NetworkChoices` | A lista das redes `Online` de um player na Tela do Nó, com a última usada no topo, para quem colocou um nó novo e para o dono que troca o nó de rede (perguntas 139, 141 e 203) |
 | Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: status, direção, face do bloco e canal da rede. Não tem lógica: o nó só lê e emite (pergunta 308) |
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
@@ -39,6 +40,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:01 | Adiciona o tipo do nó, da #107 (perguntas 337 e 339). |
 | Zennd | 2026-11-12 18:26 | Detalha a porta e adiciona a regra NOT, da #28 (perguntas 321 a 324). |
 | Zennd | 2026-11-12 17:20 | Corrige o Configurator para quatro modos, com o `Toggle` (pergunta 241). |
 | Zennd | 2026-11-12 16:50 | Tira a `Logic`, adiciona os Signal Modules em placa, muda a porta e o Signal Remote (perguntas 279, 282, 297 a 310, 313 e 314). |
