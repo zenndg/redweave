@@ -32,6 +32,14 @@ public final class ConfiguratorItem extends Item {
         RedweaveDataComponents.CONFIGURATOR_MODE.get(), ConfiguratorMode.FIRST);
   }
 
+  /**
+   * Whether a stack is a Configurator in the Open mode, which uses a block as an empty hand does:
+   * the controller and the terminal (answers 232 and 343).
+   */
+  public static boolean opensBlocks(ItemStack stack) {
+    return stack.getItem() instanceof ConfiguratorItem && modeOf(stack) == ConfiguratorMode.OPEN;
+  }
+
   /** On the server, from the Shift + scroll of the client: only a Configurator in the main hand. */
   public static void switchMode(Player player, double delta) {
     ItemStack stack = player.getMainHandItem();
