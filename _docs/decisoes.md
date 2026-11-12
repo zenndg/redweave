@@ -263,6 +263,15 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Open` do Terminal | A Tela do Controlador fica ancorada no Terminal | 259 |
 | Fechar a tela aberta pelo Terminal | Esc fecha tudo | 260 |
 | Contagem do topo do Terminal | Singular e plural | 261 |
+| Emissão do Signal Node | Só no bloco de apoio, com força; muda a 71 | 262 |
+| Onde entra a emissão nova | Na #80 | 263 |
+| `Clear log` | Limpa o log da rede, só o dono, com confirmação no segundo clique, na #80 | 264 a 266 |
+| Visor do Configurator | Só a cor do modo e o pixel da cópia; o nome na action bar e no tooltip | 267 e 271 |
+| Rótulo sobre os nós: quando | Mão principal, até `configurator.label_range` (16) | 268 |
+| Rótulo sobre os nós: sincronia | Pacote só para quem segura, só o que mudou | 269 |
+| Rótulo sobre os nós: conteúdo | Nó e rede, até 4 canais e `+n more` | 270 |
+| Testes da #80 | JUnit no conteúdo, nas mudanças e no `Clear log`; GameTests no mundo | 272 |
+| Textura `configurator_channel` | Removida | 273 |
 
 Não há perguntas pendentes da concepção.
 
@@ -270,6 +279,12 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 11:27 | Registra a decisão 273. |
+| Zennd | 2026-11-12 11:11 | Registra a decisão 272. |
+| Zennd | 2026-11-12 11:10 | Registra a decisão 271. |
+| Zennd | 2026-11-12 11:08 | Registra as decisões 267 a 270. |
+| Zennd | 2026-11-12 10:57 | Registra as decisões 264 a 266. |
+| Zennd | 2026-11-12 10:56 | Registra as decisões 262 e 263. |
 | Zennd | 2026-11-12 10:30 | Registra a decisão 261. |
 | Zennd | 2026-11-12 10:25 | Registra as decisões 259 e 260. |
 | Zennd | 2026-11-12 10:07 | Registra a decisão 258. |
