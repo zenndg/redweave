@@ -322,6 +322,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Posição na linha aberta | Sub-linha cinza `Position: x, y, z`, só para o dono | 340 |
 | Testes da #107 | JUnit do `NodeKind` e do `NodeRow`, GameTest do menu e roteiro manual | 341 |
 | Prancha da Tela do Controlador | Nova, gerada por IA a partir de `tmp/arte/tela_do_controlador/` | 342 |
+| Terminal com o Configurator | Abre no modo `Open`, como a mão vazia, como o controlador; entra no PR #121 | 343, 344 |
+| Slots do Signal Node | Continuam 16; o layout da Tela do Nó melhora numa issue própria | 345 |
 
 Não há perguntas pendentes da concepção.
 
@@ -329,6 +331,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:21 | Registra as decisões 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a decisão 342. |
 | Zennd | 2026-11-12 18:57 | Registra as decisões 339 a 341. |
 | Zennd | 2026-11-12 18:56 | Registra as decisões 335 a 338 e atualiza a lista de nós. |

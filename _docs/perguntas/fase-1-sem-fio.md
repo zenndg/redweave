@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 345 | O Signal Node passa de 16 para 10 slots, com a Tela do Nó reorganizada para aproveitar melhor o espaço? | Não: continuam os 16 slots, um por cor de canal (pergunta 224 e regra 3). A melhoria do layout da Tela do Nó entra numa issue própria, depois de o desenvolvedor dizer o que incomoda |
+| 344 | Em que PR entra a abertura do Network Terminal com o Configurator (pergunta 343)? | No PR #121, da #107, como um commit a mais na mesma branch, a pedido do desenvolvedor |
+| 343 | O Network Terminal, que abre com a mão vazia, passa a abrir também com o Configurator? | Sim, só no modo `Open`, que age como a mão vazia, com o mesmo aviso para quem não é o dono, como no Network Controller (pergunta 232). `Copy`, `Toggle` e `Wrench` continuam sem ação no Terminal (pergunta 164). Completa a pergunta 130 |
 | 342 | A prancha `tela-do-controlador.png` mostra a coluna `Position` na linha e não mostra `Type` e `State`. Como fica? | Uma prancha nova, gerada por IA, como a da Tela do Nó (pergunta 331): o agente escreve o `prompt.md` em `tmp/arte/tela_do_controlador/`, o desenvolvedor gera a imagem, e o agente a confere antes de substituir. Até lá, o `telas.md` avisa que vale a tabela (#107) |
 | 341 | Em que fronteiras entram os testes da #107? | JUnit: o `NodeKind`, com os slots inativos ignorados e as quatro combinações, e o `NodeRow` com o tipo. GameTest: o menu do controlador, montado com `FakePlayerFactory`, entrega o tipo e o estado de cada nó. Roteiro manual: as colunas, a cor só no estado, a posição na linha aberta só para o dono e o português (#107) |
 | 340 | Como fica a posição no topo da linha aberta (pergunta 335)? | Uma sub-linha em cinza, `Position: 12, 64, -30` e `Posição: 12, 64, -30`, acima dos canais ativos ou do `No active channel`. Para quem não é o dono, a sub-linha não existe. Completa a pergunta 335 (#107) |
@@ -342,6 +345,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:21 | Registra as respostas 343 a 345. |
 | Zennd | 2026-11-12 19:02 | Registra a resposta 342, da #107. |
 | Zennd | 2026-11-12 18:57 | Registra as respostas 339 a 341, da #107. |
 | Zennd | 2026-11-12 18:56 | Registra as respostas 335 a 338, da #107, e aponta a 179 para a 335. |
