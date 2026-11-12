@@ -42,6 +42,7 @@ final class NodeScreenPortugueseTexts {
   private static final String NO_NETWORK_ONLINE = NONE_ONLINE + PLACE_A_CONTROLLER + TO_CREATE_ONE;
   private static final String NODE_COUNT_ONE = "%s nó";
   private static final String NODE_COUNT_MANY = "%s nós";
+  private static final String LABEL_MORE = "+%s mais";
   private static final String BACK = "Voltar";
   private static final String RENAME_TOOLTIP = "Clique para renomear. Enter salva, Esc cancela.";
   private static final String SWITCH_NETWORK_TOOLTIP = "Clique para trocar de rede.";
@@ -67,6 +68,7 @@ final class NodeScreenPortugueseTexts {
     add.accept(NodeScreenTexts.NO_NETWORK_ONLINE, NO_NETWORK_ONLINE);
     add.accept(NodeScreenTexts.NODE_COUNT_ONE, NODE_COUNT_ONE);
     add.accept(NodeScreenTexts.NODE_COUNT_MANY, NODE_COUNT_MANY);
+    add.accept(NodeScreenTexts.LABEL_MORE, LABEL_MORE);
     add.accept(NodeScreenTexts.BACK, BACK);
     add.accept(NodeScreenTexts.RENAME_TOOLTIP, RENAME_TOOLTIP);
     add.accept(NodeScreenTexts.SWITCH_NETWORK_TOOLTIP, SWITCH_NETWORK_TOOLTIP);

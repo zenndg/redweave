@@ -68,6 +68,7 @@ public final class RedweaveServer {
   private final RenameChannel renameChannel;
   private final SignalLogs signalLogs;
   private final TerminalServices terminal;
+  private final LabelWatch labelWatch = new LabelWatch(this);
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -217,6 +218,11 @@ public final class RedweaveServer {
 
   public Optional<Network> network(NetworkId id) {
     return networks.find(id);
+  }
+
+  /** The labels over the nodes of each player with the Configurator in hand (answer 269). */
+  public LabelWatch labelWatch() {
+    return labelWatch;
   }
 
   /** The use cases of the Network Terminal (terminal-de-rede.md). */
