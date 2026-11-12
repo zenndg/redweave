@@ -4,7 +4,7 @@ O Network Terminal (`redweave:network_terminal`) é o bloco que administra todas
 
 ## Em uma frase
 
-Um clique com a mão vazia no Terminal mostra todas as redes do dono, de onde ele as renomeia, desliga, religa, limpa e abre.
+Um clique com a mão vazia, ou com o Configurator no modo `Open`, no Terminal mostra todas as redes do dono, de onde ele as renomeia, desliga, religa, limpa e abre.
 
 ## O que o Terminal não faz
 
@@ -24,7 +24,7 @@ Não cria redes. A rede nasce ao colocar um Network Controller, e cada controlad
 
 | Quem clica | O que acontece | Pergunta |
 |---|---|---|
-| O dono, com a mão vazia | Abre a tela do Terminal | 130 |
+| O dono, com a mão vazia ou com o Configurator no modo `Open` | Abre a tela do Terminal. Os modos `Copy`, `Toggle` e `Wrench` não fazem nada no Terminal | 130, 164 e 343 |
 | Outro player | Nada abre, e a action bar mostra `Only the owner can use this terminal.` | 153 |
 
 O Terminal alcança todas as redes do dono, em qualquer dimensão e a qualquer distância, porque lê o save das redes, sem carregar chunk (regra 6 e pergunta 152). O servidor confere o dono e a distância de interação com o bloco em cada ação (regras 16 e 17).
@@ -78,6 +78,7 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:23 | O modo `Open` do Configurator abre o Terminal, como a mão vazia (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Aponta a confirmação para o `Clear log` e inclui o `Toggle` na rede `Offline` (pergunta 241). |
 | Zennd | 2026-11-12 09:49 | Aplica as perguntas 251 a 256: o conceito do bloco, a barra de ações, os textos e o Terminal perdido; adiciona o desenho da tela. |
 | Zennd | 2026-11-11 10:24 | Aplica as perguntas 175 e 176. |

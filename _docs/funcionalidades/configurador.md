@@ -12,7 +12,7 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy
 
 | Modo | Em português | Cor | Clique num nó | Shift + clique num nó | Pergunta |
 |---|---|---|---|---|---|
-| `Open` | `Abrir` | Azul | Abre a Tela do Nó | — | 140 e 143 |
+| `Open` | `Abrir` | Azul | Abre a Tela do Nó e, como a mão vazia, as telas do Network Controller e do Network Terminal | — | 140, 143, 232 e 343 |
 | `Copy` | `Copiar` | Verde | Copia a configuração dos slots | Cola a cópia | 127 e 143 |
 | `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
@@ -38,7 +38,7 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Abrir
 
-É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. No Network Controller, o modo `Open` faz o mesmo que a mão vazia e abre a Tela do Controlador (pergunta 232). Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
+É o único jeito de abrir a Tela do Nó: a mão vazia só mostra a dica `Use a Configurator to open this node.` (perguntas 154 e 188). Os únicos blocos que aceitam a mão vazia são o Network Controller e o Network Terminal. No Network Controller e no Network Terminal, o modo `Open` faz o mesmo que a mão vazia e abre a tela do bloco (perguntas 232 e 343). Um nó `No network` abre na tela de escolha de rede, e um nó com rede abre na configuração ([`telas.md`](telas.md#tela-do-nó), pergunta 139).
 
 ### Copiar
 
@@ -116,6 +116,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:23 | O modo `Open` abre também o Network Terminal (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle` no resumo, na rede `Offline`, nas mensagens e no tooltip, e tira o `name` do formato da cópia (perguntas 241 e 277). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot da cópia (pergunta 277). |
 | Zennd | 2026-11-12 11:46 | O rótulo sobre os nós passa a ter duas linhas, a rede e o nó (perguntas 274 a 276). |

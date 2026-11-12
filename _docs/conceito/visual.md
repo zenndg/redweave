@@ -171,7 +171,7 @@ Ferramenta, `redweave:configurator`. Abre, copia, cola, ativa e desativa canais 
 
 | Modo | Em português | Cor | Tom | Uso |
 |---|---|---|---|---|
-| `Open` | `Abrir` | Azul | `#5B9BF0` | Clique num nó abre a Tela do Nó |
+| `Open` | `Abrir` | Azul | `#5B9BF0` | Clique num nó abre a Tela do Nó; no controlador e no Terminal, abre a tela do bloco, como a mão vazia |
 | `Copy` | `Copiar` | Verde | `#3FAE5A` | Clique num nó copia; Shift + clique cola |
 | `Toggle` | `Alternar` | Âmbar | `#E3A33B` | Clique num nó ativa os canais configurados; Shift + clique desativa (pergunta 241) |
 | `Wrench` | `Chave` | Vermelho | `#D94A64` | Clique num nó o retira como item |
@@ -188,6 +188,7 @@ Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift +
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 19:23 | O modo `Open` abre também as telas do controlador e do Terminal (perguntas 232 e 343). |
 | Zennd | 2026-11-12 17:27 | Alinha os estados do controlador ao código (perguntas 177 e 319). |
 | Zennd | 2026-11-12 17:18 | Atualiza o medidor, os estados `Offline` e `Unplaced`, as abas, os cantos do nó, o Configurator e o Signal Remote em tablet (perguntas 135, 146, 177, 224, 229, 233, 241, 271, 279 e 282 a 291). |
 | Zennd | 2026-11-12 11:46 | O rótulo sobre os nós em duas linhas (perguntas 274 a 276). |
