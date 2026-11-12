@@ -15,10 +15,9 @@ import org.junit.jupiter.api.Test;
 class LabelChangesTest {
   private static final String LAMP = "Lamp";
   private static final String DOOR = "Door";
-  private static final int NO_MORE = 0;
 
   private static NodeLabel label(String name) {
-    return new NodeLabel(name, Optional.empty(), List.of(), NO_MORE);
+    return new NodeLabel(name, Optional.empty());
   }
 
   @Test

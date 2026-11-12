@@ -66,7 +66,6 @@
   "screen.redweave.node.face.west": "Oeste",
   "screen.redweave.node.face_tooltip": "Clique numa face para escolhê-la. Arraste para girar o bloco.",
   "screen.redweave.node.input": "Entrada",
-  "screen.redweave.node.label_more": "+%s mais",
   "screen.redweave.node.logic": "Lógica",
   "screen.redweave.node.logic.delay": "Atraso",
   "screen.redweave.node.logic.invert": "Inverter",

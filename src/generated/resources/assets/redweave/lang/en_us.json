@@ -66,7 +66,6 @@
   "screen.redweave.node.face.west": "West",
   "screen.redweave.node.face_tooltip": "Click a face to choose it. Drag to turn the block.",
   "screen.redweave.node.input": "Input",
-  "screen.redweave.node.label_more": "+%s more",
   "screen.redweave.node.logic": "Logic",
   "screen.redweave.node.logic.delay": "Delay",
   "screen.redweave.node.logic.invert": "Invert",
