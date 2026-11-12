@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 /** The blockstates and models, with the textures of _docs/imagens/conceito/texturas.png (51). */
 final class RedweaveBlockStates extends BlockStateProvider {
   private static final String CONTROLLER = "network_controller";
+  private static final String TERMINAL = "network_terminal";
   private static final String LINKED_SUFFIX = "_linked";
   private static final String BLOCK_FOLDER = "block/";
   private static final String TOP = "_top";
@@ -60,6 +61,9 @@ final class RedweaveBlockStates extends BlockStateProvider {
         RedweaveBlocks.NETWORK_CONTROLLER.get(),
         state -> state.getValue(NetworkControllerBlock.LINKED) ? linked : unlinked);
     simpleBlockItem(RedweaveBlocks.NETWORK_CONTROLLER.get(), unlinked);
+    ModelFile terminal = terminalModel();
+    horizontalBlock(RedweaveBlocks.NETWORK_TERMINAL.get(), terminal);
+    simpleBlockItem(RedweaveBlocks.NETWORK_TERMINAL.get(), terminal);
     ModelFile off = nodeModel(NODE, NODE_FRONT);
     ModelFile on = nodeModel(NODE + POWERED_SUFFIX, NODE_FRONT + POWERED_SUFFIX);
     ModelFile outOfRange = nodeModel(NODE + OUT_OF_RANGE_SUFFIX, NODE_FRONT + OUT_OF_RANGE_SUFFIX);
@@ -120,6 +124,21 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private ModelFile controllerModel(String name, String top) {
     return models()
         .orientableWithBottom(name, texture(SIDE), texture(FRONT), texture(BOTTOM), texture(top));
+  }
+
+  /** The bottom is the one of the controller, the same family (answers 251 and 258). */
+  private ModelFile terminalModel() {
+    return models()
+        .orientableWithBottom(
+            TERMINAL,
+            terminalTexture(SIDE),
+            terminalTexture(FRONT),
+            texture(BOTTOM),
+            terminalTexture(TOP));
+  }
+
+  private ResourceLocation terminalTexture(String part) {
+    return modLoc(BLOCK_FOLDER + TERMINAL + part);
   }
 
   private ResourceLocation texture(String part) {

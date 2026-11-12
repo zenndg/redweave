@@ -17,12 +17,15 @@ import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
@@ -36,6 +39,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
 
   private final BlockPos pos;
   private final ContainerLevelAccess access;
+  private final Block anchor;
   private final Optional<ServerPlayer> viewer;
   private final Optional<NetworkId> network;
   private ControllerScreenRows rows;
@@ -46,9 +50,33 @@ public final class ControllerMenu extends AbstractContainerMenu {
 
   /** On the server, for a player who opened the controller of an online network. */
   public ControllerMenu(int id, ServerPlayer player, BlockPos pos, NetworkId network) {
+    this(id, player, pos, network, RedweaveBlocks.NETWORK_CONTROLLER.get());
+  }
+
+  /**
+   * Opened by the Open of a Network Terminal: the screen holds while the owner is within reach of
+   * the terminal, wherever the controller is, and its actions name the terminal (answer 259).
+   */
+  public static ControllerMenu atTerminal(
+      int id, ServerPlayer player, BlockPos terminal, NetworkId network) {
+    return new ControllerMenu(id, player, terminal, network, RedweaveBlocks.NETWORK_TERMINAL.get());
+  }
+
+  /** Opens the screen of a network from a Network Terminal; Esc closes it all (answer 260). */
+  public static void openAtTerminal(ServerPlayer viewer, BlockPos terminal, Network network) {
+    viewer.openMenu(
+        new SimpleMenuProvider(
+            (id, inventory, opener) -> atTerminal(id, viewer, terminal, network.id()),
+            Component.literal(network.name())),
+        extra -> writeOpening(extra, viewer, terminal, network.id()));
+  }
+
+  private ControllerMenu(
+      int id, ServerPlayer player, BlockPos pos, NetworkId network, Block anchor) {
     super(RedweaveMenus.CONTROLLER.get(), id);
     this.pos = pos;
     this.access = ContainerLevelAccess.create(player.level(), pos);
+    this.anchor = anchor;
     this.viewer = Optional.of(player);
     this.network = Optional.of(network);
     this.view = read(player, network);
@@ -63,6 +91,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
     super(RedweaveMenus.CONTROLLER.get(), id);
     this.pos = extra.readBlockPos();
     this.access = ContainerLevelAccess.NULL;
+    this.anchor = RedweaveBlocks.NETWORK_CONTROLLER.get();
     this.viewer = Optional.empty();
     this.network = Optional.empty();
     this.view = Optional.empty();
@@ -201,7 +230,7 @@ public final class ControllerMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(Player player) {
-    return stillValid(access, player, RedweaveBlocks.NETWORK_CONTROLLER.get()) && isOnline();
+    return stillValid(access, player, anchor) && isOnline();
   }
 
   /** On the client there is no network to check, and the server closes the screen. */
