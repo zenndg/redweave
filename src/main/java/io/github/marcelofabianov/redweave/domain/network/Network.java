@@ -5,7 +5,6 @@ import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 /**
  * The aggregate: every change to the name, the channels and the nodes goes through it, and it keeps
@@ -26,6 +25,7 @@ public final class Network {
   private ChannelColor color;
   private final NetworkStatus status;
   private final NetworkSignals signals;
+  private final SlotEdits slotEdits;
 
   private Network(
       NetworkId id,
@@ -40,6 +40,7 @@ public final class Network {
     this.color = color;
     this.status = status;
     this.signals = new NetworkSignals(nodes, readings, channels, status, limits);
+    this.slotEdits = new SlotEdits(nodes, readings, emissions);
     this.limits = limits;
   }
 
@@ -171,68 +172,42 @@ public final class Network {
 
   /** Configures one slot of a node, for the owner only. */
   public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
-    return changeSlot(requester, nodeId, index, Optional.of(slot));
+    return isOwner(requester)
+        ? slotEdits.change(nodeId, index, Optional.of(slot))
+        : Outcome.NOT_OWNER;
   }
 
   /** Enables the slot of a color, for the owner only (answers 226 and 228). */
   public Outcome enableSlot(PlayerId requester, NodeId nodeId, int index) {
-    return changeSlotWith(requester, nodeId, index, SlotChanges::enable);
+    return isOwner(requester)
+        ? slotEdits.changeWith(nodeId, index, SlotChanges::enable)
+        : Outcome.NOT_OWNER;
   }
 
   /** Disables a slot, which keeps its configuration, for the owner only (answer 228). */
   public Outcome disableSlot(PlayerId requester, NodeId nodeId, int index) {
-    return changeSlotWith(requester, nodeId, index, SlotChanges::disable);
+    return isOwner(requester)
+        ? slotEdits.changeWith(nodeId, index, SlotChanges::disable)
+        : Outcome.NOT_OWNER;
   }
 
   /** Sets up the direction and face of a slot that is not enabled, for the owner (answer 237). */
   public Outcome setUpSlot(PlayerId requester, NodeId nodeId, int index, Direction way, Face face) {
-    if (isOwner(requester) && nodes.isEnabled(nodeId, index)) {
-      return Outcome.SLOT_ENABLED;
-    }
-    return changeSlotWith(
-        requester, nodeId, index, (node, at) -> SlotChanges.setUp(node, at, way, face));
+    return isOwner(requester) ? slotEdits.setUp(nodeId, index, way, face) : Outcome.NOT_OWNER;
   }
 
   /** Names a slot, for the owner only; blank takes the name away. It changes no signal (227). */
   public Outcome renameSlot(PlayerId requester, NodeId nodeId, int index, String newName) {
-    Optional<Optional<String>> name = SlotChanges.validName(newName, limits.slotNameLength());
-    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
-    if (found != Outcome.ACCEPTED || name.isEmpty()) {
-      return found == Outcome.ACCEPTED ? Outcome.INVALID_NAME : found;
-    }
-    return nodes.changeSlot(nodeId, index, SlotChanges.name(nodes.at(nodeId), index, name.get()));
-  }
-
-  private Outcome changeSlotWith(
-      PlayerId requester,
-      NodeId nodeId,
-      int index,
-      BiFunction<Node, Integer, Optional<ChannelSlot>> change) {
-    Outcome found = isOwner(requester) ? nodes.slotOf(nodeId, index) : Outcome.NOT_OWNER;
-    if (found != Outcome.ACCEPTED) {
-      return found;
-    }
-    Optional<ChannelSlot> changed = change.apply(nodes.at(nodeId), index);
-    return changed.isEmpty() ? Outcome.INVALID_SLOT : changeSlot(requester, nodeId, index, changed);
+    return isOwner(requester)
+        ? slotEdits.rename(nodeId, index, newName, limits.slotNameLength())
+        : Outcome.NOT_OWNER;
   }
 
   /** Frees one slot of a node, for the owner only. */
   public Outcome clearSlot(PlayerId requester, NodeId nodeId, int index) {
-    return changeSlot(requester, nodeId, index, Optional.empty());
-  }
-
-  private Outcome changeSlot(
-      PlayerId requester, NodeId nodeId, int index, Optional<ChannelSlot> slot) {
-    if (!isOwner(requester)) {
-      return Outcome.NOT_OWNER;
-    }
-    Outcome changed = nodes.changeSlot(nodeId, index, slot);
-    if (changed != Outcome.ACCEPTED) {
-      return changed;
-    }
-    readings.forget(new SlotRef(nodeId, index));
-    emissions.markPending();
-    return Outcome.ACCEPTED;
+    return isOwner(requester)
+        ? slotEdits.change(nodeId, index, Optional.empty())
+        : Outcome.NOT_OWNER;
   }
 
   /** The owner placed the controller again: the network comes back online there. */
