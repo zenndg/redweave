@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.Optional;

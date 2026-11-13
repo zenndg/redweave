@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.ChannelLine;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenTexts;

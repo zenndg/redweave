@@ -1,0 +1,136 @@
+package io.github.marcelofabianov.redweave.gametest;
+
+import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NodeId;
+import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import io.github.marcelofabianov.redweave.item.RemoteLink;
+import io.github.marcelofabianov.redweave.item.RemoteMode;
+import io.github.marcelofabianov.redweave.item.RemoteState;
+import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.UUID;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+/**
+ * The Signal Remote in the world: whoever holds a linked tablet fires it, the lever and the button
+ * reach the channel only while the tablet is in the inventory, and a slot that stops being an input
+ * loses the link (answers 287, 355 to 357, 367 and 369).
+ */
+@GameTestHolder(RedweaveMod.MOD_ID)
+@PrefixGameTestTemplate(false)
+public final class SignalRemoteGameTests {
+  private static final String EMPTY = "empty";
+  private static final BlockPos FLOOR = new BlockPos(0, 0, 2);
+  private static final BlockPos CONTROLLER = FLOOR.above();
+  private static final BlockPos STONE = new BlockPos(1, 1, 1);
+  private static final int SLOT = 0;
+  private static final ChannelColor CHANNEL = ChannelColor.values()[SLOT];
+  private static final int PULSE_TICKS = 20;
+  private static final String NOT_ON = "A tablet that is on should turn the channel on";
+  private static final String NOT_OFF = "A tablet out of the inventory should not count";
+  private static final String PULSE_STAYED = "The button pulse should end";
+  private static final String NOT_LOST = "A slot that is no longer an input should lose the link";
+
+  private SignalRemoteGameTests() {}
+
+  @GameTest(template = EMPTY)
+  public static void aLeverTabletTurnsTheChannelOnWhileHeld(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    fire(helper, owner, tablet);
+
+    helper.succeedWhen(() -> helper.assertTrue(channelOf(tablet).isOn(), NOT_ON));
+  }
+
+  @GameTest(template = EMPTY)
+  public static void aTabletOutOfTheInventoryStopsCounting(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    fire(helper, owner, tablet);
+
+    helper
+        .startSequence()
+        .thenWaitUntil(() -> helper.assertTrue(channelOf(tablet).isOn(), NOT_ON))
+        .thenExecute(() -> owner.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY))
+        .thenWaitUntil(() -> helper.assertFalse(channelOf(tablet).isOn(), NOT_OFF))
+        .thenSucceed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void theButtonPulseEnds(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    tablet.set(
+        RedweaveDataComponents.SIGNAL_REMOTE.get(),
+        tablet.get(RedweaveDataComponents.SIGNAL_REMOTE.get()).withMode(RemoteMode.BUTTON));
+    fire(helper, owner, tablet);
+
+    helper
+        .startSequence()
+        .thenWaitUntil(() -> helper.assertTrue(channelOf(tablet).isOn(), NOT_ON))
+        .thenIdle(PULSE_TICKS)
+        .thenWaitUntil(() -> helper.assertFalse(channelOf(tablet).isOn(), PULSE_STAYED))
+        .thenSucceed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void aSlotThatIsNoLongerAnInputLosesTheLink(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    NodeId node = nodeOf(tablet);
+    NodeScene.networkOf(node).disableSlot(new PlayerId(owner.getUUID()), node, SLOT);
+
+    helper.succeedWhen(() ->
+        helper.assertTrue(
+            tablet.get(RedweaveDataComponents.SIGNAL_REMOTE.get()).isLost(), NOT_LOST));
+  }
+
+  /** The tests run far from the origin, so the player stands by the controller, in its reach. */
+  private static ServerPlayer playerNearTheController(GameTestHelper helper) {
+    ServerPlayer player = helper.makeMockServerPlayerInLevel();
+    player.setPos(Vec3.atCenterOf(helper.absolutePos(CONTROLLER.above())));
+    return player;
+  }
+
+  private static void fire(GameTestHelper helper, ServerPlayer owner, ItemStack tablet) {
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    tablet.getItem().use(helper.getLevel(), owner, InteractionHand.MAIN_HAND);
+  }
+
+  /** A controller, a node with an input on the first slot, and a tablet linked to it. */
+  private static ItemStack linkedTablet(GameTestHelper helper, ServerPlayer owner) {
+    NetworkId network = NodeScene.placeController(helper, owner, FLOOR, CONTROLLER);
+    NodeId node = NodeScene.placeNode(helper, owner, STONE, Direction.UP);
+    NodeScene.enableSlot(owner, node, SLOT);
+    ItemStack tablet = new ItemStack(RedweaveItems.SIGNAL_REMOTE.get());
+    RemoteLink link = new RemoteLink(network.value(), node.value(), SLOT);
+    tablet.set(
+        RedweaveDataComponents.SIGNAL_REMOTE.get(),
+        RemoteState.NEW.linkedTo(link, UUID.randomUUID()));
+    return tablet;
+  }
+
+  private static NodeId nodeOf(ItemStack tablet) {
+    return new NodeId(
+        tablet.get(RedweaveDataComponents.SIGNAL_REMOTE.get()).link().orElseThrow().node());
+  }
+
+  private static Signal channelOf(ItemStack tablet) {
+    Network network = NodeScene.networkOf(nodeOf(tablet));
+    return network.channelValue(CHANNEL);
+  }
+}

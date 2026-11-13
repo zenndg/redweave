@@ -1,0 +1,48 @@
+package io.github.marcelofabianov.redweave.datagen;
+
+import io.github.marcelofabianov.redweave.item.RemoteMessages;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.function.BiConsumer;
+
+/** The texts of the Signal Remote in Portuguese (signal-remote.md). */
+final class RemotePortugueseTexts {
+  private static final String NAME = "Controle de Sinal";
+  private static final String ON = "%s: ligado";
+  private static final String OFF = "%s: desligado";
+  private static final String PULSE = "%s: pulso";
+  private static final String HELD = "%s continua ligado por outra fonte.";
+  private static final String LINK_LOST = "Vínculo perdido";
+  private static final String OFFLINE = "%s está desligada.";
+  private static final String LINKED = "Vinculado: %s · %s · %s";
+  private static final String HOW_TO_LINK = "Shift + clique direito para vincular.";
+  private static final String LINK = "Vínculo: %s · %s · %s";
+  private static final String NO_LINK = "Sem vínculo";
+  private static final String MODE = "Modo: %s";
+  private static final String LEVER = "Alavanca";
+  private static final String BUTTON = "Botão";
+  private static final String STATE_ON = "Ligado";
+  private static final String STATE_OFF = "Desligado";
+  private static final String RULE = "Num canal, vale o sinal mais forte.";
+
+  private RemotePortugueseTexts() {}
+
+  static void addTo(BiConsumer<String, String> add) {
+    add.accept(RedweaveItems.SIGNAL_REMOTE.get().getDescriptionId(), NAME);
+    add.accept(RemoteMessages.ON, ON);
+    add.accept(RemoteMessages.OFF, OFF);
+    add.accept(RemoteMessages.PULSE, PULSE);
+    add.accept(RemoteMessages.HELD, HELD);
+    add.accept(RemoteMessages.LINK_LOST, LINK_LOST);
+    add.accept(RemoteMessages.OFFLINE, OFFLINE);
+    add.accept(RemoteMessages.LINKED, LINKED);
+    add.accept(RemoteMessages.HOW_TO_LINK, HOW_TO_LINK);
+    add.accept(RemoteMessages.LINK, LINK);
+    add.accept(RemoteMessages.NO_LINK, NO_LINK);
+    add.accept(RemoteMessages.MODE, MODE);
+    add.accept(RemoteMessages.LEVER, LEVER);
+    add.accept(RemoteMessages.BUTTON, BUTTON);
+    add.accept(RemoteMessages.STATE_ON, STATE_ON);
+    add.accept(RemoteMessages.STATE_OFF, STATE_OFF);
+    add.accept(RemoteMessages.RULE, RULE);
+  }
+}
