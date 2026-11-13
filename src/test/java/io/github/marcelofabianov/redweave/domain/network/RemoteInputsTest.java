@@ -41,6 +41,11 @@ class RemoteInputsTest {
   private static final int NONE = 0;
   private static final int ONE = 1;
   private static final int TWO = 2;
+  private static final String NETHER = "minecraft:the_nether";
+  private static final int NEAR = 10;
+  private static final BlockLocation NEAR_THE_CONTROLLER =
+      new BlockLocation(OVERWORLD, NEAR, GROUND, NEAR);
+  private static final BlockLocation IN_THE_NETHER = new BlockLocation(NETHER, 0, GROUND, 0);
 
   private static Network networkWith(Direction direction) {
     Network network = network();
@@ -126,6 +131,7 @@ class RemoteInputsTest {
     network.turnOff(OWNER);
 
     assertEquals(Signal.OFF, network.channelValue(DOOR));
+    assertEquals(NONE, network.remotes().on());
   }
 
   @Test
@@ -159,6 +165,49 @@ class RemoteInputsTest {
     assertTrue(network.remotes().accepts(NODE, SLOT));
     assertFalse(network.remotes().accepts(NODE, GATE_SLOT));
     assertFalse(network.remotes().accepts(OTHER_NODE, SLOT));
+  }
+
+  @Test
+  void theReachIsTheRangeOfTheControllerFromThePlayer() {
+    Network network = networkWith(Direction.INPUT);
+
+    assertTrue(network.remotes().reaches(NEAR_THE_CONTROLLER));
+    assertFalse(network.remotes().reaches(FAR_CONTROLLER));
+    assertFalse(network.remotes().reaches(IN_THE_NETHER));
+  }
+
+  @Test
+  void anUnplacedNetworkReachesNobody() {
+    Network network = networkWith(Direction.INPUT);
+    network.removeController(OWNER);
+
+    assertFalse(network.remotes().reaches(NEAR_THE_CONTROLLER));
+  }
+
+  @Test
+  void anotherSourceHoldsTheChannelWhenItIsOnWithoutTheTablet() {
+    Network network = networkWith(Direction.INPUT);
+    network.remotes().apply(Set.of(ON_DOOR));
+    assertFalse(network.remotes().othersHold(ON_DOOR));
+
+    network.readInput(NODE, SLOT, MIDDLE);
+    assertTrue(network.remotes().othersHold(ON_DOOR));
+  }
+
+  @Test
+  void anotherTabletAlsoHoldsTheChannel() {
+    Network network = networkWith(Direction.INPUT);
+
+    network.remotes().apply(Set.of(ON_DOOR, new RemoteInput(OTHER_TABLET, NODE, SLOT)));
+
+    assertTrue(network.remotes().othersHold(ON_DOOR));
+  }
+
+  @Test
+  void nothingHoldsASlotThatTakesNoTablet() {
+    Network network = networkWith(Direction.OUTPUT);
+
+    assertFalse(network.remotes().othersHold(ON_DOOR));
   }
 
   @Test

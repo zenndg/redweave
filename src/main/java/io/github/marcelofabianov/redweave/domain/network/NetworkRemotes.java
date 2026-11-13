@@ -35,6 +35,26 @@ public final class NetworkRemotes {
     return nodes.isInput(nodeId, index);
   }
 
+  /** Whether a player there reaches the network: the range of the controller (answer 354). */
+  public boolean reaches(BlockLocation holder) {
+    return signals.reaches(holder);
+  }
+
+  /**
+   * Whether the channel of the slot of a tablet is on without it, held by a reading or another
+   * tablet, so the tablet alone cannot turn it off (answers 289 and 370).
+   */
+  public boolean othersHold(RemoteInput tablet) {
+    if (!accepts(tablet.node(), tablet.index())) {
+      return false;
+    }
+    ChannelColor channel = nodes.at(tablet.node()).slotAt(tablet.index()).orElseThrow().channel();
+    return signals
+        .channelValues(other -> !other.remote().equals(tablet.remote()))
+        .get(channel)
+        .isOn();
+  }
+
   /** How many tablets count now, for the Controller Screen; none when not online (364). */
   public int on() {
     return signals.remotesOn();

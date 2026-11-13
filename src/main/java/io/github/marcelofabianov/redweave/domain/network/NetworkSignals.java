@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.domain.network;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * Inside the network: what each channel, slot and node is worth now, read from the parts of the
@@ -44,9 +45,14 @@ final class NetworkSignals {
   }
 
   private boolean inRange(Node node) {
+    return reaches(node.position().block());
+  }
+
+  /** Whether a place is in the range of the controller, in its dimension (answers 23 and 354). */
+  boolean reaches(BlockLocation where) {
     return status
         .controller()
-        .map(location -> new Range(limits.range()).reaches(location, node.position().block()))
+        .map(location -> new Range(limits.range()).reaches(location, where))
         .orElse(false);
   }
 
@@ -133,6 +139,11 @@ final class NetworkSignals {
 
   /** The 16 channels in one pass over the nodes, for the simulator (_docs/limites.md, load). */
   Map<ChannelColor, Signal> channelValues() {
+    return channelValues(input -> true);
+  }
+
+  /** The channels with only the tablets that pass, as without one tablet (answer 370). */
+  Map<ChannelColor, Signal> channelValues(Predicate<RemoteInput> counts) {
     Map<ChannelColor, Signal> values = channels.allOff();
     if (!isOnline()) {
       return values;
@@ -142,7 +153,7 @@ final class NetworkSignals {
         readings.addInputsOf(node, values);
       }
     }
-    remotes.addTo(nodes, values);
+    remotes.addTo(nodes, values, counts);
     return values;
   }
 

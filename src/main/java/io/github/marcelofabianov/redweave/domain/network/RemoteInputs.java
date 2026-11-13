@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Inside the network: the Signal Remotes that count this tick. The server gives the whole set each
@@ -21,10 +22,10 @@ final class RemoteInputs {
     return changed;
   }
 
-  /** Puts 15 on the channel of each linked input, with the strongest rule (answer 352). */
-  void addTo(Nodes nodes, Map<ChannelColor, Signal> channels) {
+  /** Puts 15 on the channel of each linked input that counts, with the strongest rule (352). */
+  void addTo(Nodes nodes, Map<ChannelColor, Signal> channels, Predicate<RemoteInput> counts) {
     for (RemoteInput input : active) {
-      if (nodes.isInput(input.node(), input.index())) {
+      if (counts.test(input) && nodes.isInput(input.node(), input.index())) {
         ChannelColor channel = nodes.at(input.node()).slotAt(input.index()).orElseThrow().channel();
         channels.merge(channel, Signal.MAX, Signal::strongest);
       }
