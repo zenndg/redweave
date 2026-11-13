@@ -42,6 +42,7 @@ class SignalRemoteTest {
       new BlockLocation(OVERWORLD, NEAR, GROUND, NEAR);
   private static final BlockLocation FAR_AWAY = new BlockLocation(OVERWORLD, FAR, GROUND, FAR);
   private static final Signal MIDDLE = new Signal(9);
+  private static final int ONE = 1;
 
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final EnableSlot enableSlot = new EnableSlot(fixture.networks, fixture.networks);
@@ -95,6 +96,15 @@ class SignalRemoteTest {
     applyRemotes.apply(List.of(new RemoteSighting(MISSING_NETWORK, ON_SLOT, NEAR_THE_CONTROLLER)));
 
     assertEquals(Signal.OFF, network(id).channelValue(CHANNEL));
+  }
+
+  @Test
+  void theControllerScreenCountsTheTabletsThatCount() {
+    NetworkId id = networkWithAnInput();
+    ShowNetwork show = new ShowNetwork(fixture.networks);
+    applyRemotes.apply(List.of(new RemoteSighting(id, ON_SLOT, NEAR_THE_CONTROLLER)));
+
+    assertEquals(ONE, show.of(OWNER, id, node -> true).orElseThrow().remotesOn());
   }
 
   @Test

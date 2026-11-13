@@ -9,7 +9,8 @@ import java.util.Objects;
 
 /**
  * What the Controller Screen shows of a network, for one viewer: the header, the node list and the
- * 16 channels, from which the footer counts (telas.md).
+ * 16 channels, from which the footer counts, and the Signal Remotes that count now (telas.md and
+ * answer 364).
  */
 public record NetworkView(
     String name,
@@ -18,7 +19,8 @@ public record NetworkView(
     NetworkState state,
     boolean viewerIsOwner,
     List<NodeRow> nodes,
-    List<ChannelRow> channels) {
+    List<ChannelRow> channels,
+    int remotesOn) {
   private static final String MISSING = "A network view needs a name, color, owner and state";
 
   public NetworkView {

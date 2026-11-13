@@ -54,6 +54,7 @@
   "screen.redweave.controller.position_line": "Position: %s",
   "screen.redweave.controller.read_only": "Only the owner can change this network.",
   "screen.redweave.controller.recolor_tooltip": "Click to change the color.",
+  "screen.redweave.controller.remotes_on": "%s remotes on",
   "screen.redweave.controller.rename": "Rename",
   "screen.redweave.controller.rename_tooltip": "Double-click to rename. Enter saves, Esc cancels.",
   "screen.redweave.controller.slot_row": "%s · %s",

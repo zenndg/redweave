@@ -32,7 +32,8 @@ final class ControllerFooter {
     graphics.drawString(font, channels, footer.x(), footer.y(), ScreenColors.LABEL, false);
     int x = footer.x() + font.width(channels) + COUNT_GAP;
     x = drawCount(graphics, font, x, footer.y(), countOf(menu, NodeState.UNLOADED), true);
-    drawCount(graphics, font, x, footer.y(), countOf(menu, NodeState.OUT_OF_RANGE), false);
+    x = drawCount(graphics, font, x, footer.y(), countOf(menu, NodeState.OUT_OF_RANGE), false);
+    drawRemotes(graphics, font, x, footer.y(), menu.remotesOn());
     drawOwner(graphics, font, footer.x(), footer.y() + SECOND_LINE, menu.header());
   }
 
@@ -51,6 +52,13 @@ final class ControllerFooter {
     int textX = x + Dots.SIZE + DOT_GAP;
     graphics.drawString(font, text, textX, y, color, false);
     return textX + font.width(text) + COUNT_GAP;
+  }
+
+  /** The Signal Remotes that count now, with a dot in the color of a signal that is on (364). */
+  private static void drawRemotes(GuiGraphics graphics, Font font, int x, int y, int count) {
+    Component text = Component.translatable(ControllerScreenTexts.REMOTES_ON, count);
+    Dots.draw(graphics, x, y + DOT_Y, ScreenColors.ONLINE);
+    graphics.drawString(font, text, x + Dots.SIZE + DOT_GAP, y, ScreenColors.LABEL, false);
   }
 
   private static String keyOf(boolean unloaded) {
