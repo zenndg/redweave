@@ -349,6 +349,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Clique durante o pulso | Recomeça o pulso; o fim fica no item | 369 |
 | Action bar do disparo | Canal e estado, e o aviso da outra fonte | 370 |
 | Pilha do Signal Remote | Um por slot | 371 |
+| Face na Tela do Nó | Só o nome da face ao lado do cubo, sem o rótulo `Block face` | 372 |
+| Rodapé da Tela do Controlador | Contagens à direita: `unloaded` e `remotes on` na linha 1, `out of range` na linha 2 | 373 |
+| Artes aprovadas | Entram na #22: pranchas das telas e do tablet, 4 texturas, as antigas saem | 374 |
 
 Não há perguntas pendentes da concepção.
 
@@ -356,6 +359,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:36 | Registra as decisões 372 a 374. |
 | Zennd | 2026-11-12 20:48 | Registra as decisões 368 a 371. |
 | Zennd | 2026-11-12 20:38 | Registra as decisões 364 a 367. |
 | Zennd | 2026-11-12 20:37 | Registra as decisões 360 a 363. |

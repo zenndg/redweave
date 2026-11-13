@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 374 | Onde entram as artes aprovadas: as pranchas das Telas do Nó e do Controlador, a prancha e as 4 texturas do Signal Remote, e a remoção das 5 texturas antigas? | Na branch da #22: um commit de documentação com as pranchas, que tira do `telas.md` as notas de prancha antiga, e outro com as texturas e os modelos dos 4 estados do tablet. Completa as perguntas 331, 342, 350 e 362 (#22) |
+| 373 | O rodapé da Tela do Controlador segue a prancha nova, com as contagens à direita, uma por linha? Onde fica `<n> remotes on`? | Segue a prancha. À esquerda, os canais em uso e, embaixo, o dono ou o cadeado. À direita, na primeira linha, `● <n> unloaded · ● <n> remotes on`; na segunda, `● <n> out of range`. Cabe em português. Completa as perguntas 219, 236 e 364 (#22) |
+| 372 | A prancha nova da Tela do Nó mostra só o nome da face ao lado do cubo, e o código mostra também o rótulo `Block face`. Qual vale? | Só o nome da face, como a prancha: o rótulo `Block face` sai da coluna da direita, e o tooltip do cubo continua explicando. Completa a pergunta 346 (#22) |
 | 371 | O Signal Remote empilha no inventário? | Não: um por slot, como as ferramentas do jogo, porque cada tablet tem ID, vínculo e estado próprios (perguntas 356 e 358) (#22) |
 | 370 | O que a action bar mostra a cada disparo do Signal Remote? | O canal e o estado, com o nome do canal da rede: `15 Red: On` e `15 Red: Off` no modo alavanca, e `15 Red: Pulse` no modo botão. Com o canal já ligado por outra fonte, `15 Red is held on by another source.` Completa a pergunta 289 (#22) |
 | 369 | No modo botão do Signal Remote, o que acontece com um clique durante o pulso? | O pulso recomeça a contar os 20 ticks do zero, então cliques seguidos mantêm o canal ligado. O fim do pulso fica no item, como o tick do jogo em que ele acaba (#22) |
@@ -371,6 +374,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:36 | Registra as respostas 372 a 374, da #22. |
 | Zennd | 2026-11-12 20:48 | Registra as respostas 368 a 371, da #22. |
 | Zennd | 2026-11-12 20:38 | Registra as respostas 364 a 367, da #22. |
 | Zennd | 2026-11-12 20:37 | Registra as respostas 360 a 363, da #22. |
