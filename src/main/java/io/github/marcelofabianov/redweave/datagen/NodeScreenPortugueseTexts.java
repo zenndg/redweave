@@ -9,7 +9,6 @@ final class NodeScreenPortugueseTexts {
   private static final String INPUT = "Entrada";
   private static final String OUTPUT = "Saída";
   private static final String DIRECTION = "Direção";
-  private static final String BLOCK_FACE = "Face do bloco";
   private static final String FACE_CLICK = "Clique numa face para escolhê-la.";
   private static final String FACE_DRAG = " Arraste para girar o bloco.";
   private static final String FACE_TOOLTIP = FACE_CLICK + FACE_DRAG;
@@ -65,7 +64,6 @@ final class NodeScreenPortugueseTexts {
     add.accept(NodeScreenTexts.INPUT, INPUT);
     add.accept(NodeScreenTexts.OUTPUT, OUTPUT);
     add.accept(NodeScreenTexts.DIRECTION, DIRECTION);
-    add.accept(NodeScreenTexts.BLOCK_FACE, BLOCK_FACE);
     add.accept(NodeScreenTexts.FACE_TOOLTIP, FACE_TOOLTIP);
   }
 

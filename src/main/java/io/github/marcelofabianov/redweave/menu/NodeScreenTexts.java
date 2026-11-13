@@ -14,7 +14,6 @@ public final class NodeScreenTexts {
   public static final String INPUT = PREFIX + "input";
   public static final String OUTPUT = PREFIX + "output";
   public static final String DIRECTION = PREFIX + "direction";
-  public static final String BLOCK_FACE = PREFIX + "block_face";
   public static final String FACE_TOOLTIP = PREFIX + "face_tooltip";
   public static final String SIGNAL = PREFIX + "signal";
   public static final String CHANNELS_ACTIVE = PREFIX + "channels_active";

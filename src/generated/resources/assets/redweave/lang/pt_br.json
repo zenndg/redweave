@@ -65,7 +65,6 @@
   "screen.redweave.controller.tab.signals": "Sinais",
   "screen.redweave.controller.unloaded": "%s descarregados",
   "screen.redweave.node.back": "Voltar",
-  "screen.redweave.node.block_face": "Face do bloco",
   "screen.redweave.node.channels_active": "%s de %s canais ativos",
   "screen.redweave.node.choose_network": "Escolha uma rede",
   "screen.redweave.node.direction": "Direção",
