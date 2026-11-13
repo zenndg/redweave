@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.item.RemoteMessages;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.BiConsumer;
 
@@ -22,6 +23,11 @@ final class RemoteEnglishTexts {
   private static final String BUTTON = "Button";
   private static final String STATE_ON = "On";
   private static final String STATE_OFF = "Off";
+  private static final String LINK_NETWORKS = "Networks";
+  private static final String LINK_NODES = "Nodes with an input";
+  private static final String LINK_SLOTS = "Input channels";
+  private static final String LINK_NO_INPUT_NODE = "No node with an active input in this network.";
+  private static final String LINK_NODE_DETAIL = "%s · %s";
   private static final String RULE = "The strongest signal on a channel wins.";
 
   private RemoteEnglishTexts() {}
@@ -44,5 +50,10 @@ final class RemoteEnglishTexts {
     add.accept(RemoteMessages.STATE_ON, STATE_ON);
     add.accept(RemoteMessages.STATE_OFF, STATE_OFF);
     add.accept(RemoteMessages.RULE, RULE);
+    add.accept(RemoteLinkTexts.NETWORKS, LINK_NETWORKS);
+    add.accept(RemoteLinkTexts.NODES, LINK_NODES);
+    add.accept(RemoteLinkTexts.SLOTS, LINK_SLOTS);
+    add.accept(RemoteLinkTexts.NO_INPUT_NODE, LINK_NO_INPUT_NODE);
+    add.accept(RemoteLinkTexts.NODE_DETAIL, LINK_NODE_DETAIL);
   }
 }

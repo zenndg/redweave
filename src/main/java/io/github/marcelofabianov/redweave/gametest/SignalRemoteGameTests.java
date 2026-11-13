@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.gametest;
 
+import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -10,6 +11,9 @@ import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.item.RemoteLink;
 import io.github.marcelofabianov.redweave.item.RemoteMode;
 import io.github.marcelofabianov.redweave.item.RemoteState;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkCodes;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkMenu;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkStep;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.UUID;
@@ -21,6 +25,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -43,6 +48,15 @@ public final class SignalRemoteGameTests {
   private static final String NOT_OFF = "A tablet out of the inventory should not count";
   private static final String PULSE_STAYED = "The button pulse should end";
   private static final String NOT_LOST = "A slot that is no longer an input should lose the link";
+  private static final String NOT_LINKED = "Two clicks should link the tablet to the only input";
+  private static final String NOT_LISTED = "The owner should see their online network";
+  private static final String OFFLINE_LISTED = "An offline network should not be listed";
+  private static final String STRANGER_SEES = "A stranger should not see the network of another";
+  private static final String NO_SLOT_STEP = "A node with two inputs should ask for the slot";
+  private static final String STRANGER_NAME = "stranger";
+  private static final int MENU_ID = 1;
+  private static final int FIRST_LINE = 0;
+  private static final int SECOND_SLOT = 1;
 
   private SignalRemoteGameTests() {}
 
@@ -97,6 +111,56 @@ public final class SignalRemoteGameTests {
     helper.succeedWhen(() ->
         helper.assertTrue(
             tablet.get(RedweaveDataComponents.SIGNAL_REMOTE.get()).isLost(), NOT_LOST));
+  }
+
+  @GameTest(template = EMPTY)
+  public static void theOwnerLinksTheOnlyInputInTwoClicks(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    tablet.remove(RedweaveDataComponents.SIGNAL_REMOTE.get());
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    RemoteLinkMenu menu = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
+
+    helper.assertTrue(menu.rows().lines().size() == 1, NOT_LISTED);
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+
+    RemoteState state = tablet.get(RedweaveDataComponents.SIGNAL_REMOTE.get());
+    helper.assertTrue(state != null && state.link().isPresent(), NOT_LINKED);
+    helper.succeed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void aNodeWithTwoInputsAsksForTheSlot(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    NodeScene.enableSlot(owner, nodeOf(tablet), SECOND_SLOT);
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    RemoteLinkMenu menu = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
+
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+
+    helper.assertTrue(menu.step() == RemoteLinkStep.SLOTS, NO_SLOT_STEP);
+    helper.succeed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void onlyOnlineNetworksOfThePlayerAreListed(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    ServerPlayer stranger =
+        FakePlayerFactory.get(helper.getLevel(), new GameProfile(UUID.randomUUID(), STRANGER_NAME));
+    stranger.setItemInHand(InteractionHand.MAIN_HAND, tablet.copy());
+
+    RemoteLinkMenu strangers = new RemoteLinkMenu(MENU_ID, stranger, InteractionHand.MAIN_HAND);
+    helper.assertTrue(strangers.rows().lines().isEmpty(), STRANGER_SEES);
+
+    NodeScene.networkOf(nodeOf(tablet)).turnOff(new PlayerId(owner.getUUID()));
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    RemoteLinkMenu owners = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
+    helper.assertTrue(owners.rows().lines().isEmpty(), OFFLINE_LISTED);
+    helper.succeed();
   }
 
   /** The tests run far from the origin, so the player stands by the controller, in its reach. */

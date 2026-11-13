@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.registry;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkMenu;
 import io.github.marcelofabianov.redweave.menu.TerminalMenu;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
@@ -16,6 +17,7 @@ public final class RedweaveMenus {
   private static final String NODE_ID = "signal_node";
   private static final String CONTROLLER_ID = "network_controller";
   private static final String TERMINAL_ID = "network_terminal";
+  private static final String REMOTE_LINK_ID = "remote_link";
 
   private static final DeferredRegister<MenuType<?>> MENUS =
       DeferredRegister.create(Registries.MENU, RedweaveMod.MOD_ID);
@@ -28,6 +30,9 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<TerminalMenu>> TERMINAL =
       MENUS.register(TERMINAL_ID, () -> IMenuTypeExtension.create(TerminalMenu::new));
+
+  public static final Supplier<MenuType<RemoteLinkMenu>> REMOTE_LINK =
+      MENUS.register(REMOTE_LINK_ID, () -> IMenuTypeExtension.create(RemoteLinkMenu::new));
 
   private RedweaveMenus() {}
 
