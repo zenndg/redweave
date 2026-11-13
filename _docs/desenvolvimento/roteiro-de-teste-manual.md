@@ -220,12 +220,34 @@ Entregue com a issue #122 (perguntas 346 a 348). Use o circuito dos passos 1 a 8
 | 115 | Olhe o rodapé, como dono e com o segundo player | Uma linha só: `<n> of 16 channels active` à esquerda; para o segundo player, também o cadeado à direita |
 | 116 | Troque o idioma para Português (Brasil) | `Sinal`, `Face do bloco` e `<n> de 16 canais ativos`, sem nada passando da borda |
 
+## Fase 1: o Signal Remote
+
+Entregue com a issue #22 (perguntas 352 a 374). Use o circuito dos passos 1 a 8, com a alavanca e a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 117 | Pegue um Signal Remote no criativo e passe o mouse sobre ele | O ícone sem vínculo, com o ponto cinza; o tooltip com `No link`, `Mode: Lever`, `Off` e, em cinza, `The strongest signal on a channel wins.` e `Shift + right-click to link.` |
+| 118 | Dê Shift + clique direito com o tablet | A tela do vínculo, com `No link` no topo, `Lever` escolhido e `Networks` com só as suas redes `Online` |
+| 119 | Escolha a rede; depois clique em `Back` | `Nodes with an input`, só com o nó da alavanca, com o tipo, o sinal e o estado; `Back` volta às redes |
+| 120 | Escolha a rede e o nó da alavanca, que tem um slot de input só | A tela fecha sem pedir o canal, a action bar mostra `Linked: ■ <rede> · <nó> · <canal>`, e o ícone fica desligado |
+| 121 | Desligue a alavanca física e clique com o tablet duas vezes | `<canal>: On` e a lâmpada acende, com o ícone aceso; depois `<canal>: Off` e a lâmpada apaga |
+| 122 | Abra a tela, escolha `Button` e clique com o tablet; depois clique várias vezes seguidas | `<canal>: Pulse` e a lâmpada acende por 1 segundo; cliques seguidos a mantêm acesa |
+| 123 | Ligue a alavanca física e clique com o tablet em `Lever` | `<canal> is held on by another source.`, e a lâmpada continua acesa |
+| 124 | Ligue o tablet, guarde-o num baú e tire de novo | A lâmpada apaga com o tablet no baú e acende de novo quando ele volta ao inventário |
+| 125 | Com o tablet ligado, afaste-se mais de 128 blocos do controlador | A lâmpada apaga e acende de novo quando você volta |
+| 126 | Desative o slot da alavanca na Tela do Nó e clique com o tablet | O ícone com o X âmbar, `Link lost` na action bar e no tooltip, e nada acende |
+| 127 | Desligue a rede no Network Terminal e clique com um tablet vinculado | `<rede> is offline.`, e nada acende |
+| 128 | Entregue um tablet vinculado ao segundo player e peça que ele clique; depois que dê Shift + clique direito | O disparo funciona com ele; a tela dele não lista a sua rede |
+| 129 | Abra a Tela do Controlador com um tablet ligado | À direita do rodapé, `● 0 unloaded · ● 1 remotes on` e, embaixo, `● 0 out of range` |
+| 130 | Troque o idioma para Português (Brasil) e repita os passos 117, 118 e 129 | `Controle de Sinal`, `Sem vínculo`, `Redes`, `Nós com entrada`, `Canais de entrada` e `1 controles ligados`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:49 | Adiciona os passos 117 a 130, do Signal Remote (pergunta 367). |
 | Zennd | 2026-11-12 19:51 | Ajusta os passos 11, 103 e 105 e adiciona os passos 112 a 116, da Tela do Nó em duas colunas (perguntas 346 a 348). |
 | Zennd | 2026-11-12 19:39 | Adiciona o passo 94a, do Shift + scroll no macOS (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | Adiciona o passo 83a, do Terminal aberto com o Configurator no modo `Open` (pergunta 343). |

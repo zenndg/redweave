@@ -122,10 +122,10 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 | Parte | O que mostra | Pergunta |
 |---|---|---|
 | Topo | O vínculo atual, como `■ Base Norte · Alavanca do portão · 15 Red`, ou `No link`, e o seletor `Lever` e `Button` | 365 |
-| Passo 1, redes | As redes `Online` do player, no componente da lista do Network Terminal | 279 e 359 |
-| Passo 2, nós | A tabela de nós da rede, só com os nós que têm slot de input ativo, com as colunas `Node`, `Type`, `Signal` e `State`; `Unloaded` e `Out of range` aparecem | 282, 285 e 335 |
-| Passo 3, slots | Os slots de input ativos do nó, pela cor e pelo nome do canal; pulado quando há um só | 286 |
-| Rodapé | `Back`, que volta um passo | 365 |
+| Passo 1, redes | `Networks`: as redes `Online` do player, com o quadrado da cor e a contagem de nós; sem nenhuma, `No network online. Place a Network Controller to create one.` | 279 e 359 |
+| Passo 2, nós | `Nodes with an input`: só os nós com slot de input ativo, com o nome e, à direita, o tipo, o sinal e o estado na cor dele, como `In · 12  Online`; `Unloaded` e `Out of range` aparecem. Sem nenhum, `No node with an active input in this network.` | 282, 284, 285 e 335 |
+| Passo 3, slots | `Input channels`: os slots de input ativos do nó, pela cor e pelo nome do canal; pulado quando há um só | 286 |
+| Rodapé | `Back`, a partir do passo 2, que volta um passo. Ao vincular, a tela fecha, e a action bar confirma | 291 e 365 |
 | No servidor | O cliente aponta cada escolha pela posição na lista que o servidor guardou, e o servidor confere o dono a cada passo | 357 e regras 16 e 17 |
 
 ## Pendências
@@ -138,6 +138,7 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:49 | Detalha os passos da tela do vínculo do Signal Remote, como entregues na #22. |
 | Zennd | 2026-11-12 21:38 | Troca as pranchas das Telas do Nó e do Controlador pelas novas, tira o rótulo `Block face` e leva as contagens do rodapé do controlador para a direita (perguntas 372 a 374). |
 | Zennd | 2026-11-12 20:49 | Adiciona a tela do vínculo do Signal Remote e a contagem `remotes on` no rodapé do controlador (perguntas 361, 364 e 365). |
 | Zennd | 2026-11-12 19:51 | Reorganiza a Tela do Nó em duas colunas, com o medidor no painel e o rodapé de uma linha, da #122 (perguntas 346 a 350). |
