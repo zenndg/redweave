@@ -49,12 +49,11 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
 | Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
 | Sinal | Na coluna da esquerda, o medidor de 15 barras com o sinal do canal escolhido e o número; um canal inativo mostra 0 (pergunta 346) |
-| Face do bloco | Na coluna da direita, separada por uma linha, um cubo de 40 px com a face escolhida em cobre e, ao lado, `Block face` e o nome da face, como `East`, e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
+| Face do bloco | Na coluna da direita, separada por uma linha, um cubo de 40 px com a face escolhida em cobre e, ao lado, só o nome da face, como `East`, na altura do meio do cubo (pergunta 372), e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
 | Rodapé | Uma linha: à esquerda, quantos canais estão ativos, como `3 of 16 channels active`; à direita, só para quem não é o dono, o cadeado (pergunta 347) |
 
 A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308). O painel tem 76 px de altura, o rodapé 20 px e a tela 168 px, e a escolha de rede usa a mesma altura (perguntas 329, 330, 333 e 348).
 
-**Prancha:** a `tela-do-no.png` é anterior às perguntas 277, 308 e 346 e ainda mostra o campo `Name` do slot, a linha `Logic`, a dica da Fase 2 e o painel numa coluna só. Uma prancha nova, gerada por IA, já no layout de duas colunas, a substitui (perguntas 331 e 350); até lá, vale esta página.
 
 ### Comportamento
 
@@ -87,9 +86,7 @@ O que a tela faz, decidido na issue #19.
 | Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). Se e como o Signal Remote aparece na lista, e o estado de um nó numa rede `Offline` nas listas, são decididos no refinamento da #22 (perguntas 318 e 338) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída, a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
-| Rodapé | Na primeira linha, os canais em uso, como `3 of 16 channels in use`, e quantos nós estão `Unloaded`, em âmbar, e `Out of range`, em vermelho, mesmo com zero, como `0 unloaded` e `0 out of range` (perguntas 219 e 236), e quantos Signal Remotes contam agora na rede, como `1 remotes on` (perguntas 361 e 364). Na segunda, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` |
-
-**Prancha:** a `tela-do-controlador.png` é anterior às perguntas 277 e 335 a 340 e ainda mostra a coluna `Position`, sem `Type` e `State`, e o nome do slot nas linhas abertas. Uma prancha nova, gerada por IA, a substitui (pergunta 342); até lá, vale esta página.
+| Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, como `● 0 out of range`. As contagens aparecem mesmo com zero (perguntas 219, 236, 361 e 364) |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
 
@@ -141,6 +138,7 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:38 | Troca as pranchas das Telas do Nó e do Controlador pelas novas, tira o rótulo `Block face` e leva as contagens do rodapé do controlador para a direita (perguntas 372 a 374). |
 | Zennd | 2026-11-12 20:49 | Adiciona a tela do vínculo do Signal Remote e a contagem `remotes on` no rodapé do controlador (perguntas 361, 364 e 365). |
 | Zennd | 2026-11-12 19:51 | Reorganiza a Tela do Nó em duas colunas, com o medidor no painel e o rodapé de uma linha, da #122 (perguntas 346 a 350). |
 | Zennd | 2026-11-12 19:01 | Troca as colunas da aba `Nodes` por `Node`, `Type`, `Signal` e `State` e leva a posição para a linha aberta, da #107 (perguntas 335 a 340), e marca a prancha do controlador para substituição (pergunta 342). |

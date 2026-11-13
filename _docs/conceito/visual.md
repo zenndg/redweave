@@ -182,12 +182,13 @@ O modo e a configuração copiada ficam em data components do item (regra 7 do `
 
 ### Signal Remote
 
-Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift + clique direito abre a lista de redes, depois a de nós com slot de input ativo e, se houver mais de um, a de slots (perguntas 282 e 286); o clique direito dispara. Modos alavanca e botão, num seletor na tela do vínculo (pergunta 288). Guarda rede, nó e slot; se o vínculo quebra, mostra `Link lost` e não dispara (pergunta 287). Shift + clique direito troca o vínculo a qualquer momento (pergunta 291). O tablet tem 4 estados, trocados pelo data component: sem vínculo, desligado, ligado e `Link lost`. A arte nova vem de `tmp/arte/signal_remote/` e substitui a prancha [`signal-remote.png`](../imagens/conceito/signal-remote.png) e as texturas `signal_remote_*` do conceito antigo, a alavanca de bolso (pergunta 362).
+Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift + clique direito abre a lista de redes, depois a de nós com slot de input ativo e, se houver mais de um, a de slots (perguntas 282 e 286); o clique direito dispara. Modos alavanca e botão, num seletor na tela do vínculo (pergunta 288). Guarda rede, nó e slot; se o vínculo quebra, mostra `Link lost` e não dispara (pergunta 287). Shift + clique direito troca o vínculo a qualquer momento (pergunta 291). O tablet tem 4 estados, trocados pelo data component: sem vínculo, desligado, ligado e `Link lost`. As texturas são `signal_remote`, `signal_remote_off`, `signal_remote_on` e `signal_remote_lost`, de 16 × 16, e a prancha é a [`signal-remote.png`](../imagens/conceito/signal-remote.png). Elas substituíram as do conceito antigo, a alavanca de bolso (perguntas 362 e 374).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:38 | Leva ao mod as texturas e a prancha novas do Signal Remote (pergunta 374). |
 | Zennd | 2026-11-12 20:48 | Decide o visual do Signal Remote, com 4 estados e arte nova (pergunta 362). |
 | Zennd | 2026-11-12 19:51 | O medidor da Tela do Nó vai para o painel do canal (pergunta 346). |
 | Zennd | 2026-11-12 19:23 | O modo `Open` abre também as telas do controlador e do Terminal (perguntas 232 e 343). |
