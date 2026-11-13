@@ -31,6 +31,7 @@ public final class ControllerScreenTexts {
   public static final String CHANNELS_IN_USE = PREFIX + "channels_in_use";
   public static final String UNLOADED = PREFIX + "unloaded";
   public static final String OUT_OF_RANGE = PREFIX + "out_of_range";
+  public static final String REMOTES_ON = PREFIX + "remotes_on";
   public static final String OWNER_LINE = PREFIX + "owner_line";
   public static final String OWNER = PREFIX + "owner";
   public static final String READ_ONLY = PREFIX + "read_only";

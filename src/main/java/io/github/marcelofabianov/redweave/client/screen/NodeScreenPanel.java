@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.Optional;
@@ -23,8 +24,10 @@ final class NodeScreenPanel {
   private static final int FACE_TEXT_GAP = 8;
   private static final int FACE_TEXT_X =
       SlotEditor.RIGHT_COLUMN_X + SlotEditor.CUBE_SIZE + FACE_TEXT_GAP;
-  private static final int FACE_LABEL_Y = 26;
-  private static final int FACE_NAME_Y = 40;
+
+  /** The name of the face sits in the middle of the height of the cube (answer 372). */
+  private static final int FACE_NAME_Y = 34;
+
   private static final int DIVIDER_X = SlotEditor.RIGHT_COLUMN_X - 10;
   private static final int DIVIDER_MARGIN = 4;
   private static final int NUMBER_GAP = 6;
@@ -48,14 +51,6 @@ final class NodeScreenPanel {
     label(graphics, font, panel, NodeScreenTexts.DIRECTION, SlotEditor.DIRECTION_Y);
     label(graphics, font, panel, NodeScreenTexts.SIGNAL, SlotEditor.SIGNAL_Y);
     drawDivider(graphics, panel);
-    text(
-        graphics,
-        font,
-        Component.translatable(NodeScreenTexts.BLOCK_FACE),
-        panel,
-        FACE_TEXT_X,
-        FACE_LABEL_Y,
-        ScreenColors.LABEL);
     drawSignal(graphics, font, view, panel, index);
     Optional<ChannelSlot> slot = view.menu().slot(index);
     slot.ifPresent(found -> drawFace(graphics, font, panel, found));

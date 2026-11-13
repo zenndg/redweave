@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
 import io.github.marcelofabianov.redweave.item.NetworkTerminalItem;
+import io.github.marcelofabianov.redweave.item.SignalRemoteItem;
 import java.util.Collection;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_NODE_ID = "signal_node";
   private static final String CONFIGURATOR_ID = "configurator";
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
+  private static final String SIGNAL_REMOTE_ID = "signal_remote";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -44,6 +46,11 @@ public final class RedweaveItems {
           () ->
               new NetworkTerminalItem(
                   RedweaveBlocks.NETWORK_TERMINAL.get(), new Item.Properties()));
+
+  /** One per stack: each tablet keeps its own ID, link and state (answer 371). */
+  public static final DeferredItem<SignalRemoteItem> SIGNAL_REMOTE =
+      ITEMS.register(
+          SIGNAL_REMOTE_ID, () -> new SignalRemoteItem(new Item.Properties().stacksTo(1)));
 
   private RedweaveItems() {}
 

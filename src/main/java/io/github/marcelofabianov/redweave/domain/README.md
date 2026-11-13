@@ -65,6 +65,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `SignalLog` | O log de uma rede: um buffer circular com o tamanho do config, só em memória, a linha mais nova primeiro. Cada linha tem uma sequência crescente, para a tela aberta receber só as novas (perguntas 147 e 242) | #90 |
 | `Gate` | Uma porta de duas entradas: `AND`, `OR`, `XOR` e `NAND`, nessa ordem, a do Shift + scroll (pergunta 326). `output` dá o resultado de duas entradas (perguntas 321 a 324) | #28 |
 | `Not` | A regra NOT, de uma entrada, que o Signal Inverter usa: `output` dá 15 sem sinal e 0 com sinal (perguntas 310 e 324) | #28 |
+| `RemoteId` | O ID de um Signal Remote, ganho no primeiro vínculo. Cópias de um tablet o dividem e contam como uma fonte só (perguntas 27 e 358) | #22 |
+| `RemoteInput` | Um Signal Remote que conta neste tick, no slot de input vinculado: o slot, não o canal, para o tablet acompanhar a troca de canal (perguntas 287 e 360) | #22 |
+| `RemoteInputs` | Dentro da rede: os tablets que contam neste tick, entregues inteiros a cada tick e fora do save. Põem 15 no canal de cada slot de input vinculado, na regra do mais forte (perguntas 352, 356 e 360) | #22 |
+| `NetworkRemotes` | O lado dos Signal Remotes da rede, por `remotes()`: `apply` recebe os tablets do tick, `accepts` diz se um slot aceita vínculo, `reaches` diz se um player naquele lugar alcança a rede (pergunta 354), `othersHold` diz se o canal do tablet fica ligado sem ele (pergunta 370), e `on` conta os que valem agora. Saiu do `Network` para o agregado ficar abaixo de 400 linhas | #22 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 
 ## Regras e porquês
@@ -82,7 +86,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Fora de alcance não conta:** um nó fora do raio ou em outra dimensão vale 0, e as saídas dele emitem 0 (pergunta 23). O raio vem de `NetworkLimits`, porque o domínio não lê o config.
 - **Esfera pelos quadrados:** o alcance compara os quadrados das distâncias, em `long`, sem raiz, sem arredondamento e sem estouro perto da borda do mundo (pergunta 36).
 - **Fora de alcance vence descarregado:** na tela, um nó fora do raio aparece como `OUT_OF_RANGE` mesmo descarregado, porque é isso que o impede de contar.
-- **Remote volta a 0 (planejado na #22):** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado (pergunta 27).
+- **Remote volta a 0:** uma fonte sem posição que sai do inventário ou do alcance para de contar, para o canal não ficar preso ligado. Quem chama entrega a cada tick só os tablets que contam, e a rede troca o conjunto inteiro (perguntas 27, 355 e 360).
 - **Só a rede `Online` conta:** numa rede `Offline` ou `Unplaced`, todos os canais valem 0, e as saídas emitem 0 (perguntas 24 e 135). As leituras das entradas continuam guardadas, então a rede religada volta com os valores de antes.
 - **Desligar é escolha do dono:** `turnOff` só vale numa rede `Online`, e `turnOn` só numa `Offline`; uma `Unplaced` espera o controlador. O `Offline` fica guardado enquanto o controlador está fora do mundo, e a rede volta desligada (perguntas 132, 135 e 178). Só o Network Terminal da #89 chama essas operações no jogo (pergunta 209).
 - **Só o dono altera:** toda operação que muda a rede recebe quem pede e confere com `isOwner`, sem exceção para operadores (perguntas 22 e 28). O controlador também: só o dono o retira e o recoloca (pergunta 30).
@@ -114,5 +118,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **NOT fora do `Gate`:** o NOT tem uma entrada só, então é a classe `Not`, e não uma constante do `Gate` com uma entrada ignorada (pergunta 324).
 - **Chave da porta com o save:** o `Gate` ainda não tem `key` nem `fromKey`, que entram na #31, com o primeiro módulo que grava o modo (pergunta 325).
 - **Tipo só pelos slots ativos:** um slot desativado não lê nem emite, então não conta para o `NodeKind` (perguntas 228 e 337).
+- **Tablet sem posição e sem save:** o Signal Remote não é nó, então não tem posição nem alcance próprio no domínio. Quem chama já filtra os tablets pelo alcance do player e só entrega os que contam, e o estado ligado ou desligado fica no item (perguntas 27, 354 e 356).
+- **Pendência só quando um canal muda:** trocar o conjunto de tablets compara os 16 canais antes e depois, para um tablet sobre um canal já ligado não acordar o simulador (pergunta 360).
+- **Tablet num slot inválido é ignorado:** um slot que deixou de ser input ativo não recebe nada, e o item mostra `Link lost`, para um vínculo velho nunca prender um canal (pergunta 287).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

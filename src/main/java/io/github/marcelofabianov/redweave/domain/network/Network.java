@@ -20,12 +20,14 @@ public final class Network {
   private final Channels channels = new Channels();
   private final Nodes nodes = new Nodes();
   private final Readings readings = new Readings();
+  private final RemoteInputs remoteInputs = new RemoteInputs();
   private final Emissions emissions = new Emissions();
   private String name;
   private ChannelColor color;
   private final NetworkStatus status;
   private final NetworkSignals signals;
   private final SlotEdits slotEdits;
+  private final NetworkRemotes remotes;
 
   private Network(
       NetworkId id,
@@ -39,8 +41,9 @@ public final class Network {
     this.name = name;
     this.color = color;
     this.status = status;
-    this.signals = new NetworkSignals(nodes, readings, channels, status, limits);
+    this.signals = new NetworkSignals(nodes, readings, remoteInputs, channels, status, limits);
     this.slotEdits = new SlotEdits(nodes, readings, emissions);
+    this.remotes = new NetworkRemotes(remoteInputs, signals, nodes, emissions);
     this.limits = limits;
   }
 
@@ -334,6 +337,11 @@ public final class Network {
     }
     emissions.markPending();
     return true;
+  }
+
+  /** The Signal Remotes of the network, inputs with no position (answers 27 and 360). */
+  public NetworkRemotes remotes() {
+    return remotes;
   }
 
   /** The strongest of the inputs that count, and off with none (answers 23 and 24). */

@@ -304,6 +304,11 @@ public final class ControllerMenu extends AbstractContainerMenu {
     return rows.channels();
   }
 
+  /** The Signal Remotes that count now in the network, for the footer (answer 364). */
+  public int remotesOn() {
+    return signals.remotesOn();
+  }
+
   /** The signal of a node row, 0 before the values arrive. */
   public int nodeSignal(int row) {
     return valueAt(signals.nodeSignals(), row, 0);

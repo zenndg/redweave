@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.menu.ControllerScreenRows;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenSignals;
 import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
 import io.github.marcelofabianov.redweave.menu.NodeScreenNames;
+import io.github.marcelofabianov.redweave.menu.RemoteLinkRows;
 import io.github.marcelofabianov.redweave.menu.TerminalScreenRows;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -27,6 +28,7 @@ public final class RedweavePayloads {
   public static void register(RegisterPayloadHandlersEvent event) {
     PayloadRegistrar registrar = event.registrar(VERSION);
     registerScreens(registrar);
+    registerRemote(registrar);
     registerWorld(registrar);
     registerActions(registrar);
   }
@@ -58,6 +60,14 @@ public final class RedweavePayloads {
             TerminalScreenRows.TYPE,
             TerminalScreenRows.STREAM_CODEC,
             (rows, context) -> TerminalScreenRows.receive(rows, context.player()));
+  }
+
+  /** What the server sends to the screen of the link of a Signal Remote (answer 365). */
+  private static void registerRemote(PayloadRegistrar registrar) {
+    registrar.playToClient(
+        RemoteLinkRows.TYPE,
+        RemoteLinkRows.STREAM_CODEC,
+        (rows, context) -> RemoteLinkRows.receive(rows, context.player()));
   }
 
   /** What the server sends about the world, as the labels over the nodes (answer 269). */

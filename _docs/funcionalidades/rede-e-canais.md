@@ -96,7 +96,7 @@ O valor do canal é o **sinal mais forte entre as entradas que contam**. Um cana
 | Slot de entrada de um nó `Online` | Sim | O sinal de redstone que o nó lê no bloco, na face configurada |
 | Slot de entrada de um nó `Unloaded` | Sim | O último valor lido antes de o chunk descarregar, salvo com a rede, então vale também depois de reiniciar o servidor (perguntas 13, 29 e 37) |
 | Slot de entrada de um nó `Out of range` | Não | Vale 0 (perguntas 23 e 29) |
-| Signal Remote ligado | Sim | O valor do disparo do tablet, nos modos alavanca e botão, decidido no refinamento da #22 (perguntas 288 e 318) |
+| Signal Remote ligado | Sim | 15, nos modos alavanca e botão (perguntas 288 e 352) |
 | Signal Remote fora do inventário ou do alcance | Não | Vale 0, para o canal não ficar preso ligado (pergunta 27) |
 
 O mais forte vence porque é a regra da própria redstone: um fio ligado a duas fontes fica com a mais forte.
@@ -157,7 +157,7 @@ Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 ## Signal Remote
 
-O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. O item, os modos de alavanca e de botão e a tela ficam na issue do Remote.
+O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. Na rede, ele é a parte `RemoteInputs` do agregado, entregue a cada tick com os tablets que contam, fora do save (perguntas 356 e 360). O item, o vínculo, o disparo e quando ele conta estão em [`signal-remote.md`](signal-remote.md).
 
 ## Permissões
 
@@ -173,6 +173,7 @@ Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 2
 | Renomear a rede e os canais, e trocar a cor da rede | Sim | Não |
 | Desligar, religar, limpar os nós e apagar a rede, no Network Terminal | Sim (perguntas 131 a 134 e 166) | Não |
 | Ligar um Signal Remote à rede | Sim | Não |
+| Disparar um Signal Remote já vinculado | Sim | Sim, quem o segura (pergunta 357) |
 | Quebrar o Network Controller | Sim | Não (pergunta 30) |
 
 Numa rede `Offline`, nem o dono usa as telas da rede ou o Configurator, menos a Chave: só o Network Terminal age sobre ela, e o dono ainda quebra os blocos (perguntas 132, 136 e 163).
@@ -240,6 +241,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 20:48 | Liga o Signal Remote à página dele, com o valor 15 e o `RemoteInputs` (perguntas 352, 357 e 360). |
 | Zennd | 2026-11-12 17:27 | Marca o valor do disparo do Signal Remote como decisão da #22 (pergunta 318). |
 | Zennd | 2026-11-12 17:18 | Corrige o save sem `name` do slot e com o Terminal, o `Toggle` numa rede `Offline`, o Signal Remote e a seção final (perguntas 175, 224, 241, 277, 279, 287 e 303). |
 | Zennd | 2026-11-12 16:50 | Tira a lógica do slot, que fica nos Signal Modules (pergunta 308). |

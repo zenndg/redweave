@@ -3,13 +3,16 @@ package io.github.marcelofabianov.redweave.datagen;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.item.RemoteLook;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.Locale;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -27,6 +30,9 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String LAYER_1 = "layer1";
   private static final String LAYER_2 = "layer2";
   private static final float WITH_COPY = 1;
+  private static final String SIGNAL_REMOTE = "signal_remote";
+  private static final String LOOK_PROPERTY = "look";
+  private static final String LOOK_SEPARATOR = "_";
   private static final String LINKED_SUFFIX = "_linked";
   private static final String BLOCK_FOLDER = "block/";
   private static final String TOP = "_top";
@@ -87,6 +93,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
         });
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
     configuratorModels();
+    remoteModels();
   }
 
   /**
@@ -111,6 +118,28 @@ final class RedweaveBlockStates extends BlockStateProvider {
         .predicate(modLoc(COPY_PROPERTY), WITH_COPY)
         .model(withCopy)
         .end();
+  }
+
+  /**
+   * The Signal Remote with no link, and one model for each other look, picked by the item property
+   * `look`, the order of RemoteLook; the last override that matches wins (answer 362).
+   */
+  private void remoteModels() {
+    ModelFile generated = new ModelFile.UncheckedModelFile(mcLoc(ITEM_GENERATED));
+    ItemModelBuilder remote =
+        itemModels()
+            .getBuilder(SIGNAL_REMOTE)
+            .parent(generated)
+            .texture(LAYER_0, itemTexture(SIGNAL_REMOTE));
+    for (RemoteLook look : RemoteLook.values()) {
+      if (look == RemoteLook.UNLINKED) {
+        continue;
+      }
+      String name = SIGNAL_REMOTE + LOOK_SEPARATOR + look.name().toLowerCase(Locale.ROOT);
+      ModelFile model =
+          itemModels().getBuilder(name).parent(generated).texture(LAYER_0, itemTexture(name));
+      remote.override().predicate(modLoc(LOOK_PROPERTY), look.ordinal()).model(model).end();
+    }
   }
 
   private ResourceLocation itemTexture(String name) {

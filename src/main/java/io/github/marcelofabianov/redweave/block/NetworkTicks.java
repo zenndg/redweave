@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
+import io.github.marcelofabianov.redweave.item.RemoteTicks;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,10 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The end of each tick: the networks waiting for it are evaluated once, the nodes whose output
- * changed emit again, and the nodes of those networks show their state, only in loaded chunks
- * (rules 6 and 18, no-de-sinal.md and answers 86 and 87).
+ * The end of each tick: the Signal Remotes that count reach their networks (answer 355), the
+ * networks waiting for it are evaluated once, the nodes whose output changed emit again, and the
+ * nodes of those networks show their state, only in loaded chunks (rules 6 and 18, no-de-sinal.md
+ * and answers 86 and 87).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID)
 public final class NetworkTicks {
@@ -29,6 +31,7 @@ public final class NetworkTicks {
   }
 
   private static void tick(MinecraftServer minecraft, RedweaveServer server) {
+    server.remotes().apply().apply(RemoteTicks.sightings(minecraft, server));
     List<Network> evaluated = server.pendingNetworks();
     server.evaluateNetworks().evaluate().stream()
         .map(change -> change.face().node())

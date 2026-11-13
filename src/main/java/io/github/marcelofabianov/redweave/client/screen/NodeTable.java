@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.domain.network.NodeKind;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
+import io.github.marcelofabianov.redweave.menu.ControllerKinds;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.NodeLine;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.SlotLine;
@@ -153,13 +154,7 @@ final class NodeTable {
   }
 
   static Component kindOf(NodeKind kind) {
-    return Component.translatable(
-        switch (kind) {
-          case INPUT -> ControllerScreenTexts.KIND_INPUT;
-          case OUTPUT -> ControllerScreenTexts.KIND_OUTPUT;
-          case BOTH -> ControllerScreenTexts.KIND_BOTH;
-          case NONE -> ControllerScreenTexts.KIND_NONE;
-        });
+    return Component.translatable(ControllerKinds.keyOf(kind));
   }
 
   private static ResourceLocation spriteOf(boolean open, boolean hover) {

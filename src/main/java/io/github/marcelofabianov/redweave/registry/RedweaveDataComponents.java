@@ -4,14 +4,20 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.ConfiguratorCopy;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.item.NodeSlotsCodec;
+import io.github.marcelofabianov.redweave.item.RemoteLabel;
+import io.github.marcelofabianov.redweave.item.RemoteState;
+import io.github.marcelofabianov.redweave.item.RemoteStateCodec;
+import io.netty.buffer.ByteBuf;
 import java.util.function.Supplier;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -20,6 +26,8 @@ public final class RedweaveDataComponents {
   private static final String NETWORK_ID = "network";
   private static final String NODE_SLOTS_ID = "node_slots";
   private static final String CONFIGURATOR_MODE_ID = "configurator_mode";
+  private static final String SIGNAL_REMOTE_ID = "signal_remote";
+  private static final String SIGNAL_REMOTE_LABEL_ID = "signal_remote_label";
   private static final String UNKNOWN_MODE = "Unknown Configurator mode: ";
 
   /** A saved mode that is not known is refused, and the item falls back to the first mode. */
@@ -61,6 +69,37 @@ public final class RedweaveDataComponents {
               builder
                   .persistent(MODE_CODEC)
                   .networkSynchronized(ByteBufCodecs.fromCodec(MODE_CODEC)));
+
+  /** The link, mode and state of a Signal Remote, all in the item (answers 287, 356 and 369). */
+  public static final Supplier<DataComponentType<RemoteState>> SIGNAL_REMOTE =
+      COMPONENTS.registerComponentType(
+          SIGNAL_REMOTE_ID,
+          builder ->
+              builder
+                  .persistent(RemoteStateCodec.CODEC)
+                  .networkSynchronized(ByteBufCodecs.fromCodec(RemoteStateCodec.CODEC)));
+
+  private static final StreamCodec<ByteBuf, ChannelColor> COLOR_STREAM =
+      ByteBufCodecs.VAR_INT.map(index -> ChannelColor.values()[index], ChannelColor::ordinal);
+
+  /** The names of the link of a Signal Remote, only synchronized, never saved (answer 366). */
+  public static final Supplier<DataComponentType<RemoteLabel>> SIGNAL_REMOTE_LABEL =
+      COMPONENTS.registerComponentType(
+          SIGNAL_REMOTE_LABEL_ID,
+          builder ->
+              builder.networkSynchronized(
+                  StreamCodec.composite(
+                      ByteBufCodecs.STRING_UTF8,
+                      RemoteLabel::network,
+                      COLOR_STREAM,
+                      RemoteLabel::color,
+                      ByteBufCodecs.STRING_UTF8,
+                      RemoteLabel::node,
+                      COLOR_STREAM,
+                      RemoteLabel::channel,
+                      ByteBufCodecs.STRING_UTF8,
+                      RemoteLabel::channelName,
+                      RemoteLabel::new)));
 
   private RedweaveDataComponents() {}
 

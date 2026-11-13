@@ -330,6 +330,28 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ordem da reorganização da Tela do Nó | Issue nova, logo depois da #107 e antes da #22 | 349 |
 | Prancha da Tela do Nó | Uma só, já com o layout novo | 350 |
 | Shift + scroll no macOS | Sem rolagem vertical, vale a horizontal invertida, como a hotbar; corrigido no PR #121 | 351 |
+| Valor do Signal Remote | Sempre 15 | 352 |
+| Pulso do Signal Remote | `remote.pulse_ticks`: 20 ticks, de 2 a 200 | 353 |
+| Alcance do Signal Remote | O `network.range`, a partir do player, na mesma dimensão | 354 |
+| Saída do Signal Remote | Checagem por tick só dos tablets ligados | 355 |
+| Estado do Signal Remote | No item; conta só no inventário de player online e no alcance; nada no save da rede | 356 |
+| Permissões do Signal Remote | O dono vincula; quem segura dispara | 357 |
+| Vários Signal Remotes | Um ID por tablet; vale o mais forte; cópias contam uma vez | 358 |
+| Signal Remote e rede `Offline` | Só redes `Online` na lista; vinculado a uma desligada, não dispara | 338, 359 |
+| Signal Remote no domínio | Parte `RemoteInputs` do agregado, entregue a cada tick, fora do save | 360 |
+| Signal Remote na Tela do Controlador | Contagem `<n> remotes on` no rodapé | 361, 364 |
+| Visual do Signal Remote | Arte nova com 4 estados; texturas e prancha antigas apagadas | 362 |
+| PR do Signal Remote | Um só, na #22 | 363 |
+| Tela do vínculo do Signal Remote | Vínculo atual e seletor de modo no topo, a lista do passo e `Back` | 365 |
+| Tooltip do Signal Remote | Vínculo, modo, estado, a regra do mais forte e o atalho | 366 |
+| Testes do Signal Remote | JUnit do domínio e dos casos de uso, GameTests do mundo e dos menus, roteiro manual | 367 |
+| Nome em português do Signal Remote | `Controle de Sinal` | 368 |
+| Clique durante o pulso | Recomeça o pulso; o fim fica no item | 369 |
+| Action bar do disparo | Canal e estado, e o aviso da outra fonte | 370 |
+| Pilha do Signal Remote | Um por slot | 371 |
+| Face na Tela do Nó | Só o nome da face ao lado do cubo, sem o rótulo `Block face` | 372 |
+| Rodapé da Tela do Controlador | Contagens à direita: `unloaded` e `remotes on` na linha 1, `out of range` na linha 2 | 373 |
+| Artes aprovadas | Entram na #22: pranchas das telas e do tablet, 4 texturas, as antigas saem | 374 |
 
 Não há perguntas pendentes da concepção.
 
@@ -337,6 +359,12 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-12 21:36 | Registra as decisões 372 a 374. |
+| Zennd | 2026-11-12 20:48 | Registra as decisões 368 a 371. |
+| Zennd | 2026-11-12 20:38 | Registra as decisões 364 a 367. |
+| Zennd | 2026-11-12 20:37 | Registra as decisões 360 a 363. |
+| Zennd | 2026-11-12 20:34 | Registra as decisões 356 a 359. |
+| Zennd | 2026-11-12 20:01 | Registra as decisões 352 a 355. |
 | Zennd | 2026-11-12 19:38 | Registra a decisão 351. |
 | Zennd | 2026-11-12 19:33 | Registra as decisões 347 a 350. |
 | Zennd | 2026-11-12 19:31 | Registra a decisão 346. |

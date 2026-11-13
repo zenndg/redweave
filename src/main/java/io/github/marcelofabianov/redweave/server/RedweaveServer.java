@@ -67,6 +67,7 @@ public final class RedweaveServer {
   private final RenameChannel renameChannel;
   private final SignalLogs signalLogs;
   private final TerminalServices terminal;
+  private final RemoteServices remotes;
   private final LabelWatch labelWatch = new LabelWatch(this);
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
@@ -81,6 +82,7 @@ public final class RedweaveServer {
     ServerClock clock = new SystemServerClock();
     readInput = new ReadInput(networks, networks, signalLogs, clock);
     terminal = new TerminalServices(networks, signalLogs);
+    remotes = new RemoteServices(networks);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
     evaluateNetworks = new EvaluateNetworks(networks, new Simulator(), signalLogs, clock);
@@ -231,5 +233,9 @@ public final class RedweaveServer {
 
   public Optional<NetworkId> lastUsedOf(PlayerId player) {
     return networks.lastUsedOf(player);
+  }
+
+  public RemoteServices remotes() {
+    return remotes;
   }
 }

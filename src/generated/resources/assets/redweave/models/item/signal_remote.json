@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "redweave:item/signal_remote_off",
+      "predicate": {
+        "redweave:look": 1.0
+      }
+    },
+    {
+      "model": "redweave:item/signal_remote_on",
+      "predicate": {
+        "redweave:look": 2.0
+      }
+    },
+    {
+      "model": "redweave:item/signal_remote_lost",
+      "predicate": {
+        "redweave:look": 3.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "redweave:item/signal_remote"
+  }
+}

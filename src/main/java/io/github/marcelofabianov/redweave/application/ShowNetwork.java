@@ -33,7 +33,14 @@ public final class ShowNetwork {
         network.nodes().stream().map(node -> rowOf(network, node, owner, loaded)).toList();
     List<ChannelRow> channels = channelsOf(network);
     return new NetworkView(
-        network.name(), network.color(), network.owner(), network.state(), owner, nodes, channels);
+        network.name(),
+        network.color(),
+        network.owner(),
+        network.state(),
+        owner,
+        nodes,
+        channels,
+        network.remotes().on());
   }
 
   private static NodeRow rowOf(Network network, Node node, boolean owner, LoadedNodes loaded) {
