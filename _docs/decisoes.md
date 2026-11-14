@@ -406,6 +406,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ações do Terminal no agregado | Saem para a fachada `network.terminal()`, para o `Network.java` caber em 400 linhas | 426 |
 | Nome padrão do módulo | Os 8 primeiros caracteres do ID, como o nó, porque o servidor não sabe o idioma | 427 |
 | Rotação no estado do bloco | `front`, a direção real da frente, com 6 valores, no lugar de `rotation` | 428 |
+| Modelo da placa nas 24 orientações | Duas versões de cada modelo, com o topo girado 0° ou 90° no UV, mais o `x` e o `y` do blockstate | 429 |
 
 Não há perguntas pendentes da concepção.
 
@@ -413,6 +414,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:08 | Registra a decisão 429, da #103. |
 | Zennd | 2026-11-14 11:13 | Registra a decisão 428, da #103. |
 | Zennd | 2026-11-14 10:44 | Registra a decisão 427, da #103. |
 | Zennd | 2026-11-14 10:35 | Registra a decisão 426, da #103. |

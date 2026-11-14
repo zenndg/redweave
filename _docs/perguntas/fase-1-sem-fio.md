@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 429 | No 1.21.1, a variante do blockstate só gira o modelo em `x` e `y` (`Variant.java`), o que dá 16 orientações, e a placa precisa de 24: na parede, a seta não aponta para os lados. Como o modelo do Signal Timer cobre as 24? | Com duas versões de cada modelo, com a textura do topo girada 0° ou 90° no UV da face, um recurso do jogo puro. O blockstate escolhe a versão e o `x` e o `y`, então são 8 modelos (as 4 combinações de `powered` e `running`, vezes 2), sem mudar a arte nem o comportamento. Um GameTest confere a frente nas 6 faces. Completa a pergunta 428 (#103) |
 | 428 | O estado `rotation` (`north` a `west`) não descreve a frente de uma placa na parede, que pode apontar para cima ou para baixo. Como fica? | `rotation` dá lugar a `front`, a direção real da borda da frente no mundo (`down`, `up`, `north`, `south`, `west` ou `east`), sempre perpendicular a `facing`. Muda a pergunta 411 (regra 38); nada foi publicado (#103) |
 | 427 | O log e o rótulo são montados no servidor, que não sabe o idioma do player. Como aparece um Signal Module sem nome próprio? | Como o nó: com os 8 primeiros caracteres do ID (pergunta 142), em qualquer idioma, no nome da tela, no rótulo, no log e na action bar. O título fixo da tela continua `Signal Timer`, traduzido no cliente. Muda a pergunta 391 (regra 38) (#103) |
 | 426 | O `Network.java` tem 399 linhas, e o Checkstyle reprova mais de 400. O que sai do agregado para caber `network.modules()`? | As ações do Network Terminal: `turnOff`, `turnOn`, `clearNodes` e `deletion` passam para a fachada `network.terminal()`, como `network.remotes()`, sem mudar comportamento. Completa a pergunta 209 (#103) |
@@ -428,6 +429,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:08 | Registra a resposta 429, da #103. |
 | Zennd | 2026-11-14 11:13 | Registra a resposta 428, da #103, e marca a 411 como mudada. |
 | Zennd | 2026-11-14 10:44 | Registra a resposta 427, da #103, e marca a 391 como mudada. |
 | Zennd | 2026-11-14 10:35 | Registra a resposta 426, da #103. |
