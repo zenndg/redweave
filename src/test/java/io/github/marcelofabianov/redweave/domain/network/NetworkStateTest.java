@@ -45,7 +45,7 @@ class NetworkStateTest {
   void theOwnerTurnsTheNetworkOffAndEveryChannelGoesOff() {
     Network network = readingNetwork();
 
-    assertEquals(Outcome.ACCEPTED, network.turnOff(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().turnOff(OWNER));
     assertEquals(NetworkState.OFFLINE, network.state());
     assertFalse(network.isOnline());
     assertEquals(Signal.OFF, network.channelValue(CHANNEL));
@@ -56,10 +56,10 @@ class NetworkStateTest {
   @Test
   void theOwnerTurnsTheNetworkBackOnWithTheLastReading() {
     Network network = readingNetwork();
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
     network.settle(Map.of());
 
-    assertEquals(Outcome.ACCEPTED, network.turnOn(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().turnOn(OWNER));
     assertEquals(NetworkState.ONLINE, network.state());
     assertEquals(READ, network.channelValue(CHANNEL));
     assertTrue(network.isPending());
@@ -69,9 +69,9 @@ class NetworkStateTest {
   void anotherPlayerCannotTurnTheNetworkOffNorOn() {
     Network network = network();
 
-    assertEquals(Outcome.NOT_OWNER, network.turnOff(STRANGER));
-    network.turnOff(OWNER);
-    assertEquals(Outcome.NOT_OWNER, network.turnOn(STRANGER));
+    assertEquals(Outcome.NOT_OWNER, network.terminal().turnOff(STRANGER));
+    network.terminal().turnOff(OWNER);
+    assertEquals(Outcome.NOT_OWNER, network.terminal().turnOn(STRANGER));
     assertEquals(NetworkState.OFFLINE, network.state());
   }
 
@@ -80,9 +80,9 @@ class NetworkStateTest {
   void aNetworkThatIsNotInTheRightStateIsRefused() {
     Network network = network();
 
-    assertEquals(Outcome.NETWORK_NOT_OFFLINE, network.turnOn(OWNER));
-    network.turnOff(OWNER);
-    assertEquals(Outcome.NETWORK_NOT_ONLINE, network.turnOff(OWNER));
+    assertEquals(Outcome.NETWORK_NOT_OFFLINE, network.terminal().turnOn(OWNER));
+    network.terminal().turnOff(OWNER);
+    assertEquals(Outcome.NETWORK_NOT_ONLINE, network.terminal().turnOff(OWNER));
   }
 
   /** Without its controller, the network is Unplaced and its nodes have no network (146). */
@@ -93,15 +93,15 @@ class NetworkStateTest {
 
     assertEquals(NetworkState.UNPLACED, network.state());
     assertEquals(NodeState.NO_NETWORK, network.nodeState(NODE, true));
-    assertEquals(Outcome.NETWORK_NOT_ONLINE, network.turnOff(OWNER));
-    assertEquals(Outcome.NETWORK_NOT_OFFLINE, network.turnOn(OWNER));
+    assertEquals(Outcome.NETWORK_NOT_ONLINE, network.terminal().turnOff(OWNER));
+    assertEquals(Outcome.NETWORK_NOT_OFFLINE, network.terminal().turnOn(OWNER));
   }
 
   /** Turning off is a choice of the owner, kept while the controller is away (answer 178). */
   @Test
   void aNetworkTurnedOffComesBackOffWithItsController() {
     Network network = network();
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
     network.removeController(OWNER);
 
     assertEquals(NetworkState.UNPLACED, network.state());
@@ -112,7 +112,7 @@ class NetworkStateTest {
   @Test
   void aNodeOfAnOfflineNetworkDoesNotCount() {
     Network network = readingNetwork();
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
 
     assertFalse(network.counts(NODE));
   }

@@ -109,7 +109,7 @@ public final class ControllerScreenGameTests {
   public static void aNetworkTurnedOffDoesNotOpen(GameTestHelper helper) {
     ServerPlayer owner = helper.makeMockServerPlayerInLevel();
     NetworkId id = placeController(helper, owner);
-    networkOf(id).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(id).terminal().turnOff(new PlayerId(owner.getUUID()));
 
     clickTheControllerByHand(helper, owner);
 
@@ -125,7 +125,7 @@ public final class ControllerScreenGameTests {
   public static void onlyTheOpenModeClicksTheController(GameTestHelper helper) {
     ServerPlayer owner = helper.makeMockServerPlayerInLevel();
     NetworkId id = placeController(helper, owner);
-    networkOf(id).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(id).terminal().turnOff(new PlayerId(owner.getUUID()));
 
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
     helper.assertTrue(clickTheController(helper, owner).consumesAction(), NOT_TAKEN);
@@ -227,9 +227,9 @@ public final class ControllerScreenGameTests {
     ControllerMenu menu = new ControllerMenu(MENU_ID, viewer, pos(helper), id);
 
     helper.assertTrue(menu.stillValid(viewer), INVALID_NEAR);
-    networkOf(id).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(id).terminal().turnOff(new PlayerId(owner.getUUID()));
     helper.assertFalse(menu.stillValid(viewer), VALID_OFF);
-    networkOf(id).turnOn(new PlayerId(owner.getUUID()));
+    networkOf(id).terminal().turnOn(new PlayerId(owner.getUUID()));
     viewer.setPos(viewer.position().add(FAR_AWAY, 0, FAR_AWAY));
     helper.assertFalse(menu.stillValid(viewer), VALID_FAR);
     helper.succeed();

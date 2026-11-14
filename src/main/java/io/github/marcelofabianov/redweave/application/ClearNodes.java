@@ -16,6 +16,9 @@ public final class ClearNodes {
 
   public Outcome clear(PlayerId player, NetworkId id) {
     return SavedChange.apply(
-        finder.find(id), Outcome.UNKNOWN_NETWORK, network -> network.clearNodes(player), saver);
+        finder.find(id),
+        Outcome.UNKNOWN_NETWORK,
+        network -> network.terminal().clearNodes(player),
+        saver);
   }
 }
