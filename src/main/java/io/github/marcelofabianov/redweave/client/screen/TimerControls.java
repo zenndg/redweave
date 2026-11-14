@@ -23,8 +23,8 @@ final class TimerControls {
   static final int VALUE_X = 200;
   static final int VALUE_WIDTH = 40;
 
-  private static final int STEP_WIDTH = 14;
-  private static final int PLUS_X = 242;
+  static final int STEP_WIDTH = 14;
+  static final int PLUS_X = 242;
   private static final String MINUS = "−";
   private static final String PLUS = "+";
 

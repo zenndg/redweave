@@ -46,24 +46,18 @@ final class TimerScreenParts {
   /** `Running`, paused or not, with a green dot, or `Stopped` (answers 380 and 433). */
   static TimerButton runButton(Box box, TimerMenu menu, boolean owner, Runnable click) {
     boolean running = menu.state().filter(state -> state != TimerState.STOPPED).isPresent();
-    Component label =
-        Component.literal(TimerButton.DOT)
-            .withColor(running ? ScreenColors.ONLINE : ScreenColors.DIM)
-            .append(
-                Component.translatable(
-                    running ? TimerScreenTexts.RUNNING : TimerScreenTexts.STOPPED));
-    return new TimerButton(
-        box, label, owner ? TimerButton.Look.BUTTON : TimerButton.Look.DISABLED, click);
+    return TimerButton.run(box, running, owner, click);
   }
 
-  private static void value(GuiGraphics graphics, Font font, int left, int y, int ticks) {
+  /** An interval in seconds with tenths, centered between `−` and `+` (answer 382). */
+  static void value(GuiGraphics graphics, Font font, int left, int y, int ticks) {
     Component text = TimerDial.seconds(ticks);
     Box box = valueBox(left, y);
     int x = box.x() + (box.width() - font.width(text)) / 2;
     graphics.drawString(font, text, x, y + TEXT_Y, ScreenColors.TEXT, false);
   }
 
-  private static Box valueBox(int left, int y) {
+  static Box valueBox(int left, int y) {
     return new Box(
         left + TimerControls.VALUE_X, y, TimerControls.VALUE_WIDTH, ModuleColumn.ROW_HEIGHT);
   }

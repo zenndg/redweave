@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
+import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,19 @@ record TimerButton(Box box, Component label, Look look, Runnable click) {
   static final String DOT = "● ";
 
   private static final int TEXT_Y = 3;
+
+  /**
+   * `● Running`, with a green dot, or `● Stopped`, which starts or stops a module (380 and 480).
+   */
+  static TimerButton run(Box box, boolean running, boolean owner, Runnable click) {
+    Component label =
+        Component.literal(DOT)
+            .withColor(running ? ScreenColors.ONLINE : ScreenColors.DIM)
+            .append(
+                Component.translatable(
+                    running ? TimerScreenTexts.RUNNING : TimerScreenTexts.STOPPED));
+    return new TimerButton(box, label, owner ? Look.BUTTON : Look.DISABLED, click);
+  }
 
   boolean clickable() {
     return look == Look.BUTTON || look == Look.CHOSEN;
