@@ -64,7 +64,8 @@ final class ModuleColumn {
             channel));
   }
 
-  private static TimerButton.Look lookOf(boolean chosen, boolean owner) {
+  /** Copper when chosen; dimmed for whoever does not own the plate (answer 378). */
+  static TimerButton.Look lookOf(boolean chosen, boolean owner) {
     if (chosen) {
       return owner ? TimerButton.Look.CHOSEN : TimerButton.Look.LOCKED;
     }
