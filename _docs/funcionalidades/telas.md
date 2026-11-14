@@ -154,11 +154,13 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 | Ponto | Depende de |
 |---|---|
 | A aba `Info` da Tela do Nó, que volta quando tiver conteúdo (pergunta 233) | A definir |
+| A Tela do Signal Inverter, como a do timer com o diagrama A → NOT → B no lugar do relógio (pergunta 451) | A prancha de `tmp/arte/tela_do_signal_inverter/`, na #105 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 14:31 | Adiciona a Tela do Signal Inverter às pendências (pergunta 451). |
 | Zennd | 2026-11-14 13:19 | Adiciona os rótulos em português da Tela do Signal Timer (pergunta 435). |
 | Zennd | 2026-11-14 12:52 | Adiciona como o relógio do Signal Timer é desenhado (pergunta 434). |
 | Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |

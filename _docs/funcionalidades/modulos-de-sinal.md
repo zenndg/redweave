@@ -78,7 +78,7 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 | `Open` | Abre a tela do módulo | 393 |
 | `Open`, com Shift | Gira a placa 90° no sentido horário | 399 e 403 |
 | `Copy` | Nada na v0.1.0, só a mensagem | 395 e 421 |
-| `Toggle` | O que o módulo define; no Signal Timer, alterna `Running` e `Stopped` | 395 |
+| `Toggle` | O que o módulo define; no Signal Timer, alterna `Running` e `Stopped`, e no Signal Inverter não faz nada | 395 e 443 |
 | `Wrench` | Retira o módulo como item, só pelo dono | 395 |
 
 Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. O `Wrench` funciona, e o Shift + clique no `Open` também gira a placa, porque o giro não toca na rede. Um módulo sem rede abre normalmente (perguntas 402 e 431).
@@ -91,7 +91,7 @@ Na action bar, em inglês e em português (pergunta 421):
 |---|---|
 | `Wrench` | `Module picked up` |
 | Qualquer ação de quem não é o dono | `Only the player who placed this module can change it.` |
-| `Toggle` | O que o módulo define; no Signal Timer, `<nome>: Running` ou `<nome>: Stopped` |
+| `Toggle` | O que o módulo define; no Signal Timer, `<nome>: Running` ou `<nome>: Stopped`, e no Signal Inverter, `Signal Inverter has nothing to toggle.` |
 | Giro | `Output: <borda>`, como `Output: North` |
 | Mão vazia | `Use a Configurator to open this module.` |
 | `Copy` | `Modules cannot be copied yet.` |
@@ -99,7 +99,7 @@ Na action bar, em inglês e em português (pergunta 421):
 
 ### Rótulo sobre os módulos
 
-Com o Configurator na mão, cada módulo dentro de `configurator.label_range` mostra um rótulo de duas linhas, como os nós: em cima, o nome do módulo; embaixo, o estado e o canal da saída, se ela estiver num canal. Os estados são os que o módulo define; no Signal Timer, `Running`, `Stopped` ou `Paused` (pergunta 417).
+Com o Configurator na mão, cada módulo dentro de `configurator.label_range` mostra um rótulo de duas linhas, como os nós: em cima, o nome do módulo; embaixo, o estado e o canal da saída, se ela estiver num canal. Os estados são os que o módulo define; no Signal Timer, `Running`, `Stopped` ou `Paused`, e no [Signal Inverter](signal-inverter.md), `On`, `Off` ou `Burnt out` (perguntas 417 e 448).
 
 ## Nome
 
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 14:31 | Leva o Signal Inverter ao `Toggle`, às mensagens e ao rótulo (perguntas 443 e 448). |
 | Zennd | 2026-11-14 12:34 | Fixa o som do giro (pergunta 432). |
 | Zennd | 2026-11-14 12:31 | Deixa o giro funcionar numa rede `Offline` (pergunta 431). |
 | Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
