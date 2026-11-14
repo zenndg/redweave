@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, e o Weather Detector, da #108 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, e o Signal Randomizer, da #109 |
 
 ## Linguagem
 
@@ -90,6 +90,11 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `WeatherMode` | Em `module/`: `RAIN`, que conta também a tempestade, `THUNDER` ou `CLEAR`, com a chave do save e o próximo modo do `Toggle` (perguntas 459, 462 e 467) | #108 |
 | `DetectorState` | Em `module/`: `ON`, `OFF` ou `NO_WEATHER`, a saída do Weather Detector (pergunta 465) | #108 |
 | `WeatherDetector` | Em `module/`: a regra do Weather Detector. Guarda só o modo e dá 15 enquanto o clima bate com ele, e 0 onde não há clima (perguntas 459, 460, 463 e 464) | #108 |
+| `Draws` | Em `module/`: a porta do sorteio, um número de 0 até o limite menos 1. O domínio define, e o adaptador a implementa com o `RandomSource` do mundo; os testes usam uma lista fixa (pergunta 483) | #109 |
+| `RandomizerLimits` | Em `module/`: o menor e o maior intervalo do Signal Randomizer no config, separados dos do timer. Estende o `IntervalLimits` (pergunta 477) | #109 |
+| `RandomizerMode` | Em `module/`: `ANALOG`, de 0 a 15, ou `BINARY`, 0 ou 15, com a chave do save e o sorteio de cada um (perguntas 476 e 481) | #109 |
+| `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
+| `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 
 ## Regras e porquês
@@ -154,5 +159,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Queima no domínio:** um laço de inversores trocaria sem parar, com log e avaliação da rede a cada troca, então a regra conta as trocas na janela e apaga o inversor, como a tocha. Só o resto da queima vai para o save, para um reinício não soltar o laço (perguntas 445 e 450).
 - **Clima vem de quem chama:** o domínio não lê o jogo, então o bloco passa o `Weather` a cada tick, e o detector não guarda nada além do modo. Por isso o clima não vai para o save (perguntas 467 e 468).
 - **Sem clima é 0 em todo modo:** onde o clima nunca muda, como no Nether, o `Clear` ficaria ligado para sempre, então `NONE` desliga todos os modos e tem um estado próprio (pergunta 464).
+- **Sorteio vem de quem chama:** o domínio não lê aleatoriedade, que seria uma dependência oculta, então o `Draws` é uma porta, e os testes sabem cada valor sorteado (pergunta 483).
+- **Intervalo num lugar só:** o timer e o Signal Randomizer ajustam o intervalo pela mesma regra, o `Interval`, cada um com os limites do seu config (perguntas 477 e 490).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
