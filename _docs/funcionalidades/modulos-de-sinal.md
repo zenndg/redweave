@@ -143,7 +143,7 @@ O NBT comum, em `snake_case` (regras 15 e 24). As chaves ficam fixadas na #26 (p
 | `network` | A rede, ausente sem rede |
 | Uma chave por conexão | `edge` ou a chave da cor do canal, como `red` |
 
-Cada módulo acrescenta as chaves dele. Os estados do bloco comuns são `facing`, a face onde a placa está grudada, e `front`, a direção real da borda da frente no mundo, com 6 valores e sempre perpendicular a `facing` (pergunta 428).
+Cada módulo acrescenta as chaves dele. Os estados do bloco comuns são `facing`, a face onde a placa está grudada, e `front`, a direção real da borda da frente no mundo, com 6 valores e sempre perpendicular a `facing` (pergunta 428). A partir da #44, esses estados viram campos da parte, com os mesmos nomes (pergunta 534).
 
 ## Config
 
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:34 | Leva os estados do bloco dos módulos para a parte (pergunta 534). |
 | Zennd | 2026-11-14 19:14 | Leva os módulos ao multipart da #44 (perguntas 511 e 513). |
 | Zennd | 2026-11-14 17:46 | Leva o Signal Randomizer ao `Toggle`, às mensagens e ao rótulo (perguntas 480 e 484). |
 | Zennd | 2026-11-14 16:40 | Leva o Weather Detector ao `Toggle`, às mensagens e ao rótulo (perguntas 462 e 465). |

@@ -69,7 +69,7 @@ O desenho está em [`telas.md`](telas.md#tela-do-signal-randomizer), com a pranc
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Textura | A seta centrada, para a frente, vermelha com a saída acima de 0; um dado pequeno no meio; e o LED verde de `Running`, como o timer | 488 |
-| Estados do bloco | `facing`, `front`, `powered` e `running`, fixados na #26 (regra 15) | 488 |
+| Estados do bloco | `facing`, `front`, `powered` e `running`, fixados na #26 (regra 15). A partir da #44, viram campos da parte, com os mesmos nomes (pergunta 534) | 488 |
 | Modelo | Como o dos outros módulos: o topo girado 0° ou 90° no UV cobre as 24 orientações | 429 |
 
 ## Save
@@ -114,5 +114,6 @@ Em `tmp/arte/signal_randomizer/`: as 4 texturas do topo (a seta apagada ou acesa
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |
 | Zennd | 2026-11-14 18:16 | Aponta para a prancha da tela no `telas.md` (pergunta 487). |
 | Zennd | 2026-11-14 17:46 | Cria o documento, com as decisões 475 a 493 da #109. |

@@ -81,7 +81,7 @@ Além do NBT comum dos [módulos](modulos-de-sinal.md#save) (pergunta 411):
 | `output` | A conexão `Output`: `edge` ou a chave da cor do canal |
 | `pause` | A conexão `Pause`: `edge` ou a chave da cor do canal |
 
-Os estados do bloco são `facing`, `front`, `powered` e `running` (pergunta 428).
+Os estados do bloco são `facing`, `front`, `powered` e `running` (pergunta 428). A partir da #44, esses estados viram campos da parte, com os mesmos nomes (pergunta 534).
 
 ## Config
 
@@ -110,6 +110,7 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |
 | Zennd | 2026-11-14 13:43 | Centra a seta e tira o quadrado do canto (pergunta 440). |
 | Zennd | 2026-11-14 13:37 | A seta passa a marcar o pulso (pergunta 439). |
 | Zennd | 2026-11-14 12:35 | Adiciona os estados em português (pergunta 433). |

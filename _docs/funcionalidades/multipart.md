@@ -42,9 +42,9 @@ Na #44, o Signal Node e os 4 Signal Modules entregues até a #109 deixam de ser 
 - **GameTests:** os atuais do nó e dos módulos passando como partes; duas partes no mesmo espaço; quebrar só a parte mirada; o save do contêiner.
 - **Roteiro manual:** a mira, o contorno de seleção e o desempenho (pergunta 527).
 
-## Pendência
+## Visual das partes
 
-Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488), fixados na #26. Um bloco contêiner tem um só estado para o espaço inteiro, então esses estados não cabem mais nele. Onde eles passam a ficar é uma pergunta em aberto, que precisa de resposta antes do código.
+Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488). Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Por isso, cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda (pergunta 534).
 
 ## Fora desta página
 
@@ -55,4 +55,5 @@ Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `faci
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:34 | Fecha a pendência do visual das partes (pergunta 534). |
 | Zennd | 2026-11-14 19:13 | Cria o documento, com as decisões 502, 511 a 517, 523, 524 e 533. |
