@@ -3,19 +3,19 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.ModuleMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
-import io.github.marcelofabianov.redweave.menu.TimerMenu;
 import java.util.Optional;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 /**
- * The footer of the Signal Timer Screen: the network of the module, which its owner clicks to
+ * The footer of every Signal Module Screen: the network of the module, which its owner clicks to
  * choose another, or `No network`, and, for whoever does not own the plate, the lock (answers 378,
  * 400, 404 and 423).
  */
-final class TimerFooter {
+final class ModuleFooter {
   private static final int SEPARATOR_Y = 2;
   private static final int LINK_Y = 5;
   private static final int LINK_HEIGHT = 12;
@@ -30,10 +30,10 @@ final class TimerFooter {
   private static final int LOCK_HEIGHT = 9;
   private static final int LOCK_GAP = 3;
 
-  private TimerFooter() {}
+  private ModuleFooter() {}
 
   static void draw(
-      GuiGraphics graphics, Font font, Box footer, TimerMenu menu, Mouse mouse, boolean owner) {
+      GuiGraphics graphics, Font font, Box footer, ModuleMenu menu, Mouse mouse, boolean owner) {
     int y = footer.y() + SEPARATOR_Y;
     graphics.fill(footer.x(), y, footer.right(), y + 1, ScreenColors.SEPARATOR);
     Optional<Box> link = linkBox(font, footer, menu);
@@ -50,28 +50,28 @@ final class TimerFooter {
   }
 
   /** Where the network is, or none for a module with no network. */
-  static Optional<Box> linkBox(Font font, Box footer, TimerMenu menu) {
-    if (menu.networkColor().isEmpty()) {
+  static Optional<Box> linkBox(Font font, Box footer, ModuleMenu menu) {
+    if (menu.sync().networkColor().isEmpty()) {
       return Optional.empty();
     }
-    String shown = FittedText.fit(font, Component.literal(menu.networkName()), MAX_NAME);
+    String shown = FittedText.fit(font, Component.literal(menu.sync().networkName()), MAX_NAME);
     int width = LINK_PADDING + SWATCH + SWATCH_GAP + font.width(shown) + LINK_PADDING;
     return Optional.of(new Box(footer.x(), footer.y() + LINK_Y, width, LINK_HEIGHT));
   }
 
   private static void drawLink(
-      GuiGraphics graphics, Font font, Box box, TimerMenu menu, boolean hover) {
+      GuiGraphics graphics, Font font, Box box, ModuleMenu menu, boolean hover) {
     graphics.blitSprite(
         hover ? NodeSprites.NETWORK_NAME_LINK_HOVER : NodeSprites.NETWORK_NAME_LINK,
         box.x(),
         box.y(),
         box.width(),
         box.height());
-    ChannelColor color = menu.networkColor().orElseThrow();
+    ChannelColor color = menu.sync().networkColor().orElseThrow();
     int swatchX = box.x() + LINK_PADDING;
     int swatchY = box.y() + SWATCH_Y;
     graphics.fill(swatchX, swatchY, swatchX + SWATCH, swatchY + SWATCH, ChannelColors.argb(color));
-    String shown = FittedText.fit(font, Component.literal(menu.networkName()), MAX_NAME);
+    String shown = FittedText.fit(font, Component.literal(menu.sync().networkName()), MAX_NAME);
     graphics.drawString(
         font, shown, swatchX + SWATCH + SWATCH_GAP, box.y() + TEXT_Y, ScreenColors.TEXT, false);
   }

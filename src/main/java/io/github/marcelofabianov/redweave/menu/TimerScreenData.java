@@ -1,11 +1,7 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.BlockLocations;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
-import io.github.marcelofabianov.redweave.domain.module.Connection;
-import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
-import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,13 +24,14 @@ final class TimerScreenData implements ContainerData {
   public int get(int index) {
     Optional<SignalTimerBlockEntity> block = block();
     if (block.isEmpty()) {
-      return TimerScreenLayout.NONE;
+      return ModuleScreenValues.NONE;
     }
     return switch (index) {
       case TimerScreenLayout.VIEWER_IS_OWNER -> block.get().isOwner(viewer) ? 1 : 0;
-      case TimerScreenLayout.NETWORK_STATE -> networkState(block.get());
-      case TimerScreenLayout.OUTPUT -> code(block.get().output());
-      case TimerScreenLayout.PAUSE -> code(block.get().pause());
+      case TimerScreenLayout.NETWORK_STATE ->
+          ModuleScreenValues.networkState(viewer, pos, block.get());
+      case TimerScreenLayout.OUTPUT -> ModuleScreenValues.code(block.get().output());
+      case TimerScreenLayout.PAUSE -> ModuleScreenValues.code(block.get().pause());
       default -> block.get().timer().map(timer -> ofTimer(timer, index)).orElse(0);
     };
   }
@@ -51,27 +48,6 @@ final class TimerScreenData implements ContainerData {
       return TimerScreenLayout.half(timer.cycle().pulseTicks(), index, TimerScreenLayout.PULSE);
     }
     return TimerScreenLayout.half(timer.elapsedTicks(), index, TimerScreenLayout.ELAPSED);
-  }
-
-  /** The state of the network seen from the plate, as a node, or none (answer 385). */
-  private int networkState(SignalTimerBlockEntity block) {
-    Optional<SignalModule> module = block.module().filter(found -> found.network().isPresent());
-    Optional<RedweaveServer> server = RedweaveServer.running();
-    if (module.isEmpty() || server.isEmpty()) {
-      return TimerScreenLayout.NONE;
-    }
-    return server
-            .get()
-            .modules()
-            .show()
-            .show(module.get(), BlockLocations.of(viewer.level(), pos))
-            .state()
-            .ordinal()
-        + 1;
-  }
-
-  static int code(Connection connection) {
-    return connection.channel().map(color -> color.ordinal() + 1).orElse(TimerAction.EDGE);
   }
 
   private Optional<SignalTimerBlockEntity> block() {

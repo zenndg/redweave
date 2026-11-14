@@ -16,9 +16,8 @@ public record TimerAction(Kind kind, int value) {
   };
 
   /** The value of a connection on the edge; a channel is its color plus one. */
-  public static final int EDGE = 0;
+  public static final int EDGE = ModuleScreenValues.EDGE;
 
-  private static final int CONNECTIONS = 17;
   private static final String INVALID = "Invalid value %d for %s";
 
   public enum Kind {
@@ -64,7 +63,7 @@ public record TimerAction(Kind kind, int value) {
     return switch (kind) {
       case TOGGLE -> value == 0;
       case INTERVAL, PULSE -> value >= 0 && value < STEPS.length;
-      case OUTPUT, PAUSE -> value >= EDGE && value < CONNECTIONS;
+      case OUTPUT, PAUSE -> value >= EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
     };
   }

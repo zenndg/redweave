@@ -121,7 +121,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
           String leds = timerLeds(state);
           String name = TIMER + leds + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
           ModelFile model =
-              models.computeIfAbsent(name, key -> timerModel(key, leds, turn.turned()));
+              models.computeIfAbsent(
+                  name, key -> plateModel(key, timerTexture(NODE_FRONT + leds), turn.turned()));
           return ConfiguredModel.builder()
               .modelFile(model)
               .rotationX(turn.x())
@@ -137,12 +138,15 @@ final class RedweaveBlockStates extends BlockStateProvider {
     return running + (state.getValue(SignalTimerBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX);
   }
 
-  /** The plate of the node, with the top of the timer, turned 90° on the UV when asked (429). */
-  private ModelFile timerModel(String name, String leds, boolean turned) {
+  /**
+   * The plate of a module, with the edge of the timer and the given top, turned 90° on the UV when
+   * asked (answer 429).
+   */
+  private ModelFile plateModel(String name, ResourceLocation front, boolean turned) {
     return models()
         .getBuilder(name)
         .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
-        .texture(FRONT_KEY, timerTexture(NODE_FRONT + leds))
+        .texture(FRONT_KEY, front)
         .texture(EDGE_KEY, timerTexture(NODE_EDGE))
         .texture(PARTICLE_KEY, timerTexture(NODE_EDGE))
         .element()

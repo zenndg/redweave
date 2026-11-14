@@ -18,6 +18,9 @@ record TimerButton(Box box, Component label, Look look, Runnable click) {
     DISABLED
   }
 
+  /** The dot before a state, as `● Running` or `● On`. */
+  static final String DOT = "● ";
+
   private static final int TEXT_Y = 3;
 
   boolean clickable() {
