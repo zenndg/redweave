@@ -29,6 +29,7 @@ final class RedweaveBlockLoot extends BlockLootSubProvider {
     dropSelf(RedweaveBlocks.SIGNAL_TIMER.get());
     dropSelf(RedweaveBlocks.SIGNAL_INVERTER.get());
     dropSelf(RedweaveBlocks.WEATHER_DETECTOR.get());
+    dropSelf(RedweaveBlocks.SIGNAL_RANDOMIZER.get());
   }
 
   @Override

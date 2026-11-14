@@ -23,6 +23,7 @@ public final class RedweaveConfig {
   private static final String MIN_INTERVAL_KEY = "min_interval_ticks";
   private static final String MAX_INTERVAL_KEY = "max_interval_ticks";
   private static final String MODULE = "module";
+  private static final String RANDOMIZER = "randomizer";
   private static final String INVERTER = "inverter";
   private static final String BURNOUT_TOGGLES_KEY = "burnout_toggles";
   private static final String BURNOUT_WINDOW_KEY = "burnout_window_ticks";
@@ -42,6 +43,8 @@ public final class RedweaveConfig {
   private static final String PULSE_TICKS_COMMENT = "Ticks a Signal Remote button pulse lasts.";
   private static final String MIN_INTERVAL_COMMENT = "Shortest Signal Timer interval, in ticks.";
   private static final String MAX_INTERVAL_COMMENT = "Longest Signal Timer interval, in ticks.";
+  private static final String MIN_DRAW_COMMENT = "Shortest Signal Randomizer interval, in ticks.";
+  private static final String MAX_DRAW_COMMENT = "Longest Signal Randomizer interval, in ticks.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
@@ -95,6 +98,8 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue PULSE_TICKS;
   static final ModConfigSpec.IntValue MIN_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue MAX_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue RANDOMIZER_MIN_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue RANDOMIZER_MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
@@ -160,6 +165,18 @@ public final class RedweaveConfig {
         builder
             .comment(MODULE_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_MODULE_NAME, 1, MAX_NAME);
+    builder.pop();
+    builder.push(RANDOMIZER);
+    RANDOMIZER_MIN_INTERVAL_TICKS =
+        builder
+            .comment(MIN_DRAW_COMMENT)
+            .defineInRange(
+                MIN_INTERVAL_KEY, DEFAULT_MIN_INTERVAL, LOWEST_MIN_INTERVAL, HIGHEST_MIN_INTERVAL);
+    RANDOMIZER_MAX_INTERVAL_TICKS =
+        builder
+            .comment(MAX_DRAW_COMMENT)
+            .defineInRange(
+                MAX_INTERVAL_KEY, DEFAULT_MAX_INTERVAL, LOWEST_MAX_INTERVAL, HIGHEST_MAX_INTERVAL);
     builder.pop();
     builder.push(INVERTER);
     BURNOUT_TOGGLES =

@@ -20,6 +20,8 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
+| Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
+| Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Trocas que queimam um Signal Inverter | 8, de 2 a 64 (pergunta 449) | `inverter.burnout_toggles` | 2 |
 | Janela das trocas do Signal Inverter | 60 ticks, de 20 a 1200 (pergunta 449) | `inverter.burnout_window_ticks` | 2 |
 | Tempo de queima do Signal Inverter | 160 ticks, de 20 a 6000 (pergunta 449) | `inverter.burnout_ticks` | 2 |
@@ -32,6 +34,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:46 | Adiciona os intervalos do Signal Randomizer (pergunta 477). |
 | Zennd | 2026-11-14 14:31 | Adiciona a queima do Signal Inverter (pergunta 449). |
 | Zennd | 2026-11-14 09:46 | Adiciona os limites do Signal Timer e o nome dos módulos (perguntas 384 e 391). |
 | Zennd | 2026-11-12 20:48 | Adiciona o pulso do Signal Remote (pergunta 353). |

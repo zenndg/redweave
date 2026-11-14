@@ -306,12 +306,31 @@ Entregue com a issue #108 (perguntas 457 a 474). Use o circuito dos passos 1 a 8
 | 173 | Saia do mundo e entre de novo | O detector mantém o modo e a saída, e lê o clima de novo no primeiro tick |
 | 174 | Troque o idioma para Português (Brasil) e repita os passos 166, 167 e 172 | `Detector de Clima`, `Modo`, `Saída`, `Chuva`, `Tempestade`, `Céu limpo`, `● Ligado`, `● Desligado` e `● Sem clima`, sem nada passando da borda |
 
+## Fase 1: o Signal Randomizer
+
+Entregue com a issue #109 (perguntas 475 a 493). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 175 | Pegue um Signal Randomizer no criativo e passe o mouse sobre ele | O ícone da placa, com a seta, o dado e o LED apagado |
+| 176 | Olhando para o norte, coloque o Signal Randomizer no chão, com uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa com a seta apontando para onde você olhava, nas 3 posições, parada, com o LED apagado e a lâmpada apagada |
+| 177 | Com o Configurator no `Toggle`, clique na placa e observe por alguns segundos | `<nome>: Running`, o LED verde acende, e a lâmpada acende ou apaga a cada 1 s, ao acaso, com a seta vermelha quando a saída passa de 0 |
+| 178 | Clique de novo com o `Toggle` | `<nome>: Stopped`, o LED apaga, e a lâmpada apaga |
+| 179 | Clique na placa com o Configurator no `Open` | A Tela do Signal Randomizer, como a prancha: o valor grande, `● Running` ou `Stopped` embaixo e, à direita, `Mode`, `Interval` e `Output` |
+| 180 | Na tela, ligue o módulo, escolha `Analog` e suba o intervalo com `+` e Shift + clique; passe o mouse sobre o valor | O valor grande passa a variar de 0 a 15, com um sorteio na hora da troca; o intervalo sobe 0,1 s e depois 1 s; o tooltip mostra os ticks |
+| 181 | Clique em `Channel` do `Output` num módulo sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, e a lâmpada do nó segue o sorteio |
+| 182 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running` ou `Stopped` e `15 Red` |
+| 183 | Peça ao segundo player para abrir a tela, alternar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
+| 184 | Com o módulo ligado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | O módulo volta ligado, com o mesmo valor, e continua de onde parou |
+| 185 | Troque o idioma para Português (Brasil) e repita os passos 177, 179 e 182 | `Sorteador de Sinal`, `<nome>: rodando`, `Modo`, `Intervalo`, `Saída`, `Analógico`, `Binário`, `● Rodando` e `● Parado`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 18:16 | Adiciona os passos 175 a 185, do Signal Randomizer (pergunta 489). |
 | Zennd | 2026-11-14 17:10 | Adiciona os passos 163 a 174, do Weather Detector (pergunta 472). |
 | Zennd | 2026-11-14 15:41 | Confere o `Channel` marcado com a grade aberta nos passos 140 e 157 (pergunta 456). |
 | Zennd | 2026-11-14 15:32 | Adiciona os passos 150 a 162, do Signal Inverter (pergunta 453). |

@@ -450,6 +450,25 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes do Weather Detector | JUnit na regra, GameTests do clima num lote próprio e roteiro manual | 472 |
 | Ícone do clima na tela | 4 sprites de 32 × 32 gerados por IA, como o mostrador do timer | 474 |
 | PR da #108 | Um só, com commits atômicos | 473 |
+| Nome do módulo aleatório | `Signal Randomizer`, `redweave:signal_randomizer` | 475 |
+| Sorteio do Signal Randomizer | `Analog`, de 0 a 15, ou `Binary`, 0 ou 15, escolhido na tela | 476 |
+| Intervalo do Signal Randomizer | Na tela, com `−` e `+`; `randomizer.min_interval_ticks` 4 (4 a 200) e `randomizer.max_interval_ticks` 6000 (200 a 72000) | 477 |
+| Saída entre sorteios | Mantém o valor até o próximo sorteio | 478 |
+| Conexões do Signal Randomizer | Só `Output`, na borda da frente ou num canal | 479 |
+| Liga e para do Signal Randomizer | `Running` e `Stopped`, como o timer; nasce parado, e parado emite 0 | 480 |
+| Save do Signal Randomizer | Modo, intervalo, `running`, progresso, valor e saída; continua do ponto | 481 |
+| Signal Randomizer ao ser colocado | `Binary`, 1 s, parado; sorteia na hora ao ser ligado | 482 |
+| Sorteio do Signal Randomizer | Uma porta do domínio, com o `RandomSource` do mundo no adaptador | 483 |
+| Estados do Signal Randomizer | `Running` e `Stopped`; o valor atual na tela | 484 |
+| Signal Randomizer na rede | Como os outros módulos | 485 |
+| Signal Randomizer em português | `Sorteador de Sinal`; `Analógico` e `Binário`; `Rodando` e `Parado` | 486 |
+| Tela do Signal Randomizer | Como a do timer: o valor grande e `Running` à esquerda; `Mode`, `Interval` e `Output` à direita | 487 |
+| Placa do Signal Randomizer | Seta vermelha com a saída acima de 0, dado no meio e LED de `Running`; estados `facing`, `front`, `powered` e `running` | 488 |
+| Testes do Signal Randomizer | JUnit com a porta de sorteio fixa, GameTests no mundo e roteiro manual | 489 |
+| Intervalo comum | Um value object tirado do `TimerCycle`, usado pelo timer e pelo Signal Randomizer | 490 |
+| PR da #109 | Um só, com a refatoração do intervalo comum primeiro | 491 |
+| Troca de modo rodando | Sorteia na hora no modo novo e recomeça o intervalo | 492 |
+| Troca de intervalo rodando | Recomeça o intervalo, sem sortear, como o timer | 493 |
 | `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
 
 Não há perguntas pendentes da concepção.
@@ -458,6 +477,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:45 | Registra as decisões 491 a 493, da #109. |
+| Zennd | 2026-11-14 17:39 | Registra as decisões 487 a 490, da #109. |
+| Zennd | 2026-11-14 17:36 | Registra as decisões 483 a 486, da #109. |
+| Zennd | 2026-11-14 17:35 | Registra as decisões 479 a 482, da #109. |
+| Zennd | 2026-11-14 17:34 | Registra as decisões 475 a 478, da #109. |
 | Zennd | 2026-11-14 16:55 | Registra a decisão 474, da #108. |
 | Zennd | 2026-11-14 16:39 | Registra a decisão 473, da #108. |
 | Zennd | 2026-11-14 16:38 | Registra as decisões 469 a 472, da #108. |
