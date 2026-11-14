@@ -15,6 +15,9 @@ O jogo guarda um bloco só por espaço. Para um cabo passar no chão de um espa�
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Implementação | Própria: um bloco contêiner cujo `BlockEntity` guarda as partes. A forma, o desenho, o tick e o save delegam a cada parte, e a regra de sinal continua no domínio | 512 |
+| Código | A ocupação fica em `domain/part/`. No adaptador, as partes ficam em `block/part/`, com uma interface `Part` curta (forma, sinal, tick, save e clique) e uma classe por tipo | 537 e 538 |
+| Desenho | Um modelo dinâmico junta os modelos JSON de cada parte na malha do chunk e só é refeito quando uma parte muda, sem custo por frame | 536 |
+| Drop | No código: cada parte devolve o próprio item, e o `part_space` não tem loot table | 539 |
 | Partes | O Signal Cable, o Signal Node e os Signal Modules (o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer e os próximos) | 511 |
 | Ocupação | Uma parte por face: em cada uma das 6 faces do espaço, ou um cabo, ou um nó, ou um módulo, nunca dois na mesma face. No máximo 2 cabos por espaço | 498 e 513 |
 | Face ocupada | Colocar numa face ocupada, ou um terceiro cabo num espaço, não coloca a parte: o item fica na mão, e a action bar mostra `This face is taken.` ou `This space already has 2 cables.`, em inglês e em português | 533 |
@@ -55,5 +58,6 @@ Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `faci
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539, do código, do desenho e do drop. |
 | Zennd | 2026-11-14 19:34 | Fecha a pendência do visual das partes (pergunta 534). |
 | Zennd | 2026-11-14 19:13 | Cria o documento, com as decisões 502, 511 a 517, 523, 524 e 533. |

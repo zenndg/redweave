@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 539 | Como a parte quebrada devolve o item, já que hoje cada bloco tem uma loot table `dropSelf` que o pack pode sobrescrever por datapack? | No código: cada parte devolve o próprio item, e o Signal Cable devolve o item com a cor. O `part_space` fica sem loot table própria, e o pack não sobrescreve o drop por datapack. Completa as perguntas 515 e 525 |
+| 538 | Onde ficam as partes no adaptador, o que hoje são os `BlockEntity` do Signal Node e dos módulos? | Num pacote `block/part/`, com uma interface `Part` curta (forma, sinal, tick, save e clique) e uma classe por tipo: o nó, a base dos módulos e cada módulo, e o cabo. O código dos `BlockEntity` de hoje migra para elas (regras 12 e 23). Completa a pergunta 512 |
+| 537 | Onde ficam no domínio a ocupação do espaço e o cálculo do trecho do cabo? | Em dois pacotes novos, `domain/part/` para a ocupação (pergunta 513) e `domain/cable/` para o trecho (pergunta 509). A estrutura de pacotes do `AGENTS.md` e do `README.md` ganha os dois no PR da #44 |
+| 536 | Como o bloco contêiner `part_space` desenha as partes? | Com um modelo dinâmico, que junta os modelos JSON de cada parte na malha do chunk e só é refeito quando uma parte muda, como o More Red e o Project Red. Não custa nada por frame, o que atende a meta de 1.000 nós. Completa a pergunta 534 |
 | 535 | O filete do sinal, de 2 px, cobre o meio claro do topo do Signal Cable, e de cima a cor do cabo só aparece nas duas bordas de 1 px, em cinza médio (`#A8A8A8`). Como fica o topo? | As bordas do topo (colunas 6 e 9 de `signal_cable.png`) passam para `#E6E6E6`, com os sulcos em `#D8D8D8`, e a cor do cabo aparece viva de cima. O filete continua com 2 px, e o volume fica nas laterais. O agente ajusta a textura, que é só cinza, sem imagem nova. Completa as perguntas 518 e 522 |
 | 534 | Onde fica o visual de cada parte do multipart, que hoje o Signal Node e os módulos guardam em estados do bloco (`facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range`)? | Nos dados da parte: cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o bloco contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda. Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Muda as perguntas 72, 411, 428, 455, 471 e 488 (regra 38) |
 | 533 | O que acontece ao tentar colocar uma parte numa face já ocupada, ou um terceiro cabo num espaço? | A parte não é colocada, o item fica na mão, e a action bar mostra `This face is taken.` ou `This space already has 2 cables.`, em inglês e em português. Nada é substituído sem querer |
@@ -535,6 +539,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:27 | Registra as respostas 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a resposta 535. |
 | Zennd | 2026-11-14 19:34 | Registra a resposta 534 e marca as 72, 411, 428, 455, 471 e 488 como mudadas. |
 | Zennd | 2026-11-14 19:11 | Recebe as respostas 494 a 533, do multipart e do Signal Cable, vindas de `fase-4-expansao.md` (pergunta 532). |

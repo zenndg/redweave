@@ -52,7 +52,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
-| Trecho | Quando algo muda, o servidor acha o trecho ligado de uma cor, calcula a força de cada pedaço pela distância das fontes, no mesmo tick, e só avisa os blocos vizinhos que mudaram, como os mods de redstone rápida | 509 |
+| Trecho | Quando algo muda, o servidor acha o trecho ligado de uma cor, calcula a força de cada pedaço pela distância das fontes, no mesmo tick, e só avisa os blocos vizinhos que mudaram, como os mods de redstone rápida. A regra fica em `domain/cable/` | 509 e 537 |
 | Tamanho | Sem limite no config: o sinal some em 15 blocos, então o cálculo só percorre até onde a força chega a partir das fontes | 530 |
 | Chunk descarregado | O cálculo nunca carrega um chunk (regra 6): o trecho para na borda, os pedaços do outro lado não são atualizados até o chunk carregar, e ao carregar o trecho é recalculado | 529 |
 
@@ -90,5 +90,6 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:27 | Registra o pacote do trecho (pergunta 537). |
 | Zennd | 2026-11-14 19:50 | Registra a decisão 535, das bordas claras do topo. |
 | Zennd | 2026-11-14 19:13 | Cria o documento, com as decisões 494 a 501, 504 a 509, 514, 515, 517 a 522 e 525 a 533. |

@@ -511,6 +511,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Face ocupada ou terceiro cabo | Não coloca, com aviso na action bar | 533 |
 | Visual das partes | Nos dados de cada parte, com os nomes dos estados do bloco de hoje; o contêiner monta o desenho. Muda as 72, 411, 428, 455, 471 e 488 | 534 |
 | Topo do cabo | Bordas do topo claras (`#E6E6E6`), para a cor aparecer viva de cima do filete | 535 |
+| Desenho do contêiner | Modelo dinâmico na malha do chunk, com os modelos JSON de cada parte | 536 |
+| Pacotes do domínio | `domain/part/` para a ocupação e `domain/cable/` para o trecho | 537 |
+| Partes no adaptador | `block/part/`, com a interface `Part` e uma classe por tipo | 538 |
+| Drop das partes | No código, sem loot table no `part_space` | 539 |
 
 Não há perguntas pendentes da concepção.
 
@@ -518,6 +522,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a decisão 535. |
 | Zennd | 2026-11-14 19:34 | Registra a decisão 534. |
 | Zennd | 2026-11-14 19:11 | Registra as decisões 531 a 533. |
