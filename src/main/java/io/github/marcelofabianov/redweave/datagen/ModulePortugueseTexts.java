@@ -1,11 +1,15 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import java.util.function.BiConsumer;
 
-/** The texts of the Signal Modules in Portuguese (modulos-de-sinal.md and signal-timer.md). */
+/**
+ * The texts of the Signal Modules in Portuguese (modulos-de-sinal.md, signal-timer.md and
+ * signal-inverter.md).
+ */
 final class ModulePortugueseTexts {
   private static final String SIGNAL_TIMER = "Temporizador de Sinal";
   private static final String USE_TO_OPEN = "Use um Configurador para abrir este módulo.";
@@ -25,6 +29,11 @@ final class ModulePortugueseTexts {
   private static final String SCREEN_STOPPED = "Parado";
   private static final String SCREEN_PAUSED = "Pausado";
   private static final String SCREEN_SECONDS = "%s s";
+  private static final String SIGNAL_INVERTER = "Inversor de Sinal";
+  private static final String INVERTER_NOTHING = "O Inversor de Sinal não tem o que alternar.";
+  private static final String INVERTER_ON = "Ligado";
+  private static final String INVERTER_OFF = "Desligado";
+  private static final String INVERTER_BURNT_OUT = "Queimado";
   private static final String SCREEN_TICKS = "%s ticks";
 
   private ModulePortugueseTexts() {}
@@ -49,5 +58,10 @@ final class ModulePortugueseTexts {
     add.accept(TimerScreenTexts.PAUSED, SCREEN_PAUSED);
     add.accept(TimerScreenTexts.SECONDS, SCREEN_SECONDS);
     add.accept(TimerScreenTexts.TICKS, SCREEN_TICKS);
+    add.accept(RedweaveBlocks.SIGNAL_INVERTER.get().getDescriptionId(), SIGNAL_INVERTER);
+    add.accept(ModuleMessages.INVERTER_NOTHING_TO_TOGGLE, INVERTER_NOTHING);
+    add.accept(InverterScreenTexts.ON, INVERTER_ON);
+    add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
+    add.accept(InverterScreenTexts.BURNT_OUT, INVERTER_BURNT_OUT);
   }
 }

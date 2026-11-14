@@ -1,11 +1,15 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import java.util.function.BiConsumer;
 
-/** The texts of the Signal Modules in English (modulos-de-sinal.md and signal-timer.md). */
+/**
+ * The texts of the Signal Modules in English (modulos-de-sinal.md, signal-timer.md and
+ * signal-inverter.md).
+ */
 final class ModuleEnglishTexts {
   private static final String SIGNAL_TIMER = "Signal Timer";
   private static final String USE_TO_OPEN = "Use a Configurator to open this module.";
@@ -25,6 +29,11 @@ final class ModuleEnglishTexts {
   private static final String SCREEN_STOPPED = "Stopped";
   private static final String SCREEN_PAUSED = "Paused";
   private static final String SCREEN_SECONDS = "%s s";
+  private static final String SIGNAL_INVERTER = "Signal Inverter";
+  private static final String INVERTER_NOTHING = "Signal Inverter has nothing to toggle.";
+  private static final String INVERTER_ON = "On";
+  private static final String INVERTER_OFF = "Off";
+  private static final String INVERTER_BURNT_OUT = "Burnt out";
   private static final String SCREEN_TICKS = "%s ticks";
 
   private ModuleEnglishTexts() {}
@@ -49,5 +58,10 @@ final class ModuleEnglishTexts {
     add.accept(TimerScreenTexts.PAUSED, SCREEN_PAUSED);
     add.accept(TimerScreenTexts.SECONDS, SCREEN_SECONDS);
     add.accept(TimerScreenTexts.TICKS, SCREEN_TICKS);
+    add.accept(RedweaveBlocks.SIGNAL_INVERTER.get().getDescriptionId(), SIGNAL_INVERTER);
+    add.accept(ModuleMessages.INVERTER_NOTHING_TO_TOGGLE, INVERTER_NOTHING);
+    add.accept(InverterScreenTexts.ON, INVERTER_ON);
+    add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
+    add.accept(InverterScreenTexts.BURNT_OUT, INVERTER_BURNT_OUT);
   }
 }

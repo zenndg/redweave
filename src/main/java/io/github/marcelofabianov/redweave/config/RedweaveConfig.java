@@ -23,6 +23,10 @@ public final class RedweaveConfig {
   private static final String MIN_INTERVAL_KEY = "min_interval_ticks";
   private static final String MAX_INTERVAL_KEY = "max_interval_ticks";
   private static final String MODULE = "module";
+  private static final String INVERTER = "inverter";
+  private static final String BURNOUT_TOGGLES_KEY = "burnout_toggles";
+  private static final String BURNOUT_WINDOW_KEY = "burnout_window_ticks";
+  private static final String BURNOUT_TICKS_KEY = "burnout_ticks";
 
   private static final String RANGE_RADIUS = "Radius of the reach of a Network Controller,";
   private static final String RANGE_UNIT = " in blocks.";
@@ -39,6 +43,9 @@ public final class RedweaveConfig {
   private static final String MIN_INTERVAL_COMMENT = "Shortest Signal Timer interval, in ticks.";
   private static final String MAX_INTERVAL_COMMENT = "Longest Signal Timer interval, in ticks.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
+  private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
+  private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
+  private static final String BURNOUT_COMMENT = "Ticks a burnt out Signal Inverter stays off.";
 
   private static final int DEFAULT_RANGE = 128;
   private static final int MAX_RANGE = 30_000_000;
@@ -67,6 +74,15 @@ public final class RedweaveConfig {
   private static final int LOWEST_MAX_INTERVAL = 200;
   private static final int HIGHEST_MAX_INTERVAL = 72_000;
   private static final int DEFAULT_MODULE_NAME = 16;
+  private static final int DEFAULT_TOGGLES = 8;
+  private static final int MIN_TOGGLES = 2;
+  private static final int MAX_TOGGLES = 64;
+  private static final int DEFAULT_WINDOW = 60;
+  private static final int MIN_WINDOW = 20;
+  private static final int MAX_WINDOW = 1200;
+  private static final int DEFAULT_BURNOUT = 160;
+  private static final int MIN_BURNOUT = 20;
+  private static final int MAX_BURNOUT = 6000;
 
   public static final ModConfigSpec SPEC;
   static final ModConfigSpec.IntValue RANGE_VALUE;
@@ -80,6 +96,9 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue MIN_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
+  static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
+  static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
+  static final ModConfigSpec.IntValue BURNOUT_TICKS;
 
   static {
     ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -141,6 +160,20 @@ public final class RedweaveConfig {
         builder
             .comment(MODULE_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_MODULE_NAME, 1, MAX_NAME);
+    builder.pop();
+    builder.push(INVERTER);
+    BURNOUT_TOGGLES =
+        builder
+            .comment(TOGGLES_COMMENT)
+            .defineInRange(BURNOUT_TOGGLES_KEY, DEFAULT_TOGGLES, MIN_TOGGLES, MAX_TOGGLES);
+    BURNOUT_WINDOW_TICKS =
+        builder
+            .comment(WINDOW_COMMENT)
+            .defineInRange(BURNOUT_WINDOW_KEY, DEFAULT_WINDOW, MIN_WINDOW, MAX_WINDOW);
+    BURNOUT_TICKS =
+        builder
+            .comment(BURNOUT_COMMENT)
+            .defineInRange(BURNOUT_TICKS_KEY, DEFAULT_BURNOUT, MIN_BURNOUT, MAX_BURNOUT);
     builder.pop();
     SPEC = builder.build();
   }
