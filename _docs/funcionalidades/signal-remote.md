@@ -48,7 +48,7 @@ No topo da tela ficam o vínculo atual, ou `No link`, e o seletor `Lever` e `But
 | Como | O clique direito, no ar ou num bloco sem interação própria | 279 |
 | Modo alavanca | Cada clique liga ou desliga | 288 |
 | Modo botão | Cada clique manda um pulso de `remote.pulse_ticks` ticks, 20 por padrão, como o botão de pedra. Um clique durante o pulso o recomeça | 353 e 369 |
-| Action bar | `15 Red: On`, `15 Red: Off` ou `15 Red: Pulse`, com o nome do canal da rede. Com o canal já ligado por outra fonte, `15 Red is held on by another source.` | 289 e 370 |
+| Action bar | `15 Red: On`, `15 Red: Off` ou `15 Red: Pulse`, com o nome do canal da rede. `On` fica em negrito e verde (`#6BD48F`), e `Off`, em negrito e vermelho (`#E2392F`); `Pulse` fica sem cor. Com o canal já ligado por outra fonte, `15 Red is held on by another source.` | 289, 370, 436 e 437 |
 | Sem vínculo válido | O tablet mostra `Link lost` e não dispara, quando o nó saiu da rede, o slot foi desativado ou virou output | 287 |
 | Rede `Offline` | Não dispara, e a action bar diz `<rede> is offline.` | 359 |
 
@@ -67,7 +67,7 @@ O custo cresce com os players online, não com os nós (regra 18).
 
 ## Tooltip
 
-`Link: ■ <rede> · <nó> · <canal>` ou `No link`; `Mode: Lever` ou `Button`; `On` ou `Off`; e, em cinza, `The strongest signal on a channel wins.` e `Shift + right-click to link.` (pergunta 366).
+`Link: ■ <rede> · <nó> · <canal>` ou `No link`; `Mode: Lever` ou `Button`; `On` ou `Off`, em negrito, verde ou vermelho (perguntas 436 e 437); e, em cinza, `The strongest signal on a channel wins.` e `Shift + right-click to link.` (pergunta 366).
 
 ## Na Tela do Controlador
 
@@ -83,5 +83,6 @@ O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao la
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:34 | Destaca o estado em negrito e cor (perguntas 436 e 437). |
 | Zennd | 2026-11-12 21:39 | Aponta as texturas dos 4 estados do tablet (pergunta 374). |
 | Zennd | 2026-11-12 20:48 | Cria o documento, com as decisões 352 a 371 da #22. |

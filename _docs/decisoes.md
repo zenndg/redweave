@@ -413,6 +413,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Estados do timer em português | `Rodando`, `Parado` e `Pausado`; em minúsculas na action bar | 433 |
 | Relógio da Tela do Signal Timer | Mostrador em sprite gerado por IA; anel de progresso e arco do pulso em código | 434 |
 | Rótulos da Tela do Signal Timer em português | `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal` e `%s ticks` | 435 |
+| Estado do Signal Remote em destaque | `On` e `Off` em negrito, verde `#6BD48F` e vermelho `#E2392F`, na action bar e no tooltip; `Pulse` sem cor | 436 e 437 |
+| Onde entra o destaque do Signal Remote | Na branch da #103, num commit à parte | 438 |
+| Pulso na placa do Signal Timer | Só a seta fica vermelha; o canto fica apagado, e o LED verde de `Running` continua | 439 |
+| Seta do Signal Timer | Centrada no mostrador, com ponta de 2 px e base de 4 px; o quadrado do canto sai da placa | 440 |
 
 Não há perguntas pendentes da concepção.
 
@@ -420,6 +424,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:43 | Registra a decisão 440, da #103. |
+| Zennd | 2026-11-14 13:37 | Registra a decisão 439, da #103. |
+| Zennd | 2026-11-14 13:34 | Registra as decisões 436 a 438, da #103. |
 | Zennd | 2026-11-14 13:19 | Registra a decisão 435, da #103. |
 | Zennd | 2026-11-14 12:52 | Registra a decisão 434, da #103. |
 | Zennd | 2026-11-14 12:35 | Registra a decisão 433, da #103. |

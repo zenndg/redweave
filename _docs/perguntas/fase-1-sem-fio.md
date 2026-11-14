@@ -11,6 +11,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 440 | A seta do Signal Timer, de 3 px centrados numa coluna, fica meio pixel fora do mostrador, que é centrado entre duas colunas. Como fica a placa? | A seta passa a ter ponta de 2 px e base de 4 px, centrada no mostrador, e o entalhe de trás também fica com 2 px centrados. O quadrado do canto, que não acende desde a pergunta 439, vira interior da placa. Vale para as 4 texturas do topo e para o ícone do item. Muda a pergunta 439 (regra 38); nada foi publicado (#103) |
+| 439 | No pulso, a placa do Signal Timer acende em vermelho a ponta da seta e também o quadrado do canto de cima à direita. Qual ponto fica vermelho? | Só a seta, que pisca na cor da redstone a cada pulso; o quadrado do canto, que parecia o vermelho vazando da seta, fica apagado. O LED verde de `Running` continua. As texturas `signal_timer_front_on` e `signal_timer_front_running_on` mudam só nos 4 pixels da seta. Completa a pergunta 401 (#103) **Mudada pela pergunta 440:** a seta fica centrada no mostrador, e o quadrado do canto sai da placa |
+| 438 | Onde entra a mudança das cores do estado do Signal Remote, que é da #22 e já está na `develop`? | Na branch da #103, num commit à parte, junto com o PR do Signal Timer (#103) |
+| 437 | Que tons de verde e vermelho o estado do Signal Remote usa? | Os da paleta do mod: o verde `#6BD48F`, o mesmo de `Online` nas telas, e o vermelho de redstone `#E2392F` (#103) |
+| 436 | Onde a palavra do estado do Signal Remote fica em negrito e colorida, verde para ligado e vermelho para desligado? | Na action bar ao acionar, como `15 Red: On`, e na linha do estado no tooltip do item, `On` ou `Off`. O `Pulse` do modo botão fica sem cor, porque não é ligado nem desligado. Completa as perguntas 289 e 366 (#103) |
 | 435 | Que português usam os rótulos novos da Tela do Signal Timer: `Interval`, `Pulse`, `Output`, `Pause`, `Edge`, `Channel` e o tooltip `%s ticks`? | `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda` e `Canal`, na linha da Tela do Nó e dos documentos, e o tooltip fica `%s ticks`, porque tick é o termo do jogo. Completa a pergunta 433 (#103) |
 | 434 | Como a Tela do Signal Timer desenha o relógio da prancha, com o anel de progresso, o arco do pulso e o tempo grande no centro? | O fundo do mostrador, com o aro de cobre, a trilha do anel e o visor escuro, é um sprite gerado por IA a partir de `tmp/arte/timer_screen/prompt.md` e conferido pelo agente (perguntas 185 e 186). O anel de progresso e o arco do pulso são pintados em código por cima da trilha, a cada tick, e o tempo do centro usa a fonte do jogo ampliada. Completa a pergunta 404 (#103) |
 | 433 | Como aparecem em português os estados do Signal Timer, `Running`, `Stopped` e `Paused`? | Traduzidos, como os do Signal Remote: `Rodando`, `Parado` e `Pausado` na tela e no rótulo, e em minúsculas na action bar, como `%s: rodando` e `%s: parado`. Completa as perguntas 417 e 421 (#103) |
@@ -435,6 +440,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:43 | Registra a resposta 440, da #103. |
+| Zennd | 2026-11-14 13:37 | Registra a resposta 439, da #103. |
+| Zennd | 2026-11-14 13:34 | Registra as respostas 436 a 438, da #103. |
 | Zennd | 2026-11-14 13:19 | Registra a resposta 435, da #103. |
 | Zennd | 2026-11-14 12:52 | Registra a resposta 434, da #103. |
 | Zennd | 2026-11-14 12:35 | Registra a resposta 433, da #103. |

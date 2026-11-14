@@ -62,8 +62,8 @@ Abre com o Configurator no `Open` (pergunta 393). As partes comuns estão em [`m
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
-| Textura | A seta da saída, para a frente, e o mostrador do relógio | 401 |
-| LEDs | Dois, por estados do bloco: `powered` acende no pulso, e `running` marca o timer rodando | 401 |
+| Textura | A seta da saída, para a frente, centrada no mostrador do relógio, e o entalhe do `Pause`, atrás | 401 e 440 |
+| LEDs | Por estados do bloco: com `powered`, a seta fica vermelha durante o pulso, e com `running`, o LED verde marca o timer rodando. | 401, 439 e 440 |
 | Modelo | O blockstate só gira em `x` e `y`, então cada combinação dos LEDs tem duas versões, com o topo girado 0° ou 90° no UV, para cobrir as 24 orientações de `facing` e `front` | 429 |
 | Animação | Só na tela. A placa não tem renderer próprio, para muitos timers não custarem desempenho no cliente | 401 |
 | Rótulo | Com o Configurator na mão: o nome e, embaixo, `Running`, `Stopped` ou `Paused`, e o canal da saída, se houver | 417 |
@@ -110,6 +110,8 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:43 | Centra a seta e tira o quadrado do canto (pergunta 440). |
+| Zennd | 2026-11-14 13:37 | A seta passa a marcar o pulso (pergunta 439). |
 | Zennd | 2026-11-14 12:35 | Adiciona os estados em português (pergunta 433). |
 | Zennd | 2026-11-14 12:08 | Adiciona o modelo nas 24 orientações (pergunta 429). |
 | Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
