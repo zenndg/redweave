@@ -241,12 +241,39 @@ Entregue com a issue #22 (perguntas 352 a 374). Use o circuito dos passos 1 a 8,
 | 129 | Abra a Tela do Controlador com um tablet ligado | À direita do rodapé, `● 0 unloaded · ● 1 remotes on` e, embaixo, `● 0 out of range` |
 | 130 | Troque o idioma para Português (Brasil) e repita os passos 117, 118 e 129 | `Controle de Sinal`, `Sem vínculo`, `Redes`, `Nós com entrada`, `Canais de entrada` e `1 controles ligados`, sem nada passando da borda |
 
+## Fase 1: o Signal Timer e os Signal Modules
+
+Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8, com a alavanca e a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 131 | Pegue um Signal Timer no criativo e passe o mouse sobre ele | O ícone da placa, com a seta centrada no mostrador e o LED verde apagado |
+| 132 | Olhando para o norte, coloque o timer no chão, ao lado de uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa de 10 × 10 com a seta apontando para onde você olhava, centrada no mostrador, nas 3 posições |
+| 133 | Com o Configurator no `Open`, dê Shift + clique na placa 4 vezes | A seta gira 90° no sentido horário a cada clique, com o clique do comparador e `Output: <borda>` na action bar, e volta ao início |
+| 134 | Clique na placa com a mão vazia; depois com o Configurator no `Copy` | `Use a Configurator to open this module.`; depois `Modules cannot be copied yet.` |
+| 135 | Com o Configurator no `Toggle`, clique no timer virado para a lâmpada | `<nome>: Running`, o LED verde acende, e a lâmpada pisca a cada 1 s por 0,5 s, com só a seta vermelha no pulso |
+| 136 | Ponha um bloco de redstone atrás da placa; depois tire | A lâmpada para de piscar enquanto o bloco está lá e volta a piscar logo que ele sai |
+| 137 | Clique na placa com o Configurator no `Open` | A Tela do Signal Timer, como a prancha: o relógio com o anel de cobre enchendo e o arco vermelho do pulso, o tempo até o próximo pulso no centro e `● Running` embaixo |
+| 138 | Na tela, clique em `+` do `Interval`; depois Shift + clique; passe o mouse sobre o valor | O intervalo sobe 0,1 s e depois 1 s; o tooltip mostra os ticks |
+| 139 | Na tela, clique no lápis e renomeie para `Door clock` | O nome muda na tela e, com o Configurator na mão, no rótulo sobre a placa |
+| 140 | Clique em `Channel` do `Output` num timer sem rede; escolha a rede; escolha o canal `15` | Primeiro a escolha de rede, depois a grade de 16 cores; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a borda da frente apagada |
+| 141 | Ponha um nó com o slot `15` como saída sobre uma lâmpada | A lâmpada do nó pisca com o timer |
+| 142 | Abra a Tela do Controlador | Na linha 2 do rodapé, `● 0 out of range · ● 1 modules on`, e o log com as linhas do módulo |
+| 143 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running · 15 Red`, com o quadrado vermelho |
+| 144 | Peça ao segundo player para abrir a tela, girar, alternar, retirar com o `Wrench` e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
+| 145 | Desligue a rede no Network Terminal e tente o `Open` e o `Toggle`; depois gire a placa | `<rede> is offline. Turn it on at a Network Terminal.` nos dois; o giro funciona |
+| 146 | Afaste-se até o chunk do timer descarregar e volte | A lâmpada do nó apaga enquanto o chunk está descarregado, e o timer volta a piscar do ponto onde parou |
+| 147 | Retire o timer com o `Wrench` | `Module picked up`, a placa vai para o inventário, e a lâmpada apaga |
+| 148 | Clique com um Signal Remote vinculado em `Lever` e passe o mouse sobre ele | `<canal>: On` em negrito verde e `<canal>: Off` em negrito vermelho; no tooltip, `On` ou `Off` com as mesmas cores |
+| 149 | Troque o idioma para Português (Brasil) e repita os passos 135, 137, 142, 143 e 148 | `Temporizador de Sinal`, `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal`, `● Rodando`, `1 módulos ligados`, `<nome>: rodando` e `ligado` ou `desligado`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:57 | Adiciona os passos 131 a 149, do Signal Timer e do destaque do Signal Remote (pergunta 406). |
 | Zennd | 2026-11-12 21:49 | Adiciona os passos 117 a 130, do Signal Remote (pergunta 367). |
 | Zennd | 2026-11-12 19:51 | Ajusta os passos 11, 103 e 105 e adiciona os passos 112 a 116, da Tela do Nó em duas colunas (perguntas 346 a 348). |
 | Zennd | 2026-11-12 19:39 | Adiciona o passo 94a, do Shift + scroll no macOS (pergunta 351). |
