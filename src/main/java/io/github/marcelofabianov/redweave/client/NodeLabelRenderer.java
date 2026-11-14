@@ -3,11 +3,9 @@ package io.github.marcelofabianov.redweave.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.domain.module.TimerState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
-import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.Label;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ModuleLine;
 import io.github.marcelofabianov.redweave.network.ReceivedLabels;
@@ -103,7 +101,7 @@ public final class NodeLabelRenderer {
    */
   private static void drawModule(
       PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, ModuleLine module) {
-    Component state = Component.translatable(stateKey(module.state()));
+    Component state = Component.translatable(module.state());
     Optional<ChannelColor> channel = channelOf(module.channel());
     Component below =
         channel
@@ -114,16 +112,6 @@ public final class NodeLabelRenderer {
     Line bottom = new Line(below, NETWORK_SCALE, NODE_LINE_UP, square);
     drawLine(pose, camera, font, buffers, module.pos(), top);
     drawLine(pose, camera, font, buffers, module.pos(), bottom);
-  }
-
-  /** The state comes as the order of TimerState; one outside it shows as stopped. */
-  private static String stateKey(int state) {
-    if (state == TimerState.RUNNING.ordinal()) {
-      return TimerScreenTexts.RUNNING;
-    }
-    return state == TimerState.PAUSED.ordinal()
-        ? TimerScreenTexts.PAUSED
-        : TimerScreenTexts.STOPPED;
   }
 
   private static Optional<ChannelColor> channelOf(int channel) {

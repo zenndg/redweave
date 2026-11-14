@@ -24,7 +24,8 @@ import net.minecraft.world.item.ItemStack;
  * The menu of the Signal Timer Screen: telas.md, Tela do Signal Timer. The server keeps the live
  * values in sync and decides every click; the client only shows them (rules 16 and 17).
  */
-public final class TimerMenu extends AbstractContainerMenu implements NetworkChoiceMenu {
+public final class TimerMenu extends AbstractContainerMenu
+    implements NetworkChoiceMenu, ModuleMenu {
   private static final String NO_NAME = "";
 
   private final BlockPos pos;

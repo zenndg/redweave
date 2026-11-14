@@ -4,8 +4,8 @@ import io.github.marcelofabianov.redweave.application.LabelChanges;
 import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabels;
+import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeLabelRange;
 import io.github.marcelofabianov.redweave.domain.network.ModuleId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -122,25 +122,25 @@ public final class LabelWatch {
       }
       if (entity instanceof SignalNodeBlockEntity node) {
         node.node().ifPresent(id -> near.nodes().put(id, entity.getBlockPos()));
-      } else if (entity instanceof SignalTimerBlockEntity timer) {
-        addTimer(timer, near);
+      } else if (entity instanceof ModuleBlockEntity module) {
+        addModule(module, near);
       }
     }
   }
 
-  /** The name, the state and the channel of the output of a timer (answer 417). */
-  private static void addTimer(SignalTimerBlockEntity timer, Near near) {
-    if (timer.module().isEmpty() || timer.timer().isEmpty()) {
+  /** The name, the state and the channel of the output of a module (answer 417). */
+  private static void addModule(ModuleBlockEntity module, Near near) {
+    if (module.module().isEmpty() || module.stateKey().isEmpty()) {
       return;
     }
-    ModuleId id = timer.module().get().id();
-    near.modules().put(id, timer.getBlockPos());
+    ModuleId id = module.module().get().id();
+    near.modules().put(id, module.getBlockPos());
     near.moduleLabels()
         .put(
             id,
             new ModuleLabel(
-                timer.module().get().displayName(),
-                timer.timer().get().state(),
-                timer.output().channel()));
+                module.module().get().displayName(),
+                module.stateKey().get(),
+                module.output().channel()));
   }
 }

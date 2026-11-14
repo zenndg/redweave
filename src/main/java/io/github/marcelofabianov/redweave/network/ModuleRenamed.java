@@ -1,12 +1,12 @@
 package io.github.marcelofabianov.redweave.network;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeModuleLimits;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.menu.TimerMenu;
+import io.github.marcelofabianov.redweave.menu.ModuleMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -42,11 +42,11 @@ public record ModuleRenamed(BlockPos pos, String name) implements CustomPacketPa
   /** On the server thread (the default of the registrar). */
   public static void receive(ModuleRenamed renamed, Player player) {
     boolean screenOfTheModule =
-        player.containerMenu instanceof TimerMenu menu
+        player.containerMenu instanceof ModuleMenu menu
             && menu.pos().equals(renamed.pos())
             && menu.stillValid(player);
     if (!screenOfTheModule
-        || !(player.level().getBlockEntity(renamed.pos()) instanceof SignalTimerBlockEntity block)
+        || !(player.level().getBlockEntity(renamed.pos()) instanceof ModuleBlockEntity block)
         || block.module().isEmpty()) {
       return;
     }

@@ -102,18 +102,7 @@ final class TimerTicks {
       return;
     }
     block.setEmitted(signal.strength());
-    wakeFront(level, pos, state);
-  }
-
-  /** The block in front and its neighbors, as a repeater wakes them, if it is loaded (rule 6). */
-  static void wakeFront(Level level, BlockPos pos, BlockState state) {
-    Direction front = state.getValue(SignalTimerBlock.FRONT);
-    BlockPos ahead = pos.relative(front);
-    if (level.isLoaded(ahead)) {
-      Block timer = state.getBlock();
-      level.neighborChanged(ahead, timer, pos);
-      level.updateNeighborsAtExceptFromFacing(ahead, timer, front.getOpposite());
-    }
+    ModulePlateBlock.wakeFront(level, pos, state);
   }
 
   /** The LEDs, only sent to the clients, which do not wake the neighbors (answer 401). */
