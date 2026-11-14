@@ -432,6 +432,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes do Signal Inverter | JUnit na regra, GameTests no mundo e roteiro manual | 453 |
 | PR da #105 | Um só, com a base dos módulos generalizada antes do inversor | 454 |
 | Estados do bloco do Signal Inverter | `facing`, `front`, `powered` e `burnt` | 455 |
+| `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
 
 Não há perguntas pendentes da concepção.
 
@@ -439,6 +440,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Registra a decisão 456, da #105. |
 | Zennd | 2026-11-14 14:30 | Registra as decisões 453 a 455, da #105. |
 | Zennd | 2026-11-14 14:27 | Registra as decisões 449 a 452, da #105. |
 | Zennd | 2026-11-14 14:17 | Registra as decisões 445 a 448, da #105. |

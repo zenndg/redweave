@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 456 | Na tela de um módulo, depois do clique em `Channel`, a grade de cores abre, mas o `Edge` continua marcado até a escolha de uma cor. Como ficam os botões com a grade aberta? | Com a grade aberta, o `Channel` fica marcado e o `Edge` volta a botão comum. Fechar sem escolher uma cor, clicando em `Edge`, volta ao que estava salvo. O servidor só muda quando a cor é escolhida (regra 16). Vale para o Signal Timer e o Signal Inverter, que usam a mesma coluna. Completa as perguntas 400 e 414 (#105) |
 | 455 | Quais são os estados do bloco do Signal Inverter? | `facing` e `front`, como os de todo módulo (pergunta 428); `powered`, que acende a seta com B ligado; e `burnt`, que troca a textura pela queimada. Com `burnt`, `powered` fica falso. Ficam fixados na #26 (regra 15) (#105) |
 | 454 | A #105 entra num PR só, com a generalização da base da #103? | Sim, como a #103 (pergunta 405): primeiro commits de refatoração, sem mudar comportamento, que tiram o timer da base comum, com uma interface do bloco de módulo; depois o inversor, em commits atômicos. É a prova da pergunta 301 (#105) |
 | 453 | Em que fronteiras entram os testes do Signal Inverter? | JUnit: a regra (NOT, atraso de 2 ticks, queima com a janela e a recuperação, limites) e os casos de uso. GameTests: colocar e emitir na hora, a entrada pela borda, a saída num canal lida por um nó, o laço que queima, o `Toggle` sem efeito, o dono e o NBT depois de salvar e carregar. Roteiro manual: tela, arte, textos e chunk descarregado. Na linha da pergunta 406 (#105) |
@@ -455,6 +456,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Registra a resposta 456, da #105. |
 | Zennd | 2026-11-14 14:30 | Registra as respostas 453 a 455, da #105. |
 | Zennd | 2026-11-14 14:27 | Registra as respostas 449 a 452, da #105. |
 | Zennd | 2026-11-14 14:17 | Registra as respostas 445 a 448, da #105. |
