@@ -70,7 +70,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
-| Cor | Uma textura em tons de cinza, gerada por IA, que o jogo tinge com a cor do cabo no mundo e no item, como as folhas e a grama | 518 |
+| Cor | Uma textura em tons de cinza, gerada por IA, que o jogo tinge com a cor do cabo no mundo e no item, como as folhas e a grama. As bordas do topo são claras, para a cor aparecer viva de cima, ao lado do filete | 518, 535 |
 | Sinal | Um filete no topo do cabo, por cima do isolamento colorido, que vai do vermelho escuro (0) ao vermelho vivo (15), como o pó do jogo, sem mudar a cor do isolamento (princípio 1 de [`ux.md`](../conceito/ux.md)) | 522 |
 | Arte | Em `tmp/arte/signal_cable/`: o agente escreve o `prompt.md`, o desenvolvedor gera as imagens, e o agente as confere (perguntas 185 e 186) | 518 |
 
@@ -90,4 +90,5 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:50 | Registra a decisão 535, das bordas claras do topo. |
 | Zennd | 2026-11-14 19:13 | Cria o documento, com as decisões 494 a 501, 504 a 509, 514, 515, 517 a 522 e 525 a 533. |

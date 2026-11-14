@@ -510,6 +510,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Arquivo das perguntas do cabo | `fase-1-sem-fio.md` | 532 |
 | Face ocupada ou terceiro cabo | Não coloca, com aviso na action bar | 533 |
 | Visual das partes | Nos dados de cada parte, com os nomes dos estados do bloco de hoje; o contêiner monta o desenho. Muda as 72, 411, 428, 455, 471 e 488 | 534 |
+| Topo do cabo | Bordas do topo claras (`#E6E6E6`), para a cor aparecer viva de cima do filete | 535 |
 
 Não há perguntas pendentes da concepção.
 
@@ -517,6 +518,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:50 | Registra a decisão 535. |
 | Zennd | 2026-11-14 19:34 | Registra a decisão 534. |
 | Zennd | 2026-11-14 19:11 | Registra as decisões 531 a 533. |
 | Zennd | 2026-11-14 19:09 | Registra as decisões 527 a 530. |

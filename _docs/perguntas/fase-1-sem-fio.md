@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 535 | O filete do sinal, de 2 px, cobre o meio claro do topo do Signal Cable, e de cima a cor do cabo só aparece nas duas bordas de 1 px, em cinza médio (`#A8A8A8`). Como fica o topo? | As bordas do topo (colunas 6 e 9 de `signal_cable.png`) passam para `#E6E6E6`, com os sulcos em `#D8D8D8`, e a cor do cabo aparece viva de cima. O filete continua com 2 px, e o volume fica nas laterais. O agente ajusta a textura, que é só cinza, sem imagem nova. Completa as perguntas 518 e 522 |
 | 534 | Onde fica o visual de cada parte do multipart, que hoje o Signal Node e os módulos guardam em estados do bloco (`facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range`)? | Nos dados da parte: cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o bloco contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda. Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Muda as perguntas 72, 411, 428, 455, 471 e 488 (regra 38) |
 | 533 | O que acontece ao tentar colocar uma parte numa face já ocupada, ou um terceiro cabo num espaço? | A parte não é colocada, o item fica na mão, e a action bar mostra `This face is taken.` ou `This space already has 2 cables.`, em inglês e em português. Nada é substituído sem querer |
 | 532 | Em que arquivo ficam as perguntas 494 a 533, já que o cabo e o multipart entram na `v0.1.0`? | Em `fase-1-sem-fio.md`, como todas as da `v0.1.0` (pergunta 320). O `fase-4-expansao.md` fica só com o que é da Fase 4, com um aviso apontando para elas |
@@ -534,6 +535,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:50 | Registra a resposta 535. |
 | Zennd | 2026-11-14 19:34 | Registra a resposta 534 e marca as 72, 411, 428, 455, 471 e 488 como mudadas. |
 | Zennd | 2026-11-14 19:11 | Recebe as respostas 494 a 533, do multipart e do Signal Cable, vindas de `fase-4-expansao.md` (pergunta 532). |
 | Zennd | 2026-11-14 18:57 | Marca a resposta 315 como mudada pela 511. |
