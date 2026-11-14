@@ -8,7 +8,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Linguagem | Java 21 | 2 |
 | Versão | 1.21.1 NeoForge e, depois, 26.x. Só os adapters mudam no port | 3 |
 | Multipart | Adiado para a Fase 4 | 4 |
-| Fio físico | Só na Fase 4 | 5 |
+| Fio físico | ~~Só na Fase 4~~; mudada pela 516: entra na `v0.1.0` | 5 |
 | Integrações | Jade e The One Probe primeiro, opcionais e isolados em `compat/` | 6 |
 | Licença | LGPL-3.0 | 7 |
 | Ponte (Fase 5) | MQTT | 8 |
@@ -470,6 +470,45 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Troca de modo rodando | Sorteia na hora no modo novo e recomeça o intervalo | 492 |
 | Troca de intervalo rodando | Recomeça o intervalo, sem sortear, como o timer | 493 |
 | `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
+| Item do cabo físico | Um item só, que nasce branco e ganha uma das 16 cores com corante na mesa de trabalho | 494 |
+| Forma do cabo físico | Em qualquer face, contorna os blocos, com ligação perfeita em curvas e degraus | 495 |
+| Ligação do cabo físico | Automática com o próximo, só com cabos da mesma cor | 496 e 497 |
+| Cabos num espaço de bloco | Até 2 | 498 |
+| Sinal do cabo físico | Como o fio de redstone do jogo: perde 1 por bloco | 499 |
+| Cabo físico com nós e módulos | Como o fio de redstone do jogo | 500 |
+| Cor do cabo físico | Só isolamento, sem relação com os canais da rede | 501 |
+| Multipart | Usado para os cabos dividirem um espaço de bloco; a implementação fica para outra pergunta. Muda a decisão 4 | 502 |
+| Implementação do multipart | ~~Própria, só para cabos~~; mudada pela 511 | 503 |
+| Arranjo dos 2 cabos | Um em cada face do espaço, de qualquer cor | 504 |
+| Nome do cabo físico | `Signal Cable`, `redweave:signal_cable`, `Cabo de Sinal` | 505 |
+| Tingir o Signal Cable | 8 cabos e 1 corante dão 8 cabos da cor; o branco volta ao branco | 506 |
+| Cabo e pó do jogo | O cabo se liga ao pó como componente, de qualquer cor | 507 |
+| O que o cabo energiza | Como o pó do jogo: o bloco de apoio e o bloco para onde aponta | 508 |
+| Cálculo do sinal do cabo | Por trecho de uma cor, num passo só, sem cascata (regra 18) | 509 |
+| Cabo com nós e módulos no mesmo espaço | ~~Não~~; mudada pela 511 | 510 |
+| Alcance do multipart | Todo o mod: cabos, nós e módulos são partes que dividem um espaço de bloco. Muda a 315, a 503 e a 510 | 511 |
+| Implementação do multipart geral | Sistema próprio: um bloco contêiner cujo `BlockEntity` guarda as partes | 512 |
+| Partes por face | Uma por face: cabo, nó ou módulo; até 2 cabos por espaço | 513 |
+| Sinal entre partes do mesmo espaço | Trocam sinal como vizinhas, pela curva interna | 514 |
+| Clique, quebra e Configurator no multipart | Só a parte sob a mira | 515 |
+| Quando entram o multipart e o cabo | Já, antes da #110, na `v0.1.0`: o nó e os módulos viram partes sem migração, e o cabo vem logo depois. Muda a decisão 5 | 516 |
+| Colisão das partes | Nenhuma | 517 |
+| Cor do Signal Cable no desenho | Uma textura cinza tingida pelo jogo | 518 |
+| Cabo agrupado (#46) | Sai do roadmap; a #46 é fechada | 519 |
+| Receita do Signal Cable | Na #24, com materiais do jogo | 520 |
+| Sinal visível no cabo | Um filete que vai do vermelho escuro ao vivo, por cima do isolamento | 522 |
+| IDs e save do multipart | Bloco contêiner `redweave:part_space`; os itens mantêm os IDs, e cada parte guarda o NBT de hoje numa lista com o tipo e a face | 523 |
+| Espessura do Signal Cable | 4 × 3 px, centrado na face | 521 |
+| PR do multipart e do cabo | Um só, antes da #110 | 524 |
+| Configurator no Signal Cable | `Wrench` retira para o inventário ou o chão; os outros modos não fazem nada; rótulo com a cor e a força | 525 |
+| Dono do Signal Cable | Como o nó: só o dono quebra e retira no survival | 526 |
+| Testes do multipart e do cabo | JUnit no cálculo e na ocupação, GameTests no mundo e roteiro manual | 527 |
+| Cabos de donos diferentes | Não se ligam entre si | 528 |
+| Cabo e chunk descarregado | O trecho para na borda e é recalculado ao carregar | 529 |
+| Tamanho do trecho de cabo | Sem limite no config | 530 |
+| Cabo e placas de outro dono | O cabo alimenta pelo sinal físico; o dono só impede cabo com cabo | 531 |
+| Arquivo das perguntas do cabo | `fase-1-sem-fio.md` | 532 |
+| Face ocupada ou terceiro cabo | Não coloca, com aviso na action bar | 533 |
 
 Não há perguntas pendentes da concepção.
 
@@ -477,6 +516,16 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:11 | Registra as decisões 531 a 533. |
+| Zennd | 2026-11-14 19:09 | Registra as decisões 527 a 530. |
+| Zennd | 2026-11-14 19:08 | Registra as decisões 521 e 524 a 526. |
+| Zennd | 2026-11-14 19:04 | Registra as decisões 520, 522 e 523. |
+| Zennd | 2026-11-14 19:02 | Registra as decisões 516 a 519 e marca a 5 como mudada. |
+| Zennd | 2026-11-14 18:59 | Registra as decisões 512 a 515. |
+| Zennd | 2026-11-14 18:57 | Registra as decisões 507 a 511; a 511 leva o multipart a todo o mod. |
+| Zennd | 2026-11-14 18:54 | Registra as decisões 503 a 506, do Signal Cable. |
+| Zennd | 2026-11-14 18:50 | Registra as decisões 495 a 502, do cabo físico. |
+| Zennd | 2026-11-14 18:44 | Registra a decisão 494, do cabo físico. |
 | Zennd | 2026-11-14 17:45 | Registra as decisões 491 a 493, da #109. |
 | Zennd | 2026-11-14 17:39 | Registra as decisões 487 a 490, da #109. |
 | Zennd | 2026-11-14 17:36 | Registra as decisões 483 a 486, da #109. |
