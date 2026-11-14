@@ -11,24 +11,36 @@ import java.util.UUID;
  */
 public final class ReceivedLabels {
   private static final Map<UUID, NodeLabelsUpdate.Label> LABELS = new LinkedHashMap<>();
+  private static final Map<UUID, NodeLabelsUpdate.ModuleLine> MODULES = new LinkedHashMap<>();
 
   private ReceivedLabels() {}
 
   /** Applies an update from the server: a clear of all, or the changed labels and the gone ones. */
   public static synchronized void accept(NodeLabelsUpdate update) {
     if (update.clearAll()) {
-      LABELS.clear();
+      clear();
     }
     update.labels().forEach(label -> LABELS.put(label.node(), label));
-    update.gone().forEach(LABELS::remove);
+    update.modules().forEach(module -> MODULES.put(module.module(), module));
+    update
+        .gone()
+        .forEach(id -> {
+          LABELS.remove(id);
+          MODULES.remove(id);
+        });
   }
 
   public static synchronized List<NodeLabelsUpdate.Label> all() {
     return List.copyOf(LABELS.values());
   }
 
+  public static synchronized List<NodeLabelsUpdate.ModuleLine> modules() {
+    return List.copyOf(MODULES.values());
+  }
+
   /** Leaving the world takes every label away. */
   public static synchronized void clear() {
     LABELS.clear();
+    MODULES.clear();
   }
 }
