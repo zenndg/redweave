@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.client.screen.RemoteLinkScreen;
 import io.github.marcelofabianov.redweave.client.screen.TerminalScreen;
+import io.github.marcelofabianov.redweave.client.screen.TimerScreen;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
@@ -33,6 +34,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.CONTROLLER.get(), ControllerScreen::new);
     event.register(RedweaveMenus.TERMINAL.get(), TerminalScreen::new);
     event.register(RedweaveMenus.REMOTE_LINK.get(), RemoteLinkScreen::new);
+    event.register(RedweaveMenus.TIMER.get(), TimerScreen::new);
   }
 
   @SubscribeEvent

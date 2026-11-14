@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
+import io.github.marcelofabianov.redweave.config.NeoForgeModuleLimits;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import java.util.function.Consumer;
@@ -85,6 +86,13 @@ final class NameField {
   static int limit(ToIntFunction<NeoForgeNetworkLimits> length) {
     return RedweaveConfig.SPEC.isLoaded()
         ? length.applyAsInt(new NeoForgeNetworkLimits())
+        : RedweaveConfig.MAX_NAME;
+  }
+
+  /** The limit of the name of a module, from the config of the server (answer 391). */
+  static int moduleLimit() {
+    return RedweaveConfig.SPEC.isLoaded()
+        ? new NeoForgeModuleLimits().moduleNameLength()
         : RedweaveConfig.MAX_NAME;
   }
 }

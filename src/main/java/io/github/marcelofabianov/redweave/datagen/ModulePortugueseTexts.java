@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import java.util.function.BiConsumer;
 
@@ -14,6 +15,17 @@ final class ModulePortugueseTexts {
   private static final String NOT_COPIED = "Módulos ainda não podem ser copiados.";
   private static final String TIMER_RUNNING = "%s: rodando";
   private static final String TIMER_STOPPED = "%s: parado";
+  private static final String SCREEN_INTERVAL = "Intervalo";
+  private static final String SCREEN_PULSE = "Pulso";
+  private static final String SCREEN_OUTPUT = "Saída";
+  private static final String SCREEN_PAUSE = "Pausa";
+  private static final String SCREEN_EDGE = "Borda";
+  private static final String SCREEN_CHANNEL = "Canal";
+  private static final String SCREEN_RUNNING = "Rodando";
+  private static final String SCREEN_STOPPED = "Parado";
+  private static final String SCREEN_PAUSED = "Pausado";
+  private static final String SCREEN_SECONDS = "%s s";
+  private static final String SCREEN_TICKS = "%s ticks";
 
   private ModulePortugueseTexts() {}
 
@@ -26,5 +38,16 @@ final class ModulePortugueseTexts {
     add.accept(ModuleMessages.NOT_COPIED, NOT_COPIED);
     add.accept(ModuleMessages.TIMER_RUNNING, TIMER_RUNNING);
     add.accept(ModuleMessages.TIMER_STOPPED, TIMER_STOPPED);
+    add.accept(TimerScreenTexts.INTERVAL, SCREEN_INTERVAL);
+    add.accept(TimerScreenTexts.PULSE, SCREEN_PULSE);
+    add.accept(TimerScreenTexts.OUTPUT, SCREEN_OUTPUT);
+    add.accept(TimerScreenTexts.PAUSE, SCREEN_PAUSE);
+    add.accept(TimerScreenTexts.EDGE, SCREEN_EDGE);
+    add.accept(TimerScreenTexts.CHANNEL, SCREEN_CHANNEL);
+    add.accept(TimerScreenTexts.RUNNING, SCREEN_RUNNING);
+    add.accept(TimerScreenTexts.STOPPED, SCREEN_STOPPED);
+    add.accept(TimerScreenTexts.PAUSED, SCREEN_PAUSED);
+    add.accept(TimerScreenTexts.SECONDS, SCREEN_SECONDS);
+    add.accept(TimerScreenTexts.TICKS, SCREEN_TICKS);
   }
 }
