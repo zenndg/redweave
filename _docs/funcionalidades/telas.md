@@ -130,7 +130,9 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 
 ## Tela do Signal Timer
 
-Abre com o Configurator no modo `Open` (pergunta 393). A prancha é gerada por IA a partir de `tmp/arte/tela_do_signal_timer/` e entra aqui depois de conferida (perguntas 404 e 418). O comportamento está em [`signal-timer.md`](signal-timer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+![Tela do Signal Timer](../imagens/telas/tela-do-signal-timer.png)
+
+Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro variantes: `Running`, a saída num canal com a grade de cores, `Paused` e outro player (perguntas 404 e 418). No rodapé, vale a tabela abaixo: a prancha mostra `No network` na variante `Paused`, que tem o `Pause` num canal e por isso tem rede, e não mostra a rede na variante de outro player (pergunta 423). O comportamento está em [`signal-timer.md`](signal-timer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
 
 | Parte | O que mostra | Pergunta |
 |---|---|---|
@@ -148,12 +150,12 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha é gerada por I
 | Ponto | Depende de |
 |---|---|
 | A aba `Info` da Tela do Nó, que volta quando tiver conteúdo (pergunta 233) | A definir |
-| A prancha da Tela do Signal Timer (pergunta 404) | A arte da #103 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:19 | Leva a prancha da Tela do Signal Timer, com a nota do rodapé (pergunta 423). |
 | Zennd | 2026-11-14 09:46 | Adiciona a Tela do Signal Timer e os módulos no rodapé e no log da Tela do Controlador, da #103 (perguntas 378, 388, 392, 396, 404 e 413). |
 | Zennd | 2026-11-12 21:53 | Troca o que a #22 decidiria pelo que ela decidiu na aba `Nodes` (perguntas 359 e 364). |
 | Zennd | 2026-11-12 21:49 | Detalha os passos da tela do vínculo do Signal Remote, como entregues na #22. |

@@ -400,6 +400,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Entrada e saída do módulo | Conexão, `Connection`; "porta" é só o `Gate` | 420 |
 | Mensagens dos módulos | Recolhido, só quem colocou, `Toggle` com o estado, giro com a borda, mão vazia, `Copy` ainda não, `Offline` | 421 |
 | Tamanho da placa do módulo | 10 × 10 e 2 de espessura, como o nó | 422 |
+| Prancha da Tela do Signal Timer | Entra como está; no rodapé vale a tabela do `telas.md` | 423 |
 
 Não há perguntas pendentes da concepção.
 
@@ -407,6 +408,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:19 | Registra a decisão 423, da #103. |
 | Zennd | 2026-11-14 10:01 | Registra a decisão 422, da #103. |
 | Zennd | 2026-11-14 09:47 | Registra a decisão 421, da #103. |
 | Zennd | 2026-11-14 09:46 | Corrige o `Unloaded` do timer descarregado pela decisão 388. |

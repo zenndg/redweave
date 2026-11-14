@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 423 | A prancha da Tela do Signal Timer mostra `No network` na variante `Paused`, com o `Pause` num canal, e não mostra a rede na variante de outro player. Como fica? | A prancha entra como está, e o `telas.md` avisa que, no rodapé, vale a tabela: a rede à esquerda e, para quem não é o dono, o cadeado à direita. Completa as perguntas 404 e 418 (#103) |
 | 422 | De que tamanho é a placa de um Signal Module? | 10 × 10 pixels e 2 de espessura, como o Signal Node. A borda de saída continua alimentando o bloco vizinho, e a de entrada continua lendo dele (perguntas 407 e 412) (#103) |
 | 421 | Que mensagens de action bar os Signal Modules mostram? | `Wrench`: `Module picked up` (`Módulo recolhido`). Quem não é o dono, em qualquer ação: `Only the player who placed this module can change it.` (`Só quem colocou este módulo pode alterá-lo.`). `Toggle` no timer: `Signal Timer: Running` ou `Signal Timer: Stopped`, com o nome próprio quando houver. Giro: `Output: North` (`Saída: Norte`). Mão vazia: `Use a Configurator to open this module.` (`Use um Configurador para abrir este módulo.`). `Copy`: `Modules cannot be copied yet.` (`Módulos ainda não podem ser copiados.`). Rede `Offline`: o aviso que já existe. Completa as perguntas 395 e 403 (#103) |
 | 420 | No glossário, "Porta" é o `Gate`. Que termo fica para a entrada ou a saída de um Signal Module? | Conexão, `Connection` no código: cada entrada ou saída de um módulo é uma conexão, ligada a uma borda ou a um canal, e "porta" fica só para o `Gate`. Muda o termo das respostas 385, 397, 400, 404, 411, 414 e 415 (#103) |
@@ -422,6 +423,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:19 | Registra a resposta 423, da #103. |
 | Zennd | 2026-11-14 10:01 | Registra a resposta 422, da #103. |
 | Zennd | 2026-11-14 09:47 | Registra a resposta 421, da #103. |
 | Zennd | 2026-11-14 09:46 | Anota o texto da direção na resposta 396. |
