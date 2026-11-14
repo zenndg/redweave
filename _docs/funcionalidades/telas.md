@@ -183,6 +183,25 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inver
 
 Em português, os rótulos são `Modo` e `Saída`, os modos `Chuva`, `Tempestade` e `Céu limpo`, e os estados `Ligado`, `Desligado` e `Sem clima` (pergunta 469).
 
+
+## Tela do Signal Randomizer
+
+A prancha entra quando for gerada a partir de `tmp/arte/tela_do_signal_randomizer/` (perguntas 185, 186 e 487).
+
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Timer, com o valor sorteado no lugar do relógio (pergunta 487). O comportamento está em [`signal-randomizer.md`](signal-randomizer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Randomizer` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 487 |
+| Esquerda | O valor atual grande, de 0 a 15, com a fonte ampliada como o tempo do relógio do timer. Embaixo, o botão `● Running`, com o ponto verde, ou `Stopped` | 434, 484 e 487 |
+| `Mode` | Os botões `Analog` e `Binary`, com o modo atual marcado | 476 e 487 |
+| `Interval` | O intervalo em segundos com décimos, com `−` e `+`, e os ticks no tooltip | 398, 477 e 487 |
+| Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 479 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 487 |
+| Rede `Offline` | A tela não abre, como a do nó | 402 |
+
+Em português, os rótulos são `Modo`, `Intervalo` e `Saída`, os modos `Analógico` e `Binário`, e os estados `Rodando` e `Parado` (perguntas 435 e 486).
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -193,6 +212,7 @@ Em português, os rótulos são `Modo` e `Saída`, os modos `Chuva`, `Tempestade
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:46 | Adiciona a Tela do Signal Randomizer, sem a prancha (pergunta 487). |
 | Zennd | 2026-11-14 17:10 | Leva a prancha da Tela do Weather Detector (pergunta 470). |
 | Zennd | 2026-11-14 16:55 | Desenha o ícone do clima com sprites (pergunta 474). |
 | Zennd | 2026-11-14 16:40 | Adiciona a Tela do Weather Detector, sem a prancha (pergunta 470). |

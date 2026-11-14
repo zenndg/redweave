@@ -23,12 +23,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`signal-timer.md`](signal-timer.md) | 2 | O Signal Timer: o ciclo de intervalo e pulso, o controle, a tela e o save |
 | [`signal-inverter.md`](signal-inverter.md) | 2 | O Signal Inverter, o NOT do mod: o atraso, a queima, a tela e o save |
 | [`weather-detector.md`](weather-detector.md) | 2 | O Weather Detector: os modos de clima, a dimensão sem clima, a tela e o save |
+| [`signal-randomizer.md`](signal-randomizer.md) | 2 | O Signal Randomizer: os modos do sorteio, o intervalo, o controle, a tela e o save |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:46 | Adiciona a página do Signal Randomizer (#109). |
 | Zennd | 2026-11-14 16:40 | Adiciona a página do Weather Detector (#108). |
 | Zennd | 2026-11-14 14:31 | Adiciona a página do Signal Inverter (#105). |
 | Zennd | 2026-11-14 09:46 | Adiciona as páginas dos Módulos de Sinal e do Signal Timer (#103). |
