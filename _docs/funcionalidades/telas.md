@@ -71,6 +71,8 @@ O que a tela faz, decidido na issue #19.
 | Ao vivo | O estado, a rede, os nomes, a lista de escolha e o sinal de cada slot atualizam a cada tick, só quando mudam | 82 |
 | Só leitura | Para quem não é o dono, os controles ficam apagados, e o rodapé mostra, à direita, um cadeado e `Only the owner of <rede> can change this node.` | 85 e 347 |
 
+Em português, os rótulos são `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda` e `Canal`, e os estados, `Rodando`, `Parado` e `Pausado` (perguntas 433 e 435).
+
 O mostrador do relógio é um sprite, e o anel de progresso e o arco do pulso são pintados em código por cima da trilha dele, a cada tick (pergunta 434).
 
 **O servidor confere cada ação (regras 16 e 17):** quem pede é o dono da rede do nó, o player está dentro do alcance de interação de blocos do jogo (pergunta 81), o canal existe e a face é válida. Uma ação recusada não muda nada, e a tela volta a mostrar o estado do servidor.
@@ -157,6 +159,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:19 | Adiciona os rótulos em português da Tela do Signal Timer (pergunta 435). |
 | Zennd | 2026-11-14 12:52 | Adiciona como o relógio do Signal Timer é desenhado (pergunta 434). |
 | Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |
 | Zennd | 2026-11-14 10:19 | Leva a prancha da Tela do Signal Timer, com a nota do rodapé (pergunta 423). |

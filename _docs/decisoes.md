@@ -412,6 +412,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Som do giro do módulo | O clique do comparador, no mundo | 432 |
 | Estados do timer em português | `Rodando`, `Parado` e `Pausado`; em minúsculas na action bar | 433 |
 | Relógio da Tela do Signal Timer | Mostrador em sprite gerado por IA; anel de progresso e arco do pulso em código | 434 |
+| Rótulos da Tela do Signal Timer em português | `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal` e `%s ticks` | 435 |
 
 Não há perguntas pendentes da concepção.
 
@@ -419,6 +420,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:19 | Registra a decisão 435, da #103. |
 | Zennd | 2026-11-14 12:52 | Registra a decisão 434, da #103. |
 | Zennd | 2026-11-14 12:35 | Registra a decisão 433, da #103. |
 | Zennd | 2026-11-14 12:34 | Registra a decisão 432, da #103. |

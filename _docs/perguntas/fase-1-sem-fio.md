@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 435 | Que português usam os rótulos novos da Tela do Signal Timer: `Interval`, `Pulse`, `Output`, `Pause`, `Edge`, `Channel` e o tooltip `%s ticks`? | `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda` e `Canal`, na linha da Tela do Nó e dos documentos, e o tooltip fica `%s ticks`, porque tick é o termo do jogo. Completa a pergunta 433 (#103) |
 | 434 | Como a Tela do Signal Timer desenha o relógio da prancha, com o anel de progresso, o arco do pulso e o tempo grande no centro? | O fundo do mostrador, com o aro de cobre, a trilha do anel e o visor escuro, é um sprite gerado por IA a partir de `tmp/arte/timer_screen/prompt.md` e conferido pelo agente (perguntas 185 e 186). O anel de progresso e o arco do pulso são pintados em código por cima da trilha, a cada tick, e o tempo do centro usa a fonte do jogo ampliada. Completa a pergunta 404 (#103) |
 | 433 | Como aparecem em português os estados do Signal Timer, `Running`, `Stopped` e `Paused`? | Traduzidos, como os do Signal Remote: `Rodando`, `Parado` e `Pausado` na tela e no rótulo, e em minúsculas na action bar, como `%s: rodando` e `%s: parado`. Completa as perguntas 417 e 421 (#103) |
 | 432 | A resposta 403 pede o som do clique ao girar a placa, sem dizer qual. Que som do jogo toca no giro? | O clique do comparador (`block.comparator.click`), o som de quando o player ajusta um componente de redstone já colocado, tocado no mundo para quem estiver perto. Completa a pergunta 403 (#103) |
@@ -434,6 +435,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:19 | Registra a resposta 435, da #103. |
 | Zennd | 2026-11-14 12:52 | Registra a resposta 434, da #103. |
 | Zennd | 2026-11-14 12:35 | Registra a resposta 433, da #103. |
 | Zennd | 2026-11-14 12:34 | Registra a resposta 432, da #103. |
