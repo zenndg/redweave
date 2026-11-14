@@ -168,14 +168,14 @@ Em português, os rótulos são `Entrada` e `Saída`, e os estados, `Ligado`, `D
 
 ## Tela do Weather Detector
 
-A prancha entra quando for gerada a partir de `tmp/arte/tela_do_weather_detector/` (perguntas 185, 186 e 470).
+![Tela do Weather Detector](../imagens/telas/tela-do-weather-detector.png)
 
-Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inverter, com o ícone do clima no lugar do diagrama (pergunta 470). O comportamento está em [`weather-detector.md`](weather-detector.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inverter, com o ícone do clima no lugar do diagrama (pergunta 470). A prancha mostra quatro variantes: `Rain`, a saída num canal com a grade de cores, `No weather` e outro player. O comportamento está em [`weather-detector.md`](weather-detector.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
 
 | Parte | O que mostra | Pergunta |
 |---|---|---|
 | Topo | `Weather Detector` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 470 |
-| Esquerda | Um ícone grande do clima atual: sol, nuvem com chuva ou raio. Embaixo, o estado: `● On`, `● Off` ou `● No weather` | 465 e 470 |
+| Esquerda | Um ícone grande do clima atual, um sprite de 32 × 32: sol, nuvem com chuva, nuvem com raio ou nuvem apagada sem clima. Embaixo, o estado: `● On`, `● Off` ou `● No weather` | 465, 470 e 474 |
 | `Mode` | Os botões `Rain`, `Thunder` e `Clear`, com o modo atual marcado | 459 e 470 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 461 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 470 |
@@ -193,6 +193,8 @@ Em português, os rótulos são `Modo` e `Saída`, os modos `Chuva`, `Tempestade
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:10 | Leva a prancha da Tela do Weather Detector (pergunta 470). |
+| Zennd | 2026-11-14 16:55 | Desenha o ícone do clima com sprites (pergunta 474). |
 | Zennd | 2026-11-14 16:40 | Adiciona a Tela do Weather Detector, sem a prancha (pergunta 470). |
 | Zennd | 2026-11-14 15:41 | Marca o `Channel` com a grade aberta, nas telas dos módulos (pergunta 456). |
 | Zennd | 2026-11-14 15:10 | Adiciona a Tela do Signal Inverter com a prancha (perguntas 423 e 451). |

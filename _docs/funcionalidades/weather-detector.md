@@ -54,11 +54,11 @@ Abre com o Configurator no `Open` (pergunta 393). Como a do Signal Inverter, com
 | Parte | Como é |
 |---|---|
 | Topo | `Weather Detector` e o nome do módulo, renomeável pelo dono |
-| Esquerda | Um ícone grande do clima atual (sol, nuvem com chuva ou raio) e, embaixo, a pílula do estado |
+| Esquerda | Um ícone grande do clima atual, um sprite de 32 × 32 (sol, nuvem com chuva, nuvem com raio ou nuvem apagada sem clima), e, embaixo, a pílula do estado (pergunta 474) |
 | Direita | `Mode`, com `Rain`, `Thunder` e `Clear`, e `Output`, com `Edge` ou `Channel` e a grade de 16 cores |
 | Rodapé | A rede e, para quem não é o dono, o cadeado |
 
-O desenho fica em [`telas.md`](telas.md#tela-do-weather-detector), com a prancha gerada a partir de `tmp/arte/tela_do_weather_detector/`.
+O desenho está em [`telas.md`](telas.md#tela-do-weather-detector), com a prancha `_docs/imagens/telas/tela-do-weather-detector.png`.
 
 ## No mundo
 
@@ -85,7 +85,7 @@ Nenhuma chave nova: o detector não tem número a ajustar (pergunta 468).
 
 ## Arte
 
-Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apagada ou acesa) e o ícone do item. Em `tmp/arte/tela_do_weather_detector/`: a prancha da tela. O agente escreve os `prompt.md`, o desenvolvedor gera as imagens, e o agente as confere antes de levá-las ao mod (perguntas 185, 186, 470 e 471).
+Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apagada ou acesa) e o ícone do item. Em `tmp/arte/weather_detector_screen/`: os 4 ícones do clima da tela, de 32 × 32 (pergunta 474). Em `tmp/arte/tela_do_weather_detector/`: a prancha da tela. O agente escreve os `prompt.md`, o desenvolvedor gera as imagens, e o agente as confere antes de levá-las ao mod (perguntas 185, 186, 470 e 471).
 
 ## Testes
 
@@ -101,4 +101,6 @@ Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apag
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:10 | Aponta para a prancha da tela no `telas.md` (pergunta 470). |
+| Zennd | 2026-11-14 16:55 | Desenha o ícone do clima com sprites (pergunta 474). |
 | Zennd | 2026-11-14 16:40 | Cria o documento, com as decisões 457 a 473 da #108. |

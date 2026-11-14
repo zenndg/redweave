@@ -287,12 +287,32 @@ Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8
 | 161 | Com o inversor queimado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | Ao entrar, o inversor continua queimado até o fim do tempo que faltava; com o chunk descarregado, a lâmpada do nó apaga, e o inversor volta a funcionar quando o chunk carrega |
 | 162 | Troque o idioma para Português (Brasil) e repita os passos 153, 155 e 158 | `Inversor de Sinal`, `O Inversor de Sinal não tem o que alternar.`, `Entrada`, `Saída`, `Borda`, `Canal`, `● Ligado`, `● Desligado` e `● Queimado`, sem nada passando da borda |
 
+## Fase 1: o Weather Detector
+
+Entregue com a issue #108 (perguntas 457 a 474). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players. O clima muda com `/weather clear`, `/weather rain` e `/weather thunder`.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 163 | Pegue um Weather Detector no criativo e passe o mouse sobre ele | O ícone da placa, com a seta e a nuvem com gotas |
+| 164 | Com `/weather clear`, olhando para o norte, coloque o detector no chão, com uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa com a seta apontando para onde você olhava e a nuvem com gotas, nas 3 posições, e a lâmpada apagada |
+| 165 | Rode `/weather rain` e depois `/weather thunder` | Com a chuva, a seta fica vermelha e a lâmpada acende; com a tempestade, continua acesa |
+| 166 | Com o Configurator no `Toggle`, clique no detector três vezes | `<nome>: Thunder`, `<nome>: Clear` e `<nome>: Rain` na action bar, com o símbolo da placa trocando para o raio, o sol e a nuvem |
+| 167 | Clique na placa com o Configurator no `Open` | A Tela do Weather Detector, como a prancha: o ícone do clima atual, o estado embaixo e, à direita, `Mode` e `Output` |
+| 168 | Na tela, troque o modo entre `Rain`, `Thunder` e `Clear` com `/weather clear` e `/weather thunder` | O estado e a lâmpada seguem o modo e o clima, e o ícone segue o clima |
+| 169 | Clique em `Channel` do `Output` num detector sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, e a lâmpada do nó segue o detector |
+| 170 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `On` ou `Off` e `15 Red` |
+| 171 | Peça ao segundo player para abrir a tela, alternar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
+| 172 | Leve um detector ao Nether, coloque-o e abra a tela, em cada modo | A saída fica em 0 nos 3 modos, com `No weather` na tela e no rótulo e a nuvem apagada no ícone |
+| 173 | Saia do mundo e entre de novo | O detector mantém o modo e a saída, e lê o clima de novo no primeiro tick |
+| 174 | Troque o idioma para Português (Brasil) e repita os passos 166, 167 e 172 | `Detector de Clima`, `Modo`, `Saída`, `Chuva`, `Tempestade`, `Céu limpo`, `● Ligado`, `● Desligado` e `● Sem clima`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 17:10 | Adiciona os passos 163 a 174, do Weather Detector (pergunta 472). |
 | Zennd | 2026-11-14 15:41 | Confere o `Channel` marcado com a grade aberta nos passos 140 e 157 (pergunta 456). |
 | Zennd | 2026-11-14 15:32 | Adiciona os passos 150 a 162, do Signal Inverter (pergunta 453). |
 | Zennd | 2026-11-14 13:57 | Adiciona os passos 131 a 149, do Signal Timer e do destaque do Signal Remote (pergunta 406). |
