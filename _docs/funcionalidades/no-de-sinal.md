@@ -8,7 +8,7 @@ Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, e
 
 ## Colocar
 
-O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele está grudado é o **bloco de apoio**.
+O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele está grudado é o **bloco de apoio**. A partir da #44, o nó é uma parte do [multipart](multipart.md) e divide o espaço de bloco com outras partes, uma por face, como um Signal Cable no chão do mesmo espaço (perguntas 511 e 513).
 
 1. O nó nasce `No network`, com o nome padrão, os 8 primeiros caracteres do ID, e não pode ser configurado até ter rede (perguntas 139 e 142).
 2. Quem o colocou abre o nó com o Configurator no modo `Open` e escolhe uma das redes `Online` dele (perguntas 157 e 172).
@@ -58,7 +58,7 @@ A [Tela do Nó](telas.md#tela-do-nó) abre com o [Configurator](configurador.md)
 
 | Parte | O que é |
 |---|---|
-| ID | `redweave:signal_node`, o mesmo do bloco |
+| ID | `redweave:signal_node`, o mesmo do bloco; a partir da #44, o item continua com esse ID, e o nó colocado vira uma parte do bloco contêiner `redweave:part_space` (pergunta 523) |
 | Nome | `Signal Node`, e `Nó de Sinal` em português |
 | Aba do criativo | `Redweave` (pergunta 69) |
 
@@ -73,7 +73,7 @@ Uma placa fina, com cerca de 2 pixels de espessura, presa à face como um botão
 | Frente | `signal_node_front`, com a lente apagada; `signal_node_front_on`, com a lente acesa |
 | Bordas | `signal_node_edge` |
 
-O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó está, e `powered`, verdadeiro quando o nó emite mais que 0, que acende a lente (pergunta 72). Os dois são contrato de save e ficam fixados na issue #26. O blockstate tem também `out_of_range`, que troca a frente por `signal_node_front_out_of_range`, com a lente apagada e o anel tracejado vermelho. O servidor atualiza os nós carregados de uma rede quando o estado deles muda (pergunta 86). Os 4 cantos da placa mostram os 4 primeiros canais ativos, na ordem das cores, cada um na sua cor, com a textura `signal_node_slot` tingida, e ficam apagados quando há menos de 4 ativos. Os outros aparecem só nas telas (perguntas 61, 87 e 229).
+A partir da #44, os estados abaixo viram campos da parte do multipart, com os mesmos nomes (pergunta 534). O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó está, e `powered`, verdadeiro quando o nó emite mais que 0, que acende a lente (pergunta 72). Os dois são contrato de save e ficam fixados na issue #26. O blockstate tem também `out_of_range`, que troca a frente por `signal_node_front_out_of_range`, com a lente apagada e o anel tracejado vermelho. O servidor atualiza os nós carregados de uma rede quando o estado deles muda (pergunta 86). Os 4 cantos da placa mostram os 4 primeiros canais ativos, na ordem das cores, cada um na sua cor, com a textura `signal_node_slot` tingida, e ficam apagados quando há menos de 4 ativos. Os outros aparecem só nas telas (perguntas 61, 87 e 229).
 
 **Intensidade na lente (issue #24):** a lente mostra o sinal mais forte do nó, o maior entre a última leitura das entradas e a emissão das saídas, então uma entrada recebendo sinal também acende (pergunta 98). O `powered` dá lugar a uma propriedade `signal`, de 0 a 15, e a lente é tingida do vermelho escuro ao vivo conforme o nível, como o fio de redstone, brilhando no escuro pela camada emissiva (pergunta 99). Um nó `Out of range`, `No network` ou numa rede `Unplaced` mostra a lente apagada; numa rede `Offline`, também, com o estado `Offline` em cinza nas telas (pergunta 177). Só a lente brilha: o nó não é fonte de luz (pergunta 100). O servidor só troca o estado quando o valor muda, sem avisar os vizinhos (regra 18). A propriedade é contrato de save e fica fixada na #26.
 
@@ -86,6 +86,8 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:34 | Leva os estados do bloco do nó para a parte (pergunta 534). |
+| Zennd | 2026-11-14 19:14 | Leva o nó ao multipart da #44 (perguntas 511, 513 e 523). |
 | Zennd | 2026-11-12 17:18 | Corrige o resumo com os canais inativos e aponta a Tela do Nó para `telas.md` (pergunta 226). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | A saída energiza só o bloco de apoio, sem o sinal fraco da alavanca (pergunta 262). |

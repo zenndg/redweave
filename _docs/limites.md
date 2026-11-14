@@ -1,11 +1,15 @@
 # Limites
 
-Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (regra 3 do `AGENTS.md`). Os valores abaixo são o ponto de partida e mudam conforme os testes de carga da Fase 1.
+Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (regra 3 do `AGENTS.md`). Os valores abaixo são o ponto de partida e mudam conforme o teste de carga da `v0.1.0` (#25).
 
 | Limite | Valor inicial | Chave de config | Fase |
 |---|---|---|---|
 | Canais por rede | 16 | fixo, ligado às cores de lã | 1 |
 | Slots de canal por nó | 16, um por cor, de 0 a 16 ativos (pergunta 224) | fixo, ligado às cores de lã | 1 |
+| Cores do Signal Cable | 16, as cores de lã (pergunta 494) | fixo, ligado às cores de lã | 2 |
+| Partes por face de um espaço de bloco | 1: um cabo, um nó ou um módulo (pergunta 513) | fixo, regra do multipart | 2 |
+| Signal Cables por espaço de bloco | 2 (pergunta 498) | fixo, regra do multipart | 2 |
+| Alcance do sinal no Signal Cable | 15 blocos, perdendo 1 por bloco, como o fio do jogo; sem limite de trecho (perguntas 499 e 530) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo do sinal | 0 a 15 | fixo, contrato com a redstone do jogo | 1 |
 | Avaliação da rede | 1 vez por tick, só com canal alterado | a definir | 1 |
 | Meta de carga | 1.000 nós numa rede sem impacto visível no MSPT | — | 1 |
@@ -34,6 +38,8 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:21 | Aponta o teste de carga da `v0.1.0` (#25). |
+| Zennd | 2026-11-14 19:14 | Adiciona os limites do multipart e do Signal Cable (perguntas 494, 498, 499, 513 e 530). |
 | Zennd | 2026-11-14 17:46 | Adiciona os intervalos do Signal Randomizer (pergunta 477). |
 | Zennd | 2026-11-14 14:31 | Adiciona a queima do Signal Inverter (pergunta 449). |
 | Zennd | 2026-11-14 09:46 | Adiciona os limites do Signal Timer e o nome dos módulos (perguntas 384 e 391). |

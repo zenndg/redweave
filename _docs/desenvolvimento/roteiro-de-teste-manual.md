@@ -5,7 +5,7 @@ O que os testes automáticos não cobrem e um player precisa conferir no jogo: o
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem o Network Controller, o Signal Node, o Configurator e o Network Terminal (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote e os Signal Modules (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -241,7 +241,7 @@ Entregue com a issue #22 (perguntas 352 a 374). Use o circuito dos passos 1 a 8,
 | 129 | Abra a Tela do Controlador com um tablet ligado | À direita do rodapé, `● 0 unloaded · ● 1 remotes on` e, embaixo, `● 0 out of range` |
 | 130 | Troque o idioma para Português (Brasil) e repita os passos 117, 118 e 129 | `Controle de Sinal`, `Sem vínculo`, `Redes`, `Nós com entrada`, `Canais de entrada` e `1 controles ligados`, sem nada passando da borda |
 
-## Fase 1: o Signal Timer e os Signal Modules
+## Fase 2: o Signal Timer e os Signal Modules
 
 Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8, com a alavanca e a lâmpada, e dois players.
 
@@ -267,7 +267,7 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 | 148 | Clique com um Signal Remote vinculado em `Lever` e passe o mouse sobre ele | `<canal>: On` em negrito verde e `<canal>: Off` em negrito vermelho; no tooltip, `On` ou `Off` com as mesmas cores |
 | 149 | Troque o idioma para Português (Brasil) e repita os passos 135, 137, 142, 143 e 148 | `Temporizador de Sinal`, `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal`, `● Rodando`, `1 módulos ligados`, `<nome>: rodando` e `ligado` ou `desligado`, sem nada passando da borda |
 
-## Fase 1: o Signal Inverter
+## Fase 2: o Signal Inverter
 
 Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8, com a alavanca e a lâmpada, e dois players.
 
@@ -287,7 +287,7 @@ Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8
 | 161 | Com o inversor queimado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | Ao entrar, o inversor continua queimado até o fim do tempo que faltava; com o chunk descarregado, a lâmpada do nó apaga, e o inversor volta a funcionar quando o chunk carrega |
 | 162 | Troque o idioma para Português (Brasil) e repita os passos 153, 155 e 158 | `Inversor de Sinal`, `O Inversor de Sinal não tem o que alternar.`, `Entrada`, `Saída`, `Borda`, `Canal`, `● Ligado`, `● Desligado` e `● Queimado`, sem nada passando da borda |
 
-## Fase 1: o Weather Detector
+## Fase 2: o Weather Detector
 
 Entregue com a issue #108 (perguntas 457 a 474). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players. O clima muda com `/weather clear`, `/weather rain` e `/weather thunder`.
 
@@ -306,7 +306,7 @@ Entregue com a issue #108 (perguntas 457 a 474). Use o circuito dos passos 1 a 8
 | 173 | Saia do mundo e entre de novo | O detector mantém o modo e a saída, e lê o clima de novo no primeiro tick |
 | 174 | Troque o idioma para Português (Brasil) e repita os passos 166, 167 e 172 | `Detector de Clima`, `Modo`, `Saída`, `Chuva`, `Tempestade`, `Céu limpo`, `● Ligado`, `● Desligado` e `● Sem clima`, sem nada passando da borda |
 
-## Fase 1: o Signal Randomizer
+## Fase 2: o Signal Randomizer
 
 Entregue com a issue #109 (perguntas 475 a 493). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players.
 
@@ -330,6 +330,7 @@ Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:21 | Lista todos os itens da aba criativa e põe os Signal Modules na Fase 2. |
 | Zennd | 2026-11-14 18:16 | Adiciona os passos 175 a 185, do Signal Randomizer (pergunta 489). |
 | Zennd | 2026-11-14 17:10 | Adiciona os passos 163 a 174, do Weather Detector (pergunta 472). |
 | Zennd | 2026-11-14 15:41 | Confere o `Channel` marcado com a grade aberta nos passos 140 e 157 (pergunta 456). |

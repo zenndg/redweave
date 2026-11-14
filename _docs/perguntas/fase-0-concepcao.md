@@ -24,8 +24,8 @@ As recomendações abaixo só valem depois da resposta do desenvolvedor.
 | 8 | Qual protocolo usa a ponte com o mundo real, na Fase 5? | MQTT |
 | 7 | Qual é a licença do código? | LGPL-3.0. Trechos reaproveitados de mods MIT mantêm o aviso de copyright original |
 | 6 | Quais integrações com outros mods entram primeiro? | Jade e The One Probe. As outras ficam para a Fase 4 |
-| 5 | O fio físico de redstone entra no MVP? | Não. Entra na Fase 4, junto com o multipart |
-| 4 | Como tratar o multipart? | Adiar para a Fase 4. O MVP usa nós e portas de bloco inteiro |
+| 5 | O fio físico de redstone entra no MVP? | Não. Entra na Fase 4, junto com o multipart **Mudada pela pergunta 516:** o multipart geral e o Signal Cable entram na `v0.1.0`, antes da #110 |
+| 4 | Como tratar o multipart? | Adiar para a Fase 4. O MVP usa nós e portas de bloco inteiro **Mudada pelas perguntas 511 e 516:** o multipart é de todo o mod e entra na `v0.1.0` |
 | 3 | Qual versão do Minecraft o mod mira? | 1.21.1 NeoForge e, depois, 26.x. O core sem classes do jogo facilita o port |
 | 2 | Em que linguagem o mod é escrito? | Java 21 |
 | 1 | O Redweave transporta só sinal ou também itens, fluidos e energia? | Só sinal de redstone. Transporte fica com os mods de logística |
@@ -34,6 +34,7 @@ As recomendações abaixo só valem depois da resposta do desenvolvedor.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:02 | Marca as respostas 4 e 5 como mudadas pelas 511 e 516. |
 | Zennd | 2026-11-11 09:51 | Aponta a pergunta 12 para a 170. |
 | Marcelo Fabiano | 2026-11-09 15:39 | Aponta a pergunta 29 na resposta 13. |
 | Marcelo Fabiano | 2026-11-09 10:34 | Responde as perguntas 13 a 16. |
