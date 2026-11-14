@@ -2,6 +2,7 @@
   "block.redweave.network_controller": "Network Controller",
   "block.redweave.network_terminal": "Network Terminal",
   "block.redweave.signal_node": "Signal Node",
+  "block.redweave.signal_timer": "Signal Timer",
   "fml.menu.mods.info.description.redweave": "Weave your redstone. Wireless signal networks, programmable channels and logic chips, with screens that are easy to learn and beautiful to use.",
   "item.redweave.configurator": "Configurator",
   "item.redweave.signal_remote": "Signal Remote",

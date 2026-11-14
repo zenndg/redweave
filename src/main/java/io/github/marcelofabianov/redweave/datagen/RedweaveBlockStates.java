@@ -3,16 +3,22 @@ package io.github.marcelofabianov.redweave.datagen;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -64,6 +70,10 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final float PLATE_EDGE = 3;
   private static final float PLATE_FAR_EDGE = 13;
   private static final float PLATE_THICKNESS = 2;
+  private static final String TIMER = "signal_timer";
+  private static final String RUNNING_SUFFIX = "_running";
+  private static final String TURNED_SUFFIX = "_turned";
+  private static final String NO_SUFFIX = "";
 
   RedweaveBlockStates(PackOutput output, ExistingFileHelper files) {
     super(output, RedweaveMod.MOD_ID, files);
@@ -94,6 +104,61 @@ final class RedweaveBlockStates extends BlockStateProvider {
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
     configuratorModels();
     remoteModels();
+    timerModels();
+  }
+
+  /**
+   * The Signal Timer: one model for each pair of LEDs, in two versions, with the top turned or not,
+   * so the plate reaches the 24 pairs of `facing` and `front` (answers 401 and 429).
+   */
+  private void timerModels() {
+    Map<String, ModelFile> models = new HashMap<>();
+    getVariantBuilder(RedweaveBlocks.SIGNAL_TIMER.get())
+        .forAllStates(state -> {
+          PlateTurn turn =
+              PlateTurn.of(
+                  state.getValue(SignalTimerBlock.FACING), state.getValue(SignalTimerBlock.FRONT));
+          String leds = timerLeds(state);
+          String name = TIMER + leds + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
+          ModelFile model =
+              models.computeIfAbsent(name, key -> timerModel(key, leds, turn.turned()));
+          return ConfiguredModel.builder()
+              .modelFile(model)
+              .rotationX(turn.x())
+              .rotationY(turn.y())
+              .build();
+        });
+    itemModels().basicItem(RedweaveItems.SIGNAL_TIMER.get());
+  }
+
+  /** The suffix of the top for the LEDs, in the order of the sheet of the art (answer 418). */
+  private static String timerLeds(BlockState state) {
+    String running = state.getValue(SignalTimerBlock.RUNNING) ? RUNNING_SUFFIX : NO_SUFFIX;
+    return running + (state.getValue(SignalTimerBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX);
+  }
+
+  /** The plate of the node, with the top of the timer, turned 90° on the UV when asked (429). */
+  private ModelFile timerModel(String name, String leds, boolean turned) {
+    return models()
+        .getBuilder(name)
+        .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
+        .texture(FRONT_KEY, timerTexture(NODE_FRONT + leds))
+        .texture(EDGE_KEY, timerTexture(NODE_EDGE))
+        .texture(PARTICLE_KEY, timerTexture(NODE_EDGE))
+        .element()
+        .from(PLATE_EDGE, 0, PLATE_EDGE)
+        .to(PLATE_FAR_EDGE, PLATE_THICKNESS, PLATE_FAR_EDGE)
+        .allFaces((side, face) -> {
+          face.texture(side == Direction.UP ? FRONT_REF : EDGE_REF);
+          if (side == Direction.UP && turned) {
+            face.rotation(ModelBuilder.FaceRotation.CLOCKWISE_90);
+          }
+        })
+        .end();
+  }
+
+  private ResourceLocation timerTexture(String part) {
+    return modLoc(BLOCK_FOLDER + TIMER + part);
   }
 
   /**

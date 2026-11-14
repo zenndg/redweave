@@ -19,6 +19,10 @@ public final class RedweaveConfig {
   private static final String LABEL_RANGE_KEY = "label_range";
   private static final String REMOTE = "remote";
   private static final String PULSE_TICKS_KEY = "pulse_ticks";
+  private static final String TIMER = "timer";
+  private static final String MIN_INTERVAL_KEY = "min_interval_ticks";
+  private static final String MAX_INTERVAL_KEY = "max_interval_ticks";
+  private static final String MODULE = "module";
 
   private static final String RANGE_RADIUS = "Radius of the reach of a Network Controller,";
   private static final String RANGE_UNIT = " in blocks.";
@@ -32,6 +36,9 @@ public final class RedweaveConfig {
   private static final String LOG_SIZE_COMMENT = "Lines the log of each network keeps in memory.";
   private static final String LABEL_RANGE_COMMENT = "Blocks within which the node labels show.";
   private static final String PULSE_TICKS_COMMENT = "Ticks a Signal Remote button pulse lasts.";
+  private static final String MIN_INTERVAL_COMMENT = "Shortest Signal Timer interval, in ticks.";
+  private static final String MAX_INTERVAL_COMMENT = "Longest Signal Timer interval, in ticks.";
+  private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
 
   private static final int DEFAULT_RANGE = 128;
   private static final int MAX_RANGE = 30_000_000;
@@ -53,6 +60,13 @@ public final class RedweaveConfig {
   private static final int DEFAULT_PULSE_TICKS = 20;
   private static final int MIN_PULSE_TICKS = 2;
   private static final int MAX_PULSE_TICKS = 200;
+  private static final int DEFAULT_MIN_INTERVAL = 4;
+  private static final int LOWEST_MIN_INTERVAL = 4;
+  private static final int HIGHEST_MIN_INTERVAL = 200;
+  private static final int DEFAULT_MAX_INTERVAL = 6000;
+  private static final int LOWEST_MAX_INTERVAL = 200;
+  private static final int HIGHEST_MAX_INTERVAL = 72_000;
+  private static final int DEFAULT_MODULE_NAME = 16;
 
   public static final ModConfigSpec SPEC;
   static final ModConfigSpec.IntValue RANGE_VALUE;
@@ -63,6 +77,9 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue LOG_SIZE;
   static final ModConfigSpec.IntValue LABEL_RANGE;
   static final ModConfigSpec.IntValue PULSE_TICKS;
+  static final ModConfigSpec.IntValue MIN_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue MAX_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
 
   static {
     ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -106,6 +123,24 @@ public final class RedweaveConfig {
         builder
             .comment(PULSE_TICKS_COMMENT)
             .defineInRange(PULSE_TICKS_KEY, DEFAULT_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
+    builder.pop();
+    builder.push(TIMER);
+    MIN_INTERVAL_TICKS =
+        builder
+            .comment(MIN_INTERVAL_COMMENT)
+            .defineInRange(
+                MIN_INTERVAL_KEY, DEFAULT_MIN_INTERVAL, LOWEST_MIN_INTERVAL, HIGHEST_MIN_INTERVAL);
+    MAX_INTERVAL_TICKS =
+        builder
+            .comment(MAX_INTERVAL_COMMENT)
+            .defineInRange(
+                MAX_INTERVAL_KEY, DEFAULT_MAX_INTERVAL, LOWEST_MAX_INTERVAL, HIGHEST_MAX_INTERVAL);
+    builder.pop();
+    builder.push(MODULE);
+    MODULE_NAME_LENGTH =
+        builder
+            .comment(MODULE_NAME_COMMENT)
+            .defineInRange(NAME_LENGTH, DEFAULT_MODULE_NAME, 1, MAX_NAME);
     builder.pop();
     SPEC = builder.build();
   }

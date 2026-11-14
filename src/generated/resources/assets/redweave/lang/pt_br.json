@@ -2,6 +2,7 @@
   "block.redweave.network_controller": "Controlador de Rede",
   "block.redweave.network_terminal": "Terminal de Rede",
   "block.redweave.signal_node": "Nó de Sinal",
+  "block.redweave.signal_timer": "Temporizador de Sinal",
   "fml.menu.mods.info.description.redweave": "Teça a sua redstone. Redes de sinal sem fio, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar.",
   "item.redweave.configurator": "Configurador",
   "item.redweave.signal_remote": "Controle de Sinal",
