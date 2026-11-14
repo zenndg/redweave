@@ -73,6 +73,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `ModuleInput` | Um módulo carregado que escreve num canal neste tick: o ID, a posição da placa, o canal e o sinal, ligado ou desligado (perguntas 375 e 387) | #103 |
 | `ModuleInputs` | Dentro da rede: os módulos que escrevem num canal, entregues inteiros a cada tick e fora do save. Cada um no alcance põe o seu sinal no canal, na regra do mais forte (perguntas 375, 386 e 387) | #103 |
 | `NetworkModules` | O lado dos Signal Modules da rede, por `modules()`: `apply` recebe os módulos do tick, `reaches` diz se uma placa está no alcance, e `on` conta os que contam, ligados ou não (perguntas 385, 387 e 424) | #103 |
+| `SignalModule` | Em `module/`: a base de todo Signal Module, mutável como a rede. Tem o ID, o dono, quem o colocou, o nome opcional e a rede. Renomear, escolher a rede e usar uma conexão recebem quem pede e devolvem um `Outcome`; um canal exige rede. Sem nome próprio, `displayName` dá os 8 primeiros caracteres do ID, como o nó (perguntas 378, 389, 397, 415 e 427) | #103 |
+| `ModuleLimits` | Em `module/`: o tamanho do nome de um módulo, `module.name_length`. O domínio define a interface, e o config a implementa (pergunta 391) | #103 |
+| `ModuleOutputs` | O que cada módulo que conta escreveu num canal na última olhada, para o log saber o que mudou. Um módulo que sai ligado volta a 0, trocar de canal desliga o antigo e liga o novo, e a primeira olhada só aprende (perguntas 244, 392, 396 e 424) | #103 |
 | `Connection` | Em `module/`: uma entrada ou saída de um módulo, a borda (`EDGE`) ou um canal (`on`), nunca os dois. A `key` é `edge` ou a chave da cor, e `fromKey` devolve vazio para uma chave desconhecida (perguntas 376, 411 e 420) | #103 |
 | `TimerCycle` | Em `module/`: o intervalo e o pulso do Signal Timer, em ticks. O pulso tem 2 ticks ou mais e deixa 2 desligados. `withInterval` e `withPulse` limitam à faixa em vez de recusar, e `fittedTo` ajusta um ciclo salvo à faixa nova (perguntas 379, 384, 409 e 425) | #103 |
 | `TimerLimits` | Em `module/`: o menor e o maior intervalo do config. O domínio define a interface, e o config a implementa (pergunta 384) | #103 |
@@ -135,5 +138,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Timer limita em vez de recusar:** os botões da tela passam dos limites, então `TimerCycle` traz o valor para a faixa. Só um ciclo impossível, com pulso menor que 2 ticks ou sem 2 ticks desligados, é erro de programação (perguntas 384 e 398).
 - **Faixa vale também para o salvo:** um timer salvo fora da faixa nova é ajustado ao carregar, porque o mínimo protege o tick do servidor, ao contrário dos nomes (perguntas 93 e 425).
 - **O pause não vai para o save:** o save guarda se o timer roda e o progresso, e o próximo tick lê o `Pause` de novo. Um timer parado nunca tem progresso (perguntas 381 e 411).
+- **Dono do módulo é quem o colocou:** o módulo não pertence à rede, então a regra do dono fica no `SignalModule`. Que a rede escolhida seja uma rede `Online` do dono, a aplicação confere, porque só ela vê as redes (perguntas 378 e 397).
+- **Nome padrão sem idioma:** o log, o rótulo e a action bar são montados no servidor, que não sabe o idioma do player, então o padrão é o ID, como no nó (pergunta 427).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
