@@ -3,13 +3,14 @@ package io.github.marcelofabianov.redweave.datagen;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.menu.DetectorScreenTexts;
 import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
+import io.github.marcelofabianov.redweave.menu.RandomizerScreenTexts;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import java.util.function.BiConsumer;
 
 /**
  * The texts of the Signal Modules in English (modulos-de-sinal.md, signal-timer.md,
- * signal-inverter.md and weather-detector.md).
+ * signal-inverter.md, weather-detector.md and signal-randomizer.md).
  */
 final class ModuleEnglishTexts {
   private static final String SIGNAL_TIMER = "Signal Timer";
@@ -44,6 +45,12 @@ final class ModuleEnglishTexts {
   private static final String DETECTOR_ON = "On";
   private static final String DETECTOR_OFF = "Off";
   private static final String DETECTOR_NO_WEATHER = "No weather";
+  private static final String SIGNAL_RANDOMIZER = "Signal Randomizer";
+  private static final String RANDOMIZER_RUNNING = "%s: Running";
+  private static final String RANDOMIZER_STOPPED = "%s: Stopped";
+  private static final String RANDOMIZER_MODE = "Mode";
+  private static final String RANDOMIZER_ANALOG = "Analog";
+  private static final String RANDOMIZER_BINARY = "Binary";
   private static final String SCREEN_TICKS = "%s ticks";
 
   private ModuleEnglishTexts() {}
@@ -74,6 +81,17 @@ final class ModuleEnglishTexts {
     add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
     add.accept(InverterScreenTexts.BURNT_OUT, INVERTER_BURNT_OUT);
     addDetector(add);
+    addRandomizer(add);
+  }
+
+  /** The Signal Randomizer (signal-randomizer.md). */
+  private static void addRandomizer(BiConsumer<String, String> add) {
+    add.accept(RedweaveBlocks.SIGNAL_RANDOMIZER.get().getDescriptionId(), SIGNAL_RANDOMIZER);
+    add.accept(ModuleMessages.RANDOMIZER_RUNNING, RANDOMIZER_RUNNING);
+    add.accept(ModuleMessages.RANDOMIZER_STOPPED, RANDOMIZER_STOPPED);
+    add.accept(RandomizerScreenTexts.MODE, RANDOMIZER_MODE);
+    add.accept(RandomizerScreenTexts.ANALOG, RANDOMIZER_ANALOG);
+    add.accept(RandomizerScreenTexts.BINARY, RANDOMIZER_BINARY);
   }
 
   /** The Weather Detector (weather-detector.md). */

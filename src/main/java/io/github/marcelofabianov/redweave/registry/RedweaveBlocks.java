@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
 import java.util.Collection;
@@ -26,6 +27,7 @@ public final class RedweaveBlocks {
   private static final String SIGNAL_TIMER_ID = "signal_timer";
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
   private static final String WEATHER_DETECTOR_ID = "weather_detector";
+  private static final String SIGNAL_RANDOMIZER_ID = "signal_randomizer";
 
   /** As fragile as a button. */
   private static final float NODE_HARDNESS = 0.5F;
@@ -105,6 +107,19 @@ public final class RedweaveBlocks {
           WEATHER_DETECTOR_ID,
           () ->
               new WeatherDetectorBlock(
+                  BlockBehaviour.Properties.of()
+                      .mapColor(MapColor.DEEPSLATE)
+                      .sound(SoundType.COPPER)
+                      .noCollission()
+                      .strength(NODE_HARDNESS)
+                      .pushReaction(PushReaction.DESTROY)));
+
+  /** A module plate, as the Signal Timer (signal-randomizer.md). */
+  public static final DeferredBlock<SignalRandomizerBlock> SIGNAL_RANDOMIZER =
+      BLOCKS.register(
+          SIGNAL_RANDOMIZER_ID,
+          () ->
+              new SignalRandomizerBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.COPPER)

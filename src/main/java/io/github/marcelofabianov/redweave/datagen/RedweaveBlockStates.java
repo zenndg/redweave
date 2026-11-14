@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.ModulePlateBlock;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
@@ -80,6 +81,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String INVERTER = "signal_inverter";
   private static final String BURNT_SUFFIX = "_burnt";
   private static final String DETECTOR = "weather_detector";
+  private static final String RANDOMIZER = "signal_randomizer";
   private static final String SEPARATOR = "_";
   private static final String RUNNING_SUFFIX = "_running";
   private static final String TURNED_SUFFIX = "_turned";
@@ -117,6 +119,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     timerModels();
     inverterModels();
     detectorModels();
+    randomizerModels();
   }
 
   /**
@@ -134,6 +137,25 @@ final class RedweaveBlockStates extends BlockStateProvider {
   /** The suffix of the top for the LEDs, in the order of the sheet of the art (answer 418). */
   private static String timerLeds(BlockState state) {
     return leds(state.getValue(SignalTimerBlock.RUNNING), state.getValue(SignalTimerBlock.POWERED));
+  }
+
+  /**
+   * The Signal Randomizer: one model for each pair of the LED and the arrow, in two versions, with
+   * the top turned or not, as the timer (answers 429 and 488).
+   */
+  private void randomizerModels() {
+    plateModels(
+        RedweaveBlocks.SIGNAL_RANDOMIZER.get(),
+        RedweaveItems.SIGNAL_RANDOMIZER.get(),
+        RANDOMIZER,
+        RedweaveBlockStates::randomizerLeds);
+  }
+
+  /** The suffix of the top for the LED and the arrow, in the order of the sheet (488). */
+  private static String randomizerLeds(BlockState state) {
+    return leds(
+        state.getValue(SignalRandomizerBlock.RUNNING),
+        state.getValue(SignalRandomizerBlock.POWERED));
   }
 
   private static String leds(boolean running, boolean powered) {
