@@ -49,7 +49,12 @@ final class ControllerFooter {
                 ControllerScreenTexts.OUT_OF_RANGE, countOf(menu, NodeState.OUT_OF_RANGE)),
             ScreenColors.OUT_OF_RANGE);
     drawRight(graphics, font, footer.right(), footer.y(), List.of(unloaded, remotes));
-    drawRight(graphics, font, footer.right(), footer.y() + SECOND_LINE, List.of(outOfRange));
+    Count modules =
+        new Count(
+            Component.translatable(ControllerScreenTexts.MODULES_ON, menu.modulesOn()),
+            ScreenColors.ONLINE);
+    drawRight(
+        graphics, font, footer.right(), footer.y() + SECOND_LINE, List.of(outOfRange, modules));
     drawOwner(graphics, font, footer.x(), footer.y() + SECOND_LINE, menu.header());
   }
 

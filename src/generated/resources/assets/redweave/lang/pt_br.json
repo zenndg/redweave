@@ -54,6 +54,7 @@
   "screen.redweave.controller.kind.input": "Ent",
   "screen.redweave.controller.kind.none": "—",
   "screen.redweave.controller.kind.output": "Saí",
+  "screen.redweave.controller.modules_on": "%s módulos ligados",
   "screen.redweave.controller.no_active_channel": "Nenhum canal ativo",
   "screen.redweave.controller.no_log": "Nenhuma mudança de sinal ainda.",
   "screen.redweave.controller.no_nodes": "Nenhum nó nesta rede ainda.",

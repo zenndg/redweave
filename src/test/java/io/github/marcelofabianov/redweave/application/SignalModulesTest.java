@@ -76,6 +76,16 @@ class SignalModulesTest {
   }
 
   @Test
+  void theControllerScreenCountsTheModulesThatCount() {
+    NetworkId id = fixture.ownersNetwork();
+    ShowNetwork showNetwork = new ShowNetwork(fixture.networks);
+
+    applyModules.apply(List.of(writing(id, Signal.OFF)));
+
+    assertEquals(ONE, showNetwork.of(OWNER, id, node -> true).orElseThrow().modulesOn());
+  }
+
+  @Test
   void aModuleThatStopsBeingSeenGoesBackToOff() {
     NetworkId id = fixture.ownersNetwork();
     applyModules.apply(List.of(writing(id, Signal.MAX)));
