@@ -21,6 +21,11 @@ final class ScreenColors {
 
   static final int REDSTONE = 0xFFE2392F;
 
+  /** A Signal Inverter burnt out, in amber, and its dark gray arrow (answers 448 and 452). */
+  static final int BURNT_OUT = 0xFFE3A33B;
+
+  static final int BURNT = 0xFF4A4F57;
+
   static final int SEPARATOR = 0xFF3A3E45;
   static final int SWATCH_EDGE = 0xFF15171B;
   static final int HIGHLIGHT = 0x8CE0975F;
