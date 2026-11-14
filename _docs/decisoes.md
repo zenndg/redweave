@@ -411,6 +411,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Giro do módulo numa rede `Offline` | A placa gira; só a tela e o `Toggle` ficam bloqueados | 431 |
 | Som do giro do módulo | O clique do comparador, no mundo | 432 |
 | Estados do timer em português | `Rodando`, `Parado` e `Pausado`; em minúsculas na action bar | 433 |
+| Relógio da Tela do Signal Timer | Mostrador em sprite gerado por IA; anel de progresso e arco do pulso em código | 434 |
 
 Não há perguntas pendentes da concepção.
 
@@ -418,6 +419,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:52 | Registra a decisão 434, da #103. |
 | Zennd | 2026-11-14 12:35 | Registra a decisão 433, da #103. |
 | Zennd | 2026-11-14 12:34 | Registra a decisão 432, da #103. |
 | Zennd | 2026-11-14 12:31 | Registra as decisões 430 e 431, da #103. |
