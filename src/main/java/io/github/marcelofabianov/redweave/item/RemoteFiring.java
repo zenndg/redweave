@@ -71,7 +71,10 @@ final class RemoteFiring {
     if (fired.mode() == RemoteMode.BUTTON) {
       return Component.translatable(RemoteMessages.PULSE, channel);
     }
-    return Component.translatable(fired.on() ? RemoteMessages.ON : RemoteMessages.OFF, channel);
+    return Component.translatable(
+        RemoteMessages.FIRED,
+        channel,
+        RemoteMessages.state(fired.on(), RemoteMessages.ON, RemoteMessages.OFF));
   }
 
   private static void say(ServerPlayer player, Component message) {

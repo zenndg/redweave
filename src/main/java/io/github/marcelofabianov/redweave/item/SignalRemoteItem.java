@@ -43,7 +43,7 @@ public final class SignalRemoteItem extends Item {
         Component.translatable(
             RemoteMessages.MODE, Component.translatable(RemoteMessages.nameOf(state.mode()))));
     tooltip.add(
-        Component.translatable(state.on() ? RemoteMessages.STATE_ON : RemoteMessages.STATE_OFF));
+        RemoteMessages.state(state.on(), RemoteMessages.STATE_ON, RemoteMessages.STATE_OFF));
     tooltip.add(Component.translatable(RemoteMessages.RULE).withStyle(ChatFormatting.GRAY));
     tooltip.add(Component.translatable(RemoteMessages.HOW_TO_LINK).withStyle(ChatFormatting.GRAY));
   }
