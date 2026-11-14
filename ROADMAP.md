@@ -107,7 +107,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 5. [x] Node Screen in two columns, with the signal meter in the channel panel (#122 · questions 346 to 350)
 6. [x] Signal Remote: a tablet linked to a node input slot (#22)
 7. [x] Signal Timer and the shared base of the Signal Modules (#103)
-8. [ ] Signal Inverter, the NOT of the mod (#105 · questions 296 and 310)
+8. [x] Signal Inverter, the NOT of the mod (#105 · questions 296 and 310)
 9. [ ] Weather detector module (#108)
 10. [ ] Random module (#109)
 11. [ ] Memory module, a T flip-flop (#110)
