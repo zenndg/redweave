@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Controller. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e a do Signal Timer. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -8,7 +8,7 @@ As telas próprias do Redweave na Fase 1: a do Signal Node e a do Network Contro
 - **Textos:** em inglês, no `en_us.json`, e em português, no `pt_br.json`, com as mesmas chaves (regra 1 do `AGENTS.md`). As imagens mostram os textos em inglês.
 - **Nada passa da borda:** texto longo é cortado com reticências, e um tooltip mostra o texto inteiro.
 - **Sinal ao vivo:** valores e medidores atualizam com a tela aberta, pelo servidor (regra 16).
-- **Quem abre:** qualquer player. Só o dono da rede altera alguma coisa, validado no servidor (regra 17 e pergunta 22). Para os outros, a tela abre só para leitura.
+- **Quem abre:** qualquer player. Só o dono da rede altera alguma coisa, validado no servidor (regra 17 e pergunta 22), e, num Signal Module, só o dono da placa (pergunta 378). Para os outros, a tela abre só para leitura.
 - **Rede `Offline`:** as telas da rede não abrem, nem para o dono, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.` Só o Network Terminal age sobre ela (perguntas 132 e 160).
 - **Escala:** as imagens mostram as telas em 2×. Os tamanhos finais em pixels da interface do jogo são definidos na implementação.
 
@@ -85,8 +85,8 @@ O que a tela faz, decidido na issue #19.
 | Estado | `Online · <n> nodes` |
 | Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). O Signal Remote não entra na lista: ele aparece só na contagem do rodapé, e a lista do vínculo mostra só redes `Online` (perguntas 359 e 364) |
-| Log | Uma linha por mudança de valor de uma entrada ou de uma saída, a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
-| Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, como `● 0 out of range`. As contagens aparecem mesmo com zero (perguntas 219, 236, 361 e 364) |
+| Log | Uma linha por mudança de valor de uma entrada ou de uma saída, e de cada valor que um Signal Module escreve num canal, com o nome do módulo e a direção `Output` (perguntas 392 e 396), a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
+| Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, e quantos Signal Modules escrevem num canal agora, como `● 0 out of range · ● 2 modules on`. As contagens aparecem mesmo com zero. A prancha ainda não mostra `modules on` (perguntas 219, 236, 361, 364, 388 e 413) |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
 
@@ -128,16 +128,33 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 | Rodapé | `Back`, a partir do passo 2, que volta um passo. Ao vincular, a tela fecha, e a action bar confirma | 291 e 365 |
 | No servidor | O cliente aponta cada escolha pela posição na lista que o servidor guardou, e o servidor confere o dono a cada passo | 357 e regras 16 e 17 |
 
+## Tela do Signal Timer
+
+Abre com o Configurator no modo `Open` (pergunta 393). A prancha é gerada por IA a partir de `tmp/arte/tela_do_signal_timer/` e entra aqui depois de conferida (perguntas 404 e 418). O comportamento está em [`signal-timer.md`](signal-timer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | O nome do módulo, ou `Signal Timer` sem nome próprio. Para o dono, renomeável como na Tela do Nó, com o limite de `module.name_length` | 391 e 404 |
+| Esquerda | O relógio moderno, com o anel de progresso que enche no intervalo e o arco que marca o pulso, e embaixo o botão `Running` ou `Stopped`. Com o `Pause` ativo, o relógio mostra `Paused` | 380 e 404 |
+| Direita | `Interval` e `Pulse`, em segundos com décimos, com `−` e `+`: o clique muda 0,1 s e o Shift + clique muda 1 s, e o tooltip mostra os ticks | 382, 398 e 404 |
+| Conexões | `Output` e `Pause`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 404 e 414 |
+| Rodapé | A rede, que abre a escolha de rede da Tela do Nó, e, para quem não é o dono, o cadeado | 400 e 404 |
+| Rede `Offline` | A tela não abre, como a do nó | 402 |
+
+**O servidor confere cada ação (regras 16 e 17):** o dono da placa, a distância de interação de blocos do jogo, as faixas do intervalo e do pulso e o tamanho do nome.
+
 ## Pendências
 
 | Ponto | Depende de |
 |---|---|
 | A aba `Info` da Tela do Nó, que volta quando tiver conteúdo (pergunta 233) | A definir |
+| A prancha da Tela do Signal Timer (pergunta 404) | A arte da #103 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 09:46 | Adiciona a Tela do Signal Timer e os módulos no rodapé e no log da Tela do Controlador, da #103 (perguntas 378, 388, 392, 396, 404 e 413). |
 | Zennd | 2026-11-12 21:53 | Troca o que a #22 decidiria pelo que ela decidiu na aba `Nodes` (perguntas 359 e 364). |
 | Zennd | 2026-11-12 21:49 | Detalha os passos da tela do vínculo do Signal Remote, como entregues na #22. |
 | Zennd | 2026-11-12 21:38 | Troca as pranchas das Telas do Nó e do Controlador pelas novas, tira o rótulo `Block face` e leva as contagens do rodapé do controlador para a direita (perguntas 372 a 374). |
