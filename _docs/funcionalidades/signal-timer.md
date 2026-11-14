@@ -78,7 +78,7 @@ Além do NBT comum dos [módulos](modulos-de-sinal.md#save) (pergunta 411):
 | `output` | A conexão `Output`: `edge` ou a chave da cor do canal |
 | `pause` | A conexão `Pause`: `edge` ou a chave da cor do canal |
 
-Os estados do bloco são `facing`, `rotation`, `powered` e `running`.
+Os estados do bloco são `facing`, `front`, `powered` e `running` (pergunta 428).
 
 ## Config
 
@@ -107,5 +107,6 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
 | Zennd | 2026-11-14 10:24 | Adiciona o ajuste à faixa ao carregar (pergunta 425). |
 | Zennd | 2026-11-14 09:46 | Cria o documento, com as decisões 379 a 418 da #103. |

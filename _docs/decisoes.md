@@ -388,7 +388,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Início do ciclo | Do zero, com o pulso primeiro; `Pause` e `Stopped` zeram o progresso | 408 |
 | Ajuste com o timer rodando | Recomeça o ciclo; pulso reduzido se não couber | 409 |
 | Nome em português | `Temporizador de Sinal`; família `Módulos de Sinal` | 410 |
-| Save do Signal Timer | `redweave:signal_timer`; estados `facing`, `rotation`, `powered`, `running`; NBT com `module_id`, `owner`, `name`, `network`, o ciclo e as conexões como `edge` ou cor | 411, 420 |
+| Save do Signal Timer | `redweave:signal_timer`; estados `facing`, `front`, `powered`, `running`; NBT com `module_id`, `owner`, `name`, `network`, o ciclo e as conexões como `edge` ou cor | 411, 420, 428 |
 | Entrada `Pause` pela borda | Como a do repetidor; acima de 0 pausa | 412 |
 | `modules on` no rodapé | Linha 2, depois de `out of range` | 413 |
 | `Channel` sem rede | Abre a escolha de rede e depois a grade | 414 |
@@ -405,6 +405,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Timer fora da faixa ao carregar | Ajusta à faixa nova, recomeça o ciclo e avisa no log | 425 |
 | Ações do Terminal no agregado | Saem para a fachada `network.terminal()`, para o `Network.java` caber em 400 linhas | 426 |
 | Nome padrão do módulo | Os 8 primeiros caracteres do ID, como o nó, porque o servidor não sabe o idioma | 427 |
+| Rotação no estado do bloco | `front`, a direção real da frente, com 6 valores, no lugar de `rotation` | 428 |
 
 Não há perguntas pendentes da concepção.
 
@@ -412,6 +413,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 11:13 | Registra a decisão 428, da #103. |
 | Zennd | 2026-11-14 10:44 | Registra a decisão 427, da #103. |
 | Zennd | 2026-11-14 10:35 | Registra a decisão 426, da #103. |
 | Zennd | 2026-11-14 10:24 | Registra as decisões 424 e 425, da #103. |

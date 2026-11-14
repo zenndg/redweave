@@ -143,7 +143,7 @@ O NBT comum, em `snake_case` (regras 15 e 24). As chaves ficam fixadas na #26 (p
 | `network` | A rede, ausente sem rede |
 | Uma chave por conexão | `edge` ou a chave da cor do canal, como `red` |
 
-Cada módulo acrescenta as chaves dele. Os estados do bloco comuns são `facing`, a face, e `rotation`, de `north` a `west`.
+Cada módulo acrescenta as chaves dele. Os estados do bloco comuns são `facing`, a face onde a placa está grudada, e `front`, a direção real da borda da frente no mundo, com 6 valores e sempre perpendicular a `facing` (pergunta 428).
 
 ## Config
 
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
 | Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |
 | Zennd | 2026-11-14 10:24 | Detalha a contagem `modules on` (pergunta 424). |
 | Zennd | 2026-11-14 10:01 | Fixa o tamanho da placa (pergunta 422). |

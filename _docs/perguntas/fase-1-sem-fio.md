@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 428 | O estado `rotation` (`north` a `west`) não descreve a frente de uma placa na parede, que pode apontar para cima ou para baixo. Como fica? | `rotation` dá lugar a `front`, a direção real da borda da frente no mundo (`down`, `up`, `north`, `south`, `west` ou `east`), sempre perpendicular a `facing`. Muda a pergunta 411 (regra 38); nada foi publicado (#103) |
 | 427 | O log e o rótulo são montados no servidor, que não sabe o idioma do player. Como aparece um Signal Module sem nome próprio? | Como o nó: com os 8 primeiros caracteres do ID (pergunta 142), em qualquer idioma, no nome da tela, no rótulo, no log e na action bar. O título fixo da tela continua `Signal Timer`, traduzido no cliente. Muda a pergunta 391 (regra 38) (#103) |
 | 426 | O `Network.java` tem 399 linhas, e o Checkstyle reprova mais de 400. O que sai do agregado para caber `network.modules()`? | As ações do Network Terminal: `turnOff`, `turnOn`, `clearNodes` e `deletion` passam para a fachada `network.terminal()`, como `network.remotes()`, sem mudar comportamento. Completa a pergunta 209 (#103) |
 | 425 | O que acontece ao carregar um timer salvo com o intervalo fora da faixa atual do config? | O intervalo vai ao limite mais próximo da faixa nova, o pulso passa a caber nele, e o ciclo recomeça, com um aviso no log (regra 14). O mínimo protege o tick do servidor, então um clock antigo não fura o limite que o pack subiu. Difere dos nomes (pergunta 93) (#103) |
@@ -27,7 +28,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 414 | Na tela do módulo, o que faz o seletor `Channel` de uma porta enquanto o módulo não tem rede? | Abre a escolha de rede e, escolhida a rede, a grade de cores. Completa a pergunta 400 (#103) **Termo mudado pela pergunta 420:** a entrada ou a saída de um módulo é uma conexão, e "porta" é só o `Gate` |
 | 413 | Onde fica a contagem `<n> modules on` no rodapé da Tela do Controlador? | Na linha 2: `● <n> out of range · ● <n> modules on`, e `● <n> módulos ligados` em português. O `telas.md` ganha uma nota sobre a prancha, sem gerar outra. Completa as perguntas 373 e 388 (#103) |
 | 412 | Como a entrada `Pause` lê a borda de trás? | Como a entrada do repetidor do jogo: o sinal que chega do bloco atrás, de um fio, uma alavanca, um bloco energizado ou outro módulo. Qualquer força acima de 0 pausa (pergunta 321) (#103) |
-| 411 | Quais são os IDs e as chaves de save do Signal Timer? | Bloco e item `redweave:signal_timer`. Estados do bloco `facing`, `rotation` (`north`, `east`, `south`, `west`), `powered` e `running`. NBT `module_id` (UUID), `owner`, `name`, `network`, `running`, `interval_ticks`, `pulse_ticks`, `elapsed_ticks`, `output` e `pause`, com cada porta como `edge` ou a chave da cor do canal. Ficam fixados na #26 (regra 15) (#103) **Termo mudado pela pergunta 420:** a entrada ou a saída de um módulo é uma conexão, e "porta" é só o `Gate` |
+| 411 | Quais são os IDs e as chaves de save do Signal Timer? | Bloco e item `redweave:signal_timer`. Estados do bloco `facing`, `rotation` (`north`, `east`, `south`, `west`), `powered` e `running`. NBT `module_id` (UUID), `owner`, `name`, `network`, `running`, `interval_ticks`, `pulse_ticks`, `elapsed_ticks`, `output` e `pause`, com cada porta como `edge` ou a chave da cor do canal. Ficam fixados na #26 (regra 15) (#103) **Termo mudado pela pergunta 420:** a entrada ou a saída de um módulo é uma conexão, e "porta" é só o `Gate` **Mudada pela pergunta 428:** `rotation` dá lugar a `front`, com 6 direções |
 | 410 | Qual é o nome em português do Signal Timer? | `Temporizador de Sinal`, na linha de `Nó de Sinal` e `Controle de Sinal` (pergunta 368). A família fica `Módulos de Sinal`, e o ID continua `signal_timer` (pergunta 300) (#103) |
 | 409 | O que acontece com o ciclo quando o dono muda o intervalo ou o pulso com o timer rodando? | O ciclo recomeça, pela regra da pergunta 408. Se o pulso novo não couber no intervalo, o servidor o reduz para o intervalo menos 2 ticks (pergunta 384) (#103) |
 | 408 | Por onde o ciclo começa quando o timer passa a `Running` ou o `Pause` solta? | Do zero, com o pulso: o timer liga por Y logo no início e espera o resto do intervalo, então o primeiro disparo é imediato. No `Pause` e no `Stopped`, o progresso zera, como no timer do Project Red. A descarga do chunk, ao contrário, congela o progresso (pergunta 381) (#103) |
@@ -427,6 +428,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 11:13 | Registra a resposta 428, da #103, e marca a 411 como mudada. |
 | Zennd | 2026-11-14 10:44 | Registra a resposta 427, da #103, e marca a 391 como mudada. |
 | Zennd | 2026-11-14 10:35 | Registra a resposta 426, da #103. |
 | Zennd | 2026-11-14 10:24 | Registra as respostas 424 e 425, da #103. |
