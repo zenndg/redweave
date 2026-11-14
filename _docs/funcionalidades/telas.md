@@ -149,17 +149,33 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 
 **O servidor confere cada ação (regras 16 e 17):** o dono da placa, a distância de interação de blocos do jogo, as faixas do intervalo e do pulso e o tamanho do nome.
 
+## Tela do Signal Inverter
+
+![Tela do Signal Inverter](../imagens/telas/tela-do-signal-inverter.png)
+
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do timer sem o relógio (pergunta 451). A prancha mostra quatro variantes: `On`, a saída num canal com a grade de cores, `Burnt out` e outro player. No rodapé, vale a tabela abaixo, como na Tela do Signal Timer (pergunta 423): a prancha mostra `No network` na variante `Burnt out`, que tem as conexões em canal e por isso tem rede, e não mostra a rede na variante de outro player. O comportamento está em [`signal-inverter.md`](signal-inverter.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Inverter` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 451 |
+| Esquerda | O diagrama A → NOT → B, com cada lado aceso em vermelho quando tem sinal, e embaixo o estado de B: `● On`, `● Off` ou `● Burnt out`, em âmbar | 448 e 451 |
+| Conexões | `Input` e `Output`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414 e 441 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 451 |
+| Rede `Offline` | A tela não abre, como a do nó | 402 |
+
+Em português, os rótulos são `Entrada` e `Saída`, e os estados, `Ligado`, `Desligado` e `Queimado` (perguntas 435 e 448).
+
 ## Pendências
 
 | Ponto | Depende de |
 |---|---|
 | A aba `Info` da Tela do Nó, que volta quando tiver conteúdo (pergunta 233) | A definir |
-| A Tela do Signal Inverter, como a do timer com o diagrama A → NOT → B no lugar do relógio (pergunta 451) | A prancha de `tmp/arte/tela_do_signal_inverter/`, na #105 |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:10 | Adiciona a Tela do Signal Inverter com a prancha (perguntas 423 e 451). |
 | Zennd | 2026-11-14 14:31 | Adiciona a Tela do Signal Inverter às pendências (pergunta 451). |
 | Zennd | 2026-11-14 13:19 | Adiciona os rótulos em português da Tela do Signal Timer (pergunta 435). |
 | Zennd | 2026-11-14 12:52 | Adiciona como o relógio do Signal Timer é desenhado (pergunta 434). |

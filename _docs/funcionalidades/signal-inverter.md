@@ -46,7 +46,7 @@ Abre com o Configurator no `Open` (pergunta 393). Como a do timer, sem o relógi
 | Direita | `Input` e `Output`, cada uma com `Edge` ou `Channel`, e a grade de 16 cores |
 | Rodapé | A rede e, para quem não é o dono, o cadeado |
 
-A prancha é gerada por IA a partir de `tmp/arte/tela_do_signal_inverter/` e entra no [`telas.md`](telas.md) depois de conferida.
+O desenho está em [`telas.md`](telas.md#tela-do-signal-inverter).
 
 ## No mundo
 
@@ -96,4 +96,5 @@ Em `tmp/arte/signal_inverter/`: as 3 texturas do topo (apagado, ligado e queimad
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:10 | Aponta para a prancha da tela no `telas.md` (pergunta 451). |
 | Zennd | 2026-11-14 14:31 | Cria o documento, com as decisões 441 a 455 da #105. |
