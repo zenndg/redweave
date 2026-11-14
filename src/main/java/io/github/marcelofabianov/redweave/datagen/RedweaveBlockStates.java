@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
+import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -74,6 +75,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String TIMER = "signal_timer";
   private static final String INVERTER = "signal_inverter";
   private static final String BURNT_SUFFIX = "_burnt";
+  private static final String DETECTOR = "weather_detector";
+  private static final String SEPARATOR = "_";
   private static final String RUNNING_SUFFIX = "_running";
   private static final String TURNED_SUFFIX = "_turned";
   private static final String NO_SUFFIX = "";
@@ -109,6 +112,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     remoteModels();
     timerModels();
     inverterModels();
+    detectorModels();
   }
 
   /**
@@ -174,6 +178,38 @@ final class RedweaveBlockStates extends BlockStateProvider {
       return BURNT_SUFFIX;
     }
     return state.getValue(SignalInverterBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX;
+  }
+
+  /**
+   * The Weather Detector: one model for each mode, with the arrow lit or not, in two versions, with
+   * the top turned or not, as the other modules (answers 429 and 471).
+   */
+  private void detectorModels() {
+    Map<String, ModelFile> models = new HashMap<>();
+    getVariantBuilder(RedweaveBlocks.WEATHER_DETECTOR.get())
+        .forAllStates(state -> {
+          PlateTurn turn =
+              PlateTurn.of(
+                  state.getValue(WeatherDetectorBlock.FACING),
+                  state.getValue(WeatherDetectorBlock.FRONT));
+          String look = detectorLook(state);
+          String name = DETECTOR + look + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
+          ResourceLocation front = modLoc(BLOCK_FOLDER + DETECTOR + NODE_FRONT + look);
+          ModelFile model =
+              models.computeIfAbsent(name, key -> plateModel(key, front, turn.turned()));
+          return ConfiguredModel.builder()
+              .modelFile(model)
+              .rotationX(turn.x())
+              .rotationY(turn.y())
+              .build();
+        });
+    itemModels().basicItem(RedweaveItems.WEATHER_DETECTOR.get());
+  }
+
+  /** The suffix of the top: the mode and, with the output on, the lit arrow (answer 471). */
+  private static String detectorLook(BlockState state) {
+    String mode = SEPARATOR + state.getValue(WeatherDetectorBlock.MODE).getSerializedName();
+    return mode + (state.getValue(WeatherDetectorBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX);
   }
 
   /**

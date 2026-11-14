@@ -22,6 +22,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_REMOTE_ID = "signal_remote";
   private static final String SIGNAL_TIMER_ID = "signal_timer";
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
+  private static final String WEATHER_DETECTOR_ID = "weather_detector";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -61,6 +62,10 @@ public final class RedweaveItems {
   /** A plain item that stacks and keeps no setting, as the timer (answer 394). */
   public static final DeferredItem<BlockItem> SIGNAL_INVERTER =
       ITEMS.registerSimpleBlockItem(SIGNAL_INVERTER_ID, RedweaveBlocks.SIGNAL_INVERTER);
+
+  /** A plain item that stacks and keeps no setting, as the other modules (answer 394). */
+  public static final DeferredItem<BlockItem> WEATHER_DETECTOR =
+      ITEMS.registerSimpleBlockItem(WEATHER_DETECTOR_ID, RedweaveBlocks.WEATHER_DETECTOR);
 
   private RedweaveItems() {}
 

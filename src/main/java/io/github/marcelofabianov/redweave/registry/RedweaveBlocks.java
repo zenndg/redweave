@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
+import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
 import java.util.Collection;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -24,6 +25,7 @@ public final class RedweaveBlocks {
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
   private static final String SIGNAL_TIMER_ID = "signal_timer";
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
+  private static final String WEATHER_DETECTOR_ID = "weather_detector";
 
   /** As fragile as a button. */
   private static final float NODE_HARDNESS = 0.5F;
@@ -90,6 +92,19 @@ public final class RedweaveBlocks {
           SIGNAL_INVERTER_ID,
           () ->
               new SignalInverterBlock(
+                  BlockBehaviour.Properties.of()
+                      .mapColor(MapColor.DEEPSLATE)
+                      .sound(SoundType.COPPER)
+                      .noCollission()
+                      .strength(NODE_HARDNESS)
+                      .pushReaction(PushReaction.DESTROY)));
+
+  /** A module plate, as the Signal Timer (weather-detector.md). */
+  public static final DeferredBlock<WeatherDetectorBlock> WEATHER_DETECTOR =
+      BLOCKS.register(
+          WEATHER_DETECTOR_ID,
+          () ->
+              new WeatherDetectorBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.COPPER)

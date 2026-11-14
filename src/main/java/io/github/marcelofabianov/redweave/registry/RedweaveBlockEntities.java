@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.NetworkTerminalBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -19,6 +20,7 @@ public final class RedweaveBlockEntities {
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
   private static final String SIGNAL_TIMER_ID = "signal_timer";
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
+  private static final String WEATHER_DETECTOR_ID = "weather_detector";
 
   private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
       DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, RedweaveMod.MOD_ID);
@@ -62,6 +64,14 @@ public final class RedweaveBlockEntities {
           () ->
               BlockEntityType.Builder.of(
                       SignalInverterBlockEntity::new, RedweaveBlocks.SIGNAL_INVERTER.get())
+                  .build(null));
+
+  public static final Supplier<BlockEntityType<WeatherDetectorBlockEntity>> WEATHER_DETECTOR =
+      BLOCK_ENTITIES.register(
+          WEATHER_DETECTOR_ID,
+          () ->
+              BlockEntityType.Builder.of(
+                      WeatherDetectorBlockEntity::new, RedweaveBlocks.WEATHER_DETECTOR.get())
                   .build(null));
 
   private RedweaveBlockEntities() {}

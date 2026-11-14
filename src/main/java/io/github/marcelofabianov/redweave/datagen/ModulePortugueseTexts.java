@@ -1,14 +1,15 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.menu.DetectorScreenTexts;
 import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import java.util.function.BiConsumer;
 
 /**
- * The texts of the Signal Modules in Portuguese (modulos-de-sinal.md, signal-timer.md and
- * signal-inverter.md).
+ * The texts of the Signal Modules in Portuguese (modulos-de-sinal.md, signal-timer.md,
+ * signal-inverter.md and weather-detector.md).
  */
 final class ModulePortugueseTexts {
   private static final String SIGNAL_TIMER = "Temporizador de Sinal";
@@ -34,6 +35,15 @@ final class ModulePortugueseTexts {
   private static final String INVERTER_ON = "Ligado";
   private static final String INVERTER_OFF = "Desligado";
   private static final String INVERTER_BURNT_OUT = "Queimado";
+  private static final String WEATHER_DETECTOR = "Detector de Clima";
+  private static final String DETECTOR_MODE_MESSAGE = "%s: %s";
+  private static final String DETECTOR_MODE = "Modo";
+  private static final String DETECTOR_RAIN = "Chuva";
+  private static final String DETECTOR_THUNDER = "Tempestade";
+  private static final String DETECTOR_CLEAR = "Céu limpo";
+  private static final String DETECTOR_ON = "Ligado";
+  private static final String DETECTOR_OFF = "Desligado";
+  private static final String DETECTOR_NO_WEATHER = "Sem clima";
   private static final String SCREEN_TICKS = "%s ticks";
 
   private ModulePortugueseTexts() {}
@@ -63,5 +73,19 @@ final class ModulePortugueseTexts {
     add.accept(InverterScreenTexts.ON, INVERTER_ON);
     add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
     add.accept(InverterScreenTexts.BURNT_OUT, INVERTER_BURNT_OUT);
+    addDetector(add);
+  }
+
+  /** The Weather Detector (weather-detector.md). */
+  private static void addDetector(BiConsumer<String, String> add) {
+    add.accept(RedweaveBlocks.WEATHER_DETECTOR.get().getDescriptionId(), WEATHER_DETECTOR);
+    add.accept(ModuleMessages.DETECTOR_MODE, DETECTOR_MODE_MESSAGE);
+    add.accept(DetectorScreenTexts.MODE, DETECTOR_MODE);
+    add.accept(DetectorScreenTexts.RAIN, DETECTOR_RAIN);
+    add.accept(DetectorScreenTexts.THUNDER, DETECTOR_THUNDER);
+    add.accept(DetectorScreenTexts.CLEAR, DETECTOR_CLEAR);
+    add.accept(DetectorScreenTexts.ON, DETECTOR_ON);
+    add.accept(DetectorScreenTexts.OFF, DETECTOR_OFF);
+    add.accept(DetectorScreenTexts.NO_WEATHER, DETECTOR_NO_WEATHER);
   }
 }

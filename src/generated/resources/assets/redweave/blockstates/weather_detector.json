@@ -1,0 +1,988 @@
+{
+  "variants": {
+    "facing=down,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180,
+      "y": 270
+    },
+    "facing=down,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180
+    },
+    "facing=down,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180
+    },
+    "facing=down,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180
+    },
+    "facing=down,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180
+    },
+    "facing=down,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180
+    },
+    "facing=down,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180
+    },
+    "facing=down,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180,
+      "y": 180
+    },
+    "facing=down,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 180,
+      "y": 90
+    },
+    "facing=down,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 180,
+      "y": 90
+    },
+    "facing=down,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 180,
+      "y": 90
+    },
+    "facing=down,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 180,
+      "y": 90
+    },
+    "facing=down,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 180,
+      "y": 90
+    },
+    "facing=down,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 270
+    },
+    "facing=north,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 90
+    },
+    "facing=north,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 90
+    },
+    "facing=north,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 90
+    },
+    "facing=north,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 90
+    },
+    "facing=north,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 90
+    },
+    "facing=north,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 90
+    },
+    "facing=north,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 90
+    },
+    "facing=north,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 90
+    },
+    "facing=north,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 90
+    },
+    "facing=north,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 90
+    },
+    "facing=north,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 90
+    },
+    "facing=north,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 90
+    },
+    "facing=north,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 270,
+      "y": 180
+    },
+    "facing=south,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 270
+    },
+    "facing=south,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 270
+    },
+    "facing=south,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 270
+    },
+    "facing=south,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 270
+    },
+    "facing=south,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 270
+    },
+    "facing=south,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 270
+    },
+    "facing=south,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270
+    },
+    "facing=south,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270
+    },
+    "facing=south,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270
+    },
+    "facing=south,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270
+    },
+    "facing=south,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270
+    },
+    "facing=south,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270
+    },
+    "facing=south,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270
+    },
+    "facing=south,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270
+    },
+    "facing=south,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270
+    },
+    "facing=south,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270
+    },
+    "facing=south,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270
+    },
+    "facing=south,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270
+    },
+    "facing=south,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270
+    },
+    "facing=south,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270
+    },
+    "facing=south,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270
+    },
+    "facing=south,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270
+    },
+    "facing=south,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270
+    },
+    "facing=south,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270
+    },
+    "facing=south,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear"
+    },
+    "facing=up,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on"
+    },
+    "facing=up,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain"
+    },
+    "facing=up,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on"
+    },
+    "facing=up,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder"
+    },
+    "facing=up,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on"
+    },
+    "facing=up,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "y": 90
+    },
+    "facing=up,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "y": 90
+    },
+    "facing=up,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "y": 90
+    },
+    "facing=up,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "y": 90
+    },
+    "facing=up,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "y": 90
+    },
+    "facing=up,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "y": 90
+    },
+    "facing=up,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear"
+    },
+    "facing=up,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on"
+    },
+    "facing=up,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain"
+    },
+    "facing=up,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on"
+    },
+    "facing=up,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder"
+    },
+    "facing=up,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on"
+    },
+    "facing=up,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "y": 180
+    },
+    "facing=up,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "y": 180
+    },
+    "facing=up,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "y": 180
+    },
+    "facing=up,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "y": 180
+    },
+    "facing=up,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "y": 180
+    },
+    "facing=up,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "y": 180
+    },
+    "facing=up,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear"
+    },
+    "facing=up,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on"
+    },
+    "facing=up,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain"
+    },
+    "facing=up,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on"
+    },
+    "facing=up,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder"
+    },
+    "facing=up,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on"
+    },
+    "facing=up,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "y": 270
+    },
+    "facing=up,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "y": 270
+    },
+    "facing=up,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "y": 270
+    },
+    "facing=up,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "y": 270
+    },
+    "facing=up,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "y": 270
+    },
+    "facing=up,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "y": 270
+    },
+    "facing=west,front=down,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=down,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=down,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=down,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=down,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=down,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=east,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=east,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=east,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=east,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=east,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=east,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=north,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=north,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=north,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=north,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=north,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=north,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,front=south,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=south,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=south,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=south,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=south,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=south,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on_turned",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=up,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=clear,powered=false": {
+      "model": "redweave:block/weather_detector_clear",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=clear,powered=true": {
+      "model": "redweave:block/weather_detector_clear_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=rain,powered=false": {
+      "model": "redweave:block/weather_detector_rain",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=rain,powered=true": {
+      "model": "redweave:block/weather_detector_rain_on",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=thunder,powered=false": {
+      "model": "redweave:block/weather_detector_thunder",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,front=west,mode=thunder,powered=true": {
+      "model": "redweave:block/weather_detector_thunder_on",
+      "x": 270,
+      "y": 90
+    }
+  }
+}
