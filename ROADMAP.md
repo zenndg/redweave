@@ -96,7 +96,7 @@ Phases 1 and 2 as one phase. The order follows dependencies first and then diffi
 
 ### Signal Modules
 
-All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer and the Signal Inverter, are still open.
+All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer, the Signal Inverter and the Weather Detector (question 457), are still open.
 
 ### Work order
 
