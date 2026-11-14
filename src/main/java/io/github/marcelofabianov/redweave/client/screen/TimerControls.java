@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.menu.TimerAction;
 import io.github.marcelofabianov.redweave.menu.TimerMenu;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -28,7 +29,10 @@ final class TimerControls {
   private static final String PLUS = "+";
 
   /** What a click asks: the server for an action, or the screen to open the channels. */
-  record Clicks(Consumer<TimerAction> send, Consumer<TimerAction.Kind> pick) {}
+  record Clicks(
+      Consumer<TimerAction> send,
+      Consumer<TimerAction.Kind> pick,
+      Optional<TimerAction.Kind> picking) {}
 
   private TimerControls() {}
 
@@ -91,7 +95,7 @@ final class TimerControls {
         buttons,
         now,
         new Box(left, y, 0, ModuleColumn.ROW_HEIGHT),
-        owner,
+        new ModuleColumn.Choosing(owner, clicks.picking().equals(Optional.of(kind))),
         () -> clicks.send().accept(new TimerAction(kind, TimerAction.EDGE)),
         () -> clicks.pick().accept(kind));
   }

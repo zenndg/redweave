@@ -113,7 +113,7 @@ Toda tela de módulo tem as mesmas partes comuns, com os componentes da Tela do 
 |---|---|
 | Título | O nome do tipo, como `Signal Timer`, traduzido, e, abaixo, o nome do módulo, renomeável pelo dono como na Tela do Nó |
 | Rede | A escolha de rede da Tela do Nó (`NetworkChoices`), com a última usada no topo |
-| Conexões | Cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor. Num módulo sem rede, o `Channel` abre primeiro a escolha de rede e, depois dela, a grade |
+| Conexões | Cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, e o `Channel` fica marcado enquanto ela está aberta; o servidor só muda quando a cor é escolhida (pergunta 456). Num módulo sem rede, o `Channel` abre primeiro a escolha de rede e, depois dela, a grade |
 | Rodapé | A rede e, para quem não é o dono, o cadeado |
 
 O centro da tela é de cada módulo.
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Marca o `Channel` com a grade aberta (pergunta 456). |
 | Zennd | 2026-11-14 14:31 | Leva o Signal Inverter ao `Toggle`, às mensagens e ao rótulo (perguntas 443 e 448). |
 | Zennd | 2026-11-14 12:34 | Fixa o som do giro (pergunta 432). |
 | Zennd | 2026-11-14 12:31 | Deixa o giro funcionar numa rede `Offline` (pergunta 431). |

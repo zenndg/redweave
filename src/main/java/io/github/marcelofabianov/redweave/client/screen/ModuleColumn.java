@@ -32,27 +32,35 @@ final class ModuleColumn {
   private static final int SQUARE_GAP = 3;
   private static final int MAX_CHANNEL_TEXT = 50;
 
+  /** Who looks at the row, and whether the channels of this connection are open. */
+  record Choosing(boolean owner, boolean picking) {}
+
   private ModuleColumn() {}
 
-  /** `Edge`, which asks the server, and `Channel`, which opens the channels on the client. */
+  /**
+   * `Edge`, which asks the server, and `Channel`, which opens the channels on the client. While the
+   * channels are open, `Channel` is the one chosen, though the server still keeps the edge until a
+   * channel is picked (answer 456).
+   */
   static void connection(
       List<TimerButton> buttons,
       Connection now,
       Box row,
-      boolean owner,
+      Choosing choosing,
       Runnable edge,
       Runnable channel) {
+    boolean onChannel = choosing.picking() || !now.isEdge();
     buttons.add(
         new TimerButton(
             new Box(row.x() + CONTROL_X, row.y(), EDGE_WIDTH, ROW_HEIGHT),
             Component.translatable(TimerScreenTexts.EDGE),
-            lookOf(now.isEdge(), owner),
+            lookOf(!onChannel, choosing.owner()),
             edge));
     buttons.add(
         new TimerButton(
             new Box(row.x() + CHANNEL_X, row.y(), CHANNEL_WIDTH, ROW_HEIGHT),
             Component.translatable(TimerScreenTexts.CHANNEL),
-            lookOf(!now.isEdge(), owner),
+            lookOf(onChannel, choosing.owner()),
             channel));
   }
 

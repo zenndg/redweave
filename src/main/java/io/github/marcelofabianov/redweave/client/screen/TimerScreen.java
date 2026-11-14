@@ -179,7 +179,7 @@ public final class TimerScreen extends AbstractContainerScreen<TimerMenu> {
 
   private List<TimerButton> controls() {
     return TimerControls.of(
-        menu, leftPos, topPos, owner(), new TimerControls.Clicks(this::send, this::pick));
+        menu, leftPos, topPos, owner(), new TimerControls.Clicks(this::send, this::pick, picking));
   }
 
   private TimerButton runButton() {

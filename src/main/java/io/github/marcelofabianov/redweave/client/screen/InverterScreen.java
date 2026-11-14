@@ -216,7 +216,7 @@ public final class InverterScreen extends AbstractContainerScreen<InverterMenu> 
         buttons,
         now,
         new Box(leftPos, topPos + y, 0, ModuleColumn.ROW_HEIGHT),
-        owner(),
+        new ModuleColumn.Choosing(owner(), picking.equals(Optional.of(kind))),
         () -> send(new InverterAction(kind, InverterAction.EDGE)),
         () -> pick(kind));
   }
