@@ -91,7 +91,7 @@ Na action bar, em inglês e em português (pergunta 421):
 |---|---|
 | `Wrench` | `Module picked up` |
 | Qualquer ação de quem não é o dono | `Only the player who placed this module can change it.` |
-| `Toggle` | O que o módulo define; no Signal Timer, `<nome>: Running` ou `<nome>: Stopped`, com `Signal Timer` sem nome próprio |
+| `Toggle` | O que o módulo define; no Signal Timer, `<nome>: Running` ou `<nome>: Stopped` |
 | Giro | `Output: <borda>`, como `Output: North` |
 | Mão vazia | `Use a Configurator to open this module.` |
 | `Copy` | `Modules cannot be copied yet.` |
@@ -103,7 +103,7 @@ Com o Configurator na mão, cada módulo dentro de `configurator.label_range` mo
 
 ## Nome
 
-O módulo tem um nome opcional, como o nó, com o limite de `module.name_length`. Sem nome próprio, a tela mostra o nome do módulo, como `Signal Timer`. O nome aparece no título da tela, no rótulo e no log (perguntas 389, 391 e 392).
+O módulo tem um nome opcional, como o nó, com o limite de `module.name_length`. Sem nome próprio, vale o padrão do nó, os 8 primeiros caracteres do ID, em qualquer idioma, porque o log, o rótulo e a action bar são montados no servidor, que não sabe o idioma do player (perguntas 142 e 427). O nome aparece na tela, no rótulo, no log e na action bar (perguntas 389, 391 e 392).
 
 ## Tela comum
 
@@ -111,7 +111,7 @@ Toda tela de módulo tem as mesmas partes comuns, com os componentes da Tela do 
 
 | Parte | Como é |
 |---|---|
-| Título | O nome do módulo, renomeável pelo dono como na Tela do Nó |
+| Título | O nome do tipo, como `Signal Timer`, traduzido, e, abaixo, o nome do módulo, renomeável pelo dono como na Tela do Nó |
 | Rede | A escolha de rede da Tela do Nó (`NetworkChoices`), com a última usada no topo |
 | Conexões | Cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor. Num módulo sem rede, o `Channel` abre primeiro a escolha de rede e, depois dela, a grade |
 | Rodapé | A rede e, para quem não é o dono, o cadeado |
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |
 | Zennd | 2026-11-14 10:24 | Detalha a contagem `modules on` (pergunta 424). |
 | Zennd | 2026-11-14 10:01 | Fixa o tamanho da placa (pergunta 422). |
 | Zennd | 2026-11-14 09:47 | Adiciona as mensagens (pergunta 421). |

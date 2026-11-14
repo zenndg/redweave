@@ -136,7 +136,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 
 | Parte | O que mostra | Pergunta |
 |---|---|---|
-| Topo | O nome do módulo, ou `Signal Timer` sem nome próprio. Para o dono, renomeável como na Tela do Nó, com o limite de `module.name_length` | 391 e 404 |
+| Topo | `Signal Timer` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável como na Tela do Nó, com o limite de `module.name_length` | 391, 404 e 427 |
 | Esquerda | O relógio moderno, com o anel de progresso que enche no intervalo e o arco que marca o pulso, e embaixo o botão `Running` ou `Stopped`. Com o `Pause` ativo, o relógio mostra `Paused` | 380 e 404 |
 | Direita | `Interval` e `Pulse`, em segundos com décimos, com `−` e `+`: o clique muda 0,1 s e o Shift + clique muda 1 s, e o tooltip mostra os ticks | 382, 398 e 404 |
 | Conexões | `Output` e `Pause`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 404 e 414 |
@@ -155,6 +155,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |
 | Zennd | 2026-11-14 10:19 | Leva a prancha da Tela do Signal Timer, com a nota do rodapé (pergunta 423). |
 | Zennd | 2026-11-14 09:46 | Adiciona a Tela do Signal Timer e os módulos no rodapé e no log da Tela do Controlador, da #103 (perguntas 378, 388, 392, 396, 404 e 413). |
 | Zennd | 2026-11-12 21:53 | Troca o que a #22 decidiria pelo que ela decidiu na aba `Nodes` (perguntas 359 e 364). |

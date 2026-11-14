@@ -368,7 +368,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Módulos na Tela do Controlador | Só a contagem `<n> modules on` no rodapé | 388 |
 | Nome do módulo | Opcional, como o do nó, com o nome do módulo como padrão | 389 |
 | Signal Timer ao ser colocado | `Stopped`, saída na frente, `Pause` atrás, 1 s e 0,5 s | 390 |
-| Limite do nome do módulo | `module.name_length`, 16 (1 a 64); nome no título da tela | 391 |
+| Limite do nome do módulo | `module.name_length`, 16 (1 a 64); sem nome próprio, os 8 primeiros caracteres do ID, como o nó | 391, 427 |
 | Módulos no log | Entram, com o nome do módulo e o canal | 392 |
 | Abrir a tela do módulo | Só com o Configurator no `Open`, como o nó | 393 |
 | Quebrar o módulo | Como o nó: só o dono no survival, item simples sem configuração | 394 |
@@ -404,6 +404,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Contagem `modules on` | Os módulos que contam, valendo 0 ou 15 | 424 |
 | Timer fora da faixa ao carregar | Ajusta à faixa nova, recomeça o ciclo e avisa no log | 425 |
 | Ações do Terminal no agregado | Saem para a fachada `network.terminal()`, para o `Network.java` caber em 400 linhas | 426 |
+| Nome padrão do módulo | Os 8 primeiros caracteres do ID, como o nó, porque o servidor não sabe o idioma | 427 |
 
 Não há perguntas pendentes da concepção.
 
@@ -411,6 +412,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:44 | Registra a decisão 427, da #103. |
 | Zennd | 2026-11-14 10:35 | Registra a decisão 426, da #103. |
 | Zennd | 2026-11-14 10:24 | Registra as decisões 424 e 425, da #103. |
 | Zennd | 2026-11-14 10:19 | Registra a decisão 423, da #103. |

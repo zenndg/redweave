@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 427 | O log e o rótulo são montados no servidor, que não sabe o idioma do player. Como aparece um Signal Module sem nome próprio? | Como o nó: com os 8 primeiros caracteres do ID (pergunta 142), em qualquer idioma, no nome da tela, no rótulo, no log e na action bar. O título fixo da tela continua `Signal Timer`, traduzido no cliente. Muda a pergunta 391 (regra 38) (#103) |
 | 426 | O `Network.java` tem 399 linhas, e o Checkstyle reprova mais de 400. O que sai do agregado para caber `network.modules()`? | As ações do Network Terminal: `turnOff`, `turnOn`, `clearNodes` e `deletion` passam para a fachada `network.terminal()`, como `network.remotes()`, sem mudar comportamento. Completa a pergunta 209 (#103) |
 | 425 | O que acontece ao carregar um timer salvo com o intervalo fora da faixa atual do config? | O intervalo vai ao limite mais próximo da faixa nova, o pulso passa a caber nele, e o ciclo recomeça, com um aviso no log (regra 14). O mínimo protege o tick do servidor, então um clock antigo não fura o limite que o pack subiu. Difere dos nomes (pergunta 93) (#103) |
 | 424 | Quais módulos a contagem `<n> modules on` inclui? | Os que contam: carregados, no alcance e numa rede `Online`, com a saída num canal desta rede, valendo 0 ou 15, como `remotes on`. Um timer entre pulsos continua contado. Completa a pergunta 388 (#103) |
@@ -46,7 +47,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 394 | O que acontece ao quebrar um Signal Module? | Como o nó: no survival, só o dono da placa quebra (pergunta 74); no criativo, qualquer um. A placa cai como item simples, que empilha e não guarda configuração, nome nem ciclo (pergunta 161). A saída vai a 0 na hora, e a placa cai se o bloco de apoio some (#103) |
 | 393 | Como um Signal Module abre a tela? | Como o Signal Node: só com o Configurator no modo `Open` (perguntas 140 e 188). Os outros modos e a mão vazia vêm na pergunta seguinte (#103) |
 | 392 | As mudanças do que um Signal Module escreve num canal entram no log da Tela do Controlador? | Sim, cada mudança vira uma linha com o nome do módulo e o canal, como as dos nós (pergunta 147) (#103) |
-| 391 | Que limite vale para o nome de um Signal Module, e onde ele aparece? | Uma chave própria, `module.name_length`, de 16 caracteres por padrão, de 1 a 64, que entra no `limites.md` (regra 3). O nome aparece no título da tela do módulo e, mais tarde, na lente e no Jade; sem nome, a tela mostra o nome do módulo, como `Signal Timer`. Completa a pergunta 389 (#103) |
+| 391 | Que limite vale para o nome de um Signal Module, e onde ele aparece? | Uma chave própria, `module.name_length`, de 16 caracteres por padrão, de 1 a 64, que entra no `limites.md` (regra 3). O nome aparece no título da tela do módulo e, mais tarde, na lente e no Jade; sem nome, a tela mostra o nome do módulo, como `Signal Timer`. Completa a pergunta 389 (#103) **Mudada pela pergunta 427:** sem nome próprio, vale o padrão do nó, os 8 primeiros caracteres do ID |
 | 390 | Como o Signal Timer nasce quando é colocado? | Parado, em `Stopped`, com a saída na borda da frente, o `Pause` na de trás, intervalo de 1 s e pulso de 0,5 s. Só começa quando o player o liga na tela, para não haver clock inesperado (#103) |
 | 389 | Um Signal Module tem nome próprio, como o nó? | Sim, como o nó: um nome opcional, com o nome do módulo como padrão. Os detalhes vêm nas perguntas seguintes (#103) |
 | 388 | Como os Signal Modules ligados a uma rede aparecem na Tela do Controlador? | Só no rodapé, numa contagem `<n> modules on`, com os que escrevem num canal agora, ao lado de `remotes on` (pergunta 364). A aba `Nodes` continua só com nós, e a lente e o Jade mostram cada módulo no mundo (#23 e #24) (#103) |
@@ -426,6 +427,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:44 | Registra a resposta 427, da #103, e marca a 391 como mudada. |
 | Zennd | 2026-11-14 10:35 | Registra a resposta 426, da #103. |
 | Zennd | 2026-11-14 10:24 | Registra as respostas 424 e 425, da #103. |
 | Zennd | 2026-11-14 10:19 | Registra a resposta 423, da #103. |
