@@ -281,7 +281,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Signal Remote: vínculo | Rede, nó e slot no item; `Link lost` quando quebra; troca a qualquer momento, e o canal antigo volta a 0 | 287, 291 |
 | Signal Remote: modos | Alavanca e botão, num seletor na tela; pulso no config | 288 |
 | Signal Remote: sinal mais forte | Aviso no tooltip e na action bar | 289 |
-| Timer vinculado | Na v0.1.0, em issue própria depois da #22; placa grudada, com textura, tela e visual de relógio moderno | 292, 293, 313 |
+| Timer vinculado | Na v0.1.0, em issue própria depois da #22; placa grudada, com textura, tela e visual de relógio moderno; escreve direto num canal ou numa borda, sem vínculo a um slot | 292, 293, 313, 375 |
 | Inversor de sinal | Na v0.1.0, em issue própria; placa binária como a tocha, com entrada e saída por lado físico ou canal | 294, 296, 313 |
 | Loop de sinal | Cancelado: repete o papel do timer | 295 |
 | Família de módulos | `Signal Modules`: placas grudadas com base comum, que nasce na #103; entrada e saída por lado físico ou canal | 297, 300, 301, 313 |
@@ -352,6 +352,71 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Face na Tela do Nó | Só o nome da face ao lado do cubo, sem o rótulo `Block face` | 372 |
 | Rodapé da Tela do Controlador | Contagens à direita: `unloaded` e `remotes on` na linha 1, `out of range` na linha 2 | 373 |
 | Artes aprovadas | Entram na #22: pranchas das telas e do tablet, 4 texturas, as antigas saem | 374 |
+| Módulo na rede | Escolhe rede `Online` e canal direto na tela, sem nó; conta no alcance medido da placa | 375 |
+| Entrada e saída dos módulos | Cada uma é uma borda ou um canal, nunca os dois | 376 |
+| Bordas dos módulos | Fixas por módulo, orientadas pela rotação da placa | 377 |
+| Dono do módulo | Quem colocou; os outros veem a tela só para leitura; canal só das redes do dono | 378 |
+| Ciclo do Signal Timer | Intervalo e pulso, com o pulso menor que o intervalo; faixas no config | 379 |
+| Controle do Signal Timer | `Running` ou `Stopped` na tela e a entrada `Pause`, que para e zera a saída | 380 |
+| Timer descarregado ou reiniciado | Continua do ponto: progresso e estado no NBT; congela sem tick | 381 |
+| Unidade do Signal Timer | Segundos com décimos, passos de 0,1 s; ticks no domínio e no save | 382 |
+| Bordas do Signal Timer | Saída na frente, `Pause` atrás | 383 |
+| Limites do Signal Timer | `timer.min_interval_ticks` 4 (4 a 200) e `timer.max_interval_ticks` 6000 (200 a 72000); pulso de 2 ticks ao intervalo menos 2 | 384 |
+| Timer e o estado da rede | Como um nó: fora do alcance ou rede não `Online` não conta; ciclo continua; rede apagada deixa a conexão sem canal | 385, 420 |
+| Timer descarregado no canal | Vale 0; sem lista de módulos, o `Unloaded` não aparece em tela | 386, 388 |
+| Módulos no domínio | Conjunto por tick numa parte nova do agregado, fora do save da rede; configuração e ciclo no NBT do bloco | 387 |
+| Módulos na Tela do Controlador | Só a contagem `<n> modules on` no rodapé | 388 |
+| Nome do módulo | Opcional, como o do nó, com o nome do módulo como padrão | 389 |
+| Signal Timer ao ser colocado | `Stopped`, saída na frente, `Pause` atrás, 1 s e 0,5 s | 390 |
+| Limite do nome do módulo | `module.name_length`, 16 (1 a 64); sem nome próprio, os 8 primeiros caracteres do ID, como o nó | 391, 427 |
+| Módulos no log | Entram, com o nome do módulo e o canal | 392 |
+| Abrir a tela do módulo | Só com o Configurator no `Open`, como o nó | 393 |
+| Quebrar o módulo | Como o nó: só o dono no survival, item simples sem configuração | 394 |
+| Configurator no módulo | Mão vazia só avisa; `Toggle` alterna `Running` e `Stopped`; `Wrench` retira; `Copy` sem ação | 395 |
+| Linha do módulo no log | Como a saída de um nó, com o nome do módulo; o `Pause` lido não entra | 396 |
+| Rede do módulo | Uma por módulo; cada conexão em canal escolhe um dos 16 canais dela | 397, 420 |
+| Ajuste do intervalo e do pulso | Só `−` e `+`: 0,1 s no clique, 1 s com Shift | 398 |
+| Rotação do módulo | Pela direção do player ao colocar; Shift + clique com o Configurator no `Open` gira 90° | 399 |
+| Rede e canal na tela do módulo | Escolha de rede e grade de 16 cores da Tela do Nó; seletor `Edge` ou `Channel` por conexão | 400, 420 |
+| Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco; animação só na tela | 401 |
+| Módulo numa rede `Offline` | Como o nó: `Open` e `Toggle` não agem, `Wrench` sim | 402 |
+| Giro da placa | 90° no sentido horário, com som e `Output: <borda>` na action bar | 403 |
+| Tela do Signal Timer | Relógio com anel e botão à esquerda; intervalo, pulso e conexões à direita; rede e cadeado no rodapé; prancha por IA | 404, 420 |
+| PR da #103 | Um só, com commits atômicos | 405 |
+| Testes da #103 | JUnit do ciclo, da parte nova e dos casos de uso; GameTests do mundo; roteiro manual | 406 |
+| Borda de saída | 15 ou 0, com força no bloco à frente, como o repetidor | 407 |
+| Início do ciclo | Do zero, com o pulso primeiro; `Pause` e `Stopped` zeram o progresso | 408 |
+| Ajuste com o timer rodando | Recomeça o ciclo; pulso reduzido se não couber | 409 |
+| Nome em português | `Temporizador de Sinal`; família `Módulos de Sinal` | 410 |
+| Save do Signal Timer | `redweave:signal_timer`; estados `facing`, `front`, `powered`, `running`; NBT com `module_id`, `owner`, `name`, `network`, o ciclo e as conexões como `edge` ou cor | 411, 420, 428 |
+| Entrada `Pause` pela borda | Como a do repetidor; acima de 0 pausa | 412 |
+| `modules on` no rodapé | Linha 2, depois de `out of range` | 413 |
+| `Channel` sem rede | Abre a escolha de rede e depois a grade | 414 |
+| Base comum e módulo | Base: placa, dono, nome, rede, conexões, agregado, Configurator, quebra, NBT e tela comuns; módulo: bordas, regra, `Toggle`, NBT próprio, centro da tela e arte | 415, 420 |
+| Colocação do módulo | Como o nó: qualquer face que não seja ar | 416 |
+| Rótulo sobre os módulos | Entra na #103: nome, estado e canal da saída | 417 |
+| Arte do Signal Timer | Placa nas 4 combinações de LEDs, ícone do item e prancha da tela | 418 |
+| Páginas da #103 | `modulos-de-sinal.md`, a base, e `signal-timer.md`, o timer | 419 |
+| Entrada e saída do módulo | Conexão, `Connection`; "porta" é só o `Gate` | 420 |
+| Mensagens dos módulos | Recolhido, só quem colocou, `Toggle` com o estado, giro com a borda, mão vazia, `Copy` ainda não, `Offline` | 421 |
+| Tamanho da placa do módulo | 10 × 10 e 2 de espessura, como o nó | 422 |
+| Prancha da Tela do Signal Timer | Entra como está; no rodapé vale a tabela do `telas.md` | 423 |
+| Contagem `modules on` | Os módulos que contam, valendo 0 ou 15 | 424 |
+| Timer fora da faixa ao carregar | Ajusta à faixa nova, recomeça o ciclo e avisa no log | 425 |
+| Ações do Terminal no agregado | Saem para a fachada `network.terminal()`, para o `Network.java` caber em 400 linhas | 426 |
+| Nome padrão do módulo | Os 8 primeiros caracteres do ID, como o nó, porque o servidor não sabe o idioma | 427 |
+| Rotação no estado do bloco | `front`, a direção real da frente, com 6 valores, no lugar de `rotation` | 428 |
+| Modelo da placa nas 24 orientações | Duas versões de cada modelo, com o topo girado 0° ou 90° no UV, mais o `x` e o `y` do blockstate | 429 |
+| Dicas do Configurator com os módulos | `Open`, `Toggle` e `Wrench` citam nós e módulos; o `Copy` fica igual | 430 |
+| Giro do módulo numa rede `Offline` | A placa gira; só a tela e o `Toggle` ficam bloqueados | 431 |
+| Som do giro do módulo | O clique do comparador, no mundo | 432 |
+| Estados do timer em português | `Rodando`, `Parado` e `Pausado`; em minúsculas na action bar | 433 |
+| Relógio da Tela do Signal Timer | Mostrador em sprite gerado por IA; anel de progresso e arco do pulso em código | 434 |
+| Rótulos da Tela do Signal Timer em português | `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal` e `%s ticks` | 435 |
+| Estado do Signal Remote em destaque | `On` e `Off` em negrito, verde `#6BD48F` e vermelho `#E2392F`, na action bar e no tooltip; `Pulse` sem cor | 436 e 437 |
+| Onde entra o destaque do Signal Remote | Na branch da #103, num commit à parte | 438 |
+| Pulso na placa do Signal Timer | Só a seta fica vermelha; o canto fica apagado, e o LED verde de `Running` continua | 439 |
+| Seta do Signal Timer | Centrada no mostrador, com ponta de 2 px e base de 4 px; o quadrado do canto sai da placa | 440 |
 
 Não há perguntas pendentes da concepção.
 
@@ -359,6 +424,36 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 13:43 | Registra a decisão 440, da #103. |
+| Zennd | 2026-11-14 13:37 | Registra a decisão 439, da #103. |
+| Zennd | 2026-11-14 13:34 | Registra as decisões 436 a 438, da #103. |
+| Zennd | 2026-11-14 13:19 | Registra a decisão 435, da #103. |
+| Zennd | 2026-11-14 12:52 | Registra a decisão 434, da #103. |
+| Zennd | 2026-11-14 12:35 | Registra a decisão 433, da #103. |
+| Zennd | 2026-11-14 12:34 | Registra a decisão 432, da #103. |
+| Zennd | 2026-11-14 12:31 | Registra as decisões 430 e 431, da #103. |
+| Zennd | 2026-11-14 12:08 | Registra a decisão 429, da #103. |
+| Zennd | 2026-11-14 11:13 | Registra a decisão 428, da #103. |
+| Zennd | 2026-11-14 10:44 | Registra a decisão 427, da #103. |
+| Zennd | 2026-11-14 10:35 | Registra a decisão 426, da #103. |
+| Zennd | 2026-11-14 10:24 | Registra as decisões 424 e 425, da #103. |
+| Zennd | 2026-11-14 10:19 | Registra a decisão 423, da #103. |
+| Zennd | 2026-11-14 10:01 | Registra a decisão 422, da #103. |
+| Zennd | 2026-11-14 09:47 | Registra a decisão 421, da #103. |
+| Zennd | 2026-11-14 09:46 | Corrige o `Unloaded` do timer descarregado pela decisão 388. |
+| Zennd | 2026-11-14 09:44 | Registra a decisão 420 e troca "porta" por "conexão" nas decisões da #103. |
+| Zennd | 2026-11-14 09:41 | Registra a decisão 419, da #103. |
+| Zennd | 2026-11-14 09:37 | Registra as decisões 415 a 418, da #103. |
+| Zennd | 2026-11-14 09:35 | Registra as decisões 411 a 414, da #103. |
+| Zennd | 2026-11-14 09:30 | Registra as decisões 407 a 410, da #103. |
+| Zennd | 2026-11-14 09:29 | Registra as decisões 403 a 406, da #103. |
+| Zennd | 2026-11-14 09:27 | Registra as decisões 399 a 402, da #103. |
+| Zennd | 2026-11-14 09:22 | Registra as decisões 395 a 398, da #103. |
+| Zennd | 2026-11-14 09:20 | Registra as decisões 391 a 394, da #103. |
+| Zennd | 2026-11-14 09:17 | Registra as decisões 387 a 390, da #103. |
+| Zennd | 2026-11-14 09:15 | Registra as decisões 383 a 386, da #103. |
+| Zennd | 2026-11-14 09:13 | Registra as decisões 379 a 382, da #103. |
+| Zennd | 2026-11-14 09:08 | Registra as decisões 375 a 378, da #103. |
 | Zennd | 2026-11-12 21:36 | Registra as decisões 372 a 374. |
 | Zennd | 2026-11-12 20:48 | Registra as decisões 368 a 371. |
 | Zennd | 2026-11-12 20:38 | Registra as decisões 364 a 367. |

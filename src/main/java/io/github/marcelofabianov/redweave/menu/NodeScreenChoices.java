@@ -21,9 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The network choice of the Node Screen: the rows the client draws, in the order the server keeps.
- * The client only sends back a position, so the server never trusts a network ID from it (rules 16
- * and 17, answers 157, 172 and 202).
+ * The network choice of the Node Screen and of the module screens: the rows the client draws, in
+ * the order the server keeps. The client only sends back a position, so the server never trusts a
+ * network ID from it (rules 16 and 17, answers 157, 172 and 202).
  */
 public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacketPayload {
   private static final String ID = "node_screen_choices";
@@ -103,9 +103,10 @@ public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacke
         player, new NodeScreenChoices(menu, choices.stream().map(Row::of).toList()));
   }
 
-  /** On the client: only the open Node Screen of the same menu takes the rows. */
+  /** On the client: only the open screen of the same menu takes the rows. */
   public static void receive(NodeScreenChoices choices, Player player) {
-    if (player.containerMenu instanceof NodeMenu menu && menu.containerId == choices.menu()) {
+    if (player.containerMenu instanceof NetworkChoiceMenu menu
+        && player.containerMenu.containerId == choices.menu()) {
       menu.acceptChoices(choices.rows());
     }
   }

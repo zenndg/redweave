@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -17,10 +18,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
- * The Configurator: opens, copies, pastes and picks up Signal Nodes, in the mode chosen with Shift
- * + scroll (configurador.md). The server decides every action (rule 16).
+ * The Configurator: opens, copies, pastes and picks up Signal Nodes, and turns, toggles and picks
+ * up Signal Modules, in the mode chosen with Shift + scroll (configurador.md). The server decides
+ * every action (rule 16).
  */
 public final class ConfiguratorItem extends Item {
   public ConfiguratorItem(Properties properties) {
@@ -52,11 +55,16 @@ public final class ConfiguratorItem extends Item {
         Component.translatable(ConfiguratorMessages.MODE, named(mode)), true);
   }
 
-  /** Only a Signal Node takes the click; any other block, as the controller, does nothing. */
+  /**
+   * Only a Signal Node or a Signal Module takes the click; any other block, as the controller, does
+   * nothing.
+   */
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
-    if (!(level.getBlockEntity(context.getClickedPos()) instanceof SignalNodeBlockEntity block)) {
+    BlockEntity clicked = level.getBlockEntity(context.getClickedPos());
+    if (!(clicked instanceof SignalNodeBlockEntity)
+        && !(clicked instanceof SignalTimerBlockEntity)) {
       return InteractionResult.FAIL;
     }
     if (level.isClientSide) {
@@ -67,9 +75,13 @@ public final class ConfiguratorItem extends Item {
     if (player == null || server.isEmpty()) {
       return InteractionResult.FAIL;
     }
-    ConfiguratorActions.onNode(
-            server.get(), player, context, block, modeOf(context.getItemInHand()))
-        .ifPresent(message -> player.displayClientMessage(message, true));
+    ConfiguratorMode mode = modeOf(context.getItemInHand());
+    Optional<Component> message =
+        clicked instanceof SignalNodeBlockEntity node
+            ? ConfiguratorActions.onNode(server.get(), player, context, node, mode)
+            : ModuleClicks.onModule(
+                server.get(), player, context, (SignalTimerBlockEntity) clicked, mode);
+    message.ifPresent(found -> player.displayClientMessage(found, true));
     return InteractionResult.CONSUME;
   }
 
@@ -99,6 +111,9 @@ public final class ConfiguratorItem extends Item {
               .withStyle(ChatFormatting.GRAY));
     }
     tooltip.add(hint(ConfiguratorMessages.hintOf(mode)));
+    if (mode == ConfiguratorMode.TOGGLE) {
+      tooltip.add(hint(ConfiguratorMessages.HINT_TOGGLE_MODULE));
+    }
     tooltip.add(hint(ConfiguratorMessages.HINT_SCROLL));
   }
 

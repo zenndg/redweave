@@ -26,7 +26,7 @@ public final class DeleteNetwork {
     if (network.isEmpty()) {
       return Outcome.UNKNOWN_NETWORK;
     }
-    Outcome outcome = network.get().deletion(player);
+    Outcome outcome = network.get().terminal().deletion(player);
     if (outcome == Outcome.ACCEPTED) {
       remover.remove(id);
       logs.forget(id);

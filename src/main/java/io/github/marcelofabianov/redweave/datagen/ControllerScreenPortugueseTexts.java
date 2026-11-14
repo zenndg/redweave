@@ -29,6 +29,7 @@ final class ControllerScreenPortugueseTexts {
   private static final String CHANNELS_IN_USE = "%s de %s canais em uso";
   private static final String UNLOADED = "%s descarregados";
   private static final String OUT_OF_RANGE = "%s fora de alcance";
+  private static final String MODULES_ON = "%s módulos ligados";
   private static final String REMOTES_ON = "%s controles ligados";
   private static final String OWNER_LINE = "Dono: %s";
   private static final String OWNER = "Dono";
@@ -81,6 +82,7 @@ final class ControllerScreenPortugueseTexts {
     add.accept(ControllerScreenTexts.UNLOADED, UNLOADED);
     add.accept(ControllerScreenTexts.OUT_OF_RANGE, OUT_OF_RANGE);
     add.accept(ControllerScreenTexts.REMOTES_ON, REMOTES_ON);
+    add.accept(ControllerScreenTexts.MODULES_ON, MODULES_ON);
     add.accept(ControllerScreenTexts.OWNER_LINE, OWNER_LINE);
     add.accept(ControllerScreenTexts.READ_ONLY, READ_ONLY);
   }

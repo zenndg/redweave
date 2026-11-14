@@ -128,7 +128,7 @@ class RemoteInputsTest {
     Network network = networkWith(Direction.INPUT);
     network.remotes().apply(Set.of(ON_DOOR));
 
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
 
     assertEquals(Signal.OFF, network.channelValue(DOOR));
     assertEquals(NONE, network.remotes().on());

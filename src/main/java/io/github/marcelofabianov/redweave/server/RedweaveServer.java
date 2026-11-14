@@ -68,11 +68,12 @@ public final class RedweaveServer {
   private final SignalLogs signalLogs;
   private final TerminalServices terminal;
   private final RemoteServices remotes;
+  private final ModuleServices modules;
   private final LabelWatch labelWatch = new LabelWatch(this);
+  private final RandomIds ids = new RandomIds();
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
-    RandomIds ids = new RandomIds();
     CreateNetwork create = new CreateNetwork(ids, networks, networks, limits);
     placeController = new PlaceController(create, networks, networks);
     breakController = new BreakController(networks, networks);
@@ -83,6 +84,7 @@ public final class RedweaveServer {
     readInput = new ReadInput(networks, networks, signalLogs, clock);
     terminal = new TerminalServices(networks, signalLogs);
     remotes = new RemoteServices(networks);
+    modules = new ModuleServices(ids, networks, signalLogs, clock);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
     evaluateNetworks = new EvaluateNetworks(networks, new Simulator(), signalLogs, clock);
@@ -237,5 +239,9 @@ public final class RedweaveServer {
 
   public RemoteServices remotes() {
     return remotes;
+  }
+
+  public ModuleServices modules() {
+    return modules;
   }
 }

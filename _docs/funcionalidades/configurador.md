@@ -1,6 +1,6 @@
 # Configurador
 
-O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes. Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
+O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes, e abre, gira, alterna e retira os Signal Modules (perguntas 393, 395 e 399). Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
 
 ## Em uma frase
 
@@ -17,6 +17,8 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy
 | `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
+Num Signal Module, o `Open` abre a tela e, com Shift, gira a placa 90°; o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer; o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
+
 Em qualquer modo, o Shift + clique no ar apaga a cópia (pergunta 128). O clique em qualquer outro bloco não faz nada, para um Shift + clique num bloco não apagar a cópia por engano.
 
 A cor de cada modo aparece com o nome escrito na action bar ao trocar e no tooltip. O visor do item mostra só a cor do modo, porque a tela dele tem 3×2 pixels: os 2×2 da esquerda na cor do modo, e o pixel de cima da direita aceso quando há cópia (perguntas 167 a 169 e 271). Os tons ficam no [`visual.md`](../conceito/visual.md#configurator).
@@ -31,6 +33,8 @@ Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `c
 | De baixo, com 70% desse tamanho | O nome do nó, como `Lampada 2` |
 
 Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276).
+
+Cada Signal Module dentro do mesmo raio também mostra um rótulo de duas linhas: o nome do módulo e, embaixo, o estado e o canal da saída, se ela estiver num canal (pergunta 417).
 
 O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
@@ -89,7 +93,7 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
-O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click a node to open it.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` ou `Click a node to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190 e 241).
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click to open a node or module, Shift + click to turn a module.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node or module to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241 e 430).
 
 ## Item
 
@@ -116,6 +120,8 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:31 | Leva os módulos às dicas do tooltip (pergunta 430). |
+| Zennd | 2026-11-14 09:46 | Leva os modos e o rótulo aos Signal Modules, da #103 (perguntas 393, 395, 399 e 417). |
 | Zennd | 2026-11-12 19:39 | O Shift + scroll funciona no macOS, com a roda horizontal (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | O modo `Open` abre também o Network Terminal (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle` no resumo, na rede `Offline`, nas mensagens e no tooltip, e tira o `name` do formato da cópia (perguntas 241 e 277). |

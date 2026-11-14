@@ -93,7 +93,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
   /** The node sticks to any block, but not to the air (no-de-sinal.md). */
   @Override
   protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-    return !level.getBlockState(pos.relative(state.getValue(FACING).getOpposite())).isAir();
+    return Plates.isHeld(level, pos, state.getValue(FACING));
   }
 
   /** Without its block, the node falls as an item, like a button (answer 74). */
@@ -105,7 +105,7 @@ public final class SignalNodeBlock extends Block implements EntityBlock {
       LevelAccessor level,
       BlockPos pos,
       BlockPos neighborPos) {
-    if (direction == state.getValue(FACING).getOpposite() && !canSurvive(state, level, pos)) {
+    if (Plates.falls(level, pos, state.getValue(FACING), direction)) {
       return Blocks.AIR.defaultBlockState();
     }
     return super.updateShape(state, direction, neighbor, level, pos, neighborPos);

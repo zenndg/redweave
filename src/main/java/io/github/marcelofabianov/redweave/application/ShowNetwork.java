@@ -40,7 +40,8 @@ public final class ShowNetwork {
         owner,
         nodes,
         channels,
-        network.remotes().on());
+        network.remotes().on(),
+        network.modules().on());
   }
 
   private static NodeRow rowOf(Network network, Node node, boolean owner, LoadedNodes loaded) {

@@ -22,9 +22,9 @@ class LabelChangesTest {
 
   @Test
   void theFirstLookSendsEveryLabel() {
-    LabelChanges changes = new LabelChanges();
+    LabelChanges<NodeId, NodeLabel> changes = new LabelChanges<>();
 
-    LabelChanges.Delta delta = changes.next(Map.of(NODE, label(LAMP)));
+    LabelChanges.Delta<NodeId, NodeLabel> delta = changes.next(Map.of(NODE, label(LAMP)));
 
     assertEquals(Map.of(NODE, label(LAMP)), delta.changed());
     assertTrue(delta.gone().isEmpty());
@@ -32,7 +32,7 @@ class LabelChangesTest {
 
   @Test
   void aLabelThatStaysTheSameIsNotSentAgain() {
-    LabelChanges changes = new LabelChanges();
+    LabelChanges<NodeId, NodeLabel> changes = new LabelChanges<>();
     changes.next(Map.of(NODE, label(LAMP)));
 
     assertTrue(changes.next(Map.of(NODE, label(LAMP))).isEmpty());
@@ -40,10 +40,10 @@ class LabelChangesTest {
 
   @Test
   void aChangedLabelIsSentAndALabelGoneIsTold() {
-    LabelChanges changes = new LabelChanges();
+    LabelChanges<NodeId, NodeLabel> changes = new LabelChanges<>();
     changes.next(Map.of(NODE, label(LAMP), OTHER_NODE, label(DOOR)));
 
-    LabelChanges.Delta delta = changes.next(Map.of(NODE, label(DOOR)));
+    LabelChanges.Delta<NodeId, NodeLabel> delta = changes.next(Map.of(NODE, label(DOOR)));
 
     assertEquals(Map.of(NODE, label(DOOR)), delta.changed());
     assertEquals(List.<NodeId>of(OTHER_NODE), delta.gone());
@@ -52,10 +52,10 @@ class LabelChangesTest {
   /** A node that only left the reach is still a change to send. */
   @Test
   void aLabelThatOnlyLeftIsAChange() {
-    LabelChanges changes = new LabelChanges();
+    LabelChanges<NodeId, NodeLabel> changes = new LabelChanges<>();
     changes.next(Map.of(NODE, label(LAMP)));
 
-    LabelChanges.Delta delta = changes.next(Map.of());
+    LabelChanges.Delta<NodeId, NodeLabel> delta = changes.next(Map.of());
 
     assertTrue(delta.changed().isEmpty());
     assertEquals(List.<NodeId>of(NODE), delta.gone());

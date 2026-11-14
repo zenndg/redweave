@@ -21,6 +21,7 @@ public final class Network {
   private final Nodes nodes = new Nodes();
   private final Readings readings = new Readings();
   private final RemoteInputs remoteInputs = new RemoteInputs();
+  private final ModuleInputs moduleInputs = new ModuleInputs();
   private final Emissions emissions = new Emissions();
   private String name;
   private ChannelColor color;
@@ -28,6 +29,8 @@ public final class Network {
   private final NetworkSignals signals;
   private final SlotEdits slotEdits;
   private final NetworkRemotes remotes;
+  private final TerminalActions terminal;
+  private final NetworkModules modules;
 
   private Network(
       NetworkId id,
@@ -41,9 +44,12 @@ public final class Network {
     this.name = name;
     this.color = color;
     this.status = status;
-    this.signals = new NetworkSignals(nodes, readings, remoteInputs, channels, status, limits);
+    this.signals =
+        new NetworkSignals(nodes, readings, remoteInputs, moduleInputs, channels, status, limits);
     this.slotEdits = new SlotEdits(nodes, readings, emissions);
     this.remotes = new NetworkRemotes(remoteInputs, signals, nodes, emissions);
+    this.terminal = new TerminalActions(this, status, emissions);
+    this.modules = new NetworkModules(moduleInputs, signals, emissions);
     this.limits = limits;
   }
 
@@ -173,29 +179,6 @@ public final class Network {
     return Outcome.ACCEPTED;
   }
 
-  /**
-   * Takes every node out, for the owner only, in any state, at a Network Terminal: the nodes stay
-   * in the world with no network, and their slots and readings go (answers 133 and 176).
-   */
-  public Outcome clearNodes(PlayerId requester) {
-    if (!isOwner(requester)) {
-      return Outcome.NOT_OWNER;
-    }
-    nodes.all().stream().map(Node::id).toList().forEach(this::loseNode);
-    return Outcome.ACCEPTED;
-  }
-
-  /**
-   * Whether the owner may delete the network at a Network Terminal: only an unplaced one goes, so a
-   * network with its controller in the world never does (answer 166). The saves remove it.
-   */
-  public Outcome deletion(PlayerId requester) {
-    if (!isOwner(requester)) {
-      return Outcome.NOT_OWNER;
-    }
-    return state() == NetworkState.UNPLACED ? Outcome.ACCEPTED : Outcome.NETWORK_NOT_UNPLACED;
-  }
-
   /** Configures one slot of a node, for the owner only. */
   public Outcome configureSlot(PlayerId requester, NodeId nodeId, int index, ChannelSlot slot) {
     return isOwner(requester)
@@ -253,16 +236,6 @@ public final class Network {
   public void loseController() {
     status.remove();
     emissions.markPending();
-  }
-
-  /** The owner turns an online network off, at a Network Terminal (answers 132 and 209). */
-  public Outcome turnOff(PlayerId requester) {
-    return isOwner(requester) ? pendingIfAccepted(status.turn(false)) : Outcome.NOT_OWNER;
-  }
-
-  /** The owner turns an offline network back on; an unplaced one waits for its controller. */
-  public Outcome turnOn(PlayerId requester) {
-    return isOwner(requester) ? pendingIfAccepted(status.turn(true)) : Outcome.NOT_OWNER;
   }
 
   private Outcome pendingIfAccepted(Outcome outcome) {
@@ -337,6 +310,16 @@ public final class Network {
     }
     emissions.markPending();
     return true;
+  }
+
+  /** What the Network Terminal does to the network, for its owner only (answers 209 and 426). */
+  public TerminalActions terminal() {
+    return terminal;
+  }
+
+  /** The Signal Modules that write into the channels of the network (answers 375 and 387). */
+  public NetworkModules modules() {
+    return modules;
   }
 
   /** The Signal Remotes of the network, inputs with no position (answers 27 and 360). */

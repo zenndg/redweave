@@ -104,7 +104,7 @@ class NodeSignalTest {
   @Test
   void aNodeOfAnOfflineNetworkIsOff() {
     Network network = networkWhereNodeReadsAndEmits(STRONG);
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
 
     assertEquals(Signal.OFF, network.nodeSignal(NODE));
   }

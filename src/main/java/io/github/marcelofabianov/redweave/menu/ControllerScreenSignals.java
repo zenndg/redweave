@@ -20,7 +20,8 @@ public record ControllerScreenSignals(
     List<Integer> nodeSignals,
     List<Integer> nodeStates,
     List<Integer> channelValues,
-    int remotesOn)
+    int remotesOn,
+    int modulesOn)
     implements CustomPacketPayload {
   private static final String ID = "controller_screen_signals";
 
@@ -42,11 +43,13 @@ public record ControllerScreenSignals(
           ControllerScreenSignals::channelValues,
           ByteBufCodecs.VAR_INT,
           ControllerScreenSignals::remotesOn,
+          ByteBufCodecs.VAR_INT,
+          ControllerScreenSignals::modulesOn,
           ControllerScreenSignals::new);
 
   /** Before the first values arrive, nothing is on. */
   static final ControllerScreenSignals NONE =
-      new ControllerScreenSignals(0, List.of(), List.of(), List.of(), 0);
+      new ControllerScreenSignals(0, List.of(), List.of(), List.of(), 0, 0);
 
   public ControllerScreenSignals {
     nodeSignals = List.copyOf(nodeSignals);
@@ -60,11 +63,13 @@ public record ControllerScreenSignals(
         view.nodes().stream().map(row -> row.signal().strength()).toList(),
         view.nodes().stream().map(row -> row.state().ordinal()).toList(),
         view.channels().stream().map(row -> row.value().strength()).toList(),
-        view.remotesOn());
+        view.remotesOn(),
+        view.modulesOn());
   }
 
   ControllerScreenSignals forMenu(int other) {
-    return new ControllerScreenSignals(other, nodeSignals, nodeStates, channelValues, remotesOn);
+    return new ControllerScreenSignals(
+        other, nodeSignals, nodeStates, channelValues, remotesOn, modulesOn);
   }
 
   /** On the client: only the open Controller Screen of the same menu takes the values. */

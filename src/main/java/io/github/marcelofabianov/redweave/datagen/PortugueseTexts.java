@@ -42,6 +42,7 @@ final class PortugueseTexts {
     TerminalPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     RemotePortugueseTexts.addTo(add);
+    ModulePortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);

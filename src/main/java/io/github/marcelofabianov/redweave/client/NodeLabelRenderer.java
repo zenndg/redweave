@@ -3,17 +3,23 @@ package io.github.marcelofabianov.redweave.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.domain.module.TimerState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
+import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.Label;
+import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ModuleLine;
 import io.github.marcelofabianov.redweave.network.ReceivedLabels;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.Optional;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -27,6 +33,7 @@ import org.joml.Matrix4f;
  * Draws the label over each node the server sent, while the player holds the Configurator in the
  * main hand, facing the camera like a name tag, and dimmer behind walls. Two lines: the network,
  * small, after a square in its color, and the node, a little bigger (answers 268 and 274 to 276).
+ * The Signal Modules get theirs too (answer 417).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID, value = Dist.CLIENT)
 public final class NodeLabelRenderer {
@@ -50,6 +57,7 @@ public final class NodeLabelRenderer {
   private static final int OPAQUE = 0xFF000000;
   private static final int NO_NETWORK_SQUARE = 0xFF8A9099;
   private static final float HALF = 2F;
+  private static final String SEPARATOR = " · ";
 
   private NodeLabelRenderer() {}
 
@@ -64,6 +72,9 @@ public final class NodeLabelRenderer {
     MultiBufferSource.BufferSource buffers = minecraft.renderBuffers().bufferSource();
     for (Label label : ReceivedLabels.all()) {
       draw(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, label);
+    }
+    for (ModuleLine module : ReceivedLabels.modules()) {
+      drawModule(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, module);
     }
     buffers.endBatch();
   }
@@ -82,21 +93,62 @@ public final class NodeLabelRenderer {
     int square = label.hasNetwork() ? colorOf(label.color()) : NO_NETWORK_SQUARE;
     Line top = new Line(network, NETWORK_SCALE, NETWORK_LINE_UP, square);
     Line bottom = new Line(Component.literal(label.nodeName()), NODE_SCALE, NODE_LINE_UP, 0);
-    drawLine(pose, camera, font, buffers, label, top);
-    drawLine(pose, camera, font, buffers, label, bottom);
+    drawLine(pose, camera, font, buffers, label.pos(), top);
+    drawLine(pose, camera, font, buffers, label.pos(), bottom);
+  }
+
+  /**
+   * Over a Signal Module: its name, and below, smaller, its state and the channel of its output,
+   * after a square in the color of the channel (answer 417).
+   */
+  private static void drawModule(
+      PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, ModuleLine module) {
+    Component state = Component.translatable(stateKey(module.state()));
+    Optional<ChannelColor> channel = channelOf(module.channel());
+    Component below =
+        channel
+            .<Component>map(color -> state.copy().append(SEPARATOR).append(ChannelNames.of(color)))
+            .orElse(state);
+    int square = channel.map(color -> OPAQUE | ChannelColors.argb(color)).orElse(0);
+    Line top = new Line(Component.literal(module.name()), NODE_SCALE, NETWORK_LINE_UP, 0);
+    Line bottom = new Line(below, NETWORK_SCALE, NODE_LINE_UP, square);
+    drawLine(pose, camera, font, buffers, module.pos(), top);
+    drawLine(pose, camera, font, buffers, module.pos(), bottom);
+  }
+
+  /** The state comes as the order of TimerState; one outside it shows as stopped. */
+  private static String stateKey(int state) {
+    if (state == TimerState.RUNNING.ordinal()) {
+      return TimerScreenTexts.RUNNING;
+    }
+    return state == TimerState.PAUSED.ordinal()
+        ? TimerScreenTexts.PAUSED
+        : TimerScreenTexts.STOPPED;
+  }
+
+  private static Optional<ChannelColor> channelOf(int channel) {
+    ChannelColor[] colors = ChannelColor.values();
+    return channel >= 0 && channel < colors.length
+        ? Optional.of(colors[channel])
+        : Optional.empty();
   }
 
   /** One line of the label, with its size, its height over the node and a square or none (0). */
   private record Line(Component text, float scale, double up, int square) {}
 
   private static void drawLine(
-      PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, Label label, Line line) {
+      PoseStack pose,
+      Camera camera,
+      Font font,
+      MultiBufferSource buffers,
+      BlockPos pos,
+      Line line) {
     Vec3 eye = camera.getPosition();
     pose.pushPose();
     pose.translate(
-        label.pos().getX() + CENTER - eye.x,
-        label.pos().getY() + ABOVE + line.up() - eye.y,
-        label.pos().getZ() + CENTER - eye.z);
+        pos.getX() + CENTER - eye.x,
+        pos.getY() + ABOVE + line.up() - eye.y,
+        pos.getZ() + CENTER - eye.z);
     pose.mulPose(camera.rotation());
     pose.scale(line.scale(), -line.scale(), line.scale());
     Matrix4f matrix = pose.last().pose();

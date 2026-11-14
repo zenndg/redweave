@@ -78,7 +78,7 @@ class SlotOutputsTest {
     Network network = leverAndLamp();
     outputs.observe(network, NOON);
 
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
 
     assertEquals(List.of(lamp(Signal.OFF)), outputs.observe(network, NOON));
   }

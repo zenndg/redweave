@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import java.util.Collection;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -20,6 +21,7 @@ public final class RedweaveBlocks {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
   private static final String SIGNAL_NODE_ID = "signal_node";
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
+  private static final String SIGNAL_TIMER_ID = "signal_timer";
 
   /** As fragile as a button. */
   private static final float NODE_HARDNESS = 0.5F;
@@ -60,6 +62,19 @@ public final class RedweaveBlocks {
           SIGNAL_NODE_ID,
           () ->
               new SignalNodeBlock(
+                  BlockBehaviour.Properties.of()
+                      .mapColor(MapColor.DEEPSLATE)
+                      .sound(SoundType.COPPER)
+                      .noCollission()
+                      .strength(NODE_HARDNESS)
+                      .pushReaction(PushReaction.DESTROY)));
+
+  /** A plate like the node: no collision, as fragile, broken by pistons (answers 394 and 422). */
+  public static final DeferredBlock<SignalTimerBlock> SIGNAL_TIMER =
+      BLOCKS.register(
+          SIGNAL_TIMER_ID,
+          () ->
+              new SignalTimerBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.COPPER)

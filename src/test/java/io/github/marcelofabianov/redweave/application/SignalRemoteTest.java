@@ -116,7 +116,7 @@ class SignalRemoteTest {
     assertEquals(Outcome.INVALID_SLOT, linkRemote.link(OWNER, id, NODE, FREE_SLOT));
     assertEquals(Outcome.UNKNOWN_NETWORK, linkRemote.link(OWNER, MISSING_NETWORK, NODE, SLOT));
 
-    network(id).turnOff(OWNER);
+    network(id).terminal().turnOff(OWNER);
     assertEquals(Outcome.NETWORK_NOT_ONLINE, linkRemote.link(OWNER, id, NODE, SLOT));
   }
 
@@ -145,7 +145,7 @@ class SignalRemoteTest {
   @Test
   void anOfflineNetworkKeepsTheLinkButSaysItIsOffline() {
     NetworkId id = networkWithAnInput();
-    network(id).turnOff(OWNER);
+    network(id).terminal().turnOff(OWNER);
 
     assertTrue(showRemote.show(id, ON_SLOT).orElseThrow().offline());
   }

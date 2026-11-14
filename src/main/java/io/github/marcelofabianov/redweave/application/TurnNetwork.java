@@ -16,11 +16,17 @@ public final class TurnNetwork {
 
   public Outcome off(PlayerId player, NetworkId id) {
     return SavedChange.apply(
-        finder.find(id), Outcome.UNKNOWN_NETWORK, network -> network.turnOff(player), saver);
+        finder.find(id),
+        Outcome.UNKNOWN_NETWORK,
+        network -> network.terminal().turnOff(player),
+        saver);
   }
 
   public Outcome on(PlayerId player, NetworkId id) {
     return SavedChange.apply(
-        finder.find(id), Outcome.UNKNOWN_NETWORK, network -> network.turnOn(player), saver);
+        finder.find(id),
+        Outcome.UNKNOWN_NETWORK,
+        network -> network.terminal().turnOn(player),
+        saver);
   }
 }

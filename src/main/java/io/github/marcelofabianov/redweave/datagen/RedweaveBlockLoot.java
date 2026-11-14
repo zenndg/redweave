@@ -26,6 +26,7 @@ final class RedweaveBlockLoot extends BlockLootSubProvider {
                     .include(RedweaveDataComponents.NETWORK.get())));
     dropSelf(RedweaveBlocks.SIGNAL_NODE.get());
     dropSelf(RedweaveBlocks.NETWORK_TERMINAL.get());
+    dropSelf(RedweaveBlocks.SIGNAL_TIMER.get());
   }
 
   @Override

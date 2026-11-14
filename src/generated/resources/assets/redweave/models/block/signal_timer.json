@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "east": {
+          "texture": "#edge"
+        },
+        "north": {
+          "texture": "#edge"
+        },
+        "south": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#front"
+        },
+        "west": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        2,
+        13
+      ]
+    }
+  ],
+  "textures": {
+    "edge": "redweave:block/signal_timer_edge",
+    "front": "redweave:block/signal_timer_front",
+    "particle": "redweave:block/signal_timer_edge"
+  }
+}

@@ -17,6 +17,9 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Linhas do log por rede | 100, de 10 a 1000, só em memória (pergunta 147) | `log.size` | 1 |
 | Raio do rótulo sobre os nós | 16 blocos, de 4 a 64 (pergunta 268) | `configurator.label_range` | 1 |
 | Pulso do Signal Remote no modo botão | 20 ticks, de 2 a 200 (perguntas 353 e 318) | `remote.pulse_ticks` | 1 |
+| Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
+| Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
+| Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
 | Network Terminals por player | 1 (pergunta 137) | fixo, regra do bloco | 1 |
 | Mensagens por segundo por canal na ponte | a definir | a definir | 5 |
 
@@ -26,6 +29,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 09:46 | Adiciona os limites do Signal Timer e o nome dos módulos (perguntas 384 e 391). |
 | Zennd | 2026-11-12 20:48 | Adiciona o pulso do Signal Remote (pergunta 353). |
 | Zennd | 2026-11-12 11:58 | Tira o `slot.name_length` (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | Adiciona o raio do rótulo sobre os nós (pergunta 268). |

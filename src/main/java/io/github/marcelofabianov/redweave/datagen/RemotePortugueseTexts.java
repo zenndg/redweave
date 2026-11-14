@@ -8,8 +8,9 @@ import java.util.function.BiConsumer;
 /** The texts of the Signal Remote in Portuguese (signal-remote.md). */
 final class RemotePortugueseTexts {
   private static final String NAME = "Controle de Sinal";
-  private static final String ON = "%s: ligado";
-  private static final String OFF = "%s: desligado";
+  private static final String FIRED = "%s: %s";
+  private static final String ON = "ligado";
+  private static final String OFF = "desligado";
   private static final String PULSE = "%s: pulso";
   private static final String HELD = "%s continua ligado por outra fonte.";
   private static final String LINK_LOST = "Vínculo perdido";
@@ -34,6 +35,7 @@ final class RemotePortugueseTexts {
 
   static void addTo(BiConsumer<String, String> add) {
     add.accept(RedweaveItems.SIGNAL_REMOTE.get().getDescriptionId(), NAME);
+    add.accept(RemoteMessages.FIRED, FIRED);
     add.accept(RemoteMessages.ON, ON);
     add.accept(RemoteMessages.OFF, OFF);
     add.accept(RemoteMessages.PULSE, PULSE);

@@ -19,12 +19,15 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`terminal-de-rede.md`](terminal-de-rede.md) | 1 | O Network Terminal: as redes do player, desligar, religar, limpar e apagar |
 | [`configurador.md`](configurador.md) | 1 | O Configurator: os modos de abrir, copiar e colar, e retirar nós |
 | [`signal-remote.md`](signal-remote.md) | 1 | O Signal Remote: o tablet que liga um slot de input de longe, o vínculo, o disparo e quando ele conta |
+| [`modulos-de-sinal.md`](modulos-de-sinal.md) | 2 | A base comum dos Signal Modules: a placa, o dono, a rede, as conexões, o Configurator, a tela comum e o save |
+| [`signal-timer.md`](signal-timer.md) | 2 | O Signal Timer: o ciclo de intervalo e pulso, o controle, a tela e o save |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 09:46 | Adiciona as páginas dos Módulos de Sinal e do Signal Timer (#103). |
 | Zennd | 2026-11-12 20:48 | Adiciona a página do Signal Remote (#22). |
 | Zennd | 2026-11-12 18:26 | Adiciona a página das portas lógicas (pergunta 328). |
 | Zennd | 2026-11-12 16:50 | Troca a lógica por canal e as portas em placa pelos Signal Modules (perguntas 308 a 310). |

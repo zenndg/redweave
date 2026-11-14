@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.application;
 
+import io.github.marcelofabianov.redweave.domain.network.ModuleOutputs;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.SignalChange;
 import io.github.marcelofabianov.redweave.domain.network.SignalLog;
@@ -16,6 +17,7 @@ public final class SignalLogs {
   private final LogLimits limits;
   private final Map<NetworkId, SignalLog> logs = new HashMap<>();
   private final Map<NetworkId, SlotOutputs> outputs = new HashMap<>();
+  private final Map<NetworkId, ModuleOutputs> modules = new HashMap<>();
 
   public SignalLogs(LogLimits limits) {
     this.limits = limits;
@@ -50,9 +52,15 @@ public final class SignalLogs {
   void forget(NetworkId network) {
     logs.remove(network);
     outputs.remove(network);
+    modules.remove(network);
   }
 
   SlotOutputs outputsOf(NetworkId network) {
     return outputs.computeIfAbsent(network, id -> new SlotOutputs());
+  }
+
+  /** What the Signal Modules of a network last wrote, for the log (answers 392 and 396). */
+  ModuleOutputs modulesOf(NetworkId network) {
+    return modules.computeIfAbsent(network, id -> new ModuleOutputs());
   }
 }

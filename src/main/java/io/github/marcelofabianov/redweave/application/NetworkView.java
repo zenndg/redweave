@@ -20,7 +20,8 @@ public record NetworkView(
     boolean viewerIsOwner,
     List<NodeRow> nodes,
     List<ChannelRow> channels,
-    int remotesOn) {
+    int remotesOn,
+    int modulesOn) {
   private static final String MISSING = "A network view needs a name, color, owner and state";
 
   public NetworkView {

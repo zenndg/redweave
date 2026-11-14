@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
 import io.github.marcelofabianov.redweave.menu.NodeScreenNames;
 import io.github.marcelofabianov.redweave.menu.RemoteLinkRows;
 import io.github.marcelofabianov.redweave.menu.TerminalScreenRows;
+import io.github.marcelofabianov.redweave.menu.TimerScreenNames;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -31,6 +32,20 @@ public final class RedweavePayloads {
     registerRemote(registrar);
     registerWorld(registrar);
     registerActions(registrar);
+    registerModules(registrar);
+  }
+
+  /** The screens of the Signal Modules: their names to the client, a new name to the server. */
+  private static void registerModules(PayloadRegistrar registrar) {
+    registrar
+        .playToClient(
+            TimerScreenNames.TYPE,
+            TimerScreenNames.STREAM_CODEC,
+            (names, context) -> TimerScreenNames.receive(names, context.player()))
+        .playToServer(
+            ModuleRenamed.TYPE,
+            ModuleRenamed.STREAM_CODEC,
+            (renamed, context) -> ModuleRenamed.receive(renamed, context.player()));
   }
 
   /** What the server sends to the open screens. */

@@ -16,10 +16,10 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The end of each tick: the Signal Remotes that count reach their networks (answer 355), the
- * networks waiting for it are evaluated once, the nodes whose output changed emit again, and the
- * nodes of those networks show their state, only in loaded chunks (rules 6 and 18, no-de-sinal.md
- * and answers 86 and 87).
+ * The end of each tick: the Signal Remotes and the Signal Modules that count reach their networks
+ * (answers 355 and 387), the networks waiting for it are evaluated once, the nodes whose output
+ * changed emit again, and the nodes of those networks show their state, only in loaded chunks
+ * (rules 6 and 18, no-de-sinal.md and answers 86 and 87).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID)
 public final class NetworkTicks {
@@ -32,6 +32,7 @@ public final class NetworkTicks {
 
   private static void tick(MinecraftServer minecraft, RedweaveServer server) {
     server.remotes().apply().apply(RemoteTicks.sightings(minecraft, server));
+    server.modules().apply().apply(server.modules().sightings().drain());
     List<Network> evaluated = server.pendingNetworks();
     server.evaluateNetworks().evaluate().stream()
         .map(change -> change.face().node())

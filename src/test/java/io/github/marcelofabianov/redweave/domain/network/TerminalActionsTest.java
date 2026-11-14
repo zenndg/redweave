@@ -37,7 +37,7 @@ class TerminalActionsTest {
   void clearingTakesEveryNodeOut() {
     Network network = twoNodesWithASignal();
 
-    assertEquals(Outcome.ACCEPTED, network.clearNodes(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().clearNodes(OWNER));
 
     assertEquals(List.of(), network.nodes());
     assertEquals(Signal.OFF, network.channelValue(LEVER));
@@ -48,7 +48,7 @@ class TerminalActionsTest {
   void onlyTheOwnerClearsTheNodes() {
     Network network = twoNodesWithASignal();
 
-    assertEquals(Outcome.NOT_OWNER, network.clearNodes(STRANGER));
+    assertEquals(Outcome.NOT_OWNER, network.terminal().clearNodes(STRANGER));
     assertEquals(List.of(NODE, OTHER_NODE), network.nodes().stream().map(Node::id).toList());
   }
 
@@ -58,7 +58,7 @@ class TerminalActionsTest {
     Network network = twoNodesWithASignal();
     network.removeController(OWNER);
 
-    assertEquals(Outcome.ACCEPTED, network.clearNodes(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().clearNodes(OWNER));
   }
 
   /** Only an unplaced network may go, so a network in the world is never deleted (166). */
@@ -66,11 +66,11 @@ class TerminalActionsTest {
   void onlyAnUnplacedNetworkCanBeDeleted() {
     Network network = network();
 
-    assertEquals(Outcome.NETWORK_NOT_UNPLACED, network.deletion(OWNER));
-    network.turnOff(OWNER);
-    assertEquals(Outcome.NETWORK_NOT_UNPLACED, network.deletion(OWNER));
+    assertEquals(Outcome.NETWORK_NOT_UNPLACED, network.terminal().deletion(OWNER));
+    network.terminal().turnOff(OWNER);
+    assertEquals(Outcome.NETWORK_NOT_UNPLACED, network.terminal().deletion(OWNER));
     network.removeController(OWNER);
-    assertEquals(Outcome.ACCEPTED, network.deletion(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().deletion(OWNER));
   }
 
   @Test
@@ -78,6 +78,6 @@ class TerminalActionsTest {
     Network network = network();
     network.removeController(OWNER);
 
-    assertEquals(Outcome.NOT_OWNER, network.deletion(STRANGER));
+    assertEquals(Outcome.NOT_OWNER, network.terminal().deletion(STRANGER));
   }
 }

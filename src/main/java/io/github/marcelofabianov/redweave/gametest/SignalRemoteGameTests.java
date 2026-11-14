@@ -156,7 +156,7 @@ public final class SignalRemoteGameTests {
     RemoteLinkMenu strangers = new RemoteLinkMenu(MENU_ID, stranger, InteractionHand.MAIN_HAND);
     helper.assertTrue(strangers.rows().lines().isEmpty(), STRANGER_SEES);
 
-    NodeScene.networkOf(nodeOf(tablet)).turnOff(new PlayerId(owner.getUUID()));
+    NodeScene.networkOf(nodeOf(tablet)).terminal().turnOff(new PlayerId(owner.getUUID()));
     owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
     RemoteLinkMenu owners = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
     helper.assertTrue(owners.rows().lines().isEmpty(), OFFLINE_LISTED);

@@ -159,6 +159,10 @@ Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. Na rede, ele é a parte `RemoteInputs` do agregado, entregue a cada tick com os tablets que contam, fora do save (perguntas 356 e 360). O item, o vínculo, o disparo e quando ele conta estão em [`signal-remote.md`](signal-remote.md).
 
+## Signal Modules
+
+Um Signal Module escreve direto num canal da rede dele, sem nó: na rede, ele é uma parte nova do agregado, entregue a cada tick com os módulos carregados que escrevem num canal, fora do save, como o `RemoteInputs`. Entra na regra do mais forte, conta no alcance do controlador medido da placa e vale 0 fora do alcance, numa rede que não está `Online` ou num chunk descarregado. A rede só fica pendente se um canal mudar (perguntas 375, 385, 386 e 387). A base está em [`modulos-de-sinal.md`](modulos-de-sinal.md).
+
 ## Permissões
 
 Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 22 e 28).
@@ -233,7 +237,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 ## Fora desta página
 
-- Os Signal Modules, da Fase 2, que sai junto com a Fase 1 na v0.1.0 (perguntas 297, 303 e 308).
+- O que cada Signal Module faz, na página dele, a partir de [`modulos-de-sinal.md`](modulos-de-sinal.md).
 - Circuitos e chips (Fase 3).
 - Transferir a rede para outro dono.
 
@@ -241,6 +245,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 09:46 | Adiciona os Signal Modules como fonte do canal, da #103 (perguntas 375 a 387). |
 | Zennd | 2026-11-12 20:48 | Liga o Signal Remote à página dele, com o valor 15 e o `RemoteInputs` (perguntas 352, 357 e 360). |
 | Zennd | 2026-11-12 17:27 | Marca o valor do disparo do Signal Remote como decisão da #22 (pergunta 318). |
 | Zennd | 2026-11-12 17:18 | Corrige o save sem `name` do slot e com o Terminal, o `Toggle` numa rede `Offline`, o Signal Remote e a seção final (perguntas 175, 224, 241, 277, 279, 287 e 303). |

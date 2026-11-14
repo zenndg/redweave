@@ -27,6 +27,7 @@ final class ControllerScreenEnglishTexts {
   private static final String CHANNELS_IN_USE = "%s of %s channels in use";
   private static final String UNLOADED = "%s unloaded";
   private static final String OUT_OF_RANGE = "%s out of range";
+  private static final String MODULES_ON = "%s modules on";
   private static final String REMOTES_ON = "%s remotes on";
   private static final String OWNER_LINE = "Owner: %s";
   private static final String OWNER = "Owner";
@@ -79,6 +80,7 @@ final class ControllerScreenEnglishTexts {
     add.accept(ControllerScreenTexts.UNLOADED, UNLOADED);
     add.accept(ControllerScreenTexts.OUT_OF_RANGE, OUT_OF_RANGE);
     add.accept(ControllerScreenTexts.REMOTES_ON, REMOTES_ON);
+    add.accept(ControllerScreenTexts.MODULES_ON, MODULES_ON);
     add.accept(ControllerScreenTexts.OWNER_LINE, OWNER_LINE);
     add.accept(ControllerScreenTexts.READ_ONLY, READ_ONLY);
   }

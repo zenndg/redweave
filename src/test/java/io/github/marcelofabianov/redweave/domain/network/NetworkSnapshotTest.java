@@ -95,7 +95,7 @@ class NetworkSnapshotTest {
   @Test
   void aNetworkTurnedOffComesBackOffEvenUnplaced() {
     Network network = busyNetwork();
-    network.turnOff(OWNER);
+    network.terminal().turnOff(OWNER);
     assertEquals(NetworkState.OFFLINE, restored(network).state());
 
     network.removeController(OWNER);

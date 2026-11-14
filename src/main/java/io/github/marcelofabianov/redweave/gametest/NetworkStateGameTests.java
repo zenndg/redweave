@@ -55,7 +55,7 @@ public final class NetworkStateGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
     NodeId node = NodeScene.placeNode(helper, owner, STONE, Direction.EAST);
-    networkOf(network).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(network).terminal().turnOff(new PlayerId(owner.getUUID()));
 
     ItemStack configurator = ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.COPY);
     NodeScene.click(helper, owner, NODE);
@@ -72,7 +72,7 @@ public final class NetworkStateGameTests {
   public static void aNetworkTurnedOffComesBackOffWithItsCoreOff(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
-    networkOf(network).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(network).terminal().turnOff(new PlayerId(owner.getUUID()));
     server().loseController().lose(network);
     helper.setBlock(CONTROLLER, Blocks.AIR);
 
@@ -90,7 +90,7 @@ public final class NetworkStateGameTests {
   public static void aLoadedControllerShowsItsNetworkTurnedOff(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
-    networkOf(network).turnOff(new PlayerId(owner.getUUID()));
+    networkOf(network).terminal().turnOff(new PlayerId(owner.getUUID()));
 
     ControllerLink.refreshCore(server(), helper.getLevel(), helper.absolutePos(CONTROLLER));
 

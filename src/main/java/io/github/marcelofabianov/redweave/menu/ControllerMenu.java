@@ -309,6 +309,11 @@ public final class ControllerMenu extends AbstractContainerMenu {
     return signals.remotesOn();
   }
 
+  /** The Signal Modules that write into a channel of the network now (answers 388 and 424). */
+  public int modulesOn() {
+    return signals.modulesOn();
+  }
+
   /** The signal of a node row, 0 before the values arrive. */
   public int nodeSignal(int row) {
     return valueAt(signals.nodeSignals(), row, 0);

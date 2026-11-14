@@ -20,6 +20,7 @@ public final class RedweaveItems {
   private static final String CONFIGURATOR_ID = "configurator";
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
   private static final String SIGNAL_REMOTE_ID = "signal_remote";
+  private static final String SIGNAL_TIMER_ID = "signal_timer";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -51,6 +52,10 @@ public final class RedweaveItems {
   public static final DeferredItem<SignalRemoteItem> SIGNAL_REMOTE =
       ITEMS.register(
           SIGNAL_REMOTE_ID, () -> new SignalRemoteItem(new Item.Properties().stacksTo(1)));
+
+  /** A plain item that stacks and keeps no setting, as the node (answer 394). */
+  public static final DeferredItem<BlockItem> SIGNAL_TIMER =
+      ITEMS.registerSimpleBlockItem(SIGNAL_TIMER_ID, RedweaveBlocks.SIGNAL_TIMER);
 
   private RedweaveItems() {}
 
