@@ -11,6 +11,12 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 547 | Com dois Signal Nodes no mesmo espaço, os rótulos, posicionados pelo bloco, se sobrepõem. Como fica? | Cada rótulo se desloca para o lado da sua parte, no passo 6 da #44, junto com o resto do desenho das partes |
+| 546 | O NBT do Signal Node como parte guarda o `facing`, que é sempre o oposto da `face` da parte no contêiner (pergunta 543)? | Não: o `facing` do nó sai da `face` do contêiner, sem duas fontes para o mesmo valor. Os outros campos da 534 continuam na parte. Completa a pergunta 534 |
+| 545 | Com um item de parte na mão, o que acontece ao clicar em cima de uma parte que já existe, como um nó no topo de um cabo no chão? | A parte é transparente: o alvo é o mesmo espaço, na face oposta à clicada, como se o clique fosse no bloco de trás. No exemplo, o clique mira a face `down`, já ocupada, e a action bar mostra `This face is taken.` (pergunta 533) |
+| 544 | Qual valor o campo `type` guarda no save de cada parte? | O ID do item, como `redweave:signal_node` e `redweave:signal_timer`, o mesmo que a pergunta 523 mantém, sem um segundo nome para manter. Fica fixado na #26 (regra 15) |
+| 543 | Qual o formato do NBT do bloco contêiner `part_space`? | Aninhado: `parts`, uma lista em que cada parte tem `type`, `face` (o lado do espaço onde ela encosta, como `down`) e `data`, com o NBT de hoje da parte intacto, sem risco de colisão com as chaves do contêiner. Fica fixado na #26 (regra 15). Completa a pergunta 523 |
+| 542 | Como fica o passo 3 da #44, o contêiner? | Junto com a conversão do Signal Node, num commit só, porque sem um tipo de parte o contêiner não se testa no mundo (regra 29). O `PartSpaceBlock` e o `PartSpaceBlockEntity` ficam em `block/`, a interface `Part` e o `NodePart` em `block/part/`, com o tick e o clique em interfaces separadas (regra 12), e o `PartItem` em `item/`. A face da parte é o lado do espaço onde ela encosta, e o código que acha o nó pela posição passa a achá-lo pela posição e pela face. Os 4 módulos vêm no passo seguinte. Completa a pergunta 538 |
 | 541 | A curva interna, entre dois Signal Cables da mesma cor em faces vizinhas do mesmo espaço, perde 1 de força? | Não: o cabo perde 1 só entre espaços de bloco, e a curva interna não perde nada. É a leitura literal de "por bloco" (pergunta 499), com o mesmo alcance de 15 blocos do pó do jogo, mesmo subindo uma parede. Completa as perguntas 499 e 504 |
 | 540 | Como fica o domínio do trecho do Signal Cable em `domain/cable/`? | O `Insulation`, com a cor e o dono, decide quais cabos se ligam (`joins`), e o `CableRun` calcula a força de cada pedaço pela entrada externa e pelas ligações que o adaptador entrega, só com os pedaços carregados: a força é a maior entrada menos a distância, com mínimo de 0, e a busca parte das fontes. A cor reusa o `ChannelColor`, o tipo das 16 cores de lã, sem relação com os canais (pergunta 501). Completa as perguntas 509, 530 e 537 |
 | 539 | Como a parte quebrada devolve o item, já que hoje cada bloco tem uma loot table `dropSelf` que o pack pode sobrescrever por datapack? | No código: cada parte devolve o próprio item, e o Signal Cable devolve o item com a cor. O `part_space` fica sem loot table própria, e o pack não sobrescreve o drop por datapack. Completa as perguntas 515 e 525 |
@@ -541,6 +547,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:58 | Registra as respostas 546 e 547. |
+| Zennd | 2026-11-14 20:40 | Registra as respostas 542 a 545. |
 | Zennd | 2026-11-14 20:33 | Registra as respostas 540 e 541. |
 | Zennd | 2026-11-14 20:27 | Registra as respostas 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a resposta 535. |

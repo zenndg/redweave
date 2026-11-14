@@ -20,6 +20,7 @@ O jogo guarda um bloco só por espaço. Para um cabo passar no chão de um espa�
 | Drop | No código: cada parte devolve o próprio item, e o `part_space` não tem loot table | 539 |
 | Partes | O Signal Cable, o Signal Node e os Signal Modules (o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer e os próximos) | 511 |
 | Ocupação | Uma parte por face: em cada uma das 6 faces do espaço, ou um cabo, ou um nó, ou um módulo, nunca dois na mesma face. No máximo 2 cabos por espaço | 498 e 513 |
+| Clique numa parte | Com um item de parte na mão, clicar numa parte que já existe mira o mesmo espaço, na face oposta à clicada, como se a parte fosse transparente. Um nó clicado no topo de um cabo no chão mira a face `down`, já ocupada | 545 |
 | Face ocupada | Colocar numa face ocupada, ou um terceiro cabo num espaço, não coloca a parte: o item fica na mão, e a action bar mostra `This face is taken.` ou `This space already has 2 cables.`, em inglês e em português | 533 |
 | Sinal no espaço | Partes do mesmo espaço trocam sinal como vizinhas: um cabo no chão se liga ao nó ou ao módulo na parede pela curva interna. O nó continua lendo e emitindo no bloco de apoio, e o módulo nas bordas da placa | 514 |
 | Mira | Só a parte sob a mira responde: quebrar tira só ela e devolve só o item dela, o Configurator abre, gira, alterna ou retira só ela, e o contorno de seleção mostra só essa parte | 515 |
@@ -32,7 +33,7 @@ O jogo guarda um bloco só por espaço. Para um cabo passar no chão de um espa�
 |---|---|---|
 | Bloco | Um bloco contêiner com ID próprio, `redweave:part_space` | 523 |
 | Itens | Mantêm os IDs de hoje: `signal_node`, `signal_timer`, `signal_inverter`, `weather_detector`, `signal_randomizer` e os próximos módulos, e `signal_cable` | 523 |
-| NBT | O contêiner guarda uma lista de partes, cada uma com o tipo, a face e o NBT que a parte já tem hoje (perguntas 76, 165, 411, 450, 467 e 481) | 523 |
+| NBT | O contêiner guarda `parts`, uma lista em que cada parte tem `type`, o ID do item, `face`, o lado do espaço onde ela encosta, como `down`, e `data`, com o NBT que a parte já tem hoje, intacto (perguntas 76, 165, 411, 450, 467 e 481) | 523, 543 e 544 |
 | Migração | Nenhuma: o Signal Node e os 4 módulos existentes viram partes antes da primeira versão publicada, e nada foi publicado. Tudo fica fixado na #26 (regra 15) | 516 |
 
 ## Conversão do que já existe
@@ -47,7 +48,7 @@ Na #44, o Signal Node e os 4 Signal Modules entregues até a #109 deixam de ser 
 
 ## Visual das partes
 
-Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488). Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Por isso, cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda (pergunta 534).
+Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488). Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Por isso, cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda (pergunta 534). O `facing` do Signal Node não vai para o save, porque é sempre o oposto da `face` da parte (pergunta 546). Com dois nós no mesmo espaço, cada rótulo se desloca para o lado da sua parte (pergunta 547).
 
 ## Fora desta página
 
@@ -58,6 +59,8 @@ Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `faci
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547, do `facing` do nó e dos rótulos. |
+| Zennd | 2026-11-14 20:40 | Registra as decisões 543 a 545, do NBT e do clique numa parte. |
 | Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539, do código, do desenho e do drop. |
 | Zennd | 2026-11-14 19:34 | Fecha a pendência do visual das partes (pergunta 534). |
 | Zennd | 2026-11-14 19:13 | Cria o documento, com as decisões 502, 511 a 517, 523, 524 e 533. |

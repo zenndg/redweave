@@ -517,6 +517,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Drop das partes | No código, sem loot table no `part_space` | 539 |
 | Domínio do trecho | `Insulation` (cor e dono) e `CableRun` (força pela entrada menos a distância); a cor reusa o `ChannelColor` | 540 |
 | Curva interna | Não perde força; o cabo perde 1 só entre espaços | 541 |
+| Passo 3 da #44 | O contêiner junto com o Signal Node como parte, num commit só | 542 |
+| NBT do contêiner | `parts`, com `type`, `face` e `data` aninhado | 543 |
+| Tipo da parte no save | O ID do item | 544 |
+| Clique numa parte | A parte é transparente: mira a face oposta do mesmo espaço | 545 |
+| `facing` do nó | Não vai para o save; sai da `face` do contêiner | 546 |
+| Rótulos no mesmo espaço | Cada um se desloca para o lado da sua parte | 547 |
 
 Não há perguntas pendentes da concepção.
 
@@ -524,6 +530,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547. |
+| Zennd | 2026-11-14 20:40 | Registra as decisões 542 a 545. |
 | Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541. |
 | Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a decisão 535. |
