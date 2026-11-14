@@ -96,7 +96,7 @@ public record NodeScreenNames(
   }
 
   /** The name of each channel, empty where the owner gave none (answer 221). */
-  private static Labels labelsOf(Network network) {
+  static Labels labelsOf(Network network) {
     return new Labels(
         network.channels().stream().map(channel -> channel.name().orElse(NONE)).toList());
   }

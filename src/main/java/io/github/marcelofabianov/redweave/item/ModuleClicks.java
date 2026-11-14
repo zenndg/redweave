@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -46,7 +47,7 @@ final class ModuleClicks {
       case OPEN ->
           player.isSecondaryUseActive()
               ? owned(player, block, () -> turn(level, pos))
-              : unlessOffline(server, context, block, Optional::empty);
+              : unlessOffline(server, context, block, () -> open(player, pos));
       case COPY -> message(ModuleMessages.NOT_COPIED);
       case TOGGLE ->
           unlessOffline(server, context, block, () -> owned(player, block, () -> toggle(block)));
@@ -89,6 +90,14 @@ final class ModuleClicks {
       return Optional.empty();
     }
     return Optional.of(ControllerMessages.offline(view.name().orElse(NO_NAME)));
+  }
+
+  /** Anyone opens the screen; who is not the owner sees it read only (answers 378 and 393). */
+  private static Optional<Component> open(Player player, BlockPos pos) {
+    if (player instanceof ServerPlayer viewer) {
+      SignalTimerBlock.openScreen(viewer, pos);
+    }
+    return Optional.empty();
   }
 
   private static Optional<Component> turn(Level level, BlockPos pos) {

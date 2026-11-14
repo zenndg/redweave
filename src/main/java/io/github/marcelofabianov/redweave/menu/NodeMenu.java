@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
  * reads the live values, and every action goes to the server as a button click, which the game only
  * delivers while the menu is still valid, so within reach of the node (answer 81).
  */
-public final class NodeMenu extends AbstractContainerMenu {
+public final class NodeMenu extends AbstractContainerMenu implements NetworkChoiceMenu {
   private static final int NO_STATE = 0;
   private static final String NO_NAME = "";
 
@@ -129,7 +129,8 @@ public final class NodeMenu extends AbstractContainerMenu {
     names = received;
   }
 
-  void acceptChoices(List<NodeScreenChoices.Row> received) {
+  @Override
+  public void acceptChoices(List<NodeScreenChoices.Row> received) {
     rows = received;
   }
 

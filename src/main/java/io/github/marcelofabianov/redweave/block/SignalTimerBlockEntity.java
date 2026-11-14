@@ -17,6 +17,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
@@ -77,11 +78,31 @@ public final class SignalTimerBlockEntity extends BlockEntity {
     return timer;
   }
 
-  /** Keeps the timer after a tick, and marks the block to save only when it changed. */
-  void setTimer(SignalTimer next) {
+  /** Keeps the timer after a tick or a change, and marks the block to save only when it changed. */
+  public void setTimer(SignalTimer next) {
     if (!timer.equals(Optional.of(next))) {
       timer = Optional.of(next);
       setChanged();
+    }
+  }
+
+  /** The owner moved the output to its edge or to a channel (answers 376 and 404). */
+  public void connectOutput(Connection connection) {
+    output = connection;
+    changed();
+  }
+
+  /** The owner moved the `Pause` to its edge or to a channel (answers 376 and 404). */
+  public void connectPause(Connection connection) {
+    pause = connection;
+    changed();
+  }
+
+  /** Saves the block and sends it to the clients, after its module changed from the screen. */
+  public void changed() {
+    setChanged();
+    if (level != null) {
+      level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
   }
 

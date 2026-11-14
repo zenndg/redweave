@@ -3,18 +3,22 @@ package io.github.marcelofabianov.redweave.block;
 import com.mojang.serialization.MapCodec;
 import io.github.marcelofabianov.redweave.config.NeoForgeTimerLimits;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.menu.TimerMenu;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
+import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Arrays;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -242,6 +246,15 @@ public final class SignalTimerBlock extends Block implements EntityBlock {
       player.displayClientMessage(Component.translatable(ModuleMessages.USE_TO_OPEN), true);
     }
     return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  /** Opens the Signal Timer Screen, from the Configurator in the Open mode (answer 393). */
+  public static void openScreen(ServerPlayer viewer, BlockPos pos) {
+    viewer.openMenu(
+        new SimpleMenuProvider(
+            (id, inventory, opener) -> new TimerMenu(id, viewer, pos),
+            RedweaveBlocks.SIGNAL_TIMER.get().getName()),
+        extra -> TimerMenu.writeOpening(extra, viewer, pos));
   }
 
   /**
