@@ -12,6 +12,7 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,6 +50,7 @@ public final class SignalTimerTickGameTests {
   private static final ChannelColor CHANNEL = ChannelColor.RED;
   private static final int SETTLE_TICKS = 30;
   private static final UUID DELETED = UUID.fromString("5f6a7b8c-9d0e-4f1a-8b2c-3d4e5f6a7b8c");
+  private static final String ONLY_FRONT = "Only the block in front should get the pulse";
   private static final String STILL_LINKED = "A timer should let a deleted network go";
   private static final String RUNNING = "running";
   private static final String NETWORK = "network";
@@ -120,6 +122,33 @@ public final class SignalTimerTickGameTests {
     });
   }
 
+  /**
+   * On every face, the running timer feeds only the block in front of its front edge, as the game
+   * asks it from that block, and gives 0 to the others (answers 406 and 407).
+   */
+  @GameTest(template = EMPTY)
+  public static void aTimerOnEveryFaceFeedsOnlyItsFront(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    helper.setBlock(STONE, Blocks.STONE);
+    for (net.minecraft.core.Direction face : net.minecraft.core.Direction.values()) {
+      helper.setBlock(STONE.relative(face), Blocks.AIR);
+      GameTestActions.placeOn(
+          helper, owner, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), STONE, face);
+      startAt(helper, STONE.relative(face));
+    }
+    helper.succeedWhen(() -> {
+      for (net.minecraft.core.Direction face : net.minecraft.core.Direction.values()) {
+        BlockPos plate = helper.absolutePos(STONE.relative(face));
+        net.minecraft.core.Direction front =
+            helper.getLevel().getBlockState(plate).getValue(SignalTimerBlock.FRONT);
+        for (net.minecraft.core.Direction side : net.minecraft.core.Direction.values()) {
+          int expected = side == front.getOpposite() ? Signal.MAX.strength() : 0;
+          helper.assertValueEqual(helper.getLevel().getSignal(plate, side), expected, ONLY_FRONT);
+        }
+      }
+    });
+  }
+
   /** A timer whose network was deleted lets it go, until its owner picks another (385). */
   @GameTest(template = EMPTY)
   public static void aTimerLetsADeletedNetworkGo(GameTestHelper helper) {
@@ -160,7 +189,15 @@ public final class SignalTimerTickGameTests {
 
   /** Starts the timer in its NBT, with the changes of the test. */
   private static void start(GameTestHelper helper, Consumer<CompoundTag> changes) {
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
+    startAt(helper, TIMER, changes);
+  }
+
+  private static void startAt(GameTestHelper helper, BlockPos at) {
+    startAt(helper, at, tag -> {});
+  }
+
+  private static void startAt(GameTestHelper helper, BlockPos at, Consumer<CompoundTag> changes) {
+    SignalTimerBlockEntity timer = helper.getBlockEntity(at);
     RegistryAccess registries = helper.getLevel().registryAccess();
     CompoundTag tag = timer.saveWithoutMetadata(registries);
     tag.putBoolean(RUNNING, true);
