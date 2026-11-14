@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | A base e as regras dos Signal Modules, planejado na #103 (pergunta 323) |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323) |
 
 ## Linguagem
 
@@ -69,6 +69,15 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RemoteInput` | Um Signal Remote que conta neste tick, no slot de input vinculado: o slot, não o canal, para o tablet acompanhar a troca de canal (perguntas 287 e 360) | #22 |
 | `RemoteInputs` | Dentro da rede: os tablets que contam neste tick, entregues inteiros a cada tick e fora do save. Põem 15 no canal de cada slot de input vinculado, na regra do mais forte (perguntas 352, 356 e 360) | #22 |
 | `NetworkRemotes` | O lado dos Signal Remotes da rede, por `remotes()`: `apply` recebe os tablets do tick, `accepts` diz se um slot aceita vínculo, `reaches` diz se um player naquele lugar alcança a rede (pergunta 354), `othersHold` diz se o canal do tablet fica ligado sem ele (pergunta 370), e `on` conta os que valem agora. Saiu do `Network` para o agregado ficar abaixo de 400 linhas | #22 |
+| `ModuleId` | O ID de um Signal Module, gravado no bloco como `module_id` (pergunta 411) | #103 |
+| `ModuleInput` | Um módulo carregado que escreve num canal neste tick: o ID, a posição da placa, o canal e o sinal, ligado ou desligado (perguntas 375 e 387) | #103 |
+| `ModuleInputs` | Dentro da rede: os módulos que escrevem num canal, entregues inteiros a cada tick e fora do save. Cada um no alcance põe o seu sinal no canal, na regra do mais forte (perguntas 375, 386 e 387) | #103 |
+| `NetworkModules` | O lado dos Signal Modules da rede, por `modules()`: `apply` recebe os módulos do tick, `reaches` diz se uma placa está no alcance, e `on` conta os que contam, ligados ou não (perguntas 385, 387 e 424) | #103 |
+| `Connection` | Em `module/`: uma entrada ou saída de um módulo, a borda (`EDGE`) ou um canal (`on`), nunca os dois. A `key` é `edge` ou a chave da cor, e `fromKey` devolve vazio para uma chave desconhecida (perguntas 376, 411 e 420) | #103 |
+| `TimerCycle` | Em `module/`: o intervalo e o pulso do Signal Timer, em ticks. O pulso tem 2 ticks ou mais e deixa 2 desligados. `withInterval` e `withPulse` limitam à faixa em vez de recusar, e `fittedTo` ajusta um ciclo salvo à faixa nova (perguntas 379, 384, 409 e 425) | #103 |
+| `TimerLimits` | Em `module/`: o menor e o maior intervalo do config. O domínio define a interface, e o config a implementa (pergunta 384) | #103 |
+| `TimerState` | Em `module/`: `STOPPED`, `RUNNING` ou `PAUSED` (pergunta 380) | #103 |
+| `SignalTimer` | Em `module/`: a regra do Signal Timer, um tick por vez. Nasce parado, começa do zero com o pulso, e o `Pause` e o `stop` zeram o ciclo. `output` dá 15 no pulso (perguntas 380, 390, 408 e 409) | #103 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 
 ## Regras e porquês
@@ -121,5 +130,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Tablet sem posição e sem save:** o Signal Remote não é nó, então não tem posição nem alcance próprio no domínio. Quem chama já filtra os tablets pelo alcance do player e só entrega os que contam, e o estado ligado ou desligado fica no item (perguntas 27, 354 e 356).
 - **Pendência só quando um canal muda:** trocar o conjunto de tablets compara os 16 canais antes e depois, para um tablet sobre um canal já ligado não acordar o simulador (pergunta 360).
 - **Tablet num slot inválido é ignorado:** um slot que deixou de ser input ativo não recebe nada, e o item mostra `Link lost`, para um vínculo velho nunca prender um canal (pergunta 287).
+- **Módulo sem posição no save da rede:** a rede não guarda os Signal Modules. Quem chama entrega a cada tick só os carregados que escrevem num canal, então um módulo descarregado vale 0, e a configuração fica no bloco (perguntas 386 e 387).
+- **Módulo conta pela placa:** o alcance de um módulo é medido da placa, como o de um nó, e a rede que não está `Online` ignora os módulos (pergunta 385).
+- **Timer limita em vez de recusar:** os botões da tela passam dos limites, então `TimerCycle` traz o valor para a faixa. Só um ciclo impossível, com pulso menor que 2 ticks ou sem 2 ticks desligados, é erro de programação (perguntas 384 e 398).
+- **Faixa vale também para o salvo:** um timer salvo fora da faixa nova é ajustado ao carregar, porque o mínimo protege o tick do servidor, ao contrário dos nomes (perguntas 93 e 425).
+- **O pause não vai para o save:** o save guarda se o timer roda e o progresso, e o próximo tick lê o `Pause` de novo. Um timer parado nunca tem progresso (perguntas 381 e 411).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

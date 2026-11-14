@@ -13,6 +13,7 @@ final class NetworkSignals {
   private final Nodes nodes;
   private final Readings readings;
   private final RemoteInputs remotes;
+  private final ModuleInputs modules;
   private final Channels channels;
   private final NetworkStatus status;
   private final NetworkLimits limits;
@@ -21,12 +22,14 @@ final class NetworkSignals {
       Nodes nodes,
       Readings readings,
       RemoteInputs remotes,
+      ModuleInputs modules,
       Channels channels,
       NetworkStatus status,
       NetworkLimits limits) {
     this.nodes = nodes;
     this.readings = readings;
     this.remotes = remotes;
+    this.modules = modules;
     this.channels = channels;
     this.status = status;
     this.limits = limits;
@@ -154,12 +157,18 @@ final class NetworkSignals {
       }
     }
     remotes.addTo(nodes, values, counts);
+    modules.addTo(values, this::reaches);
     return values;
   }
 
   /** The Signal Remotes that count now, for the Controller Screen; none when not online (364). */
   int remotesOn() {
     return isOnline() ? remotes.count(nodes) : 0;
+  }
+
+  /** The Signal Modules that count now, for the Controller Screen; none when not online (424). */
+  int modulesOn() {
+    return isOnline() ? modules.count(this::reaches) : 0;
   }
 
   /** Whether a node counts: the network is online and the node is in range (answer 132). */

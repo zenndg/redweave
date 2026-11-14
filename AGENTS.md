@@ -189,7 +189,7 @@ io.github.marcelofabianov.redweave
 │   ├── signal/             // Signal (0 a 15), ChannelColor
 │   ├── network/            // Network (agregado), Node, Channel, permissões, NetworkLimits (interface)
 │   ├── circuit/            // portas e a regra NOT (#28), chips (Fase 3)
-│   ├── module/             // base e regras dos Signal Modules (planejado, #103)
+│   ├── module/             // regras dos Signal Modules: conexões e o ciclo do Signal Timer
 │   └── simulation/         // compilação do grafo, avaliação por tick, loops e oscilação
 ├── application/            // casos de uso, um por ação do player, e as portas
 ├── config/                 // ModConfigSpec → implementa NetworkLimits
