@@ -13,6 +13,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
 | `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, e o Signal Randomizer, da #109 |
+| `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 
 ## Linguagem
 
@@ -96,6 +97,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
 | `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
+| `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
+| `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |
+| `PartSpace` | Em `part/`: as partes de um espaço de bloco, por face. `fit` diz se uma parte cabe, `with` a coloca e `without` a tira, sempre num espaço novo. Recusa mais de 2 cabos (`MAX_CABLES`) (perguntas 498 e 513) | #44 |
 
 ## Regras e porquês
 
@@ -161,5 +165,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Sem clima é 0 em todo modo:** onde o clima nunca muda, como no Nether, o `Clear` ficaria ligado para sempre, então `NONE` desliga todos os modos e tem um estado próprio (pergunta 464).
 - **Sorteio vem de quem chama:** o domínio não lê aleatoriedade, que seria uma dependência oculta, então o `Draws` é uma porta, e os testes sabem cada valor sorteado (pergunta 483).
 - **Intervalo num lugar só:** o timer e o Signal Randomizer ajustam o intervalo pela mesma regra, o `Interval`, cada um com os limites do seu config (perguntas 477 e 490).
+- **Face ocupada primeiro:** numa face já ocupada, a recusa é `FACE_TAKEN` mesmo com os 2 cabos no espaço, porque é a face que o player mirou que explica o clique recusado (pergunta 533).
+- **Ocupação no domínio:** o espaço só sabe o tipo de cada face. O que cada parte é e faz fica no adaptador e nas regras de cada uma, e o contêiner consulta o `PartSpace` antes de colocar (perguntas 512 e 538).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
