@@ -186,9 +186,9 @@ Em português, os rótulos são `Modo` e `Saída`, os modos `Chuva`, `Tempestade
 
 ## Tela do Signal Randomizer
 
-A prancha entra quando for gerada a partir de `tmp/arte/tela_do_signal_randomizer/` (perguntas 185, 186 e 487).
+![Tela do Signal Randomizer](../imagens/telas/tela-do-signal-randomizer.png)
 
-Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Timer, com o valor sorteado no lugar do relógio (pergunta 487). O comportamento está em [`signal-randomizer.md`](signal-randomizer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Timer, com o valor sorteado no lugar do relógio (pergunta 487). A prancha mostra quatro variantes: `Running`, a saída num canal com a grade de cores, `Stopped` e outro player. O comportamento está em [`signal-randomizer.md`](signal-randomizer.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
 
 | Parte | O que mostra | Pergunta |
 |---|---|---|
@@ -212,6 +212,7 @@ Em português, os rótulos são `Modo`, `Intervalo` e `Saída`, os modos `Analó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 18:16 | Leva a prancha da Tela do Signal Randomizer (pergunta 487). |
 | Zennd | 2026-11-14 17:46 | Adiciona a Tela do Signal Randomizer, sem a prancha (pergunta 487). |
 | Zennd | 2026-11-14 17:10 | Leva a prancha da Tela do Weather Detector (pergunta 470). |
 | Zennd | 2026-11-14 16:55 | Desenha o ícone do clima com sprites (pergunta 474). |

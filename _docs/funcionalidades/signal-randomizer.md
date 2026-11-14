@@ -62,7 +62,7 @@ Abre com o Configurator no `Open` (pergunta 393). Como a do timer, com as partes
 | Direita | `Mode`, com `Analog` e `Binary`; `Interval`, com `−` e `+`; e `Output`, com `Edge` ou `Channel` e a grade de 16 cores |
 | Rodapé | A rede e, para quem não é o dono, o cadeado |
 
-O desenho fica em [`telas.md`](telas.md#tela-do-signal-randomizer), com a prancha gerada a partir de `tmp/arte/tela_do_signal_randomizer/`.
+O desenho está em [`telas.md`](telas.md#tela-do-signal-randomizer), com a prancha `_docs/imagens/telas/tela-do-signal-randomizer.png`.
 
 ## No mundo
 
@@ -114,4 +114,5 @@ Em `tmp/arte/signal_randomizer/`: as 4 texturas do topo (a seta apagada ou acesa
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 18:16 | Aponta para a prancha da tela no `telas.md` (pergunta 487). |
 | Zennd | 2026-11-14 17:46 | Cria o documento, com as decisões 475 a 493 da #109. |
