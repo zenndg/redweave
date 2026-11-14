@@ -60,10 +60,10 @@ public record NodeLabelsUpdate(
   }
 
   /**
-   * The label of a module: its block, its name, its state as the order of TimerState, and the
-   * channel of its output, or -1 when the output is on its edge (answer 417).
+   * The label of a module: its block, its name, the key of the text of its state, and the channel
+   * of its output, or -1 when the output is on its edge (answer 417).
    */
-  public record ModuleLine(UUID module, BlockPos pos, String name, int state, int channel) {
+  public record ModuleLine(UUID module, BlockPos pos, String name, String state, int channel) {
     static final StreamCodec<RegistryFriendlyByteBuf, ModuleLine> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
@@ -72,7 +72,7 @@ public record NodeLabelsUpdate(
             ModuleLine::pos,
             ByteBufCodecs.STRING_UTF8,
             ModuleLine::name,
-            ByteBufCodecs.VAR_INT,
+            ByteBufCodecs.STRING_UTF8,
             ModuleLine::state,
             ByteBufCodecs.VAR_INT,
             ModuleLine::channel,
@@ -83,7 +83,7 @@ public record NodeLabelsUpdate(
           module,
           pos,
           label.name(),
-          label.state().ordinal(),
+          label.state(),
           label.output().map(ChannelColor::ordinal).orElse(NO_COLOR));
     }
   }

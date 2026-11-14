@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 public final class ModuleMessages {
   private static final String PREFIX = "message." + RedweaveMod.MOD_ID + ".module.";
   private static final String TIMER = "message." + RedweaveMod.MOD_ID + ".signal_timer.";
+  private static final String INVERTER = "message." + RedweaveMod.MOD_ID + ".signal_inverter.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
@@ -14,6 +15,7 @@ public final class ModuleMessages {
   public static final String NOT_COPIED = PREFIX + "not_copied";
   public static final String TIMER_RUNNING = TIMER + "running";
   public static final String TIMER_STOPPED = TIMER + "stopped";
+  public static final String INVERTER_NOTHING_TO_TOGGLE = INVERTER + "nothing_to_toggle";
 
   private ModuleMessages() {}
 }

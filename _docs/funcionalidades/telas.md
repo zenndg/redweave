@@ -143,11 +143,27 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 | Topo | `Signal Timer` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável como na Tela do Nó, com o limite de `module.name_length` | 391, 404 e 427 |
 | Esquerda | O relógio moderno, com o anel de progresso que enche no intervalo e o arco que marca o pulso, e embaixo o botão `Running` ou `Stopped`. Com o `Pause` ativo, o relógio mostra `Paused` | 380 e 404 |
 | Direita | `Interval` e `Pulse`, em segundos com décimos, com `−` e `+`: o clique muda 0,1 s e o Shift + clique muda 1 s, e o tooltip mostra os ticks | 382, 398 e 404 |
-| Conexões | `Output` e `Pause`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 404 e 414 |
+| Conexões | `Output` e `Pause`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 404, 414 e 456 |
 | Rodapé | A rede, que abre a escolha de rede da Tela do Nó, e, para quem não é o dono, o cadeado | 400 e 404 |
 | Rede `Offline` | A tela não abre, como a do nó | 402 |
 
 **O servidor confere cada ação (regras 16 e 17):** o dono da placa, a distância de interação de blocos do jogo, as faixas do intervalo e do pulso e o tamanho do nome.
+
+## Tela do Signal Inverter
+
+![Tela do Signal Inverter](../imagens/telas/tela-do-signal-inverter.png)
+
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do timer sem o relógio (pergunta 451). A prancha mostra quatro variantes: `On`, a saída num canal com a grade de cores, `Burnt out` e outro player. No rodapé, vale a tabela abaixo, como na Tela do Signal Timer (pergunta 423): a prancha mostra `No network` na variante `Burnt out`, que tem as conexões em canal e por isso tem rede, e não mostra a rede na variante de outro player. O comportamento está em [`signal-inverter.md`](signal-inverter.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum).
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Inverter` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 451 |
+| Esquerda | O diagrama A → NOT → B, com cada lado aceso em vermelho quando tem sinal, e embaixo o estado de B: `● On`, `● Off` ou `● Burnt out`, em âmbar | 448 e 451 |
+| Conexões | `Input` e `Output`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 441 e 456 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 451 |
+| Rede `Offline` | A tela não abre, como a do nó | 402 |
+
+Em português, os rótulos são `Entrada` e `Saída`, e os estados, `Ligado`, `Desligado` e `Queimado` (perguntas 435 e 448).
 
 ## Pendências
 
@@ -159,6 +175,9 @@ Abre com o Configurator no modo `Open` (pergunta 393). A prancha mostra quatro v
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Marca o `Channel` com a grade aberta, nas telas dos módulos (pergunta 456). |
+| Zennd | 2026-11-14 15:10 | Adiciona a Tela do Signal Inverter com a prancha (perguntas 423 e 451). |
+| Zennd | 2026-11-14 14:31 | Adiciona a Tela do Signal Inverter às pendências (pergunta 451). |
 | Zennd | 2026-11-14 13:19 | Adiciona os rótulos em português da Tela do Signal Timer (pergunta 435). |
 | Zennd | 2026-11-14 12:52 | Adiciona como o relógio do Signal Timer é desenhado (pergunta 434). |
 | Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |

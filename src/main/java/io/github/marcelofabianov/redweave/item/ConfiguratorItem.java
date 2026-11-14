@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.item;
 
+import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -63,8 +63,7 @@ public final class ConfiguratorItem extends Item {
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
     BlockEntity clicked = level.getBlockEntity(context.getClickedPos());
-    if (!(clicked instanceof SignalNodeBlockEntity)
-        && !(clicked instanceof SignalTimerBlockEntity)) {
+    if (!(clicked instanceof SignalNodeBlockEntity) && !(clicked instanceof ModuleBlockEntity)) {
       return InteractionResult.FAIL;
     }
     if (level.isClientSide) {
@@ -80,7 +79,7 @@ public final class ConfiguratorItem extends Item {
         clicked instanceof SignalNodeBlockEntity node
             ? ConfiguratorActions.onNode(server.get(), player, context, node, mode)
             : ModuleClicks.onModule(
-                server.get(), player, context, (SignalTimerBlockEntity) clicked, mode);
+                server.get(), player, context, (ModuleBlockEntity) clicked, mode);
     message.ifPresent(found -> player.displayClientMessage(found, true));
     return InteractionResult.CONSUME;
   }

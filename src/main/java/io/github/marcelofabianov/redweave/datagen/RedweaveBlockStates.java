@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
+import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
@@ -71,6 +72,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final float PLATE_FAR_EDGE = 13;
   private static final float PLATE_THICKNESS = 2;
   private static final String TIMER = "signal_timer";
+  private static final String INVERTER = "signal_inverter";
+  private static final String BURNT_SUFFIX = "_burnt";
   private static final String RUNNING_SUFFIX = "_running";
   private static final String TURNED_SUFFIX = "_turned";
   private static final String NO_SUFFIX = "";
@@ -105,6 +108,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     configuratorModels();
     remoteModels();
     timerModels();
+    inverterModels();
   }
 
   /**
@@ -121,7 +125,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
           String leds = timerLeds(state);
           String name = TIMER + leds + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
           ModelFile model =
-              models.computeIfAbsent(name, key -> timerModel(key, leds, turn.turned()));
+              models.computeIfAbsent(
+                  name, key -> plateModel(key, timerTexture(NODE_FRONT + leds), turn.turned()));
           return ConfiguredModel.builder()
               .modelFile(model)
               .rotationX(turn.x())
@@ -137,12 +142,49 @@ final class RedweaveBlockStates extends BlockStateProvider {
     return running + (state.getValue(SignalTimerBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX);
   }
 
-  /** The plate of the node, with the top of the timer, turned 90° on the UV when asked (429). */
-  private ModelFile timerModel(String name, String leds, boolean turned) {
+  /**
+   * The Signal Inverter: one model for each look, off, on or burnt, in two versions, with the top
+   * turned or not, as the timer (answers 429, 452 and 455). Burnt wins over powered.
+   */
+  private void inverterModels() {
+    Map<String, ModelFile> models = new HashMap<>();
+    getVariantBuilder(RedweaveBlocks.SIGNAL_INVERTER.get())
+        .forAllStates(state -> {
+          PlateTurn turn =
+              PlateTurn.of(
+                  state.getValue(SignalInverterBlock.FACING),
+                  state.getValue(SignalInverterBlock.FRONT));
+          String look = inverterLook(state);
+          String name = INVERTER + look + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
+          ResourceLocation front = modLoc(BLOCK_FOLDER + INVERTER + NODE_FRONT + look);
+          ModelFile model =
+              models.computeIfAbsent(name, key -> plateModel(key, front, turn.turned()));
+          return ConfiguredModel.builder()
+              .modelFile(model)
+              .rotationX(turn.x())
+              .rotationY(turn.y())
+              .build();
+        });
+    itemModels().basicItem(RedweaveItems.SIGNAL_INVERTER.get());
+  }
+
+  /** The suffix of the top for the look, in the order of the sheet of the art (answer 452). */
+  private static String inverterLook(BlockState state) {
+    if (state.getValue(SignalInverterBlock.BURNT)) {
+      return BURNT_SUFFIX;
+    }
+    return state.getValue(SignalInverterBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX;
+  }
+
+  /**
+   * The plate of a module, with the edge of the timer and the given top, turned 90° on the UV when
+   * asked (answer 429).
+   */
+  private ModelFile plateModel(String name, ResourceLocation front, boolean turned) {
     return models()
         .getBuilder(name)
         .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
-        .texture(FRONT_KEY, timerTexture(NODE_FRONT + leds))
+        .texture(FRONT_KEY, front)
         .texture(EDGE_KEY, timerTexture(NODE_EDGE))
         .texture(PARTICLE_KEY, timerTexture(NODE_EDGE))
         .element()

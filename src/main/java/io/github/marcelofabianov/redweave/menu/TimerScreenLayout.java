@@ -15,9 +15,6 @@ final class TimerScreenLayout {
   static final int ELAPSED = 9;
   static final int SIZE = 11;
 
-  /** No timer or no network: the states are kept as their order plus one. */
-  static final int NONE = 0;
-
   private static final int HALF_BITS = 15;
   private static final int HALF_MASK = (1 << HALF_BITS) - 1;
 

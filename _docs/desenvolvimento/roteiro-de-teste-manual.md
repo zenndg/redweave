@@ -256,7 +256,7 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 | 137 | Clique na placa com o Configurator no `Open` | A Tela do Signal Timer, como a prancha: o relógio com o anel de cobre enchendo e o arco vermelho do pulso, o tempo até o próximo pulso no centro e `● Running` embaixo |
 | 138 | Na tela, clique em `+` do `Interval`; depois Shift + clique; passe o mouse sobre o valor | O intervalo sobe 0,1 s e depois 1 s; o tooltip mostra os ticks |
 | 139 | Na tela, clique no lápis e renomeie para `Door clock` | O nome muda na tela e, com o Configurator na mão, no rótulo sobre a placa |
-| 140 | Clique em `Channel` do `Output` num timer sem rede; escolha a rede; escolha o canal `15` | Primeiro a escolha de rede, depois a grade de 16 cores; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a borda da frente apagada |
+| 140 | Clique em `Channel` do `Output` num timer sem rede; escolha a rede; escolha o canal `15` | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a borda da frente apagada |
 | 141 | Ponha um nó com o slot `15` como saída sobre uma lâmpada | A lâmpada do nó pisca com o timer |
 | 142 | Abra a Tela do Controlador | Na linha 2 do rodapé, `● 0 out of range · ● 1 modules on`, e o log com as linhas do módulo |
 | 143 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running · 15 Red`, com o quadrado vermelho |
@@ -267,12 +267,34 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 | 148 | Clique com um Signal Remote vinculado em `Lever` e passe o mouse sobre ele | `<canal>: On` em negrito verde e `<canal>: Off` em negrito vermelho; no tooltip, `On` ou `Off` com as mesmas cores |
 | 149 | Troque o idioma para Português (Brasil) e repita os passos 135, 137, 142, 143 e 148 | `Temporizador de Sinal`, `Intervalo`, `Pulso`, `Saída`, `Pausa`, `Borda`, `Canal`, `● Rodando`, `1 módulos ligados`, `<nome>: rodando` e `ligado` ou `desligado`, sem nada passando da borda |
 
+## Fase 1: o Signal Inverter
+
+Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8, com a alavanca e a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 150 | Pegue um Signal Inverter no criativo e passe o mouse sobre ele | O ícone da placa, com a seta, o entalhe de trás e o símbolo do NOT no meio |
+| 151 | Olhando para o norte, coloque o inversor no chão, com uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa com a seta vermelha apontando para onde você olhava, nas 3 posições, e a lâmpada da frente acesa na hora |
+| 152 | Ponha uma alavanca ligada a um bloco atrás da placa; ligue e desligue a alavanca | A lâmpada apaga com a alavanca ligada e acende com ela desligada, com o atraso de uma tocha; a seta fica vermelha só com a lâmpada acesa |
+| 153 | Com o Configurator no `Toggle`, clique no inversor | `Signal Inverter has nothing to toggle.` na action bar, e nada muda |
+| 154 | Com o Configurator no `Open`, dê Shift + clique na placa | A seta gira 90° no sentido horário, com o clique do comparador |
+| 155 | Clique na placa com o Configurator no `Open` | A Tela do Signal Inverter, como a prancha: o diagrama A → NOT → B, com B aceso em vermelho, `● On` embaixo e, à direita, `Input` e `Output` em `Edge` |
+| 156 | Com a tela aberta, ligue a alavanca de trás | No diagrama, A acende em vermelho, B apaga, e o estado vira `● Off` |
+| 157 | Clique em `Channel` do `Output` num inversor sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a lâmpada do nó segue a saída do inversor |
+| 158 | Ponha também o `Input` no canal `15`, para o inversor ler a própria saída | O inversor pisca e queima: a seta fica cinza-escura, a tela mostra `● Burnt out` em âmbar, e depois de 8 segundos ele volta a piscar e queima de novo |
+| 159 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, o estado (`On`, `Off` ou `Burnt out`) e a saída |
+| 160 | Peça ao segundo player para abrir a tela, girar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
+| 161 | Com o inversor queimado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | Ao entrar, o inversor continua queimado até o fim do tempo que faltava; com o chunk descarregado, a lâmpada do nó apaga, e o inversor volta a funcionar quando o chunk carrega |
+| 162 | Troque o idioma para Português (Brasil) e repita os passos 153, 155 e 158 | `Inversor de Sinal`, `O Inversor de Sinal não tem o que alternar.`, `Entrada`, `Saída`, `Borda`, `Canal`, `● Ligado`, `● Desligado` e `● Queimado`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Confere o `Channel` marcado com a grade aberta nos passos 140 e 157 (pergunta 456). |
+| Zennd | 2026-11-14 15:32 | Adiciona os passos 150 a 162, do Signal Inverter (pergunta 453). |
 | Zennd | 2026-11-14 13:57 | Adiciona os passos 131 a 149, do Signal Timer e do destaque do Signal Remote (pergunta 406). |
 | Zennd | 2026-11-12 21:49 | Adiciona os passos 117 a 130, do Signal Remote (pergunta 367). |
 | Zennd | 2026-11-12 19:51 | Ajusta os passos 11, 103 e 105 e adiciona os passos 112 a 116, da Tela do Nó em duas colunas (perguntas 346 a 348). |

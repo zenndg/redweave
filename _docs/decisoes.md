@@ -417,6 +417,22 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Onde entra o destaque do Signal Remote | Na branch da #103, num commit à parte | 438 |
 | Pulso na placa do Signal Timer | Só a seta fica vermelha; o canto fica apagado, e o LED verde de `Running` continua | 439 |
 | Seta do Signal Timer | Centrada no mostrador, com ponta de 2 px e base de 4 px; o quadrado do canto sai da placa | 440 |
+| Bordas do Signal Inverter | Entrada A atrás, saída B na frente | 441 |
+| Signal Inverter ao ser colocado | Emite 15 sem sinal em A, como a tocha; sem estado de ligado | 442 |
+| `Toggle` no Signal Inverter | Nada, com o aviso `Signal Inverter has nothing to toggle.` | 443 |
+| Atraso do Signal Inverter | 2 ticks pela borda, como a tocha | 444 |
+| Laço de Signal Inverters | Queima como a tocha: mais de 8 trocas em 60 ticks, apagado por 160 ticks, números no config | 445 |
+| Atraso do Signal Inverter pelo canal | 2 ticks no total, como pela borda | 446 |
+| Nome do Signal Inverter em português | `Inversor de Sinal` | 447 |
+| Estados do Signal Inverter | `On`, `Off` e `Burnt out`; `Ligado`, `Desligado` e `Queimado` | 448 |
+| Config da queima do Signal Inverter | `inverter.burnout_toggles` 8 (2 a 64), `inverter.burnout_window_ticks` 60 (20 a 1200), `inverter.burnout_ticks` 160 (20 a 6000) | 449 |
+| Save do Signal Inverter | `input`, `output` e `burnout_ticks`; a linha de atraso e o histórico não são salvos | 450 |
+| Tela do Signal Inverter | Como a do timer, com o diagrama A → NOT → B no lugar do relógio | 451 |
+| Placa do Signal Inverter | Seta vermelha com B ligado, cinza-escura queimado, símbolo do NOT no meio | 452 |
+| Testes do Signal Inverter | JUnit na regra, GameTests no mundo e roteiro manual | 453 |
+| PR da #105 | Um só, com a base dos módulos generalizada antes do inversor | 454 |
+| Estados do bloco do Signal Inverter | `facing`, `front`, `powered` e `burnt` | 455 |
+| `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
 
 Não há perguntas pendentes da concepção.
 
@@ -424,6 +440,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 15:41 | Registra a decisão 456, da #105. |
+| Zennd | 2026-11-14 14:30 | Registra as decisões 453 a 455, da #105. |
+| Zennd | 2026-11-14 14:27 | Registra as decisões 449 a 452, da #105. |
+| Zennd | 2026-11-14 14:17 | Registra as decisões 445 a 448, da #105. |
+| Zennd | 2026-11-14 14:15 | Registra as decisões 441 a 444, da #105. |
 | Zennd | 2026-11-14 13:43 | Registra a decisão 440, da #103. |
 | Zennd | 2026-11-14 13:37 | Registra a decisão 439, da #103. |
 | Zennd | 2026-11-14 13:34 | Registra as decisões 436 a 438, da #103. |

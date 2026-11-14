@@ -24,6 +24,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Signal Modules | — | `Módulos de Sinal` em português: a família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. Cada uma tem um dono, quem a colocou, e escreve direto num canal, sem nó. Cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313, 314, 375, 378, 410 e 415) |
 | Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`) e o `Signal Inverter` (`signal_inverter`) (pergunta 300) |
 | Conexão | `Connection` | Uma entrada ou uma saída de um módulo, ligada a uma borda da placa (`Edge`) ou a um canal da rede do módulo (`Channel`), nunca aos dois. Não é uma porta (perguntas 376 e 420) |
+| Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha, e queima num laço (perguntas 296, 310, 444, 445 e 447) |
 | Signal Timer | `signal_timer` | `Temporizador de Sinal` em português: o módulo que, a cada intervalo, liga a saída por um pulso, e para enquanto a entrada `Pause` recebe sinal (perguntas 379, 380 e 410) |
 | Porta | `Gate` | AND, OR, XOR ou NAND, de duas entradas, como Signal Module ou dentro de um chip. Cada entrada conta como ligada acima de 0, e a saída é 15 ou 0. O NOT é o Signal Inverter (perguntas 309, 310, 321 e 322) |
 | Regra NOT | `Not` | A regra de uma entrada que o Signal Inverter usa: 15 sem sinal e 0 com qualquer sinal, como a tocha do jogo. Não é uma porta (perguntas 310, 321 e 322) |
@@ -42,6 +43,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 14:31 | Adiciona o Signal Inverter, da #105 (perguntas 441 a 455). |
 | Zennd | 2026-11-14 09:46 | Detalha os Signal Modules e adiciona a conexão e o Signal Timer, da #103 (perguntas 375 a 420). |
 | Zennd | 2026-11-12 20:48 | Detalha o Signal Remote, da #22 (perguntas 352, 360 e 368). |
 | Zennd | 2026-11-12 19:01 | Adiciona o tipo do nó, da #107 (perguntas 337 e 339). |

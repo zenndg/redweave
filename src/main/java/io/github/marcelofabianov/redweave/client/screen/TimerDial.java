@@ -29,8 +29,6 @@ final class TimerDial {
   private static final int TRACK_OUTER = 33;
   private static final double HALF_PIXEL = 0.5;
   private static final double TURN = 2 * Math.PI;
-  private static final int COPPER = 0xFFC27B4C;
-  private static final int PULSE_ON = 0xFFE2392F;
   private static final int PULSE_MARK = 0xFF5A1E1B;
   private static final int NO_PAINT = 0;
   private static final double TICKS_PER_SECOND = 20.0;
@@ -66,9 +64,9 @@ final class TimerDial {
   private static int colorOf(double turn, double progress, double pulse) {
     boolean reached = turn < progress;
     if (turn < pulse) {
-      return reached ? PULSE_ON : PULSE_MARK;
+      return reached ? ScreenColors.REDSTONE : PULSE_MARK;
     }
-    return reached ? COPPER : NO_PAINT;
+    return reached ? ScreenColors.COPPER : NO_PAINT;
   }
 
   private static void drawMiddle(

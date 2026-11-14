@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
-import io.github.marcelofabianov.redweave.domain.module.TimerState;
+import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -59,11 +59,11 @@ public final class ModuleLabelGameTests {
         first,
         Optional.of(
             new NodeLabelsUpdate.ModuleLine(
-                id, helper.absolutePos(TIMER), name, TimerState.STOPPED.ordinal(), NO_CHANNEL)),
+                id, helper.absolutePos(TIMER), name, TimerScreenTexts.STOPPED, NO_CHANNEL)),
         NOT_SENT);
     helper.assertValueEqual(
         after.map(NodeLabelsUpdate.ModuleLine::state),
-        Optional.of(TimerState.RUNNING.ordinal()),
+        Optional.of(TimerScreenTexts.RUNNING),
         NOT_CHANGED);
     helper.succeed();
   }

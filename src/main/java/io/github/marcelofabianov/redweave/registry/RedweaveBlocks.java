@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.registry;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
+import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import java.util.Collection;
@@ -22,6 +23,7 @@ public final class RedweaveBlocks {
   private static final String SIGNAL_NODE_ID = "signal_node";
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
   private static final String SIGNAL_TIMER_ID = "signal_timer";
+  private static final String SIGNAL_INVERTER_ID = "signal_inverter";
 
   /** As fragile as a button. */
   private static final float NODE_HARDNESS = 0.5F;
@@ -75,6 +77,19 @@ public final class RedweaveBlocks {
           SIGNAL_TIMER_ID,
           () ->
               new SignalTimerBlock(
+                  BlockBehaviour.Properties.of()
+                      .mapColor(MapColor.DEEPSLATE)
+                      .sound(SoundType.COPPER)
+                      .noCollission()
+                      .strength(NODE_HARDNESS)
+                      .pushReaction(PushReaction.DESTROY)));
+
+  /** A module plate, as the Signal Timer (signal-inverter.md). */
+  public static final DeferredBlock<SignalInverterBlock> SIGNAL_INVERTER =
+      BLOCKS.register(
+          SIGNAL_INVERTER_ID,
+          () ->
+              new SignalInverterBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.COPPER)

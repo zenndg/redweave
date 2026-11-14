@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -17,41 +17,41 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * The names the Signal Timer Screen shows, built on the server: the name of the module, or the
- * first 8 characters of its ID, and the name, color and channels of its network (answers 385, 404
- * and 427). Sent when the screen opens and again when they change.
+ * The names a Signal Module Screen shows, built on the server: the name of the module, or the first
+ * 8 characters of its ID, and the name, color and channels of its network (answers 385, 404 and
+ * 427). Sent when the screen opens and again when they change.
  */
-public record TimerScreenNames(
+public record ModuleScreenNames(
     int menu, String module, String network, int color, NodeScreenNames.Labels labels)
     implements CustomPacketPayload {
-  private static final String ID = "timer_screen_names";
+  private static final String ID = "module_screen_names";
   private static final String NONE = "";
 
-  public static final Type<TimerScreenNames> TYPE =
+  public static final Type<ModuleScreenNames> TYPE =
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
 
-  public static final StreamCodec<RegistryFriendlyByteBuf, TimerScreenNames> STREAM_CODEC =
+  public static final StreamCodec<RegistryFriendlyByteBuf, ModuleScreenNames> STREAM_CODEC =
       StreamCodec.composite(
           ByteBufCodecs.VAR_INT,
-          TimerScreenNames::menu,
+          ModuleScreenNames::menu,
           ByteBufCodecs.STRING_UTF8,
-          TimerScreenNames::module,
+          ModuleScreenNames::module,
           ByteBufCodecs.STRING_UTF8,
-          TimerScreenNames::network,
+          ModuleScreenNames::network,
           ByteBufCodecs.VAR_INT,
-          TimerScreenNames::color,
+          ModuleScreenNames::color,
           NodeScreenNames.Labels.STREAM_CODEC,
-          TimerScreenNames::labels,
-          TimerScreenNames::new);
+          ModuleScreenNames::labels,
+          ModuleScreenNames::new);
 
   @Override
-  public Type<TimerScreenNames> type() {
+  public Type<ModuleScreenNames> type() {
     return TYPE;
   }
 
-  static TimerScreenNames read(ServerPlayer player, BlockPos pos, int menu) {
+  static ModuleScreenNames read(ServerPlayer player, BlockPos pos, int menu) {
     Optional<SignalModule> module =
-        player.level().getBlockEntity(pos) instanceof SignalTimerBlockEntity block
+        player.level().getBlockEntity(pos) instanceof ModuleBlockEntity block
             ? block.module()
             : Optional.empty();
     String name = module.map(SignalModule::displayName).orElse(NONE);
@@ -61,21 +61,22 @@ public record TimerScreenNames(
             .flatMap(id -> RedweaveServer.running().flatMap(server -> server.network(id)));
     return network
         .map(found ->
-            new TimerScreenNames(
+            new ModuleScreenNames(
                 menu, name, found.name(), found.color().ordinal(), NodeScreenNames.labelsOf(found)))
         .orElse(
-            new TimerScreenNames(
+            new ModuleScreenNames(
                 menu, name, NONE, NodeScreenNames.NO_COLOR, NodeScreenNames.Labels.NONE));
   }
 
-  static void send(ServerPlayer player, TimerScreenNames names) {
+  static void send(ServerPlayer player, ModuleScreenNames names) {
     PacketDistributor.sendToPlayer(player, names);
   }
 
-  /** On the client: only the open Signal Timer Screen of the same menu takes the names. */
-  public static void receive(TimerScreenNames names, Player player) {
-    if (player.containerMenu instanceof TimerMenu menu && menu.containerId == names.menu()) {
-      menu.acceptNames(names);
+  /** On the client: only the open Signal Module Screen of the same menu takes the names. */
+  public static void receive(ModuleScreenNames names, Player player) {
+    if (player.containerMenu instanceof ModuleMenu menu
+        && player.containerMenu.containerId == names.menu()) {
+      menu.sync().acceptNames(names);
     }
   }
 }
