@@ -11,6 +11,23 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 473 | A #108 entra num PR só? | Sim, como a #103 e a #105 (perguntas 405 e 454): commits atômicos, na ordem docs, domínio com TDD, bloco e menu com GameTests, tela, roteiro manual e `AGENTS.md`; uma refatoração da base comum, se precisar, vem antes, sem mudar comportamento (#108) |
+| 472 | Em que fronteiras entram os testes do Weather Detector? | JUnit: a regra, os 3 modos com cada clima e o `No weather`. GameTests: os que mudam o clima, que é global ao mundo, ficam num lote (`batch`) próprio, para não afetar os testes que rodam em paralelo; os demais cobrem colocar e emitir, o `Toggle`, o dono, o NBT, a saída num canal e o menu. Roteiro manual: a tela, a arte, os textos e o Nether. Na linha das perguntas 406 e 453 (#108) |
+| 471 | Como a placa do Weather Detector mostra o estado no mundo? | A seta centrada aponta para a saída e fica vermelha com a saída ligada; no meio, o símbolo do modo: nuvem com gota (`Rain`), raio (`Thunder`) ou sol (`Clear`). Estados do bloco `facing`, `front`, `powered` e `mode`, fixados na #26 (regra 15). São 6 texturas do topo (3 modos × ligado ou não) e o ícone, gerados por IA a partir de `tmp/arte/weather_detector/` (#108) |
+| 470 | Como fica a Tela do Weather Detector? | Como a do Signal Inverter (pergunta 451): a mesma moldura de 340 × 168 e as partes comuns. À esquerda, um ícone grande do clima atual (sol, nuvem com chuva ou raio) e a pílula do estado; à direita, `Mode` com `Rain`, `Thunder` e `Clear`, e `Output` com `Edge` ou `Channel`. A prancha é gerada por IA a partir de `tmp/arte/tela_do_weather_detector/` (#108) |
+| 469 | Que textos em português o Weather Detector usa? | Nome `Detector de Clima`; modos `Chuva`, `Tempestade` e `Céu limpo`; estados `Ligado`, `Desligado` e `Sem clima`; no `Toggle`, `<nome>: <modo>`, como `<nome>: Tempestade`. O ID continua `weather_detector` (#108) |
+| 468 | Com que frequência o Weather Detector lê o clima? | A cada tick, sem chave no config: são duas leituras de campo, e a rede só é avaliada quando a saída muda (regra 18) (#108) |
+| 467 | O que o Weather Detector guarda no NBT, além das chaves comuns dos módulos? | `mode` (`rain`, `thunder` ou `clear`) e `output` (`edge` ou a chave da cor do canal). O clima não é salvo: é lido de novo no primeiro tick. Um `mode` danificado volta a `rain`, com um aviso no log (regra 14). Completa a pergunta 415 (#108) |
+| 466 | Com a saída num canal, como o Weather Detector trata a rede `Offline` ou `Unplaced`, o alcance, a rede apagada e o chunk descarregado? | Como os outros módulos (perguntas 385 e 386): fora do alcance, numa rede que não está `Online` ou num chunk descarregado, o canal recebe 0, e com a rede apagada a saída fica sem canal até o dono escolher outro. A borda continua funcionando (#108) |
+| 465 | Que estados a tela e o rótulo do Weather Detector mostram? | A saída: `On` (15) ou `Off` (0), como o Signal Inverter (pergunta 448), e `No weather` numa dimensão sem clima (pergunta 464). O modo aparece na tela, e o rótulo fica como `On · 15 Red`. Completa a pergunta 417 (#108) |
+| 464 | Num lugar sem clima, como o Nether e o End, o que o Weather Detector emite? | 0 em todos os modos, numa dimensão sem luz do céu (`hasSkyLight` falso), onde o jogo não faz o clima avançar; a tela e o rótulo mostram o estado `No weather`. Evita o `Clear` ligado para sempre no Nether. Completa a pergunta 458 (#108) |
+| 463 | Como o Weather Detector nasce ao ser colocado? | No modo `Rain`, com a saída na borda da frente. Não tem estado de ligado: emite já no primeiro tick, conforme o clima, como o Signal Inverter (pergunta 442) (#108) |
+| 462 | O que o modo `Toggle` do Configurator faz num Weather Detector? | Troca o modo, `Rain` → `Thunder` → `Clear` → `Rain`, com `<nome>: <modo>` na action bar, sem abrir a tela; só o dono pode (pergunta 378). Completa a pergunta 395 (#108) |
+| 461 | Quais conexões o Weather Detector tem? | Só a saída, `Output`, na borda da frente ou num canal (pergunta 376). A trás e as laterais ficam livres, e a seta da placa aponta para a saída. Completa a pergunta 377 (#108) |
+| 460 | Que força a saída do Weather Detector emite? | Binária: 15 quando a condição do modo vale e 0 quando não vale, como o Signal Timer e o Signal Inverter, previsível para portas e alarmes (#108) |
+| 459 | Quais modos o Weather Detector tem? | Três: `Rain`, que liga com chuva ou tempestade; `Thunder`, que liga só com tempestade; e `Clear`, que liga com céu limpo, sem precisar de um Signal Inverter depois. O modo é escolhido na tela (#108) |
+| 458 | O que o Weather Detector lê para saber se chove? | O clima da dimensão da placa (`isRaining` e `isThundering`), que vale em qualquer lugar, até no subsolo e dentro da base, sem depender de céu aberto nem do bioma. Em dimensões sem clima, como o Nether e o End, nunca chove (#108) |
+| 457 | Qual é o nome em inglês e o ID do módulo detector de clima? | `Weather Detector`, com o ID `redweave:weather_detector`, como o `Daylight Detector` do jogo e os futuros detectores de player e de borda (#108) |
 | 456 | Na tela de um módulo, depois do clique em `Channel`, a grade de cores abre, mas o `Edge` continua marcado até a escolha de uma cor. Como ficam os botões com a grade aberta? | Com a grade aberta, o `Channel` fica marcado e o `Edge` volta a botão comum. Fechar sem escolher uma cor, clicando em `Edge`, volta ao que estava salvo. O servidor só muda quando a cor é escolhida (regra 16). Vale para o Signal Timer e o Signal Inverter, que usam a mesma coluna. Completa as perguntas 400 e 414 (#105) |
 | 455 | Quais são os estados do bloco do Signal Inverter? | `facing` e `front`, como os de todo módulo (pergunta 428); `powered`, que acende a seta com B ligado; e `burnt`, que troca a textura pela queimada. Com `burnt`, `powered` fica falso. Ficam fixados na #26 (regra 15) (#105) |
 | 454 | A #105 entra num PR só, com a generalização da base da #103? | Sim, como a #103 (pergunta 405): primeiro commits de refatoração, sem mudar comportamento, que tiram o timer da base comum, com uma interface do bloco de módulo; depois o inversor, em commits atômicos. É a prova da pergunta 301 (#105) |
@@ -456,6 +473,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 16:39 | Registra a resposta 473, da #108. |
+| Zennd | 2026-11-14 16:38 | Registra as respostas 469 a 472, da #108. |
+| Zennd | 2026-11-14 16:35 | Registra as respostas 465 a 468, da #108. |
+| Zennd | 2026-11-14 16:32 | Registra as respostas 461 a 464, da #108. |
+| Zennd | 2026-11-14 16:31 | Registra as respostas 457 a 460, da #108. |
 | Zennd | 2026-11-14 15:41 | Registra a resposta 456, da #105. |
 | Zennd | 2026-11-14 14:30 | Registra as respostas 453 a 455, da #105. |
 | Zennd | 2026-11-14 14:27 | Registra as respostas 449 a 452, da #105. |

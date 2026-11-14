@@ -432,6 +432,23 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes do Signal Inverter | JUnit na regra, GameTests no mundo e roteiro manual | 453 |
 | PR da #105 | Um só, com a base dos módulos generalizada antes do inversor | 454 |
 | Estados do bloco do Signal Inverter | `facing`, `front`, `powered` e `burnt` | 455 |
+| Nome do detector de clima | `Weather Detector`, `redweave:weather_detector` | 457 |
+| Leitura do Weather Detector | O clima da dimensão da placa, sem céu aberto nem bioma | 458 |
+| Modos do Weather Detector | `Rain`, `Thunder` e `Clear`, escolhidos na tela | 459 |
+| Força do Weather Detector | Binária, 0 ou 15 | 460 |
+| Conexões do Weather Detector | Só `Output`, na borda da frente ou num canal | 461 |
+| `Toggle` no Weather Detector | Troca o modo, `Rain` → `Thunder` → `Clear` | 462 |
+| Weather Detector ao ser colocado | `Rain`, emitindo na hora, sem estado de ligado | 463 |
+| Weather Detector sem clima | 0 em todos os modos, com o estado `No weather` | 464 |
+| Estados do Weather Detector | `On`, `Off` e `No weather` | 465 |
+| Weather Detector na rede | Como os outros módulos: 0 no canal fora do alcance, `Offline` ou descarregado | 466 |
+| Save do Weather Detector | `mode` e `output`; o clima não é salvo | 467 |
+| Leitura do clima | A cada tick, sem chave no config | 468 |
+| Weather Detector em português | `Detector de Clima`; `Chuva`, `Tempestade`, `Céu limpo`; `Ligado`, `Desligado`, `Sem clima` | 469 |
+| Tela do Weather Detector | Como a do inversor, com o ícone do clima à esquerda e `Mode` e `Output` à direita | 470 |
+| Placa do Weather Detector | Seta vermelha com a saída ligada e o símbolo do modo; estados `facing`, `front`, `powered` e `mode` | 471 |
+| Testes do Weather Detector | JUnit na regra, GameTests do clima num lote próprio e roteiro manual | 472 |
+| PR da #108 | Um só, com commits atômicos | 473 |
 | `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
 
 Não há perguntas pendentes da concepção.
@@ -440,6 +457,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 16:39 | Registra a decisão 473, da #108. |
+| Zennd | 2026-11-14 16:38 | Registra as decisões 469 a 472, da #108. |
+| Zennd | 2026-11-14 16:35 | Registra as decisões 465 a 468, da #108. |
+| Zennd | 2026-11-14 16:32 | Registra as decisões 461 a 464, da #108. |
+| Zennd | 2026-11-14 16:31 | Registra as decisões 457 a 460, da #108. |
 | Zennd | 2026-11-14 15:41 | Registra a decisão 456, da #105. |
 | Zennd | 2026-11-14 14:30 | Registra as decisões 453 a 455, da #105. |
 | Zennd | 2026-11-14 14:27 | Registra as decisões 449 a 452, da #105. |
