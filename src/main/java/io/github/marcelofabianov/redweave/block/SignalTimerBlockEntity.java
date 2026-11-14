@@ -29,6 +29,7 @@ public final class SignalTimerBlockEntity extends BlockEntity {
   private Optional<SignalTimer> timer = Optional.empty();
   private Connection output = Connection.EDGE;
   private Connection pause = Connection.EDGE;
+  private int emitted;
 
   public SignalTimerBlockEntity(BlockPos pos, BlockState state) {
     super(RedweaveBlockEntities.SIGNAL_TIMER.get(), pos, state);
@@ -57,6 +58,29 @@ public final class SignalTimerBlockEntity extends BlockEntity {
 
   public Connection pause() {
     return pause;
+  }
+
+  /** Keeps the timer after a tick, and marks the block to save only when it changed. */
+  void setTimer(SignalTimer next) {
+    if (!timer.equals(Optional.of(next))) {
+      timer = Optional.of(next);
+      setChanged();
+    }
+  }
+
+  /** The network of the module was deleted: it has none until its owner picks another (385). */
+  void loseNetwork() {
+    module.ifPresent(SignalModule::loseNetwork);
+    setChanged();
+  }
+
+  /** What the front edge gives now, not saved, as the next tick works it out again. */
+  int emitted() {
+    return emitted;
+  }
+
+  void setEmitted(int strength) {
+    emitted = strength;
   }
 
   /**

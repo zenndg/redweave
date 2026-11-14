@@ -108,7 +108,10 @@ public final class SignalTimerGameTests {
     helper.succeed();
   }
 
-  /** The interval goes to the nearest limit and the cycle restarts, on load (answer 425). */
+  /**
+   * The interval goes to the nearest limit and the cycle restarts, on load (answer 425): the timer
+   * ticks again from 0, far from where it was saved.
+   */
   @GameTest(template = EMPTY)
   public static void aSavedIntervalOutsideTheConfigFitsIt(GameTestHelper helper) {
     int longest = new NeoForgeTimerLimits().maxIntervalTicks();
@@ -116,13 +119,15 @@ public final class SignalTimerGameTests {
     BlockState state = RedweaveBlocks.SIGNAL_TIMER.get().defaultBlockState();
     helper.setBlock(ON_TOP, state);
 
-    SignalTimerBlockEntity loaded = load(helper, fullSave(longest + INTERVAL));
+    CompoundTag saved = fullSave(longest + INTERVAL);
+    saved.putInt(Keys.ELAPSED, longest / 2);
+    SignalTimerBlockEntity loaded = load(helper, saved);
     helper.getLevel().setBlockEntity(loaded);
 
     helper.succeedWhen(() -> {
       SignalTimer timer = loaded.timer().orElseThrow();
       helper.assertValueEqual(timer.cycle().intervalTicks(), longest, NOT_FITTED);
-      helper.assertValueEqual(timer.elapsedTicks(), 0, NOT_FITTED);
+      helper.assertTrue(timer.elapsedTicks() < INTERVAL, NOT_FITTED);
     });
   }
 

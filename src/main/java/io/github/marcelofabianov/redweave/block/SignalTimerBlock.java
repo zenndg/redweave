@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.block;
 import com.mojang.serialization.MapCodec;
 import io.github.marcelofabianov.redweave.config.NeoForgeTimerLimits;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Arrays;
 import java.util.Optional;
@@ -20,6 +21,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -114,6 +117,53 @@ public final class SignalTimerBlock extends Block implements EntityBlock {
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new SignalTimerBlockEntity(pos, state);
+  }
+
+  /** Only the server ticks the timer; the client sees its LEDs in the blockstate (401). */
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState state, BlockEntityType<T> type) {
+    if (level.isClientSide || type != RedweaveBlockEntities.SIGNAL_TIMER.get()) {
+      return null;
+    }
+    return (tickLevel, pos, tickState, block) -> {
+      if (block instanceof SignalTimerBlockEntity timer) {
+        TimerTicks.tick(tickLevel, pos, tickState, timer);
+      }
+    };
+  }
+
+  @Override
+  protected boolean isSignalSource(BlockState state) {
+    return true;
+  }
+
+  /**
+   * Only the block in front gets the signal, as from a repeater (answer 407). The game asks with
+   * the side seen from the asker, which for the block in front is the opposite of the front.
+   */
+  @Override
+  protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+    if (side != state.getValue(FRONT).getOpposite()) {
+      return 0;
+    }
+    return level.getBlockEntity(pos) instanceof SignalTimerBlockEntity timer ? timer.emitted() : 0;
+  }
+
+  /** The block in front gets it with strength, so a solid block passes it on (answer 407). */
+  @Override
+  protected int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+    return getSignal(state, level, pos, side);
+  }
+
+  /** Gone by any means, the front edge goes to 0 at once (answer 394). */
+  @Override
+  protected void onRemove(
+      BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    super.onRemove(state, level, pos, newState, movedByPiston);
+    if (!level.isClientSide && !state.is(newState.getBlock())) {
+      TimerTicks.wakeFront(level, pos, state);
+    }
   }
 
   /** Whoever places the timer owns it, and it is born stopped (answers 390 and 416). */

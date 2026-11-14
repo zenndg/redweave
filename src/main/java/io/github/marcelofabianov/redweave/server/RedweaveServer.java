@@ -84,7 +84,7 @@ public final class RedweaveServer {
     readInput = new ReadInput(networks, networks, signalLogs, clock);
     terminal = new TerminalServices(networks, signalLogs);
     remotes = new RemoteServices(networks);
-    modules = new ModuleServices(ids);
+    modules = new ModuleServices(ids, networks, signalLogs, clock);
     breakNode = new BreakNode(networks, networks);
     loseNode = new LoseNode(networks, networks);
     evaluateNetworks = new EvaluateNetworks(networks, new Simulator(), signalLogs, clock);
