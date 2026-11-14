@@ -401,6 +401,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Mensagens dos módulos | Recolhido, só quem colocou, `Toggle` com o estado, giro com a borda, mão vazia, `Copy` ainda não, `Offline` | 421 |
 | Tamanho da placa do módulo | 10 × 10 e 2 de espessura, como o nó | 422 |
 | Prancha da Tela do Signal Timer | Entra como está; no rodapé vale a tabela do `telas.md` | 423 |
+| Contagem `modules on` | Os módulos que contam, valendo 0 ou 15 | 424 |
+| Timer fora da faixa ao carregar | Ajusta à faixa nova, recomeça o ciclo e avisa no log | 425 |
+| Ações do Terminal no agregado | Saem para a fachada `network.terminal()`, para o `Network.java` caber em 400 linhas | 426 |
 
 Não há perguntas pendentes da concepção.
 
@@ -408,6 +411,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:35 | Registra a decisão 426, da #103. |
+| Zennd | 2026-11-14 10:24 | Registra as decisões 424 e 425, da #103. |
 | Zennd | 2026-11-14 10:19 | Registra a decisão 423, da #103. |
 | Zennd | 2026-11-14 10:01 | Registra a decisão 422, da #103. |
 | Zennd | 2026-11-14 09:47 | Registra a decisão 421, da #103. |

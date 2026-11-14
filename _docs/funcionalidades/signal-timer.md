@@ -25,6 +25,7 @@ As laterais ficam livres. Cada conexão é `Edge` ou `Channel` (pergunta 376).
 | Ajuste | Botões `−` e `+`: o clique muda 0,1 s, e o Shift + clique muda 1 s. O servidor confere o valor e o limita à faixa (regra 16) | 398 |
 | Faixas | O intervalo vai de `timer.min_interval_ticks` a `timer.max_interval_ticks`, e o pulso, de 2 ticks até o intervalo menos 2 | 384 |
 | Ajuste com o timer rodando | Mudar o intervalo ou o pulso recomeça o ciclo. Um pulso que não cabe no intervalo novo é reduzido para o intervalo menos 2 ticks | 409 |
+| Config mudado | Ao carregar, um intervalo fora da faixa atual vai ao limite mais próximo, o pulso passa a caber, e o ciclo recomeça, com um aviso no log | 425 |
 
 ## Controle
 
@@ -106,4 +107,5 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:24 | Adiciona o ajuste à faixa ao carregar (pergunta 425). |
 | Zennd | 2026-11-14 09:46 | Cria o documento, com as decisões 379 a 418 da #103. |

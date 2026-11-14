@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 426 | O `Network.java` tem 399 linhas, e o Checkstyle reprova mais de 400. O que sai do agregado para caber `network.modules()`? | As ações do Network Terminal: `turnOff`, `turnOn`, `clearNodes` e `deletion` passam para a fachada `network.terminal()`, como `network.remotes()`, sem mudar comportamento. Completa a pergunta 209 (#103) |
+| 425 | O que acontece ao carregar um timer salvo com o intervalo fora da faixa atual do config? | O intervalo vai ao limite mais próximo da faixa nova, o pulso passa a caber nele, e o ciclo recomeça, com um aviso no log (regra 14). O mínimo protege o tick do servidor, então um clock antigo não fura o limite que o pack subiu. Difere dos nomes (pergunta 93) (#103) |
+| 424 | Quais módulos a contagem `<n> modules on` inclui? | Os que contam: carregados, no alcance e numa rede `Online`, com a saída num canal desta rede, valendo 0 ou 15, como `remotes on`. Um timer entre pulsos continua contado. Completa a pergunta 388 (#103) |
 | 423 | A prancha da Tela do Signal Timer mostra `No network` na variante `Paused`, com o `Pause` num canal, e não mostra a rede na variante de outro player. Como fica? | A prancha entra como está, e o `telas.md` avisa que, no rodapé, vale a tabela: a rede à esquerda e, para quem não é o dono, o cadeado à direita. Completa as perguntas 404 e 418 (#103) |
 | 422 | De que tamanho é a placa de um Signal Module? | 10 × 10 pixels e 2 de espessura, como o Signal Node. A borda de saída continua alimentando o bloco vizinho, e a de entrada continua lendo dele (perguntas 407 e 412) (#103) |
 | 421 | Que mensagens de action bar os Signal Modules mostram? | `Wrench`: `Module picked up` (`Módulo recolhido`). Quem não é o dono, em qualquer ação: `Only the player who placed this module can change it.` (`Só quem colocou este módulo pode alterá-lo.`). `Toggle` no timer: `Signal Timer: Running` ou `Signal Timer: Stopped`, com o nome próprio quando houver. Giro: `Output: North` (`Saída: Norte`). Mão vazia: `Use a Configurator to open this module.` (`Use um Configurador para abrir este módulo.`). `Copy`: `Modules cannot be copied yet.` (`Módulos ainda não podem ser copiados.`). Rede `Offline`: o aviso que já existe. Completa as perguntas 395 e 403 (#103) |
@@ -423,6 +426,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:35 | Registra a resposta 426, da #103. |
+| Zennd | 2026-11-14 10:24 | Registra as respostas 424 e 425, da #103. |
 | Zennd | 2026-11-14 10:19 | Registra a resposta 423, da #103. |
 | Zennd | 2026-11-14 10:01 | Registra a resposta 422, da #103. |
 | Zennd | 2026-11-14 09:47 | Registra a resposta 421, da #103. |

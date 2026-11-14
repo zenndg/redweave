@@ -58,7 +58,7 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 
 ### Na Tela do Controlador
 
-- **Rodapé:** a contagem `● <n> modules on`, na linha 2, depois de `out of range`, com os módulos que escrevem num canal agora. A aba `Nodes` continua só com nós (perguntas 388 e 413).
+- **Rodapé:** a contagem `● <n> modules on`, na linha 2, depois de `out of range`, com os módulos que contam agora: carregados, no alcance, numa rede `Online` e com a saída num canal, valendo 0 ou 15. A aba `Nodes` continua só com nós (perguntas 388, 413 e 424).
 - **Log:** cada mudança do que um módulo escreve num canal vira uma linha como a de uma saída de nó, com a data e a hora, o nome do módulo, o canal, a direção `Output` e o valor. Uma entrada lida de um canal não gera linha (perguntas 392 e 396).
 
 ## Dono e permissões
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 10:24 | Detalha a contagem `modules on` (pergunta 424). |
 | Zennd | 2026-11-14 10:01 | Fixa o tamanho da placa (pergunta 422). |
 | Zennd | 2026-11-14 09:47 | Adiciona as mensagens (pergunta 421). |
 | Zennd | 2026-11-14 09:46 | Cria o documento, com as decisões 375 a 420 da #103. |
