@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 541 | A curva interna, entre dois Signal Cables da mesma cor em faces vizinhas do mesmo espaço, perde 1 de força? | Não: o cabo perde 1 só entre espaços de bloco, e a curva interna não perde nada. É a leitura literal de "por bloco" (pergunta 499), com o mesmo alcance de 15 blocos do pó do jogo, mesmo subindo uma parede. Completa as perguntas 499 e 504 |
+| 540 | Como fica o domínio do trecho do Signal Cable em `domain/cable/`? | O `Insulation`, com a cor e o dono, decide quais cabos se ligam (`joins`), e o `CableRun` calcula a força de cada pedaço pela entrada externa e pelas ligações que o adaptador entrega, só com os pedaços carregados: a força é a maior entrada menos a distância, com mínimo de 0, e a busca parte das fontes. A cor reusa o `ChannelColor`, o tipo das 16 cores de lã, sem relação com os canais (pergunta 501). Completa as perguntas 509, 530 e 537 |
 | 539 | Como a parte quebrada devolve o item, já que hoje cada bloco tem uma loot table `dropSelf` que o pack pode sobrescrever por datapack? | No código: cada parte devolve o próprio item, e o Signal Cable devolve o item com a cor. O `part_space` fica sem loot table própria, e o pack não sobrescreve o drop por datapack. Completa as perguntas 515 e 525 |
 | 538 | Onde ficam as partes no adaptador, o que hoje são os `BlockEntity` do Signal Node e dos módulos? | Num pacote `block/part/`, com uma interface `Part` curta (forma, sinal, tick, save e clique) e uma classe por tipo: o nó, a base dos módulos e cada módulo, e o cabo. O código dos `BlockEntity` de hoje migra para elas (regras 12 e 23). Completa a pergunta 512 |
 | 537 | Onde ficam no domínio a ocupação do espaço e o cálculo do trecho do cabo? | Em dois pacotes novos, `domain/part/` para a ocupação (pergunta 513) e `domain/cable/` para o trecho (pergunta 509). A estrutura de pacotes do `AGENTS.md` e do `README.md` ganha os dois no PR da #44 |
@@ -539,6 +541,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:33 | Registra as respostas 540 e 541. |
 | Zennd | 2026-11-14 20:27 | Registra as respostas 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a resposta 535. |
 | Zennd | 2026-11-14 19:34 | Registra a resposta 534 e marca as 72, 411, 428, 455, 471 e 488 como mudadas. |

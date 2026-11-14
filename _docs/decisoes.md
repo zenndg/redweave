@@ -515,6 +515,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Pacotes do domínio | `domain/part/` para a ocupação e `domain/cable/` para o trecho | 537 |
 | Partes no adaptador | `block/part/`, com a interface `Part` e uma classe por tipo | 538 |
 | Drop das partes | No código, sem loot table no `part_space` | 539 |
+| Domínio do trecho | `Insulation` (cor e dono) e `CableRun` (força pela entrada menos a distância); a cor reusa o `ChannelColor` | 540 |
+| Curva interna | Não perde força; o cabo perde 1 só entre espaços | 541 |
 
 Não há perguntas pendentes da concepção.
 
@@ -522,6 +524,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541. |
 | Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539. |
 | Zennd | 2026-11-14 19:50 | Registra a decisão 535. |
 | Zennd | 2026-11-14 19:34 | Registra a decisão 534. |
