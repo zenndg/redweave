@@ -7,16 +7,11 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import java.util.Optional;
 
 /**
- * The owner of a Weather Detector changes its mode, with the Toggle or on its screen. Anyone else
- * changes nothing (answers 378, 462 and 470). The detector lives in its block, so the caller keeps
- * what comes back.
+ * The owner of a Weather Detector picks its mode on its screen. Anyone else changes nothing
+ * (answers 378 and 470); the Toggle of the Configurator checks the owner before it (answer 462).
+ * The detector lives in its block, so the caller keeps what comes back.
  */
 public final class ChangeWeatherDetector {
-  public Optional<WeatherDetector> toggle(
-      PlayerId requester, SignalModule module, WeatherDetector detector) {
-    return owned(requester, module).map(owner -> detector.toggled());
-  }
-
   public Optional<WeatherDetector> mode(PlayerId requester, SignalModule module, WeatherMode mode) {
     return owned(requester, module).map(owner -> new WeatherDetector(mode));
   }
