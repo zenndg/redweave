@@ -37,6 +37,8 @@ As laterais ficam livres. Cada conexão é `Edge` ou `Channel` (pergunta 376).
 
 Um `Pause` lido de um canal fora do alcance ou numa rede que não está `Online` vale 0 (pergunta 385).
 
+Em português, os estados são `Rodando`, `Parado` e `Pausado` na tela e no rótulo, e em minúsculas na action bar, como `<nome>: rodando` (pergunta 433).
+
 ## Ao ser colocado
 
 O timer nasce `Stopped`, com a saída na borda da frente, o `Pause` na de trás, intervalo de 1 s e pulso de 0,5 s, sem rede (pergunta 390).
@@ -108,6 +110,7 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:35 | Adiciona os estados em português (pergunta 433). |
 | Zennd | 2026-11-14 12:08 | Adiciona o modelo nas 24 orientações (pergunta 429). |
 | Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
 | Zennd | 2026-11-14 10:24 | Adiciona o ajuste à faixa ao carregar (pergunta 425). |

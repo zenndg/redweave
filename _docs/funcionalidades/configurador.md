@@ -93,7 +93,7 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
-O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click a node to open it.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` ou `Click a node to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190 e 241).
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click to open a node or module, Shift + click to turn a module.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node or module to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241 e 430).
 
 ## Item
 
@@ -120,6 +120,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:31 | Leva os módulos às dicas do tooltip (pergunta 430). |
 | Zennd | 2026-11-14 09:46 | Leva os modos e o rótulo aos Signal Modules, da #103 (perguntas 393, 395, 399 e 417). |
 | Zennd | 2026-11-12 19:39 | O Shift + scroll funciona no macOS, com a roda horizontal (pergunta 351). |
 | Zennd | 2026-11-12 19:23 | O modo `Open` abre também o Network Terminal (pergunta 343). |

@@ -26,7 +26,7 @@ Resposta 415.
 | Forma | Uma placa de 10 × 10 pixels e 2 de espessura, como o Signal Node, grudada em qualquer face de um bloco que não seja ar, no chão, na parede ou no teto | 313, 416 e 422 |
 | Espaço | Cada placa ocupa o seu espaço de bloco na v0.1.0, sem multipart, que fica com a #44 | 315 |
 | Rotação | Ao colocar, a frente aponta para onde o player olha, projetada na face, como o repetidor do jogo | 399 |
-| Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o som do clique e a borda da saída na action bar, como `Output: North`. Só o dono gira | 399 e 403 |
+| Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira | 399, 403 e 432 |
 | Bordas | As 4 bordas, frente, trás, esquerda e direita, ligadas aos vizinhos na mesma camada. Quais são entrada e quais são saída é fixo por módulo, e a textura mostra a seta | 314 e 377 |
 | Bloco de apoio | Não recebe sinal do módulo. Se ele some, a placa cai como item | 394 e 407 |
 
@@ -81,7 +81,7 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 | `Toggle` | O que o módulo define; no Signal Timer, alterna `Running` e `Stopped` | 395 |
 | `Wrench` | Retira o módulo como item, só pelo dono | 395 |
 
-Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. O `Wrench` funciona. Um módulo sem rede abre normalmente (pergunta 402).
+Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. O `Wrench` funciona, e o Shift + clique no `Open` também gira a placa, porque o giro não toca na rede. Um módulo sem rede abre normalmente (perguntas 402 e 431).
 
 ### Mensagens
 
@@ -169,6 +169,8 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:34 | Fixa o som do giro (pergunta 432). |
+| Zennd | 2026-11-14 12:31 | Deixa o giro funcionar numa rede `Offline` (pergunta 431). |
 | Zennd | 2026-11-14 11:13 | Troca `rotation` por `front` (pergunta 428). |
 | Zennd | 2026-11-14 10:44 | Troca o nome padrão do módulo pelo do nó (pergunta 427). |
 | Zennd | 2026-11-14 10:24 | Detalha a contagem `modules on` (pergunta 424). |

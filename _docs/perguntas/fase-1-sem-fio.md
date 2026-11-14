@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 433 | Como aparecem em português os estados do Signal Timer, `Running`, `Stopped` e `Paused`? | Traduzidos, como os do Signal Remote: `Rodando`, `Parado` e `Pausado` na tela e no rótulo, e em minúsculas na action bar, como `%s: rodando` e `%s: parado`. Completa as perguntas 417 e 421 (#103) |
+| 432 | A resposta 403 pede o som do clique ao girar a placa, sem dizer qual. Que som do jogo toca no giro? | O clique do comparador (`block.comparator.click`), o som de quando o player ajusta um componente de redstone já colocado, tocado no mundo para quem estiver perto. Completa a pergunta 403 (#103) |
+| 431 | Numa rede `Offline`, o `Open` e o `Toggle` não agem num módulo (pergunta 402). O giro, Shift + clique no `Open`, também fica bloqueado? | Não: a placa gira mesmo numa rede `Offline`, porque o giro só muda a placa no mundo, sem tocar na rede, como o `Wrench`. Só abrir a tela e o `Toggle` ficam bloqueados. Completa a pergunta 402 (#103) |
+| 430 | As dicas do tooltip do Configurator nos modos `Open`, `Toggle` e `Wrench` falam só de nó. Com os Signal Modules, como ficam? | Citam os nós e os módulos. `Open`: `Click to open a node or module, Shift + click to turn a module.` (`Clique para abrir um nó ou módulo, Shift + clique para girar um módulo.`). `Toggle`: mantém a linha do nó e ganha `Click a module to start or stop it.` (`Clique num módulo para ligá-lo ou pará-lo.`). `Wrench`: `Click a node or module to pick it up.` (`Clique num nó ou módulo para retirá-lo.`). O `Copy` fica igual. Completa a pergunta 190 (#103) |
 | 429 | No 1.21.1, a variante do blockstate só gira o modelo em `x` e `y` (`Variant.java`), o que dá 16 orientações, e a placa precisa de 24: na parede, a seta não aponta para os lados. Como o modelo do Signal Timer cobre as 24? | Com duas versões de cada modelo, com a textura do topo girada 0° ou 90° no UV da face, um recurso do jogo puro. O blockstate escolhe a versão e o `x` e o `y`, então são 8 modelos (as 4 combinações de `powered` e `running`, vezes 2), sem mudar a arte nem o comportamento. Um GameTest confere a frente nas 6 faces. Completa a pergunta 428 (#103) |
 | 428 | O estado `rotation` (`north` a `west`) não descreve a frente de uma placa na parede, que pode apontar para cima ou para baixo. Como fica? | `rotation` dá lugar a `front`, a direção real da borda da frente no mundo (`down`, `up`, `north`, `south`, `west` ou `east`), sempre perpendicular a `facing`. Muda a pergunta 411 (regra 38); nada foi publicado (#103) |
 | 427 | O log e o rótulo são montados no servidor, que não sabe o idioma do player. Como aparece um Signal Module sem nome próprio? | Como o nó: com os 8 primeiros caracteres do ID (pergunta 142), em qualquer idioma, no nome da tela, no rótulo, no log e na action bar. O título fixo da tela continua `Signal Timer`, traduzido no cliente. Muda a pergunta 391 (regra 38) (#103) |
@@ -429,6 +433,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 12:35 | Registra a resposta 433, da #103. |
+| Zennd | 2026-11-14 12:34 | Registra a resposta 432, da #103. |
+| Zennd | 2026-11-14 12:31 | Registra as respostas 430 e 431, da #103. |
 | Zennd | 2026-11-14 12:08 | Registra a resposta 429, da #103. |
 | Zennd | 2026-11-14 11:13 | Registra a resposta 428, da #103, e marca a 411 como mudada. |
 | Zennd | 2026-11-14 10:44 | Registra a resposta 427, da #103, e marca a 391 como mudada. |
