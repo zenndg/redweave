@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 474 | Como a Tela do Weather Detector desenha o ícone grande do clima atual? | Com 4 sprites de 32 × 32, sol, nuvem com chuva, nuvem com raio e nuvem apagada para `No weather`, gerados por IA a partir de `tmp/arte/weather_detector_screen/prompt.md` e conferidos pelo agente, como o mostrador do timer (pergunta 434). Completa a pergunta 470 (#108) |
 | 473 | A #108 entra num PR só? | Sim, como a #103 e a #105 (perguntas 405 e 454): commits atômicos, na ordem docs, domínio com TDD, bloco e menu com GameTests, tela, roteiro manual e `AGENTS.md`; uma refatoração da base comum, se precisar, vem antes, sem mudar comportamento (#108) |
 | 472 | Em que fronteiras entram os testes do Weather Detector? | JUnit: a regra, os 3 modos com cada clima e o `No weather`. GameTests: os que mudam o clima, que é global ao mundo, ficam num lote (`batch`) próprio, para não afetar os testes que rodam em paralelo; os demais cobrem colocar e emitir, o `Toggle`, o dono, o NBT, a saída num canal e o menu. Roteiro manual: a tela, a arte, os textos e o Nether. Na linha das perguntas 406 e 453 (#108) |
 | 471 | Como a placa do Weather Detector mostra o estado no mundo? | A seta centrada aponta para a saída e fica vermelha com a saída ligada; no meio, o símbolo do modo: nuvem com gota (`Rain`), raio (`Thunder`) ou sol (`Clear`). Estados do bloco `facing`, `front`, `powered` e `mode`, fixados na #26 (regra 15). São 6 texturas do topo (3 modos × ligado ou não) e o ícone, gerados por IA a partir de `tmp/arte/weather_detector/` (#108) |
@@ -473,6 +474,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 16:55 | Registra a resposta 474, da #108. |
 | Zennd | 2026-11-14 16:39 | Registra a resposta 473, da #108. |
 | Zennd | 2026-11-14 16:38 | Registra as respostas 469 a 472, da #108. |
 | Zennd | 2026-11-14 16:35 | Registra as respostas 465 a 468, da #108. |

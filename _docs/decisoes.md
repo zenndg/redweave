@@ -448,6 +448,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Tela do Weather Detector | Como a do inversor, com o ícone do clima à esquerda e `Mode` e `Output` à direita | 470 |
 | Placa do Weather Detector | Seta vermelha com a saída ligada e o símbolo do modo; estados `facing`, `front`, `powered` e `mode` | 471 |
 | Testes do Weather Detector | JUnit na regra, GameTests do clima num lote próprio e roteiro manual | 472 |
+| Ícone do clima na tela | 4 sprites de 32 × 32 gerados por IA, como o mostrador do timer | 474 |
 | PR da #108 | Um só, com commits atômicos | 473 |
 | `Channel` com a grade aberta | Marcado, com o `Edge` como botão comum; o servidor só muda com a cor escolhida | 456 |
 
@@ -457,6 +458,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 16:55 | Registra a decisão 474, da #108. |
 | Zennd | 2026-11-14 16:39 | Registra a decisão 473, da #108. |
 | Zennd | 2026-11-14 16:38 | Registra as decisões 469 a 472, da #108. |
 | Zennd | 2026-11-14 16:35 | Registra as decisões 465 a 468, da #108. |
