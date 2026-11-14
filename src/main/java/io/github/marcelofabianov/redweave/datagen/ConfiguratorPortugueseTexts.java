@@ -28,9 +28,12 @@ final class ConfiguratorPortugueseTexts {
   private static final String NOT_PLACER = "Só quem colocou este nó pode retirá-lo.";
   private static final String USE_TO_OPEN = "Use um Configurador para abrir este nó.";
   private static final String COPY = "Cópia: %s slots";
-  private static final String HINT_OPEN = "Clique num nó para abri-lo.";
+  private static final String OPEN_CLICK = "Clique para abrir um nó ou módulo,";
+  private static final String OPEN_SHIFT = " Shift + clique para girar um módulo.";
+  private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
+  private static final String HINT_TOGGLE_MODULE = "Clique num módulo para ligá-lo ou pará-lo.";
   private static final String HINT_COPY = "Clique num nó para copiá-lo, Shift + clique para colar.";
-  private static final String HINT_WRENCH = "Clique num nó para retirá-lo.";
+  private static final String HINT_WRENCH = "Clique num nó ou módulo para retirá-lo.";
   private static final String HINT_SCROLL = "Shift + scroll para trocar o modo.";
 
   private ConfiguratorPortugueseTexts() {}
@@ -42,6 +45,7 @@ final class ConfiguratorPortugueseTexts {
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.COPY), COPY_MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.TOGGLE), TOGGLE);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.TOGGLE), HINT_TOGGLE);
+    add.accept(ConfiguratorMessages.HINT_TOGGLE_MODULE, HINT_TOGGLE_MODULE);
     add.accept(ConfiguratorMessages.ENABLED, ENABLED);
     add.accept(ConfiguratorMessages.DISABLED, DISABLED);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.WRENCH), WRENCH);

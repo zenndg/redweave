@@ -9,6 +9,12 @@ import java.util.Arrays;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +34,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -178,6 +186,76 @@ public final class SignalTimerBlock extends Block implements EntityBlock {
     if (level.getBlockEntity(pos) instanceof SignalTimerBlockEntity timer) {
       PlayerId owner = new PlayerId(player.getUUID());
       timer.place(server.get().modules().place().place(owner), new NeoForgeTimerLimits());
+      level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
     }
+  }
+
+  /** In survival, only the owner breaks the plate; in creative, anyone (answer 394). */
+  @Override
+  protected float getDestroyProgress(
+      BlockState state, Player player, BlockGetter level, BlockPos pos) {
+    boolean owned =
+        !(level.getBlockEntity(pos) instanceof SignalTimerBlockEntity timer)
+            || timer.isOwner(player);
+    return player.isCreative() || owned ? super.getDestroyProgress(state, player, level, pos) : 0;
+  }
+
+  /** The server has the last word on breaking, whatever the client shows (rule 16). */
+  @Override
+  public boolean onDestroyedByPlayer(
+      BlockState state,
+      Level level,
+      BlockPos pos,
+      Player player,
+      boolean willHarvest,
+      FluidState fluid) {
+    boolean owned =
+        !(level.getBlockEntity(pos) instanceof SignalTimerBlockEntity timer)
+            || timer.isOwner(player);
+    if (!level.isClientSide && !player.isCreative() && !owned) {
+      return false;
+    }
+    return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+  }
+
+  /** Only an empty hand uses the plate itself; an item, as the Configurator, takes the click. */
+  @Override
+  protected ItemInteractionResult useItemOn(
+      ItemStack stack,
+      BlockState state,
+      Level level,
+      BlockPos pos,
+      Player player,
+      InteractionHand hand,
+      BlockHitResult hit) {
+    if (!stack.isEmpty()) {
+      return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+    }
+    return super.useItemOn(stack, state, level, pos, player, hand, hit);
+  }
+
+  /** An empty hand does not open the module, and the action bar teaches how (answer 395). */
+  @Override
+  protected InteractionResult useWithoutItem(
+      BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    if (!level.isClientSide) {
+      player.displayClientMessage(Component.translatable(ModuleMessages.USE_TO_OPEN), true);
+    }
+    return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  /**
+   * Turns the plate 90° clockwise, seen from its front, with the click of a comparator (answers
+   * 399, 403 and 432). The old front loses the signal at once, and the next tick feeds the new one.
+   */
+  public static Direction turn(Level level, BlockPos pos, BlockState state) {
+    Direction front = Plates.clockwise(state.getValue(FACING), state.getValue(FRONT));
+    if (level.getBlockEntity(pos) instanceof SignalTimerBlockEntity timer) {
+      timer.setEmitted(0);
+    }
+    TimerTicks.wakeFront(level, pos, state);
+    level.setBlock(pos, state.setValue(FRONT, front), Block.UPDATE_ALL);
+    level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS);
+    return front;
   }
 }

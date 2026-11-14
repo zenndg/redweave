@@ -7,11 +7,16 @@ import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import io.github.marcelofabianov.redweave.domain.module.TimerCycle;
 import io.github.marcelofabianov.redweave.domain.module.TimerLimits;
+import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.slf4j.Logger;
@@ -58,6 +63,18 @@ public final class SignalTimerBlockEntity extends BlockEntity {
 
   public Connection pause() {
     return pause;
+  }
+
+  /** A plate without a valid module, as from a damaged save, has no owner to protect it. */
+  public boolean isOwner(Player player) {
+    return module.map(found -> found.isOwner(new PlayerId(player.getUUID()))).orElse(true);
+  }
+
+  /** Starts or stops the timer, from the Configurator, and gives what it is now (answer 395). */
+  public Optional<SignalTimer> toggle() {
+    timer = timer.map(SignalTimer::toggle);
+    setChanged();
+    return timer;
   }
 
   /** Keeps the timer after a tick, and marks the block to save only when it changed. */
@@ -121,5 +138,18 @@ public final class SignalTimerBlockEntity extends BlockEntity {
     timer = TimerSave.readTimer(tag);
     output = TimerSave.readConnection(tag, TimerSave.OUTPUT);
     pause = TimerSave.readConnection(tag, TimerSave.PAUSE);
+  }
+
+  /**
+   * The client gets the module too, for its owner, so it shows the breaking as the server (394).
+   */
+  @Override
+  public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    return saveCustomOnly(registries);
+  }
+
+  @Override
+  public Packet<ClientGamePacketListener> getUpdatePacket() {
+    return ClientboundBlockEntityDataPacket.create(this);
   }
 }

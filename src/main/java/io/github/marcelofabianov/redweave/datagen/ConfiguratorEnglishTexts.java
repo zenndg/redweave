@@ -28,9 +28,12 @@ final class ConfiguratorEnglishTexts {
   private static final String NOT_PLACER = "Only the player who placed this node can pick it up.";
   private static final String USE_TO_OPEN = "Use a Configurator to open this node.";
   private static final String COPY = "Copy: %s slots";
-  private static final String HINT_OPEN = "Click a node to open it.";
+  private static final String OPEN_CLICK = "Click to open a node or module,";
+  private static final String OPEN_SHIFT = " Shift + click to turn a module.";
+  private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
+  private static final String HINT_TOGGLE_MODULE = "Click a module to start or stop it.";
   private static final String HINT_COPY = "Click a node to copy it, Shift + click to paste.";
-  private static final String HINT_WRENCH = "Click a node to pick it up.";
+  private static final String HINT_WRENCH = "Click a node or module to pick it up.";
   private static final String HINT_SCROLL = "Shift + scroll to change the mode.";
 
   private ConfiguratorEnglishTexts() {}
@@ -42,6 +45,7 @@ final class ConfiguratorEnglishTexts {
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.COPY), COPY_MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.TOGGLE), TOGGLE);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.TOGGLE), HINT_TOGGLE);
+    add.accept(ConfiguratorMessages.HINT_TOGGLE_MODULE, HINT_TOGGLE_MODULE);
     add.accept(ConfiguratorMessages.ENABLED, ENABLED);
     add.accept(ConfiguratorMessages.DISABLED, DISABLED);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.WRENCH), WRENCH);

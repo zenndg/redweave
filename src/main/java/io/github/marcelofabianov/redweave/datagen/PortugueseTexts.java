@@ -16,7 +16,6 @@ final class PortugueseTexts {
 
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
-  private static final String SIGNAL_TIMER = "Temporizador de Sinal";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
   private static final String NETWORK_TERMINAL = "Terminal de Rede";
   private static final String TERMINAL_NOT_OWNER = "Só o dono pode usar este terminal.";
@@ -43,8 +42,8 @@ final class PortugueseTexts {
     TerminalPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     RemotePortugueseTexts.addTo(add);
+    ModulePortugueseTexts.addTo(add);
     add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
-    add.accept(RedweaveBlocks.SIGNAL_TIMER.get().getDescriptionId(), SIGNAL_TIMER);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

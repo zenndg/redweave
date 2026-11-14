@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.LevelReader;
 
 /**
@@ -19,5 +20,14 @@ final class Plates {
   /** Whether the change came from the block that holds the plate and it no longer does. */
   static boolean falls(LevelReader level, BlockPos pos, Direction facing, Direction changed) {
     return changed == facing.getOpposite() && !isHeld(level, pos, facing);
+  }
+
+  /**
+   * The front of a plate turned 90° clockwise, seen from the front of the plate: the cross product
+   * of the front and the face it sticks on (answer 403).
+   */
+  static Direction clockwise(Direction facing, Direction front) {
+    Vec3i turned = front.getNormal().cross(facing.getNormal());
+    return Direction.fromDelta(turned.getX(), turned.getY(), turned.getZ());
   }
 }
