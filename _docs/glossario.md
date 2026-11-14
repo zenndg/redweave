@@ -27,6 +27,10 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha, e queima num laço (perguntas 296, 310, 444, 445 e 447) |
 | Signal Randomizer | `signal_randomizer` | `Sorteador de Sinal` em português: o módulo de fonte que, ligado, sorteia a cada intervalo um valor de 0 a 15 (`Analog`) ou 0 ou 15 (`Binary`) e o mantém na saída até o próximo sorteio (perguntas 475, 476, 478 e 486) |
 | Signal Timer | `signal_timer` | `Temporizador de Sinal` em português: o módulo que, a cada intervalo, liga a saída por um pulso, e para enquanto a entrada `Pause` recebe sinal (perguntas 379, 380 e 410) |
+| Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
+| Parte | `Part` | Uma peça do multipart, numa face de um espaço de bloco: um Signal Cable, um Signal Node ou um Signal Module. Responde por si à mira, ao clique, à quebra e ao Configurator (perguntas 511 e 515) |
+| Signal Cable | `signal_cable` | `Cabo de Sinal` em português: o cabo físico de redstone, um item só que nasce branco e ganha uma das 16 cores com corante. Liga-se só a cabos da mesma cor e do mesmo dono, e leva o sinal como o fio do jogo (perguntas 494, 497, 499, 505 e 528) |
+| Trecho | — | Os pedaços de Signal Cable ligados entre si, de uma cor e de um dono, que o servidor calcula num passo só quando algo muda (pergunta 509) |
 | Weather Detector | `weather_detector` | `Detector de Clima` em português: o módulo de fonte que liga a saída conforme o clima da dimensão, nos modos `Rain`, `Thunder` ou `Clear`, e fica em 0 onde não há clima (perguntas 457 a 459, 464 e 469) |
 | Porta | `Gate` | AND, OR, XOR ou NAND, de duas entradas, como Signal Module ou dentro de um chip. Cada entrada conta como ligada acima de 0, e a saída é 15 ou 0. O NOT é o Signal Inverter (perguntas 309, 310, 321 e 322) |
 | Regra NOT | `Not` | A regra de uma entrada que o Signal Inverter usa: 15 sem sinal e 0 com qualquer sinal, como a tocha do jogo. Não é uma porta (perguntas 310, 321 e 322) |
@@ -35,7 +39,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
 | Network Controller | `network_controller` | O bloco que é uma rede: colocá-lo cria a rede, e a tela dele a gerencia, com a lista de nós e o log |
 | Network Terminal | `network_terminal` | O bloco que administra todas as redes do dono: renomear, desligar, religar, limpar os nós e apagar as `Unplaced`. Não cria redes (perguntas 130 e 131) |
-| Configurador | `configurator` | Ferramenta com quatro modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item (perguntas 143, 161 e 241) |
+| Configurador | `configurator` | Ferramenta com quatro modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela e gira a placa com Shift, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 143, 161, 241, 393, 395 e 399) |
 | Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
 | Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
 | Signal Remote | `signal_remote` | Item de mão com aparência de tablet, `Controle de Sinal` em português, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot, sempre com 15 (perguntas 15, 279, 282, 288, 352 e 368). Na rede, é uma entrada sem posição, a parte `RemoteInputs` (perguntas 27 e 360) |
@@ -45,6 +49,8 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:21 | Leva os Signal Modules ao Configurator. |
+| Zennd | 2026-11-14 19:14 | Adiciona o multipart, a parte, o Signal Cable e o trecho (perguntas 494 a 533). |
 | Zennd | 2026-11-14 17:46 | Adiciona o Signal Randomizer, da #109 (perguntas 475 a 493). |
 | Zennd | 2026-11-14 16:40 | Adiciona o Weather Detector, da #108 (perguntas 457 a 473). |
 | Zennd | 2026-11-14 14:31 | Adiciona o Signal Inverter, da #105 (perguntas 441 a 455). |

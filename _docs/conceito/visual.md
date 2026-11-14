@@ -160,7 +160,7 @@ Peça de face, `redweave:signal_node`. Gruda em qualquer face de qualquer bloco 
 
 ![Configurator](../imagens/conceito/configurator.png)
 
-Ferramenta, `redweave:configurator`. Abre, copia, cola, ativa e desativa canais e retira Signal Nodes, com quatro modos ([`configurador.md`](../funcionalidades/configurador.md)). A prancha é anterior às perguntas 126 a 169 e mostra o visor do canal guardado, que deu lugar ao visor do modo.
+Ferramenta, `redweave:configurator`. Abre, copia, cola, ativa e desativa canais e retira Signal Nodes, e abre, gira, alterna e retira Signal Modules, com quatro modos ([`configurador.md`](../funcionalidades/configurador.md)). A prancha é anterior às perguntas 126 a 169 e mostra o visor do canal guardado, que deu lugar ao visor do modo.
 
 | Parte | Como é |
 |---|---|
@@ -188,6 +188,7 @@ Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift +
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:21 | Leva os Signal Modules ao Configurator. |
 | Zennd | 2026-11-12 21:38 | Leva ao mod as texturas e a prancha novas do Signal Remote (pergunta 374). |
 | Zennd | 2026-11-12 20:48 | Decide o visual do Signal Remote, com 4 estados e arte nova (pergunta 362). |
 | Zennd | 2026-11-12 19:51 | O medidor da Tela do Nó vai para o painel do canal (pergunta 346). |

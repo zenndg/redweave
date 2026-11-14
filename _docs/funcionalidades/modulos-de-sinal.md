@@ -24,7 +24,7 @@ Resposta 415.
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Forma | Uma placa de 10 × 10 pixels e 2 de espessura, como o Signal Node, grudada em qualquer face de um bloco que não seja ar, no chão, na parede ou no teto | 313, 416 e 422 |
-| Espaço | Cada placa ocupa o seu espaço de bloco na v0.1.0, sem multipart, que fica com a #44 | 315 |
+| Espaço | Uma parte do [multipart](multipart.md): divide o espaço de bloco com outras partes, uma por face, como um nó ou um Signal Cable em outra face. Até a #44, cada placa ocupa o seu espaço de bloco | 315, 511 e 513 |
 | Rotação | Ao colocar, a frente aponta para onde o player olha, projetada na face, como o repetidor do jogo | 399 |
 | Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira | 399, 403 e 432 |
 | Bordas | As 4 bordas, frente, trás, esquerda e direita, ligadas aos vizinhos na mesma camada. Quais são entrada e quais são saída é fixo por módulo, e a textura mostra a seta | 314 e 377 |
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:14 | Leva os módulos ao multipart da #44 (perguntas 511 e 513). |
 | Zennd | 2026-11-14 17:46 | Leva o Signal Randomizer ao `Toggle`, às mensagens e ao rótulo (perguntas 480 e 484). |
 | Zennd | 2026-11-14 16:40 | Leva o Weather Detector ao `Toggle`, às mensagens e ao rótulo (perguntas 462 e 465). |
 | Zennd | 2026-11-14 15:41 | Marca o `Channel` com a grade aberta (pergunta 456). |

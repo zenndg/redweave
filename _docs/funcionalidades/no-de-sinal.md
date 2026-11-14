@@ -8,7 +8,7 @@ Grudado num bloco, o nó nasce sem rede; quando quem o colocou escolhe a rede, e
 
 ## Colocar
 
-O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele está grudado é o **bloco de apoio**.
+O nó gruda em qualquer face de qualquer bloco, como um botão. O bloco onde ele está grudado é o **bloco de apoio**. A partir da #44, o nó é uma parte do [multipart](multipart.md) e divide o espaço de bloco com outras partes, uma por face, como um Signal Cable no chão do mesmo espaço (perguntas 511 e 513).
 
 1. O nó nasce `No network`, com o nome padrão, os 8 primeiros caracteres do ID, e não pode ser configurado até ter rede (perguntas 139 e 142).
 2. Quem o colocou abre o nó com o Configurator no modo `Open` e escolhe uma das redes `Online` dele (perguntas 157 e 172).
@@ -58,7 +58,7 @@ A [Tela do Nó](telas.md#tela-do-nó) abre com o [Configurator](configurador.md)
 
 | Parte | O que é |
 |---|---|
-| ID | `redweave:signal_node`, o mesmo do bloco |
+| ID | `redweave:signal_node`, o mesmo do bloco; a partir da #44, o item continua com esse ID, e o nó colocado vira uma parte do bloco contêiner `redweave:part_space` (pergunta 523) |
 | Nome | `Signal Node`, e `Nó de Sinal` em português |
 | Aba do criativo | `Redweave` (pergunta 69) |
 
@@ -86,6 +86,7 @@ O blockstate tem `facing`, nas 6 direções, a face do bloco de apoio onde o nó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:14 | Leva o nó ao multipart da #44 (perguntas 511, 513 e 523). |
 | Zennd | 2026-11-12 17:18 | Corrige o resumo com os canais inativos e aponta a Tela do Nó para `telas.md` (pergunta 226). |
 | Zennd | 2026-11-12 11:58 | Tira o nome do slot (pergunta 277). |
 | Zennd | 2026-11-12 11:11 | A saída energiza só o bloco de apoio, sem o sinal fraco da alavanca (pergunta 262). |

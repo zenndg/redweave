@@ -4,7 +4,7 @@ O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e
 
 ## Em uma frase
 
-Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item.
+Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela e, com Shift, gira a placa, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 393, 395 e 399).
 
 ## Modos
 
@@ -65,7 +65,7 @@ Colar substitui os 16 slots do nó de destino pelos da cópia, com o status (per
 
 No modo `Wrench`, o clique num nó o retira como item, que vai para o inventário, ou cai no chão se o inventário estiver cheio. É como quebrar o nó (pergunta 74): ele sai da rede, perde os slots e o nome, e o item é um Signal Node comum, que empilha. Recolocado, nasce `No network` (perguntas 139 e 161).
 
-Só o dono usa a Chave: o dono da rede do nó e, num nó sem rede, quem o colocou, gravado no bloco com a chave de NBT `owner` (perguntas 162, 165 e 189). Um nó colocado antes do `owner` não tem quem o colocou, e a Chave recusa para todos; a mão ainda o quebra (perguntas 74 e 193). A Chave vale só para o Signal Node: o Network Controller e o Network Terminal saem só quebrando (pergunta 164).
+Só o dono usa a Chave: o dono da rede do nó e, num nó sem rede, quem o colocou, gravado no bloco com a chave de NBT `owner` (perguntas 162, 165 e 189). Um nó colocado antes do `owner` não tem quem o colocou, e a Chave recusa para todos; a mão ainda o quebra (perguntas 74 e 193). A Chave vale para o Signal Node e para os Signal Modules ([`modulos-de-sinal.md`](modulos-de-sinal.md)); o Network Controller e o Network Terminal saem só quebrando (pergunta 164).
 
 ## Mensagens
 
@@ -120,6 +120,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:21 | Leva os Signal Modules à Chave e aos modos do Configurator. |
 | Zennd | 2026-11-14 12:31 | Leva os módulos às dicas do tooltip (pergunta 430). |
 | Zennd | 2026-11-14 09:46 | Leva os modos e o rótulo aos Signal Modules, da #103 (perguntas 393, 395, 399 e 417). |
 | Zennd | 2026-11-12 19:39 | O Shift + scroll funciona no macOS, com a roda horizontal (pergunta 351). |

@@ -23,9 +23,9 @@ Só sinal de redstone (pergunta 1). Itens, fluidos e energia ficam com os mods d
 | Fase | Tema | Entrega |
 |---|---|---|
 | 1 · Sem fio (MVP) | Sinal em qualquer lugar | Signal Node, Network Controller, Network Terminal, Configurador, Signal Remote, simulador, Jade e The One Probe |
-| 2 · Lógica | Lógica que se vê | Os Signal Modules: Signal Timer, Signal Inverter, porta, contador, memória, trava e os outros módulos de fonte e de transformação |
+| 2 · Lógica | Lógica que se vê | Os Signal Modules: Signal Timer, Signal Inverter, porta, contador, memória, trava e os outros módulos de fonte e de transformação; o multipart e o Signal Cable, o cabo físico de 16 cores (pergunta 516) |
 | 3 · Chips | Programar a redstone | Bancada de Circuitos, editor com debug por tick, chips como item e livro guia |
-| 4 · Expansão | Fio físico | Fio de redstone, cabo agrupado de 16 canais, multipart, integrações e port para 26.x |
+| 4 · Expansão | Integrações | Integrações e port para 26.x. O fio físico e o multipart foram para a `v0.1.0` (pergunta 516), e o cabo agrupado saiu (pergunta 519) |
 | 5 · Ponte | Além do jogo | Ponte MQTT para dashboards e hardware real |
 
 Toda versão é jogável e testada no Iron Meridian. As Fases 1 e 2 saem juntas na v0.1.0, como uma fase só (pergunta 303), e a ordem do trabalho fica no [`ROADMAP.md`](../../ROADMAP.md).
@@ -40,6 +40,7 @@ A ponte é só mais um adapter, com as portas `EventPublisher` e `CommandReceive
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:14 | Leva o multipart e o Signal Cable para a `v0.1.0` e tira o cabo agrupado (perguntas 516 e 519). |
 | Zennd | 2026-11-12 16:50 | Junta as Fases 1 e 2 na v0.1.0 e troca a lógica por canal e as portas em placa pelos Signal Modules (perguntas 303 e 308 a 310). |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal à Fase 1 (pergunta 130). |
 | Marcelo Fabiano | 2026-11-09 10:05 | Cria o documento. |

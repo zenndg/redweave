@@ -109,25 +109,26 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 7. [x] Signal Timer and the shared base of the Signal Modules (#103)
 8. [x] Signal Inverter, the NOT of the mod (#105 · questions 296 and 310)
 9. [x] Weather detector module (#108)
-10. [ ] Random module (#109)
-11. [ ] Memory module, a T flip-flop (#110)
-12. [ ] Latch module, an SR latch (#111)
-13. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)
-14. [ ] Shift + scroll changes a gate's mode (#32)
-15. [ ] Tooltip with each gate's truth table (#34)
-16. [ ] Schedule module, by the time of day in the game (#112)
-17. [ ] Pulse extender module (#113)
-18. [ ] Edge detector module (#114)
-19. [ ] Threshold module, with hysteresis (#115)
-20. [ ] Long delay module (#116)
-21. [ ] Player detector module (#117)
-22. [ ] Counter module (#30 · question 308)
-23. [ ] Placement preview of the modules before the block exists (#33)
-24. [ ] Optional Jade and The One Probe integration, covering every block (#23 · question 306)
-25. [ ] Vanilla recipes and emissive textures (#24)
-26. [ ] Load test with spark: a 1,000-node network with modules and gates (#25)
-27. [ ] Freeze block, item, data component and config IDs (#26)
-28. [ ] Release v0.1.0 and test in Iron Meridian (#27)
+10. [x] Random module (#109)
+11. [ ] Multipart for the whole mod and the Signal Cable: the Signal Node and the modules become parts that share a block space, and a physical redstone cable in 16 colors (#44 and #45 · questions 494 to 533)
+12. [ ] Memory module, a T flip-flop (#110)
+13. [ ] Latch module, an SR latch (#111)
+14. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)
+15. [ ] Shift + scroll changes a gate's mode (#32)
+16. [ ] Tooltip with each gate's truth table (#34)
+17. [ ] Schedule module, by the time of day in the game (#112)
+18. [ ] Pulse extender module (#113)
+19. [ ] Edge detector module (#114)
+20. [ ] Threshold module, with hysteresis (#115)
+21. [ ] Long delay module (#116)
+22. [ ] Player detector module (#117)
+23. [ ] Counter module (#30 · question 308)
+24. [ ] Placement preview of the modules before the block exists (#33)
+25. [ ] Optional Jade and The One Probe integration, covering every block (#23 · question 306)
+26. [ ] Vanilla recipes and emissive textures (#24)
+27. [ ] Load test with spark: a 1,000-node network with modules and gates (#25)
+28. [ ] Freeze block, item, data component and config IDs (#26)
+29. [ ] Release v0.1.0 and test in Iron Meridian (#27)
 
 ### Dropped from Phase 2
 
@@ -135,6 +136,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 - Gate blocks as a family of their own: the gate is a Signal Module, a plate like the others (questions 309 and 313).
 - The NOT gate: the Signal Inverter covers it (question 310).
 - Phase 2 release v0.2.0 (#35): Phase 2 ships in v0.1.0 (question 303).
+- The 16-channel bundled cable (#46): 16 Signal Cables of different colors and the network channels already cover it (question 519).
 
 ## Phase 3 · Chips
 
@@ -151,11 +153,8 @@ Program your redstone.
 
 ## Phase 4 · Expansion
 
-Physical wiring and integrations.
+Integrations and the port to 26.x. The multipart and the physical cable moved to v0.1.0 (question 516).
 
-- [ ] Multipart decision: CB Multipart or our own system (#44)
-- [ ] Physical redstone wire (#45)
-- [ ] 16-channel bundled cable (#46)
 - [ ] Integrated Dynamics integration (#47)
 - [ ] CC: Tweaked integration (#48)
 - [ ] Optional Cubit integration through a tag or an interface (#49)

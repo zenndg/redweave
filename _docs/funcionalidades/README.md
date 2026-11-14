@@ -5,9 +5,9 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | Fase | Funcionalidades |
 |---|---|
 | 1 · Sem fio | Rede e canais, Signal Node, Network Controller, Network Terminal, Configurador, Signal Remote, telas do nó e do controlador, Jade e The One Probe |
-| 2 · Lógica | Signal Modules: timer, inversor, porta, contador e os outros módulos (perguntas 297 e 308 a 310) |
+| 2 · Lógica | Signal Modules: timer, inversor, porta, contador e os outros módulos (perguntas 297 e 308 a 310); o multipart e o Signal Cable, que entram na `v0.1.0` (pergunta 516) |
 | 3 · Chips | Circuitos, chips, Bancada de Circuitos, editor e livro guia |
-| 4 · Expansão | Fio físico, cabo agrupado, multipart, integrações e port para 26.x |
+| 4 · Expansão | Integrações e port para 26.x. O multipart e o Signal Cable foram para a `v0.1.0` (pergunta 516), e o cabo agrupado saiu (pergunta 519) |
 | 5 · Ponte | Ponte MQTT, segurança, protótipos com ESP32 e dashboard |
 
 | Página | Fase | Estado |
@@ -24,12 +24,15 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`signal-inverter.md`](signal-inverter.md) | 2 | O Signal Inverter, o NOT do mod: o atraso, a queima, a tela e o save |
 | [`weather-detector.md`](weather-detector.md) | 2 | O Weather Detector: os modos de clima, a dimensão sem clima, a tela e o save |
 | [`signal-randomizer.md`](signal-randomizer.md) | 2 | O Signal Randomizer: os modos do sorteio, o intervalo, o controle, a tela e o save |
+| [`multipart.md`](multipart.md) | 2 | O multipart de todo o mod: o bloco contêiner, as partes, a ocupação por face, a mira e o save |
+| [`signal-cable.md`](signal-cable.md) | 2 | O Signal Cable: o item tingido, a forma, a ligação por cor e por dono, o sinal como o fio do jogo e o cálculo por trecho |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 19:14 | Adiciona as páginas do multipart e do Signal Cable, e tira o fio da Fase 4 (perguntas 516 e 519). |
 | Zennd | 2026-11-14 17:46 | Adiciona a página do Signal Randomizer (#109). |
 | Zennd | 2026-11-14 16:40 | Adiciona a página do Weather Detector (#108). |
 | Zennd | 2026-11-14 14:31 | Adiciona a página do Signal Inverter (#105). |
