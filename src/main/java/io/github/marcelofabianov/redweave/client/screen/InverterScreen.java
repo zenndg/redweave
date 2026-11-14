@@ -26,10 +26,6 @@ public final class InverterScreen extends AbstractContainerScreen<InverterMenu> 
   private static final int INPUT_Y = 42;
   private static final int OUTPUT_Y = 60;
   private static final int GRID_Y = 82;
-  private static final Box PILL = new Box(17, 90, 92, 13);
-  private static final int DOT_X = 5;
-  private static final int DOT_Y = 4;
-  private static final int PILL_TEXT_Y = 3;
 
   private final ModuleFrame frame;
   private Optional<InverterAction.Kind> picking = Optional.empty();
@@ -96,15 +92,14 @@ public final class InverterScreen extends AbstractContainerScreen<InverterMenu> 
 
   /** `● On`, `● Off` or `● Burnt out`, in amber (answer 448). */
   private void drawPill(GuiGraphics graphics, InverterState state) {
-    Box box = frame.at(PILL);
-    graphics.blitSprite(NodeSprites.STATE_PILL, box.x(), box.y(), box.width(), box.height());
-    Component text = Component.translatable(textOf(state));
-    int width = DOT_X + font.width(TimerButton.DOT) + font.width(text);
-    int x = box.x() + (box.width() - width) / 2;
-    Dots.draw(graphics, x + DOT_X, box.y() + DOT_Y, dotOf(state));
     int color = state == InverterState.BURNT_OUT ? ScreenColors.BURNT_OUT : ScreenColors.TEXT;
-    graphics.drawString(
-        font, text, x + DOT_X + font.width(TimerButton.DOT), box.y() + PILL_TEXT_Y, color, false);
+    ModulePill.draw(
+        graphics,
+        font,
+        frame.at(ModulePill.BOX),
+        Component.translatable(textOf(state)),
+        dotOf(state),
+        color);
   }
 
   private static String textOf(InverterState state) {

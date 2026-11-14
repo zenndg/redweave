@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
+import io.github.marcelofabianov.redweave.menu.DetectorMenu;
 import io.github.marcelofabianov.redweave.menu.InverterMenu;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.RemoteLinkMenu;
@@ -19,6 +20,7 @@ public final class RedweaveMenus {
   private static final String NODE_ID = "signal_node";
   private static final String TIMER_ID = "signal_timer";
   private static final String INVERTER_ID = "signal_inverter";
+  private static final String DETECTOR_ID = "weather_detector";
   private static final String CONTROLLER_ID = "network_controller";
   private static final String TERMINAL_ID = "network_terminal";
   private static final String REMOTE_LINK_ID = "remote_link";
@@ -34,6 +36,9 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<InverterMenu>> INVERTER =
       MENUS.register(INVERTER_ID, () -> IMenuTypeExtension.create(InverterMenu::new));
+
+  public static final Supplier<MenuType<DetectorMenu>> DETECTOR =
+      MENUS.register(DETECTOR_ID, () -> IMenuTypeExtension.create(DetectorMenu::new));
 
   public static final Supplier<MenuType<ControllerMenu>> CONTROLLER =
       MENUS.register(CONTROLLER_ID, () -> IMenuTypeExtension.create(ControllerMenu::new));

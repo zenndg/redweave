@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
+import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.client.screen.RemoteLinkScreen;
@@ -37,6 +38,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.REMOTE_LINK.get(), RemoteLinkScreen::new);
     event.register(RedweaveMenus.TIMER.get(), TimerScreen::new);
     event.register(RedweaveMenus.INVERTER.get(), InverterScreen::new);
+    event.register(RedweaveMenus.DETECTOR.get(), DetectorScreen::new);
   }
 
   @SubscribeEvent

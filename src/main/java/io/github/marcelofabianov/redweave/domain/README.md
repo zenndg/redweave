@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323) |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, e o Weather Detector, da #108 |
 
 ## Linguagem
 
@@ -84,6 +84,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `InverterLimits` | Em `module/`: as trocas, a janela e o tempo da queima do Signal Inverter no config. O domínio define a interface, e o config a implementa (pergunta 449) | #105 |
 | `InverterState` | Em `module/`: `ON`, `OFF` ou `BURNT_OUT`, a saída do Signal Inverter (pergunta 448) | #105 |
 | `SignalInverter` | Em `module/`: a regra do Signal Inverter, um tick por vez. A saída é o NOT da entrada de 2 ticks antes pela borda, ou de 1 tick pelo canal, que já chega com um de atraso. O primeiro tick lê a entrada na hora, e trocas demais na janela o queimam (perguntas 442, 444, 445 e 446) | #105 |
+| `Weather` | Em `module/`: `CLEAR`, `RAIN`, `THUNDER` ou `NONE`, o clima da dimensão de um Weather Detector, que quem chama fornece. `of` monta o clima do que o jogo diz, e trovão sem chuva conta como céu limpo (perguntas 458 e 464) | #108 |
+| `WeatherMode` | Em `module/`: `RAIN`, que conta também a tempestade, `THUNDER` ou `CLEAR`, com a chave do save e o próximo modo do `Toggle` (perguntas 459, 462 e 467) | #108 |
+| `DetectorState` | Em `module/`: `ON`, `OFF` ou `NO_WEATHER`, a saída do Weather Detector (pergunta 465) | #108 |
+| `WeatherDetector` | Em `module/`: a regra do Weather Detector. Guarda só o modo e dá 15 enquanto o clima bate com ele, e 0 onde não há clima (perguntas 459, 460, 463 e 464) | #108 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 
 ## Regras e porquês
@@ -146,5 +150,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Inversor lê a entrada no primeiro tick:** depois de colocar ou carregar, a linha de atraso começa cheia com a entrada lida, então a saída já nasce certa, sem um pulso falso de 15. Por isso a linha não vai para o save (perguntas 442 e 450).
 - **Mesmo atraso pela borda e pelo canal:** o canal já chega com um tick, então o inversor espera só mais um, e o tempo de um circuito não muda com o tipo da conexão (perguntas 444 e 446).
 - **Queima no domínio:** um laço de inversores trocaria sem parar, com log e avaliação da rede a cada troca, então a regra conta as trocas na janela e apaga o inversor, como a tocha. Só o resto da queima vai para o save, para um reinício não soltar o laço (perguntas 445 e 450).
+- **Clima vem de quem chama:** o domínio não lê o jogo, então o bloco passa o `Weather` a cada tick, e o detector não guarda nada além do modo. Por isso o clima não vai para o save (perguntas 467 e 468).
+- **Sem clima é 0 em todo modo:** onde o clima nunca muda, como no Nether, o `Clear` ficaria ligado para sempre, então `NONE` desliga todos os modos e tem um estado próprio (pergunta 464).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 
