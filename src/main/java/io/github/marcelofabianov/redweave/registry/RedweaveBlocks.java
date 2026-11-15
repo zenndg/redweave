@@ -3,8 +3,8 @@ package io.github.marcelofabianov.redweave.registry;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.NetworkTerminalBlock;
+import io.github.marcelofabianov.redweave.block.PartSpaceBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /** The blocks of the mod. Their IDs are part of the save (AGENTS.md, rule 15). */
 public final class RedweaveBlocks {
   private static final String NETWORK_CONTROLLER_ID = "network_controller";
-  private static final String SIGNAL_NODE_ID = "signal_node";
+  private static final String PART_SPACE_ID = "part_space";
   private static final String NETWORK_TERMINAL_ID = "network_terminal";
   private static final String SIGNAL_TIMER_ID = "signal_timer";
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
@@ -63,19 +63,23 @@ public final class RedweaveBlocks {
                       .strength(CONTROLLER_HARDNESS, CONTROLLER_EXPLOSION_RESISTANCE)));
 
   /** A plate without collision that pistons and explosions break, like a button (answer 74). */
-  public static final DeferredBlock<SignalNodeBlock> SIGNAL_NODE =
+  /**
+   * The part space, which holds the Signal Node and, from the next steps, the modules and the
+   * cables: no collision and no loot table, as each part drops its own item (answers 517 and 539).
+   */
+  public static final DeferredBlock<PartSpaceBlock> PART_SPACE =
       BLOCKS.register(
-          SIGNAL_NODE_ID,
+          PART_SPACE_ID,
           () ->
-              new SignalNodeBlock(
+              new PartSpaceBlock(
                   BlockBehaviour.Properties.of()
                       .mapColor(MapColor.DEEPSLATE)
                       .sound(SoundType.COPPER)
                       .noCollission()
+                      .noLootTable()
                       .strength(NODE_HARDNESS)
                       .pushReaction(PushReaction.DESTROY)));
 
-  /** A plate like the node: no collision, as fragile, broken by pistons (answers 394 and 422). */
   public static final DeferredBlock<SignalTimerBlock> SIGNAL_TIMER =
       BLOCKS.register(
           SIGNAL_TIMER_ID,

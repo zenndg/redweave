@@ -1,9 +1,9 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
@@ -183,7 +183,7 @@ public final class SignalTimerTickGameTests {
         NODE_LAMP,
         net.minecraft.core.Direction.UP);
     NodeScene.choose(helper, owner, NODE_LAMP.above(), NodeScene.FIRST_CHOICE);
-    SignalNodeBlockEntity block = helper.getBlockEntity(NODE_LAMP.above());
+    NodePart block = NodeParts.only(helper, NODE_LAMP.above());
     return block.node().orElseThrow();
   }
 

@@ -1,8 +1,7 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
@@ -10,7 +9,6 @@ import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
@@ -96,7 +94,7 @@ public final class SignalNodeGameTests {
         .startSequence()
         .thenExecute(() -> helper.pullLever(LEVER))
         .thenWaitUntil(() -> helper.assertTrue(network.channelValue(LEVER_CHANNEL).isOn(), NOT_ON))
-        .thenWaitUntil(() -> helper.assertBlockProperty(OUTPUT_NODE, SignalNodeBlock.POWERED, true))
+        .thenWaitUntil(() -> NodeParts.assertPowered(helper, OUTPUT_NODE, true))
         .thenIdle(SETTLE_TICKS)
         .thenExecute(() -> helper.assertFalse(network.channelValue(ECHO_CHANNEL).isOn(), ECHO))
         .thenSucceed();
@@ -152,7 +150,7 @@ public final class SignalNodeGameTests {
 
     NodeId node = placeNode(helper, stranger, LEVER_BLOCK, net.minecraft.core.Direction.EAST);
 
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_NODE.get(), INPUT_NODE);
+    NodeParts.assertPresent(helper, INPUT_NODE);
     helper.assertTrue(server().networkOfNode(node).isEmpty(), HAS_NETWORK);
     helper.succeed();
   }
@@ -183,7 +181,7 @@ public final class SignalNodeGameTests {
 
     helper.destroyBlock(LEVER_BLOCK);
 
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_NODE.get(), INPUT_NODE);
+    NodeParts.assertAbsent(helper, INPUT_NODE);
     helper.assertTrue(server().networkOfNode(node).isEmpty(), STILL_IN);
     helper.succeed();
   }
@@ -225,7 +223,7 @@ public final class SignalNodeGameTests {
       GameTestHelper helper, Player player, BlockPos block, net.minecraft.core.Direction face) {
     GameTestActions.placeOn(
         helper, player, new ItemStack(RedweaveItems.SIGNAL_NODE.get()), block, face);
-    SignalNodeBlockEntity node = helper.getBlockEntity(block.relative(face));
+    NodePart node = NodeParts.only(helper, block.relative(face));
     Optional<NodeId> id = node.node();
     helper.assertTrue(id.isPresent(), NO_NODE);
     NodeScene.choose(helper, player, block.relative(face), NodeScene.FIRST_CHOICE);

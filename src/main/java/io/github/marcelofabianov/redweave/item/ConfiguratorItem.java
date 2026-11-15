@@ -1,7 +1,10 @@
 package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.PartTargets;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -63,7 +66,8 @@ public final class ConfiguratorItem extends Item {
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
     BlockEntity clicked = level.getBlockEntity(context.getClickedPos());
-    if (!(clicked instanceof SignalNodeBlockEntity) && !(clicked instanceof ModuleBlockEntity)) {
+    Optional<NodePart> node = nodeOf(clicked, context);
+    if (node.isEmpty() && !(clicked instanceof ModuleBlockEntity)) {
       return InteractionResult.FAIL;
     }
     if (level.isClientSide) {
@@ -76,12 +80,27 @@ public final class ConfiguratorItem extends Item {
     }
     ConfiguratorMode mode = modeOf(context.getItemInHand());
     Optional<Component> message =
-        clicked instanceof SignalNodeBlockEntity node
-            ? ConfiguratorActions.onNode(server.get(), player, context, node, mode)
+        node.isPresent()
+            ? ConfiguratorActions.onNode(
+                server.get(), player, context, spotOf(context, node.get()), node.get(), mode)
             : ModuleClicks.onModule(
                 server.get(), player, context, (ModuleBlockEntity) clicked, mode);
     message.ifPresent(found -> player.displayClientMessage(found, true));
     return InteractionResult.CONSUME;
+  }
+
+  /** The node part where the click landed, as only the aimed part answers (answer 515). */
+  private static Optional<NodePart> nodeOf(BlockEntity clicked, UseOnContext context) {
+    if (!(clicked instanceof PartSpaceBlockEntity space)) {
+      return Optional.empty();
+    }
+    return PartTargets.nearest(context.getClickedPos(), space.parts(), context.getClickLocation())
+        .filter(NodePart.class::isInstance)
+        .map(NodePart.class::cast);
+  }
+
+  private static PartSpot spotOf(UseOnContext context, NodePart node) {
+    return new PartSpot(context.getClickedPos(), node.face());
   }
 
   /** Shift + click in the air clears the copy, in any mode (answers 106 and 128). */

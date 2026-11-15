@@ -3,14 +3,14 @@ package io.github.marcelofabianov.redweave.menu;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.NetworkChoice;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -74,8 +74,8 @@ public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacke
    * Who may pick the network of the node: with no network, only whoever placed it (answer 172);
    * with one, only its owner, and the move checks the new one too (answer 141).
    */
-  static boolean mayChoose(Player player, BlockPos pos) {
-    Optional<NodeId> node = NodeSignals.nodeAt(player.level(), pos);
+  static boolean mayChoose(Player player, PartSpot spot) {
+    Optional<NodeId> node = NodeSignals.nodeAt(player.level(), spot);
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (node.isEmpty() || server.isEmpty()) {
       return false;
@@ -84,13 +84,12 @@ public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacke
     if (network.isPresent()) {
       return network.get().isOwner(new PlayerId(player.getUUID()));
     }
-    return player.level().getBlockEntity(pos) instanceof SignalNodeBlockEntity entity
-        && entity.wasPlacedBy(player);
+    return NodePart.at(player.level(), spot).map(part -> part.wasPlacedBy(player)).orElse(false);
   }
 
   /** The networks the player may pick now, or none when they may not pick. */
-  static List<NetworkChoice> read(ServerPlayer player, BlockPos pos) {
-    if (!mayChoose(player, pos)) {
+  static List<NetworkChoice> read(ServerPlayer player, PartSpot spot) {
+    if (!mayChoose(player, spot)) {
       return List.of();
     }
     return RedweaveServer.running()

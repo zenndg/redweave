@@ -63,7 +63,7 @@ public final class NetworkStateGameTests {
 
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.WRENCH);
     NodeScene.click(helper, owner, NODE);
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertAbsent(helper, NODE);
     helper.assertTrue(server().networkOfNode(node).isEmpty(), NOT_PICKED);
     helper.succeed();
   }

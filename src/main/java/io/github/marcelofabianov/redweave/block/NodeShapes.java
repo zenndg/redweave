@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** The thin plate of a node, about 2 pixels thick, on each face of its block (visual.md). */
-final class NodeShapes {
+public final class NodeShapes {
   private static final double EDGE = 3;
   private static final double FAR_EDGE = 13;
   private static final double THICKNESS = 2;
@@ -27,7 +27,7 @@ final class NodeShapes {
 
   private NodeShapes() {}
 
-  static VoxelShape of(Direction stuckTo) {
+  public static VoxelShape of(Direction stuckTo) {
     return SHAPES.get(stuckTo);
   }
 }

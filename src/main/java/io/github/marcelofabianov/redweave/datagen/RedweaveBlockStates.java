@@ -4,7 +4,6 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.ModulePlateBlock;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
 import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
 import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
@@ -86,6 +85,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String RUNNING_SUFFIX = "_running";
   private static final String TURNED_SUFFIX = "_turned";
   private static final String NO_SUFFIX = "";
+  private static final String PART_SPACE = "part_space";
 
   RedweaveBlockStates(PackOutput output, ExistingFileHelper files) {
     super(output, RedweaveMod.MOD_ID, files);
@@ -102,17 +102,10 @@ final class RedweaveBlockStates extends BlockStateProvider {
     ModelFile terminal = terminalModel();
     horizontalBlock(RedweaveBlocks.NETWORK_TERMINAL.get(), terminal);
     simpleBlockItem(RedweaveBlocks.NETWORK_TERMINAL.get(), terminal);
-    ModelFile off = nodeModel(NODE, NODE_FRONT);
-    ModelFile on = nodeModel(NODE + POWERED_SUFFIX, NODE_FRONT + POWERED_SUFFIX);
-    ModelFile outOfRange = nodeModel(NODE + OUT_OF_RANGE_SUFFIX, NODE_FRONT + OUT_OF_RANGE_SUFFIX);
-    directionalBlock(
-        RedweaveBlocks.SIGNAL_NODE.get(),
-        state -> {
-          if (state.getValue(SignalNodeBlock.OUT_OF_RANGE)) {
-            return outOfRange;
-          }
-          return state.getValue(SignalNodeBlock.POWERED) ? on : off;
-        });
+    nodeModel(NODE, NODE_FRONT);
+    nodeModel(NODE + POWERED_SUFFIX, NODE_FRONT + POWERED_SUFFIX);
+    nodeModel(NODE + OUT_OF_RANGE_SUFFIX, NODE_FRONT + OUT_OF_RANGE_SUFFIX);
+    partSpaceModel();
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
     configuratorModels();
     remoteModels();
@@ -302,7 +295,23 @@ final class RedweaveBlockStates extends BlockStateProvider {
     return modLoc(ITEM_FOLDER + name);
   }
 
-  /** A thin plate on the floor of the block, turned to each face by the blockstate (answer 72). */
+  /**
+   * The part space has no shape of its own: the client joins the models of its parts (answer 536),
+   * and this one only gives the particles of breaking.
+   */
+  private void partSpaceModel() {
+    ModelFile empty =
+        models()
+            .getBuilder(PART_SPACE)
+            .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))
+            .texture(PARTICLE_KEY, nodeTexture(NODE_EDGE));
+    simpleBlock(RedweaveBlocks.PART_SPACE.get(), empty);
+  }
+
+  /**
+   * A thin plate on the floor of the block, which the part space turns to each face (answers 72 and
+   * 536).
+   */
   private ModelFile nodeModel(String name, String front) {
     BlockModelBuilder model =
         models()

@@ -2,8 +2,10 @@ package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.TerminalMessages;
+import io.github.marcelofabianov.redweave.block.part.PartMessages;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.BiConsumer;
 
 /** The Brazilian Portuguese texts, with the same keys as English. */
@@ -16,6 +18,8 @@ final class PortugueseTexts {
 
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
+  private static final String FACE_TAKEN = "Esta face já está ocupada.";
+  private static final String CABLES_FULL = "Este espaço já tem 2 cabos.";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
   private static final String NETWORK_TERMINAL = "Terminal de Rede";
   private static final String TERMINAL_NOT_OWNER = "Só o dono pode usar este terminal.";
@@ -43,7 +47,9 @@ final class PortugueseTexts {
     ConfiguratorPortugueseTexts.addTo(add);
     RemotePortugueseTexts.addTo(add);
     ModulePortugueseTexts.addTo(add);
-    add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
+    add.accept(RedweaveItems.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
+    add.accept(PartMessages.FACE_TAKEN, FACE_TAKEN);
+    add.accept(PartMessages.CABLES_FULL, CABLES_FULL);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

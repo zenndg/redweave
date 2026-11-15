@@ -1,14 +1,14 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.block.NodeSignals;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
@@ -20,13 +20,13 @@ import net.minecraft.world.level.Level;
 final class NodeScreenData implements ContainerData {
   private final Player player;
   private final Level level;
-  private final BlockPos pos;
+  private final PartSpot spot;
   private final PlayerId viewer;
 
-  NodeScreenData(Player player, BlockPos pos) {
+  NodeScreenData(Player player, PartSpot spot) {
     this.player = player;
     this.level = player.level();
-    this.pos = pos;
+    this.spot = spot;
     this.viewer = NodeScreenActions.playerOf(player);
   }
 
@@ -35,7 +35,7 @@ final class NodeScreenData implements ContainerData {
     if (index == NodeScreenLayout.VIEWER_PLACED) {
       return placedByViewer() ? 1 : 0;
     }
-    Optional<NodeId> id = NodeSignals.nodeAt(level, pos);
+    Optional<NodeId> id = NodeSignals.nodeAt(level, spot);
     Optional<Network> network =
         id.flatMap(node -> RedweaveServer.running().flatMap(server -> server.networkOfNode(node)));
     if (network.isEmpty()) {
@@ -62,8 +62,7 @@ final class NodeScreenData implements ContainerData {
   }
 
   private boolean placedByViewer() {
-    return level.getBlockEntity(pos) instanceof SignalNodeBlockEntity entity
-        && entity.wasPlacedBy(player);
+    return NodePart.at(level, spot).map(node -> node.wasPlacedBy(player)).orElse(false);
   }
 
   @Override

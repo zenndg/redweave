@@ -2,8 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
@@ -140,7 +139,7 @@ public final class NodeScreenGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     nodeOf(helper, owner);
     ServerPlayer viewer = playerNearTheNode(helper, owner.getUUID(), OWNER_NAME);
-    NodeMenu menu = new NodeMenu(MENU_ID, viewer, helper.absolutePos(NODE));
+    NodeMenu menu = new NodeMenu(MENU_ID, viewer, NodeParts.spotOf(helper, NODE));
 
     helper.assertTrue(menu.stillValid(viewer), INVALID_NEAR);
     viewer.setPos(viewer.position().add(FAR_AWAY, 0, FAR_AWAY));
@@ -186,7 +185,7 @@ public final class NodeScreenGameTests {
     network.removeController(ownerId);
     network.placeController(ownerId, BEYOND_THE_RANGE);
 
-    helper.succeedWhen(() -> helper.assertBlockProperty(NODE, SignalNodeBlock.OUT_OF_RANGE, true));
+    helper.succeedWhen(() -> NodeParts.assertOutOfRange(helper, NODE, true));
   }
 
   /**
@@ -204,7 +203,7 @@ public final class NodeScreenGameTests {
     networkOf(node).disableSlot(ownerId, node, DISABLED_CHANNEL.ordinal());
 
     helper.succeedWhen(() -> {
-      SignalNodeBlockEntity entity = helper.getBlockEntity(NODE);
+      NodePart entity = NodeParts.only(helper, NODE);
       for (int corner = 0; corner < CORNER_CHANNELS.size(); corner++) {
         helper.assertTrue(
             entity.corner(corner) == CORNER_CHANNELS.get(corner).ordinal(), WRONG_CORNER);
@@ -226,13 +225,14 @@ public final class NodeScreenGameTests {
         new ItemStack(RedweaveItems.SIGNAL_NODE.get()),
         STONE,
         net.minecraft.core.Direction.UP);
-    SignalNodeBlockEntity entity = helper.getBlockEntity(NODE);
+    NodePart entity = NodeParts.only(helper, NODE);
     NodeScene.choose(helper, owner, NODE, NodeScene.FIRST_CHOICE);
     return entity.node().orElseThrow();
   }
 
   private static NodeMenu menuOf(GameTestHelper helper, UUID player, String name) {
-    return new NodeMenu(MENU_ID, playerNearTheNode(helper, player, name), helper.absolutePos(NODE));
+    return new NodeMenu(
+        MENU_ID, playerNearTheNode(helper, player, name), NodeParts.spotOf(helper, NODE));
   }
 
   /** A server player with that UUID, standing next to the node. */

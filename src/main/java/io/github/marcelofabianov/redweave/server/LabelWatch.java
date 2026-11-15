@@ -5,7 +5,9 @@ import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabels;
 import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.config.NeoForgeLabelRange;
 import io.github.marcelofabianov.redweave.domain.network.ModuleId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -120,10 +122,18 @@ public final class LabelWatch {
       if (entity.getBlockPos().distSqr(center) > reach) {
         continue;
       }
-      if (entity instanceof SignalNodeBlockEntity node) {
-        node.node().ifPresent(id -> near.nodes().put(id, entity.getBlockPos()));
+      if (entity instanceof PartSpaceBlockEntity space) {
+        addNodes(space, near);
       } else if (entity instanceof ModuleBlockEntity module) {
         addModule(module, near);
+      }
+    }
+  }
+
+  private static void addNodes(PartSpaceBlockEntity space, Near near) {
+    for (Part part : space.parts()) {
+      if (part instanceof NodePart node) {
+        node.node().ifPresent(id -> near.nodes().put(id, space.getBlockPos()));
       }
     }
   }
