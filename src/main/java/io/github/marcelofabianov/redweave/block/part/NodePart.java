@@ -19,12 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -127,6 +129,25 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
   @Override
   public int signal(Direction side) {
     return side == facing() ? emitted : 0;
+  }
+
+  /**
+   * A Signal Cable or the game wire beside the space, on the same side, also gets what the node
+   * emits, as a cable of its own space (answer 574); nothing else beside the space does (262).
+   */
+  @Override
+  public int signal(BlockGetter level, BlockPos pos, Direction side) {
+    Direction toward = side.getOpposite();
+    if (toward.getAxis() == face.getAxis()) {
+      return signal(side);
+    }
+    return NodeBeside.takes(level, pos.relative(toward), face) ? emitted : signal(side);
+  }
+
+  /** The game wire turns only to a node on the floor, which it exchanges with (answer 574). */
+  @Override
+  public boolean turnsWire(Direction toward) {
+    return NodeBeside.turnsWire(face, toward);
   }
 
   /** The ring out of range wins over the lit lens (answers 72 and 86). */

@@ -38,6 +38,14 @@ public interface Part {
     return signal(side);
   }
 
+  /**
+   * Whether the game wire, coming from the direction, turns to the part, as it turns to a signal
+   * source; a node turns it only when they exchange signal (answer 574).
+   */
+  default boolean turnsWire(Direction toward) {
+    return true;
+  }
+
   /** What the client draws for the part, which the model of the space joins (answer 536). */
   List<PartLook> looks();
 

@@ -1,0 +1,114 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "east": {
+          "rotation": 90,
+          "texture": "#cable",
+          "tintindex": 0,
+          "uv": [
+            2.0,
+            0.0,
+            5.0,
+            9.0
+          ]
+        },
+        "north": {
+          "texture": "#cable",
+          "tintindex": 0,
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            3.0
+          ]
+        },
+        "up": {
+          "texture": "#cable",
+          "tintindex": 0,
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            9.0
+          ]
+        },
+        "west": {
+          "rotation": 90,
+          "texture": "#cable",
+          "tintindex": 0,
+          "uv": [
+            2.0,
+            0.0,
+            5.0,
+            9.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        0,
+        -3
+      ],
+      "to": [
+        10,
+        3,
+        6
+      ]
+    },
+    {
+      "faces": {
+        "up": {
+          "texture": "#stripe",
+          "tintindex": 1,
+          "uv": [
+            7.0,
+            0.0,
+            9.0,
+            10.0
+          ]
+        }
+      },
+      "from": [
+        7,
+        3.1,
+        -3.1
+      ],
+      "to": [
+        9,
+        3.1,
+        7
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "texture": "#stripe",
+          "tintindex": 1,
+          "uv": [
+            7.0,
+            0.0,
+            9.0,
+            3.0
+          ]
+        }
+      },
+      "from": [
+        7,
+        0,
+        -3.1
+      ],
+      "to": [
+        9,
+        3.1,
+        -3.1
+      ]
+    }
+  ],
+  "textures": {
+    "cable": "redweave:block/signal_cable",
+    "particle": "redweave:block/signal_cable",
+    "stripe": "redweave:block/signal_cable_stripe"
+  }
+}

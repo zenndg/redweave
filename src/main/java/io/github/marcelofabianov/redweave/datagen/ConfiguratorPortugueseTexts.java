@@ -33,7 +33,7 @@ final class ConfiguratorPortugueseTexts {
   private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
   private static final String HINT_TOGGLE_MODULE = "Clique num módulo para ligá-lo ou pará-lo.";
   private static final String HINT_COPY = "Clique num nó para copiá-lo, Shift + clique para colar.";
-  private static final String HINT_WRENCH = "Clique num nó ou módulo para retirá-lo.";
+  private static final String HINT_WRENCH = "Clique num nó, módulo ou cabo para retirá-lo.";
   private static final String HINT_SCROLL = "Shift + scroll para trocar o modo.";
 
   private ConfiguratorPortugueseTexts() {}

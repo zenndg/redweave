@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.block;
 
 import io.github.marcelofabianov.redweave.block.part.CablePart;
+import io.github.marcelofabianov.redweave.block.part.NodeBeside;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import net.minecraft.core.BlockPos;
@@ -17,13 +18,15 @@ final class NodeReading {
 
   /**
    * On the face the node sticks to, the strength of the block itself, without the node, so an
-   * output of the node is never read back. On any other face, what that neighbor sends in.
+   * output of the node is never read back, or of a cable of its space or a cable or the game wire
+   * beside it, on its side (answers 566 and 574). On any other face, what that neighbor sends in.
    */
   static Signal read(Level level, PartSpot node, Direction face) {
     Direction stuckTo = node.face().getOpposite();
     BlockPos support = node.support();
     if (face == stuckTo) {
-      return Signal.clamped(Math.max(strengthWithout(level, support, node), cablesOf(level, node)));
+      int fromCables = Math.max(cablesOf(level, node), NodeBeside.strength(level, node));
+      return Signal.clamped(Math.max(strengthWithout(level, support, node), fromCables));
     }
     BlockPos neighbor = support.relative(face);
     if (!level.isLoaded(neighbor)) {

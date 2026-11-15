@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import com.mojang.logging.LogUtils;
+import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.domain.cable.Insulation;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
@@ -8,22 +9,24 @@ import io.github.marcelofabianov.redweave.domain.part.PartKind;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.slf4j.Logger;
@@ -41,26 +44,23 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
   private static final PlayerId NO_OWNER = new PlayerId(new UUID(0, 0));
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String DROPPED = "Dropped an invalid color of a Signal Cable: {}";
-  private static final double THICKNESS = 3;
-  private static final double FULL = 16;
-  private static final double BACK = FULL - THICKNESS;
-  private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
+  private static final String CENTER_PATH = "block/signal_cable_center";
 
-  static {
-    SHAPES.put(Direction.DOWN, Block.box(0, 0, 0, FULL, THICKNESS, FULL));
-    SHAPES.put(Direction.UP, Block.box(0, BACK, 0, FULL, FULL, FULL));
-    SHAPES.put(Direction.NORTH, Block.box(0, 0, 0, FULL, FULL, THICKNESS));
-    SHAPES.put(Direction.SOUTH, Block.box(0, 0, BACK, FULL, FULL, FULL));
-    SHAPES.put(Direction.WEST, Block.box(0, 0, 0, THICKNESS, FULL, FULL));
-    SHAPES.put(Direction.EAST, Block.box(BACK, 0, 0, FULL, FULL, FULL));
-  }
+  /** The model of the center of the cable, on the floor (answer 521). */
+  public static final ResourceLocation CENTER =
+      ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, CENTER_PATH);
+
+  /** Every model of the cable, which the client loads for the part space (answer 536). */
+  public static final List<ResourceLocation> MODELS =
+      Stream.concat(Stream.of(CENTER), Arrays.stream(CableReach.values()).map(CableReach::model))
+          .toList();
 
   private final Direction face;
   private final ChannelColor color;
   private Optional<UUID> owner = Optional.empty();
   private int strength;
   private int input;
-  private Set<Direction> arms = EnumSet.noneOf(Direction.class);
+  private Map<Direction, CableReach> arms = new EnumMap<>(Direction.class);
 
   private CablePart(Direction face, ChannelColor color) {
     this.face = face;
@@ -113,9 +113,10 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
     return SignalCableItem.stackOf(color, 1);
   }
 
+  /** The shape follows what is drawn: the center and the arms (answer 571). */
   @Override
   public VoxelShape shape() {
-    return SHAPES.get(face);
+    return CableShapes.of(face, arms);
   }
 
   /**
@@ -127,7 +128,7 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
     if (strength == 0 || CableInputs.isReading()) {
       return 0;
     }
-    return side == face.getOpposite() || arms.contains(side.getOpposite()) ? strength : 0;
+    return side == face.getOpposite() || arms.containsKey(side.getOpposite()) ? strength : 0;
   }
 
   /** The game wire beside it gets one less, as from another wire (answer 565). */
@@ -138,10 +139,18 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
     return wire && given > 0 ? given - 1 : given;
   }
 
-  /** Drawn from step 8 of #44 on; until then the cable has no look of its own. */
+  /** The cable draws with its own pieces, which turn to any direction (answer 572). */
   @Override
   public List<PartLook> looks() {
     return List.of();
+  }
+
+  /** The center and each arm, which the client joins into the space (answers 521 and 572). */
+  public List<CableLook> pieces() {
+    List<CableLook> pieces = new ArrayList<>();
+    pieces.add(new CableLook(CENTER, face, CableLinks.across(face).getFirst()));
+    arms.forEach((toward, reach) -> pieces.add(new CableLook(reach.model(), face, toward)));
+    return List.copyOf(pieces);
   }
 
   @Override
@@ -161,9 +170,9 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
     return strength;
   }
 
-  /** The directions across its side where it points, which the shape of step 8 draws. */
-  public Set<Direction> arms() {
-    return Set.copyOf(arms);
+  /** The directions across its side where it points, and how far each arm reaches (571). */
+  public Map<Direction, CableReach> arms() {
+    return Map.copyOf(arms);
   }
 
   /** The color and the owner that decide which cables join (answers 497 and 528). */
@@ -187,9 +196,9 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
   }
 
   /** Keeps where it points and tells whether that changed. */
-  boolean setArms(Set<Direction> next) {
+  boolean setArms(Map<Direction, CableReach> next) {
     boolean moved = !arms.equals(next);
-    arms = next.isEmpty() ? EnumSet.noneOf(Direction.class) : EnumSet.copyOf(next);
+    arms = next.isEmpty() ? new EnumMap<>(Direction.class) : new EnumMap<>(next);
     return moved;
   }
 
@@ -229,16 +238,17 @@ public final class CablePart implements Part, LivePart, OwnedPart, ClientPart {
     return mayBreak(player);
   }
 
-  /** The client gets the strength and the arms, to draw them in step 8 (answer 522). */
+  /** The client gets the strength and the arms, to draw them (answers 522 and 573). */
   @Override
   public void writeClient(CompoundTag tag) {
     tag.putInt(STRENGTH_TAG, strength);
-    tag.putInt(ARMS_TAG, CableLinks.maskOf(arms));
+    tag.putInt(ARMS_TAG, CableReach.pack(arms));
   }
 
   @Override
   public void readClient(CompoundTag tag) {
     strength = tag.getInt(STRENGTH_TAG);
-    arms = CableLinks.fromMask(tag.getInt(ARMS_TAG));
+    arms = new EnumMap<>(Direction.class);
+    arms.putAll(CableReach.unpack(tag.getInt(ARMS_TAG)));
   }
 }

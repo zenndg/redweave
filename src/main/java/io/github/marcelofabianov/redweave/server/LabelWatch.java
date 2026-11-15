@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabels;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
@@ -29,15 +30,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 /**
- * Which labels each player with the Configurator in the main hand has, of the nodes and of the
- * Signal Modules, to send only what changed (answers 268, 269 and 417, and rule 18). It reads only
- * loaded chunks, so no chunk loads (rule 6), and keeps nothing in the saves. Each label goes with
- * its place, so the labels of the parts of one space do not sit on each other (answer 547).
+ * Which labels each player with the Configurator in the main hand has, of the nodes, of the Signal
+ * Modules and of the Signal Cables, to send only what changed (answers 268, 269, 417 and 525, and
+ * rule 18). It reads only loaded chunks, so no chunk loads (rule 6), and keeps nothing in the
+ * saves. Each label goes with its place, so the labels of the parts of one space do not sit on each
+ * other (answer 547).
  */
 public final class LabelWatch {
   private final RedweaveServer server;
   private final Map<UUID, LabelChanges<NodeId, Placed<NodeLabel>>> nodeHolders = new HashMap<>();
   private final Map<UUID, LabelChanges<ModuleId, Placed<ModuleLabel>>> moduleHolders =
+      new HashMap<>();
+  private final Map<UUID, LabelChanges<PartSpot, NodeLabelsUpdate.CableLine>> cableHolders =
       new HashMap<>();
 
   LabelWatch(RedweaveServer server) {
@@ -47,11 +51,15 @@ public final class LabelWatch {
   /** A label with its place, so a space that gains or loses a labeled part sends it again. */
   private record Placed<L>(L label, NodeLabelsUpdate.Place place) {}
 
-  /** The nodes and the modules near a player, with their spots and the labeled parts per space. */
+  /**
+   * The nodes, the modules and the cables near a player, with their spots and the labeled parts per
+   * space.
+   */
   private record Near(
       Map<NodeId, PartSpot> nodes,
       Map<ModuleId, PartSpot> modules,
       Map<ModuleId, ModuleLabel> moduleLabels,
+      Map<PartSpot, CablePart> cables,
       Map<BlockPos, Integer> labeled) {
     void count(BlockPos space) {
       labeled.merge(space, 1, Integer::sum);
@@ -67,7 +75,10 @@ public final class LabelWatch {
   public Optional<NodeLabelsUpdate> update(ServerPlayer player) {
     UUID id = player.getUUID();
     if (!player.getMainHandItem().is(RedweaveItems.CONFIGURATOR.get())) {
-      boolean had = nodeHolders.remove(id) != null | moduleHolders.remove(id) != null;
+      boolean had =
+          nodeHolders.remove(id) != null
+              | moduleHolders.remove(id) != null
+              | cableHolders.remove(id) != null;
       return had ? Optional.of(NodeLabelsUpdate.clear()) : Optional.empty();
     }
     Near near = near(player, new NeoForgeLabelRange().getAsInt());
@@ -75,10 +86,12 @@ public final class LabelWatch {
         nodeHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(nodeLabels(near));
     LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules =
         moduleHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(moduleLabels(near));
-    if (nodes.isEmpty() && modules.isEmpty()) {
+    LabelChanges.Delta<PartSpot, NodeLabelsUpdate.CableLine> cables =
+        cableHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(cableLabels(near));
+    if (nodes.isEmpty() && modules.isEmpty() && cables.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.of(updateOf(nodes, modules));
+    return Optional.of(updateOf(nodes, modules, cables));
   }
 
   private Map<NodeId, Placed<NodeLabel>> nodeLabels(Near near) {
@@ -99,9 +112,22 @@ public final class LabelWatch {
     return labels;
   }
 
+  /** The color and the strength of each cable, as `15 Red · 12` (answer 525). */
+  private static Map<PartSpot, NodeLabelsUpdate.CableLine> cableLabels(Near near) {
+    Map<PartSpot, NodeLabelsUpdate.CableLine> labels = new LinkedHashMap<>();
+    near.cables()
+        .forEach((spot, cable) ->
+            labels.put(
+                spot,
+                NodeLabelsUpdate.CableLine.of(
+                    near.placeOf(spot), cable.color(), cable.strength())));
+    return labels;
+  }
+
   private static NodeLabelsUpdate updateOf(
       LabelChanges.Delta<NodeId, Placed<NodeLabel>> nodes,
-      LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules) {
+      LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules,
+      LabelChanges.Delta<PartSpot, NodeLabelsUpdate.CableLine> cables) {
     List<UUID> gone = new ArrayList<>(nodes.gone().stream().map(NodeId::value).toList());
     modules.gone().forEach(module -> gone.add(module.value()));
     return new NodeLabelsUpdate(
@@ -116,13 +142,16 @@ public final class LabelWatch {
                 NodeLabelsUpdate.ModuleLine.of(
                     entry.getKey().value(), entry.getValue().place(), entry.getValue().label()))
             .toList(),
-        gone);
+        List.copyOf(cables.changed().values()),
+        gone,
+        cables.gone());
   }
 
   /** A player who left takes nothing with them. */
   public void forget(UUID player) {
     nodeHolders.remove(player);
     moduleHolders.remove(player);
+    cableHolders.remove(player);
   }
 
   /** The nodes and modules in loaded chunks within the reach of the player, in a sphere. */
@@ -131,7 +160,11 @@ public final class LabelWatch {
     BlockPos center = player.blockPosition();
     Near near =
         new Near(
-            new LinkedHashMap<>(), new LinkedHashMap<>(), new LinkedHashMap<>(), new HashMap<>());
+            new LinkedHashMap<>(),
+            new LinkedHashMap<>(),
+            new LinkedHashMap<>(),
+            new LinkedHashMap<>(),
+            new HashMap<>());
     int fromX = SectionPos.blockToSectionCoord(center.getX() - range);
     int toX = SectionPos.blockToSectionCoord(center.getX() + range);
     int fromZ = SectionPos.blockToSectionCoord(center.getZ() - range);
@@ -168,6 +201,9 @@ public final class LabelWatch {
         near.count(pos);
       } else if (part instanceof ModulePart module) {
         addModule(module, spot, near);
+      } else if (part instanceof CablePart cable) {
+        near.cables().put(spot, cable);
+        near.count(pos);
       }
     }
   }

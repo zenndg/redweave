@@ -5,9 +5,10 @@ import io.github.marcelofabianov.redweave.domain.cable.CableLink;
 import io.github.marcelofabianov.redweave.domain.cable.Passage;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.EnumMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -66,50 +67,59 @@ final class CableLinks {
   }
 
   /**
-   * Where the cable points: to the joined cables and to the components the game wire turns to; a
-   * cable with one link runs on through, and a lone one points every way, as a cross (568).
+   * Where the cable points and how far each arm reaches: to the joined cables and to the components
+   * the game wire turns to; a cable with one link runs on through, and a lone one points every way,
+   * as a cross (568, 571 and 572).
    */
-  static Set<Direction> arms(Level level, PartSpot spot, CablePart cable) {
-    Set<Direction> linked = EnumSet.noneOf(Direction.class);
+  static Map<Direction, CableReach> arms(Level level, PartSpot spot, CablePart cable) {
+    Map<Direction, CableReach> arms = new EnumMap<>(Direction.class);
     for (Direction direction : across(spot.face())) {
-      if (joinsToward(level, spot, cable, direction) || component(level, spot, direction)) {
-        linked.add(direction);
+      Optional<CableReach> joined = joinedReach(level, spot, cable, direction);
+      if (joined.isPresent()) {
+        arms.put(direction, joined.get());
+      } else if (component(level, spot, direction)) {
+        arms.put(
+            direction, plateBeside(level, spot, direction) ? CableReach.PLATE : CableReach.EDGE);
       }
     }
-    if (linked.isEmpty()) {
-      linked.addAll(across(spot.face()));
-    } else if (linked.size() == ONE) {
-      linked.add(linked.iterator().next().getOpposite());
-    }
-    return linked;
-  }
-
-  static int maskOf(Set<Direction> arms) {
-    int mask = 0;
-    for (Direction direction : arms) {
-      mask |= ONE << direction.ordinal();
-    }
-    return mask;
-  }
-
-  static Set<Direction> fromMask(int mask) {
-    Set<Direction> arms = EnumSet.noneOf(Direction.class);
-    for (Direction direction : Direction.values()) {
-      if ((mask & (ONE << direction.ordinal())) != 0) {
-        arms.add(direction);
-      }
+    if (arms.isEmpty()) {
+      across(spot.face()).forEach(direction -> arms.put(direction, CableReach.EDGE));
+    } else if (arms.size() == ONE) {
+      arms.put(arms.keySet().iterator().next().getOpposite(), CableReach.EDGE);
     }
     return arms;
   }
 
-  private static boolean joinsToward(
+  /** How the arm reaches the first joined cable in the direction, if one is joined. */
+  private static Optional<CableReach> joinedReach(
       Level level, PartSpot spot, CablePart cable, Direction direction) {
-    return toward(level, spot, direction).stream()
-        .map(link -> CablePart.at(level, link.piece()))
-        .anyMatch(found ->
-            found.isPresent()
-                && found.get() != cable
-                && cable.insulation().joins(found.get().insulation()));
+    for (CableLink<PartSpot> link : toward(level, spot, direction)) {
+      Optional<CablePart> found = CablePart.at(level, link.piece());
+      if (found.isPresent()
+          && found.get() != cable
+          && cable.insulation().joins(found.get().insulation())) {
+        return Optional.of(reachTo(spot, direction, link.piece()));
+      }
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * The reach toward a joined spot: short on the inner curve and past the edge on the outer one,
+   * only for the side of the lower ordinal; up the block on a step up; to the edge otherwise.
+   */
+  static CableReach reachTo(PartSpot spot, Direction direction, PartSpot other) {
+    BlockPos pos = spot.pos();
+    Direction face = spot.face();
+    boolean lower = face.ordinal() < other.face().ordinal();
+    if (other.pos().equals(pos)) {
+      return lower ? CableReach.SHORT : CableReach.EDGE;
+    }
+    if (other.face() == direction.getOpposite()) {
+      return lower ? CableReach.CORNER : CableReach.EDGE;
+    }
+    boolean up = other.pos().equals(pos.relative(direction).relative(face.getOpposite()));
+    return up ? CableReach.STEP : CableReach.EDGE;
   }
 
   /**
@@ -129,6 +139,23 @@ final class CableLinks {
       return space.parts().stream().anyMatch(part -> !(part instanceof CablePart));
     }
     return turnsTo(level, side, level.getBlockState(side), direction);
+  }
+
+  /**
+   * Whether the space beside, in the direction, has on the same side a node or a module that
+   * exchanges signal with the cable, whose plate the arm reaches past the edge (answers 574 and
+   * 575): any node, and a module only by its back or front edge (answer 566).
+   */
+  private static boolean plateBeside(Level level, PartSpot spot, Direction direction) {
+    return PartSpaceBlockEntity.at(level, spot.pos().relative(direction))
+        .flatMap(space -> space.at(spot.face()))
+        .map(part -> part instanceof NodePart || edgeToward(part, direction.getOpposite()))
+        .orElse(false);
+  }
+
+  /** A module with its front or back edge toward the direction. */
+  private static boolean edgeToward(Part part, Direction toward) {
+    return part instanceof ModulePart module && module.front().getAxis() == toward.getAxis();
   }
 
   private static boolean sharesSpace(Level level, PartSpot spot, Direction direction) {

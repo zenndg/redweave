@@ -1,5 +1,7 @@
 package io.github.marcelofabianov.redweave.block;
 
+import io.github.marcelofabianov.redweave.block.part.CableLook;
+import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.ClientPart;
 import io.github.marcelofabianov.redweave.block.part.HostedPart;
 import io.github.marcelofabianov.redweave.block.part.LivePart;
@@ -39,6 +41,9 @@ import net.neoforged.neoforge.client.model.data.ModelProperty;
 public final class PartSpaceBlockEntity extends BlockEntity {
   /** The looks of the parts, which the model of the client joins (answer 536). */
   public static final ModelProperty<List<PartLook>> LOOKS = new ModelProperty<>();
+
+  /** The pieces of the Signal Cables, which the model of the client turns (answer 572). */
+  public static final ModelProperty<List<CableLook>> CABLES = new ModelProperty<>();
 
   private static final String CLIENT = "client";
 
@@ -197,6 +202,12 @@ public final class PartSpaceBlockEntity extends BlockEntity {
   public ModelData getModelData() {
     return ModelData.builder()
         .with(LOOKS, parts.values().stream().flatMap(part -> part.looks().stream()).toList())
+        .with(
+            CABLES,
+            parts.values().stream()
+                .filter(CablePart.class::isInstance)
+                .flatMap(part -> ((CablePart) part).pieces().stream())
+                .toList())
         .build();
   }
 

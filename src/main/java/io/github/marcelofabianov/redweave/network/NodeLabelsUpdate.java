@@ -16,12 +16,17 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * The labels over the nodes and the modules for the player who holds the Configurator: the ones
- * that changed or came into reach and the nodes that left it, or a clear of all when the player
- * lets go (answers 268, 269 and 274, and rule 18).
+ * The labels over the nodes, the modules and the cables for the player who holds the Configurator:
+ * the ones that changed or came into reach and the ones that left it, or a clear of all when the
+ * player lets go (answers 268, 269, 274 and 525, and rule 18).
  */
 public record NodeLabelsUpdate(
-    boolean clearAll, List<Label> labels, List<ModuleLine> modules, List<UUID> gone)
+    boolean clearAll,
+    List<Label> labels,
+    List<ModuleLine> modules,
+    List<CableLine> cables,
+    List<UUID> gone,
+    List<PartSpot> goneCables)
     implements CustomPacketPayload {
   private static final String ID = "node_labels";
   private static final int NO_COLOR = -1;
@@ -99,6 +104,26 @@ public record NodeLabelsUpdate(
     }
   }
 
+  /**
+   * The label of a Signal Cable, in one line: its place, the number of its color, as the channels
+   * show it, and its strength, as `15 Red · 12` (answer 525).
+   */
+  public record CableLine(Place place, int color, int strength) {
+    static final StreamCodec<ByteBuf, CableLine> STREAM_CODEC =
+        StreamCodec.composite(
+            Place.STREAM_CODEC,
+            CableLine::place,
+            ByteBufCodecs.VAR_INT,
+            CableLine::color,
+            ByteBufCodecs.VAR_INT,
+            CableLine::strength,
+            CableLine::new);
+
+    public static CableLine of(Place place, ChannelColor color, int strength) {
+      return new CableLine(place, color.ordinal(), strength);
+    }
+  }
+
   public static final StreamCodec<RegistryFriendlyByteBuf, NodeLabelsUpdate> STREAM_CODEC =
       StreamCodec.composite(
           ByteBufCodecs.BOOL,
@@ -107,19 +132,25 @@ public record NodeLabelsUpdate(
           NodeLabelsUpdate::labels,
           ModuleLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
           NodeLabelsUpdate::modules,
+          CableLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          NodeLabelsUpdate::cables,
           UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs.list()),
           NodeLabelsUpdate::gone,
+          PartSpot.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          NodeLabelsUpdate::goneCables,
           NodeLabelsUpdate::new);
 
   public NodeLabelsUpdate {
     labels = List.copyOf(labels);
     modules = List.copyOf(modules);
+    cables = List.copyOf(cables);
     gone = List.copyOf(gone);
+    goneCables = List.copyOf(goneCables);
   }
 
   /** The player let the Configurator go, so every label goes. */
   public static NodeLabelsUpdate clear() {
-    return new NodeLabelsUpdate(true, List.of(), List.of(), List.of());
+    return new NodeLabelsUpdate(true, List.of(), List.of(), List.of(), List.of(), List.of());
   }
 
   @Override

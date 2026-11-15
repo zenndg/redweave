@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartTargets;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -90,6 +91,18 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
   @Override
   protected boolean isSignalSource(BlockState state) {
     return true;
+  }
+
+  /**
+   * The game wire turns to the space when a part takes it, as a Signal Node on the floor or a
+   * Signal Cable (answers 507 and 574); the direction goes from the wire to the space.
+   */
+  @Override
+  public boolean canConnectRedstone(
+      BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+    return direction != null
+        && level.getBlockEntity(pos) instanceof PartSpaceBlockEntity space
+        && space.parts().stream().anyMatch(part -> part.turnsWire(direction));
   }
 
   /** The strongest signal any part gives to the side. */

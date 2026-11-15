@@ -3,10 +3,12 @@ package io.github.marcelofabianov.redweave.client;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
@@ -24,12 +26,14 @@ import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -50,6 +54,8 @@ public final class RedweaveClient {
   /** White with full opacity: the layer keeps the colors of its texture. */
   private static final int UNTINTED = 0xFFFFFFFF;
 
+  private static final int OPAQUE = 0xFF000000;
+
   private RedweaveClient() {}
 
   @SubscribeEvent
@@ -66,7 +72,7 @@ public final class RedweaveClient {
 
   @SubscribeEvent
   public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-    event.register(RedweaveClient::cornerColor, RedweaveBlocks.PART_SPACE.get());
+    event.register(RedweaveClient::partColor, RedweaveBlocks.PART_SPACE.get());
   }
 
   /** The insulation of a Signal Cable item takes its color; its copper tips keep theirs (518). */
@@ -85,6 +91,7 @@ public final class RedweaveClient {
   public static void registerPartModels(ModelEvent.RegisterAdditional event) {
     Stream.of(
             NodePart.MODELS,
+            CablePart.MODELS,
             ModulePart.models(TimerPart.ID, TimerPart.LOOKS),
             ModulePart.models(InverterPart.ID, InverterPart.LOOKS),
             ModulePart.models(DetectorPart.ID, DetectorPart.LOOKS),
@@ -109,24 +116,34 @@ public final class RedweaveClient {
   }
 
   /**
-   * The tint of a corner of a node: its side and its slot, from 0 to 3, which the model of the
-   * space packs in the tint index (answers 87 and 536).
+   * The tint of a part: its side and its slot, from 0 to 3, which the model of the space packs in
+   * the tint index (answers 87 and 536). A node tints its corners, and a cable its insulation and
+   * its stripe (answers 518 and 522).
    */
-  private static int cornerColor(
+  private static int partColor(
       BlockState state, BlockAndTintGetter level, BlockPos pos, int tintIndex) {
     if (level == null
         || pos == null
         || !(level.getBlockEntity(pos) instanceof PartSpaceBlockEntity space)) {
       return ChannelColors.FREE;
     }
+    Optional<Part> part = space.at(PartQuads.faceOf(tintIndex));
+    if (part.isPresent() && part.get() instanceof CablePart cable) {
+      return cableColor(cable, PartQuads.slotOf(tintIndex));
+    }
     int channel =
-        space
-            .at(PartQuads.faceOf(tintIndex))
-            .filter(NodePart.class::isInstance)
-            .map(part -> ((NodePart) part).corner(PartQuads.slotOf(tintIndex)))
+        part.filter(NodePart.class::isInstance)
+            .map(found -> ((NodePart) found).corner(PartQuads.slotOf(tintIndex)))
             .orElse(NodeLook.FREE);
     return channel == NodeLook.FREE
         ? ChannelColors.FREE
         : ChannelColors.argb(ChannelColor.values()[channel]);
+  }
+
+  /** The insulation in the color of the cable, and the stripe in the red of the game wire (522). */
+  private static int cableColor(CablePart cable, int slot) {
+    return slot == CableQuads.STRIPE
+        ? OPAQUE | RedStoneWireBlock.getColorForPower(cable.strength())
+        : ChannelColors.argb(cable.color());
   }
 }

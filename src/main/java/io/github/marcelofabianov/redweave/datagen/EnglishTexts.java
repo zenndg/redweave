@@ -28,6 +28,8 @@ final class EnglishTexts {
   private static final String SIGNAL_CABLE_COLORED = "%s Signal Cable";
 
   private static final String FACE_TAKEN = "This face is taken.";
+  private static final String CABLE_PICKED_UP = "Cable picked up";
+  private static final String OWNER_ONLY = "Only the player who placed this cable can pick it up.";
   private static final String CABLES_FULL = "This space already has 2 cables.";
   private static final String NETWORK_CONTROLLER = "Network Controller";
   private static final String NETWORK_TERMINAL = "Network Terminal";
@@ -62,6 +64,8 @@ final class EnglishTexts {
     add.accept(cable + SignalCableItem.COLORED_SUFFIX, SIGNAL_CABLE_COLORED);
     add.accept(PartMessages.FACE_TAKEN, FACE_TAKEN);
     add.accept(PartMessages.CABLES_FULL, CABLES_FULL);
+    add.accept(PartMessages.CABLE_PICKED_UP, CABLE_PICKED_UP);
+    add.accept(PartMessages.CABLE_NOT_OWNER, OWNER_ONLY);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

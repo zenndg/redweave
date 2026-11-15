@@ -28,9 +28,14 @@ final class PartQuads {
   /** The quads of the model turned as the look says, with the tints of its side. */
   static List<BakedQuad> of(BakedModel model, PartLook look) {
     Transformation turn = BlockModelRotation.by(look.turn().x(), look.turn().y()).getRotation();
+    return of(model, turn, look.face());
+  }
+
+  /** The quads of the model with the turn, about the center of the block, and the side's tints. */
+  static List<BakedQuad> of(BakedModel model, Transformation turn, Direction face) {
     List<BakedQuad> quads = new ArrayList<>();
     for (BakedQuad quad : all(model)) {
-      quads.add(turned(quad, turn, look.face()));
+      quads.add(turned(quad, turn, face));
     }
     return List.copyOf(quads);
   }

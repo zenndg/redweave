@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.client;
 
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.CableLook;
 import io.github.marcelofabianov.redweave.block.part.PartLook;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ final class PartSpaceModel implements IDynamicBakedModel {
   private final BakedModel base;
   private final Function<ResourceLocation, BakedModel> models;
   private final Map<PartLook, List<BakedQuad>> turned = new ConcurrentHashMap<>();
+  private final Map<CableLook, List<BakedQuad>> cables = new ConcurrentHashMap<>();
 
   PartSpaceModel(BakedModel base, Function<ResourceLocation, BakedModel> models) {
     this.base = base;
@@ -44,11 +46,21 @@ final class PartSpaceModel implements IDynamicBakedModel {
     for (PartLook look : looks) {
       quads.addAll(turned.computeIfAbsent(look, this::bake));
     }
+    List<CableLook> pieces = data.get(PartSpaceBlockEntity.CABLES);
+    if (pieces != null) {
+      for (CableLook piece : pieces) {
+        quads.addAll(cables.computeIfAbsent(piece, this::bakeCable));
+      }
+    }
     return quads;
   }
 
   private List<BakedQuad> bake(PartLook look) {
     return PartQuads.of(models.apply(look.model()), look);
+  }
+
+  private List<BakedQuad> bakeCable(CableLook piece) {
+    return CableQuads.of(models.apply(piece.model()), piece);
   }
 
   @Override

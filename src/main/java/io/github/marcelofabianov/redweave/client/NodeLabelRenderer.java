@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
+import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.CableLine;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.Label;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ModuleLine;
 import io.github.marcelofabianov.redweave.network.ReceivedLabels;
@@ -33,7 +34,7 @@ import org.joml.Matrix4f;
  * Draws the label over each node the server sent, while the player holds the Configurator in the
  * main hand, facing the camera like a name tag, and dimmer behind walls. Two lines: the network,
  * small, after a square in its color, and the node, a little bigger (answers 268 and 274 to 276).
- * The Signal Modules get theirs too (answer 417).
+ * The Signal Modules get theirs too (answer 417), and the Signal Cables one line (answer 525).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID, value = Dist.CLIENT)
 public final class NodeLabelRenderer {
@@ -84,6 +85,9 @@ public final class NodeLabelRenderer {
     for (ModuleLine module : ReceivedLabels.modules()) {
       drawModule(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, module);
     }
+    for (CableLine cable : ReceivedLabels.cables()) {
+      drawCable(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, cable);
+    }
     buffers.endBatch();
   }
 
@@ -124,6 +128,31 @@ public final class NodeLabelRenderer {
     Vec3 anchor = anchorOf(module.place());
     drawLine(pose, camera, font, buffers, anchor, top);
     drawLine(pose, camera, font, buffers, anchor, bottom);
+  }
+
+  /**
+   * Over a Signal Cable, in one line: a square in its color, the color as the channels show it, and
+   * its strength, as `15 Red · 12` (answer 525). A number outside the colors shows no label.
+   */
+  private static void drawCable(
+      PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, CableLine cable) {
+    Optional<ChannelColor> color = channelOf(cable.color());
+    if (color.isEmpty()) {
+      return;
+    }
+    Component text =
+        ChannelNames.of(color.get())
+            .copy()
+            .append(SEPARATOR)
+            .append(String.valueOf(cable.strength()));
+    int square = OPAQUE | ChannelColors.argb(color.get());
+    drawLine(
+        pose,
+        camera,
+        font,
+        buffers,
+        anchorOf(cable.place()),
+        new Line(text, NODE_SCALE, NODE_LINE_UP, square));
   }
 
   /**
