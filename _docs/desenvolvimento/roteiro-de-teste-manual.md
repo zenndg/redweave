@@ -356,12 +356,36 @@ Entregue com a issue #44 (perguntas 494 a 575). Confere a forma, a arte, a mira 
 | 209 | Monte um relógio rápido numa linha longa de cabos e olhe o F3 | O MSPT não sobe de forma visível, e os blocos vizinhos não piscam em cascata |
 | 210 | Troque o idioma para Português (Brasil) e repita os passos 188, 190, 205 e 206 | `Esta face já está ocupada.`, `Este espaço já tem 2 cabos.`, `Cabo de Sinal Vermelho`, `Cabo retirado` e `Só quem colocou este cabo pode retirá-lo.`, sem nada passando da borda |
 
+## Fase 2: o Signal Lever
+
+Entregue com a issue #130 (perguntas 548 a 558 e 576 a 587). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 211 | Pegue um Signal Lever no criativo e passe o mouse sobre ele | `Signal Lever` e o ícone da alavanca desligada, com o cabo para trás e a luz vermelha |
+| 212 | Olhando para o norte, coloque a alavanca no chão, com uma lâmpada ao norte e outra ao lado do bloco de apoio | A placa com a seta para o norte, a base de cobre, o cabo inclinado para trás, a luz vermelha, e as lâmpadas apagadas |
+| 213 | Clique na alavanca com a mão vazia | O clique da alavanca do jogo, mais agudo; o cabo vai para a frente, a luz fica verde e a seta vermelha, e as duas lâmpadas acendem, sem mensagem na action bar |
+| 214 | Clique de novo segurando terra; depois Shift + clique com a terra | O clique mais grave, a alavanca desliga e a terra não é colocada; com Shift, a terra é colocada e a alavanca não muda |
+| 215 | Apague a luz do ambiente e olhe a alavanca de noite | A luz da alavanca brilha no escuro, vermelha ou verde |
+| 216 | Coloque alavancas na parede e no teto, e gire uma com Shift + clique no `Open` | O cabo, a base e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
+| 217 | Mire no cabo da alavanca e numa parte vizinha do mesmo espaço | O contorno cobre a placa e o cabo, e a mira pega a parte certa |
+| 218 | Peça ao segundo player para clicar na alavanca, abrir a tela e quebrá-la | `Only the player who placed this module can change it.`; a tela só para leitura, com o cadeado, e a placa não quebra |
+| 219 | Clique na placa com o Configurator no `Open` | A Tela do Signal Lever: `Off` ou `On` grande à esquerda e, à direita, `Strength 15` com `−` e `+` e `Output` |
+| 220 | Aperte `−` três vezes e ligue a alavanca, com um comparador ou um Signal Cable na frente | A força 12 na tela, e o comparador ou o cabo lê 12 |
+| 221 | Ponha a saída no canal `15` de uma rede, com um nó de saída no `15` sobre uma lâmpada, e ligue a alavanca | A lâmpada do nó acende, e a da frente fica apagada |
+| 222 | Desligue a rede no Network Terminal e use o `Toggle` e a mão | A alavanca liga e desliga, com `<nome>: On` e `<nome>: Off` no `Toggle`; o canal fica em 0 enquanto a rede está `Offline`, e o `Open` mostra a mensagem da rede |
+| 223 | Segure o Configurator perto da alavanca | O rótulo em duas linhas: o nome e, embaixo, `On` ou `Off` e o canal |
+| 224 | Coloque um Signal Cable na frente da alavanca e ligue-a | O braço do cabo encosta na placa, e o cabo acende com força 15 |
+| 225 | Saia do mundo e entre de novo | A alavanca mantém o estado, a força e a saída |
+| 226 | Troque o idioma para Português (Brasil) e repita os passos 211, 219 e 222 | `Alavanca de Sinal`, `Ligada`, `Desligada`, `Força` e `Saída`, e `<nome>: Ligada` no `Toggle` |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 13:19 | Adiciona os passos 211 a 226, do Signal Lever (pergunta 583). |
 | Zennd | 2026-11-15 09:37 | Adiciona os passos 186 a 210, do multipart e do Signal Cable da #44 (pergunta 527). |
 | Zennd | 2026-11-14 19:21 | Lista todos os itens da aba criativa e põe os Signal Modules na Fase 2. |
 | Zennd | 2026-11-14 18:16 | Adiciona os passos 175 a 185, do Signal Randomizer (pergunta 489). |

@@ -11,6 +11,18 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 587 | A saída do Signal Lever acompanha o clique no tick seguinte, pelo tick comum dos módulos. Fica assim? | Sim: a saída muda no tick seguinte ao clique (1/20 s), pelo caminho único dos módulos (regra 18). Num circuito muito preciso, dá 1 tick a mais que a alavanca do jogo |
+| 586 | Os modelos de bloco só giram em 0, ±22,5 e ±45 graus. Qual inclinação o cabo do Signal Lever usa? | 22,5°, o mais perto dos 30° do prompt de arte, com o pomo dentro da placa: para a frente ligada e para trás desligada. O impedimento técnico muda o prompt de arte (regra 38) |
+| 585 | Que mensagem o Signal Lever mostra na action bar ao mudar de estado? | Só no `Toggle` do Configurator: `<nome>: On` ou `<nome>: Off`, como o `<nome>: Running` do Signal Timer. O clique à mão não mostra nada: o som e a luz bastam, como na alavanca do jogo |
+| 584 | Em qual chave do NBT da parte o Signal Lever guarda a força? | `strength`, um inteiro de 1 a 15, ao lado de `on` e da `output` comum, com o nome do domínio. Fica fixado na #26 (regra 15). Completa a pergunta 579 |
+| 583 | Em que fronteiras entram os testes do Signal Lever? | JUnit: a regra da alavanca em `domain/module/` (estado, força e saída). GameTests: o clique à mão, o dono, a saída pela borda e pelo canal, a força, o save e o `Toggle`. Roteiro manual: a arte, a luz e o som |
+| 582 | Como fica o centro da tela do Signal Lever e o seu rótulo? | A força de 1 a 15 num seletor `−` / `+` e o estado `On` ou `Off` mostrado, sem botão para ligar. O rótulo mostra `On` ou `Off` e o canal da saída, como os módulos (pergunta 417). Completa a pergunta 552 |
+| 581 | O que a luz do Signal Lever mostra quando a saída está num canal e o sinal não chega, fora do alcance ou com a rede `Offline`? | O estado da alavanca: verde ligada e vermelha desligada, sempre. O que não chega aparece no rótulo e na tela, como nos módulos. Completa a pergunta 554 |
+| 580 | Qual som o Signal Lever faz ao ligar e desligar? | O clique da alavanca do jogo (`LEVER_CLICK`), com o tom mais alto ao ligar e mais baixo ao desligar |
+| 579 | Em qual chave do NBT da parte o Signal Lever guarda se está ligado? | `on`, um booleano salvo. O `powered` da base (pergunta 560) continua sendo o visual da saída, derivado. Fica fixado na #26 (regra 15) |
+| 578 | Com a rede do Signal Lever `Offline`, o clique e o `Toggle` ligam e desligam a alavanca? | Sim, sempre: a alavanca muda de estado mesmo com a rede `Offline`, e o canal só não conta enquanto ela está `Offline` (pergunta 385). Pela borda, funciona normalmente. Difere dos outros módulos (pergunta 402) |
+| 577 | Quem pode ligar e desligar o Signal Lever à mão? | Só o dono, como nos Signal Modules (pergunta 378) e pela regra 17. Os outros players veem `Only the player who placed this module can change it.` |
+| 576 | O que o clique com a mão vazia, ou com um item que não é o Configurator, faz no Signal Lever? | Liga e desliga a alavanca, como a do jogo. O Configurator segue a base dos Signal Modules. Difere da mão vazia nos outros módulos (pergunta 395) |
 | 575 | Como o Signal Cable encosta visualmente num Signal Node ou num Signal Module do espaço vizinho, cuja placa tem 10 × 10 px e deixa um vão de 3 px até a borda? | O braço do cabo passa 3 px da borda do espaço e encosta na placa, só quando há troca de sinal: com o nó, pela pergunta 574, e com o módulo, só pela borda de trás ou da frente (pergunta 566). A mira acompanha o braço (pergunta 571). Completa as perguntas 572 e 574 |
 | 574 | O Signal Node troca sinal pelos lados do espaço dele com um Signal Cable no espaço vizinho? | Sim, só com o Signal Cable e com o pó do jogo: um cabo ou um pó no espaço vizinho, na mesma face, liga-se ao nó, recebe o que ele emite e o alimenta como se fosse o bloco de apoio, como no mesmo espaço (pergunta 566). Para o resto do mundo, como lâmpadas e pistões, o nó continua energizando só o bloco de apoio, e os circuitos compactos seguem previsíveis. Muda a pergunta 262 |
 | 573 | Como o filete do sinal do Signal Cable é atualizado no cliente? | No modelo do bloco contêiner: cada mudança de força redesenha a seção do chunk, como o pó do jogo ao mudar de estado, e cabos parados não custam nada por quadro. Completa a pergunta 522 |
@@ -575,6 +587,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 12:27 | Registra as respostas 584 a 587, do Signal Lever. |
+| Zennd | 2026-11-15 11:47 | Registra as respostas 576 a 583, do Signal Lever. |
 | Zennd | 2026-11-15 09:08 | Registra a resposta 575. |
 | Zennd | 2026-11-15 09:07 | Registra a resposta 574, que muda a 262. |
 | Zennd | 2026-11-15 08:32 | Registra as respostas 571 a 573. |

@@ -25,6 +25,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
+| Força do Signal Lever | 1 a 15, 15 ao ser colocado (pergunta 552) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Trocas que queimam um Signal Inverter | 8, de 2 a 64 (pergunta 449) | `inverter.burnout_toggles` | 2 |
@@ -39,6 +40,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 13:19 | Adiciona a força do Signal Lever (pergunta 552). |
 | Zennd | 2026-11-15 09:34 | Adiciona a busca do cálculo do Signal Cable e leva o raio do rótulo aos módulos e aos cabos (perguntas 417, 525 e 530). |
 | Zennd | 2026-11-14 19:21 | Aponta o teste de carga da `v0.1.0` (#25). |
 | Zennd | 2026-11-14 19:14 | Adiciona os limites do multipart e do Signal Cable (perguntas 494, 498, 499, 513 e 530). |

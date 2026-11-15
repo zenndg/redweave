@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, e o Signal Randomizer, da #109 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, e o Signal Lever, da #130 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -97,6 +97,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RandomizerMode` | Em `module/`: `ANALOG`, de 0 a 15, ou `BINARY`, 0 ou 15, com a chave do save e o sorteio de cada um (perguntas 476 e 481) | #109 |
 | `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
 | `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
+| `SignalLever` | Em `module/`: a regra do Signal Lever, ligado ou desligado pelo player, com a força de 1 a 15, 15 ao ser colocado. A saída é a força ligado e 0 desligado. Não tem tick próprio: só o player o muda, e o `ChangeLever`, em `application/`, só aceita o dono (perguntas 552, 576, 577 e 579) | #130 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 | `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
 | `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |

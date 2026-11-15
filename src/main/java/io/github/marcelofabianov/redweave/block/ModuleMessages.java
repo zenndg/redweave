@@ -9,6 +9,7 @@ public final class ModuleMessages {
   private static final String INVERTER = "message." + RedweaveMod.MOD_ID + ".signal_inverter.";
   private static final String DETECTOR = "message." + RedweaveMod.MOD_ID + ".weather_detector.";
   private static final String RANDOMIZER = "message." + RedweaveMod.MOD_ID + ".signal_randomizer.";
+  private static final String LEVER = "message." + RedweaveMod.MOD_ID + ".signal_lever.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
@@ -21,6 +22,8 @@ public final class ModuleMessages {
   public static final String DETECTOR_MODE = DETECTOR + "mode";
   public static final String RANDOMIZER_RUNNING = RANDOMIZER + "running";
   public static final String RANDOMIZER_STOPPED = RANDOMIZER + "stopped";
+  public static final String LEVER_ON = LEVER + "on";
+  public static final String LEVER_OFF = LEVER + "off";
 
   private ModuleMessages() {}
 }
