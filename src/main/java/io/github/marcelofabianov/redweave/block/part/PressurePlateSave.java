@@ -9,8 +9,9 @@ import org.slf4j.Logger;
 
 /**
  * The NBT of a Signal Pressure Plate besides its module, part of the save (rule 15): whether it is
- * on, under `on`, its strength, its mode, under `mode`, as `mobs`, `players` or `items`, and its
- * output (answer 608). An invalid mode goes back to players with a warning (rule 14).
+ * on, under `on`, its strength, its mode, under `mode`, as `players`, `passive`, `hostile` or
+ * `items`, and its output (answer 608). An invalid mode goes back to players with a warning (rule
+ * 14).
  */
 final class PressurePlateSave {
   static final String OUTPUT = "output";
