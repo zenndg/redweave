@@ -11,6 +11,12 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 601 | Os itens do mod ficam na aba criativa para os testes? | Sim, sempre: todo item terminado fica disponível na aba criativa do Redweave, para os testes, mesmo antes de ter receita. Um GameTest confere que cada item registrado aparece na aba, e o `AGENTS.md` traz a regra |
+| 600 | O que o `Toggle` do Configurator mostra com o Signal Button já apertado? | `<nome>: Pressed`, como num aperto novo; o aperto em si não faz nada e o tempo não recomeça (pergunta 590) |
+| 599 | Como fica a mensagem `Pressed` do Signal Button em português? | `<nome>: Apertado`. Completa a pergunta 593 |
+| 598 | Como ficam os estados `On` e `Off` do Signal Button em português? | Em chaves próprias do botão, no masculino: `Ligado` e `Desligado`. O Signal Lever continua com `Ligada` e `Desligada` |
+| 597 | Qual o rótulo da linha do tempo ligado na tela do Signal Button? | `On time` em inglês e `Tempo ligado` em português |
+| 596 | As respostas 556, com o tempo ligado no `Interval` comum, e 592, com o mínimo de 2 ticks, conflitam, porque o `Interval` não aceita menos de 4 ticks. Como fica? | O botão tem um `ButtonTime` próprio, com mínimo de 2 ticks, que usa a mesma regra de ajuste à faixa do `Interval` (`Interval.clamped` e `Interval.fitting`), sem repetir o conhecimento. O Signal Timer e o Signal Randomizer não mudam. Muda a pergunta 556 (regra 38) |
 | 595 | Como o Signal Button mostra que está apertado, e o que diz o rótulo? | A peça do botão afunda 1 px quando apertado e a luz fica verde. O rótulo mostra `On` ou `Off` e o canal da saída, como o Signal Lever (pergunta 582) |
 | 594 | Flechas e outras entidades apertam o Signal Button, como o botão de madeira do jogo? | Não: só o clique do dono e o `Toggle` do Configurator apertam, sem apertos fora do controle do dono (regra 17) |
 | 593 | Que mensagem o `Toggle` do Configurator mostra ao apertar o Signal Button? | `<nome>: Pressed`. O clique à mão não mostra nada (perguntas 585 e 588) |
@@ -595,6 +601,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:03 | Registra a resposta 601, da aba criativa. |
+| Zennd | 2026-11-15 13:59 | Registra as respostas 596 a 600, do Signal Button. |
 | Zennd | 2026-11-15 13:42 | Registra as respostas 588 a 595, do Signal Button. |
 | Zennd | 2026-11-15 12:27 | Registra as respostas 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as respostas 576 a 583, do Signal Lever. |

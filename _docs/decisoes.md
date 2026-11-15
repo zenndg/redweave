@@ -571,6 +571,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Mensagem do botão | `<nome>: Pressed`, só no `Toggle` | 593 |
 | Entidades no botão | Não apertam; só o player | 594 |
 | Visual do botão | Afunda 1 px, luz verde; rótulo `On` ou `Off` | 595 |
+| Tempo ligado do botão | `ButtonTime` próprio, mínimo de 2 ticks, com o ajuste do `Interval`; muda a 556 | 596 |
+| Textos do botão | `On time`/`Tempo ligado`, `Ligado`/`Desligado` e `<nome>: Apertado` | 597 a 599 |
+| `Toggle` no botão apertado | Mostra `<nome>: Pressed`; o aperto não faz nada | 600 |
+| Aba criativa | Todo item terminado fica nela, para os testes, mesmo sem receita; um GameTest confere | 601 |
 
 Não há perguntas pendentes da concepção.
 
@@ -578,6 +582,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:03 | Registra a decisão 601, da aba criativa. |
+| Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do Signal Button. |
 | Zennd | 2026-11-15 13:42 | Registra as decisões 588 a 595, do Signal Button. |
 | Zennd | 2026-11-15 12:27 | Registra as decisões 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as decisões 576 a 583, do Signal Lever. |
