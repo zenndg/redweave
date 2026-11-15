@@ -559,6 +559,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Luz da alavanca | O estado da alavanca, sempre | 581 |
 | Tela e rótulo da alavanca | Força `−` / `+` e o estado; rótulo `On` ou `Off` e o canal | 582 |
 | Testes da alavanca | JUnit, GameTests e roteiro manual | 583 |
+| Força da alavanca no NBT | `strength` | 584 |
+| Mensagem da alavanca | Só no `Toggle`: `<nome>: On` ou `<nome>: Off` | 585 |
+| Inclinação do cabo da alavanca | 22,5° | 586 |
+| Saída da alavanca | No tick seguinte ao clique | 587 |
 
 Não há perguntas pendentes da concepção.
 
@@ -566,6 +570,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 12:27 | Registra as decisões 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as decisões 576 a 583, do Signal Lever. |
 | Zennd | 2026-11-15 09:35 | Atualiza os resumos do nó e do Signal Timer mudados pelo multipart e pela 574 (perguntas 534 e 574). |
 | Zennd | 2026-11-15 09:08 | Registra a decisão 575. |

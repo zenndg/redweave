@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 587 | A saída do Signal Lever acompanha o clique no tick seguinte, pelo tick comum dos módulos. Fica assim? | Sim: a saída muda no tick seguinte ao clique (1/20 s), pelo caminho único dos módulos (regra 18). Num circuito muito preciso, dá 1 tick a mais que a alavanca do jogo |
+| 586 | Os modelos de bloco só giram em 0, ±22,5 e ±45 graus. Qual inclinação o cabo do Signal Lever usa? | 22,5°, o mais perto dos 30° do prompt de arte, com o pomo dentro da placa: para a frente ligada e para trás desligada. O impedimento técnico muda o prompt de arte (regra 38) |
+| 585 | Que mensagem o Signal Lever mostra na action bar ao mudar de estado? | Só no `Toggle` do Configurator: `<nome>: On` ou `<nome>: Off`, como o `<nome>: Running` do Signal Timer. O clique à mão não mostra nada: o som e a luz bastam, como na alavanca do jogo |
+| 584 | Em qual chave do NBT da parte o Signal Lever guarda a força? | `strength`, um inteiro de 1 a 15, ao lado de `on` e da `output` comum, com o nome do domínio. Fica fixado na #26 (regra 15). Completa a pergunta 579 |
 | 583 | Em que fronteiras entram os testes do Signal Lever? | JUnit: a regra da alavanca em `domain/module/` (estado, força e saída). GameTests: o clique à mão, o dono, a saída pela borda e pelo canal, a força, o save e o `Toggle`. Roteiro manual: a arte, a luz e o som |
 | 582 | Como fica o centro da tela do Signal Lever e o seu rótulo? | A força de 1 a 15 num seletor `−` / `+` e o estado `On` ou `Off` mostrado, sem botão para ligar. O rótulo mostra `On` ou `Off` e o canal da saída, como os módulos (pergunta 417). Completa a pergunta 552 |
 | 581 | O que a luz do Signal Lever mostra quando a saída está num canal e o sinal não chega, fora do alcance ou com a rede `Offline`? | O estado da alavanca: verde ligada e vermelha desligada, sempre. O que não chega aparece no rótulo e na tela, como nos módulos. Completa a pergunta 554 |
@@ -583,6 +587,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 12:27 | Registra as respostas 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as respostas 576 a 583, do Signal Lever. |
 | Zennd | 2026-11-15 09:08 | Registra a resposta 575. |
 | Zennd | 2026-11-15 09:07 | Registra a resposta 574, que muda a 262. |
