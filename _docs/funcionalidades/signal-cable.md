@@ -49,6 +49,7 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Save | `color` e `owner` em `data`; a força é recalculada ao carregar e só vai ao cliente | 567 |
 | Nós e módulos | Integra-se como o fio do jogo, sem nada novo: o nó lê e emite no bloco, e o módulo lê e emite pelas bordas da placa (perguntas 71, 407 e 412) | 500 |
 | Outro dono | Pelo sinal físico, o cabo energiza blocos e alimenta nós, módulos e pó de qualquer dono; o dono só impede a ligação de cabo com cabo | 531 |
+| Energia de outro cabo | O cabo ignora a energia que outro cabo põe num bloco, de qualquer cor ou dono, como o pó do jogo | 570 |
 
 ## Cálculo no servidor
 
@@ -94,6 +95,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 08:27 | Registra a decisão 570, da energia de outro cabo. |
 | Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569, do save, do cabo solto e dos componentes. |
 | Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566, do pó do jogo e da curva interna com o nó e os módulos. |
 | Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564, do item, das receitas de tingir e do nome. |

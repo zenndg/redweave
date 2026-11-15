@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 570 | Um Signal Cable lê a energia que outro cabo põe num bloco, como um cabo de outra cor ou de outro dono que energiza o bloco de apoio? | Não. Como o pó do jogo, que ignora blocos energizados por pó, o cabo ignora a energia vinda de outro cabo, de qualquer cor ou dono, o que evita a realimentação entre trechos. Nós, módulos e o pó continuam lendo o cabo (pergunta 531) |
 | 569 | Com quais componentes o Signal Cable se liga, virando a ponta para eles? | Os mesmos do pó do jogo: tudo o que é fonte de sinal ou aceita redstone, como a alavanca, o botão, o repetidor, o comparador, o Signal Node e os Signal Modules, além dos cabos da mesma cor e dono e do pó. Completa as perguntas 496 e 508 |
 | 568 | Um Signal Cable sozinho, sem nenhuma ligação, energiza o quê? | Como o pó do jogo em cruz: o bloco de apoio e os 4 vizinhos em volta, na face. Completa a pergunta 508 |
 | 567 | Quais chaves o Signal Cable guarda dentro de `data` no NBT do contêiner? | `color`, com a chave da cor, e `owner`, com o UUID, os mesmos nomes do componente e do nó. A força não vai para o save: é recalculada ao carregar (pergunta 529) e só vai ao cliente, para o filete. Fica fixado na #26 (regra 15). Completa a pergunta 543 |
@@ -569,6 +570,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 08:27 | Registra a resposta 570. |
 | Zennd | 2026-11-14 23:07 | Registra as respostas 567 a 569. |
 | Zennd | 2026-11-14 23:01 | Registra as respostas 565 e 566. |
 | Zennd | 2026-11-14 22:27 | Registra as respostas 561 a 564. |
