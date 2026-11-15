@@ -96,7 +96,7 @@ Phases 1 and 2 as one phase. The order follows dependencies first and then diffi
 
 ### Signal Modules
 
-All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer, the Signal Inverter, the Weather Detector and the Signal Randomizer (questions 457 and 475), are still open.
+All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer, the Signal Inverter, the Weather Detector, the Signal Randomizer (questions 457 and 475) and the Signal Lever, the Signal Button and the Signal Pressure Plate (question 550), are still open. The lever, the button and the pressure plate are source modules (question 549).
 
 ### Work order
 
@@ -111,9 +111,9 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 9. [x] Weather detector module (#108)
 10. [x] Random module (#109)
 11. [ ] Multipart for the whole mod and the Signal Cable: the Signal Node and the modules become parts that share a block space, and a physical redstone cable in 16 colors (#44 and #45 · questions 494 to 547)
-12. [ ] Lever: a 3D lever with red and green indicators and a screen to send its signal wireless, on a network channel, or by redstone (#130 · questions 548 to 558)
-13. [ ] Button: the same idea as the lever, a press that turns off by itself (#131 · questions 548 to 558)
-14. [ ] Pressure plate: the same idea as the lever, on while something stands on it (#132 · questions 548 to 558)
+12. [ ] Signal Lever: a 3D lever with an indicator light that turns from red to green and a screen to send its signal wireless, on a network channel, or by redstone (#130 · questions 548 to 558)
+13. [ ] Signal Button: the same idea as the lever, a press that turns off by itself (#131 · questions 548 to 558)
+14. [ ] Signal Pressure Plate: the same idea as the lever, on while something stands on it (#132 · questions 548 to 558)
 15. [ ] Memory module, a T flip-flop (#110)
 16. [ ] Latch module, an SR latch (#111)
 17. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)

@@ -29,6 +29,9 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Signal Timer | `signal_timer` | `Temporizador de Sinal` em português: o módulo que, a cada intervalo, liga a saída por um pulso, e para enquanto a entrada `Pause` recebe sinal (perguntas 379, 380 e 410) |
 | Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
 | Parte | `Part` | Uma peça do multipart, numa face de um espaço de bloco: um Signal Cable, um Signal Node ou um Signal Module. Responde por si à mira, ao clique, à quebra e ao Configurator (perguntas 511 e 515) |
+| Signal Button | `signal_button` | `Botão de Sinal` em português: um Signal Module de fonte, apertado pelo player, que volta sozinho depois do tempo escolhido na tela, com uma luz vermelha desligado e verde ligado e a saída pela redstone ou por um canal (perguntas 548 a 556) |
+| Signal Lever | `signal_lever` | `Alavanca de Sinal` em português: um Signal Module de fonte, ligado e desligado pelo player, com uma luz vermelha desligada e verde ligada e a saída pela redstone ou por um canal (perguntas 548 a 555) |
+| Signal Pressure Plate | `signal_pressure_plate` | `Placa de Pressão de Sinal` em português: um Signal Module de fonte, só no chão, ligado enquanto algo do modo escolhido (`Everything`, `Mobs` ou `Players`) está sobre ele, com uma luz vermelha desligado e verde ligado (perguntas 548 a 557) |
 | Signal Cable | `signal_cable` | `Cabo de Sinal` em português: o cabo físico de redstone, um item só que nasce branco e ganha uma das 16 cores com corante. Liga-se só a cabos da mesma cor e do mesmo dono, e leva o sinal como o fio do jogo (perguntas 494, 497, 499, 505 e 528) |
 | Trecho | — | Os pedaços de Signal Cable ligados entre si, de uma cor e de um dono, que o servidor calcula num passo só quando algo muda (pergunta 509) |
 | Weather Detector | `weather_detector` | `Detector de Clima` em português: o módulo de fonte que liga a saída conforme o clima da dimensão, nos modos `Rain`, `Thunder` ou `Clear`, e fica em 0 onde não há clima (perguntas 457 a 459, 464 e 469) |
@@ -49,6 +52,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 21:23 | Adiciona o Signal Lever, o Signal Button e o Signal Pressure Plate (perguntas 548 a 557). |
 | Zennd | 2026-11-14 19:21 | Leva os Signal Modules ao Configurator. |
 | Zennd | 2026-11-14 19:14 | Adiciona o multipart, a parte, o Signal Cable e o trecho (perguntas 494 a 533). |
 | Zennd | 2026-11-14 17:46 | Adiciona o Signal Randomizer, da #109 (perguntas 475 a 493). |

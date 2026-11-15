@@ -523,7 +523,18 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Clique numa parte | A parte é transparente: mira a face oposta do mesmo espaço | 545 |
 | `facing` do nó | Não vai para o save; sai da `face` do contêiner | 546 |
 | Rótulos no mesmo espaço | Cada um se desloca para o lado da sua parte | 547 |
-| Depois do Signal Cable | Alavanca, botão e placa de pressão, cada um na sua issue, com aparência 3D, indicadores vermelho e verde e saída sem fio ou pela redstone | 548 |
+| Depois do Signal Cable | Alavanca, botão e placa de pressão, cada um na sua issue, com aparência 3D, indicador vermelho e verde e saída sem fio ou pela redstone | 548 |
+| Família da alavanca, do botão e da placa | Signal Modules de fonte | 549 |
+| Nomes | `Signal Lever`, `Signal Button` e `Signal Pressure Plate` | 550 |
+| Onde ficam | Partes de placa; a placa de pressão só no chão | 551 |
+| Força | Ajustável de 1 a 15, padrão 15 | 552 |
+| Saída pela redstone | Forte no bloco de apoio e pela borda da frente | 553 |
+| Indicador | Uma luz que troca de vermelho para verde, a mesma nos três | 554 |
+| Dono, rede e `Toggle` | Iguais aos módulos | 555 |
+| Tempo do botão | Ajustável na tela, padrão 1 s | 556 |
+| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players` | 557 |
+| Ordem | Alavanca, botão e placa de pressão | 558 |
+| `facing` dos módulos | Não vai para o save, como no nó | 559 |
 
 Não há perguntas pendentes da concepção.
 
@@ -531,6 +542,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 21:21 | Registra as decisões 549 a 559. |
 | Zennd | 2026-11-14 21:14 | Registra a decisão 548. |
 | Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547. |
 | Zennd | 2026-11-14 20:40 | Registra as decisões 542 a 545. |
