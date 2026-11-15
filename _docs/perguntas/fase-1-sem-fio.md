@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 566 | Pela curva interna, como o Signal Cable troca sinal com um Signal Node ou um Signal Module em outra face do mesmo espaço? | O nó lê a força do cabo como se ele fosse o seu bloco de apoio, e o cabo lê o que o nó emite. O módulo troca sinal com o cabo só se a borda de trás, a entrada, ou a da frente, a saída, apontar para a face do cabo. Completa a pergunta 514 |
+| 565 | Quando o sinal passa do Signal Cable para o pó de redstone do jogo, ou do pó para o cabo, perde 1? | Sim, como de um pó para outro: o alcance fica o mesmo de um fio só de pó, e um circuito misto não ganha força de graça. Completa a pergunta 507 |
 | 564 | Como fica o nome do Signal Cable tingido, e o que a aba criativa mostra? | O nome leva a cor, como `Red Signal Cable` e `Cabo de Sinal Vermelho`, e o branco continua `Signal Cable` (pergunta 505). A aba criativa mostra as 16 cores |
 | 563 | Qual o ID das receitas de tingir o Signal Cable? | `redweave:<cor>_signal_cable`, como `redweave:red_signal_cable`, na linha do `red_stained_glass` do jogo. Fica fixado na #26 (regra 15) |
 | 562 | Como nascem as 16 receitas de tingir o Signal Cable, as primeiras do mod? | Pelo datagen, em `src/generated`, conferidas pelo `check-generated`, como o resto do mod. Continuam JSON de datapack, que o pack sobrescreve com KubeJS (regra 4) |
@@ -564,6 +566,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:01 | Registra as respostas 565 e 566. |
 | Zennd | 2026-11-14 22:27 | Registra as respostas 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a resposta 560. |
 | Zennd | 2026-11-14 21:21 | Responde as perguntas 549 a 558 e registra a resposta 559. |

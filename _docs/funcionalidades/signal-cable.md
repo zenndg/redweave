@@ -34,8 +34,8 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Cor | Só com cabos da mesma cor, para cabos de cores diferentes passarem lado a lado sem um interferir no outro | 497 |
 | Para que serve a cor | Só para isolar os cabos. Não liga o cabo a um canal da rede | 501 |
 | Dono | Só com cabos do mesmo dono | 528 |
-| Pó do jogo | Um cabo de qualquer cor se liga ao pó de redstone do jogo como componente: lê o sinal dele e o alimenta. Um pó entre cabos de cores diferentes liga os dois, a critério do player | 507 |
-| Partes do mesmo espaço | Liga-se ao nó ou ao módulo de outra face do mesmo espaço pela curva interna | 514 |
+| Pó do jogo | Um cabo de qualquer cor se liga ao pó de redstone do jogo como componente: lê o sinal dele e o alimenta. Um pó entre cabos de cores diferentes liga os dois, a critério do player. Na passagem entre o cabo e o pó, o sinal perde 1, como de pó para pó | 507 e 565 |
+| Partes do mesmo espaço | Liga-se ao nó ou ao módulo de outra face do mesmo espaço pela curva interna. O nó lê a força do cabo como se ele fosse o seu bloco de apoio, e o cabo lê o que o nó emite. O módulo só troca sinal com o cabo pela borda de trás ou da frente que apontar para a face do cabo | 514 e 566 |
 
 ## Sinal
 
@@ -91,6 +91,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566, do pó do jogo e da curva interna com o nó e os módulos. |
 | Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564, do item, das receitas de tingir e do nome. |
 | Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541, do domínio do trecho e da curva interna. |
 | Zennd | 2026-11-14 20:27 | Registra o pacote do trecho (pergunta 537). |

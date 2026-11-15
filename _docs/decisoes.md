@@ -540,6 +540,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Receitas de tingir | Pelo datagen | 562 |
 | ID das receitas de tingir | `redweave:<cor>_signal_cable` | 563 |
 | Nome do cabo tingido | Com a cor; o branco é `Signal Cable`; as 16 na aba criativa | 564 |
+| Cabo e pó do jogo | O sinal perde 1 na passagem, como de pó para pó | 565 |
+| Cabo, nó e módulo na curva interna | O nó lê o cabo como o apoio, e o cabo lê o nó; o módulo, só pela borda que aponta para o cabo | 566 |
 
 Não há perguntas pendentes da concepção.
 
@@ -547,6 +549,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566. |
 | Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a decisão 560. |
 | Zennd | 2026-11-14 21:21 | Registra as decisões 549 a 559. |
