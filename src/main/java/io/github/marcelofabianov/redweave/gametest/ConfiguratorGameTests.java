@@ -67,7 +67,8 @@ public final class ConfiguratorGameTests {
     ItemStack configurator = holdConfigurator(owner, ConfiguratorMode.FIRST);
 
     ConfiguratorItem.switchMode(owner, SCROLL_DOWN);
-    helper.assertTrue(ConfiguratorItem.modeOf(configurator) == ConfiguratorMode.COPY, NOT_SWITCHED);
+    helper.assertTrue(
+        ConfiguratorItem.modeOf(configurator) == ConfiguratorMode.ROTATE, NOT_SWITCHED);
     ConfiguratorItem.switchMode(owner, SCROLL_UP);
     ConfiguratorItem.switchMode(owner, SCROLL_UP);
     helper.assertTrue(

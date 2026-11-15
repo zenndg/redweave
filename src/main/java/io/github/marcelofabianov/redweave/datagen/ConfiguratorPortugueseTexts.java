@@ -28,9 +28,12 @@ final class ConfiguratorPortugueseTexts {
   private static final String NOT_PLACER = "Só quem colocou este nó pode retirá-lo.";
   private static final String USE_TO_OPEN = "Use um Configurador para abrir este nó.";
   private static final String COPY = "Cópia: %s slots";
-  private static final String OPEN_CLICK = "Clique para abrir um nó ou módulo,";
-  private static final String OPEN_SHIFT = " Shift + clique para girar um módulo.";
-  private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
+  private static final String HINT_OPEN = "Clique para abrir um nó ou módulo.";
+  private static final String ROTATE = "Girar";
+  private static final String ROTATE_CLICK = "Clique para girar um módulo,";
+  private static final String ROTATE_SHIFT = " Shift + clique para voltar.";
+  private static final String HINT_ROTATE = ROTATE_CLICK + ROTATE_SHIFT;
+  private static final String ONLY_MODULES = "Só os módulos giram.";
   private static final String HINT_TOGGLE_MODULE = "Clique num módulo para ligá-lo ou pará-lo.";
   private static final String HINT_COPY = "Clique num nó para copiá-lo, Shift + clique para colar.";
   private static final String HINT_WRENCH = "Clique num nó, módulo ou cabo para retirá-lo.";
@@ -42,6 +45,9 @@ final class ConfiguratorPortugueseTexts {
     add.accept(RedweaveItems.CONFIGURATOR.get().getDescriptionId(), NAME);
     add.accept(ConfiguratorMessages.MODE, MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.OPEN), OPEN);
+    add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.ROTATE), ROTATE);
+    add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.ROTATE), HINT_ROTATE);
+    add.accept(ConfiguratorMessages.ONLY_MODULES, ONLY_MODULES);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.COPY), COPY_MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.TOGGLE), TOGGLE);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.TOGGLE), HINT_TOGGLE);

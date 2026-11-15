@@ -26,8 +26,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * The Configurator: opens, copies, pastes and picks up Signal Nodes, turns, toggles and picks up
- * Signal Modules, and picks up Signal Cables, in the mode chosen with Shift + scroll
- * (configurador.md). The server decides every action (rule 16).
+ * Signal Modules (the turn in a mode of its own, answer 610), and picks up Signal Cables, in the
+ * mode chosen with Shift + scroll (configurador.md). The server decides every action (rule 16).
  */
 public final class ConfiguratorItem extends Item {
   public ConfiguratorItem(Properties properties) {
@@ -60,8 +60,8 @@ public final class ConfiguratorItem extends Item {
   }
 
   /**
-   * Only a Signal Node, a Signal Module or, with the Wrench, a Signal Cable takes the click; any
-   * other block, as the controller, does nothing (answer 525).
+   * Only a Signal Node, a Signal Module or, with the Wrench or the Rotate, a Signal Cable takes the
+   * click; any other block, as the controller, does nothing (answers 525 and 617).
    */
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -87,7 +87,7 @@ public final class ConfiguratorItem extends Item {
           case NodePart node ->
               ConfiguratorActions.onNode(
                   server.get(), player, context, space.spotOf(node), node, mode);
-          case CablePart cable -> Optional.of(CableClicks.pickUp(player, space, cable));
+          case CablePart cable -> Optional.of(CableClicks.onCable(player, space, cable, mode));
           default ->
               ModuleClicks.onModule(server.get(), player, space, (ModulePart) part.get(), mode);
         };

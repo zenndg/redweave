@@ -28,9 +28,12 @@ final class ConfiguratorEnglishTexts {
   private static final String NOT_PLACER = "Only the player who placed this node can pick it up.";
   private static final String USE_TO_OPEN = "Use a Configurator to open this node.";
   private static final String COPY = "Copy: %s slots";
-  private static final String OPEN_CLICK = "Click to open a node or module,";
-  private static final String OPEN_SHIFT = " Shift + click to turn a module.";
-  private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
+  private static final String HINT_OPEN = "Click to open a node or module.";
+  private static final String ROTATE = "Rotate";
+  private static final String ROTATE_CLICK = "Click to turn a module,";
+  private static final String ROTATE_SHIFT = " Shift + click to turn it back.";
+  private static final String HINT_ROTATE = ROTATE_CLICK + ROTATE_SHIFT;
+  private static final String ONLY_MODULES = "Only modules can be turned.";
   private static final String HINT_TOGGLE_MODULE = "Click a module to start or stop it.";
   private static final String HINT_COPY = "Click a node to copy it, Shift + click to paste.";
   private static final String HINT_WRENCH = "Click a node, module or cable to pick it up.";
@@ -42,6 +45,9 @@ final class ConfiguratorEnglishTexts {
     add.accept(RedweaveItems.CONFIGURATOR.get().getDescriptionId(), NAME);
     add.accept(ConfiguratorMessages.MODE, MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.OPEN), OPEN);
+    add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.ROTATE), ROTATE);
+    add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.ROTATE), HINT_ROTATE);
+    add.accept(ConfiguratorMessages.ONLY_MODULES, ONLY_MODULES);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.COPY), COPY_MODE);
     add.accept(ConfiguratorMessages.nameOf(ConfiguratorMode.TOGGLE), TOGGLE);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.TOGGLE), HINT_TOGGLE);
