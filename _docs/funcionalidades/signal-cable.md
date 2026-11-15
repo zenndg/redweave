@@ -44,6 +44,9 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Perda | Como o fio do jogo: perde 1 de força por bloco, de 15 até 0. A curva interna, dentro do mesmo espaço, não perde nada. Um repetidor, um nó ou um módulo renova o sinal | 499 e 541 |
 | O que energiza | Como o pó do jogo: energia fraca no bloco onde está grudado e no bloco para onde aponta numa ponta solta | 508 |
 | O que lê | O sinal de alavancas, botões, repetidores, nós e módulos ao lado | 508 |
+| Cabo solto | Sem nenhuma ligação, energiza como o pó em cruz: o bloco de apoio e os 4 vizinhos em volta, na face | 568 |
+| Componentes | Vira a ponta para os mesmos componentes do pó do jogo: tudo o que é fonte de sinal ou aceita redstone | 569 |
+| Save | `color` e `owner` em `data`; a força é recalculada ao carregar e só vai ao cliente | 567 |
 | Nós e módulos | Integra-se como o fio do jogo, sem nada novo: o nó lê e emite no bloco, e o módulo lê e emite pelas bordas da placa (perguntas 71, 407 e 412) | 500 |
 | Outro dono | Pelo sinal físico, o cabo energiza blocos e alimenta nós, módulos e pó de qualquer dono; o dono só impede a ligação de cabo com cabo | 531 |
 
@@ -91,6 +94,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569, do save, do cabo solto e dos componentes. |
 | Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566, do pó do jogo e da curva interna com o nó e os módulos. |
 | Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564, do item, das receitas de tingir e do nome. |
 | Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541, do domínio do trecho e da curva interna. |

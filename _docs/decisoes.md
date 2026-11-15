@@ -542,6 +542,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome do cabo tingido | Com a cor; o branco é `Signal Cable`; as 16 na aba criativa | 564 |
 | Cabo e pó do jogo | O sinal perde 1 na passagem, como de pó para pó | 565 |
 | Cabo, nó e módulo na curva interna | O nó lê o cabo como o apoio, e o cabo lê o nó; o módulo, só pela borda que aponta para o cabo | 566 |
+| NBT do cabo | `color` e `owner` em `data`; a força não é salva | 567 |
+| Cabo solto | Energiza como o pó em cruz | 568 |
+| Componentes do cabo | Os mesmos do pó do jogo | 569 |
 
 Não há perguntas pendentes da concepção.
 
@@ -549,6 +552,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569. |
 | Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566. |
 | Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a decisão 560. |

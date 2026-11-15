@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 569 | Com quais componentes o Signal Cable se liga, virando a ponta para eles? | Os mesmos do pó do jogo: tudo o que é fonte de sinal ou aceita redstone, como a alavanca, o botão, o repetidor, o comparador, o Signal Node e os Signal Modules, além dos cabos da mesma cor e dono e do pó. Completa as perguntas 496 e 508 |
+| 568 | Um Signal Cable sozinho, sem nenhuma ligação, energiza o quê? | Como o pó do jogo em cruz: o bloco de apoio e os 4 vizinhos em volta, na face. Completa a pergunta 508 |
+| 567 | Quais chaves o Signal Cable guarda dentro de `data` no NBT do contêiner? | `color`, com a chave da cor, e `owner`, com o UUID, os mesmos nomes do componente e do nó. A força não vai para o save: é recalculada ao carregar (pergunta 529) e só vai ao cliente, para o filete. Fica fixado na #26 (regra 15). Completa a pergunta 543 |
 | 566 | Pela curva interna, como o Signal Cable troca sinal com um Signal Node ou um Signal Module em outra face do mesmo espaço? | O nó lê a força do cabo como se ele fosse o seu bloco de apoio, e o cabo lê o que o nó emite. O módulo troca sinal com o cabo só se a borda de trás, a entrada, ou a da frente, a saída, apontar para a face do cabo. Completa a pergunta 514 |
 | 565 | Quando o sinal passa do Signal Cable para o pó de redstone do jogo, ou do pó para o cabo, perde 1? | Sim, como de um pó para outro: o alcance fica o mesmo de um fio só de pó, e um circuito misto não ganha força de graça. Completa a pergunta 507 |
 | 564 | Como fica o nome do Signal Cable tingido, e o que a aba criativa mostra? | O nome leva a cor, como `Red Signal Cable` e `Cabo de Sinal Vermelho`, e o branco continua `Signal Cable` (pergunta 505). A aba criativa mostra as 16 cores |
@@ -566,6 +569,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 23:07 | Registra as respostas 567 a 569. |
 | Zennd | 2026-11-14 23:01 | Registra as respostas 565 e 566. |
 | Zennd | 2026-11-14 22:27 | Registra as respostas 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a resposta 560. |
