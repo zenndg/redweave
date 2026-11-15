@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
+import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
@@ -109,6 +110,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     randomizerModels();
     leverModels();
     buttonModels();
+    pressurePlateModels();
   }
 
   /**
@@ -175,6 +177,28 @@ final class RedweaveBlockStates extends BlockStateProvider {
           plateModel(ButtonPart.ID + look + TURNED_SUFFIX, front, true), parts, light, on, true);
     }
     itemModels().basicItem(RedweaveItems.SIGNAL_BUTTON.get());
+  }
+
+  /**
+   * The Signal Pressure Plate: its plate, off or on, with the 3D tread and the light over it, in
+   * two versions, with the top turned or not, as the other modules (429, 548 and 609).
+   */
+  private void pressurePlateModels() {
+    ResourceLocation parts = modLoc(BLOCK_FOLDER + PressurePlatePart.ID + LEVER_PARTS);
+    ResourceLocation light = modLoc(BLOCK_FOLDER + LeverPart.ID + LEVER_PARTS);
+    for (String look : PressurePlatePart.LOOKS) {
+      ResourceLocation front = modLoc(BLOCK_FOLDER + PressurePlatePart.ID + NODE_FRONT + look);
+      boolean on = !look.isEmpty();
+      PressurePlateModels.addPieces(
+          plateModel(PressurePlatePart.ID + look, front, false), parts, light, on, false);
+      PressurePlateModels.addPieces(
+          plateModel(PressurePlatePart.ID + look + TURNED_SUFFIX, front, true),
+          parts,
+          light,
+          on,
+          true);
+    }
+    itemModels().basicItem(RedweaveItems.SIGNAL_PRESSURE_PLATE.get());
   }
 
   /**
