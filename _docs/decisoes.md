@@ -535,6 +535,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players` | 557 |
 | Ordem | Alavanca, botão e placa de pressão | 558 |
 | `facing` dos módulos | Não vai para o save, como no nó | 559 |
+| `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
 
 Não há perguntas pendentes da concepção.
 
@@ -542,6 +543,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 22:13 | Registra a decisão 560. |
 | Zennd | 2026-11-14 21:21 | Registra as decisões 549 a 559. |
 | Zennd | 2026-11-14 21:14 | Registra a decisão 548. |
 | Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547. |

@@ -48,7 +48,7 @@ Na #44, o Signal Node e os 4 Signal Modules entregues até a #109 deixam de ser 
 
 ## Visual das partes
 
-Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488). Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Por isso, cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda (pergunta 534). O `facing` do Signal Node não vai para o save, porque é sempre o oposto da `face` da parte (pergunta 546), e o dos Signal Modules também não, que guardam só o `front` (pergunta 559). Com dois nós no mesmo espaço, cada rótulo se desloca para o lado da sua parte (pergunta 547).
+Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `facing`, `front`, `powered`, `running`, `burnt`, `mode` e `out_of_range` (perguntas 72, 411, 428, 455, 471 e 488). Um bloco contêiner tem um só estado para o espaço inteiro e não comporta as combinações de até 6 partes. Por isso, cada parte guarda o seu visual no NBT dela, sincronizado com o cliente, e o contêiner monta o desenho juntando o modelo de cada parte. Os estados de hoje viram campos da parte, com os mesmos nomes, fixados na #26 (regra 15), e o que o player vê não muda (pergunta 534). O `facing` do Signal Node não vai para o save, porque é sempre o oposto da `face` da parte (pergunta 546), e o dos Signal Modules também não, que guardam o `front` (pergunta 559) e o `powered`, nos 4, numa regra só (pergunta 560). Com dois nós no mesmo espaço, cada rótulo se desloca para o lado da sua parte (pergunta 547).
 
 ## Fora desta página
 
@@ -59,6 +59,7 @@ Hoje o Signal Node e os módulos guardam o seu visual em estados do bloco: `faci
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 22:13 | Registra a decisão 560, do `powered` dos módulos. |
 | Zennd | 2026-11-14 21:23 | Registra a decisão 559, do `facing` dos módulos. |
 | Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547, do `facing` do nó e dos rótulos. |
 | Zennd | 2026-11-14 20:40 | Registra as decisões 543 a 545, do NBT e do clique numa parte. |
