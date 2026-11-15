@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector e Signal Randomizer. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer e Signal Lever. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -202,6 +202,21 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Timer
 
 Em português, os rótulos são `Modo`, `Intervalo` e `Saída`, os modos `Analógico` e `Binário`, e os estados `Rodando` e `Parado` (perguntas 435 e 486).
 
+## Tela do Signal Lever
+
+Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas dos módulos, com o estado da alavanca no lugar do relógio, e não tem botão para ligar: a alavanca liga pela mão ou pelo `Toggle` (pergunta 582). O comportamento está em [`alavanca.md`](alavanca.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Lever` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 550 |
+| Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz da alavanca | 554 e 582 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+` | 552 e 582 |
+| Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 549 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 |
+| Rede `Offline` | A tela não abre, como a do nó; o `Toggle` e a mão ainda ligam e desligam a alavanca | 402 e 578 |
+
+Em português, `Alavanca de Sinal`, `Ligada`, `Desligada`, `Força` e `Saída`.
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -212,6 +227,7 @@ Em português, os rótulos são `Modo`, `Intervalo` e `Saída`, os modos `Analó
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 13:16 | Adiciona a Tela do Signal Lever, sem a prancha (perguntas 578 e 582). |
 | Zennd | 2026-11-14 19:21 | Lista as telas dos quatro Signal Modules na introdução. |
 | Zennd | 2026-11-14 18:16 | Leva a prancha da Tela do Signal Randomizer (pergunta 487). |
 | Zennd | 2026-11-14 17:46 | Adiciona a Tela do Signal Randomizer, sem a prancha (pergunta 487). |
