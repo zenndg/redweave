@@ -4,6 +4,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
@@ -75,6 +76,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final float PLATE_THICKNESS = 2;
   private static final String TURNED_SUFFIX = "_turned";
   private static final String PART_SPACE = "part_space";
+  private static final String LEVER_PARTS = "_parts";
 
   RedweaveBlockStates(PackOutput output, ExistingFileHelper files) {
     super(output, RedweaveMod.MOD_ID, files);
@@ -104,6 +106,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     inverterModels();
     detectorModels();
     randomizerModels();
+    leverModels();
   }
 
   /**
@@ -139,6 +142,22 @@ final class RedweaveBlockStates extends BlockStateProvider {
   }
 
   /**
+   * The Signal Lever: its plate, off or on, with the 3D base, handle and light over it, in two
+   * versions, with the top turned or not, as the other modules (answers 429, 548 and 554).
+   */
+  private void leverModels() {
+    ResourceLocation parts = modLoc(BLOCK_FOLDER + LeverPart.ID + LEVER_PARTS);
+    for (String look : LeverPart.LOOKS) {
+      ResourceLocation front = modLoc(BLOCK_FOLDER + LeverPart.ID + NODE_FRONT + look);
+      boolean on = !look.isEmpty();
+      LeverModels.addPieces(plateModel(LeverPart.ID + look, front, false), parts, on, false);
+      LeverModels.addPieces(
+          plateModel(LeverPart.ID + look + TURNED_SUFFIX, front, true), parts, on, true);
+    }
+    itemModels().basicItem(RedweaveItems.SIGNAL_LEVER.get());
+  }
+
+  /**
    * Every look of a module plate, in two versions, with the top turned or not, which the part space
    * turns to the 24 pairs of `facing` and `front` (answers 429 and 536), and its item.
    */
@@ -155,7 +174,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
    * The plate of a module, with the edge of the timer and the given top, turned 90° on the UV when
    * asked (answer 429).
    */
-  private ModelFile plateModel(String name, ResourceLocation front, boolean turned) {
+  private BlockModelBuilder plateModel(String name, ResourceLocation front, boolean turned) {
     return models()
         .getBuilder(name)
         .parent(models().getExistingFile(mcLoc(BLOCK_PARENT)))

@@ -149,10 +149,24 @@ public abstract class ModulePart
     return NodeShapes.of(facing());
   }
 
-  /** Only the block in front gets the signal, with strength, as from a repeater (407). */
+  /**
+   * Only the block in front gets the signal, with strength, as from a repeater (407); a module that
+   * feeds its block of support, as the Signal Lever, gives it the same (answer 553).
+   */
   @Override
   public int signal(Direction side) {
-    return side == front.getOpposite() ? emitted : 0;
+    boolean fed = side == front.getOpposite() || (feedsSupport() && side == facing());
+    return fed ? emitted : 0;
+  }
+
+  /** Whether the block of support gets the signal too, with strength (answer 553). */
+  protected boolean feedsSupport() {
+    return false;
+  }
+
+  /** Whether the `Toggle` works with the network `Offline`, as on the Signal Lever (578). */
+  public boolean togglesOffline() {
+    return false;
   }
 
   @Override
@@ -278,7 +292,7 @@ public abstract class ModulePart
   @Override
   public void removed(PartSpaceBlockEntity space) {
     emitted = 0;
-    wakeFront(space.getLevel(), space.getBlockPos(), front);
+    wakeOutputs(space.getLevel(), space.getBlockPos());
     space.wakeOthers(this);
   }
 
@@ -307,7 +321,7 @@ public abstract class ModulePart
     Level level = level().orElseThrow();
     BlockPos pos = spot().pos();
     emitted = 0;
-    wakeFront(level, pos, front);
+    wakeOutputs(level, pos);
     front = Plates.clockwise(facing(), front);
     host.ifPresent(space -> space.wakeOthers(this));
     changed();
@@ -315,8 +329,17 @@ public abstract class ModulePart
     return front;
   }
 
+  /** What the plate feeds: the block in front and, for some modules, the block of support. */
+  void wakeOutputs(Level level, BlockPos pos) {
+    wakeFront(level, pos, front);
+    BlockPos support = pos.relative(face);
+    if (feedsSupport() && level.isLoaded(support)) {
+      level.updateNeighborsAt(support, RedweaveBlocks.PART_SPACE.get());
+    }
+  }
+
   /** The block in front and its neighbors, as a repeater wakes them, if it is loaded (rule 6). */
-  static void wakeFront(Level level, BlockPos pos, Direction front) {
+  private static void wakeFront(Level level, BlockPos pos, Direction front) {
     BlockPos ahead = pos.relative(front);
     if (level.isLoaded(ahead)) {
       Block space = RedweaveBlocks.PART_SPACE.get();

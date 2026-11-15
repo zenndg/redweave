@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
@@ -14,6 +15,7 @@ import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
+import io.github.marcelofabianov.redweave.client.screen.LeverScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.client.screen.RandomizerScreen;
 import io.github.marcelofabianov.redweave.client.screen.RemoteLinkScreen;
@@ -68,6 +70,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.INVERTER.get(), InverterScreen::new);
     event.register(RedweaveMenus.DETECTOR.get(), DetectorScreen::new);
     event.register(RedweaveMenus.RANDOMIZER.get(), RandomizerScreen::new);
+    event.register(RedweaveMenus.LEVER.get(), LeverScreen::new);
   }
 
   @SubscribeEvent
@@ -95,7 +98,8 @@ public final class RedweaveClient {
             ModulePart.models(TimerPart.ID, TimerPart.LOOKS),
             ModulePart.models(InverterPart.ID, InverterPart.LOOKS),
             ModulePart.models(DetectorPart.ID, DetectorPart.LOOKS),
-            ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS))
+            ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS),
+            ModulePart.models(LeverPart.ID, LeverPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }

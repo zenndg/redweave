@@ -42,7 +42,10 @@ final class ModuleClicks {
               ? owned(player, part, () -> turn(part))
               : unlessOffline(server, space, part, () -> open(player, part));
       case COPY -> message(ModuleMessages.NOT_COPIED);
-      case TOGGLE -> unlessOffline(server, space, part, () -> owned(player, part, part::toggle));
+      case TOGGLE ->
+          part.togglesOffline()
+              ? owned(player, part, part::toggle)
+              : unlessOffline(server, space, part, () -> owned(player, part, part::toggle));
       case WRENCH -> owned(player, part, () -> pickUp(player, space, part));
     };
   }

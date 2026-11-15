@@ -55,6 +55,7 @@ final class PortugueseTexts {
     ConfiguratorPortugueseTexts.addTo(add);
     RemotePortugueseTexts.addTo(add);
     ModulePortugueseTexts.addTo(add);
+    LeverPortugueseTexts.addTo(add);
     add.accept(RedweaveItems.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     String cable = RedweaveItems.SIGNAL_CABLE.get().getDescriptionId();
     add.accept(cable, SIGNAL_CABLE);

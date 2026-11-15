@@ -117,7 +117,7 @@ final class ModuleTicks {
       return;
     }
     part.setEmitted(signal.strength());
-    ModulePart.wakeFront(space.getLevel(), space.getBlockPos(), part.front());
+    part.wakeOutputs(space.getLevel(), space.getBlockPos());
     space.wakeOthers(part);
   }
 }

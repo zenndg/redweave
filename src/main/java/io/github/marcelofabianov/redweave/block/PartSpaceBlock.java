@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.part.LivePart;
 import io.github.marcelofabianov.redweave.block.part.OwnedPart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartTargets;
+import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import java.util.Optional;
 import javax.annotation.Nullable;
@@ -206,7 +207,11 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
     super.onRemove(state, level, pos, newState, movedByPiston);
   }
 
-  /** Only an empty hand uses the part itself; an item, as the Configurator, takes the click. */
+  /**
+   * Only an empty hand uses the part itself; an item, as the Configurator, takes the click. A part
+   * that takes any item, as the Signal Lever, takes it before the item, but never the Configurator
+   * (answer 576).
+   */
   @Override
   protected ItemInteractionResult useItemOn(
       ItemStack stack,
@@ -216,10 +221,23 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
       Player player,
       InteractionHand hand,
       BlockHitResult hit) {
-    if (!stack.isEmpty()) {
+    if (stack.isEmpty()) {
+      return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    }
+    Optional<HandPart> taker =
+        stack.getItem() instanceof ConfiguratorItem
+            ? Optional.empty()
+            : aimed(level, pos, player)
+                .filter(HandPart.class::isInstance)
+                .map(HandPart.class::cast)
+                .filter(HandPart::takesAnyItem);
+    if (taker.isEmpty()) {
       return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
     }
-    return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    if (!level.isClientSide) {
+      taker.get().emptyHand(player);
+    }
+    return ItemInteractionResult.sidedSuccess(level.isClientSide);
   }
 
   @Override
