@@ -575,6 +575,17 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Textos do botão | `On time`/`Tempo ligado`, `Ligado`/`Desligado` e `<nome>: Apertado` | 597 a 599 |
 | `Toggle` no botão apertado | Mostra `<nome>: Pressed`; o aperto não faz nada | 600 |
 | Aba criativa | Todo item terminado fica nela, para os testes, mesmo sem receita; um GameTest confere | 601 |
+| Modos da placa de pressão | `Mobs`, `Players` e `Items`, um por vez; muda a 557 | 602 |
+| `Toggle` da placa | Troca o modo | 603 |
+| Modo padrão da placa | `Players` | 604 |
+| O que conta na placa | Mobs vivos sem players; players sem espectador; itens soltos | 605 |
+| Placa e as decisões da alavanca | Herda 578, 581, 583 a 585 e 587; a mão não faz nada | 606 |
+| Detecção da placa | No contato; confere a cada `pressure_plate.check_ticks` (20) enquanto ligada | 607 |
+| NBT da placa | `on`, `strength` e `mode` | 608 |
+| Som, visual e rótulo da placa | Placa de pedra do jogo; afunda 1 px; `On`/`Off`, modo e canal | 609 |
+| Giro dos módulos | Sai do Shift + `Open` e ganha um modo próprio na #136; muda a 399 e a 403 | 610 |
+| Placa fora do chão | Recusada com mensagem | 611 |
+| Ordem da #136 | Antes da #132, no passo 14 | 612 |
 
 Não há perguntas pendentes da concepção.
 
@@ -582,6 +593,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:25 | Registra as decisões 602 a 612. |
 | Zennd | 2026-11-15 14:03 | Registra a decisão 601, da aba criativa. |
 | Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do Signal Button. |
 | Zennd | 2026-11-15 13:42 | Registra as decisões 588 a 595, do Signal Button. |

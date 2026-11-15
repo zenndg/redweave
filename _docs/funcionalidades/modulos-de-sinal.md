@@ -26,7 +26,7 @@ Resposta 415.
 | Forma | Uma placa de 10 × 10 pixels e 2 de espessura, como o Signal Node, grudada em qualquer face de um bloco que não seja ar, no chão, na parede ou no teto | 313, 416 e 422 |
 | Espaço | Uma parte do [multipart](multipart.md): divide o espaço de bloco com outras partes, uma por face, como um nó ou um Signal Cable em outra face. Até a #44, cada placa ocupa o seu espaço de bloco | 315, 511 e 513 |
 | Rotação | Ao colocar, a frente aponta para onde o player olha, projetada na face, como o repetidor do jogo | 399 |
-| Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira | 399, 403 e 432 |
+| Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira. Na #136, o giro sai do `Open` e ganha um modo próprio do Configurator (pergunta 610) | 399, 403, 432 e 610 |
 | Bordas | As 4 bordas, frente, trás, esquerda e direita, ligadas aos vizinhos na mesma camada. Quais são entrada e quais são saída é fixo por módulo, e a textura mostra a seta | 314 e 377 |
 | Bloco de apoio | Não recebe sinal do módulo. As exceções são o Signal Lever e o Signal Button, que o energizam com força, como uma alavanca grudada. Se ele some, a placa cai como item | 394, 407 e 553 |
 
@@ -76,7 +76,7 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 |---|---|---|
 | Mão vazia | Não abre nada e mostra `Use a Configurator to open this module.` No Signal Lever, a mão vazia ou um item que não seja o Configurator liga e desliga a alavanca, e no Signal Button, aperta o botão, só pelo dono | 395, 576, 577 e 588 |
 | `Open` | Abre a tela do módulo | 393 |
-| `Open`, com Shift | Gira a placa 90° no sentido horário | 399 e 403 |
+| `Open`, com Shift | Gira a placa 90° no sentido horário, até a #136 levar o giro a um modo próprio | 399, 403 e 610 |
 | `Copy` | Nada na v0.1.0, só a mensagem | 395 e 421 |
 | `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, alterna `Running` e `Stopped`, no Signal Inverter não faz nada, no Weather Detector troca o modo, no Signal Lever liga e desliga, e no Signal Button aperta | 395, 443, 462, 480 e 555 |
 | `Wrench` | Retira o módulo como item, só pelo dono | 395 |
@@ -169,6 +169,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:26 | O giro vai para um modo próprio do Configurator na #136 (pergunta 610). |
 | Zennd | 2026-11-15 14:04 | Leva o Signal Button à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 553, 588, 593, 595 e 600). |
 | Zennd | 2026-11-15 13:15 | Leva o Signal Lever à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 553, 576 a 578, 582 e 585). |
 | Zennd | 2026-11-15 09:35 | Leva o visual dos módulos para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 543, 559 e 560). |

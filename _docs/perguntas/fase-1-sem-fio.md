@@ -11,6 +11,17 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 612 | Em que ponto do roadmap entra a #136, o modo de girar do Configurator? | Antes da #132: a #136 vira o passo 14, e a placa de pressão, o passo 15, já nasce com o modo novo |
+| 611 | O que acontece ao tentar colocar o Signal Pressure Plate numa parede ou no teto? | A placa não é colocada, o item fica na mão, e a action bar mostra `The Signal Pressure Plate only goes on the floor.`, em inglês e em português, como as recusas do multipart (pergunta 533). Completa a pergunta 551 |
+| 610 | Como o player gira um Signal Module, e o giro ganha um modo próprio no Configurator? | O giro sai do Shift + clique no `Open`, que passa a só abrir a tela, e ganha um modo próprio no Configurator, na #136. O nome, a ordem, a cor, o clique, o save e o que o modo faz no nó e no cabo ficam para o refinamento da #136. Muda as perguntas 399 e 403 |
+| 609 | Qual o som, o visual e o rótulo do Signal Pressure Plate? | O som da placa de pressão de pedra do jogo (`STONE_PRESSURE_PLATE_CLICK_ON` e `_OFF`); a peça da placa afunda 1 px quando ligada, com a luz verde; o rótulo mostra o nome e, embaixo, `On` ou `Off`, o modo e o canal |
+| 608 | Quais chaves do NBT da parte o Signal Pressure Plate usa? | `on`, um booleano; `strength`, de 1 a 15; e `mode`, com `mobs`, `players` ou `items`, além das chaves comuns dos módulos. Ficam fixados na #26 (regra 15) |
+| 607 | Quando o Signal Pressure Plate detecta e quando solta? | Como a placa do jogo: liga no contato, na área da placa (10 × 10 px) até 4 px acima; enquanto ligada, confere de novo a cada `pressure_plate.check_ticks` (20 ticks, 1 s, no config, de 2 a 200) e solta quando não há mais nada do modo sobre ela (regra 3) |
+| 606 | O que o Signal Pressure Plate herda do Signal Lever e do Signal Button? | A chave `strength` (584), a luz pelo estado (581), a saída no tick seguinte (587), a saída funcionando com a rede `Offline` (578), a mensagem só no `Toggle` (585) e os testes nas três fronteiras (583). O clique à mão não faz nada, sem mensagem, como a placa do jogo; quem pisa pode ser qualquer player ou mob do modo, não só o dono |
+| 605 | O que conta em cada modo do Signal Pressure Plate? | `Mobs`: qualquer criatura viva que não seja player. `Players`: qualquer player, menos o espectador, de qualquer dono. `Items`: itens soltos no chão (entidades de item). Flechas e outras entidades não contam em nenhum modo |
+| 604 | Qual o modo padrão do Signal Pressure Plate ao ser colocado? | `Players`, o uso mais comum, como portas e armadilhas |
+| 603 | O que o `Toggle` do Configurator faz no Signal Pressure Plate? | Troca o modo, na ordem `Mobs`, `Players` e `Items`, com `<nome>: <modo>`, como o `Toggle` do Weather Detector (pergunta 462). Fecha o ponto pendente da pergunta 555 |
+| 602 | Quais são os modos do Signal Pressure Plate, e como o player escolhe? | `Mobs`, `Players` e `Items`, no lugar de `Everything`, um por vez, num seletor da tela, como o modo do Weather Detector. Muda a pergunta 557 |
 | 601 | Os itens do mod ficam na aba criativa para os testes? | Sim, sempre: todo item terminado fica disponível na aba criativa do Redweave, para os testes, mesmo antes de ter receita. Um GameTest confere que cada item registrado aparece na aba, e o `AGENTS.md` traz a regra |
 | 600 | O que o `Toggle` do Configurator mostra com o Signal Button já apertado? | `<nome>: Pressed`, como num aperto novo; o aperto em si não faz nada e o tempo não recomeça (pergunta 590) |
 | 599 | Como fica a mensagem `Pressed` do Signal Button em português? | `<nome>: Apertado`. Completa a pergunta 593 |
@@ -601,6 +612,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:25 | Registra as respostas 602 a 612, do Signal Pressure Plate e do modo de girar. |
 | Zennd | 2026-11-15 14:03 | Registra a resposta 601, da aba criativa. |
 | Zennd | 2026-11-15 13:59 | Registra as respostas 596 a 600, do Signal Button. |
 | Zennd | 2026-11-15 13:42 | Registra as respostas 588 a 595, do Signal Button. |
