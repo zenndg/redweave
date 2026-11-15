@@ -249,7 +249,7 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 |---|---|---|
 | 131 | Pegue um Signal Timer no criativo e passe o mouse sobre ele | O ícone da placa, com a seta centrada no mostrador e o LED verde apagado |
 | 132 | Olhando para o norte, coloque o timer no chão, ao lado de uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa de 10 × 10 com a seta apontando para onde você olhava, centrada no mostrador, nas 3 posições |
-| 133 | Com o Configurator no `Open`, dê Shift + clique na placa 4 vezes | A seta gira 90° no sentido horário a cada clique, com o clique do comparador e `Output: <borda>` na action bar, e volta ao início |
+| 133 | Com o Configurator no `Rotate`, clique na placa 4 vezes | A seta gira 90° no sentido horário a cada clique, com o clique do comparador e `Output: <borda>` na action bar, e volta ao início |
 | 134 | Clique na placa com a mão vazia; depois com o Configurator no `Copy` | `Use a Configurator to open this module.`; depois `Modules cannot be copied yet.` |
 | 135 | Com o Configurator no `Toggle`, clique no timer virado para a lâmpada | `<nome>: Running`, o LED verde acende, e a lâmpada pisca a cada 1 s por 0,5 s, com só a seta vermelha no pulso |
 | 136 | Ponha um bloco de redstone atrás da placa; depois tire | A lâmpada para de piscar enquanto o bloco está lá e volta a piscar logo que ele sai |
@@ -277,7 +277,7 @@ Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8
 | 151 | Olhando para o norte, coloque o inversor no chão, com uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa com a seta vermelha apontando para onde você olhava, nas 3 posições, e a lâmpada da frente acesa na hora |
 | 152 | Ponha uma alavanca ligada a um bloco atrás da placa; ligue e desligue a alavanca | A lâmpada apaga com a alavanca ligada e acende com ela desligada, com o atraso de uma tocha; a seta fica vermelha só com a lâmpada acesa |
 | 153 | Com o Configurator no `Toggle`, clique no inversor | `Signal Inverter has nothing to toggle.` na action bar, e nada muda |
-| 154 | Com o Configurator no `Open`, dê Shift + clique na placa | A seta gira 90° no sentido horário, com o clique do comparador |
+| 154 | Com o Configurator no `Rotate`, clique na placa | A seta gira 90° no sentido horário, com o clique do comparador |
 | 155 | Clique na placa com o Configurator no `Open` | A Tela do Signal Inverter, como a prancha: o diagrama A → NOT → B, com B aceso em vermelho, `● On` embaixo e, à direita, `Input` e `Output` em `Edge` |
 | 156 | Com a tela aberta, ligue a alavanca de trás | No diagrama, A acende em vermelho, B apaga, e o estado vira `● Off` |
 | 157 | Clique em `Channel` do `Output` num inversor sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a lâmpada do nó segue a saída do inversor |
@@ -367,7 +367,7 @@ Entregue com a issue #130 (perguntas 548 a 558 e 576 a 587). Use o circuito dos 
 | 213 | Clique na alavanca com a mão vazia | O clique da alavanca do jogo, mais agudo; o cabo vai para a frente, a luz fica verde e a seta vermelha, e as duas lâmpadas acendem, sem mensagem na action bar |
 | 214 | Clique de novo segurando terra; depois Shift + clique com a terra | O clique mais grave, a alavanca desliga e a terra não é colocada; com Shift, a terra é colocada e a alavanca não muda |
 | 215 | Apague a luz do ambiente e olhe a alavanca de noite | A luz da alavanca brilha no escuro, vermelha ou verde |
-| 216 | Coloque alavancas na parede e no teto, e gire uma com Shift + clique no `Open` | O cabo, a base e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
+| 216 | Coloque alavancas na parede e no teto, e gire uma com o `Rotate` do Configurator | O cabo, a base e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
 | 217 | Mire no cabo da alavanca e numa parte vizinha do mesmo espaço | O contorno cobre a placa e o cabo, e a mira pega a parte certa |
 | 218 | Peça ao segundo player para clicar na alavanca, abrir a tela e quebrá-la | `Only the player who placed this module can change it.`; a tela só para leitura, com o cadeado, e a placa não quebra |
 | 219 | Clique na placa com o Configurator no `Open` | A Tela do Signal Lever: `Off` ou `On` grande à esquerda e, à direita, `Strength 15` com `−` e `+` e `Output` |
@@ -392,7 +392,7 @@ Entregue com a issue #131 (perguntas 548 a 558 e 588 a 600). Use o circuito dos 
 | 231 | Clique de novo enquanto o botão está apertado | Nada muda, e ele solta no mesmo tempo, sem recomeçar |
 | 232 | Clique segurando terra; depois Shift + clique com a terra | A terra aperta o botão e não é colocada; com Shift, a terra é colocada e o botão não é apertado |
 | 233 | Apague a luz do ambiente e olhe o botão de noite | A luz do botão brilha no escuro, vermelha ou verde |
-| 234 | Coloque botões na parede e no teto, e gire um com Shift + clique no `Open` | O anel, o botão e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
+| 234 | Coloque botões na parede e no teto, e gire um com o `Rotate` do Configurator | O anel, o botão e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
 | 235 | Peça ao segundo player para clicar no botão, abrir a tela e quebrá-lo | `Only the player who placed this module can change it.`; a tela só para leitura, com o cadeado, e a placa não quebra |
 | 236 | Clique na placa com o Configurator no `Open` | A Tela do Signal Button: `Off` ou `On` grande à esquerda e, à direita, `Strength 15`, `On time 1.0 s` e `Output`, sem botão de apertar |
 | 237 | Aperte `−` três vezes na força e Shift + `+` no tempo ligado, e aperte o botão, com um comparador ou um Signal Cable na frente | A força 12 e o tempo de 2 s na tela, e o comparador ou o cabo lê 12 durante 2 s |
@@ -405,12 +405,31 @@ Entregue com a issue #131 (perguntas 548 a 558 e 588 a 600). Use o circuito dos 
 | 244 | Ponha `button.max_interval_ticks` abaixo do tempo ligado salvo de um botão e recarregue o mundo | O tempo ligado é ajustado ao limite, com um aviso no log |
 | 245 | Troque o idioma para Português (Brasil) e repita os passos 228, 236 e 240 | `Botão de Sinal`, `Ligado`, `Desligado`, `Força`, `Tempo ligado` e `Saída`, e `<nome>: Apertado` no `Toggle` |
 
+## Fase 2: o modo Rotate do Configurator
+
+Entregue com a issue #136 (perguntas 610 e 613 a 620). Use um Signal Timer, um Signal Lever na parede, um Signal Button no teto, um Signal Node, um Signal Cable e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 246 | Com o Configurator na mão, dê Shift + scroll para baixo a partir do `Open` | `Mode: Rotate` em roxo, depois `Copy`, `Toggle`, `Wrench` e de volta ao `Open` |
+| 247 | No `Rotate`, olhe o visor e passe o mouse sobre o item | O visor em roxo, e o tooltip com `Click to turn a module, Shift + click to turn it back.` |
+| 248 | No `Rotate`, clique num Signal Timer no chão | A seta gira 90° no sentido horário, com o clique do comparador e `Output: <borda>` na action bar |
+| 249 | No `Rotate`, dê Shift + clique no timer | A seta volta 90°, no sentido anti-horário |
+| 250 | No `Rotate`, clique 4 vezes para cada lado na alavanca da parede e no botão do teto | As 4 posições nos dois sentidos, com o modelo seguindo a frente, sem nada espelhado |
+| 251 | Peça ao segundo player para usar o `Rotate` no timer | `Only the player who placed this module can change it.`, e a placa não gira |
+| 252 | Desligue a rede no Network Terminal e use o `Rotate` no timer | A placa gira mesmo assim |
+| 253 | Use o `Rotate` num Signal Node e num Signal Cable | `Only modules can be turned.`, e nada muda |
+| 254 | No `Open`, dê Shift + clique num módulo; depois um clique simples | O Shift + clique não faz nada; o clique simples abre a tela |
+| 255 | Troque o idioma para Português (Brasil) e repita os passos 246, 247 e 253 | `Girar`, `Clique para girar um módulo, Shift + clique para voltar.` e `Só os módulos giram.` |
+| 256 | Saia do mundo com o Configurator no `Rotate` e entre de novo | O Configurator continua no `Rotate` |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:38 | Os giros passam ao modo `Rotate`, e entra a seção do modo, com os passos 246 a 256 (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:04 | Adiciona os passos 227 a 245, do Signal Button e da aba criativa com todos os itens (perguntas 588 a 600 e 601). |
 | Zennd | 2026-11-15 13:19 | Adiciona os passos 211 a 226, do Signal Lever (pergunta 583). |
 | Zennd | 2026-11-15 09:37 | Adiciona os passos 186 a 210, do multipart e do Signal Cable da #44 (pergunta 527). |

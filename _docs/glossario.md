@@ -47,7 +47,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
 | Network Controller | `network_controller` | O bloco que é uma rede: colocá-lo cria a rede, e a tela dele a gerencia, com a lista de nós e o log |
 | Network Terminal | `network_terminal` | O bloco que administra todas as redes do dono: renomear, desligar, religar, limpar os nós e apagar as `Unplaced`. Não cria redes (perguntas 130 e 131) |
-| Configurador | `configurator` | Ferramenta com quatro modos: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela e gira a placa com Shift, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 143, 161, 241, 393, 395 e 399) |
+| Configurador | `configurator` | Ferramenta com cinco modos: `Open` abre a Tela do Nó, `Rotate` gira os Signal Modules, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela, `Rotate` gira a placa, no sentido horário ou, com Shift, no anti-horário, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 143, 161, 241, 393, 395, 610 e 613 a 618) |
 | Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
 | Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
 | Signal Remote | `signal_remote` | Item de mão com aparência de tablet, `Controle de Sinal` em português, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot, sempre com 15 (perguntas 15, 279, 282, 288, 352 e 368). Na rede, é uma entrada sem posição, a parte `RemoteInputs` (perguntas 27 e 360) |
@@ -57,6 +57,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:37 | O Configurator passa a ter cinco modos, com o `Rotate` (perguntas 610 e 613 a 618). |
 | Zennd | 2026-11-15 14:04 | Leva o Signal Button à lista de módulos e diz o que entrou na #131 (perguntas 550 e 588 a 600). |
 | Zennd | 2026-11-15 13:19 | Leva o Signal Lever à lista de módulos e diz o que entrou na #130 (perguntas 550 e 576 a 587). |
 | Zennd | 2026-11-15 09:36 | Adiciona o espaço de partes, o isolamento, a curva interna, a curva externa e o degrau (perguntas 495, 537, 540, 541 e 572). |
