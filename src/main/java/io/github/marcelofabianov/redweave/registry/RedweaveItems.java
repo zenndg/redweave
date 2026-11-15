@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
 import io.github.marcelofabianov.redweave.item.NetworkTerminalItem;
 import io.github.marcelofabianov.redweave.item.PartItem;
+import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import io.github.marcelofabianov.redweave.item.SignalRemoteItem;
 import java.util.Collection;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_INVERTER_ID = "signal_inverter";
   private static final String WEATHER_DETECTOR_ID = "weather_detector";
   private static final String SIGNAL_RANDOMIZER_ID = "signal_randomizer";
+  private static final String SIGNAL_CABLE_ID = "signal_cable";
 
   private static final DeferredRegister.Items ITEMS =
       DeferredRegister.createItems(RedweaveMod.MOD_ID);
@@ -72,6 +74,10 @@ public final class RedweaveItems {
   /** A part of the part space that stacks and keeps no setting, with its old ID (394 and 523). */
   public static final DeferredItem<PartItem> SIGNAL_RANDOMIZER =
       ITEMS.register(SIGNAL_RANDOMIZER_ID, () -> new PartItem(new Item.Properties()));
+
+  /** The Signal Cable, white until dyed; cables of one color stack (answers 494 and 505). */
+  public static final DeferredItem<SignalCableItem> SIGNAL_CABLE =
+      ITEMS.register(SIGNAL_CABLE_ID, () -> new SignalCableItem(new Item.Properties()));
 
   private RedweaveItems() {}
 

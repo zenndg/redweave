@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.datagen;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.TerminalMessages;
 import io.github.marcelofabianov.redweave.block.part.PartMessages;
+import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -18,6 +19,11 @@ final class PortugueseTexts {
 
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Nó de Sinal";
+  private static final String SIGNAL_CABLE = "Cabo de Sinal";
+
+  /** A dyed cable, with the name of the color from the game, such as `Cabo de Sinal Vermelho`. */
+  private static final String SIGNAL_CABLE_COLORED = "Cabo de Sinal %s";
+
   private static final String FACE_TAKEN = "Esta face já está ocupada.";
   private static final String CABLES_FULL = "Este espaço já tem 2 cabos.";
   private static final String NETWORK_CONTROLLER = "Controlador de Rede";
@@ -48,6 +54,9 @@ final class PortugueseTexts {
     RemotePortugueseTexts.addTo(add);
     ModulePortugueseTexts.addTo(add);
     add.accept(RedweaveItems.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
+    String cable = RedweaveItems.SIGNAL_CABLE.get().getDescriptionId();
+    add.accept(cable, SIGNAL_CABLE);
+    add.accept(cable + SignalCableItem.COLORED_SUFFIX, SIGNAL_CABLE_COLORED);
     add.accept(PartMessages.FACE_TAKEN, FACE_TAKEN);
     add.accept(PartMessages.CABLES_FULL, CABLES_FULL);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);

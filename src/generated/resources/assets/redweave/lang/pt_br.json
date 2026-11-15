@@ -3,6 +3,8 @@
   "block.redweave.network_terminal": "Terminal de Rede",
   "fml.menu.mods.info.description.redweave": "Teça a sua redstone. Redes de sinal sem fio, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar.",
   "item.redweave.configurator": "Configurador",
+  "item.redweave.signal_cable": "Cabo de Sinal",
+  "item.redweave.signal_cable.colored": "Cabo de Sinal %s",
   "item.redweave.signal_inverter": "Inversor de Sinal",
   "item.redweave.signal_node": "Nó de Sinal",
   "item.redweave.signal_randomizer": "Sorteador de Sinal",

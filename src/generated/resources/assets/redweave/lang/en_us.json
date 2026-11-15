@@ -3,6 +3,8 @@
   "block.redweave.network_terminal": "Network Terminal",
   "fml.menu.mods.info.description.redweave": "Weave your redstone. Wireless signal networks, programmable channels and logic chips, with screens that are easy to learn and beautiful to use.",
   "item.redweave.configurator": "Configurator",
+  "item.redweave.signal_cable": "Signal Cable",
+  "item.redweave.signal_cable.colored": "%s Signal Cable",
   "item.redweave.signal_inverter": "Signal Inverter",
   "item.redweave.signal_node": "Signal Node",
   "item.redweave.signal_randomizer": "Signal Randomizer",

@@ -18,7 +18,9 @@ import io.github.marcelofabianov.redweave.client.screen.RemoteLinkScreen;
 import io.github.marcelofabianov.redweave.client.screen.TerminalScreen;
 import io.github.marcelofabianov.redweave.client.screen.TimerScreen;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,12 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
     bus = EventBusSubscriber.Bus.MOD,
     value = Dist.CLIENT)
 public final class RedweaveClient {
+  /** The first layer of the cable item, the insulation; the second, the tips, is not tinted. */
+  private static final int INSULATION_LAYER = 0;
+
+  /** White with full opacity: the layer keeps the colors of its texture. */
+  private static final int UNTINTED = 0xFFFFFFFF;
+
   private RedweaveClient() {}
 
   @SubscribeEvent
@@ -59,6 +67,17 @@ public final class RedweaveClient {
   @SubscribeEvent
   public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
     event.register(RedweaveClient::cornerColor, RedweaveBlocks.PART_SPACE.get());
+  }
+
+  /** The insulation of a Signal Cable item takes its color; its copper tips keep theirs (518). */
+  @SubscribeEvent
+  public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+    event.register(
+        (stack, layer) ->
+            layer == INSULATION_LAYER
+                ? ChannelColors.argb(SignalCableItem.colorOf(stack))
+                : UNTINTED,
+        RedweaveItems.SIGNAL_CABLE.get());
   }
 
   /** The models of the parts, which no blockstate names, so the part space can join them (536). */

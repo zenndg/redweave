@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -26,7 +27,14 @@ public final class RedweaveCreativeTabs {
                   .title(Component.translatable(TITLE))
                   .icon(() -> RedweaveItems.NETWORK_CONTROLLER.get().getDefaultInstance())
                   .displayItems((parameters, output) ->
-                      RedweaveItems.all().forEach(item -> output.accept(item.get())))
+                      RedweaveItems.all()
+                          .forEach(item -> {
+                            if (item.get() instanceof SignalCableItem) {
+                              output.acceptAll(SignalCableItem.everyColor());
+                            } else {
+                              output.accept(item.get());
+                            }
+                          }))
                   .build());
 
   private RedweaveCreativeTabs() {}

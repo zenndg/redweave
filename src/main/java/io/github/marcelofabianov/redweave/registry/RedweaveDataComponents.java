@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.item.CableColorCodec;
 import io.github.marcelofabianov.redweave.item.ConfiguratorCopy;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.item.NodeSlotsCodec;
@@ -28,6 +29,7 @@ public final class RedweaveDataComponents {
   private static final String CONFIGURATOR_MODE_ID = "configurator_mode";
   private static final String SIGNAL_REMOTE_ID = "signal_remote";
   private static final String SIGNAL_REMOTE_LABEL_ID = "signal_remote_label";
+  private static final String CABLE_COLOR_ID = "cable_color";
   private static final String UNKNOWN_MODE = "Unknown Configurator mode: ";
 
   /** A saved mode that is not known is refused, and the item falls back to the first mode. */
@@ -100,6 +102,15 @@ public final class RedweaveDataComponents {
                       ByteBufCodecs.STRING_UTF8,
                       RemoteLabel::channelName,
                       RemoteLabel::new)));
+
+  /** The color of a Signal Cable; a white cable has none (answer 561). */
+  public static final Supplier<DataComponentType<ChannelColor>> CABLE_COLOR =
+      COMPONENTS.registerComponentType(
+          CABLE_COLOR_ID,
+          builder ->
+              builder
+                  .persistent(CableColorCodec.CODEC)
+                  .networkSynchronized(CableColorCodec.STREAM_CODEC));
 
   private RedweaveDataComponents() {}
 

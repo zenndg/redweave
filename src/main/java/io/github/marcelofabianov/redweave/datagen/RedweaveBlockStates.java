@@ -37,6 +37,9 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final String LAYER_2 = "layer2";
   private static final float WITH_COPY = 1;
   private static final String SIGNAL_REMOTE = "signal_remote";
+  private static final String SIGNAL_CABLE = "signal_cable";
+  private static final String CABLE_INSULATION = "signal_cable_item";
+  private static final String CABLE_TIPS = "signal_cable_item_tips";
   private static final String LOOK_PROPERTY = "look";
   private static final String LOOK_SEPARATOR = "_";
   private static final String LINKED_SUFFIX = "_linked";
@@ -95,6 +98,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
     configuratorModels();
     remoteModels();
+    cableItemModel();
     timerModels();
     inverterModels();
     detectorModels();
@@ -217,6 +221,18 @@ final class RedweaveBlockStates extends BlockStateProvider {
           itemModels().getBuilder(name).parent(generated).texture(LAYER_0, itemTexture(name));
       remote.override().predicate(modLoc(LOOK_PROPERTY), look.ordinal()).model(model).end();
     }
+  }
+
+  /**
+   * The Signal Cable item in two layers: the gray insulation, tinted with the color of the cable,
+   * and the copper tips, never tinted (answers 518 and 535).
+   */
+  private void cableItemModel() {
+    itemModels()
+        .getBuilder(SIGNAL_CABLE)
+        .parent(new ModelFile.UncheckedModelFile(mcLoc(ITEM_GENERATED)))
+        .texture(LAYER_0, itemTexture(CABLE_INSULATION))
+        .texture(LAYER_1, itemTexture(CABLE_TIPS));
   }
 
   private ResourceLocation itemTexture(String name) {
