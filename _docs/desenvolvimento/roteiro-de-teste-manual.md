@@ -5,7 +5,7 @@ O que os testes automáticos não cobrem e um player precisa conferir no jogo: o
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote, os Signal Modules e o Signal Cable nas 16 cores (perguntas 69 e 564). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod, mesmo os que ainda não têm receita: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote, os Signal Modules, incluindo o Signal Lever e o Signal Button, e o Signal Cable nas 16 cores (perguntas 69, 564 e 601). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -379,12 +379,39 @@ Entregue com a issue #130 (perguntas 548 a 558 e 576 a 587). Use o circuito dos 
 | 225 | Saia do mundo e entre de novo | A alavanca mantém o estado, a força e a saída |
 | 226 | Troque o idioma para Português (Brasil) e repita os passos 211, 219 e 222 | `Alavanca de Sinal`, `Ligada`, `Desligada`, `Força` e `Saída`, e `<nome>: Ligada` no `Toggle` |
 
+## Fase 2: o Signal Button
+
+Entregue com a issue #131 (perguntas 548 a 558 e 588 a 600). Use o circuito dos passos 1 a 8, com a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 227 | Abra a aba `Redweave` do criativo e confira os itens | Todos os itens do mod estão nela, incluindo o Signal Lever e o Signal Button (pergunta 601) |
+| 228 | Pegue um Signal Button no criativo e passe o mouse sobre ele | `Signal Button` e o ícone do botão solto, com o anel de cobre e a luz vermelha |
+| 229 | Olhando para o norte, coloque o botão no chão, com uma lâmpada ao norte e outra ao lado do bloco de apoio | A placa com a seta para o norte, o anel de cobre, o botão de deepslate levantado, a luz vermelha, e as lâmpadas apagadas |
+| 230 | Clique no botão com a mão vazia | O clique do botão de pedra; o botão afunda, a luz fica verde e a seta vermelha, e as duas lâmpadas acendem, sem mensagem na action bar. Depois de 1 s, tudo apaga, com o clique de soltar |
+| 231 | Clique de novo enquanto o botão está apertado | Nada muda, e ele solta no mesmo tempo, sem recomeçar |
+| 232 | Clique segurando terra; depois Shift + clique com a terra | A terra aperta o botão e não é colocada; com Shift, a terra é colocada e o botão não é apertado |
+| 233 | Apague a luz do ambiente e olhe o botão de noite | A luz do botão brilha no escuro, vermelha ou verde |
+| 234 | Coloque botões na parede e no teto, e gire um com Shift + clique no `Open` | O anel, o botão e a luz seguem a frente nas 3 faces e nos 4 giros, sem nada espelhado |
+| 235 | Peça ao segundo player para clicar no botão, abrir a tela e quebrá-lo | `Only the player who placed this module can change it.`; a tela só para leitura, com o cadeado, e a placa não quebra |
+| 236 | Clique na placa com o Configurator no `Open` | A Tela do Signal Button: `Off` ou `On` grande à esquerda e, à direita, `Strength 15`, `On time 1.0 s` e `Output`, sem botão de apertar |
+| 237 | Aperte `−` três vezes na força e Shift + `+` no tempo ligado, e aperte o botão, com um comparador ou um Signal Cable na frente | A força 12 e o tempo de 2 s na tela, e o comparador ou o cabo lê 12 durante 2 s |
+| 238 | Passe o mouse sobre o valor do tempo ligado | Uma dica com o tempo em ticks |
+| 239 | Ponha a saída no canal `15` de uma rede, com um nó de saída no `15` sobre uma lâmpada, e aperte o botão | A lâmpada do nó acende durante o tempo ligado, e a da frente fica apagada |
+| 240 | Desligue a rede no Network Terminal, use o `Toggle` e use de novo com o botão apertado | `<nome>: Pressed` nas duas vezes; o botão é apertado, a segunda não recomeça o tempo, o canal fica em 0 enquanto a rede está `Offline`, e o `Open` mostra a mensagem da rede |
+| 241 | Segure o Configurator perto do botão | O rótulo em duas linhas: o nome e, embaixo, `On` ou `Off` e o canal |
+| 242 | Coloque um Signal Cable na frente do botão e aperte-o | O braço do cabo encosta na placa, e o cabo acende com força 15 durante o tempo ligado |
+| 243 | Com um tempo ligado de 10 s, aperte o botão, saia do mundo e entre de novo antes de ele soltar | O botão continua apertado e solta quando o tempo que faltava acaba |
+| 244 | Ponha `button.max_interval_ticks` abaixo do tempo ligado salvo de um botão e recarregue o mundo | O tempo ligado é ajustado ao limite, com um aviso no log |
+| 245 | Troque o idioma para Português (Brasil) e repita os passos 228, 236 e 240 | `Botão de Sinal`, `Ligado`, `Desligado`, `Força`, `Tempo ligado` e `Saída`, e `<nome>: Apertado` no `Toggle` |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:04 | Adiciona os passos 227 a 245, do Signal Button e da aba criativa com todos os itens (perguntas 588 a 600 e 601). |
 | Zennd | 2026-11-15 13:19 | Adiciona os passos 211 a 226, do Signal Lever (pergunta 583). |
 | Zennd | 2026-11-15 09:37 | Adiciona os passos 186 a 210, do multipart e do Signal Cable da #44 (pergunta 527). |
 | Zennd | 2026-11-14 19:21 | Lista todos os itens da aba criativa e põe os Signal Modules na Fase 2. |
