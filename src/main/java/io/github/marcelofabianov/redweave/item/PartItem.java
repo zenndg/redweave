@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * the space with other parts (answers 512, 523 and 533). Clicking a part that is already there aims
  * at the opposite side of the same space, as if the part were not there (answer 545).
  */
-public final class PartItem extends Item {
+public class PartItem extends Item {
   public PartItem(Properties properties) {
     super(properties);
   }
@@ -38,7 +39,7 @@ public final class PartItem extends Item {
     Level level = context.getLevel();
     Player player = context.getPlayer();
     PartSpot spot = spotOf(context);
-    Optional<Part> part = PartTypes.placed(this, spot.face());
+    Optional<Part> part = partOf(context.getItemInHand(), spot.face());
     if (player == null || part.isEmpty() || !fitsInto(level, spot)) {
       return InteractionResult.FAIL;
     }
@@ -54,6 +55,11 @@ public final class PartItem extends Item {
       context.getItemInHand().consume(1, player);
     }
     return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  /** The new part the stack places on the side; the Signal Cable carries its color (answer 561). */
+  protected Optional<Part> partOf(ItemStack stack, Direction face) {
+    return PartTypes.placed(this, face);
   }
 
   /**

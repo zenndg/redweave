@@ -31,7 +31,7 @@ public final class DetectorPart extends ModulePart {
   public static final String ID = "weather_detector";
 
   /** The looks of the top: the symbol of each mode, with the arrow lit or not (answer 471). */
-  public static final List<String> LOOKS = looks();
+  public static final List<String> LOOKS = lookNames();
 
   private WeatherDetector detector = WeatherDetector.placed();
   private Connection output = Connection.EDGE;
@@ -54,7 +54,7 @@ public final class DetectorPart extends ModulePart {
     return part;
   }
 
-  private static List<String> looks() {
+  private static List<String> lookNames() {
     List<String> looks = new ArrayList<>();
     for (WeatherMode mode : WeatherMode.values()) {
       looks.add(lookOf(mode, false));

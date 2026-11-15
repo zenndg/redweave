@@ -156,6 +156,11 @@ public abstract class ModulePart
   }
 
   @Override
+  public List<PartLook> looks() {
+    return List.of(look());
+  }
+
+  /** The look of the plate, which the client draws (answer 534). */
   public PartLook look() {
     PlateTurn turn = PlateTurn.of(facing(), front);
     return new PartLook(

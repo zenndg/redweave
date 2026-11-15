@@ -44,7 +44,9 @@ final class ModuleTicks {
   static Signal read(
       ModuleServices modules, PartSpaceBlockEntity space, ModulePart part, Connection input) {
     if (input.isEdge()) {
-      return fromBehind(space.getLevel(), space.getBlockPos(), part.front().getOpposite());
+      Direction back = part.front().getOpposite();
+      Signal behind = fromBehind(space.getLevel(), space.getBlockPos(), back);
+      return Signal.clamped(Math.max(behind.strength(), cableOn(space, back)));
     }
     return modules
         .read()
@@ -81,6 +83,15 @@ final class ModuleTicks {
       strength = Math.max(strength, wire.getValue(RedStoneWireBlock.POWER));
     }
     return Signal.clamped(strength);
+  }
+
+  /** A Signal Cable of the space on the side of the back edge feeds it (answer 566). */
+  private static int cableOn(PartSpaceBlockEntity space, Direction back) {
+    return space
+        .at(back)
+        .filter(CablePart.class::isInstance)
+        .map(part -> ((CablePart) part).strength())
+        .orElse(0);
   }
 
   /** With its output on a channel of its network, the module writes into it this tick (387). */

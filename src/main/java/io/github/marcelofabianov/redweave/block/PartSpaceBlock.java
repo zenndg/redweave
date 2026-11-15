@@ -98,7 +98,7 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
     if (!(level.getBlockEntity(pos) instanceof PartSpaceBlockEntity space)) {
       return 0;
     }
-    return space.parts().stream().mapToInt(part -> part.signal(side)).max().orElse(0);
+    return space.parts().stream().mapToInt(part -> part.signal(level, pos, side)).max().orElse(0);
   }
 
   @Override
@@ -224,9 +224,7 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
   @Override
   public ItemStack getCloneItemStack(
       BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-    return aimed(level, pos, player)
-        .map(part -> new ItemStack(part.item()))
-        .orElse(ItemStack.EMPTY);
+    return aimed(level, pos, player).map(Part::drop).orElse(ItemStack.EMPTY);
   }
 
   private static Optional<Part> aimed(BlockGetter level, BlockPos pos, Player player) {

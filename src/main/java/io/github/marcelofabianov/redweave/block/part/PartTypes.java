@@ -21,7 +21,8 @@ public final class PartTypes {
           RedweaveItems.SIGNAL_TIMER.getId(), TimerPart::load,
           RedweaveItems.SIGNAL_INVERTER.getId(), InverterPart::load,
           RedweaveItems.WEATHER_DETECTOR.getId(), DetectorPart::load,
-          RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load);
+          RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load,
+          RedweaveItems.SIGNAL_CABLE.getId(), CablePart::load);
 
   private PartTypes() {}
 

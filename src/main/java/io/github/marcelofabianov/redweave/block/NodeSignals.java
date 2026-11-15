@@ -60,6 +60,7 @@ public final class NodeSignals {
     if (node.get().setPowered(signal.isOn())) {
       space.orElseThrow().changed();
     }
+    space.ifPresent(found -> found.wakeOthers(node.get()));
     Block block = RedweaveBlocks.PART_SPACE.get();
     level.updateNeighborsAt(spot.pos(), block);
     level.updateNeighborsAt(spot.support(), block);

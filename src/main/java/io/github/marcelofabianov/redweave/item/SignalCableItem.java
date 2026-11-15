@@ -1,26 +1,35 @@
 package io.github.marcelofabianov.redweave.item;
 
+import io.github.marcelofabianov.redweave.block.part.CablePart;
+import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
  * The Signal Cable as an item: one item that is born white and takes one of the 16 wool colors in
  * the data component `cable_color`; a white cable has no component, so every white cable stacks
- * with the others (answers 494, 505 and 561). Placing it in the world comes with its part (#44).
+ * with the others (answers 494, 505 and 561). It places a cable part of its color (answer 495).
  */
-public final class SignalCableItem extends Item {
+public final class SignalCableItem extends PartItem {
   /** The suffix of the key of the name of a colored cable, such as `Red Signal Cable` (564). */
   public static final String COLORED_SUFFIX = ".colored";
 
   public SignalCableItem(Properties properties) {
     super(properties);
+  }
+
+  /** The cable part of the color of the stack, on the side (answers 495 and 561). */
+  @Override
+  protected Optional<Part> partOf(ItemStack stack, Direction face) {
+    return Optional.of(CablePart.placed(face, colorOf(stack)));
   }
 
   /** The color of the cable in the stack; white when it has none (answer 561). */

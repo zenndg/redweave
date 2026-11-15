@@ -131,6 +131,11 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
 
   /** The ring out of range wins over the lit lens (answers 72 and 86). */
   @Override
+  public List<PartLook> looks() {
+    return List.of(look());
+  }
+
+  /** The look of the plate, which the client draws (answer 534). */
   public PartLook look() {
     ResourceLocation model = outOfRange ? OUT_OF_RANGE : powered ? ON : OFF;
     return new PartLook(model, face, PlateTurn.facing(facing()));

@@ -196,7 +196,7 @@ public final class PartSpaceBlockEntity extends BlockEntity {
   @Override
   public ModelData getModelData() {
     return ModelData.builder()
-        .with(LOOKS, parts.values().stream().map(Part::look).toList())
+        .with(LOOKS, parts.values().stream().flatMap(part -> part.looks().stream()).toList())
         .build();
   }
 

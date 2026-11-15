@@ -1,9 +1,13 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.domain.part.PartKind;
+import java.util.List;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
@@ -26,7 +30,21 @@ public interface Part {
   /** What the part gives to the side, as the game asks a block, seen from the asker. */
   int signal(Direction side);
 
-  PartLook look();
+  /**
+   * What the part gives to the side when the game asks the space, which knows the asker, as the
+   * Signal Cable gives one less to the game wire (answer 565).
+   */
+  default int signal(BlockGetter level, BlockPos pos, Direction side) {
+    return signal(side);
+  }
+
+  /** What the client draws for the part, which the model of the space joins (answer 536). */
+  List<PartLook> looks();
+
+  /** The item the part drops or the middle click picks, as its item (answer 539). */
+  default ItemStack drop() {
+    return new ItemStack(item());
+  }
 
   /** The NBT of the part, kept under `data` (answer 543). */
   CompoundTag save();

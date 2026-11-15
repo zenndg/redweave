@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.block;
 
+import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ final class NodeReading {
     Direction stuckTo = node.face().getOpposite();
     BlockPos support = node.support();
     if (face == stuckTo) {
-      return Signal.clamped(strengthWithout(level, support, node));
+      return Signal.clamped(Math.max(strengthWithout(level, support, node), cablesOf(level, node)));
     }
     BlockPos neighbor = support.relative(face);
     if (!level.isLoaded(neighbor)) {
@@ -50,6 +51,21 @@ final class NodeReading {
       }
     }
     return strength;
+  }
+
+  /**
+   * A Signal Cable of the space of the node counts as its block of support, by the inner curve
+   * (answer 566).
+   */
+  private static int cablesOf(Level level, PartSpot node) {
+    return PartSpaceBlockEntity.at(level, node.pos())
+        .map(space ->
+            space.parts().stream()
+                .filter(CablePart.class::isInstance)
+                .mapToInt(part -> ((CablePart) part).strength())
+                .max()
+                .orElse(0))
+        .orElse(0);
   }
 
   private static int directSignal(Level level, BlockPos neighbor, Direction side, PartSpot node) {
