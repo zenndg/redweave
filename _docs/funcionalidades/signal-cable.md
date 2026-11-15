@@ -10,9 +10,10 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
-| Item único | Um item só, `redweave:signal_cable`, que nasce branco. A cor fica num data component (regra 7), e cabos de cores diferentes não empilham entre si | 494 e 505 |
+| Item único | Um item só, `redweave:signal_cable`, que nasce branco. A cor fica no data component `redweave:cable_color`, com a chave da cor (regra 7), e o branco fica sem ele. Cabos de cores diferentes não empilham entre si | 494, 505 e 561 |
+| Nome | Leva a cor, como `Red Signal Cable` e `Cabo de Sinal Vermelho`; o branco é `Signal Cable`. A aba criativa mostra as 16 cores | 564 |
 | Cores | As 16 cores de lã, as mesmas dos slots do Signal Node e dos canais da rede (pergunta 224) | 494 |
-| Tingir | 8 cabos de qualquer cor em volta de 1 corante, na mesa de trabalho, dão 8 cabos da cor do corante, como o vidro e a terracota tingidos. Um cabo tingido pode trocar de cor, e o corante branco o leva de volta ao branco | 506 |
+| Tingir | 8 cabos de qualquer cor em volta de 1 corante, na mesa de trabalho, dão 8 cabos da cor do corante, como o vidro e a terracota tingidos. Um cabo tingido pode trocar de cor, e o corante branco o leva de volta ao branco. As 16 receitas saem do datagen, com o ID `redweave:<cor>_signal_cable` | 506, 562 e 563 |
 | Receita | A do cabo branco fica para a #24, com materiais do jogo puro (regra 4), em JSON de datapack. Até lá, o cabo vem do criativo | 520 |
 
 ## Forma
@@ -90,6 +91,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564, do item, das receitas de tingir e do nome. |
 | Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541, do domínio do trecho e da curva interna. |
 | Zennd | 2026-11-14 20:27 | Registra o pacote do trecho (pergunta 537). |
 | Zennd | 2026-11-14 19:50 | Registra a decisão 535, das bordas claras do topo. |

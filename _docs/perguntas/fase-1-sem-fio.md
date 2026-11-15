@@ -11,6 +11,10 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 564 | Como fica o nome do Signal Cable tingido, e o que a aba criativa mostra? | O nome leva a cor, como `Red Signal Cable` e `Cabo de Sinal Vermelho`, e o branco continua `Signal Cable` (pergunta 505). A aba criativa mostra as 16 cores |
+| 563 | Qual o ID das receitas de tingir o Signal Cable? | `redweave:<cor>_signal_cable`, como `redweave:red_signal_cable`, na linha do `red_stained_glass` do jogo. Fica fixado na #26 (regra 15) |
+| 562 | Como nascem as 16 receitas de tingir o Signal Cable, as primeiras do mod? | Pelo datagen, em `src/generated`, conferidas pelo `check-generated`, como o resto do mod. Continuam JSON de datapack, que o pack sobrescreve com KubeJS (regra 4) |
+| 561 | Como o item Signal Cable guarda a cor? | No data component `redweave:cable_color`, com a chave da cor (`red`, `blue` e as outras). O cabo branco fica sem o componente, para o branco da receita da #24 e o branco tingido empilharem juntos. Fica fixado na #26 (regra 15). Completa as perguntas 494 e 506 |
 | 560 | Onde o `powered` dos Signal Modules como partes é salvo, já que no Signal Timer e no Signal Randomizer ele sai do estado do domínio, e no Signal Inverter e no Weather Detector não? | Nos 4 módulos, numa regra só, na base comum, dentro de `data`. No timer e no Signal Randomizer o valor também sai do estado do domínio, e a regra única vale mais que evitar essa repetição. Completa as perguntas 534 e 559 |
 | 559 | O NBT dos Signal Modules como partes guarda o `facing`, que é sempre o oposto da `face` da parte no contêiner? | Não, como no Signal Node (pergunta 546): o `facing` dos módulos sai da `face`, e só o `front`, que o player escolhe e gira, vai para `data`. Completa a pergunta 534 |
 | 558 | Em que ordem entram a alavanca, o botão e a placa de pressão, cada um na sua issue, depois do Signal Cable? | Alavanca (#130), botão (#131) e placa de pressão (#132), da mais simples para a mais complexa; a alavanca prova o que os outros dois usam (pergunta 304) |
@@ -560,6 +564,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 22:27 | Registra as respostas 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a resposta 560. |
 | Zennd | 2026-11-14 21:21 | Responde as perguntas 549 a 558 e registra a resposta 559. |
 | Zennd | 2026-11-14 21:14 | Registra a resposta 548 e as perguntas pendentes 549 a 558, da alavanca, do botão e da placa de pressão. |

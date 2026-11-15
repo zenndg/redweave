@@ -536,6 +536,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ordem | Alavanca, botão e placa de pressão | 558 |
 | `facing` dos módulos | Não vai para o save, como no nó | 559 |
 | `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
+| Cor do cabo no item | `redweave:cable_color`, com a chave da cor; o branco fica sem | 561 |
+| Receitas de tingir | Pelo datagen | 562 |
+| ID das receitas de tingir | `redweave:<cor>_signal_cable` | 563 |
+| Nome do cabo tingido | Com a cor; o branco é `Signal Cable`; as 16 na aba criativa | 564 |
 
 Não há perguntas pendentes da concepção.
 
@@ -543,6 +547,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564. |
 | Zennd | 2026-11-14 22:13 | Registra a decisão 560. |
 | Zennd | 2026-11-14 21:21 | Registra as decisões 549 a 559. |
 | Zennd | 2026-11-14 21:14 | Registra a decisão 548. |
