@@ -29,7 +29,7 @@ O nó lê quando é colocado, quando um vizinho muda e quando o chunk dele carre
 
 ## Emitir
 
-Um slot `Output` energiza com força só o bloco de apoio, qualquer que seja a face do slot, e o resto segue a redstone do jogo a partir desse bloco: uma lâmpada com um nó grudado acende, e o bloco de apoio liga o que encosta nele. Diferente de uma alavanca, o nó não manda sinal fraco para os vizinhos do espaço dele, então duas lâmpadas separadas por 1 bloco, com o nó entre elas, acendem só a do apoio (perguntas 71 e 262).
+Um slot `Output` energiza com força só o bloco de apoio, qualquer que seja a face do slot, e o resto segue a redstone do jogo a partir desse bloco: uma lâmpada com um nó grudado acende, e o bloco de apoio liga o que encosta nele. Diferente de uma alavanca, o nó não manda sinal fraco para os vizinhos do espaço dele, então duas lâmpadas separadas por 1 bloco, com o nó entre elas, acendem só a do apoio (perguntas 71 e 262). A exceção é o [Signal Cable](signal-cable.md) e o pó do jogo: um cabo ou um pó no espaço vizinho, na mesma face do nó, liga-se a ele, recebe o que ele emite e o alimenta como se fosse o bloco de apoio, como um cabo no mesmo espaço (perguntas 566 e 574).
 
 - O nó emite o mais forte entre as saídas dele (perguntas 39 e 71).
 - Um nó `Out of range`, `No network` ou numa rede `Offline` ou `Unplaced` emite 0.
@@ -86,6 +86,7 @@ A partir da #44, os estados abaixo viram campos da parte do multipart, com os me
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:07 | O nó troca sinal com o Signal Cable e o pó do jogo no espaço vizinho (pergunta 574). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco do nó para a parte (pergunta 534). |
 | Zennd | 2026-11-14 19:14 | Leva o nó ao multipart da #44 (perguntas 511, 513 e 523). |
 | Zennd | 2026-11-12 17:18 | Corrige o resumo com os canais inativos e aponta a Tela do Nó para `telas.md` (pergunta 226). |

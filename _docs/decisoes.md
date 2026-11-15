@@ -264,7 +264,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Open` do Terminal | A Tela do Controlador fica ancorada no Terminal | 259 |
 | Fechar a tela aberta pelo Terminal | Esc fecha tudo | 260 |
 | Contagem do topo do Terminal | Singular e plural | 261 |
-| Emissão do Signal Node | Só no bloco de apoio, com força; muda a 71 | 262 |
+| Emissão do Signal Node | Só no bloco de apoio, com força; muda a 71. Pelos lados, só com o Signal Cable e o pó do jogo (574) | 262 e 574 |
 | Onde entra a emissão nova | Na #80 | 263 |
 | `Clear log` | Limpa o log da rede, só o dono, com confirmação no segundo clique, na #80 | 264 a 266 |
 | Visor do Configurator | Só a cor do modo e o pixel da cópia; o nome na action bar e no tooltip | 267 e 271 |
@@ -549,6 +549,8 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Mira do cabo | Segue o desenho: o centro e os braços | 571 |
 | Curva externa e degrau do cabo | Como o pó: trecho na lateral no degrau, braços até a quina na curva | 572 |
 | Filete do cabo | No modelo do bloco, redesenhando a seção do chunk | 573 |
+| Nó e cabo no espaço vizinho | Trocam sinal como no mesmo espaço; muda a 262 só para o cabo e o pó | 574 |
+| Cabo encostando na placa vizinha | O braço passa 3 px da borda até a placa, só com troca de sinal | 575 |
 
 Não há perguntas pendentes da concepção.
 
@@ -556,6 +558,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:08 | Registra a decisão 575. |
+| Zennd | 2026-11-15 09:07 | Registra a decisão 574, que muda a 262. |
 | Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573. |
 | Zennd | 2026-11-15 08:27 | Registra a decisão 570. |
 | Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569. |

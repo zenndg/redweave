@@ -11,6 +11,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 575 | Como o Signal Cable encosta visualmente num Signal Node ou num Signal Module do espaço vizinho, cuja placa tem 10 × 10 px e deixa um vão de 3 px até a borda? | O braço do cabo passa 3 px da borda do espaço e encosta na placa, só quando há troca de sinal: com o nó, pela pergunta 574, e com o módulo, só pela borda de trás ou da frente (pergunta 566). A mira acompanha o braço (pergunta 571). Completa as perguntas 572 e 574 |
+| 574 | O Signal Node troca sinal pelos lados do espaço dele com um Signal Cable no espaço vizinho? | Sim, só com o Signal Cable e com o pó do jogo: um cabo ou um pó no espaço vizinho, na mesma face, liga-se ao nó, recebe o que ele emite e o alimenta como se fosse o bloco de apoio, como no mesmo espaço (pergunta 566). Para o resto do mundo, como lâmpadas e pistões, o nó continua energizando só o bloco de apoio, e os circuitos compactos seguem previsíveis. Muda a pergunta 262 |
 | 573 | Como o filete do sinal do Signal Cable é atualizado no cliente? | No modelo do bloco contêiner: cada mudança de força redesenha a seção do chunk, como o pó do jogo ao mudar de estado, e cabos parados não custam nada por quadro. Completa a pergunta 522 |
 | 572 | Como o Signal Cable desenha a curva externa e o degrau? | Como o pó do jogo: no degrau, o cabo de baixo desenha um trecho subindo a lateral do bloco; na curva externa, cada cabo estica o braço até a quina, e os dois se encontram ali. Completa a pergunta 495 |
 | 571 | Qual o contorno de mira do Signal Cable? | Segue o desenho do cabo: o centro de 4 × 3 e os braços ligados, para a mira ficar precisa com duas partes no mesmo espaço. Completa a pergunta 521 |
@@ -573,6 +575,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:08 | Registra a resposta 575. |
+| Zennd | 2026-11-15 09:07 | Registra a resposta 574, que muda a 262. |
 | Zennd | 2026-11-15 08:32 | Registra as respostas 571 a 573. |
 | Zennd | 2026-11-15 08:27 | Registra a resposta 570. |
 | Zennd | 2026-11-14 23:07 | Registra as respostas 567 a 569. |

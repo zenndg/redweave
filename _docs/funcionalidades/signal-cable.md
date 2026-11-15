@@ -38,6 +38,8 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Dono | Só com cabos do mesmo dono | 528 |
 | Pó do jogo | Um cabo de qualquer cor se liga ao pó de redstone do jogo como componente: lê o sinal dele e o alimenta. Um pó entre cabos de cores diferentes liga os dois, a critério do player. Na passagem entre o cabo e o pó, o sinal perde 1, como de pó para pó | 507 e 565 |
 | Partes do mesmo espaço | Liga-se ao nó ou ao módulo de outra face do mesmo espaço pela curva interna. O nó lê a força do cabo como se ele fosse o seu bloco de apoio, e o cabo lê o que o nó emite. O módulo só troca sinal com o cabo pela borda de trás ou da frente que apontar para a face do cabo | 514 e 566 |
+| Nó no espaço vizinho | Um cabo no espaço vizinho, na mesma face do nó, liga-se a ele como no mesmo espaço: recebe o que o nó emite e o alimenta como se fosse o bloco de apoio. O mesmo vale para o pó do jogo | 574 |
+| Encosto na placa vizinha | A placa do nó e a dos módulos tem 10 × 10 px. Quando há troca de sinal, o braço do cabo passa 3 px da borda do espaço e encosta nela; com o módulo, só pela borda de trás ou da frente. A mira acompanha o braço | 575 |
 
 ## Sinal
 
@@ -97,6 +99,8 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:08 | Registra a decisão 575, do encosto na placa vizinha. |
+| Zennd | 2026-11-15 09:07 | Registra a decisão 574, do nó no espaço vizinho. |
 | Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573, da mira, das curvas e do filete. |
 | Zennd | 2026-11-15 08:27 | Registra a decisão 570, da energia de outro cabo. |
 | Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569, do save, do cabo solto e dos componentes. |
