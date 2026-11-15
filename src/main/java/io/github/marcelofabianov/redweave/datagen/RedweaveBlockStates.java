@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
+import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
@@ -107,6 +108,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     detectorModels();
     randomizerModels();
     leverModels();
+    buttonModels();
   }
 
   /**
@@ -155,6 +157,24 @@ final class RedweaveBlockStates extends BlockStateProvider {
           plateModel(LeverPart.ID + look + TURNED_SUFFIX, front, true), parts, on, true);
     }
     itemModels().basicItem(RedweaveItems.SIGNAL_LEVER.get());
+  }
+
+  /**
+   * The Signal Button: its plate, released or pressed, with the 3D ring, push button and light over
+   * it, in two versions, with the top turned or not, as the other modules (429, 548 and 595).
+   */
+  private void buttonModels() {
+    ResourceLocation parts = modLoc(BLOCK_FOLDER + ButtonPart.ID + LEVER_PARTS);
+    ResourceLocation light = modLoc(BLOCK_FOLDER + LeverPart.ID + LEVER_PARTS);
+    for (String look : ButtonPart.LOOKS) {
+      ResourceLocation front = modLoc(BLOCK_FOLDER + ButtonPart.ID + NODE_FRONT + look);
+      boolean on = !look.isEmpty();
+      ButtonModels.addPieces(
+          plateModel(ButtonPart.ID + look, front, false), parts, light, on, false);
+      ButtonModels.addPieces(
+          plateModel(ButtonPart.ID + look + TURNED_SUFFIX, front, true), parts, light, on, true);
+    }
+    itemModels().basicItem(RedweaveItems.SIGNAL_BUTTON.get());
   }
 
   /**

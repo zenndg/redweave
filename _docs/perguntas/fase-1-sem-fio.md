@@ -11,6 +11,20 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 601 | Os itens do mod ficam na aba criativa para os testes? | Sim, sempre: todo item terminado fica disponível na aba criativa do Redweave, para os testes, mesmo antes de ter receita. Um GameTest confere que cada item registrado aparece na aba, e o `AGENTS.md` traz a regra |
+| 600 | O que o `Toggle` do Configurator mostra com o Signal Button já apertado? | `<nome>: Pressed`, como num aperto novo; o aperto em si não faz nada e o tempo não recomeça (pergunta 590) |
+| 599 | Como fica a mensagem `Pressed` do Signal Button em português? | `<nome>: Apertado`. Completa a pergunta 593 |
+| 598 | Como ficam os estados `On` e `Off` do Signal Button em português? | Em chaves próprias do botão, no masculino: `Ligado` e `Desligado`. O Signal Lever continua com `Ligada` e `Desligada` |
+| 597 | Qual o rótulo da linha do tempo ligado na tela do Signal Button? | `On time` em inglês e `Tempo ligado` em português |
+| 596 | As respostas 556, com o tempo ligado no `Interval` comum, e 592, com o mínimo de 2 ticks, conflitam, porque o `Interval` não aceita menos de 4 ticks. Como fica? | O botão tem um `ButtonTime` próprio, com mínimo de 2 ticks, que usa a mesma regra de ajuste à faixa do `Interval` (`Interval.clamped` e `Interval.fitting`), sem repetir o conhecimento. O Signal Timer e o Signal Randomizer não mudam. Muda a pergunta 556 (regra 38) |
+| 595 | Como o Signal Button mostra que está apertado, e o que diz o rótulo? | A peça do botão afunda 1 px quando apertado e a luz fica verde. O rótulo mostra `On` ou `Off` e o canal da saída, como o Signal Lever (pergunta 582) |
+| 594 | Flechas e outras entidades apertam o Signal Button, como o botão de madeira do jogo? | Não: só o clique do dono e o `Toggle` do Configurator apertam, sem apertos fora do controle do dono (regra 17) |
+| 593 | Que mensagem o `Toggle` do Configurator mostra ao apertar o Signal Button? | `<nome>: Pressed`. O clique à mão não mostra nada (perguntas 585 e 588) |
+| 592 | Quais limites do tempo ligado do Signal Button ficam no config? | `button.min_interval_ticks`, com 2 ticks, de 2 a 200, e `button.max_interval_ticks`, com 6000 ticks, de 200 a 72000, no padrão do Signal Timer (regra 3). O padrão do botão continua 20 ticks, 1 s (pergunta 556) |
+| 591 | Quais chaves do NBT da parte o Signal Button usa? | `on`, um booleano; `strength`, de 1 a 15; `interval`, o tempo ligado em ticks; e `remaining`, os ticks que faltam, para o botão voltar de onde parou ao recarregar. Ficam fixados na #26 (regra 15) |
+| 590 | O que acontece ao apertar o Signal Button de novo enquanto ele está ligado? | Nada, como o botão do jogo: o clique é ignorado e o tempo não recomeça |
+| 589 | Qual som o Signal Button faz? | O do botão de pedra do jogo: `STONE_BUTTON_CLICK_ON` ao apertar e `STONE_BUTTON_CLICK_OFF` ao voltar |
+| 588 | As decisões do Signal Lever valem para o Signal Button? | Sim, todas: a mão vazia ou qualquer item que não seja o Configurator aperta (576), só o dono (577), funciona com a rede `Offline` (578), a luz mostra o estado (581), a força na chave `strength` (584), a mensagem só no `Toggle` (585), a saída no tick seguinte (587) e os testes nas três fronteiras (583) |
 | 587 | A saída do Signal Lever acompanha o clique no tick seguinte, pelo tick comum dos módulos. Fica assim? | Sim: a saída muda no tick seguinte ao clique (1/20 s), pelo caminho único dos módulos (regra 18). Num circuito muito preciso, dá 1 tick a mais que a alavanca do jogo |
 | 586 | Os modelos de bloco só giram em 0, ±22,5 e ±45 graus. Qual inclinação o cabo do Signal Lever usa? | 22,5°, o mais perto dos 30° do prompt de arte, com o pomo dentro da placa: para a frente ligada e para trás desligada. O impedimento técnico muda o prompt de arte (regra 38) |
 | 585 | Que mensagem o Signal Lever mostra na action bar ao mudar de estado? | Só no `Toggle` do Configurator: `<nome>: On` ou `<nome>: Off`, como o `<nome>: Running` do Signal Timer. O clique à mão não mostra nada: o som e a luz bastam, como na alavanca do jogo |
@@ -587,6 +601,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:03 | Registra a resposta 601, da aba criativa. |
+| Zennd | 2026-11-15 13:59 | Registra as respostas 596 a 600, do Signal Button. |
+| Zennd | 2026-11-15 13:42 | Registra as respostas 588 a 595, do Signal Button. |
 | Zennd | 2026-11-15 12:27 | Registra as respostas 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as respostas 576 a 583, do Signal Lever. |
 | Zennd | 2026-11-15 09:08 | Registra a resposta 575. |

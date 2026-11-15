@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.client;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
@@ -12,6 +13,7 @@ import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
+import io.github.marcelofabianov.redweave.client.screen.ButtonScreen;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
@@ -71,6 +73,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.DETECTOR.get(), DetectorScreen::new);
     event.register(RedweaveMenus.RANDOMIZER.get(), RandomizerScreen::new);
     event.register(RedweaveMenus.LEVER.get(), LeverScreen::new);
+    event.register(RedweaveMenus.BUTTON.get(), ButtonScreen::new);
   }
 
   @SubscribeEvent
@@ -99,7 +102,8 @@ public final class RedweaveClient {
             ModulePart.models(InverterPart.ID, InverterPart.LOOKS),
             ModulePart.models(DetectorPart.ID, DetectorPart.LOOKS),
             ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS),
-            ModulePart.models(LeverPart.ID, LeverPart.LOOKS))
+            ModulePart.models(LeverPart.ID, LeverPart.LOOKS),
+            ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }

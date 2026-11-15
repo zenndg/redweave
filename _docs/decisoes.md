@@ -563,6 +563,18 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Mensagem da alavanca | Só no `Toggle`: `<nome>: On` ou `<nome>: Off` | 585 |
 | Inclinação do cabo da alavanca | 22,5° | 586 |
 | Saída da alavanca | No tick seguinte ao clique | 587 |
+| Botão e as decisões da alavanca | Valem todas: 576 a 578, 581, 583 a 585 e 587 | 588 |
+| Som do botão | O do botão de pedra do jogo | 589 |
+| Apertar o botão ligado | Nada; o tempo não recomeça | 590 |
+| NBT do botão | `on`, `strength`, `interval` e `remaining` | 591 |
+| Tempo ligado do botão no config | `button.min_interval_ticks` 2 e `button.max_interval_ticks` 6000 | 592 |
+| Mensagem do botão | `<nome>: Pressed`, só no `Toggle` | 593 |
+| Entidades no botão | Não apertam; só o player | 594 |
+| Visual do botão | Afunda 1 px, luz verde; rótulo `On` ou `Off` | 595 |
+| Tempo ligado do botão | `ButtonTime` próprio, mínimo de 2 ticks, com o ajuste do `Interval`; muda a 556 | 596 |
+| Textos do botão | `On time`/`Tempo ligado`, `Ligado`/`Desligado` e `<nome>: Apertado` | 597 a 599 |
+| `Toggle` no botão apertado | Mostra `<nome>: Pressed`; o aperto não faz nada | 600 |
+| Aba criativa | Todo item terminado fica nela, para os testes, mesmo sem receita; um GameTest confere | 601 |
 
 Não há perguntas pendentes da concepção.
 
@@ -570,6 +582,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:03 | Registra a decisão 601, da aba criativa. |
+| Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do Signal Button. |
+| Zennd | 2026-11-15 13:42 | Registra as decisões 588 a 595, do Signal Button. |
 | Zennd | 2026-11-15 12:27 | Registra as decisões 584 a 587, do Signal Lever. |
 | Zennd | 2026-11-15 11:47 | Registra as decisões 576 a 583, do Signal Lever. |
 | Zennd | 2026-11-15 09:35 | Atualiza os resumos do nó e do Signal Timer mudados pelo multipart e pela 574 (perguntas 534 e 574). |

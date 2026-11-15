@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, e o Signal Lever, da #130 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, e o Signal Button, da #131 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -79,7 +79,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `ModuleLimits` | Em `module/`: o tamanho do nome de um módulo, `module.name_length`. O domínio define a interface, e o config a implementa (pergunta 391) | #103 |
 | `ModuleOutputs` | O que cada módulo que conta escreveu num canal na última olhada, para o log saber o que mudou. Um módulo que sai ligado volta a 0, trocar de canal desliga o antigo e liga o novo, e a primeira olhada só aprende (perguntas 244, 392, 396 e 424) | #103 |
 | `Connection` | Em `module/`: uma entrada ou saída de um módulo, a borda (`EDGE`) ou um canal (`on`), nunca os dois. A `key` é `edge` ou a chave da cor, e `fromKey` devolve vazio para uma chave desconhecida (perguntas 376, 411 e 420) | #103 |
-| `Interval` | Em `module/`: o intervalo de um módulo que conta sozinho, como o Signal Timer e o Signal Randomizer, em ticks inteiros. `within` limita à faixa do config em vez de recusar, nunca abaixo de 4 ticks, e `fittedTo` ajusta um intervalo salvo à faixa nova (perguntas 384, 425 e 490) | #109 |
+| `Interval` | Em `module/`: o intervalo de um módulo que conta sozinho, como o Signal Timer e o Signal Randomizer, em ticks inteiros. `within` limita à faixa do config em vez de recusar, nunca abaixo de 4 ticks, e `fittedTo` ajusta um intervalo salvo à faixa nova. A regra de ajuste, com o piso como parâmetro, é a mesma do tempo ligado do Signal Button (perguntas 384, 425, 490 e 596) | #109 |
 | `IntervalLimits` | Em `module/`: o menor e o maior intervalo do config. O `TimerLimits` a estende, e cada módulo tem as suas chaves (perguntas 384 e 477) | #109 |
 | `TimerCycle` | Em `module/`: o intervalo e o pulso do Signal Timer, em ticks. O pulso tem 2 ticks ou mais e deixa 2 desligados. O intervalo segue a regra do `Interval`; `withPulse` limita à faixa em vez de recusar, e `fittedTo` ajusta um ciclo salvo à faixa nova (perguntas 379, 384, 409, 425 e 490) | #103 |
 | `TimerLimits` | Em `module/`: o menor e o maior intervalo do config. O domínio define a interface, e o config a implementa (pergunta 384) | #103 |
@@ -98,6 +98,9 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
 | `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
 | `SignalLever` | Em `module/`: a regra do Signal Lever, ligado ou desligado pelo player, com a força de 1 a 15, 15 ao ser colocado. A saída é a força ligado e 0 desligado. Não tem tick próprio: só o player o muda, e o `ChangeLever`, em `application/`, só aceita o dono (perguntas 552, 576, 577 e 579) | #130 |
+| `SignalButton` | Em `module/`: a regra do Signal Button. Apertado, liga com a força de 1 a 15 durante o tempo ligado e desliga sozinho no último tick; apertar de novo ligado não muda nada. Guarda os ticks que faltam, para um recarregamento continuar de onde parou. O `ChangeButton`, em `application/`, só aceita o dono (perguntas 552, 556, 588, 590 e 591) | #131 |
+| `ButtonTime` | Em `module/`: o tempo ligado do Signal Button, em ticks inteiros, 1 s ao ser colocado. Segue a regra de ajuste do `Interval`, com o piso de 2 ticks, um passo da tela, em vez dos 4 do timer (perguntas 556, 592 e 596) | #131 |
+| `ButtonLimits` | Em `module/`: os limites do tempo ligado do Signal Button no config, `button.min_interval_ticks` e `button.max_interval_ticks`, separados dos do timer. O domínio define, e o `config/` implementa (pergunta 592) | #131 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 | `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
 | `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |
@@ -172,7 +175,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Clima vem de quem chama:** o domínio não lê o jogo, então o bloco passa o `Weather` a cada tick, e o detector não guarda nada além do modo. Por isso o clima não vai para o save (perguntas 467 e 468).
 - **Sem clima é 0 em todo modo:** onde o clima nunca muda, como no Nether, o `Clear` ficaria ligado para sempre, então `NONE` desliga todos os modos e tem um estado próprio (pergunta 464).
 - **Sorteio vem de quem chama:** o domínio não lê aleatoriedade, que seria uma dependência oculta, então o `Draws` é uma porta, e os testes sabem cada valor sorteado (pergunta 483).
-- **Intervalo num lugar só:** o timer e o Signal Randomizer ajustam o intervalo pela mesma regra, o `Interval`, cada um com os limites do seu config (perguntas 477 e 490).
+- **Intervalo num lugar só:** o timer e o Signal Randomizer ajustam o intervalo pela mesma regra, o `Interval`, cada um com os limites do seu config, e o tempo ligado do Signal Button usa a mesma regra, com o piso de 2 ticks (perguntas 477, 490 e 596).
 - **Face ocupada primeiro:** numa face já ocupada, a recusa é `FACE_TAKEN` mesmo com os 2 cabos no espaço, porque é a face que o player mirou que explica o clique recusado (pergunta 533).
 - **Ocupação no domínio:** o espaço só sabe o tipo de cada face. O que cada parte é e faz fica no adaptador e nas regras de cada uma, e o contêiner consulta o `PartSpace` antes de colocar (perguntas 512 e 538).
 - **Trecho num passo só:** o pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O `CableRun` dá o mesmo resultado de uma vez: espalha a força da maior entrada para baixo, e cada pedaço fica com o seu melhor valor uma vez só (pergunta 509).
