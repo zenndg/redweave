@@ -532,7 +532,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Indicador | Uma luz que troca de vermelho para verde, a mesma nos três | 554 |
 | Dono, rede e `Toggle` | Iguais aos módulos | 555 |
 | Tempo do botão | Ajustável na tela, padrão 1 s | 556 |
-| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players` | 557 |
+| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players`; mudado pela 621 | 557 |
 | Ordem | Alavanca, botão e placa de pressão | 558 |
 | `facing` dos módulos | Não vai para o save, como no nó | 559 |
 | `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
@@ -603,6 +603,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:10 | Marca a detecção da placa (557) como mudada pela 621. |
 | Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, da placa de pressão. |
 | Zennd | 2026-11-15 14:49 | Registra as decisões 621 a 623, dos modos da placa de pressão. |
 | Zennd | 2026-11-15 14:37 | Atualiza os resumos do giro e dos modos mudados pela #136 (perguntas 399, 403, 431 e 241). |

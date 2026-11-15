@@ -114,7 +114,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 12. [x] Signal Lever: a 3D lever with an indicator light that turns from red to green, used by its owner by hand or with the Configurator, and a screen to set its strength from 1 to 15 and send its signal wireless, on a network channel, or by redstone (#130 · questions 548 to 558 and 576 to 587)
 13. [x] Signal Button: the same idea as the lever, pressed by its owner by hand or with the Configurator, that turns off by itself after an on time set on its screen with its strength from 1 to 15 (#131 · questions 548 to 558 and 588 to 600)
 14. [x] Configurator `Rotate` mode: turns the Signal Modules clockwise, or back with Shift, in place of Shift + click in Open (#136 · questions 610 and 612 to 620)
-15. [ ] Signal Pressure Plate: the same idea as the lever, on while something stands on it (#132 · questions 548 to 558 and 602 to 611)
+15. [ ] Signal Pressure Plate: the same idea as the lever, on the floor only, on while something of its mode stands on it (players, passive mobs, hostile mobs or items), with the mode and its strength from 1 to 15 on its screen (#132 · questions 548 to 558, 602 to 611 and 621 to 626)
 16. [ ] Memory module, a T flip-flop (#110)
 17. [ ] Latch module, an SR latch (#111)
 18. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)
