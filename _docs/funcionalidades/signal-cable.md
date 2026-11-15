@@ -25,6 +25,8 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Curvas | Contorna os blocos (curva externa) e passa para outra face do mesmo espaço (curva interna), com a ligação perfeita entre os pedaços, mesmo em degraus | 495 |
 | No mesmo espaço | Até 2 cabos, cada um numa face diferente, de qualquer cor. Da mesma cor e em faces vizinhas, fazem a curva interna e se ligam | 498 e 504 |
 | Colisão | Nenhuma | 517 |
+| Mira | O contorno segue o desenho do cabo: o centro de 4 × 3 e os braços ligados | 571 |
+| Desenho das curvas | Como o pó do jogo: no degrau, o cabo de baixo desenha um trecho subindo a lateral do bloco; na curva externa, cada cabo estica o braço até a quina, e os dois se encontram ali | 572 |
 
 ## Ligação
 
@@ -76,7 +78,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Cor | Uma textura em tons de cinza, gerada por IA, que o jogo tinge com a cor do cabo no mundo e no item, como as folhas e a grama. As bordas do topo são claras, para a cor aparecer viva de cima, ao lado do filete | 518, 535 |
-| Sinal | Um filete no topo do cabo, por cima do isolamento colorido, que vai do vermelho escuro (0) ao vermelho vivo (15), como o pó do jogo, sem mudar a cor do isolamento (princípio 1 de [`ux.md`](../conceito/ux.md)) | 522 |
+| Sinal | Um filete no topo do cabo, por cima do isolamento colorido, que vai do vermelho escuro (0) ao vermelho vivo (15), como o pó do jogo, sem mudar a cor do isolamento (princípio 1 de [`ux.md`](../conceito/ux.md)). Fica no modelo do bloco: cada mudança de força redesenha a seção do chunk, como o pó do jogo | 522 e 573 |
 | Arte | Em `tmp/arte/signal_cable/`: o agente escreve o `prompt.md`, o desenvolvedor gera as imagens, e o agente as confere (perguntas 185 e 186) | 518 |
 
 ## Testes
@@ -95,6 +97,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573, da mira, das curvas e do filete. |
 | Zennd | 2026-11-15 08:27 | Registra a decisão 570, da energia de outro cabo. |
 | Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569, do save, do cabo solto e dos componentes. |
 | Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566, do pó do jogo e da curva interna com o nó e os módulos. |

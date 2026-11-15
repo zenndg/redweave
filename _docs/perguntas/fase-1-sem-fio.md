@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 573 | Como o filete do sinal do Signal Cable é atualizado no cliente? | No modelo do bloco contêiner: cada mudança de força redesenha a seção do chunk, como o pó do jogo ao mudar de estado, e cabos parados não custam nada por quadro. Completa a pergunta 522 |
+| 572 | Como o Signal Cable desenha a curva externa e o degrau? | Como o pó do jogo: no degrau, o cabo de baixo desenha um trecho subindo a lateral do bloco; na curva externa, cada cabo estica o braço até a quina, e os dois se encontram ali. Completa a pergunta 495 |
+| 571 | Qual o contorno de mira do Signal Cable? | Segue o desenho do cabo: o centro de 4 × 3 e os braços ligados, para a mira ficar precisa com duas partes no mesmo espaço. Completa a pergunta 521 |
 | 570 | Um Signal Cable lê a energia que outro cabo põe num bloco, como um cabo de outra cor ou de outro dono que energiza o bloco de apoio? | Não. Como o pó do jogo, que ignora blocos energizados por pó, o cabo ignora a energia vinda de outro cabo, de qualquer cor ou dono, o que evita a realimentação entre trechos. Nós, módulos e o pó continuam lendo o cabo (pergunta 531) |
 | 569 | Com quais componentes o Signal Cable se liga, virando a ponta para eles? | Os mesmos do pó do jogo: tudo o que é fonte de sinal ou aceita redstone, como a alavanca, o botão, o repetidor, o comparador, o Signal Node e os Signal Modules, além dos cabos da mesma cor e dono e do pó. Completa as perguntas 496 e 508 |
 | 568 | Um Signal Cable sozinho, sem nenhuma ligação, energiza o quê? | Como o pó do jogo em cruz: o bloco de apoio e os 4 vizinhos em volta, na face. Completa a pergunta 508 |
@@ -570,6 +573,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 08:32 | Registra as respostas 571 a 573. |
 | Zennd | 2026-11-15 08:27 | Registra a resposta 570. |
 | Zennd | 2026-11-14 23:07 | Registra as respostas 567 a 569. |
 | Zennd | 2026-11-14 23:01 | Registra as respostas 565 e 566. |

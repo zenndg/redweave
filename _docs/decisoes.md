@@ -546,6 +546,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cabo solto | Energiza como o pó em cruz | 568 |
 | Componentes do cabo | Os mesmos do pó do jogo | 569 |
 | Cabo e energia de outro cabo | Ignora, como o pó do jogo, de qualquer cor ou dono | 570 |
+| Mira do cabo | Segue o desenho: o centro e os braços | 571 |
+| Curva externa e degrau do cabo | Como o pó: trecho na lateral no degrau, braços até a quina na curva | 572 |
+| Filete do cabo | No modelo do bloco, redesenhando a seção do chunk | 573 |
 
 Não há perguntas pendentes da concepção.
 
@@ -553,6 +556,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573. |
 | Zennd | 2026-11-15 08:27 | Registra a decisão 570. |
 | Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569. |
 | Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566. |
