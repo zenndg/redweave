@@ -17,6 +17,19 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy
 | `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
+### Modo `Rotate`, na #136
+
+O giro dos Signal Modules sai do Shift + clique no `Open` e ganha um modo próprio (perguntas 610 e 613 a 620):
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Nome e cor | `Rotate`, `Girar` em português, em roxo `#9B6BF0`, com o valor `rotate` no data component do modo | 613 e 615 |
+| Ordem | `Open`, `Rotate`, `Copy`, `Toggle` e `Wrench` no Shift + scroll | 614 |
+| Num Signal Module | O clique gira a placa 90° no sentido horário e o Shift + clique, no anti-horário, olhando-a de frente, com `Output: <borda>` e o clique do comparador. Só o dono gira, e o giro funciona com a rede `Offline` | 616 e 619 |
+| Num nó ou num cabo | Nada, com `Only modules can be turned.` | 617 |
+| `Open` com Shift num módulo | Nada; o `Open` só abre a tela | 618 |
+| Tooltip | `Click to turn a module, Shift + click to turn it back.` | 619 |
+
 Num Signal Module, o `Open` abre a tela e, com Shift, gira a placa 90°, até a #136 levar o giro a um modo próprio (pergunta 610); o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer ligar e desligar o [Signal Lever](alavanca.md), com `<nome>: On` ou `<nome>: Off`, ou apertar o [Signal Button](botao.md), com `<nome>: Pressed`, mesmo com ele já apertado; o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. No Signal Lever e no Signal Button, o `Toggle` funciona mesmo com a rede `Offline` (perguntas 578, 588, 593 e 600). O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
 
 Num [Signal Cable](signal-cable.md), o `Wrench` o retira, e `Open`, `Copy` e `Toggle` não fazem nada, porque o cabo não tem tela nem estado (pergunta 525). Num espaço com várias partes, o clique vale só para a parte sob a mira (pergunta 515).
@@ -128,6 +141,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:30 | Descreve o modo Rotate da #136 (perguntas 613 a 620). |
 | Zennd | 2026-11-15 14:26 | O giro dos módulos vai para um modo próprio na #136 (pergunta 610). |
 | Zennd | 2026-11-15 14:04 | Leva o `Toggle` e o rótulo ao Signal Button, com a rede `Offline` e o botão já apertado (perguntas 588, 593, 595 e 600). |
 | Zennd | 2026-11-15 13:16 | Leva o `Toggle` e o rótulo ao Signal Lever, com a rede `Offline` (perguntas 578, 582 e 585). |

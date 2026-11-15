@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 620 | Em que fronteiras entram os testes da #136? | GameTests: girar nos dois sentidos, o dono, a mensagem no nó e no cabo, o `Open` com Shift sem efeito num módulo e a ordem dos modos. Roteiro manual: a cor do visor, o tooltip e a tradução. Sem regra nova no domínio |
+| 619 | As regras do giro de hoje continuam no modo `Rotate`? | Sim: só o dono gira (pergunta 403), o giro funciona com a rede `Offline` (pergunta 431) e a mensagem continua `Output: <borda>`, com o clique do comparador (pergunta 432). A dica do tooltip passa a `Click to turn a module, Shift + click to turn it back.` |
+| 618 | O que o Shift + clique no `Open` faz num Signal Module depois da #136? | Nada: o `Open` só abre a tela com o clique simples. Muda a pergunta 399 |
+| 617 | O que o modo `Rotate` faz num Signal Node, num Signal Cable ou em outro bloco? | Num nó ou num cabo, não faz nada e mostra `Only modules can be turned.` (`Só os módulos giram.`) na action bar. Num bloco qualquer, não faz nada, como os outros modos |
+| 616 | O que o clique e o Shift + clique fazem num Signal Module no modo `Rotate`? | O clique gira a placa 90° no sentido horário e o Shift + clique, 90° no anti-horário, olhando-a de frente. Muda a pergunta 399 |
+| 615 | Qual a cor do modo `Rotate`? | Roxo, `#9B6BF0`, no visor, no tooltip e nas mensagens, diferente do azul do `Open`, do verde do `Copy`, do âmbar do `Toggle` e do vermelho do `Wrench` |
+| 614 | Em que posição o modo `Rotate` entra no Shift + scroll? | Depois do `Open`, perto de onde o giro saiu: `Open`, `Rotate`, `Copy`, `Toggle` e `Wrench`. Muda a pergunta 241 |
+| 613 | Qual o nome do modo novo do Configurator para girar os Signal Modules? | `Rotate` em inglês e `Girar` em português, com o valor `rotate` no data component do modo, que só soma aos valores de hoje, sem migração (regra 15). Completa a pergunta 610 |
 | 612 | Em que ponto do roadmap entra a #136, o modo de girar do Configurator? | Antes da #132: a #136 vira o passo 14, e a placa de pressão, o passo 15, já nasce com o modo novo |
 | 611 | O que acontece ao tentar colocar o Signal Pressure Plate numa parede ou no teto? | A placa não é colocada, o item fica na mão, e a action bar mostra `The Signal Pressure Plate only goes on the floor.`, em inglês e em português, como as recusas do multipart (pergunta 533). Completa a pergunta 551 |
 | 610 | Como o player gira um Signal Module, e o giro ganha um modo próprio no Configurator? | O giro sai do Shift + clique no `Open`, que passa a só abrir a tela, e ganha um modo próprio no Configurator, na #136. O nome, a ordem, a cor, o clique, o save e o que o modo faz no nó e no cabo ficam para o refinamento da #136. Muda as perguntas 399 e 403 |
@@ -612,6 +620,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:30 | Registra as respostas 613 a 620, do modo Rotate do Configurator. |
 | Zennd | 2026-11-15 14:25 | Registra as respostas 602 a 612, do Signal Pressure Plate e do modo de girar. |
 | Zennd | 2026-11-15 14:03 | Registra a resposta 601, da aba criativa. |
 | Zennd | 2026-11-15 13:59 | Registra as respostas 596 a 600, do Signal Button. |

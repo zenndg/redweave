@@ -586,6 +586,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Giro dos módulos | Sai do Shift + `Open` e ganha um modo próprio na #136; muda a 399 e a 403 | 610 |
 | Placa fora do chão | Recusada com mensagem | 611 |
 | Ordem da #136 | Antes da #132, no passo 14 | 612 |
+| Modo de girar | `Rotate` (`Girar`), valor `rotate`, roxo `#9B6BF0`, depois do `Open` | 613 a 615 |
+| Clique no `Rotate` | Horário; com Shift, anti-horário | 616 |
+| `Rotate` fora dos módulos | `Only modules can be turned.` no nó e no cabo | 617 |
+| Shift + `Open` num módulo | Nada; muda a 399 | 618 |
+| Regras do giro | Continuam: dono, `Offline` e `Output: <borda>` | 619 |
+| Testes da #136 | GameTests e roteiro manual | 620 |
 
 Não há perguntas pendentes da concepção.
 
@@ -593,6 +599,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:30 | Registra as decisões 613 a 620, do modo Rotate. |
 | Zennd | 2026-11-15 14:25 | Registra as decisões 602 a 612. |
 | Zennd | 2026-11-15 14:03 | Registra a decisão 601, da aba criativa. |
 | Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do Signal Button. |
