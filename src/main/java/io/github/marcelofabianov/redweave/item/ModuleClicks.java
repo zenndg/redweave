@@ -22,7 +22,8 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * What the Configurator does on a Signal Module on the server, each action giving its message, if
- * any (modulos-de-sinal.md). Only the owner turns, toggles and picks it up (answers 378 and 421).
+ * any (modulos-de-sinal.md). Only the owner turns, toggles and picks it up (answers 378, 421 and
+ * 619); the Open only opens the screen, and the Rotate turns the plate (answers 616 and 618).
  */
 final class ModuleClicks {
   private static final boolean NOT_THROWN = false;
@@ -39,8 +40,9 @@ final class ModuleClicks {
     return switch (mode) {
       case OPEN ->
           player.isSecondaryUseActive()
-              ? owned(player, part, () -> turn(part))
+              ? Optional.empty()
               : unlessOffline(server, space, part, () -> open(player, part));
+      case ROTATE -> owned(player, part, () -> turn(part, player.isSecondaryUseActive()));
       case COPY -> message(ModuleMessages.NOT_COPIED);
       case TOGGLE ->
           part.togglesOffline()
@@ -67,8 +69,8 @@ final class ModuleClicks {
   }
 
   /**
-   * A network turned off takes no Open and no Toggle; the turn and the Wrench still work, as they
-   * do not touch it (answers 402 and 431).
+   * A network turned off takes no Open and no Toggle; the Rotate and the Wrench still work, as they
+   * do not touch it (answers 402, 431 and 619).
    */
   private static Optional<Component> offline(
       RedweaveServer server, PartSpaceBlockEntity space, ModulePart part) {
@@ -95,8 +97,9 @@ final class ModuleClicks {
     return Optional.empty();
   }
 
-  private static Optional<Component> turn(ModulePart part) {
-    Direction front = part.turn();
+  /** Clockwise, or counterclockwise with Shift, seen from the front (answers 616 and 618). */
+  private static Optional<Component> turn(ModulePart part, boolean back) {
+    Direction front = part.turn(back);
     Component edge = Component.translatable(NodeScreenTexts.face(Faces.of(front)));
     return Optional.of(Component.translatable(ModuleMessages.OUTPUT, edge));
   }

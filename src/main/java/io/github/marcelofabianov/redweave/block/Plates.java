@@ -28,7 +28,15 @@ public final class Plates {
    * of the front and the face it sticks on (answer 403).
    */
   public static Direction clockwise(Direction facing, Direction front) {
-    Vec3i turned = front.getNormal().cross(facing.getNormal());
+    return across(front.getNormal().cross(facing.getNormal()));
+  }
+
+  /** The front of a plate turned 90° counterclockwise, seen from its front (answer 616). */
+  public static Direction counterclockwise(Direction facing, Direction front) {
+    return across(facing.getNormal().cross(front.getNormal()));
+  }
+
+  private static Direction across(Vec3i turned) {
     return Direction.fromDelta(turned.getX(), turned.getY(), turned.getZ());
   }
 }

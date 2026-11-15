@@ -41,6 +41,9 @@ final class ConfiguratorActions {
       PartSpot spot,
       NodePart block,
       ConfiguratorMode mode) {
+    if (mode == ConfiguratorMode.ROTATE) {
+      return Optional.of(Component.translatable(ConfiguratorMessages.ONLY_MODULES));
+    }
     Optional<Network> offline =
         block.node().flatMap(server::networkOfNode).filter(ConfiguratorActions::isOff);
     if (offline.isPresent() && mode != ConfiguratorMode.WRENCH) {
@@ -48,6 +51,7 @@ final class ConfiguratorActions {
     }
     return switch (mode) {
       case OPEN -> open(player, spot);
+      case ROTATE -> Optional.empty();
       case COPY -> copyOrPaste(server, player, context, spot, block);
       case TOGGLE -> toggle(server, player, context, spot, block);
       case WRENCH -> pickUp(server, player, context.getLevel(), spot, block);

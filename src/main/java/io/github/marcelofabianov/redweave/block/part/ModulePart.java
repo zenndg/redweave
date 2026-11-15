@@ -314,15 +314,16 @@ public abstract class ModulePart
   }
 
   /**
-   * Turns the plate 90° clockwise, seen from its front, with the click of a comparator (answers
-   * 399, 403 and 432). The old front loses the signal at once, and the next tick feeds the new one.
+   * Turns the plate 90° clockwise, or counterclockwise when `back`, seen from its front, with the
+   * click of a comparator (answers 403, 432 and 616). The old front loses the signal at once, and
+   * the next tick feeds the new one.
    */
-  public Direction turn() {
+  public Direction turn(boolean back) {
     Level level = level().orElseThrow();
     BlockPos pos = spot().pos();
     emitted = 0;
     wakeOutputs(level, pos);
-    front = Plates.clockwise(facing(), front);
+    front = back ? Plates.counterclockwise(facing(), front) : Plates.clockwise(facing(), front);
     host.ifPresent(space -> space.wakeOthers(this));
     changed();
     level.playSound(null, pos, SoundEvents.COMPARATOR_CLICK, SoundSource.BLOCKS);

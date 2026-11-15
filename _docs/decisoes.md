@@ -144,7 +144,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Abrir a Tela do Nó | Pelo Configurator, no modo `Open` | 140 |
 | Trocar de rede | Pelo nome da rede na Tela do Nó | 141 |
 | Nome padrão | Os 8 primeiros caracteres do ID, no nó e na rede | 142 |
-| Modos do Configurator | `Open`, `Copy`, `Toggle` e `Wrench`, trocados com Shift + scroll | 143, 161, 164, 241 |
+| Modos do Configurator | `Open`, `Copy`, `Toggle` e `Wrench`, trocados com Shift + scroll; desde a #136, `Open`, `Rotate`, `Copy`, `Toggle` e `Wrench` (614) | 143, 161, 164, 241, 614 |
 | Nome do nó | Renomeado na Tela do Nó e na lista do controlador; `node.name_length` | 144 |
 | Limite de redes | `network.max_per_player`, 10, conferido ao colocar o controlador | 145 |
 | Nome do estado sem controlador | `Unplaced`, `Não colocada` | 146 |
@@ -376,11 +376,11 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Linha do módulo no log | Como a saída de um nó, com o nome do módulo; o `Pause` lido não entra | 396 |
 | Rede do módulo | Uma por módulo; cada conexão em canal escolhe um dos 16 canais dela | 397, 420 |
 | Ajuste do intervalo e do pulso | Só `−` e `+`: 0,1 s no clique, 1 s com Shift | 398 |
-| Rotação do módulo | Pela direção do player ao colocar; Shift + clique com o Configurator no `Open` gira 90° | 399 |
+| Rotação do módulo | Pela direção do player ao colocar; Shift + clique com o Configurator no `Open` gira 90°; desde a #136, o modo `Rotate` gira e o Shift + `Open` não faz nada (610, 616 e 618) | 399 |
 | Rede e canal na tela do módulo | Escolha de rede e grade de 16 cores da Tela do Nó; seletor `Edge` ou `Channel` por conexão | 400, 420 |
 | Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco, desde a #44 por campos da parte (534); animação só na tela | 401 e 534 |
 | Módulo numa rede `Offline` | Como o nó: `Open` e `Toggle` não agem, `Wrench` sim | 402 |
-| Giro da placa | 90° no sentido horário, com som e `Output: <borda>` na action bar | 403 |
+| Giro da placa | 90° no sentido horário, com som e `Output: <borda>` na action bar; desde a #136, também no anti-horário, com Shift no `Rotate` (616) | 403 |
 | Tela do Signal Timer | Relógio com anel e botão à esquerda; intervalo, pulso e conexões à direita; rede e cadeado no rodapé; prancha por IA | 404, 420 |
 | PR da #103 | Um só, com commits atômicos | 405 |
 | Testes da #103 | JUnit do ciclo, da parte nova e dos casos de uso; GameTests do mundo; roteiro manual | 406 |
@@ -408,7 +408,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Rotação no estado do bloco | `front`, a direção real da frente, com 6 valores, no lugar de `rotation` | 428 |
 | Modelo da placa nas 24 orientações | Duas versões de cada modelo, com o topo girado 0° ou 90° no UV, mais o `x` e o `y` do blockstate | 429 |
 | Dicas do Configurator com os módulos | `Open`, `Toggle` e `Wrench` citam nós e módulos; o `Copy` fica igual | 430 |
-| Giro do módulo numa rede `Offline` | A placa gira; só a tela e o `Toggle` ficam bloqueados | 431 |
+| Giro do módulo numa rede `Offline` | A placa gira, com o `Rotate` desde a #136 (619); só a tela e o `Toggle` ficam bloqueados | 431 |
 | Som do giro do módulo | O clique do comparador, no mundo | 432 |
 | Estados do timer em português | `Rodando`, `Parado` e `Pausado`; em minúsculas na action bar | 433 |
 | Relógio da Tela do Signal Timer | Mostrador em sprite gerado por IA; anel de progresso e arco do pulso em código | 434 |
@@ -575,6 +575,23 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Textos do botão | `On time`/`Tempo ligado`, `Ligado`/`Desligado` e `<nome>: Apertado` | 597 a 599 |
 | `Toggle` no botão apertado | Mostra `<nome>: Pressed`; o aperto não faz nada | 600 |
 | Aba criativa | Todo item terminado fica nela, para os testes, mesmo sem receita; um GameTest confere | 601 |
+| Modos da placa de pressão | `Mobs`, `Players` e `Items`, um por vez; muda a 557 | 602 |
+| `Toggle` da placa | Troca o modo | 603 |
+| Modo padrão da placa | `Players` | 604 |
+| O que conta na placa | Mobs vivos sem players; players sem espectador; itens soltos | 605 |
+| Placa e as decisões da alavanca | Herda 578, 581, 583 a 585 e 587; a mão não faz nada | 606 |
+| Detecção da placa | No contato; confere a cada `pressure_plate.check_ticks` (20) enquanto ligada | 607 |
+| NBT da placa | `on`, `strength` e `mode` | 608 |
+| Som, visual e rótulo da placa | Placa de pedra do jogo; afunda 1 px; `On`/`Off`, modo e canal | 609 |
+| Giro dos módulos | Sai do Shift + `Open` e ganha um modo próprio na #136; muda a 399 e a 403 | 610 |
+| Placa fora do chão | Recusada com mensagem | 611 |
+| Ordem da #136 | Antes da #132, no passo 14 | 612 |
+| Modo de girar | `Rotate` (`Girar`), valor `rotate`, roxo `#9B6BF0`, depois do `Open` | 613 a 615 |
+| Clique no `Rotate` | Horário; com Shift, anti-horário | 616 |
+| `Rotate` fora dos módulos | `Only modules can be turned.` no nó e no cabo | 617 |
+| Shift + `Open` num módulo | Nada; muda a 399 | 618 |
+| Regras do giro | Continuam: dono, `Offline` e `Output: <borda>` | 619 |
+| Testes da #136 | GameTests e roteiro manual | 620 |
 
 Não há perguntas pendentes da concepção.
 
@@ -582,6 +599,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:37 | Atualiza os resumos do giro e dos modos mudados pela #136 (perguntas 399, 403, 431 e 241). |
+| Zennd | 2026-11-15 14:30 | Registra as decisões 613 a 620, do modo Rotate. |
+| Zennd | 2026-11-15 14:25 | Registra as decisões 602 a 612. |
 | Zennd | 2026-11-15 14:03 | Registra a decisão 601, da aba criativa. |
 | Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do Signal Button. |
 | Zennd | 2026-11-15 13:42 | Registra as decisões 588 a 595, do Signal Button. |

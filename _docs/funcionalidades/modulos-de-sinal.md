@@ -26,7 +26,7 @@ Resposta 415.
 | Forma | Uma placa de 10 × 10 pixels e 2 de espessura, como o Signal Node, grudada em qualquer face de um bloco que não seja ar, no chão, na parede ou no teto | 313, 416 e 422 |
 | Espaço | Uma parte do [multipart](multipart.md): divide o espaço de bloco com outras partes, uma por face, como um nó ou um Signal Cable em outra face. Até a #44, cada placa ocupa o seu espaço de bloco | 315, 511 e 513 |
 | Rotação | Ao colocar, a frente aponta para onde o player olha, projetada na face, como o repetidor do jogo | 399 |
-| Giro | Shift + clique com o Configurator no `Open` gira a placa 90° no sentido horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira | 399, 403 e 432 |
+| Giro | O modo `Rotate` do Configurator gira a placa 90°: o clique no sentido horário e o Shift + clique no anti-horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira. Desde a #136, o Shift + clique no `Open` não gira mais | 399, 403, 432, 610, 616 e 618 |
 | Bordas | As 4 bordas, frente, trás, esquerda e direita, ligadas aos vizinhos na mesma camada. Quais são entrada e quais são saída é fixo por módulo, e a textura mostra a seta | 314 e 377 |
 | Bloco de apoio | Não recebe sinal do módulo. As exceções são o Signal Lever e o Signal Button, que o energizam com força, como uma alavanca grudada. Se ele some, a placa cai como item | 394, 407 e 553 |
 
@@ -76,12 +76,14 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 |---|---|---|
 | Mão vazia | Não abre nada e mostra `Use a Configurator to open this module.` No Signal Lever, a mão vazia ou um item que não seja o Configurator liga e desliga a alavanca, e no Signal Button, aperta o botão, só pelo dono | 395, 576, 577 e 588 |
 | `Open` | Abre a tela do módulo | 393 |
-| `Open`, com Shift | Gira a placa 90° no sentido horário | 399 e 403 |
+| `Open`, com Shift | Nada; o `Open` só abre a tela | 618 |
+| `Rotate` | Gira a placa 90° no sentido horário, só pelo dono | 403, 613 e 616 |
+| `Rotate`, com Shift | Gira a placa 90° no sentido anti-horário, só pelo dono | 403 e 616 |
 | `Copy` | Nada na v0.1.0, só a mensagem | 395 e 421 |
 | `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, alterna `Running` e `Stopped`, no Signal Inverter não faz nada, no Weather Detector troca o modo, no Signal Lever liga e desliga, e no Signal Button aperta | 395, 443, 462, 480 e 555 |
 | `Wrench` | Retira o módulo como item, só pelo dono | 395 |
 
-Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. No Signal Lever e no Signal Button, o `Toggle` e a mão continuam funcionando, e o canal só não conta enquanto a rede está `Offline` (perguntas 578 e 588). O `Wrench` funciona, e o Shift + clique no `Open` também gira a placa, porque o giro não toca na rede. Um módulo sem rede abre normalmente (perguntas 402 e 431).
+Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. No Signal Lever e no Signal Button, o `Toggle` e a mão continuam funcionando, e o canal só não conta enquanto a rede está `Offline` (perguntas 578 e 588). O `Wrench` funciona, e o `Rotate` também gira a placa, porque o giro não toca na rede (pergunta 619). Um módulo sem rede abre normalmente (perguntas 402 e 431).
 
 ### Mensagens
 
@@ -92,7 +94,7 @@ Na action bar, em inglês e em português (pergunta 421):
 | `Wrench` | `Module picked up` |
 | Qualquer ação de quem não é o dono | `Only the player who placed this module can change it.` |
 | `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, `<nome>: Running` ou `<nome>: Stopped`; no Signal Inverter, `Signal Inverter has nothing to toggle.`; no Weather Detector, `<nome>: <modo>`, como `<nome>: Thunder`; no Signal Lever, `<nome>: On` ou `<nome>: Off`; e no Signal Button, `<nome>: Pressed`, também com o botão já apertado (perguntas 593 e 600) |
-| Giro | `Output: <borda>`, como `Output: North` |
+| Giro, com o `Rotate` | `Output: <borda>`, como `Output: North` |
 | Mão vazia | `Use a Configurator to open this module.`, menos no Signal Lever e no Signal Button, que não mostram nada (perguntas 585 e 588) |
 | `Copy` | `Modules cannot be copied yet.` |
 | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
@@ -169,6 +171,8 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:37 | O giro passa ao modo `Rotate`, nos dois sentidos, e o Shift + clique no `Open` não faz nada (perguntas 610 e 613 a 620). |
+| Zennd | 2026-11-15 14:26 | O giro vai para um modo próprio do Configurator na #136 (pergunta 610). |
 | Zennd | 2026-11-15 14:04 | Leva o Signal Button à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 553, 588, 593, 595 e 600). |
 | Zennd | 2026-11-15 13:15 | Leva o Signal Lever à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 553, 576 a 578, 582 e 585). |
 | Zennd | 2026-11-15 09:35 | Leva o visual dos módulos para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 543, 559 e 560). |

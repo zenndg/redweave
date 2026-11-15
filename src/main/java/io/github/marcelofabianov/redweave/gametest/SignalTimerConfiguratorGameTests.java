@@ -38,6 +38,9 @@ public final class SignalTimerConfiguratorGameTests {
   private static final String NOT_ACROSS = "The front should stay across the face of the plate";
   private static final String NOT_ROUND = "Four turns should give four fronts and come back";
   private static final String NOT_CLOCKWISE = "Seen from above, north should turn to east";
+  private static final String NOT_COUNTERCLOCKWISE = "Seen from above, north should turn to west";
+  private static final String NOT_UNDONE = "A turn back should undo a turn";
+  private static final String OPEN_TURNED = "Shift + click in the Open should not turn the plate";
   private static final String TURNED = "Only the owner should turn the plate";
   private static final String NOT_RUNNING = "The Toggle should start the timer";
   private static final String NOT_STOPPED = "The Toggle should stop the timer";
@@ -47,7 +50,7 @@ public final class SignalTimerConfiguratorGameTests {
 
   private SignalTimerConfiguratorGameTests() {}
 
-  /** On every face, four turns go round the four edges, clockwise from the front (403). */
+  /** On every face, four Rotate clicks go round the four edges, clockwise (403 and 616). */
   @GameTest(template = EMPTY)
   public static void theOwnerTurnsThePlateOnEveryFace(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -57,9 +60,9 @@ public final class SignalTimerConfiguratorGameTests {
       place(helper, owner, face);
       Direction start = frontOf(helper, plate);
       Set<Direction> fronts = new HashSet<>();
-      ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
+      ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.ROTATE);
       for (int turn = 0; turn < QUARTERS; turn++) {
-        NodeScene.shiftClick(helper, owner, plate);
+        NodeScene.click(helper, owner, plate);
         Direction front = frontOf(helper, plate);
         helper.assertTrue(front.getAxis() != face.getAxis(), NOT_ACROSS);
         fronts.add(front);
@@ -70,17 +73,63 @@ public final class SignalTimerConfiguratorGameTests {
     helper.succeed();
   }
 
-  /** On the floor, looking at the plate from above, north turns to east (answer 403). */
+  /** On the floor, looking at the plate from above, the Rotate turns north to east (403, 616). */
   @GameTest(template = EMPTY)
   public static void aTurnOnTheFloorIsClockwiseSeenFromAbove(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     owner.setYHeadRot(LOOK_NORTH);
     place(helper, owner, Direction.UP);
+    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.ROTATE);
+
+    NodeScene.click(helper, owner, TIMER);
+
+    helper.assertValueEqual(frontOf(helper, TIMER), Direction.EAST, NOT_CLOCKWISE);
+    helper.succeed();
+  }
+
+  /** Shift + click in the Rotate turns back: north to west, seen from above (answer 616). */
+  @GameTest(template = EMPTY)
+  public static void aShiftTurnOnTheFloorIsCounterclockwise(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    owner.setYHeadRot(LOOK_NORTH);
+    place(helper, owner, Direction.UP);
+    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.ROTATE);
+
+    NodeScene.shiftClick(helper, owner, TIMER);
+
+    helper.assertValueEqual(frontOf(helper, TIMER), Direction.WEST, NOT_COUNTERCLOCKWISE);
+    helper.succeed();
+  }
+
+  /** On every face, a turn and a turn back leave the front where it was (answer 616). */
+  @GameTest(template = EMPTY)
+  public static void aTurnBackUndoesATurnOnEveryFace(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    for (Direction face : Direction.values()) {
+      BlockPos plate = STONE.relative(face);
+      helper.setBlock(plate, Blocks.AIR);
+      place(helper, owner, face);
+      Direction start = frontOf(helper, plate);
+      ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.ROTATE);
+      NodeScene.click(helper, owner, plate);
+      NodeScene.shiftClick(helper, owner, plate);
+      helper.assertValueEqual(frontOf(helper, plate), start, NOT_UNDONE);
+      helper.setBlock(plate, Blocks.AIR);
+    }
+    helper.succeed();
+  }
+
+  /** The Open only opens the screen: with Shift, it no longer turns the plate (answer 618). */
+  @GameTest(template = EMPTY)
+  public static void aShiftClickInTheOpenDoesNotTurn(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    place(helper, owner, Direction.UP);
+    Direction front = frontOf(helper, TIMER);
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
 
     NodeScene.shiftClick(helper, owner, TIMER);
 
-    helper.assertValueEqual(frontOf(helper, TIMER), Direction.EAST, NOT_CLOCKWISE);
+    helper.assertValueEqual(frontOf(helper, TIMER), front, OPEN_TURNED);
     helper.succeed();
   }
 
@@ -92,8 +141,8 @@ public final class SignalTimerConfiguratorGameTests {
     place(helper, owner, Direction.UP);
     Direction front = frontOf(helper, TIMER);
 
-    ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.OPEN);
-    NodeScene.shiftClick(helper, stranger, TIMER);
+    ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.ROTATE);
+    NodeScene.click(helper, stranger, TIMER);
     helper.assertValueEqual(frontOf(helper, TIMER), front, TURNED);
     ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.WRENCH);
     NodeScene.click(helper, stranger, TIMER);
@@ -136,8 +185,8 @@ public final class SignalTimerConfiguratorGameTests {
 
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.TOGGLE);
     NodeScene.click(helper, owner, TIMER);
-    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
-    NodeScene.shiftClick(helper, owner, TIMER);
+    ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.ROTATE);
+    NodeScene.click(helper, owner, TIMER);
 
     helper.assertFalse(isRunning(ModuleParts.only(helper, TIMER, TimerPart.class)), TOGGLED);
     helper.assertFalse(frontOf(helper, TIMER) == front, TURNED);

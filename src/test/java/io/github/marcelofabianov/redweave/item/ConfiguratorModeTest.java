@@ -7,9 +7,13 @@ import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-/** The modes of the Configurator and their order: configurador.md (answers 143, 173, 192, 241). */
+/**
+ * The modes of the Configurator and their order: configurador.md (answers 143, 173, 192, 241, 613
+ * and 614).
+ */
 class ConfiguratorModeTest {
   private static final String OPEN = "open";
+  private static final String ROTATE = "rotate";
   private static final String COPY = "copy";
   private static final String TOGGLE = "toggle";
   private static final String WRENCH = "wrench";
@@ -19,7 +23,8 @@ class ConfiguratorModeTest {
 
   @Test
   void theModesGoInTheOrderOfTheShiftScroll() {
-    assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.OPEN.next());
+    assertEquals(ConfiguratorMode.ROTATE, ConfiguratorMode.OPEN.next());
+    assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.ROTATE.next());
     assertEquals(ConfiguratorMode.TOGGLE, ConfiguratorMode.COPY.next());
     assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.TOGGLE.next());
     assertEquals(ConfiguratorMode.OPEN, ConfiguratorMode.WRENCH.next());
@@ -28,7 +33,8 @@ class ConfiguratorModeTest {
   @Test
   void theModesGoBackInTheOtherDirection() {
     assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.OPEN.previous());
-    assertEquals(ConfiguratorMode.OPEN, ConfiguratorMode.COPY.previous());
+    assertEquals(ConfiguratorMode.OPEN, ConfiguratorMode.ROTATE.previous());
+    assertEquals(ConfiguratorMode.ROTATE, ConfiguratorMode.COPY.previous());
     assertEquals(ConfiguratorMode.TOGGLE, ConfiguratorMode.WRENCH.previous());
     assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.TOGGLE.previous());
   }
@@ -36,13 +42,14 @@ class ConfiguratorModeTest {
   /** Like the hotbar: scrolling down goes forward, scrolling up goes back (answer 192). */
   @Test
   void theScrollDirectionChoosesTheStep() {
-    assertEquals(ConfiguratorMode.COPY, ConfiguratorMode.OPEN.scrolled(SCROLL_DOWN));
+    assertEquals(ConfiguratorMode.ROTATE, ConfiguratorMode.OPEN.scrolled(SCROLL_DOWN));
     assertEquals(ConfiguratorMode.WRENCH, ConfiguratorMode.OPEN.scrolled(SCROLL_UP));
   }
 
   @Test
   void theSavedNamesAreTheContractOfTheComponent() {
     assertEquals(OPEN, ConfiguratorMode.OPEN.serializedName());
+    assertEquals(ROTATE, ConfiguratorMode.ROTATE.serializedName());
     assertEquals(COPY, ConfiguratorMode.COPY.serializedName());
     assertEquals(TOGGLE, ConfiguratorMode.TOGGLE.serializedName());
     assertEquals(WRENCH, ConfiguratorMode.WRENCH.serializedName());

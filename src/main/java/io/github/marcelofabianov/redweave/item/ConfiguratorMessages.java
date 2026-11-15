@@ -19,6 +19,7 @@ public final class ConfiguratorMessages {
   public static final String NOT_PLACER = PREFIX + "not_placer";
   public static final String PASTE_NOT_PLACER = PREFIX + "paste_not_placer";
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
+  public static final String ONLY_MODULES = PREFIX + "only_modules";
   public static final String COPY = TOOLTIP + "copy";
   public static final String HINT_SCROLL = TOOLTIP + "hint_scroll";
   public static final String HINT_TOGGLE_MODULE = MODE_HINT + "toggle_module";

@@ -97,7 +97,7 @@ public final class CablePlateGameTests {
         helper, owner, new ItemStack(RedweaveItems.SIGNAL_INVERTER.get()), FLOOR, Direction.UP);
     InverterPart inverter = ModuleParts.only(helper, SPACE, InverterPart.class);
     for (int turn = 0; turn < TURNS && inverter.front() != front; turn++) {
-      inverter.turn();
+      inverter.turn(false);
     }
     return inverter;
   }

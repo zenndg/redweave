@@ -75,6 +75,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 | Quebrar | Tira só o cabo mirado, e o item, com a cor, cai no chão | 515 e 525 |
 | `Wrench` | Retira o cabo e manda o item, com a cor, para o inventário do player, ou para o chão se não houver espaço | 525 |
 | `Open`, `Copy` e `Toggle` | Não fazem nada: o cabo não tem tela nem estado | 525 |
+| `Rotate` | Não faz nada e mostra `Only modules can be turned.`, porque só os Signal Modules giram | 617 |
 | Rótulo | Com o Configurator na mão, o rótulo sobre o cabo mostra a cor e a força, como `15 Red · 12` | 525 |
 
 ## Visual
@@ -110,6 +111,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:38 | O modo `Rotate` no cabo mostra `Only modules can be turned.` (pergunta 617). |
 | Zennd | 2026-11-15 09:34 | Marca o cabo como implementado na #44, com o código, os testes e a busca até 30. |
 | Zennd | 2026-11-15 09:08 | Registra a decisão 575, do encosto na placa vizinha. |
 | Zennd | 2026-11-15 09:07 | Registra a decisão 574, do nó no espaço vizinho. |

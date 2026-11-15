@@ -17,16 +17,27 @@ final class CableClicks {
 
   private CableClicks() {}
 
-  /** Only the Wrench takes the click; Open, Copy and Toggle do nothing on a cable (answer 525). */
+  /**
+   * Only the Wrench and the Rotate take the click; Open, Copy and Toggle do nothing on a cable
+   * (answers 525 and 617).
+   */
   static boolean takes(ConfiguratorMode mode) {
-    return mode == ConfiguratorMode.WRENCH;
+    return mode == ConfiguratorMode.WRENCH || mode == ConfiguratorMode.ROTATE;
+  }
+
+  /** The Wrench picks the cable up, and the Rotate tells that only modules turn (answer 617). */
+  static Component onCable(
+      Player player, PartSpaceBlockEntity space, CablePart cable, ConfiguratorMode mode) {
+    return mode == ConfiguratorMode.ROTATE
+        ? Component.translatable(ConfiguratorMessages.ONLY_MODULES)
+        : pickUp(player, space, cable);
   }
 
   /**
    * Picks the cable up, as its item with its color, to the inventory, or to the ground when it is
    * full; in survival only its owner does, and in creative anyone (answers 525 and 526).
    */
-  static Component pickUp(Player player, PartSpaceBlockEntity space, CablePart cable) {
+  private static Component pickUp(Player player, PartSpaceBlockEntity space, CablePart cable) {
     if (!player.isCreative() && !cable.mayBreak(player)) {
       return Component.translatable(PartMessages.CABLE_NOT_OWNER);
     }

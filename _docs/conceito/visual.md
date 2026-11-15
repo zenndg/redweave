@@ -172,6 +172,7 @@ Ferramenta, `redweave:configurator`. Abre, copia, cola, ativa e desativa canais 
 | Modo | Em português | Cor | Tom | Uso |
 |---|---|---|---|---|
 | `Open` | `Abrir` | Azul | `#5B9BF0` | Clique num nó abre a Tela do Nó; no controlador e no Terminal, abre a tela do bloco, como a mão vazia |
+| `Rotate` | `Girar` | Roxo | `#9B6BF0` | Clique num Signal Module gira a placa no sentido horário; Shift + clique, no anti-horário (perguntas 613 a 616) |
 | `Copy` | `Copiar` | Verde | `#3FAE5A` | Clique num nó copia; Shift + clique cola |
 | `Toggle` | `Alternar` | Âmbar | `#E3A33B` | Clique num nó ativa os canais configurados; Shift + clique desativa (pergunta 241) |
 | `Wrench` | `Chave` | Vermelho | `#D94A64` | Clique num nó o retira como item |
@@ -188,6 +189,7 @@ Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift +
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 14:37 | Adiciona o modo `Rotate`, em roxo `#9B6BF0` (perguntas 613 a 616). |
 | Zennd | 2026-11-14 19:21 | Leva os Signal Modules ao Configurator. |
 | Zennd | 2026-11-12 21:38 | Leva ao mod as texturas e a prancha novas do Signal Remote (pergunta 374). |
 | Zennd | 2026-11-12 20:48 | Decide o visual do Signal Remote, com 4 estados e arte nova (pergunta 362). |
