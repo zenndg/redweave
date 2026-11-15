@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
+import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.Label;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ModuleLine;
 import io.github.marcelofabianov.redweave.network.ReceivedLabels;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -42,6 +44,14 @@ public final class NodeLabelRenderer {
   private static final float NODE_SCALE = NAME_TAG * 0.7F;
   private static final double CENTER = 0.5;
   private static final double ABOVE = 0.75;
+
+  /**
+   * How far a label moves from the center of a shared space toward the side of its part (answer
+   * 547). It stays inside the space, and the labels of opposite sides end 0.7 apart, more than the
+   * two lines of a label, about 0.36 high.
+   */
+  private static final double TOWARD_SIDE = 0.35;
+
   private static final double NODE_LINE_UP = 0.0;
   private static final double NETWORK_LINE_UP = 0.2;
   private static final int SQUARE = 7;
@@ -91,8 +101,9 @@ public final class NodeLabelRenderer {
     int square = label.hasNetwork() ? colorOf(label.color()) : NO_NETWORK_SQUARE;
     Line top = new Line(network, NETWORK_SCALE, NETWORK_LINE_UP, square);
     Line bottom = new Line(Component.literal(label.nodeName()), NODE_SCALE, NODE_LINE_UP, 0);
-    drawLine(pose, camera, font, buffers, label.pos(), top);
-    drawLine(pose, camera, font, buffers, label.pos(), bottom);
+    Vec3 anchor = anchorOf(label.place());
+    drawLine(pose, camera, font, buffers, anchor, top);
+    drawLine(pose, camera, font, buffers, anchor, bottom);
   }
 
   /**
@@ -110,8 +121,23 @@ public final class NodeLabelRenderer {
     int square = channel.map(color -> OPAQUE | ChannelColors.argb(color)).orElse(0);
     Line top = new Line(Component.literal(module.name()), NODE_SCALE, NETWORK_LINE_UP, 0);
     Line bottom = new Line(below, NETWORK_SCALE, NODE_LINE_UP, square);
-    drawLine(pose, camera, font, buffers, module.pos(), top);
-    drawLine(pose, camera, font, buffers, module.pos(), bottom);
+    Vec3 anchor = anchorOf(module.place());
+    drawLine(pose, camera, font, buffers, anchor, top);
+    drawLine(pose, camera, font, buffers, anchor, bottom);
+  }
+
+  /**
+   * Where the lines of a label start: over the space, as always, when its part is alone, or moved
+   * from the center toward the side of its part when the space has other labeled parts (547).
+   */
+  private static Vec3 anchorOf(NodeLabelsUpdate.Place place) {
+    BlockPos pos = place.spot().pos();
+    if (!place.shared()) {
+      return new Vec3(pos.getX() + CENTER, pos.getY() + ABOVE, pos.getZ() + CENTER);
+    }
+    Vec3i side = place.spot().face().getNormal();
+    return Vec3.atCenterOf(pos)
+        .add(side.getX() * TOWARD_SIDE, side.getY() * TOWARD_SIDE, side.getZ() * TOWARD_SIDE);
   }
 
   private static Optional<ChannelColor> channelOf(int channel) {
@@ -125,18 +151,10 @@ public final class NodeLabelRenderer {
   private record Line(Component text, float scale, double up, int square) {}
 
   private static void drawLine(
-      PoseStack pose,
-      Camera camera,
-      Font font,
-      MultiBufferSource buffers,
-      BlockPos pos,
-      Line line) {
+      PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, Vec3 anchor, Line line) {
     Vec3 eye = camera.getPosition();
     pose.pushPose();
-    pose.translate(
-        pos.getX() + CENTER - eye.x,
-        pos.getY() + ABOVE + line.up() - eye.y,
-        pos.getZ() + CENTER - eye.z);
+    pose.translate(anchor.x - eye.x, anchor.y + line.up() - eye.y, anchor.z - eye.z);
     pose.mulPose(camera.rotation());
     pose.scale(line.scale(), -line.scale(), line.scale());
     Matrix4f matrix = pose.last().pose();

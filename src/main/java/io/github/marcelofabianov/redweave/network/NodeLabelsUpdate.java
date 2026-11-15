@@ -3,10 +3,11 @@ package io.github.marcelofabianov.redweave.network;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.UUID;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -29,14 +30,24 @@ public record NodeLabelsUpdate(
   public static final Type<NodeLabelsUpdate> TYPE =
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
 
-  /** A label: the node and its block, its name, and the network with its color, or -1 for none. */
-  public record Label(UUID node, BlockPos pos, String nodeName, String network, int color) {
+  /**
+   * Where a label sits: the spot of its part, and whether its space has other labeled parts, so
+   * each label moves toward the side of its own part instead of over the others (answer 547).
+   */
+  public record Place(PartSpot spot, boolean shared) {
+    static final StreamCodec<ByteBuf, Place> STREAM_CODEC =
+        StreamCodec.composite(
+            PartSpot.STREAM_CODEC, Place::spot, ByteBufCodecs.BOOL, Place::shared, Place::new);
+  }
+
+  /** A label: the node and its place, its name, and the network with its color, or -1 for none. */
+  public record Label(UUID node, Place place, String nodeName, String network, int color) {
     static final StreamCodec<RegistryFriendlyByteBuf, Label> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
             Label::node,
-            BlockPos.STREAM_CODEC,
-            Label::pos,
+            Place.STREAM_CODEC,
+            Label::place,
             ByteBufCodecs.STRING_UTF8,
             Label::nodeName,
             ByteBufCodecs.STRING_UTF8,
@@ -45,10 +56,10 @@ public record NodeLabelsUpdate(
             Label::color,
             Label::new);
 
-    public static Label of(UUID node, BlockPos pos, NodeLabel label) {
+    public static Label of(UUID node, Place place, NodeLabel label) {
       return new Label(
           node,
-          pos,
+          place,
           label.node(),
           label.network().map(NodeLabel.NetworkPart::name).orElse(NO_NAME),
           label.network().map(part -> part.color().ordinal()).orElse(NO_COLOR));
@@ -60,16 +71,16 @@ public record NodeLabelsUpdate(
   }
 
   /**
-   * The label of a module: its block, its name, the key of the text of its state, and the channel
+   * The label of a module: its place, its name, the key of the text of its state, and the channel
    * of its output, or -1 when the output is on its edge (answer 417).
    */
-  public record ModuleLine(UUID module, BlockPos pos, String name, String state, int channel) {
+  public record ModuleLine(UUID module, Place place, String name, String state, int channel) {
     static final StreamCodec<RegistryFriendlyByteBuf, ModuleLine> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
             ModuleLine::module,
-            BlockPos.STREAM_CODEC,
-            ModuleLine::pos,
+            Place.STREAM_CODEC,
+            ModuleLine::place,
             ByteBufCodecs.STRING_UTF8,
             ModuleLine::name,
             ByteBufCodecs.STRING_UTF8,
@@ -78,10 +89,10 @@ public record NodeLabelsUpdate(
             ModuleLine::channel,
             ModuleLine::new);
 
-    public static ModuleLine of(UUID module, BlockPos pos, ModuleLabel label) {
+    public static ModuleLine of(UUID module, Place place, ModuleLabel label) {
       return new ModuleLine(
           module,
-          pos,
+          place,
           label.name(),
           label.state(),
           label.output().map(ChannelColor::ordinal).orElse(NO_COLOR));
