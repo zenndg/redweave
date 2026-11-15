@@ -6,8 +6,8 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 
 ## Estado atual
 
-- **Etapa atual:** Fases 1 e 2, juntas rumo à `v0.1.0`, como uma fase só (pergunta 303). Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88), a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80), e o rótulo em duas linhas, sem o nome do slot (#101). O novo modelo de rede está completo. Rumo à `v0.1.0`, já entraram o roadmap (#104), as portas e a regra NOT no domínio (#28), a remoção da lógica da Tela do Nó (#106), as colunas de tipo e estado nas listas de nós (#107), a Tela do Nó em duas colunas (#122), o Signal Remote (#22), o Signal Timer, com a base dos Signal Modules (#103), o Signal Inverter (#105), o Weather Detector (#108) e o Signal Randomizer (#109). Toda lógica de sinal fica nos Signal Modules (pergunta 308). O trabalho entra por issue, na ordem do `ROADMAP.md`.
-- **Próximos:** a ordem de trabalho da seção "Toward v0.1.0" do `ROADMAP.md`, a partir do passo 11: o multipart de todo o mod e o Signal Cable (#44 e #45, perguntas 494 a 535), já documentados e sem código, e depois a alavanca, o botão e a placa de pressão (#130 a #132, pergunta 548) e a #110.
+- **Etapa atual:** Fases 1 e 2, juntas rumo à `v0.1.0`, como uma fase só (pergunta 303). Já entraram o projeto NeoForge com os gates, o domínio da rede (#9 a #13), o Network Controller (#14), o Signal Node (#15), a persistência (#16), o Configurator (#17), o nó num canal livre (#18), a Tela do Nó (#19) e o novo modelo de rede das perguntas 125 a 172: a remoção do Label (#85), os modos do Configurator (#86), o nó que escolhe a rede (#87), os estados `Offline` e `Unplaced` (#88), a Tela do Controlador (#20), que trouxe os 16 slots por cor do Signal Node e o modo `Toggle`, o log da Tela do Controlador (#90), o Network Terminal (#89) e o visor e o rótulo do Configurator, com a emissão do nó só no bloco de apoio e o `Clear log` (#80), e o rótulo em duas linhas, sem o nome do slot (#101). O novo modelo de rede está completo. Rumo à `v0.1.0`, já entraram o roadmap (#104), as portas e a regra NOT no domínio (#28), a remoção da lógica da Tela do Nó (#106), as colunas de tipo e estado nas listas de nós (#107), a Tela do Nó em duas colunas (#122), o Signal Remote (#22), o Signal Timer, com a base dos Signal Modules (#103), o Signal Inverter (#105), o Weather Detector (#108), o Signal Randomizer (#109) e o multipart de todo o mod, com o Signal Node e os Signal Modules como partes, e o Signal Cable (#44, perguntas 494 a 575). Toda lógica de sinal fica nos Signal Modules (pergunta 308). O trabalho entra por issue, na ordem do `ROADMAP.md`.
+- **Próximos:** a ordem de trabalho da seção "Toward v0.1.0" do `ROADMAP.md`, a partir do passo 12: a alavanca, o botão e a placa de pressão (#130 a #132, pergunta 548), e depois a #110.
 - **Limite:** não avance para a Fase 3 ou as seguintes sem pedido explícito.
 
 ## Documentação
@@ -190,12 +190,15 @@ io.github.marcelofabianov.redweave
 │   ├── network/            // Network (agregado), Node, Channel, permissões, NetworkLimits (interface)
 │   ├── circuit/            // portas e a regra NOT (#28), chips (Fase 3)
 │   ├── module/             // regras dos Signal Modules: conexões, o intervalo comum e as regras do Signal Timer, do Signal Inverter, do Weather Detector e do Signal Randomizer
+│   ├── part/               // ocupação do espaço do multipart: uma parte por face e até 2 cabos
+│   ├── cable/              // trecho do Signal Cable: isolamento, ligações e a força de cada pedaço
 │   └── simulation/         // compilação do grafo, avaliação por tick, loops e oscilação
 ├── application/            // casos de uso, um por ação do player, e as portas
 ├── config/                 // ModConfigSpec → implementa NetworkLimits
 ├── registry/               // DeferredRegisters
-├── block/                  // Network Controller, Network Terminal, Signal Node, Signal Modules, BlockEntities (e o part_space na #44)
-├── item/                   // Configurador, Signal Remote, chips
+├── block/                  // Network Controller, Network Terminal, o contêiner part_space e os BlockEntities
+│   └── part/               // as partes do multipart: Signal Node, Signal Modules e Signal Cable
+├── item/                   // Configurador, Signal Remote, itens das partes e o Signal Cable, chips
 ├── menu/                   // menus das telas
 ├── network/                // pacotes próprios, validados no servidor
 ├── server/                 // estado por servidor: redes, última rede usada de cada player e casos de uso

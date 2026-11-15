@@ -53,7 +53,7 @@ O desenho está em [`telas.md`](telas.md#tela-do-signal-inverter).
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Textura | A seta centrada, para a frente, o entalhe de A atrás e, no meio, o símbolo do NOT, um triângulo com um círculo na ponta | 452 |
-| Estados do bloco | `facing`, `front`, `powered`, que acende a seta em vermelho com B ligado, e `burnt`, que troca a seta pela cinza-escura. Com `burnt`, `powered` fica falso. A partir da #44, viram campos da parte, com os mesmos nomes (pergunta 534) | 452 e 455 |
+| Campos da parte | `facing`, `front`, `powered`, que acende a seta em vermelho com B ligado, e `burnt`, que troca a seta pela cinza-escura. Com `burnt`, `powered` fica falso. Desde a #44, são campos da parte, não estados do bloco: `facing` sai da `face` da parte no contêiner, `front` e `powered` ficam no save, e `burnt` sai do tempo de queima salvo (perguntas 534, 559 e 560) | 452 e 455 |
 | Modelo | Como o do timer: o topo girado 0° ou 90° no UV cobre as 24 orientações | 429 |
 
 ## Save
@@ -96,6 +96,7 @@ Em `tmp/arte/signal_inverter/`: as 3 texturas do topo (apagado, ligado e queimad
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |
 | Zennd | 2026-11-14 15:10 | Aponta para a prancha da tela no `telas.md` (pergunta 451). |
 | Zennd | 2026-11-14 14:31 | Cria o documento, com as decisões 441 a 455 da #105. |

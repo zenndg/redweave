@@ -113,7 +113,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 |---|---|
 | ID | `NodeId`, um UUID (pergunta 31) |
 | Nome | Nasce com os 8 primeiros caracteres do ID (pergunta 142). O dono o renomeia na Tela do Nó e na lista da tela do controlador, com o limite de `node.name_length` (pergunta 144) |
-| Quem colocou | O player que colocou o bloco, gravado na BlockEntity. Num nó sem rede, é o dono para a escolha da rede e para a Chave do Configurator (perguntas 165 e 172) |
+| Quem colocou | O player que colocou o nó, gravado na parte, dentro do contêiner `part_space` desde a #44 (pergunta 543). Num nó sem rede, é o dono para a escolha da rede e para a Chave do Configurator (perguntas 165 e 172) |
 | Posição | A dimensão, o bloco e a face onde o nó está grudado |
 | Slots | 16, um por cor de canal, fixos, cada um um `ChannelSlot`. Todos nascem inativos, e o nó pode ter de 0 a 16 ativos (perguntas 224 e 226) |
 
@@ -245,6 +245,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:37 | Quem colocou o nó fica gravado na parte do multipart (pergunta 543). |
 | Zennd | 2026-11-14 09:46 | Adiciona os Signal Modules como fonte do canal, da #103 (perguntas 375 a 387). |
 | Zennd | 2026-11-12 20:48 | Liga o Signal Remote à página dele, com o valor 15 e o `RemoteInputs` (perguntas 352, 357 e 360). |
 | Zennd | 2026-11-12 17:27 | Marca o valor do disparo do Signal Remote como decisão da #22 (pergunta 318). |

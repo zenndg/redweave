@@ -7,7 +7,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Escopo | Só sinal de redstone. Itens, fluidos e energia ficam com os mods de logística | 1 |
 | Linguagem | Java 21 | 2 |
 | Versão | 1.21.1 NeoForge e, depois, 26.x. Só os adapters mudam no port | 3 |
-| Multipart | Adiado para a Fase 4 | 4 |
+| Multipart | ~~Adiado para a Fase 4~~; mudada pela 516: entra na `v0.1.0`, na #44 | 4 |
 | Fio físico | ~~Só na Fase 4~~; mudada pela 516: entra na `v0.1.0` | 5 |
 | Integrações | Jade e The One Probe primeiro, opcionais e isolados em `compat/` | 6 |
 | Licença | LGPL-3.0 | 7 |
@@ -72,7 +72,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome em português | `Controlador de Rede` | 68 |
 | Aba do criativo | Aba própria `Redweave` | 69 |
 | Nó ligado ao colocar | Mudada pela 139: o nó nasce `No network` | 70, 139 |
-| Face do slot no mundo | Entrada lê o vizinho daquela face; saída energiza só o bloco de apoio, com força (262) | 71, 262 |
+| Face do slot no mundo | Entrada lê o vizinho daquela face; saída energiza só o bloco de apoio, com força (262), e troca sinal com o Signal Cable e o pó do jogo vizinhos na mesma face (574) | 71, 262 e 574 |
 | Blockstate do nó | `facing` e `powered`; o `powered` vira `signal` pela 99 | 72 |
 | Página do nó | `no-de-sinal.md` | 73 |
 | Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
@@ -87,7 +87,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Usar um slot livre | Na primeira ativação, o canal vira entrada na face grudada (226, 228) | 83, 226, 228 |
 | Liberar um slot | Saiu com os 16 slots fixos; o canal é desativado | 84, 224, 319 |
 | Modo só leitura | Controles apagados e aviso com cadeado | 85 |
-| Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate | 86 |
+| Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate; desde a #44, campo da parte (534) | 86 e 534 |
 | Pontos dos slots | Os 4 primeiros canais ativos, na ordem das cores (229) | 87, 229 |
 | Onde salvar as redes | Um `SavedData` único no Overworld, `redweave_networks.dat` | 88 |
 | Formato do save | Codecs sobre `NbtOps`, com `version` e chaves estáveis; a leitura fica no slot | 89 |
@@ -378,7 +378,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ajuste do intervalo e do pulso | Só `−` e `+`: 0,1 s no clique, 1 s com Shift | 398 |
 | Rotação do módulo | Pela direção do player ao colocar; Shift + clique com o Configurator no `Open` gira 90° | 399 |
 | Rede e canal na tela do módulo | Escolha de rede e grade de 16 cores da Tela do Nó; seletor `Edge` ou `Channel` por conexão | 400, 420 |
-| Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco; animação só na tela | 401 |
+| Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco, desde a #44 por campos da parte (534); animação só na tela | 401 e 534 |
 | Módulo numa rede `Offline` | Como o nó: `Open` e `Toggle` não agem, `Wrench` sim | 402 |
 | Giro da placa | 90° no sentido horário, com som e `Output: <borda>` na action bar | 403 |
 | Tela do Signal Timer | Relógio com anel e botão à esquerda; intervalo, pulso e conexões à direita; rede e cadeado no rodapé; prancha por IA | 404, 420 |
@@ -558,6 +558,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:35 | Atualiza os resumos do nó e do Signal Timer mudados pelo multipart e pela 574 (perguntas 534 e 574). |
 | Zennd | 2026-11-15 09:08 | Registra a decisão 575. |
 | Zennd | 2026-11-15 09:07 | Registra a decisão 574, que muda a 262. |
 | Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573. |

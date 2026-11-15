@@ -2,6 +2,8 @@
 
 O Signal Cable (`redweave:signal_cable`, `Cabo de Sinal` em português) é o cabo físico de redstone do Redweave, no estilo do More Red e do Project Red: grudado em qualquer face, ele faz o papel do fio de redstone do jogo, em 16 cores que isolam os cabos uns dos outros (perguntas 494, 495 e 505). É uma parte do [multipart](multipart.md) e entra na #44, junto com ele, na `v0.1.0` (perguntas 516 e 524). Os termos são os do [`glossario.md`](../glossario.md).
 
+**Estado:** implementado na #44, com a receita do cabo branco pendente na #24.
+
 ## Em uma frase
 
 Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma cor e do mesmo dono e leva o sinal como o fio do jogo, perdendo 1 de força por bloco (perguntas 496, 497, 499, 521 e 528).
@@ -62,7 +64,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Trecho | Quando algo muda, o servidor acha o trecho ligado de uma cor, calcula a força de cada pedaço pela distância das fontes, no mesmo tick, e só avisa os blocos vizinhos que mudaram, como os mods de redstone rápida. A regra fica em `domain/cable/`: o `Insulation` decide quais cabos se ligam, e o `CableRun` calcula a força | 509, 537 e 540 |
-| Tamanho | Sem limite no config: o sinal some em 15 blocos, então o cálculo só percorre até onde a força chega a partir das fontes | 530 |
+| Tamanho | Sem limite no config: o sinal some em 15 blocos, então o cálculo só percorre até onde a força chega a partir das fontes. Uma mudança só afeta pedaços a até 15 espaços, e as fontes deles estão a até 30, então a busca para em 30 e grava só até 15 (os números ficam em [`limites.md`](../limites.md)) | 530 |
 | Chunk descarregado | O cálculo nunca carrega um chunk (regra 6): o trecho para na borda, os pedaços do outro lado não são atualizados até o chunk carregar, e ao carregar o trecho é recalculado | 529 |
 
 ## Dono, quebra e Configurator
@@ -83,11 +85,20 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 | Sinal | Um filete no topo do cabo, por cima do isolamento colorido, que vai do vermelho escuro (0) ao vermelho vivo (15), como o pó do jogo, sem mudar a cor do isolamento (princípio 1 de [`ux.md`](../conceito/ux.md)). Fica no modelo do bloco: cada mudança de força redesenha a seção do chunk, como o pó do jogo | 522 e 573 |
 | Arte | Em `tmp/arte/signal_cable/`: o agente escreve o `prompt.md`, o desenvolvedor gera as imagens, e o agente as confere (perguntas 185 e 186) | 518 |
 
+## Código
+
+| Camada | O que fica lá |
+|---|---|
+| `domain/cable/` | `Insulation` (cor e dono, `joins`), `CablePiece`, `CableLink` e `Passage` (curva interna sem perda, próximo espaço com perda 1), a porta `CableGrid` e o `CableRun`, que calcula a força de cada pedaço (perguntas 537 e 540) |
+| `block/part/` | `CablePart`, a parte; `CableLinks`, a geometria das ligações e dos braços; `CableInputs`, o que o cabo lê ao lado; `CableRuns`, que roda o cálculo no servidor; `WorldCableGrid`, a porta só com espaços carregados (pergunta 529); `CableReach`, `CableTurn` e `CableShapes`, o alcance dos braços, a rotação e o contorno de mira |
+| `item/` | `SignalCableItem`, que coloca um cabo da cor do item, `CableColorCodec` e `CableClicks`, o Configurator no cabo |
+| `client/` e `datagen/` | `CableQuads` e o `PartSpaceModel` desenham o cabo; `CableModels` gera os modelos das peças: centro, braço, braço curto, quina, degrau e placa |
+
 ## Testes
 
-- **JUnit:** o cálculo do trecho, com a força por distância, o isolamento por cor e as fontes.
-- **GameTests:** o cabo perdendo força, as cores isoladas, os donos, as curvas e os degraus, o pó do jogo, o dono e o save.
-- **Roteiro manual:** a forma, a arte e o desempenho (pergunta 527).
+- **JUnit:** o cálculo do trecho, com a força por distância, o isolamento por cor e as fontes (`CableRunTest` e `InsulationTest`).
+- **GameTests:** o cabo perdendo força, as cores isoladas, os donos, as curvas e os degraus, o pó do jogo, o nó e o módulo no mesmo espaço e no vizinho, a ponta solta, o contorno de mira, o Configurator, o rótulo e o save.
+- **Roteiro manual:** a forma, a arte, a mira e o desempenho (pergunta 527), na seção do multipart e do Signal Cable do [roteiro de teste manual](../desenvolvimento/roteiro-de-teste-manual.md).
 
 ## Fora desta página
 
@@ -99,6 +110,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:34 | Marca o cabo como implementado na #44, com o código, os testes e a busca até 30. |
 | Zennd | 2026-11-15 09:08 | Registra a decisão 575, do encosto na placa vizinha. |
 | Zennd | 2026-11-15 09:07 | Registra a decisão 574, do nó no espaço vizinho. |
 | Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573, da mira, das curvas e do filete. |
