@@ -2,7 +2,7 @@
 
 A alavanca do Redweave, o Signal Lever (`redweave:signal_lever`, `Alavanca de Sinal` em português), é uma fonte de sinal ligada e desligada pelo player, parecida com a alavanca do jogo, mas com uma aparência 3D mais realista e um indicador de cor, uma luz vermelha desligada e verde ligada, a mesma nos três itens (pergunta 554). Tem uma tela parecida com a dos [Módulos de Sinal](modulos-de-sinal.md), em que o player escolhe se o sinal sai sem fio, por um canal da rede, como um [Signal Node](no-de-sinal.md), ou pela redstone, no mundo (pergunta 548). Entra depois do [Signal Cable](signal-cable.md), numa issue própria, a #130, como o [Botão](botao.md) e a [Placa de pressão](placa-de-pressao.md). Os termos são os do [`glossario.md`](../glossario.md).
 
-**Estado:** conceito fechado, com as perguntas 549 a 555 e 558 respondidas (regra 9).
+**Estado:** conceito fechado, com as perguntas 549 a 555, 558 e 576 a 583 respondidas (regra 9), em implementação na #130.
 
 ## Em uma frase
 
@@ -33,6 +33,25 @@ Um clique liga ou desliga a alavanca, que mostra o estado com uma luz vermelha o
 | `Toggle` | O `Toggle` do Configurator liga e desliga a alavanca | 555 |
 | Ordem | Alavanca (#130), botão (#131) e placa de pressão (#132) | 558 |
 
+## Uso e comportamento
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Mão vazia | A mão vazia, ou um item que não seja o Configurator, liga e desliga a alavanca, como a do jogo. O Configurator segue a base dos Signal Modules | 576 |
+| Quem usa | Só o dono, como nos Signal Modules; os outros veem `Only the player who placed this module can change it.` | 577 |
+| Rede `Offline` | A alavanca liga e desliga sempre; o canal só não conta enquanto a rede está `Offline`. Pela borda, funciona normalmente | 578 |
+| Save | `on`, um booleano, no NBT da parte. O `powered` da base continua sendo o visual da saída, derivado. Fica fixado na #26 | 579 |
+| Som | O clique da alavanca do jogo (`LEVER_CLICK`), mais alto ao ligar e mais baixo ao desligar | 580 |
+| Luz | Mostra o estado da alavanca, sempre: verde ligada e vermelha desligada. O que não chega ao canal aparece no rótulo e na tela | 581 |
+| Centro da tela | A força de 1 a 15 num seletor `−` / `+` e o estado `On` ou `Off`, sem botão para ligar | 582 |
+| Rótulo | `On` ou `Off` e o canal da saída, como os módulos | 582 |
+
+## Testes
+
+- **JUnit:** a regra da alavanca em `domain/module/`: o estado, a força e a saída.
+- **GameTests:** o clique à mão, o dono, a saída pela borda e pelo canal, a força, o save e o `Toggle`.
+- **Roteiro manual:** a arte, a luz e o som (pergunta 583).
+
 ## Arte
 
 A arte segue as perguntas 185 e 186: o agente escreve o prompt em `tmp/arte/signal_lever/` (pergunta 550), o desenvolvedor gera a imagem, e o agente a confere.
@@ -46,5 +65,6 @@ A arte segue as perguntas 185 e 186: o agente escreve o prompt em `tmp/arte/sign
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 11:47 | Registra as decisões 576 a 583, do uso, do save, do som, da luz, da tela e dos testes. |
 | Zennd | 2026-11-14 21:22 | Fecha o conceito com as respostas 549 a 558. |
 | Zennd | 2026-11-14 21:14 | Cria o conceito, com a decisão 548 e as perguntas pendentes 549 a 555 e 558. |
