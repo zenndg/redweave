@@ -41,13 +41,13 @@ As decisões do [Signal Lever](alavanca.md) que valem para a placa: a força na 
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Mão | O clique à mão não faz nada, sem mensagem, como a placa do jogo. Quem pisa pode ser qualquer player ou mob do modo, não só o dono | 606 |
-| O que conta | `Players` (`Players`): qualquer player, menos o espectador. `Passive` (`Passivos`): toda criatura viva que não é player nem tem a marca `Enemy` do jogo, como animais, aldeões, golems e peixes. `Hostile` (`Hostis`): toda criatura com a marca `Enemy`, como zumbi, creeper e slime, incluindo o enderman e o piglin zumbificado. `Items` (`Itens`): itens soltos no chão. Flechas e outras entidades não contam | 605 e 621 |
+| O que conta | `Players` (`Players`): qualquer player, menos o espectador. `Passive` (`Passivos`): toda criatura viva que não é player nem tem a marca `Enemy` do jogo, como animais, aldeões, golems e peixes. `Hostile` (`Hostis`): toda criatura com a marca `Enemy`, como zumbi, creeper e slime, incluindo o enderman e o piglin zumbificado. `Items` (`Itens`): itens soltos no chão. Flechas, outras entidades e o suporte de armadura não contam | 605, 621 e 624 |
 | Detecção | Liga no contato, na área da placa (10 × 10 px) até 4 px acima. Enquanto ligada, confere de novo a cada `pressure_plate.check_ticks` (20 ticks, 1 s) e solta quando não há mais nada do modo sobre ela | 607 |
 | Save | `on`, `strength` e `mode` (`players`, `passive`, `hostile` ou `items`), fixados na #26 | 608 e 621 |
 | Som | O da placa de pressão de pedra do jogo (`STONE_PRESSURE_PLATE_CLICK_ON` e `_OFF`) | 609 |
-| Visual | A peça da placa afunda 1 px quando ligada, e a luz fica verde | 609 |
+| Visual | A sapata afunda quando ligada e fica 0,25 px acima da placa, o que parece rente sem piscar, e a luz fica verde | 609 e 625 |
 | Rótulo | O nome e, embaixo, `On` ou `Off`, o modo e o canal | 609 |
-| Fora do chão | Recusada: o item fica na mão, e a action bar mostra `The Signal Pressure Plate only goes on the floor.` | 611 |
+| Fora do chão | Recusada: o item fica na mão, e a action bar mostra `The Signal Pressure Plate only goes on the floor.` (`A Placa de Pressão de Sinal só vai no chão.`) | 611 e 626 |
 
 ## Arte
 
@@ -62,6 +62,7 @@ A arte segue as perguntas 185 e 186: o agente escreve o prompt em `tmp/arte/sign
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, do suporte de armadura, da sapata e da mensagem. |
 | Zennd | 2026-11-15 14:49 | Troca os modos por `Players`, `Passive`, `Hostile` e `Items` (pergunta 621). |
 | Zennd | 2026-11-15 14:26 | Fecha o conceito com as respostas 602 a 612: os modos, o Toggle, a detecção, o save, o visual e a ordem. |
 | Zennd | 2026-11-14 21:22 | Fecha o conceito com as respostas 549 a 558. |

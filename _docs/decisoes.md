@@ -593,6 +593,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Regras do giro | Continuam: dono, `Offline` e `Output: <borda>` | 619 |
 | Testes da #136 | GameTests e roteiro manual | 620 |
 | Modos da placa de pressão | `Players`, `Passive`, `Hostile` e `Items`, pela marca `Enemy` do jogo; em português `Players`, `Passivos`, `Hostis` e `Itens`; salvos como `players`, `passive`, `hostile` e `items`; muda a 602, a 603, a 605 e a 608 | 621 a 623 |
+| Suporte de armadura na placa | Não conta em nenhum modo | 624 |
+| Sapata ligada | 0,25 px acima da placa, para não piscar | 625 |
+| Placa fora do chão, em português | `A Placa de Pressão de Sinal só vai no chão.` | 626 |
 
 Não há perguntas pendentes da concepção.
 
@@ -600,6 +603,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, da placa de pressão. |
 | Zennd | 2026-11-15 14:49 | Registra as decisões 621 a 623, dos modos da placa de pressão. |
 | Zennd | 2026-11-15 14:37 | Atualiza os resumos do giro e dos modos mudados pela #136 (perguntas 399, 403, 431 e 241). |
 | Zennd | 2026-11-15 14:30 | Registra as decisões 613 a 620, do modo Rotate. |

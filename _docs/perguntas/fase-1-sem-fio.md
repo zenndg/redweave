@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 626 | Qual a mensagem em português ao tentar colocar o Signal Pressure Plate fora do chão? | `A Placa de Pressão de Sinal só vai no chão.`, a tradução de `The Signal Pressure Plate only goes on the floor.` (pergunta 611) |
+| 625 | A sapata do Signal Pressure Plate ligada fica 0,25 px acima da placa, em vez de rente, para evitar que duas superfícies na mesma altura pisquem. Fica assim? | Sim: ligada, a sapata afunda 0,75 px e fica 0,25 px acima da placa, o que parece rente e não pisca. Completa a pergunta 609 |
+| 624 | O suporte de armadura, que o jogo trata como entidade viva, conta no modo `Passive` do Signal Pressure Plate? | Não: `Passive` quer dizer criaturas, e o suporte de armadura não liga a placa em nenhum modo. Completa a pergunta 621 |
 | 623 | Quais valores o NBT `mode` do Signal Pressure Plate guarda? | `players`, `passive`, `hostile` e `items`, os nomes em inglês em `snake_case`, como os outros valores salvos do mod. Ficam fixados na #26 (regra 15). Confirma a pergunta 621 |
 | 622 | Como ficam os nomes dos modos do Signal Pressure Plate em português? | `Players`, igual ao resto do mod, `Passivos`, `Hostis` e `Itens`. Confirma a pergunta 621 |
 | 621 | Quais são os modos do Signal Pressure Plate, com animais, mobs neutros ou passivos e mobs hostis separados? | Quatro, um por vez, nesta ordem no `Toggle`: `Players` (`Players`), qualquer player menos o espectador, o padrão; `Passive` (`Passivos`), toda criatura viva que não é player nem tem a marca `Enemy` do jogo, como animais, aldeões, golems e peixes; `Hostile` (`Hostis`), toda criatura com a marca `Enemy`, como zumbi, creeper e slime, incluindo o enderman e o piglin zumbificado, que o jogo marca como `Enemy`; e `Items` (`Itens`), os itens soltos no chão. Os valores salvos em `mode` são `players`, `passive`, `hostile` e `items`. Flechas e outras entidades não contam. Muda as perguntas 602, 603, 605 e 608 |
@@ -623,6 +626,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:05 | Registra as respostas 624 a 626, da placa de pressão. |
 | Zennd | 2026-11-15 14:49 | Registra as respostas 621 a 623, dos quatro modos da placa de pressão. |
 | Zennd | 2026-11-15 14:30 | Registra as respostas 613 a 620, do modo Rotate do Configurator. |
 | Zennd | 2026-11-15 14:25 | Registra as respostas 602 a 612, do Signal Pressure Plate e do modo de girar. |
