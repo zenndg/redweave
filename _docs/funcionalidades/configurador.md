@@ -1,10 +1,10 @@
 # Configurador
 
-O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes, e abre, gira, alterna e retira os Signal Modules (perguntas 393, 395 e 399). Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
+O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes, abre, gira, alterna e retira os Signal Modules (perguntas 393, 395 e 399), e retira os Signal Cables (pergunta 525). Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
 
 ## Em uma frase
 
-Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela e, com Shift, gira a placa, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 393, 395 e 399).
+Com o Configurator na mão, Shift + scroll escolhe o modo: `Open` abre a Tela do Nó, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela e, com Shift, gira a placa, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 393, 395 e 399). Num Signal Cable, só o `Wrench` faz algo: retira o cabo (pergunta 525).
 
 ## Modos
 
@@ -18,6 +18,8 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Copy
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
 Num Signal Module, o `Open` abre a tela e, com Shift, gira a placa 90°; o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer; o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
+
+Num [Signal Cable](signal-cable.md), o `Wrench` o retira, e `Open`, `Copy` e `Toggle` não fazem nada, porque o cabo não tem tela nem estado (pergunta 525). Num espaço com várias partes, o clique vale só para a parte sob a mira (pergunta 515).
 
 Em qualquer modo, o Shift + clique no ar apaga a cópia (pergunta 128). O clique em qualquer outro bloco não faz nada, para um Shift + clique num bloco não apagar a cópia por engano.
 
@@ -35,6 +37,8 @@ Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `c
 Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276).
 
 Cada Signal Module dentro do mesmo raio também mostra um rótulo de duas linhas: o nome do módulo e, embaixo, o estado e o canal da saída, se ela estiver num canal (pergunta 417).
+
+Cada Signal Cable dentro do mesmo raio mostra um rótulo de uma linha: um quadradinho na cor do cabo, o número e o nome da cor e a força, como `15 Red · 12` (pergunta 525). Num espaço com mais de uma parte com rótulo, cada rótulo se desloca para o lado da sua parte (pergunta 547).
 
 O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
@@ -67,6 +71,8 @@ No modo `Wrench`, o clique num nó o retira como item, que vai para o inventári
 
 Só o dono usa a Chave: o dono da rede do nó e, num nó sem rede, quem o colocou, gravado no bloco com a chave de NBT `owner` (perguntas 162, 165 e 189). Um nó colocado antes do `owner` não tem quem o colocou, e a Chave recusa para todos; a mão ainda o quebra (perguntas 74 e 193). A Chave vale para o Signal Node e para os Signal Modules ([`modulos-de-sinal.md`](modulos-de-sinal.md)); o Network Controller e o Network Terminal saem só quebrando (pergunta 164).
 
+Num Signal Cable, a Chave retira o cabo e manda o item, com a cor, para o inventário, ou para o chão se não houver espaço. Só quem colocou o cabo o retira no survival; no criativo, qualquer um (perguntas 525 e 526).
+
 ## Mensagens
 
 Na action bar, em inglês e em português (perguntas 108 e 143).
@@ -90,10 +96,12 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Retirar | Retirou | `Node picked up` |
 | Retirar | Não é dono da rede | `Only the owner of <rede> can change this node.` |
 | Retirar | Nó sem rede, de outro player | `Only the player who placed this node can pick it up.` |
+| Retirar | Retirou um cabo | `Cable picked up` |
+| Retirar | Cabo de outro player | `Only the player who placed this cable can pick it up.` |
 | Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
-O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click to open a node or module, Shift + click to turn a module.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node or module to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241 e 430).
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click to open a node or module, Shift + click to turn a module.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node, module or cable to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241 e 430).
 
 ## Item
 
@@ -120,6 +128,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:34 | Leva o Signal Cable à Chave, ao rótulo e às dicas (perguntas 525, 526 e 547). |
 | Zennd | 2026-11-14 19:21 | Leva os Signal Modules à Chave e aos modos do Configurator. |
 | Zennd | 2026-11-14 12:31 | Leva os módulos às dicas do tooltip (pergunta 430). |
 | Zennd | 2026-11-14 09:46 | Leva os modos e o rótulo aos Signal Modules, da #103 (perguntas 393, 395, 399 e 417). |

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "signal_cable",
+  "key": {
+    "#": {
+      "item": "redweave:signal_cable"
+    },
+    "D": {
+      "item": "minecraft:cyan_dye"
+    }
+  },
+  "pattern": [
+    "###",
+    "#D#",
+    "###"
+  ],
+  "result": {
+    "components": {
+      "redweave:cable_color": "cyan"
+    },
+    "count": 8,
+    "id": "redweave:signal_cable"
+  }
+}

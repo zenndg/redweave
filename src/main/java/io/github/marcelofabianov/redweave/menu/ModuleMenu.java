@@ -1,6 +1,6 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import net.minecraft.core.BlockPos;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
  * names and the network choice of its module in sync (answers 400 and 404).
  */
 public interface ModuleMenu {
-  BlockPos pos();
+  PartSpot spot();
 
   boolean stillValid(Player player);
 

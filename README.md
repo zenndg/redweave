@@ -46,7 +46,7 @@ Redweave brings those ideas together, focused on **signal only** (items, fluids 
 | **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and has 16 channel slots, one per channel color, each enabled or disabled. |
 | **Channel** | One of the 16 signal lines of a network, each with a wool color and an optional name. Each node slot is tied to one channel and sets its direction (input or output) and block face. Several inputs on one channel → the strongest signal wins. |
 | **Signal Module** | A plate that attaches to any face of any block, like a node, and holds signal logic: timer, inverter, gate, counter, memory, latch and more. Its inputs and output are the edges of the plate or network channels. |
-| **Signal Cable** | Coming in v0.1.0 (#44 and #45): a physical redstone cable that attaches to any face of any block and works like vanilla redstone dust. One item, white at first, dyed in 16 colors; a cable only connects to cables of its own color, so cables of different colors run side by side. |
+| **Signal Cable** | In v0.1.0 (#44): a physical redstone cable that attaches to any face of any block and works like vanilla redstone dust. One item, white at first, dyed in 16 colors; a cable only connects to cables of its own color and owner, so cables of different colors run side by side, and it loses 1 of strength per block, as dust does. |
 | **Part** | From v0.1.0 (#44), nodes, modules and cables are parts: up to six share one block space, one per face, with at most two cables. |
 | **Chip** | A circuit of gates designed in the Circuit Editor and saved into an item, with a name and icon. It runs as a single high-performance piece. |
 
@@ -64,7 +64,7 @@ flowchart LR
 | Phase | Theme | Delivers |
 | --- | --- | --- |
 | **1 · Wireless** (MVP, v0.1.0) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
-| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable |
+| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; a lever, a button and a pressure plate with a wireless or redstone output |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Integrations | More mod integrations and the port to 26.x |
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |
@@ -127,11 +127,14 @@ src/main/java/io/github/marcelofabianov/redweave/
 │   ├── network/             # Network aggregate, Node, Channel, permissions
 │   ├── circuit/             # AND, OR, XOR and NAND gates and the NOT rule; chips in phase 3
 │   ├── module/              # Signal Module rules: connections, the shared interval and the rules of each module
+│   ├── part/                # multipart occupancy: one part per face, at most two cables
+│   ├── cable/               # Signal Cable runs: which cables join and the strength of each
 │   └── simulation/          # tick evaluator, loop and oscillation detection
 ├── application/             # use cases (one per player action) and their ports
 ├── config/                  # server config, implements the domain limits
 ├── registry/                # blocks, items, data components, menus
 ├── block/ item/ menu/       # world adapters: blocks, block entities, items, menus
+│   └── block/part/          # the parts of a block space: node, modules and cable
 ├── network/                 # packets, validated on the server
 ├── server/                  # per-server state: networks and use cases
 ├── compat/                  # Jade and The One Probe, optional (planned)

@@ -1,20 +1,20 @@
 package io.github.marcelofabianov.redweave.menu;
 
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.TimerState;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 
@@ -24,28 +24,28 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class TimerMenu extends AbstractContainerMenu
     implements NetworkChoiceMenu, ModuleMenu {
-  private final BlockPos pos;
-  private final ContainerLevelAccess access;
+  /** The reach of a player to a block, with the slack of the game for an open screen. */
+  private static final double INTERACTION_SLACK = 4.0;
+
+  private final PartSpot spot;
   private final ContainerData data;
   private final Optional<ServerPlayer> viewer;
   private final ModuleScreenSync sync;
 
   /** On the server, with the live values read from the block. */
-  public TimerMenu(int id, ServerPlayer player, BlockPos pos) {
+  public TimerMenu(int id, ServerPlayer player, PartSpot spot) {
     super(RedweaveMenus.TIMER.get(), id);
-    this.pos = pos;
-    this.access = ContainerLevelAccess.create(player.level(), pos);
-    this.data = new TimerScreenData(player, pos);
+    this.spot = spot;
+    this.data = new TimerScreenData(player, spot);
     this.viewer = Optional.of(player);
-    this.sync = ModuleScreenSync.onServer(player, pos, id);
+    this.sync = ModuleScreenSync.onServer(player, spot, id);
     addDataSlots(data);
   }
 
   /** On the client, with the position and the names the server sent when opening. */
   public TimerMenu(int id, Inventory inventory, RegistryFriendlyByteBuf extra) {
     super(RedweaveMenus.TIMER.get(), id);
-    this.pos = extra.readBlockPos();
-    this.access = ContainerLevelAccess.NULL;
+    this.spot = PartSpot.STREAM_CODEC.decode(extra);
     this.data = new SimpleContainerData(TimerScreenLayout.SIZE);
     this.viewer = Optional.empty();
     this.sync = ModuleScreenSync.onClient(id, extra);
@@ -54,9 +54,9 @@ public final class TimerMenu extends AbstractContainerMenu
 
   /** What the server writes when it opens the screen; the client puts its own menu ID. */
   public static void writeOpening(
-      RegistryFriendlyByteBuf extra, ServerPlayer player, BlockPos pos) {
-    extra.writeBlockPos(pos);
-    ModuleScreenSync.writeOpening(extra, player, pos);
+      RegistryFriendlyByteBuf extra, ServerPlayer player, PartSpot spot) {
+    PartSpot.STREAM_CODEC.encode(extra, spot);
+    ModuleScreenSync.writeOpening(extra, player, spot);
   }
 
   @Override
@@ -69,23 +69,24 @@ public final class TimerMenu extends AbstractContainerMenu
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, TimerAction action) {
     if (action.kind() != TimerAction.Kind.CHOOSE) {
-      TimerScreenActions.apply(player, pos, action);
+      TimerScreenActions.apply(player, spot, action);
       return;
     }
     sync.choiceAt(action.value())
-        .ifPresent(network -> ModuleScreenActions.choose(player, pos, network));
+        .ifPresent(network -> ModuleScreenActions.choose(player, spot, network));
   }
 
   /** Sends the names and the network choice again when they change. */
   @Override
   public void broadcastChanges() {
     super.broadcastChanges();
-    viewer.ifPresent(player -> sync.broadcast(player, pos, containerId));
+    viewer.ifPresent(player -> sync.broadcast(player, spot, containerId));
   }
 
   @Override
   public boolean stillValid(Player player) {
-    return stillValid(access, player, RedweaveBlocks.SIGNAL_TIMER.get());
+    return ModulePart.at(player.level(), spot, TimerPart.class).isPresent()
+        && player.canInteractWithBlock(spot.pos(), INTERACTION_SLACK);
   }
 
   @Override
@@ -99,8 +100,8 @@ public final class TimerMenu extends AbstractContainerMenu
   }
 
   @Override
-  public BlockPos pos() {
-    return pos;
+  public PartSpot spot() {
+    return spot;
   }
 
   @Override

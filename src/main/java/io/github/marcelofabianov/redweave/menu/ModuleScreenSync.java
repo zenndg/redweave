@@ -1,11 +1,11 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.NetworkChoice;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -26,8 +26,8 @@ public final class ModuleScreenSync {
   }
 
   /** On the server, with the names read from the block. */
-  static ModuleScreenSync onServer(ServerPlayer player, BlockPos pos, int menu) {
-    return new ModuleScreenSync(ModuleScreenNames.read(player, pos, menu));
+  static ModuleScreenSync onServer(ServerPlayer player, PartSpot spot, int menu) {
+    return new ModuleScreenSync(ModuleScreenNames.read(player, spot, menu));
   }
 
   /** On the client, with the names the server sent when opening and the menu ID of the client. */
@@ -39,18 +39,18 @@ public final class ModuleScreenSync {
   }
 
   /** What the server writes when it opens the screen, after the position. */
-  static void writeOpening(RegistryFriendlyByteBuf extra, ServerPlayer player, BlockPos pos) {
-    ModuleScreenNames.STREAM_CODEC.encode(extra, ModuleScreenNames.read(player, pos, 0));
+  static void writeOpening(RegistryFriendlyByteBuf extra, ServerPlayer player, PartSpot spot) {
+    ModuleScreenNames.STREAM_CODEC.encode(extra, ModuleScreenNames.read(player, spot, 0));
   }
 
   /** Sends the names and the network choice again when they change. */
-  void broadcast(ServerPlayer player, BlockPos pos, int menu) {
-    ModuleScreenNames now = ModuleScreenNames.read(player, pos, menu);
+  void broadcast(ServerPlayer player, PartSpot spot, int menu) {
+    ModuleScreenNames now = ModuleScreenNames.read(player, spot, menu);
     if (!now.equals(names)) {
       names = now;
       ModuleScreenNames.send(player, now);
     }
-    List<NetworkChoice> nowChoices = ModuleScreenActions.choices(player, pos);
+    List<NetworkChoice> nowChoices = ModuleScreenActions.choices(player, spot);
     if (!nowChoices.equals(choices)) {
       choices = nowChoices;
       NodeScreenChoices.send(player, menu, nowChoices);

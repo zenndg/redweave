@@ -1,9 +1,9 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -69,7 +68,7 @@ public final class SignalTimerTickGameTests {
     helper
         .startSequence()
         .thenWaitUntil(() -> lamp(helper, LAMP_IN_FRONT, true))
-        .thenWaitUntil(() -> helper.assertBlockProperty(TIMER, SignalTimerBlock.POWERED, true))
+        .thenWaitUntil(() -> ModuleParts.assertPowered(helper, TIMER, true))
         .thenWaitUntil(() -> lamp(helper, LAMP_IN_FRONT, false))
         .thenSucceed();
   }
@@ -85,10 +84,10 @@ public final class SignalTimerTickGameTests {
 
     helper
         .startSequence()
-        .thenWaitUntil(() -> helper.assertBlockProperty(TIMER, SignalTimerBlock.RUNNING, true))
+        .thenWaitUntil(() -> ModuleParts.assertTimerRunning(helper, TIMER, true))
         .thenIdle(SETTLE_TICKS)
         .thenExecute(() -> helper.assertBlockProperty(LAMP_IN_FRONT, RedstoneLampBlock.LIT, false))
-        .thenExecute(() -> helper.assertBlockProperty(TIMER, SignalTimerBlock.POWERED, false))
+        .thenExecute(() -> ModuleParts.assertPowered(helper, TIMER, false))
         .thenExecute(() -> helper.setBlock(BEHIND, Blocks.AIR))
         .thenWaitUntil(() -> lamp(helper, LAMP_IN_FRONT, true))
         .thenSucceed();
@@ -140,7 +139,7 @@ public final class SignalTimerTickGameTests {
       for (net.minecraft.core.Direction face : net.minecraft.core.Direction.values()) {
         BlockPos plate = helper.absolutePos(STONE.relative(face));
         net.minecraft.core.Direction front =
-            helper.getLevel().getBlockState(plate).getValue(SignalTimerBlock.FRONT);
+            ModuleParts.only(helper, STONE.relative(face), TimerPart.class).front();
         for (net.minecraft.core.Direction side : net.minecraft.core.Direction.values()) {
           int expected = side == front.getOpposite() ? Signal.MAX.strength() : 0;
           helper.assertValueEqual(helper.getLevel().getSignal(plate, side), expected, ONLY_FRONT);
@@ -156,7 +155,7 @@ public final class SignalTimerTickGameTests {
 
     start(helper, tag -> tag.putUUID(NETWORK, DELETED));
 
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
+    TimerPart timer = ModuleParts.only(helper, TIMER, TimerPart.class);
     helper.succeedWhen(() ->
         helper.assertValueEqual(
             timer.module().flatMap(SignalModule::network), Optional.empty(), STILL_LINKED));
@@ -183,7 +182,7 @@ public final class SignalTimerTickGameTests {
         NODE_LAMP,
         net.minecraft.core.Direction.UP);
     NodeScene.choose(helper, owner, NODE_LAMP.above(), NodeScene.FIRST_CHOICE);
-    SignalNodeBlockEntity block = helper.getBlockEntity(NODE_LAMP.above());
+    NodePart block = NodeParts.only(helper, NODE_LAMP.above());
     return block.node().orElseThrow();
   }
 
@@ -197,12 +196,10 @@ public final class SignalTimerTickGameTests {
   }
 
   private static void startAt(GameTestHelper helper, BlockPos at, Consumer<CompoundTag> changes) {
-    SignalTimerBlockEntity timer = helper.getBlockEntity(at);
-    RegistryAccess registries = helper.getLevel().registryAccess();
-    CompoundTag tag = timer.saveWithoutMetadata(registries);
+    CompoundTag tag = ModuleParts.only(helper, at, ModulePart.class).save();
     tag.putBoolean(RUNNING, true);
     changes.accept(tag);
-    timer.loadWithComponents(tag, registries);
+    ModuleParts.reload(helper, at, tag);
   }
 
   private static void lamp(GameTestHelper helper, BlockPos lamp, boolean lit) {

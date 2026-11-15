@@ -1,9 +1,10 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ContainerData;
 
@@ -13,23 +14,23 @@ import net.minecraft.world.inventory.ContainerData;
  */
 final class TimerScreenData implements ContainerData {
   private final ServerPlayer viewer;
-  private final BlockPos pos;
+  private final PartSpot spot;
 
-  TimerScreenData(ServerPlayer viewer, BlockPos pos) {
+  TimerScreenData(ServerPlayer viewer, PartSpot spot) {
     this.viewer = viewer;
-    this.pos = pos;
+    this.spot = spot;
   }
 
   @Override
   public int get(int index) {
-    Optional<SignalTimerBlockEntity> block = block();
+    Optional<TimerPart> block = block();
     if (block.isEmpty()) {
       return ModuleScreenValues.NONE;
     }
     return switch (index) {
       case TimerScreenLayout.VIEWER_IS_OWNER -> block.get().isOwner(viewer) ? 1 : 0;
       case TimerScreenLayout.NETWORK_STATE ->
-          ModuleScreenValues.networkState(viewer, pos, block.get());
+          ModuleScreenValues.networkState(viewer, spot, block.get());
       case TimerScreenLayout.OUTPUT -> ModuleScreenValues.code(block.get().output());
       case TimerScreenLayout.PAUSE -> ModuleScreenValues.code(block.get().pause());
       default -> block.get().timer().map(timer -> ofTimer(timer, index)).orElse(0);
@@ -50,10 +51,8 @@ final class TimerScreenData implements ContainerData {
     return TimerScreenLayout.half(timer.elapsedTicks(), index, TimerScreenLayout.ELAPSED);
   }
 
-  private Optional<SignalTimerBlockEntity> block() {
-    return viewer.level().getBlockEntity(pos) instanceof SignalTimerBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private Optional<TimerPart> block() {
+    return ModulePart.at(viewer.level(), spot, TimerPart.class);
   }
 
   @Override

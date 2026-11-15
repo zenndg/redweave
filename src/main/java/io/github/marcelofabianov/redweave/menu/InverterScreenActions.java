@@ -1,8 +1,10 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import net.minecraft.core.BlockPos;
+import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -13,11 +15,12 @@ import net.minecraft.world.entity.player.Player;
 final class InverterScreenActions {
   private InverterScreenActions() {}
 
-  static void apply(Player player, BlockPos pos, InverterAction action) {
-    if (!(player.level().getBlockEntity(pos) instanceof SignalInverterBlockEntity block)
-        || block.module().isEmpty()) {
+  static void apply(Player player, PartSpot spot, InverterAction action) {
+    Optional<InverterPart> found = ModulePart.at(player.level(), spot, InverterPart.class);
+    if (found.isEmpty() || found.get().module().isEmpty()) {
       return;
     }
+    InverterPart block = found.get();
     PlayerId requester = new PlayerId(player.getUUID());
     switch (action.kind()) {
       case INPUT ->

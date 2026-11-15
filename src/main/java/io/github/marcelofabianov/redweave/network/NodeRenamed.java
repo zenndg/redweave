@@ -2,13 +2,13 @@ package io.github.marcelofabianov.redweave.network;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
  * open screen of that node, still within reach, and the domain checks the owner and the length of
  * node.name_length (rules 16 and 17). A text longer than the ceiling of the config never decodes.
  */
-public record NodeRenamed(BlockPos pos, String name) implements CustomPacketPayload {
+public record NodeRenamed(PartSpot spot, String name) implements CustomPacketPayload {
   private static final String ID = "node_renamed";
 
   public static final Type<NodeRenamed> TYPE =
@@ -29,8 +29,8 @@ public record NodeRenamed(BlockPos pos, String name) implements CustomPacketPayl
 
   public static final StreamCodec<RegistryFriendlyByteBuf, NodeRenamed> STREAM_CODEC =
       StreamCodec.composite(
-          BlockPos.STREAM_CODEC,
-          NodeRenamed::pos,
+          PartSpot.STREAM_CODEC,
+          NodeRenamed::spot,
           ByteBufCodecs.stringUtf8(RedweaveConfig.MAX_NAME),
           NodeRenamed::name,
           NodeRenamed::new);
@@ -44,10 +44,10 @@ public record NodeRenamed(BlockPos pos, String name) implements CustomPacketPayl
   static void receive(NodeRenamed renamed, Player player) {
     boolean screenOfTheNode =
         player.containerMenu instanceof NodeMenu menu
-            && menu.pos().equals(renamed.pos())
+            && menu.spot().equals(renamed.spot())
             && menu.stillValid(player);
     Optional<RedweaveServer> server = RedweaveServer.running();
-    Optional<NodeId> node = NodeSignals.nodeAt(player.level(), renamed.pos());
+    Optional<NodeId> node = NodeSignals.nodeAt(player.level(), renamed.spot());
     if (!screenOfTheNode || server.isEmpty() || node.isEmpty()) {
       return;
     }

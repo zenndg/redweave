@@ -2,7 +2,6 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import net.minecraft.core.BlockPos;
@@ -44,7 +43,7 @@ public final class WrenchGameTests {
 
     NodeScene.click(helper, owner, NODE);
 
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertAbsent(helper, NODE);
     helper.assertTrue(
         owner.getInventory().contains(new ItemStack(RedweaveItems.SIGNAL_NODE.get())),
         NOT_IN_INVENTORY);
@@ -63,7 +62,7 @@ public final class WrenchGameTests {
 
     NodeScene.click(helper, owner, NODE);
 
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertAbsent(helper, NODE);
     helper.assertFalse(
         helper
             .getLevel()
@@ -86,7 +85,7 @@ public final class WrenchGameTests {
 
     NodeScene.click(helper, stranger, NODE);
 
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertPresent(helper, NODE);
     helper.succeed();
   }
 
@@ -100,9 +99,9 @@ public final class WrenchGameTests {
     ConfiguratorGameTests.holdConfigurator(placer, ConfiguratorMode.WRENCH);
 
     NodeScene.click(helper, stranger, NODE);
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertPresent(helper, NODE);
     NodeScene.click(helper, placer, NODE);
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_NODE.get(), NODE);
+    NodeParts.assertAbsent(helper, NODE);
     helper.assertFalse(
         stranger.getInventory().contains(new ItemStack(RedweaveItems.SIGNAL_NODE.get())), PICKED);
     helper.assertTrue(

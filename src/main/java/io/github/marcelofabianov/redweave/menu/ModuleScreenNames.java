@@ -1,12 +1,12 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -49,11 +49,9 @@ public record ModuleScreenNames(
     return TYPE;
   }
 
-  static ModuleScreenNames read(ServerPlayer player, BlockPos pos, int menu) {
+  static ModuleScreenNames read(ServerPlayer player, PartSpot spot, int menu) {
     Optional<SignalModule> module =
-        player.level().getBlockEntity(pos) instanceof ModuleBlockEntity block
-            ? block.module()
-            : Optional.empty();
+        ModulePart.at(player.level(), spot, ModulePart.class).flatMap(ModulePart::module);
     String name = module.map(SignalModule::displayName).orElse(NONE);
     Optional<Network> network =
         module

@@ -1,9 +1,8 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.module.WeatherMode;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
@@ -15,7 +14,6 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -138,9 +136,9 @@ public final class WeatherDetectorTickGameTests {
    * small template, and a lit lamp, a solid block, would power the lamp next to it.
    */
   private static void powered(GameTestHelper helper, boolean rain, boolean thunder, boolean clear) {
-    helper.assertBlockProperty(RAIN_STONE.above(), WeatherDetectorBlock.POWERED, rain);
-    helper.assertBlockProperty(THUNDER_STONE.above(), WeatherDetectorBlock.POWERED, thunder);
-    helper.assertBlockProperty(CLEAR_STONE.above(), WeatherDetectorBlock.POWERED, clear);
+    ModuleParts.assertPowered(helper, RAIN_STONE.above(), rain);
+    ModuleParts.assertPowered(helper, THUNDER_STONE.above(), thunder);
+    ModuleParts.assertPowered(helper, CLEAR_STONE.above(), clear);
   }
 
   /** A node on top of a lamp, in the network, which feeds the lamp under it (answer 71). */
@@ -153,16 +151,14 @@ public final class WeatherDetectorTickGameTests {
         NODE_LAMP,
         net.minecraft.core.Direction.UP);
     NodeScene.choose(helper, owner, NODE_LAMP.above(), NodeScene.FIRST_CHOICE);
-    SignalNodeBlockEntity block = helper.getBlockEntity(NODE_LAMP.above());
+    NodePart block = NodeParts.only(helper, NODE_LAMP.above());
     return block.node().orElseThrow();
   }
 
   /** Changes the NBT of the detector, as a `/data merge` would. */
   private static void change(GameTestHelper helper, BlockPos at, Consumer<CompoundTag> changes) {
-    WeatherDetectorBlockEntity detector = helper.getBlockEntity(at);
-    RegistryAccess registries = helper.getLevel().registryAccess();
-    CompoundTag tag = detector.saveWithoutMetadata(registries);
+    CompoundTag tag = ModuleParts.only(helper, at, ModulePart.class).save();
     changes.accept(tag);
-    detector.loadWithComponents(tag, registries);
+    ModuleParts.reload(helper, at, tag);
   }
 }

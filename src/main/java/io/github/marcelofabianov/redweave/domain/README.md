@@ -13,6 +13,8 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
 | `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, e o Signal Randomizer, da #109 |
+| `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
+| `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
 ## Linguagem
 
@@ -96,6 +98,15 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
 | `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
+| `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
+| `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |
+| `PartSpace` | Em `part/`: as partes de um espaço de bloco, por face. `fit` diz se uma parte cabe, `with` a coloca e `without` a tira, sempre num espaço novo. Recusa mais de 2 cabos (`MAX_CABLES`) (perguntas 498 e 513) | #44 |
+| `Insulation` | Em `cable/`: a cor e o dono de um Signal Cable. `joins` só liga cabos da mesma cor e do mesmo dono. A cor reusa o `ChannelColor`, sem relação com os canais (perguntas 497, 501, 528 e 540) | #44 |
+| `CablePiece` | Em `cable/`: um cabo de um trecho, com o `Insulation` e a entrada, o sinal mais forte que ele lê ao lado (perguntas 507 e 508) | #44 |
+| `Passage` | Em `cable/`: como uma ligação passa de um cabo ao próximo. `NEXT_SPACE` perde 1, e `INNER_CURVE`, para outra face do mesmo espaço, não perde nada (perguntas 499 e 541) | #44 |
+| `CableLink` | Em `cable/`: a ligação de um cabo ao pedaço vizinho, com a `Passage` | #44 |
+| `CableGrid` | Em `cable/`: a porta com os cabos do mundo, por uma chave que o adaptador escolhe. Só dá pedaços carregados, então o trecho para na borda de um chunk descarregado (regra 6 e pergunta 529) | #44 |
+| `CableRun` | Em `cable/`: a força de cada cabo que uma mudança alcança, num passo só. `around` dá, para os pedaços até 15 espaços das mudanças (`REACH`), a maior entrada do trecho menos a distância, nunca abaixo de 0 (perguntas 499, 509 e 530) | #44 |
 
 ## Regras e porquês
 
@@ -161,5 +172,10 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Sem clima é 0 em todo modo:** onde o clima nunca muda, como no Nether, o `Clear` ficaria ligado para sempre, então `NONE` desliga todos os modos e tem um estado próprio (pergunta 464).
 - **Sorteio vem de quem chama:** o domínio não lê aleatoriedade, que seria uma dependência oculta, então o `Draws` é uma porta, e os testes sabem cada valor sorteado (pergunta 483).
 - **Intervalo num lugar só:** o timer e o Signal Randomizer ajustam o intervalo pela mesma regra, o `Interval`, cada um com os limites do seu config (perguntas 477 e 490).
+- **Face ocupada primeiro:** numa face já ocupada, a recusa é `FACE_TAKEN` mesmo com os 2 cabos no espaço, porque é a face que o player mirou que explica o clique recusado (pergunta 533).
+- **Ocupação no domínio:** o espaço só sabe o tipo de cada face. O que cada parte é e faz fica no adaptador e nas regras de cada uma, e o contêiner consulta o `PartSpace` antes de colocar (perguntas 512 e 538).
+- **Trecho num passo só:** o pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O `CableRun` dá o mesmo resultado de uma vez: espalha a força da maior entrada para baixo, e cada pedaço fica com o seu melhor valor uma vez só (pergunta 509).
+- **Busca até 30:** uma mudança só altera pedaços até 15 espaços dela, e as fontes desses pedaços estão até 15 além. Por isso a busca para em 30 e só grava até 15, mesmo num cabo enorme, sem número no config (pergunta 530).
+- **Isolamento no domínio:** o adaptador entrega todos os vizinhos, de qualquer cor e dono, e o `CableRun` só segue os que o `Insulation` liga, para a regra das cores e dos donos ficar num lugar só (perguntas 497 e 528).
 - **Sem `get*`:** `strength()`, não `getStrength()` (regra 11), conferido pelo ArchUnit.
 

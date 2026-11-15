@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
@@ -66,7 +66,7 @@ public final class InverterMenuGameTests {
     click(menu, viewer, InverterAction.choose(0));
     click(menu, viewer, red);
 
-    SignalInverterBlockEntity block = helper.getBlockEntity(INVERTER);
+    InverterPart block = ModuleParts.only(helper, INVERTER, InverterPart.class);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::network), Optional.of(network), NOT_JOINED);
     helper.assertValueEqual(menu.input(), Connection.on(ChannelColor.RED), NOT_JOINED);
@@ -108,7 +108,7 @@ public final class InverterMenuGameTests {
     click(menu, stranger, InverterAction.choose(0));
     click(menu, stranger, new InverterAction(InverterAction.Kind.OUTPUT, 1));
 
-    SignalInverterBlockEntity block = helper.getBlockEntity(INVERTER);
+    InverterPart block = ModuleParts.only(helper, INVERTER, InverterPart.class);
     helper.assertFalse(menu.viewerIsOwner(), STRANGER);
     helper.assertValueEqual(menu.output(), Connection.EDGE, STRANGER);
     helper.assertValueEqual(
@@ -147,7 +147,7 @@ public final class InverterMenuGameTests {
   }
 
   private static InverterMenu menuOf(GameTestHelper helper, ServerPlayer viewer) {
-    return new InverterMenu(MENU_ID, viewer, helper.absolutePos(INVERTER));
+    return new InverterMenu(MENU_ID, viewer, ModuleParts.spotOf(helper, INVERTER));
   }
 
   private static void click(InverterMenu menu, ServerPlayer viewer, InverterAction action) {

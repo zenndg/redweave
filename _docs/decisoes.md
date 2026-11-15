@@ -7,7 +7,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Escopo | Só sinal de redstone. Itens, fluidos e energia ficam com os mods de logística | 1 |
 | Linguagem | Java 21 | 2 |
 | Versão | 1.21.1 NeoForge e, depois, 26.x. Só os adapters mudam no port | 3 |
-| Multipart | Adiado para a Fase 4 | 4 |
+| Multipart | ~~Adiado para a Fase 4~~; mudada pela 516: entra na `v0.1.0`, na #44 | 4 |
 | Fio físico | ~~Só na Fase 4~~; mudada pela 516: entra na `v0.1.0` | 5 |
 | Integrações | Jade e The One Probe primeiro, opcionais e isolados em `compat/` | 6 |
 | Licença | LGPL-3.0 | 7 |
@@ -72,7 +72,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Nome em português | `Controlador de Rede` | 68 |
 | Aba do criativo | Aba própria `Redweave` | 69 |
 | Nó ligado ao colocar | Mudada pela 139: o nó nasce `No network` | 70, 139 |
-| Face do slot no mundo | Entrada lê o vizinho daquela face; saída energiza só o bloco de apoio, com força (262) | 71, 262 |
+| Face do slot no mundo | Entrada lê o vizinho daquela face; saída energiza só o bloco de apoio, com força (262), e troca sinal com o Signal Cable e o pó do jogo vizinhos na mesma face (574) | 71, 262 e 574 |
 | Blockstate do nó | `facing` e `powered`; o `powered` vira `signal` pela 99 | 72 |
 | Página do nó | `no-de-sinal.md` | 73 |
 | Quebrar um nó | Só o dono no survival; a queda sai da rede sem dono | 74 |
@@ -87,7 +87,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Usar um slot livre | Na primeira ativação, o canal vira entrada na face grudada (226, 228) | 83, 226, 228 |
 | Liberar um slot | Saiu com os 16 slots fixos; o canal é desativado | 84, 224, 319 |
 | Modo só leitura | Controles apagados e aviso com cadeado | 85 |
-| Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate | 86 |
+| Nó fora de alcance no mundo | Propriedade `out_of_range` no blockstate; desde a #44, campo da parte (534) | 86 e 534 |
 | Pontos dos slots | Os 4 primeiros canais ativos, na ordem das cores (229) | 87, 229 |
 | Onde salvar as redes | Um `SavedData` único no Overworld, `redweave_networks.dat` | 88 |
 | Formato do save | Codecs sobre `NbtOps`, com `version` e chaves estáveis; a leitura fica no slot | 89 |
@@ -264,7 +264,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Open` do Terminal | A Tela do Controlador fica ancorada no Terminal | 259 |
 | Fechar a tela aberta pelo Terminal | Esc fecha tudo | 260 |
 | Contagem do topo do Terminal | Singular e plural | 261 |
-| Emissão do Signal Node | Só no bloco de apoio, com força; muda a 71 | 262 |
+| Emissão do Signal Node | Só no bloco de apoio, com força; muda a 71. Pelos lados, só com o Signal Cable e o pó do jogo (574) | 262 e 574 |
 | Onde entra a emissão nova | Na #80 | 263 |
 | `Clear log` | Limpa o log da rede, só o dono, com confirmação no segundo clique, na #80 | 264 a 266 |
 | Visor do Configurator | Só a cor do modo e o pixel da cópia; o nome na action bar e no tooltip | 267 e 271 |
@@ -378,7 +378,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Ajuste do intervalo e do pulso | Só `−` e `+`: 0,1 s no clique, 1 s com Shift | 398 |
 | Rotação do módulo | Pela direção do player ao colocar; Shift + clique com o Configurator no `Open` gira 90° | 399 |
 | Rede e canal na tela do módulo | Escolha de rede e grade de 16 cores da Tela do Nó; seletor `Edge` ou `Channel` por conexão | 400, 420 |
-| Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco; animação só na tela | 401 |
+| Visual do Signal Timer no mundo | Seta, mostrador e dois LEDs por estado do bloco, desde a #44 por campos da parte (534); animação só na tela | 401 e 534 |
 | Módulo numa rede `Offline` | Como o nó: `Open` e `Toggle` não agem, `Wrench` sim | 402 |
 | Giro da placa | 90° no sentido horário, com som e `Output: <borda>` na action bar | 403 |
 | Tela do Signal Timer | Relógio com anel e botão à esquerda; intervalo, pulso e conexões à direita; rede e cadeado no rodapé; prancha por IA | 404, 420 |
@@ -510,6 +510,47 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Arquivo das perguntas do cabo | `fase-1-sem-fio.md` | 532 |
 | Face ocupada ou terceiro cabo | Não coloca, com aviso na action bar | 533 |
 | Visual das partes | Nos dados de cada parte, com os nomes dos estados do bloco de hoje; o contêiner monta o desenho. Muda as 72, 411, 428, 455, 471 e 488 | 534 |
+| Topo do cabo | Bordas do topo claras (`#E6E6E6`), para a cor aparecer viva de cima do filete | 535 |
+| Desenho do contêiner | Modelo dinâmico na malha do chunk, com os modelos JSON de cada parte | 536 |
+| Pacotes do domínio | `domain/part/` para a ocupação e `domain/cable/` para o trecho | 537 |
+| Partes no adaptador | `block/part/`, com a interface `Part` e uma classe por tipo | 538 |
+| Drop das partes | No código, sem loot table no `part_space` | 539 |
+| Domínio do trecho | `Insulation` (cor e dono) e `CableRun` (força pela entrada menos a distância); a cor reusa o `ChannelColor` | 540 |
+| Curva interna | Não perde força; o cabo perde 1 só entre espaços | 541 |
+| Passo 3 da #44 | O contêiner junto com o Signal Node como parte, num commit só | 542 |
+| NBT do contêiner | `parts`, com `type`, `face` e `data` aninhado | 543 |
+| Tipo da parte no save | O ID do item | 544 |
+| Clique numa parte | A parte é transparente: mira a face oposta do mesmo espaço | 545 |
+| `facing` do nó | Não vai para o save; sai da `face` do contêiner | 546 |
+| Rótulos no mesmo espaço | Cada um se desloca para o lado da sua parte | 547 |
+| Depois do Signal Cable | Alavanca, botão e placa de pressão, cada um na sua issue, com aparência 3D, indicador vermelho e verde e saída sem fio ou pela redstone | 548 |
+| Família da alavanca, do botão e da placa | Signal Modules de fonte | 549 |
+| Nomes | `Signal Lever`, `Signal Button` e `Signal Pressure Plate` | 550 |
+| Onde ficam | Partes de placa; a placa de pressão só no chão | 551 |
+| Força | Ajustável de 1 a 15, padrão 15 | 552 |
+| Saída pela redstone | Forte no bloco de apoio e pela borda da frente | 553 |
+| Indicador | Uma luz que troca de vermelho para verde, a mesma nos três | 554 |
+| Dono, rede e `Toggle` | Iguais aos módulos | 555 |
+| Tempo do botão | Ajustável na tela, padrão 1 s | 556 |
+| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players` | 557 |
+| Ordem | Alavanca, botão e placa de pressão | 558 |
+| `facing` dos módulos | Não vai para o save, como no nó | 559 |
+| `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
+| Cor do cabo no item | `redweave:cable_color`, com a chave da cor; o branco fica sem | 561 |
+| Receitas de tingir | Pelo datagen | 562 |
+| ID das receitas de tingir | `redweave:<cor>_signal_cable` | 563 |
+| Nome do cabo tingido | Com a cor; o branco é `Signal Cable`; as 16 na aba criativa | 564 |
+| Cabo e pó do jogo | O sinal perde 1 na passagem, como de pó para pó | 565 |
+| Cabo, nó e módulo na curva interna | O nó lê o cabo como o apoio, e o cabo lê o nó; o módulo, só pela borda que aponta para o cabo | 566 |
+| NBT do cabo | `color` e `owner` em `data`; a força não é salva | 567 |
+| Cabo solto | Energiza como o pó em cruz | 568 |
+| Componentes do cabo | Os mesmos do pó do jogo | 569 |
+| Cabo e energia de outro cabo | Ignora, como o pó do jogo, de qualquer cor ou dono | 570 |
+| Mira do cabo | Segue o desenho: o centro e os braços | 571 |
+| Curva externa e degrau do cabo | Como o pó: trecho na lateral no degrau, braços até a quina na curva | 572 |
+| Filete do cabo | No modelo do bloco, redesenhando a seção do chunk | 573 |
+| Nó e cabo no espaço vizinho | Trocam sinal como no mesmo espaço; muda a 262 só para o cabo e o pó | 574 |
+| Cabo encostando na placa vizinha | O braço passa 3 px da borda até a placa, só com troca de sinal | 575 |
 
 Não há perguntas pendentes da concepção.
 
@@ -517,6 +558,22 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:35 | Atualiza os resumos do nó e do Signal Timer mudados pelo multipart e pela 574 (perguntas 534 e 574). |
+| Zennd | 2026-11-15 09:08 | Registra a decisão 575. |
+| Zennd | 2026-11-15 09:07 | Registra a decisão 574, que muda a 262. |
+| Zennd | 2026-11-15 08:32 | Registra as decisões 571 a 573. |
+| Zennd | 2026-11-15 08:27 | Registra a decisão 570. |
+| Zennd | 2026-11-14 23:07 | Registra as decisões 567 a 569. |
+| Zennd | 2026-11-14 23:01 | Registra as decisões 565 e 566. |
+| Zennd | 2026-11-14 22:27 | Registra as decisões 561 a 564. |
+| Zennd | 2026-11-14 22:13 | Registra a decisão 560. |
+| Zennd | 2026-11-14 21:21 | Registra as decisões 549 a 559. |
+| Zennd | 2026-11-14 21:14 | Registra a decisão 548. |
+| Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547. |
+| Zennd | 2026-11-14 20:40 | Registra as decisões 542 a 545. |
+| Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541. |
+| Zennd | 2026-11-14 20:27 | Registra as decisões 536 a 539. |
+| Zennd | 2026-11-14 19:50 | Registra a decisão 535. |
 | Zennd | 2026-11-14 19:34 | Registra a decisão 534. |
 | Zennd | 2026-11-14 19:11 | Registra as decisões 531 a 533. |
 | Zennd | 2026-11-14 19:09 | Registra as decisões 527 a 530. |

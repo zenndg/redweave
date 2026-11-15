@@ -33,7 +33,7 @@ final class ConfiguratorEnglishTexts {
   private static final String HINT_OPEN = OPEN_CLICK + OPEN_SHIFT;
   private static final String HINT_TOGGLE_MODULE = "Click a module to start or stop it.";
   private static final String HINT_COPY = "Click a node to copy it, Shift + click to paste.";
-  private static final String HINT_WRENCH = "Click a node or module to pick it up.";
+  private static final String HINT_WRENCH = "Click a node, module or cable to pick it up.";
   private static final String HINT_SCROLL = "Shift + scroll to change the mode.";
 
   private ConfiguratorEnglishTexts() {}

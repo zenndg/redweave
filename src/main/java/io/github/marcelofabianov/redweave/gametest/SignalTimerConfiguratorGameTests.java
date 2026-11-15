@@ -1,20 +1,18 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -99,7 +97,7 @@ public final class SignalTimerConfiguratorGameTests {
     helper.assertValueEqual(frontOf(helper, TIMER), front, TURNED);
     ConfiguratorGameTests.holdConfigurator(stranger, ConfiguratorMode.WRENCH);
     NodeScene.click(helper, stranger, TIMER);
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_TIMER.get(), TIMER);
+    ModuleParts.assertPresent(helper, TIMER);
     helper.assertFalse(GameTestActions.breakBy(helper, stranger, TIMER), BROKEN);
     helper.assertTrue(GameTestActions.breakBy(helper, owner, TIMER), BROKEN);
     helper.succeed();
@@ -111,17 +109,17 @@ public final class SignalTimerConfiguratorGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     place(helper, owner, Direction.UP);
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.TOGGLE);
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
+    TimerPart timer = ModuleParts.only(helper, TIMER, TimerPart.class);
 
     NodeScene.click(helper, owner, TIMER);
 
     helper
         .startSequence()
         .thenExecute(() -> helper.assertTrue(isRunning(timer), NOT_RUNNING))
-        .thenWaitUntil(() -> helper.assertBlockProperty(TIMER, SignalTimerBlock.RUNNING, true))
+        .thenWaitUntil(() -> ModuleParts.assertTimerRunning(helper, TIMER, true))
         .thenExecute(() -> NodeScene.click(helper, owner, TIMER))
         .thenExecute(() -> helper.assertFalse(isRunning(timer), NOT_STOPPED))
-        .thenWaitUntil(() -> helper.assertBlockProperty(TIMER, SignalTimerBlock.RUNNING, false))
+        .thenWaitUntil(() -> ModuleParts.assertTimerRunning(helper, TIMER, false))
         .thenSucceed();
   }
 
@@ -141,7 +139,7 @@ public final class SignalTimerConfiguratorGameTests {
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.OPEN);
     NodeScene.shiftClick(helper, owner, TIMER);
 
-    helper.assertFalse(isRunning(helper.getBlockEntity(TIMER)), TOGGLED);
+    helper.assertFalse(isRunning(ModuleParts.only(helper, TIMER, TimerPart.class)), TOGGLED);
     helper.assertFalse(frontOf(helper, TIMER) == front, TURNED);
     helper.succeed();
   }
@@ -155,7 +153,7 @@ public final class SignalTimerConfiguratorGameTests {
 
     NodeScene.click(helper, owner, TIMER);
 
-    helper.assertBlockNotPresent(RedweaveBlocks.SIGNAL_TIMER.get(), TIMER);
+    ModuleParts.assertAbsent(helper, TIMER);
     helper.assertTrue(owner.getInventory().contains(timerItem()), NOT_PICKED);
     helper.succeed();
   }
@@ -167,18 +165,16 @@ public final class SignalTimerConfiguratorGameTests {
 
   /** Joins the timer to the network in its NBT; its screen comes later (answer 397). */
   private static void join(GameTestHelper helper, NetworkId network) {
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
-    RegistryAccess registries = helper.getLevel().registryAccess();
-    CompoundTag tag = timer.saveWithoutMetadata(registries);
+    CompoundTag tag = ModuleParts.only(helper, TIMER, ModulePart.class).save();
     tag.putUUID(NETWORK, network.value());
-    timer.loadWithComponents(tag, registries);
+    ModuleParts.reload(helper, TIMER, tag);
   }
 
   private static Direction frontOf(GameTestHelper helper, BlockPos plate) {
-    return helper.getBlockState(plate).getValue(SignalTimerBlock.FRONT);
+    return ModuleParts.only(helper, plate, TimerPart.class).front();
   }
 
-  private static boolean isRunning(SignalTimerBlockEntity timer) {
+  private static boolean isRunning(TimerPart timer) {
     return timer.timer().map(SignalTimer::isRunning).orElse(false);
   }
 

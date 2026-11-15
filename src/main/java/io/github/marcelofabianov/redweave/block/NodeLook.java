@@ -1,5 +1,7 @@
 package io.github.marcelofabianov.redweave.block;
 
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -8,10 +10,7 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * What a node looks like in the world: the ring when it is out of range (answer 86) and the color
@@ -20,29 +19,27 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class NodeLook {
   /** The corners of the plate show the first 4 enabled channels. */
-  static final int CORNERS = 4;
+  public static final int CORNERS = 4;
 
   /** A corner with no enabled channel, or of a node without a network. */
   public static final int FREE = -1;
 
   private NodeLook() {}
 
-  public static void refresh(RedweaveServer server, Level level, BlockPos pos) {
-    if (!(level.getBlockEntity(pos) instanceof SignalNodeBlockEntity entity)) {
+  public static void refresh(RedweaveServer server, Level level, PartSpot spot) {
+    Optional<PartSpaceBlockEntity> space = PartSpaceBlockEntity.at(level, spot.pos());
+    Optional<NodePart> part = NodePart.at(level, spot);
+    if (part.isEmpty()) {
       return;
     }
-    Optional<NodeId> id = entity.node();
+    Optional<NodeId> id = part.get().node();
     Optional<Network> network = id.flatMap(server::networkOfNode);
     Optional<Node> node = network.flatMap(found -> found.node(id.get()));
     boolean outOfRange =
         node.isPresent() && network.get().nodeState(id.get(), true) == NodeState.OUT_OF_RANGE;
-    BlockState state = level.getBlockState(pos);
-    if (state.getValue(SignalNodeBlock.OUT_OF_RANGE) != outOfRange) {
-      level.setBlock(
-          pos, state.setValue(SignalNodeBlock.OUT_OF_RANGE, outOfRange), Block.UPDATE_ALL);
-    }
-    if (entity.setCorners(corners(node))) {
-      level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
+    boolean ring = part.get().setOutOfRange(outOfRange);
+    if (part.get().setCorners(corners(node)) || ring) {
+      space.orElseThrow().changed();
     }
   }
 

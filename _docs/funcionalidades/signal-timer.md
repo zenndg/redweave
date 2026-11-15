@@ -63,8 +63,8 @@ Abre com o Configurator no `Open` (pergunta 393). As partes comuns estão em [`m
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Textura | A seta da saída, para a frente, centrada no mostrador do relógio, e o entalhe do `Pause`, atrás | 401 e 440 |
-| LEDs | Por estados do bloco: com `powered`, a seta fica vermelha durante o pulso, e com `running`, o LED verde marca o timer rodando. | 401, 439 e 440 |
-| Modelo | O blockstate só gira em `x` e `y`, então cada combinação dos LEDs tem duas versões, com o topo girado 0° ou 90° no UV, para cobrir as 24 orientações de `facing` e `front` | 429 |
+| LEDs | Por campos da parte: com `powered`, a seta fica vermelha durante o pulso, e com `running`, o LED verde marca o timer rodando. | 401, 439 e 440 |
+| Modelo | O modelo da placa só gira em `x` e `y`, como um blockstate, então cada combinação dos LEDs tem duas versões, com o topo girado 0° ou 90° no UV, para cobrir as 24 orientações de `facing` e `front`. Desde a #44, o contêiner do multipart aplica a rotação a cada parte | 429 e 536 |
 | Animação | Só na tela. A placa não tem renderer próprio, para muitos timers não custarem desempenho no cliente | 401 |
 | Rótulo | Com o Configurator na mão: o nome e, embaixo, `Running`, `Stopped` ou `Paused`, e o canal da saída, se houver | 417 |
 
@@ -81,7 +81,7 @@ Além do NBT comum dos [módulos](modulos-de-sinal.md#save) (pergunta 411):
 | `output` | A conexão `Output`: `edge` ou a chave da cor do canal |
 | `pause` | A conexão `Pause`: `edge` ou a chave da cor do canal |
 
-Os estados do bloco são `facing`, `front`, `powered` e `running` (pergunta 428). A partir da #44, esses estados viram campos da parte, com os mesmos nomes (pergunta 534).
+O visual usa `facing`, `front`, `powered` e `running` (pergunta 428). Desde a #44, são campos da parte, não estados do bloco: `facing` sai da `face` da parte no contêiner, e `front`, `powered` e `running` ficam no save, dentro de `data` (perguntas 534, 559 e 560).
 
 ## Config
 
@@ -110,6 +110,7 @@ Em `tmp/arte/signal_timer/`: a textura da placa de 16 px, nas 4 combinações de
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |
 | Zennd | 2026-11-14 13:43 | Centra a seta e tira o quadrado do canto (pergunta 440). |
 | Zennd | 2026-11-14 13:37 | A seta passa a marcar o pulso (pergunta 439). |

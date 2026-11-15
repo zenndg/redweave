@@ -10,6 +10,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Partes por face de um espaço de bloco | 1: um cabo, um nó ou um módulo (pergunta 513) | fixo, regra do multipart | 2 |
 | Signal Cables por espaço de bloco | 2 (pergunta 498) | fixo, regra do multipart | 2 |
 | Alcance do sinal no Signal Cable | 15 blocos, perdendo 1 por bloco, como o fio do jogo; sem limite de trecho (perguntas 499 e 530) | fixo, contrato com a redstone do jogo | 2 |
+| Busca do cálculo do Signal Cable | 30 espaços a partir do que mudou, o dobro do alcance, porque uma mudança só afeta pedaços a até 15 e as fontes deles estão a até 15 deles; grava só até 15 (pergunta 530) | fixo, derivado do alcance | 2 |
 | Intervalo do sinal | 0 a 15 | fixo, contrato com a redstone do jogo | 1 |
 | Avaliação da rede | 1 vez por tick, só com canal alterado | a definir | 1 |
 | Meta de carga | 1.000 nós numa rede sem impacto visível no MSPT | — | 1 |
@@ -19,7 +20,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Tamanho do nome do nó | 16 caracteres, de 1 a 64 (pergunta 144) | `node.name_length` | 1 |
 | Redes por player | 10, de 1 a 100; todas contam, inclusive as `Offline` e as `Unplaced` (pergunta 145) | `network.max_per_player` | 1 |
 | Linhas do log por rede | 100, de 10 a 1000, só em memória (pergunta 147) | `log.size` | 1 |
-| Raio do rótulo sobre os nós | 16 blocos, de 4 a 64 (pergunta 268) | `configurator.label_range` | 1 |
+| Raio do rótulo sobre os nós, os módulos e os cabos | 16 blocos, de 4 a 64 (perguntas 268, 417 e 525) | `configurator.label_range` | 1 |
 | Pulso do Signal Remote no modo botão | 20 ticks, de 2 a 200 (perguntas 353 e 318) | `remote.pulse_ticks` | 1 |
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
@@ -38,6 +39,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:34 | Adiciona a busca do cálculo do Signal Cable e leva o raio do rótulo aos módulos e aos cabos (perguntas 417, 525 e 530). |
 | Zennd | 2026-11-14 19:21 | Aponta o teste de carga da `v0.1.0` (#25). |
 | Zennd | 2026-11-14 19:14 | Adiciona os limites do multipart e do Signal Cable (perguntas 494, 498, 499, 513 e 530). |
 | Zennd | 2026-11-14 17:46 | Adiciona os intervalos do Signal Randomizer (pergunta 477). |

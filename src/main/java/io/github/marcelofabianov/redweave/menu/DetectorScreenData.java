@@ -1,8 +1,9 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ContainerData;
 
@@ -12,25 +13,25 @@ import net.minecraft.world.inventory.ContainerData;
  */
 final class DetectorScreenData implements ContainerData {
   private final ServerPlayer viewer;
-  private final BlockPos pos;
+  private final PartSpot spot;
 
-  DetectorScreenData(ServerPlayer viewer, BlockPos pos) {
+  DetectorScreenData(ServerPlayer viewer, PartSpot spot) {
     this.viewer = viewer;
-    this.pos = pos;
+    this.spot = spot;
   }
 
   @Override
   public int get(int index) {
-    Optional<WeatherDetectorBlockEntity> block = block();
+    Optional<DetectorPart> block = block();
     if (block.isEmpty()) {
       return ModuleScreenValues.NONE;
     }
-    WeatherDetectorBlockEntity found = block.get();
+    DetectorPart found = block.get();
     return switch (index) {
       case DetectorScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case DetectorScreenLayout.STATE -> found.detector().state(found.weather()).ordinal() + 1;
       case DetectorScreenLayout.NETWORK_STATE ->
-          ModuleScreenValues.networkState(viewer, pos, found);
+          ModuleScreenValues.networkState(viewer, spot, found);
       case DetectorScreenLayout.MODE -> found.detector().mode().ordinal() + 1;
       case DetectorScreenLayout.OUTPUT -> ModuleScreenValues.code(found.output());
       case DetectorScreenLayout.WEATHER -> found.weather().ordinal() + 1;
@@ -38,10 +39,8 @@ final class DetectorScreenData implements ContainerData {
     };
   }
 
-  private Optional<WeatherDetectorBlockEntity> block() {
-    return viewer.level().getBlockEntity(pos) instanceof WeatherDetectorBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private Optional<DetectorPart> block() {
+    return ModulePart.at(viewer.level(), spot, DetectorPart.class);
   }
 
   @Override

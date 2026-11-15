@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -110,8 +110,7 @@ public final class NetworkChoiceGameTests {
   }
 
   private static NodePosition positionOf(GameTestHelper helper) {
-    BlockPos pos = helper.absolutePos(NODE);
-    return SignalNodeBlock.positionOf(helper.getLevel(), pos, helper.getLevel().getBlockState(pos));
+    return NodePart.positionOf(helper.getLevel(), NodeParts.spotOf(helper, NODE));
   }
 
   private static Optional<NetworkId> networkIdOf(NodeId node) {

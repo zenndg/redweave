@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -60,7 +60,7 @@ final class NodeScene {
     helper.setBlock(stone, Blocks.STONE);
     ItemStack item = new ItemStack(RedweaveItems.SIGNAL_NODE.get());
     GameTestActions.placeOn(helper, owner, item, stone, face);
-    SignalNodeBlockEntity node = helper.getBlockEntity(stone.relative(face));
+    NodePart node = NodeParts.only(helper, stone.relative(face));
     return node.node().orElseThrow();
   }
 
@@ -73,7 +73,7 @@ final class NodeScene {
         FakePlayerFactory.get(
             helper.getLevel(), new GameProfile(player.getUUID(), player.getScoreboardName()));
     viewer.setPos(Vec3.atCenterOf(helper.absolutePos(node.above())));
-    NodeMenu menu = new NodeMenu(MENU_ID, viewer, helper.absolutePos(node));
+    NodeMenu menu = new NodeMenu(MENU_ID, viewer, NodeParts.spotOf(helper, node));
     menu.broadcastChanges();
     menu.clickMenuButton(viewer, NodeScreenCodes.button(NodeAction.choose(position)));
   }

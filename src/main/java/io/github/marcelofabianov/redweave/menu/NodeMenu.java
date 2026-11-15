@@ -1,21 +1,22 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.NetworkChoice;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,8 +29,10 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
   private static final int NO_STATE = 0;
   private static final String NO_NAME = "";
 
-  private final BlockPos pos;
-  private final ContainerLevelAccess access;
+  /** How far past the reach of the player the menu stays open, as the game does for blocks. */
+  private static final double INTERACTION_SLACK = 4.0;
+
+  private final PartSpot spot;
   private final ContainerData data;
   private final Optional<ServerPlayer> viewer;
   private NodeScreenNames names;
@@ -37,21 +40,19 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
   private List<NodeScreenChoices.Row> rows = List.of();
 
   /** On the server, with the live values read from the network. */
-  public NodeMenu(int id, ServerPlayer player, BlockPos pos) {
+  public NodeMenu(int id, ServerPlayer player, PartSpot spot) {
     super(RedweaveMenus.NODE.get(), id);
-    this.pos = pos;
-    this.access = ContainerLevelAccess.create(player.level(), pos);
-    this.data = new NodeScreenData(player, pos);
+    this.spot = spot;
+    this.data = new NodeScreenData(player, spot);
     this.viewer = Optional.of(player);
-    this.names = NodeScreenNames.read(player, pos, id);
+    this.names = NodeScreenNames.read(player, spot, id);
     addDataSlots(data);
   }
 
   /** On the client, with the position and the names the server sent when opening. */
   public NodeMenu(int id, Inventory inventory, RegistryFriendlyByteBuf extra) {
     super(RedweaveMenus.NODE.get(), id);
-    this.pos = extra.readBlockPos();
-    this.access = ContainerLevelAccess.NULL;
+    this.spot = PartSpot.STREAM_CODEC.decode(extra);
     this.data = new SimpleContainerData(NodeScreenLayout.SIZE);
     this.viewer = Optional.empty();
     NodeScreenNames opening = NodeScreenNames.STREAM_CODEC.decode(extra);
@@ -71,9 +72,9 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
    * not known yet, so the client puts its own.
    */
   public static void writeOpening(
-      RegistryFriendlyByteBuf extra, ServerPlayer player, BlockPos pos) {
-    extra.writeBlockPos(pos);
-    NodeScreenNames.STREAM_CODEC.encode(extra, NodeScreenNames.read(player, pos, 0));
+      RegistryFriendlyByteBuf extra, ServerPlayer player, PartSpot spot) {
+    PartSpot.STREAM_CODEC.encode(extra, spot);
+    NodeScreenNames.STREAM_CODEC.encode(extra, NodeScreenNames.read(player, spot, 0));
   }
 
   @Override
@@ -86,11 +87,11 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, NodeAction action) {
     if (action.kind() != NodeAction.Kind.CHOOSE) {
-      NodeScreenActions.apply(player, pos, action);
+      NodeScreenActions.apply(player, spot, action);
       return;
     }
     if (action.index() < choices.size()) {
-      NodeScreenActions.choose(player, pos, choices.get(action.index()).id());
+      NodeScreenActions.choose(player, spot, choices.get(action.index()).id());
     }
   }
 
@@ -102,12 +103,12 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
   public void broadcastChanges() {
     super.broadcastChanges();
     viewer.ifPresent(player -> {
-      NodeScreenNames now = NodeScreenNames.read(player, pos, containerId);
+      NodeScreenNames now = NodeScreenNames.read(player, spot, containerId);
       if (!now.equals(names)) {
         names = now;
         NodeScreenNames.send(player, now);
       }
-      List<NetworkChoice> nowChoices = NodeScreenChoices.read(player, pos);
+      List<NetworkChoice> nowChoices = NodeScreenChoices.read(player, spot);
       if (!nowChoices.equals(choices)) {
         choices = nowChoices;
         NodeScreenChoices.send(player, containerId, nowChoices);
@@ -117,7 +118,8 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
 
   @Override
   public boolean stillValid(Player player) {
-    return stillValid(access, player, RedweaveBlocks.SIGNAL_NODE.get());
+    return NodePart.at(player.level(), spot).isPresent()
+        && player.canInteractWithBlock(spot.pos(), INTERACTION_SLACK);
   }
 
   @Override
@@ -134,8 +136,17 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
     rows = received;
   }
 
-  public BlockPos pos() {
-    return pos;
+  public PartSpot spot() {
+    return spot;
+  }
+
+  /** Opens the Node Screen, from the Configurator in the Open mode (answer 140). */
+  public static void open(ServerPlayer viewer, PartSpot spot) {
+    viewer.openMenu(
+        new SimpleMenuProvider(
+            (id, inventory, opener) -> new NodeMenu(id, viewer, spot),
+            RedweaveItems.SIGNAL_NODE.get().getDescription()),
+        extra -> writeOpening(extra, viewer, spot));
   }
 
   public String nodeName() {

@@ -2,7 +2,8 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
@@ -36,6 +37,9 @@ public final class ModuleLabelGameTests {
   private static final int NO_CHANNEL = -1;
   private static final String NOT_SENT = "The holder should get the name and state of the timer";
   private static final String NOT_CHANGED = "A timer started should send its new state";
+  private static final BlockPos WALL = TIMER.north();
+  private static final String NOT_SHARED = "Each label of a shared space should move to its side";
+  private static final String NOT_RESENT = "A second part in the space should resend the first";
 
   private ModuleLabelGameTests() {}
 
@@ -46,7 +50,7 @@ public final class ModuleLabelGameTests {
     helper.setBlock(STONE, Blocks.STONE);
     GameTestActions.placeOn(
         helper, owner, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), STONE, Direction.UP);
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
+    TimerPart timer = ModuleParts.only(helper, TIMER, TimerPart.class);
     ServerPlayer holder = holder(helper);
 
     UUID id = timer.module().orElseThrow().id().value();
@@ -59,13 +63,63 @@ public final class ModuleLabelGameTests {
         first,
         Optional.of(
             new NodeLabelsUpdate.ModuleLine(
-                id, helper.absolutePos(TIMER), name, TimerScreenTexts.STOPPED, NO_CHANNEL)),
+                id, alone(helper), name, TimerScreenTexts.STOPPED, NO_CHANNEL)),
         NOT_SENT);
     helper.assertValueEqual(
         after.map(NodeLabelsUpdate.ModuleLine::state),
         Optional.of(TimerScreenTexts.RUNNING),
         NOT_CHANGED);
     helper.succeed();
+  }
+
+  /**
+   * A second labeled part in the space sends both labels again, each with the side of its own part
+   * and marked as shared, so the client moves them apart (answer 547).
+   */
+  @GameTest(template = EMPTY)
+  public static void twoModulesInOneSpaceShareIt(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    helper.setBlock(STONE, Blocks.STONE);
+    helper.setBlock(WALL, Blocks.STONE);
+    GameTestActions.placeOn(
+        helper, owner, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), STONE, Direction.UP);
+    UUID floor = idOf(ModuleParts.only(helper, TIMER, TimerPart.class));
+    ServerPlayer holder = holder(helper);
+    Optional<NodeLabelsUpdate.ModuleLine> before =
+        lineOf(server().labelWatch().update(holder), floor);
+
+    GameTestActions.placeOn(
+        helper, owner, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), WALL, Direction.SOUTH);
+    Optional<NodeLabelsUpdate> after = server().labelWatch().update(holder);
+
+    helper.assertValueEqual(
+        before.map(NodeLabelsUpdate.ModuleLine::place), Optional.of(alone(helper)), NOT_SHARED);
+    helper.assertValueEqual(
+        lineOf(after, floor).map(NodeLabelsUpdate.ModuleLine::place),
+        Optional.of(shared(helper, Direction.DOWN)),
+        NOT_RESENT);
+    helper.assertTrue(
+        after
+            .map(update ->
+                update.modules().stream()
+                    .anyMatch(line -> line.place().equals(shared(helper, Direction.NORTH))))
+            .orElse(false),
+        NOT_SHARED);
+    helper.succeed();
+  }
+
+  private static UUID idOf(TimerPart timer) {
+    return timer.module().orElseThrow().id().value();
+  }
+
+  /** The place of the timer alone on the stone: the floor of its space, not shared. */
+  private static NodeLabelsUpdate.Place alone(GameTestHelper helper) {
+    return new NodeLabelsUpdate.Place(
+        new PartSpot(helper.absolutePos(TIMER), Direction.DOWN), false);
+  }
+
+  private static NodeLabelsUpdate.Place shared(GameTestHelper helper, Direction side) {
+    return new NodeLabelsUpdate.Place(new PartSpot(helper.absolutePos(TIMER), side), true);
   }
 
   /** Other tests run in the same world, so the line is picked by the ID of this module. */

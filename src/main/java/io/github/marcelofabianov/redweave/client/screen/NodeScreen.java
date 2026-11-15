@@ -1,7 +1,6 @@
 package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.block.Faces;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
 import io.github.marcelofabianov.redweave.config.NeoForgeNetworkLimits;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -200,7 +198,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
           keyCode,
           scanCode,
           modifiers,
-          text -> PacketDistributor.sendToServer(new NodeRenamed(menu.pos(), text)));
+          text -> PacketDistributor.sendToServer(new NodeRenamed(menu.spot(), text)));
       return true;
     }
     return super.keyPressed(keyCode, scanCode, modifiers);
@@ -331,15 +329,9 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     return new NodeView(view.menu(), view.mouseX(), view.mouseY(), settable);
   }
 
-  /** The face the node sticks to, read from its block, or up when it cannot be read. */
+  /** The face of the block of support the node sticks on, from the spot of the menu. */
   private Face stuckFace() {
-    if (minecraft == null || minecraft.level == null) {
-      return Face.UP;
-    }
-    BlockState node = minecraft.level.getBlockState(menu.pos());
-    return node.hasProperty(SignalNodeBlock.FACING)
-        ? Faces.of(node.getValue(SignalNodeBlock.FACING))
-        : Face.UP;
+    return Faces.of(menu.spot().face().getOpposite());
   }
 
   /** The block the node sticks to, or polished deepslate for a block drawn some other way. */
@@ -348,12 +340,7 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
     if (minecraft == null || minecraft.level == null) {
       return fallback;
     }
-    BlockState node = minecraft.level.getBlockState(menu.pos());
-    if (!node.hasProperty(SignalNodeBlock.FACING)) {
-      return fallback;
-    }
-    BlockPos support = menu.pos().relative(node.getValue(SignalNodeBlock.FACING).getOpposite());
-    BlockState block = minecraft.level.getBlockState(support);
+    BlockState block = minecraft.level.getBlockState(menu.spot().support());
     return block.getRenderShape() == RenderShape.MODEL ? block : fallback;
   }
 

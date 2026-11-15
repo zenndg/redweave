@@ -2,16 +2,15 @@ package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Carries an action of the Node Screen to its use case. The domain checks the owner and the slot,
@@ -24,38 +23,37 @@ final class NodeScreenActions {
     return new PlayerId(player.getUUID());
   }
 
-  static void apply(Player player, BlockPos pos, NodeAction action) {
+  static void apply(Player player, PartSpot spot, NodeAction action) {
     Level level = player.level();
     Optional<RedweaveServer> server = RedweaveServer.running();
-    Optional<NodeId> node = NodeSignals.nodeAt(level, pos);
+    Optional<NodeId> node = NodeSignals.nodeAt(level, spot);
     if (level.isClientSide || server.isEmpty() || node.isEmpty()) {
       return;
     }
     run(server.get(), playerOf(player), node.get(), action);
-    NodeSignals.read(server.get(), level, pos, level.getBlockState(pos));
+    NodeSignals.read(server.get(), level, spot);
   }
 
   /**
    * Picks or switches the network of the node, for whoever may (answers 141 and 172). The node
    * reads its block again and shows its new slot on the corners at once.
    */
-  static void choose(Player player, BlockPos pos, NetworkId network) {
+  static void choose(Player player, PartSpot spot, NetworkId network) {
     Level level = player.level();
     Optional<RedweaveServer> server = RedweaveServer.running();
-    Optional<NodeId> node = NodeSignals.nodeAt(level, pos);
+    Optional<NodeId> node = NodeSignals.nodeAt(level, spot);
     if (level.isClientSide
         || server.isEmpty()
         || node.isEmpty()
-        || !NodeScreenChoices.mayChoose(player, pos)) {
+        || !NodeScreenChoices.mayChoose(player, spot)) {
       return;
     }
-    BlockState state = level.getBlockState(pos);
     server
         .get()
         .linkNode()
-        .link(playerOf(player), node.get(), SignalNodeBlock.positionOf(level, pos, state), network);
-    NodeSignals.read(server.get(), level, pos, state);
-    NodeLook.refresh(server.get(), level, pos);
+        .link(playerOf(player), node.get(), NodePart.positionOf(level, spot), network);
+    NodeSignals.read(server.get(), level, spot);
+    NodeLook.refresh(server.get(), level, spot);
   }
 
   private static void run(RedweaveServer server, PlayerId player, NodeId node, NodeAction action) {

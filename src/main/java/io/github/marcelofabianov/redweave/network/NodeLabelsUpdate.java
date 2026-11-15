@@ -3,10 +3,11 @@ package io.github.marcelofabianov.redweave.network;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.netty.buffer.ByteBuf;
 import java.util.List;
 import java.util.UUID;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -15,12 +16,17 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * The labels over the nodes and the modules for the player who holds the Configurator: the ones
- * that changed or came into reach and the nodes that left it, or a clear of all when the player
- * lets go (answers 268, 269 and 274, and rule 18).
+ * The labels over the nodes, the modules and the cables for the player who holds the Configurator:
+ * the ones that changed or came into reach and the ones that left it, or a clear of all when the
+ * player lets go (answers 268, 269, 274 and 525, and rule 18).
  */
 public record NodeLabelsUpdate(
-    boolean clearAll, List<Label> labels, List<ModuleLine> modules, List<UUID> gone)
+    boolean clearAll,
+    List<Label> labels,
+    List<ModuleLine> modules,
+    List<CableLine> cables,
+    List<UUID> gone,
+    List<PartSpot> goneCables)
     implements CustomPacketPayload {
   private static final String ID = "node_labels";
   private static final int NO_COLOR = -1;
@@ -29,14 +35,24 @@ public record NodeLabelsUpdate(
   public static final Type<NodeLabelsUpdate> TYPE =
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
 
-  /** A label: the node and its block, its name, and the network with its color, or -1 for none. */
-  public record Label(UUID node, BlockPos pos, String nodeName, String network, int color) {
+  /**
+   * Where a label sits: the spot of its part, and whether its space has other labeled parts, so
+   * each label moves toward the side of its own part instead of over the others (answer 547).
+   */
+  public record Place(PartSpot spot, boolean shared) {
+    static final StreamCodec<ByteBuf, Place> STREAM_CODEC =
+        StreamCodec.composite(
+            PartSpot.STREAM_CODEC, Place::spot, ByteBufCodecs.BOOL, Place::shared, Place::new);
+  }
+
+  /** A label: the node and its place, its name, and the network with its color, or -1 for none. */
+  public record Label(UUID node, Place place, String nodeName, String network, int color) {
     static final StreamCodec<RegistryFriendlyByteBuf, Label> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
             Label::node,
-            BlockPos.STREAM_CODEC,
-            Label::pos,
+            Place.STREAM_CODEC,
+            Label::place,
             ByteBufCodecs.STRING_UTF8,
             Label::nodeName,
             ByteBufCodecs.STRING_UTF8,
@@ -45,10 +61,10 @@ public record NodeLabelsUpdate(
             Label::color,
             Label::new);
 
-    public static Label of(UUID node, BlockPos pos, NodeLabel label) {
+    public static Label of(UUID node, Place place, NodeLabel label) {
       return new Label(
           node,
-          pos,
+          place,
           label.node(),
           label.network().map(NodeLabel.NetworkPart::name).orElse(NO_NAME),
           label.network().map(part -> part.color().ordinal()).orElse(NO_COLOR));
@@ -60,16 +76,16 @@ public record NodeLabelsUpdate(
   }
 
   /**
-   * The label of a module: its block, its name, the key of the text of its state, and the channel
+   * The label of a module: its place, its name, the key of the text of its state, and the channel
    * of its output, or -1 when the output is on its edge (answer 417).
    */
-  public record ModuleLine(UUID module, BlockPos pos, String name, String state, int channel) {
+  public record ModuleLine(UUID module, Place place, String name, String state, int channel) {
     static final StreamCodec<RegistryFriendlyByteBuf, ModuleLine> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
             ModuleLine::module,
-            BlockPos.STREAM_CODEC,
-            ModuleLine::pos,
+            Place.STREAM_CODEC,
+            ModuleLine::place,
             ByteBufCodecs.STRING_UTF8,
             ModuleLine::name,
             ByteBufCodecs.STRING_UTF8,
@@ -78,13 +94,33 @@ public record NodeLabelsUpdate(
             ModuleLine::channel,
             ModuleLine::new);
 
-    public static ModuleLine of(UUID module, BlockPos pos, ModuleLabel label) {
+    public static ModuleLine of(UUID module, Place place, ModuleLabel label) {
       return new ModuleLine(
           module,
-          pos,
+          place,
           label.name(),
           label.state(),
           label.output().map(ChannelColor::ordinal).orElse(NO_COLOR));
+    }
+  }
+
+  /**
+   * The label of a Signal Cable, in one line: its place, the number of its color, as the channels
+   * show it, and its strength, as `15 Red · 12` (answer 525).
+   */
+  public record CableLine(Place place, int color, int strength) {
+    static final StreamCodec<ByteBuf, CableLine> STREAM_CODEC =
+        StreamCodec.composite(
+            Place.STREAM_CODEC,
+            CableLine::place,
+            ByteBufCodecs.VAR_INT,
+            CableLine::color,
+            ByteBufCodecs.VAR_INT,
+            CableLine::strength,
+            CableLine::new);
+
+    public static CableLine of(Place place, ChannelColor color, int strength) {
+      return new CableLine(place, color.ordinal(), strength);
     }
   }
 
@@ -96,19 +132,25 @@ public record NodeLabelsUpdate(
           NodeLabelsUpdate::labels,
           ModuleLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
           NodeLabelsUpdate::modules,
+          CableLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          NodeLabelsUpdate::cables,
           UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs.list()),
           NodeLabelsUpdate::gone,
+          PartSpot.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          NodeLabelsUpdate::goneCables,
           NodeLabelsUpdate::new);
 
   public NodeLabelsUpdate {
     labels = List.copyOf(labels);
     modules = List.copyOf(modules);
+    cables = List.copyOf(cables);
     gone = List.copyOf(gone);
+    goneCables = List.copyOf(goneCables);
   }
 
   /** The player let the Configurator go, so every label goes. */
   public static NodeLabelsUpdate clear() {
-    return new NodeLabelsUpdate(true, List.of(), List.of(), List.of());
+    return new NodeLabelsUpdate(true, List.of(), List.of(), List.of(), List.of(), List.of());
   }
 
   @Override

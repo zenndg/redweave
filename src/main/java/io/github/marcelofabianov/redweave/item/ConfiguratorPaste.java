@@ -2,8 +2,8 @@ package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.application.PasteResult;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlock;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -12,7 +12,6 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -28,14 +27,15 @@ final class ConfiguratorPaste {
   private ConfiguratorPaste() {}
 
   static Component paste(
-      RedweaveServer server, Player player, Level level, BlockPos pos, ConfiguratorCopy copy) {
-    if (!(level.getBlockEntity(pos) instanceof SignalNodeBlockEntity block)
-        || block.node().isEmpty()) {
+      RedweaveServer server, Player player, Level level, PartSpot spot, ConfiguratorCopy copy) {
+    Optional<NodePart> found = NodePart.at(level, spot);
+    if (found.isEmpty() || found.get().node().isEmpty()) {
       return Component.translatable(ControllerMessages.NO_NETWORK);
     }
+    NodePart block = found.get();
     NodeId node = block.node().get();
     if (server.networkOfNode(node).isEmpty()) {
-      Optional<Component> refused = join(server, player, level, pos, block, copy.network());
+      Optional<Component> refused = join(server, player, level, spot, block, copy.network());
       if (refused.isPresent()) {
         return refused.get();
       }
@@ -48,8 +48,8 @@ final class ConfiguratorPaste {
       RedweaveServer server,
       Player player,
       Level level,
-      BlockPos pos,
-      SignalNodeBlockEntity block,
+      PartSpot spot,
+      NodePart block,
       NetworkId network) {
     if (!block.wasPlacedBy(player)) {
       return Optional.of(Component.translatable(ConfiguratorMessages.PASTE_NOT_PLACER));
@@ -60,7 +60,7 @@ final class ConfiguratorPaste {
             .link(
                 new PlayerId(player.getUUID()),
                 block.node().get(),
-                SignalNodeBlock.positionOf(level, pos, level.getBlockState(pos)),
+                NodePart.positionOf(level, spot),
                 network);
     String name = server.network(network).map(Network::name).orElse(NO_NAME);
     return switch (joined) {

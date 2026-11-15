@@ -1,9 +1,11 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
-import net.minecraft.core.BlockPos;
+import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -14,11 +16,12 @@ import net.minecraft.world.entity.player.Player;
 final class DetectorScreenActions {
   private DetectorScreenActions() {}
 
-  static void apply(Player player, BlockPos pos, DetectorAction action) {
-    if (!(player.level().getBlockEntity(pos) instanceof WeatherDetectorBlockEntity block)
-        || block.module().isEmpty()) {
+  static void apply(Player player, PartSpot spot, DetectorAction action) {
+    Optional<DetectorPart> found = ModulePart.at(player.level(), spot, DetectorPart.class);
+    if (found.isEmpty() || found.get().module().isEmpty()) {
       return;
     }
+    DetectorPart block = found.get();
     PlayerId requester = new PlayerId(player.getUUID());
     switch (action.kind()) {
       case MODE ->

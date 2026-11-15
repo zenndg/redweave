@@ -1,5 +1,8 @@
 package io.github.marcelofabianov.redweave.block;
 
+import io.github.marcelofabianov.redweave.block.part.CablePart;
+import io.github.marcelofabianov.redweave.block.part.NodeBeside;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,12 +18,15 @@ final class NodeReading {
 
   /**
    * On the face the node sticks to, the strength of the block itself, without the node, so an
-   * output of the node is never read back. On any other face, what that neighbor sends in.
+   * output of the node is never read back, or of a cable of its space or a cable or the game wire
+   * beside it, on its side (answers 566 and 574). On any other face, what that neighbor sends in.
    */
-  static Signal read(Level level, BlockPos nodePos, Direction stuckTo, Direction face) {
-    BlockPos support = nodePos.relative(stuckTo.getOpposite());
+  static Signal read(Level level, PartSpot node, Direction face) {
+    Direction stuckTo = node.face().getOpposite();
+    BlockPos support = node.support();
     if (face == stuckTo) {
-      return Signal.clamped(strengthWithout(level, support, nodePos, stuckTo.getOpposite()));
+      int fromCables = Math.max(cablesOf(level, node), NodeBeside.strength(level, node));
+      return Signal.clamped(Math.max(strengthWithout(level, support, node), fromCables));
     }
     BlockPos neighbor = support.relative(face);
     if (!level.isLoaded(neighbor)) {
@@ -31,10 +37,11 @@ final class NodeReading {
 
   /**
    * As the game reads a block, without the node: what the block emits toward the node and, if it
-   * conducts redstone, the strong power its other neighbors give it.
+   * conducts redstone, the strong power its other neighbors give it. The other parts of the space
+   * of the node count, as neighbors of the block (answer 514).
    */
-  private static int strengthWithout(
-      Level level, BlockPos support, BlockPos node, Direction towardSupport) {
+  private static int strengthWithout(Level level, BlockPos support, PartSpot node) {
+    Direction towardSupport = node.face();
     BlockState state = level.getBlockState(support);
     int strength = state.getSignal(level, support, towardSupport);
     if (!state.shouldCheckWeakPower(level, support, towardSupport)) {
@@ -42,10 +49,34 @@ final class NodeReading {
     }
     for (Direction side : Direction.values()) {
       BlockPos neighbor = support.relative(side);
-      if (!neighbor.equals(node) && level.isLoaded(neighbor)) {
-        strength = Math.max(strength, level.getDirectSignal(neighbor, side));
+      if (level.isLoaded(neighbor)) {
+        strength = Math.max(strength, directSignal(level, neighbor, side, node));
       }
     }
     return strength;
+  }
+
+  /**
+   * A Signal Cable of the space of the node counts as its block of support, by the inner curve
+   * (answer 566).
+   */
+  private static int cablesOf(Level level, PartSpot node) {
+    return PartSpaceBlockEntity.at(level, node.pos())
+        .map(space ->
+            space.parts().stream()
+                .filter(CablePart.class::isInstance)
+                .mapToInt(part -> ((CablePart) part).strength())
+                .max()
+                .orElse(0))
+        .orElse(0);
+  }
+
+  private static int directSignal(Level level, BlockPos neighbor, Direction side, PartSpot node) {
+    if (!neighbor.equals(node.pos())) {
+      return level.getDirectSignal(neighbor, side);
+    }
+    return PartSpaceBlockEntity.at(level, neighbor)
+        .map(space -> space.signalWithout(space.at(node.face()).orElse(null), side))
+        .orElse(0);
   }
 }

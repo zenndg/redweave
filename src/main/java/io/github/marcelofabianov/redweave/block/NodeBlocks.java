@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.block;
 
 import io.github.marcelofabianov.redweave.application.LoadedNodes;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import java.util.Optional;
@@ -30,7 +31,12 @@ public final class NodeBlocks {
     BlockPos pos = posOf(node);
     return levelOf(minecraft, node.block().dimension())
         .filter(level -> level.isLoaded(pos))
-        .map(level -> new Located(level, pos));
+        .map(level -> new Located(level, spotOf(node)));
+  }
+
+  /** The spot of the node part: its space and the side it rests on, toward its support. */
+  public static PartSpot spotOf(NodePosition node) {
+    return new PartSpot(posOf(node), Faces.toDirection(node.face()).getOpposite());
   }
 
   /** The world answering whether a node is loaded, for the Controller Screen (answer 29). */
@@ -46,5 +52,5 @@ public final class NodeBlocks {
     return Optional.ofNullable(minecraft.getLevel(ResourceKey.create(Registries.DIMENSION, id)));
   }
 
-  record Located(ServerLevel level, BlockPos pos) {}
+  record Located(ServerLevel level, PartSpot spot) {}
 }

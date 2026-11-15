@@ -1,9 +1,10 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalRandomizer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ContainerData;
 
@@ -13,24 +14,24 @@ import net.minecraft.world.inventory.ContainerData;
  */
 final class RandomizerScreenData implements ContainerData {
   private final ServerPlayer viewer;
-  private final BlockPos pos;
+  private final PartSpot spot;
 
-  RandomizerScreenData(ServerPlayer viewer, BlockPos pos) {
+  RandomizerScreenData(ServerPlayer viewer, PartSpot spot) {
     this.viewer = viewer;
-    this.pos = pos;
+    this.spot = spot;
   }
 
   @Override
   public int get(int index) {
-    Optional<SignalRandomizerBlockEntity> block = block();
+    Optional<RandomizerPart> block = block();
     if (block.isEmpty()) {
       return ModuleScreenValues.NONE;
     }
-    SignalRandomizerBlockEntity found = block.get();
+    RandomizerPart found = block.get();
     return switch (index) {
       case RandomizerScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case RandomizerScreenLayout.NETWORK_STATE ->
-          ModuleScreenValues.networkState(viewer, pos, found);
+          ModuleScreenValues.networkState(viewer, spot, found);
       case RandomizerScreenLayout.OUTPUT -> ModuleScreenValues.code(found.output());
       default -> found.randomizer().map(randomizer -> of(randomizer, index)).orElse(0);
     };
@@ -47,10 +48,8 @@ final class RandomizerScreenData implements ContainerData {
     };
   }
 
-  private Optional<SignalRandomizerBlockEntity> block() {
-    return viewer.level().getBlockEntity(pos) instanceof SignalRandomizerBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private Optional<RandomizerPart> block() {
+    return ModulePart.at(viewer.level(), spot, RandomizerPart.class);
   }
 
   @Override

@@ -2,8 +2,11 @@ package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.TerminalMessages;
+import io.github.marcelofabianov.redweave.block.part.PartMessages;
+import io.github.marcelofabianov.redweave.item.SignalCableItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveCreativeTabs;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.BiConsumer;
 
 /** The English texts, the base of every language. */
@@ -19,6 +22,15 @@ final class EnglishTexts {
 
   private static final String TAB = "Redweave";
   private static final String SIGNAL_NODE = "Signal Node";
+  private static final String SIGNAL_CABLE = "Signal Cable";
+
+  /** A dyed cable, with the name of the color from the game, such as `Red Signal Cable`. */
+  private static final String SIGNAL_CABLE_COLORED = "%s Signal Cable";
+
+  private static final String FACE_TAKEN = "This face is taken.";
+  private static final String CABLE_PICKED_UP = "Cable picked up";
+  private static final String OWNER_ONLY = "Only the player who placed this cable can pick it up.";
+  private static final String CABLES_FULL = "This space already has 2 cables.";
   private static final String NETWORK_CONTROLLER = "Network Controller";
   private static final String NETWORK_TERMINAL = "Network Terminal";
   private static final String TERMINAL_NOT_OWNER = "Only the owner can use this terminal.";
@@ -46,7 +58,14 @@ final class EnglishTexts {
     ConfiguratorEnglishTexts.addTo(add);
     RemoteEnglishTexts.addTo(add);
     ModuleEnglishTexts.addTo(add);
-    add.accept(RedweaveBlocks.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
+    add.accept(RedweaveItems.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
+    String cable = RedweaveItems.SIGNAL_CABLE.get().getDescriptionId();
+    add.accept(cable, SIGNAL_CABLE);
+    add.accept(cable + SignalCableItem.COLORED_SUFFIX, SIGNAL_CABLE_COLORED);
+    add.accept(PartMessages.FACE_TAKEN, FACE_TAKEN);
+    add.accept(PartMessages.CABLES_FULL, CABLES_FULL);
+    add.accept(PartMessages.CABLE_PICKED_UP, CABLE_PICKED_UP);
+    add.accept(PartMessages.CABLE_NOT_OWNER, OWNER_ONLY);
     add.accept(ControllerMessages.OFFLINE, OFFLINE);
     add.accept(ControllerMessages.NETWORK_LIMIT, NETWORK_LIMIT);
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);

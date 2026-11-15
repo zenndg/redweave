@@ -1,14 +1,15 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.ChangeRandomizer;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.config.NeoForgeRandomizerLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.SignalRandomizer;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,12 +20,12 @@ import net.minecraft.world.entity.player.Player;
 final class RandomizerScreenActions {
   private RandomizerScreenActions() {}
 
-  static void apply(Player player, BlockPos pos, RandomizerAction action) {
-    if (!(player.level().getBlockEntity(pos) instanceof SignalRandomizerBlockEntity block)
-        || block.module().isEmpty()
-        || block.randomizer().isEmpty()) {
+  static void apply(Player player, PartSpot spot, RandomizerAction action) {
+    Optional<RandomizerPart> found = ModulePart.at(player.level(), spot, RandomizerPart.class);
+    if (found.isEmpty() || found.get().module().isEmpty() || found.get().randomizer().isEmpty()) {
       return;
     }
+    RandomizerPart block = found.get();
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (server.isEmpty()) {
       return;
@@ -39,10 +40,7 @@ final class RandomizerScreenActions {
   }
 
   private static Optional<SignalRandomizer> change(
-      ChangeRandomizer change,
-      PlayerId requester,
-      SignalRandomizerBlockEntity block,
-      RandomizerAction action) {
+      ChangeRandomizer change, PlayerId requester, RandomizerPart block, RandomizerAction action) {
     SignalModule module = block.module().get();
     SignalRandomizer now = block.randomizer().get();
     return switch (action.kind()) {

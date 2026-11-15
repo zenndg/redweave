@@ -5,7 +5,7 @@ import io.github.marcelofabianov.redweave.menu.DetectorScreenTexts;
 import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
 import io.github.marcelofabianov.redweave.menu.RandomizerScreenTexts;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.BiConsumer;
 
 /**
@@ -56,7 +56,7 @@ final class ModulePortugueseTexts {
   private ModulePortugueseTexts() {}
 
   static void addTo(BiConsumer<String, String> add) {
-    add.accept(RedweaveBlocks.SIGNAL_TIMER.get().getDescriptionId(), SIGNAL_TIMER);
+    add.accept(RedweaveItems.SIGNAL_TIMER.get().getDescriptionId(), SIGNAL_TIMER);
     add.accept(ModuleMessages.USE_TO_OPEN, USE_TO_OPEN);
     add.accept(ModuleMessages.PICKED_UP, PICKED_UP);
     add.accept(ModuleMessages.NOT_OWNER, NOT_OWNER);
@@ -75,7 +75,7 @@ final class ModulePortugueseTexts {
     add.accept(TimerScreenTexts.PAUSED, SCREEN_PAUSED);
     add.accept(TimerScreenTexts.SECONDS, SCREEN_SECONDS);
     add.accept(TimerScreenTexts.TICKS, SCREEN_TICKS);
-    add.accept(RedweaveBlocks.SIGNAL_INVERTER.get().getDescriptionId(), SIGNAL_INVERTER);
+    add.accept(RedweaveItems.SIGNAL_INVERTER.get().getDescriptionId(), SIGNAL_INVERTER);
     add.accept(ModuleMessages.INVERTER_NOTHING_TO_TOGGLE, INVERTER_NOTHING);
     add.accept(InverterScreenTexts.ON, INVERTER_ON);
     add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
@@ -86,7 +86,7 @@ final class ModulePortugueseTexts {
 
   /** The Signal Randomizer (signal-randomizer.md). */
   private static void addRandomizer(BiConsumer<String, String> add) {
-    add.accept(RedweaveBlocks.SIGNAL_RANDOMIZER.get().getDescriptionId(), SIGNAL_RANDOMIZER);
+    add.accept(RedweaveItems.SIGNAL_RANDOMIZER.get().getDescriptionId(), SIGNAL_RANDOMIZER);
     add.accept(ModuleMessages.RANDOMIZER_RUNNING, RANDOMIZER_RUNNING);
     add.accept(ModuleMessages.RANDOMIZER_STOPPED, RANDOMIZER_STOPPED);
     add.accept(RandomizerScreenTexts.MODE, RANDOMIZER_MODE);
@@ -96,7 +96,7 @@ final class ModulePortugueseTexts {
 
   /** The Weather Detector (weather-detector.md). */
   private static void addDetector(BiConsumer<String, String> add) {
-    add.accept(RedweaveBlocks.WEATHER_DETECTOR.get().getDescriptionId(), WEATHER_DETECTOR);
+    add.accept(RedweaveItems.WEATHER_DETECTOR.get().getDescriptionId(), WEATHER_DETECTOR);
     add.accept(ModuleMessages.DETECTOR_MODE, DETECTOR_MODE_MESSAGE);
     add.accept(DetectorScreenTexts.MODE, DETECTOR_MODE);
     add.accept(DetectorScreenTexts.RAIN, DETECTOR_RAIN);

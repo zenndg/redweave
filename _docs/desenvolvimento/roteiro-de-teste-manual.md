@@ -5,7 +5,7 @@ O que os testes automáticos não cobrem e um player precisa conferir no jogo: o
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote e os Signal Modules (pergunta 69). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote, os Signal Modules e o Signal Cable nas 16 cores (perguntas 69 e 564). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -324,12 +324,45 @@ Entregue com a issue #109 (perguntas 475 a 493). Use o circuito dos passos 1 a 8
 | 184 | Com o módulo ligado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | O módulo volta ligado, com o mesmo valor, e continua de onde parou |
 | 185 | Troque o idioma para Português (Brasil) e repita os passos 177, 179 e 182 | `Sorteador de Sinal`, `<nome>: rodando`, `Modo`, `Intervalo`, `Saída`, `Analógico`, `Binário`, `● Rodando` e `● Parado`, sem nada passando da borda |
 
+## Fase 2: o multipart e o Signal Cable
+
+Entregue com a issue #44 (perguntas 494 a 575). Confere a forma, a arte, a mira e o desempenho (pergunta 527). Use o circuito dos passos 1 a 8, com a rede e a lâmpada, e dois players.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 186 | Grude um Signal Node no chão de um espaço e um Signal Timer na parede do mesmo espaço | As duas partes no mesmo espaço, cada uma com o seu visual de antes do multipart |
+| 187 | Mire em cada parte do espaço e quebre uma delas | O contorno mostra só a parte mirada; a quebra tira só ela, e só o item dela cai |
+| 188 | Com um item de parte na mão, clique numa face ocupada; depois coloque 2 cabos num espaço e tente um terceiro | A parte não é colocada, e a action bar mostra `This face is taken.` e, no terceiro cabo, `This space already has 2 cables.` |
+| 189 | Com dois nós no mesmo espaço, segure o Configurator | Cada rótulo se desloca para o lado da sua parte, sem se sobrepor |
+| 190 | Na mesa de trabalho, ponha 8 cabos em volta de um corante vermelho; depois tinja um cabo vermelho de branco | 8 `Red Signal Cable`, com o item tingido; o corante branco o leva de volta a `Signal Cable`. Cores diferentes não empilham |
+| 191 | Coloque um cabo vermelho sozinho no chão | Uma cruz de 4 × 3 px, um pouco mais alta que a placa do nó, com o isolamento vermelho, as bordas claras no topo e o filete vermelho escuro |
+| 192 | Ponha um bloco de redstone ao lado e faça uma linha de cabos até uma lâmpada | O filete fica vermelho vivo e escurece bloco a bloco; a lâmpada acende enquanto a força chega a ela, e apaga depois de 15 blocos |
+| 193 | Monte uma reta, um L e um T | Os braços se juntam sem vão, com tampa só nas pontas soltas |
+| 194 | Ponha um cabo no chão e outro na parede do mesmo espaço (curva interna), na mesma cor | Os dois se encontram sem vão e sem piscar, e o sinal passa sem perder força |
+| 195 | Passe o cabo pela borda de um bloco e desça pela lateral (curva externa); depois suba um degrau | A peça da quina liga os dois; no degrau, um trecho sobe a lateral do bloco e encontra o cabo de cima |
+| 196 | Coloque cabos na parede e no teto, em várias cores, e troque um cabo do meio de uma linha por outra cor | A cor certa e a textura correndo ao longo do cabo, sem nada espelhado; cabos de cores diferentes não se ligam, e a linha apaga depois da troca |
+| 197 | Ligue pó de redstone a uma ponta da linha de cabos, nos dois sentidos | O pó recebe o sinal com 1 a menos, e o cabo também recebe do pó com 1 a menos |
+| 198 | Ponha um nó no chão do mesmo espaço de um cabo, e depois no chão do espaço vizinho, na mesma face | Nos dois casos, a entrada do nó lê o cabo como o seu bloco de apoio, e a saída dele acende o cabo; no espaço vizinho, o braço do cabo encosta na placa do nó |
+| 199 | Ponha uma lâmpada ao lado do espaço desse nó | A lâmpada continua apagada: o nó só energiza o bloco de apoio, fora o cabo e o pó |
+| 200 | Ponha pó ao lado de um nó no chão; depois, ao lado de um nó na parede | O pó se vira para o nó do chão e troca sinal com ele nos dois sentidos; para o nó da parede, não se vira |
+| 201 | Ponha um cabo ao lado de um módulo: na borda da frente, na de trás e numa lateral | Na frente e atrás, o braço encosta na placa e troca sinal; na lateral, o braço para na borda, e o contorno de mira acompanha o braço |
+| 202 | Mire num cabo com braços e num espaço com cabo e nó | O contorno segue o desenho do cabo, e a mira pega a parte certa |
+| 203 | Segure o Configurator perto de um cabo energizado | Um rótulo de uma linha, como `■ 15 Red · 12`, com a força ao vivo |
+| 204 | Use o Configurator nos modos `Open`, `Copy` e `Toggle` num cabo | Nada acontece |
+| 205 | Use o `Wrench` num cabo, como dono no survival, com o inventário livre e depois cheio | `Cable picked up`; o item vai para o inventário com a cor e, com o inventário cheio, cai no chão |
+| 206 | Peça ao segundo player para usar o `Wrench` e quebrar um cabo seu no survival; depois tente no criativo | `Only the player who placed this cable can pick it up.`, e o cabo não quebra; no criativo, qualquer um o tira |
+| 207 | Quebre um cabo do meio de uma linha energizada | O trecho depois dele apaga, e o cabo cai como item da cor dele |
+| 208 | Saia do mundo e entre de novo com a linha energizada; depois afaste-se até o chunk descarregar e volte | Os cabos e as partes voltam com a cor, o dono e o visual, e a força é recalculada |
+| 209 | Monte um relógio rápido numa linha longa de cabos e olhe o F3 | O MSPT não sobe de forma visível, e os blocos vizinhos não piscam em cascata |
+| 210 | Troque o idioma para Português (Brasil) e repita os passos 188, 190, 205 e 206 | `Esta face já está ocupada.`, `Este espaço já tem 2 cabos.`, `Cabo de Sinal Vermelho`, `Cabo retirado` e `Só quem colocou este cabo pode retirá-lo.`, sem nada passando da borda |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 09:37 | Adiciona os passos 186 a 210, do multipart e do Signal Cable da #44 (pergunta 527). |
 | Zennd | 2026-11-14 19:21 | Lista todos os itens da aba criativa e põe os Signal Modules na Fase 2. |
 | Zennd | 2026-11-14 18:16 | Adiciona os passos 175 a 185, do Signal Randomizer (pergunta 489). |
 | Zennd | 2026-11-14 17:10 | Adiciona os passos 163 a 174, do Weather Detector (pergunta 472). |

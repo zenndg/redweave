@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.menu;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.PlayerNames;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.DefaultNames;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
@@ -10,7 +11,6 @@ import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -73,8 +73,8 @@ public record NodeScreenNames(
     return TYPE;
   }
 
-  static NodeScreenNames read(ServerPlayer player, BlockPos pos, int menu) {
-    Optional<NodeId> id = NodeSignals.nodeAt(player.level(), pos);
+  static NodeScreenNames read(ServerPlayer player, PartSpot spot, int menu) {
+    Optional<NodeId> id = NodeSignals.nodeAt(player.level(), spot);
     Optional<Network> network =
         id.flatMap(node -> RedweaveServer.running().flatMap(server -> server.networkOfNode(node)));
     String node =

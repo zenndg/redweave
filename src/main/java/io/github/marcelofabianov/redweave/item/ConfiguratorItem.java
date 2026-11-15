@@ -1,7 +1,11 @@
 package io.github.marcelofabianov.redweave.item;
 
-import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
-import io.github.marcelofabianov.redweave.block.SignalNodeBlockEntity;
+import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.CablePart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.Part;
+import io.github.marcelofabianov.redweave.block.part.PartTargets;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -21,9 +25,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
- * The Configurator: opens, copies, pastes and picks up Signal Nodes, and turns, toggles and picks
- * up Signal Modules, in the mode chosen with Shift + scroll (configurador.md). The server decides
- * every action (rule 16).
+ * The Configurator: opens, copies, pastes and picks up Signal Nodes, turns, toggles and picks up
+ * Signal Modules, and picks up Signal Cables, in the mode chosen with Shift + scroll
+ * (configurador.md). The server decides every action (rule 16).
  */
 public final class ConfiguratorItem extends Item {
   public ConfiguratorItem(Properties properties) {
@@ -56,14 +60,17 @@ public final class ConfiguratorItem extends Item {
   }
 
   /**
-   * Only a Signal Node or a Signal Module takes the click; any other block, as the controller, does
-   * nothing.
+   * Only a Signal Node, a Signal Module or, with the Wrench, a Signal Cable takes the click; any
+   * other block, as the controller, does nothing (answer 525).
    */
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
     BlockEntity clicked = level.getBlockEntity(context.getClickedPos());
-    if (!(clicked instanceof SignalNodeBlockEntity) && !(clicked instanceof ModuleBlockEntity)) {
+    Optional<Part> part = partOf(clicked, context);
+    if (!(clicked instanceof PartSpaceBlockEntity space)
+        || part.isEmpty()
+        || !takes(part.get(), modeOf(context.getItemInHand()))) {
       return InteractionResult.FAIL;
     }
     if (level.isClientSide) {
@@ -76,12 +83,30 @@ public final class ConfiguratorItem extends Item {
     }
     ConfiguratorMode mode = modeOf(context.getItemInHand());
     Optional<Component> message =
-        clicked instanceof SignalNodeBlockEntity node
-            ? ConfiguratorActions.onNode(server.get(), player, context, node, mode)
-            : ModuleClicks.onModule(
-                server.get(), player, context, (ModuleBlockEntity) clicked, mode);
+        switch (part.get()) {
+          case NodePart node ->
+              ConfiguratorActions.onNode(
+                  server.get(), player, context, space.spotOf(node), node, mode);
+          case CablePart cable -> Optional.of(CableClicks.pickUp(player, space, cable));
+          default ->
+              ModuleClicks.onModule(server.get(), player, space, (ModulePart) part.get(), mode);
+        };
     message.ifPresent(found -> player.displayClientMessage(found, true));
     return InteractionResult.CONSUME;
+  }
+
+  private static boolean takes(Part part, ConfiguratorMode mode) {
+    return part instanceof NodePart
+        || part instanceof ModulePart
+        || part instanceof CablePart && CableClicks.takes(mode);
+  }
+
+  /** The part where the click landed, as only the aimed part answers (answer 515). */
+  private static Optional<Part> partOf(BlockEntity clicked, UseOnContext context) {
+    if (!(clicked instanceof PartSpaceBlockEntity space)) {
+      return Optional.empty();
+    }
+    return PartTargets.nearest(context.getClickedPos(), space.parts(), context.getClickLocation());
   }
 
   /** Shift + click in the air clears the copy, in any mode (answers 106 and 128). */

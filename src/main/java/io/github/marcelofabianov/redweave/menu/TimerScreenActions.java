@@ -1,14 +1,15 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.ChangeTimer;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.config.NeoForgeTimerLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -18,8 +19,8 @@ import net.minecraft.world.entity.player.Player;
 final class TimerScreenActions {
   private TimerScreenActions() {}
 
-  static void apply(Player player, BlockPos pos, TimerAction action) {
-    Optional<SignalTimerBlockEntity> block = blockAt(player, pos);
+  static void apply(Player player, PartSpot spot, TimerAction action) {
+    Optional<TimerPart> block = blockAt(player, spot);
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (block.isEmpty() || server.isEmpty() || block.get().module().isEmpty()) {
       return;
@@ -41,7 +42,7 @@ final class TimerScreenActions {
   }
 
   private static void change(
-      ChangeTimer change, PlayerId requester, SignalTimerBlockEntity block, TimerAction action) {
+      ChangeTimer change, PlayerId requester, TimerPart block, TimerAction action) {
     SignalModule module = block.module().get();
     Optional<SignalTimer> timer = block.timer();
     if (timer.isEmpty()) {
@@ -64,9 +65,7 @@ final class TimerScreenActions {
     next.ifPresent(block::setTimer);
   }
 
-  private static Optional<SignalTimerBlockEntity> blockAt(Player player, BlockPos pos) {
-    return player.level().getBlockEntity(pos) instanceof SignalTimerBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private static Optional<TimerPart> blockAt(Player player, PartSpot spot) {
+    return ModulePart.at(player.level(), spot, TimerPart.class);
   }
 }
