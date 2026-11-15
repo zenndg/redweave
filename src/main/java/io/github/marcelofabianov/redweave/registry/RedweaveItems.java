@@ -26,6 +26,7 @@ public final class RedweaveItems {
   private static final String WEATHER_DETECTOR_ID = "weather_detector";
   private static final String SIGNAL_RANDOMIZER_ID = "signal_randomizer";
   private static final String SIGNAL_LEVER_ID = "signal_lever";
+  private static final String SIGNAL_BUTTON_ID = "signal_button";
   private static final String SIGNAL_CABLE_ID = "signal_cable";
 
   private static final DeferredRegister.Items ITEMS =
@@ -79,6 +80,10 @@ public final class RedweaveItems {
   /** A part of the part space that stacks and keeps no setting, as the other modules (394). */
   public static final DeferredItem<PartItem> SIGNAL_LEVER =
       ITEMS.register(SIGNAL_LEVER_ID, () -> new PartItem(new Item.Properties()));
+
+  /** A part of the part space that stacks and keeps no setting, as the other modules (394). */
+  public static final DeferredItem<PartItem> SIGNAL_BUTTON =
+      ITEMS.register(SIGNAL_BUTTON_ID, () -> new PartItem(new Item.Properties()));
 
   /** The Signal Cable, white until dyed; cables of one color stack (answers 494 and 505). */
   public static final DeferredItem<SignalCableItem> SIGNAL_CABLE =

@@ -23,12 +23,12 @@ public record Interval(int ticks) {
 
   /** The interval of the ticks, clamped to the limits. */
   public static Interval within(int ticks, IntervalLimits limits) {
-    return new Interval(Math.clamp(ticks, shortestOf(limits), longestOf(limits)));
+    return new Interval(clamped(ticks, limits, SHORTEST_TICKS));
   }
 
   /** Whether it is within the limits, as a saved interval after the config changed. */
   public boolean fits(IntervalLimits limits) {
-    return ticks >= shortestOf(limits) && ticks <= longestOf(limits);
+    return fitting(ticks, limits, SHORTEST_TICKS);
   }
 
   /** The same interval within the limits, for a saved one after the config changed (425). */
@@ -36,11 +36,24 @@ public record Interval(int ticks) {
     return within(ticks, limits);
   }
 
-  private static int shortestOf(IntervalLimits limits) {
-    return Math.max(limits.minIntervalTicks(), SHORTEST_TICKS);
+  /**
+   * Ticks clamped to the limits, never below the floor, whatever the config says: the one rule of
+   * every interval of a module, as the on time of the Signal Button too (answers 490 and 592).
+   */
+  static int clamped(int ticks, IntervalLimits limits, int floor) {
+    return Math.clamp(ticks, shortestOf(limits, floor), longestOf(limits, floor));
   }
 
-  private static int longestOf(IntervalLimits limits) {
-    return Math.max(limits.maxIntervalTicks(), shortestOf(limits));
+  /** Whether the ticks are within the limits, never below the floor. */
+  static boolean fitting(int ticks, IntervalLimits limits, int floor) {
+    return ticks >= shortestOf(limits, floor) && ticks <= longestOf(limits, floor);
+  }
+
+  private static int shortestOf(IntervalLimits limits, int floor) {
+    return Math.max(limits.minIntervalTicks(), floor);
+  }
+
+  private static int longestOf(IntervalLimits limits, int floor) {
+    return Math.max(limits.maxIntervalTicks(), shortestOf(limits, floor));
   }
 }
