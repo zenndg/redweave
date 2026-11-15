@@ -6,11 +6,22 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Opções | Recomendação |
 |---|---|---|---|
+| 558 | Em que ordem entram a alavanca, o botão e a placa de pressão, cada um na sua issue, depois do Signal Cable? | Alavanca, botão e placa de pressão; outra ordem | Alavanca, botão e placa de pressão: da mais simples para a mais complexa, e a alavanca prova a base que os outros dois usam (pergunta 304) |
+| 557 | O que a placa de pressão detecta, e o sinal muda com a quantidade? | Um modo na tela, `Everything`, `Mobs` ou `Players`, com saída 15; os tipos das placas do jogo, uma por item; o sinal pela quantidade, como as placas pesadas | Um item só, com o modo na tela (`Everything`, `Mobs` e `Players`) e saída 15, sem multiplicar itens, como o modo do Weather Detector (pergunta 459) |
+| 556 | Quanto tempo o botão fica ligado, e quem escolhe? | Ajustável na tela, com o intervalo comum dos módulos (pergunta 490) e 1 s como padrão; fixo, como o do jogo (1 s de pedra, 1,5 s de madeira); fixo no config | Ajustável na tela, com o `Interval` comum e 1 s como padrão, como o do botão de pedra do jogo |
+| 555 | A alavanca, o botão e a placa de pressão têm dono, rede e o `Toggle` do Configurator como os Signal Modules? | Iguais aos módulos: dono, rede escolhida, `Open` abre a tela e `Toggle` liga e desliga; sem dono nem `Toggle` | Iguais aos módulos (perguntas 393, 395, 415 e 416). O `Toggle` liga e desliga a alavanca e aperta o botão |
+| 554 | Como ficam os dois indicadores de cor? | Os dois sempre à mostra, só o do estado aceso; uma luz só, que troca de vermelho para verde | Os dois à mostra, só o do estado aceso e o outro apagado, para o estado ser lido de longe, mesmo por quem não distingue bem as cores (princípio 1 de `ux.md`) |
+| 553 | Pela redstone, onde a alavanca, o botão e a placa de pressão mandam o sinal? | Como os do jogo: forte no bloco de apoio e fraco nos vizinhos; por uma borda, como os módulos; só no bloco de apoio, como o Signal Node (pergunta 262) | Como os do jogo, para trocar um pelo outro sem refazer o circuito |
+| 552 | A força do sinal é 15 fixo ou ajustável? | 15 fixo, como os do jogo; ajustável na tela, de 1 a 15 | Ajustável na tela, de 1 a 15, com 15 como padrão: alcança mais usos sem item novo, e a tela já existe |
+| 551 | A alavanca, o botão e a placa de pressão são partes do multipart, e em que faces ficam? | Partes de placa, em qualquer face, e a placa de pressão só no chão; partes em qualquer face, as três; blocos próprios, fora do multipart | Partes de placa (pergunta 511): a alavanca e o botão em qualquer face, e a placa de pressão só no chão, como a do jogo |
+| 550 | Quais são os nomes em inglês, os IDs e os nomes em português? | `Signal Lever`, `Signal Button` e `Signal Pressure Plate` (`signal_lever`, `signal_button`, `signal_pressure_plate`); outros nomes | `Signal Lever`, `Signal Button` e `Signal Pressure Plate`, na linha do `Signal Node` e do `Signal Cable` (perguntas 300 e 505), com `Alavanca de Sinal`, `Botão de Sinal` e `Placa de Pressão de Sinal` em português |
+| 549 | A alavanca, o botão e a placa de pressão são Signal Modules de fonte, com a base comum, ou uma família à parte? | Signal Modules de fonte, como o Signal Randomizer e o Weather Detector; uma família própria de controles | Signal Modules de fonte: a tela, o dono, a rede e a saída por borda ou canal (`Connection`) já existem na base comum (perguntas 313, 314 e 415), e cada um só implementa a sua regra |
 
 ## Respondidas
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 548 | O que entra depois do Signal Cable? | Uma alavanca, um botão e uma placa de pressão, cada um numa issue própria, depois do Signal Cable completo. São parecidos com os do jogo, mas com uma aparência 3D mais realista e dois indicadores de cor, vermelho desligado e verde ligado, e uma tela parecida com a dos Signal Modules, em que o player escolhe a saída sem fio, por um canal da rede, como um Signal Node, ou pela redstone. As perguntas 549 a 558 detalham o conceito |
 | 547 | Com dois Signal Nodes no mesmo espaço, os rótulos, posicionados pelo bloco, se sobrepõem. Como fica? | Cada rótulo se desloca para o lado da sua parte, no passo 6 da #44, junto com o resto do desenho das partes |
 | 546 | O NBT do Signal Node como parte guarda o `facing`, que é sempre o oposto da `face` da parte no contêiner (pergunta 543)? | Não: o `facing` do nó sai da `face` do contêiner, sem duas fontes para o mesmo valor. Os outros campos da 534 continuam na parte. Completa a pergunta 534 |
 | 545 | Com um item de parte na mão, o que acontece ao clicar em cima de uma parte que já existe, como um nó no topo de um cabo no chão? | A parte é transparente: o alvo é o mesmo espaço, na face oposta à clicada, como se o clique fosse no bloco de trás. No exemplo, o clique mira a face `down`, já ocupada, e a action bar mostra `This face is taken.` (pergunta 533) |
@@ -547,6 +558,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 21:14 | Registra a resposta 548 e as perguntas pendentes 549 a 558, da alavanca, do botão e da placa de pressão. |
 | Zennd | 2026-11-14 20:58 | Registra as respostas 546 e 547. |
 | Zennd | 2026-11-14 20:40 | Registra as respostas 542 a 545. |
 | Zennd | 2026-11-14 20:33 | Registra as respostas 540 e 541. |

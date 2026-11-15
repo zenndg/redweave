@@ -523,6 +523,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Clique numa parte | A parte é transparente: mira a face oposta do mesmo espaço | 545 |
 | `facing` do nó | Não vai para o save; sai da `face` do contêiner | 546 |
 | Rótulos no mesmo espaço | Cada um se desloca para o lado da sua parte | 547 |
+| Depois do Signal Cable | Alavanca, botão e placa de pressão, cada um na sua issue, com aparência 3D, indicadores vermelho e verde e saída sem fio ou pela redstone | 548 |
 
 Não há perguntas pendentes da concepção.
 
@@ -530,6 +531,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 21:14 | Registra a decisão 548. |
 | Zennd | 2026-11-14 20:58 | Registra as decisões 546 e 547. |
 | Zennd | 2026-11-14 20:40 | Registra as decisões 542 a 545. |
 | Zennd | 2026-11-14 20:33 | Registra as decisões 540 e 541. |

@@ -26,12 +26,16 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`signal-randomizer.md`](signal-randomizer.md) | 2 | O Signal Randomizer: os modos do sorteio, o intervalo, o controle, a tela e o save |
 | [`multipart.md`](multipart.md) | 2 | O multipart de todo o mod: o bloco contêiner, as partes, a ocupação por face, a mira e o save |
 | [`signal-cable.md`](signal-cable.md) | 2 | O Signal Cable: o item tingido, a forma, a ligação por cor e por dono, o sinal como o fio do jogo e o cálculo por trecho |
+| [`alavanca.md`](alavanca.md) | 2 | Conceito da alavanca: fonte ligada e desligada pelo player, com indicadores vermelho e verde e saída sem fio ou pela redstone |
+| [`botao.md`](botao.md) | 2 | Conceito do botão: fonte apertada pelo player, que volta sozinha, na mesma ideia da alavanca |
+| [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | Conceito da placa de pressão: fonte ligada enquanto algo está sobre ela, na mesma ideia da alavanca |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-14 21:14 | Adiciona os conceitos da alavanca, do botão e da placa de pressão (pergunta 548). |
 | Zennd | 2026-11-14 19:14 | Adiciona as páginas do multipart e do Signal Cable, e tira o fio da Fase 4 (perguntas 516 e 519). |
 | Zennd | 2026-11-14 17:46 | Adiciona a página do Signal Randomizer (#109). |
 | Zennd | 2026-11-14 16:40 | Adiciona a página do Weather Detector (#108). |
