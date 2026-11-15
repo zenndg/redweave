@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.TimerState;
@@ -105,7 +105,7 @@ public final class TimerMenuGameTests {
     click(menu, viewer, TimerAction.choose(0));
     click(menu, viewer, red);
 
-    SignalTimerBlockEntity block = helper.getBlockEntity(TIMER);
+    TimerPart block = ModuleParts.only(helper, TIMER, TimerPart.class);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::network), Optional.of(network), NOT_JOINED);
     helper.assertValueEqual(menu.output(), Connection.on(ChannelColor.RED), NOT_JOINED);
@@ -120,9 +120,9 @@ public final class TimerMenuGameTests {
     ServerPlayer viewer = viewerAs(helper, owner);
     viewer.containerMenu = menuOf(helper, viewer);
 
-    ModuleRenamed.receive(new ModuleRenamed(helper.absolutePos(TIMER), NAME), viewer);
+    ModuleRenamed.receive(new ModuleRenamed(ModuleParts.spotOf(helper, TIMER), NAME), viewer);
 
-    SignalTimerBlockEntity block = helper.getBlockEntity(TIMER);
+    TimerPart block = ModuleParts.only(helper, TIMER, TimerPart.class);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::name), Optional.of(NAME), NOT_RENAMED);
     helper.succeed();
@@ -158,7 +158,7 @@ public final class TimerMenuGameTests {
   }
 
   private static TimerMenu menuOf(GameTestHelper helper, ServerPlayer viewer) {
-    return new TimerMenu(MENU_ID, viewer, helper.absolutePos(TIMER));
+    return new TimerMenu(MENU_ID, viewer, ModuleParts.spotOf(helper, TIMER));
   }
 
   private static void click(TimerMenu menu, ServerPlayer viewer, TimerAction action) {

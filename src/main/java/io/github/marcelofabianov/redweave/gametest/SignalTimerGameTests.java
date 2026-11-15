@@ -1,14 +1,12 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.config.NeoForgeTimerLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import io.github.marcelofabianov.redweave.domain.module.TimerCycle;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -63,8 +60,8 @@ public final class SignalTimerGameTests {
     player.setYHeadRot(LOOK_NORTH);
     place(helper, player, Direction.UP);
 
-    helper.assertBlockProperty(ON_TOP, SignalTimerBlock.FACING, Direction.UP);
-    helper.assertBlockProperty(ON_TOP, SignalTimerBlock.FRONT, Direction.NORTH);
+    ModuleParts.assertFacing(helper, ON_TOP, Direction.UP);
+    ModuleParts.assertFront(helper, ON_TOP, Direction.NORTH);
     helper.succeed();
   }
 
@@ -75,8 +72,8 @@ public final class SignalTimerGameTests {
     player.setXRot(LOOK_DOWN);
     place(helper, player, Direction.EAST);
 
-    helper.assertBlockProperty(STONE.east(), SignalTimerBlock.FACING, Direction.EAST);
-    helper.assertBlockProperty(STONE.east(), SignalTimerBlock.FRONT, Direction.DOWN);
+    ModuleParts.assertFacing(helper, STONE.east(), Direction.EAST);
+    ModuleParts.assertFront(helper, STONE.east(), Direction.DOWN);
     helper.succeed();
   }
 
@@ -85,14 +82,14 @@ public final class SignalTimerGameTests {
   public static void aPlacedTimerIsStoppedAndBelongsToItsPlacer(GameTestHelper helper) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     place(helper, player, Direction.UP);
-    SignalTimerBlockEntity placed = helper.getBlockEntity(ON_TOP);
+    TimerPart placed = ModuleParts.only(helper, ON_TOP, TimerPart.class);
 
     PlayerId owner = new PlayerId(player.getUUID());
     helper.assertTrue(placed.module().orElseThrow().isOwner(owner), NOT_OWNER);
     SignalTimer stopped = SignalTimer.stopped(TimerCycle.initial(new NeoForgeTimerLimits()));
     helper.assertValueEqual(placed.timer().orElseThrow(), stopped, NOT_STOPPED);
     helper.assertTrue(placed.output().isEdge() && placed.pause().isEdge(), NOT_EDGES);
-    helper.assertBlockProperty(ON_TOP, SignalTimerBlock.RUNNING, false);
+    ModuleParts.assertTimerRunning(helper, ON_TOP, false);
     helper.succeed();
   }
 
@@ -101,9 +98,9 @@ public final class SignalTimerGameTests {
   public static void aTimerKeepsItsSaveWhole(GameTestHelper helper) {
     CompoundTag saved = fullSave(INTERVAL);
 
-    SignalTimerBlockEntity loaded = load(helper, saved);
+    TimerPart loaded = load(saved);
 
-    CompoundTag written = loaded.saveWithoutMetadata(helper.getLevel().registryAccess());
+    CompoundTag written = loaded.save();
     helper.assertValueEqual(written, saved, NOT_KEPT);
     helper.succeed();
   }
@@ -116,13 +113,10 @@ public final class SignalTimerGameTests {
   public static void aSavedIntervalOutsideTheConfigFitsIt(GameTestHelper helper) {
     int longest = new NeoForgeTimerLimits().maxIntervalTicks();
     helper.setBlock(STONE, Blocks.STONE);
-    BlockState state = RedweaveBlocks.SIGNAL_TIMER.get().defaultBlockState();
-    helper.setBlock(ON_TOP, state);
 
     CompoundTag saved = fullSave(longest + INTERVAL);
     saved.putInt(Keys.ELAPSED, longest / 2);
-    SignalTimerBlockEntity loaded = load(helper, saved);
-    helper.getLevel().setBlockEntity(loaded);
+    TimerPart loaded = inWorld(helper, saved);
 
     helper.succeedWhen(() -> {
       SignalTimer timer = loaded.timer().orElseThrow();
@@ -135,12 +129,10 @@ public final class SignalTimerGameTests {
   @GameTest(template = EMPTY)
   public static void aDamagedSaveFallsBackToAStoppedTimer(GameTestHelper helper) {
     helper.setBlock(STONE, Blocks.STONE);
-    helper.setBlock(ON_TOP, RedweaveBlocks.SIGNAL_TIMER.get().defaultBlockState());
     CompoundTag damaged = fullSave(0);
     damaged.putString(Keys.OUTPUT, UNKNOWN);
 
-    SignalTimerBlockEntity loaded = load(helper, damaged);
-    helper.getLevel().setBlockEntity(loaded);
+    TimerPart loaded = inWorld(helper, damaged);
 
     helper.succeedWhen(() -> {
       SignalTimer stopped = SignalTimer.stopped(TimerCycle.initial(new NeoForgeTimerLimits()));
@@ -156,12 +148,15 @@ public final class SignalTimerGameTests {
         helper, player, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), STONE, face);
   }
 
-  /** A timer block entity at the plate, read from the tag as the game reads a chunk. */
-  private static SignalTimerBlockEntity load(GameTestHelper helper, CompoundTag tag) {
-    BlockState state = RedweaveBlocks.SIGNAL_TIMER.get().defaultBlockState();
-    SignalTimerBlockEntity loaded = new SignalTimerBlockEntity(helper.absolutePos(ON_TOP), state);
-    loaded.loadWithComponents(tag, helper.getLevel().registryAccess());
-    return loaded;
+  /** The timer in a space on the stone, loaded as the game loads a chunk (answer 425). */
+  private static TimerPart inWorld(GameTestHelper helper, CompoundTag tag) {
+    return ModuleParts.loadInWorld(
+        helper, ON_TOP, RedweaveItems.SIGNAL_TIMER.get(), tag, TimerPart.class);
+  }
+
+  /** The part on the floor, read from its tag as the space reads it (answer 543). */
+  private static TimerPart load(CompoundTag tag) {
+    return TimerPart.load(Direction.DOWN, tag);
   }
 
   /** The save of a running timer with a name, a network and its output on a channel. */
@@ -177,11 +172,15 @@ public final class SignalTimerGameTests {
     tag.putInt(Keys.ELAPSED, ELAPSED);
     tag.putString(Keys.OUTPUT, RED);
     tag.putString(Keys.PAUSE, EDGE);
+    tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
+    tag.putBoolean(Keys.POWERED, true);
     return tag;
   }
 
   /** The keys of answer 411, written here again, so a renamed key fails the test (rule 15). */
   private static final class Keys {
+    static final String FRONT = "front";
+    static final String POWERED = "powered";
     static final String MODULE_ID = "module_id";
     static final String OWNER = "owner";
     static final String NAME = "name";

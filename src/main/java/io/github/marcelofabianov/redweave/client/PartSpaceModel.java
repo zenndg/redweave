@@ -48,7 +48,7 @@ final class PartSpaceModel implements IDynamicBakedModel {
   }
 
   private List<BakedQuad> bake(PartLook look) {
-    return PartQuads.of(models.apply(look.model()), look.facing());
+    return PartQuads.of(models.apply(look.model()), look);
   }
 
   @Override

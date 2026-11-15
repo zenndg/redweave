@@ -1,32 +1,41 @@
-package io.github.marcelofabianov.redweave.block;
+package io.github.marcelofabianov.redweave.block.part;
 
 import com.mojang.logging.LogUtils;
+import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeTimerLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
-import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.module.SignalTimer;
 import io.github.marcelofabianov.redweave.domain.module.TimerCycle;
 import io.github.marcelofabianov.redweave.domain.module.TimerLimits;
 import io.github.marcelofabianov.redweave.domain.module.TimerState;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.TimerMenu;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
+import io.github.marcelofabianov.redweave.registry.RedweaveItems;
+import io.github.marcelofabianov.redweave.server.ModuleServices;
+import java.util.List;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.Item;
 import org.slf4j.Logger;
 
 /**
- * What a Signal Timer block keeps besides its module: its timer and its two connections, all in its
- * NBT and none in the save of the network (answers 387 and 411). The rules stay in the domain.
+ * The Signal Timer as a part: _docs/funcionalidades/signal-timer.md. A module plate with its output
+ * on the front edge and its `Pause` on the back one (answers 383, 416 and 422), and its timer and
+ * connections in its NBT, none in the save of the network (answers 387 and 411). Its running LED is
+ * the `running` of its timer (answer 401).
  */
-public final class SignalTimerBlockEntity extends ModuleBlockEntity {
+public final class TimerPart extends ModulePart {
+  public static final String ID = "signal_timer";
+
+  /** The looks of the top: the running LED and the lit arrow (answers 401 and 418). */
+  public static final List<String> LOOKS = ModuleLooks.leds();
+
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String FITTED = "Fitted the Signal Timer at {} to the config: {}";
   private static final String RESTARTED = "A Signal Timer at {} had no valid cycle and starts anew";
@@ -35,18 +44,62 @@ public final class SignalTimerBlockEntity extends ModuleBlockEntity {
   private Connection output = Connection.EDGE;
   private Connection pause = Connection.EDGE;
 
-  public SignalTimerBlockEntity(BlockPos pos, BlockState state) {
-    super(RedweaveBlockEntities.SIGNAL_TIMER.get(), pos, state);
+  private TimerPart(Direction face) {
+    super(face);
+  }
+
+  /** A timer on the side of its space, from its NBT, or a new one from an empty tag. */
+  public static TimerPart load(Direction face, CompoundTag tag) {
+    TimerPart part = new TimerPart(face);
+    part.loadPlate(tag);
+    if (!tag.isEmpty()) {
+      part.timer = TimerSave.readTimer(tag);
+      part.output = ModuleSave.readConnection(tag, TimerSave.OUTPUT);
+      part.pause = ModuleSave.readConnection(tag, TimerSave.PAUSE);
+    }
+    return part;
+  }
+
+  @Override
+  protected String id() {
+    return ID;
+  }
+
+  @Override
+  public Item item() {
+    return RedweaveItems.SIGNAL_TIMER.get();
+  }
+
+  @Override
+  protected String lookSuffix() {
+    return ModuleLooks.leds(timer.map(SignalTimer::isRunning).orElse(false), powered());
   }
 
   /** A timer just placed: stopped, on the edges, one second with a half-second pulse (390). */
   @Override
-  void place(SignalModule placed) {
-    TimerLimits limits = new NeoForgeTimerLimits();
-    timer = Optional.of(SignalTimer.stopped(TimerCycle.initial(limits)));
+  protected void placeRule() {
+    timer = Optional.of(SignalTimer.stopped(TimerCycle.initial(new NeoForgeTimerLimits())));
     output = Connection.EDGE;
     pause = Connection.EDGE;
-    setModule(placed);
+  }
+
+  /** It reads its `Pause`, ticks its timer in the domain and writes its output (401). */
+  @Override
+  protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
+    if (timer.isEmpty()) {
+      return;
+    }
+    Signal paused = ModuleTicks.read(modules, space, this, pause);
+    SignalTimer next = timer.get().tick(paused);
+    setTimer(next);
+    ModuleTicks.write(modules, space, this, next.output());
+  }
+
+  @Override
+  protected void saveRule(CompoundTag tag) {
+    timer.ifPresent(found -> TimerSave.writeTimer(tag, found));
+    ModuleSave.writeConnection(tag, TimerSave.OUTPUT, output);
+    ModuleSave.writeConnection(tag, TimerSave.PAUSE, pause);
   }
 
   public Optional<SignalTimer> timer() {
@@ -66,7 +119,7 @@ public final class SignalTimerBlockEntity extends ModuleBlockEntity {
   @Override
   public Optional<Component> toggle() {
     timer = timer.map(SignalTimer::toggle);
-    setChanged();
+    markDirty();
     if (timer.isEmpty() || module().isEmpty()) {
       return Optional.empty();
     }
@@ -91,18 +144,18 @@ public final class SignalTimerBlockEntity extends ModuleBlockEntity {
 
   @Override
   public void openScreen(ServerPlayer viewer) {
+    PartSpot spot = spot();
     viewer.openMenu(
         new SimpleMenuProvider(
-            (id, inventory, opener) -> new TimerMenu(id, viewer, worldPosition),
-            RedweaveBlocks.SIGNAL_TIMER.get().getName()),
-        extra -> TimerMenu.writeOpening(extra, viewer, worldPosition));
+            (id, inventory, opener) -> new TimerMenu(id, viewer, spot), item().getDescription()),
+        extra -> TimerMenu.writeOpening(extra, viewer, spot));
   }
 
-  /** Keeps the timer after a tick or a change, and marks the block to save only when it changed. */
+  /** Keeps the timer after a tick or a change, and marks the space to save only when it changed. */
   public void setTimer(SignalTimer next) {
     if (!timer.equals(Optional.of(next))) {
       timer = Optional.of(next);
-      setChanged();
+      markDirty();
     }
   }
 
@@ -123,36 +176,19 @@ public final class SignalTimerBlockEntity extends ModuleBlockEntity {
    * goes to the nearest limit and the cycle restarts, with a warning (answer 425 and rule 14).
    */
   @Override
-  public void onLoad() {
-    super.onLoad();
-    if (level == null || level.isClientSide || module().isEmpty()) {
+  public void loaded(PartSpaceBlockEntity space) {
+    if (module().isEmpty()) {
       return;
     }
     TimerLimits limits = new NeoForgeTimerLimits();
     if (timer.isEmpty()) {
-      LOGGER.warn(RESTARTED, worldPosition);
+      LOGGER.warn(RESTARTED, space.getBlockPos());
       timer = Optional.of(SignalTimer.stopped(TimerCycle.initial(limits)));
-      setChanged();
+      markDirty();
     } else if (!timer.get().cycle().fits(limits)) {
-      LOGGER.warn(FITTED, worldPosition, timer.get().cycle().intervalTicks());
+      LOGGER.warn(FITTED, space.getBlockPos(), timer.get().cycle().intervalTicks());
       timer = timer.map(found -> found.withCycle(found.cycle().fittedTo(limits)));
-      setChanged();
+      markDirty();
     }
-  }
-
-  @Override
-  protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.saveAdditional(tag, registries);
-    timer.ifPresent(found -> TimerSave.writeTimer(tag, found));
-    ModuleSave.writeConnection(tag, TimerSave.OUTPUT, output);
-    ModuleSave.writeConnection(tag, TimerSave.PAUSE, pause);
-  }
-
-  @Override
-  protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-    super.loadAdditional(tag, registries);
-    timer = TimerSave.readTimer(tag);
-    output = ModuleSave.readConnection(tag, TimerSave.OUTPUT);
-    pause = ModuleSave.readConnection(tag, TimerSave.PAUSE);
   }
 }

@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.RandomizerMode;
 import io.github.marcelofabianov.redweave.domain.module.RandomizerState;
@@ -105,7 +105,7 @@ public final class RandomizerMenuGameTests {
     click(menu, viewer, RandomizerAction.choose(0));
     click(menu, viewer, red);
 
-    SignalRandomizerBlockEntity block = helper.getBlockEntity(RANDOMIZER);
+    RandomizerPart block = ModuleParts.only(helper, RANDOMIZER, RandomizerPart.class);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::network), Optional.of(network), NOT_JOINED);
     helper.assertValueEqual(menu.output(), Connection.on(ChannelColor.RED), NOT_JOINED);
@@ -129,7 +129,7 @@ public final class RandomizerMenuGameTests {
   }
 
   private static RandomizerMenu menuOf(GameTestHelper helper, ServerPlayer viewer) {
-    return new RandomizerMenu(MENU_ID, viewer, helper.absolutePos(RANDOMIZER));
+    return new RandomizerMenu(MENU_ID, viewer, ModuleParts.spotOf(helper, RANDOMIZER));
   }
 
   private static void click(RandomizerMenu menu, ServerPlayer viewer, RandomizerAction action) {

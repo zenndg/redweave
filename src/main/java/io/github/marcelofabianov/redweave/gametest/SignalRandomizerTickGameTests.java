@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
@@ -13,7 +13,6 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -66,15 +65,13 @@ public final class SignalRandomizerTickGameTests {
     place(helper, owner);
     helper.setBlock(LAMP_IN_FRONT, Blocks.REDSTONE_LAMP);
 
-    SignalRandomizerBlockEntity randomizer = helper.getBlockEntity(RANDOMIZER);
-    RegistryAccess registries = helper.getLevel().registryAccess();
-    CompoundTag tag = randomizer.saveWithoutMetadata(registries);
+    CompoundTag tag = ModuleParts.only(helper, RANDOMIZER, ModulePart.class).save();
     tag.putUUID(NETWORK, network.value());
     tag.putBoolean(RUNNING, true);
     tag.putInt(INTERVAL, LONG_INTERVAL);
     tag.putInt(VALUE, Signal.MAX.strength());
     tag.putString(OUTPUT, CHANNEL.key());
-    randomizer.loadWithComponents(tag, registries);
+    ModuleParts.reload(helper, RANDOMIZER, tag);
 
     helper.succeedWhen(() -> {
       helper.assertBlockProperty(NODE_LAMP, RedstoneLampBlock.LIT, true);

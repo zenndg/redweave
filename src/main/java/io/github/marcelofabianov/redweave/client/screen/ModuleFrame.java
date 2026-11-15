@@ -158,7 +158,7 @@ final class ModuleFrame {
         keyCode,
         scanCode,
         modifiers,
-        text -> PacketDistributor.sendToServer(new ModuleRenamed(menu.pos(), text)));
+        text -> PacketDistributor.sendToServer(new ModuleRenamed(menu.spot(), text)));
     return true;
   }
 

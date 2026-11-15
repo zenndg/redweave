@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.menu.TimerScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
@@ -46,7 +46,7 @@ public final class ModuleLabelGameTests {
     helper.setBlock(STONE, Blocks.STONE);
     GameTestActions.placeOn(
         helper, owner, new ItemStack(RedweaveItems.SIGNAL_TIMER.get()), STONE, Direction.UP);
-    SignalTimerBlockEntity timer = helper.getBlockEntity(TIMER);
+    TimerPart timer = ModuleParts.only(helper, TIMER, TimerPart.class);
     ServerPlayer holder = holder(helper);
 
     UUID id = timer.module().orElseThrow().id().value();

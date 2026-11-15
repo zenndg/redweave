@@ -1,13 +1,13 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.block.BlockLocations;
-import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -27,7 +27,7 @@ final class ModuleScreenValues {
   private ModuleScreenValues() {}
 
   /** The state of the network seen from the plate, as a node, or none (answer 385). */
-  static int networkState(ServerPlayer viewer, BlockPos pos, ModuleBlockEntity block) {
+  static int networkState(ServerPlayer viewer, PartSpot spot, ModulePart block) {
     Optional<SignalModule> module = block.module().filter(found -> found.network().isPresent());
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (module.isEmpty() || server.isEmpty()) {
@@ -37,7 +37,7 @@ final class ModuleScreenValues {
             .get()
             .modules()
             .show()
-            .show(module.get(), BlockLocations.of(viewer.level(), pos))
+            .show(module.get(), BlockLocations.of(viewer.level(), spot.pos()))
             .state()
             .ordinal()
         + 1;

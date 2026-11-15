@@ -1,4 +1,4 @@
-package io.github.marcelofabianov.redweave.block;
+package io.github.marcelofabianov.redweave.block.part;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;

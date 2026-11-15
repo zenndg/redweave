@@ -16,7 +16,12 @@ import net.minecraft.world.item.Item;
  */
 public final class PartTypes {
   private static final Map<ResourceLocation, BiFunction<Direction, CompoundTag, Part>> TYPES =
-      Map.of(RedweaveItems.SIGNAL_NODE.getId(), NodePart::load);
+      Map.of(
+          RedweaveItems.SIGNAL_NODE.getId(), NodePart::load,
+          RedweaveItems.SIGNAL_TIMER.getId(), TimerPart::load,
+          RedweaveItems.SIGNAL_INVERTER.getId(), InverterPart::load,
+          RedweaveItems.WEATHER_DETECTOR.getId(), DetectorPart::load,
+          RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load);
 
   private PartTypes() {}
 

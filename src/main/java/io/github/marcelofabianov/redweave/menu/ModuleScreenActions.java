@@ -1,7 +1,8 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.NetworkChoice;
-import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
@@ -12,7 +13,6 @@ import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -25,8 +25,8 @@ final class ModuleScreenActions {
   private ModuleScreenActions() {}
 
   /** The owner picks one of his online networks for the module (answers 397 and 400). */
-  static void choose(Player player, BlockPos pos, NetworkId network) {
-    Optional<ModuleBlockEntity> block = blockAt(player, pos);
+  static void choose(Player player, PartSpot spot, NetworkId network) {
+    Optional<ModulePart> block = blockAt(player, spot);
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (block.isEmpty() || server.isEmpty() || block.get().module().isEmpty()) {
       return;
@@ -40,11 +40,11 @@ final class ModuleScreenActions {
   }
 
   /** The networks the owner may pick, or none for anyone else (answers 378 and 397). */
-  static List<NetworkChoice> choices(ServerPlayer player, BlockPos pos) {
+  static List<NetworkChoice> choices(ServerPlayer player, PartSpot spot) {
     PlayerId viewer = new PlayerId(player.getUUID());
     boolean owner =
-        blockAt(player, pos)
-            .flatMap(ModuleBlockEntity::module)
+        blockAt(player, spot)
+            .flatMap(ModulePart::module)
             .map(module -> module.isOwner(viewer))
             .orElse(false);
     if (!owner) {
@@ -57,10 +57,7 @@ final class ModuleScreenActions {
 
   /** A channel needs the network of the module; the edge always works (answers 375 and 414). */
   static void connect(
-      PlayerId requester,
-      ModuleBlockEntity block,
-      Optional<Integer> channel,
-      Consumer<Connection> keep) {
+      PlayerId requester, ModulePart block, Optional<Integer> channel, Consumer<Connection> keep) {
     Connection connection =
         channel.map(index -> Connection.on(ChannelColor.values()[index])).orElse(Connection.EDGE);
     if (block.module().get().connects(requester, connection) == Outcome.ACCEPTED) {
@@ -68,9 +65,7 @@ final class ModuleScreenActions {
     }
   }
 
-  private static Optional<ModuleBlockEntity> blockAt(Player player, BlockPos pos) {
-    return player.level().getBlockEntity(pos) instanceof ModuleBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private static Optional<ModulePart> blockAt(Player player, PartSpot spot) {
+    return ModulePart.at(player.level(), spot, ModulePart.class);
   }
 }

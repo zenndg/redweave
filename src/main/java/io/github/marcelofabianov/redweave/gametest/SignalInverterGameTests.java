@@ -1,13 +1,11 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -20,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RedstoneLampBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -62,13 +59,13 @@ public final class SignalInverterGameTests {
     helper.setBlock(LAMP_IN_FRONT, Blocks.REDSTONE_LAMP);
     place(helper, player);
 
-    SignalInverterBlockEntity placed = helper.getBlockEntity(INVERTER);
+    InverterPart placed = ModuleParts.only(helper, INVERTER, InverterPart.class);
     helper.assertTrue(
         placed.module().orElseThrow().isOwner(new PlayerId(player.getUUID())), NOT_OWNER);
     helper.assertValueEqual(placed.input(), Connection.EDGE, NOT_EDGES);
     helper.assertValueEqual(placed.output(), Connection.EDGE, NOT_EDGES);
     helper.succeedWhen(() -> {
-      helper.assertBlockProperty(INVERTER, SignalInverterBlock.POWERED, true);
+      ModuleParts.assertPowered(helper, INVERTER, true);
       helper.assertBlockProperty(LAMP_IN_FRONT, RedstoneLampBlock.LIT, true);
       helper.assertValueEqual(placed.inverter().state(), InverterState.ON, NOT_ON);
     });
@@ -82,7 +79,7 @@ public final class SignalInverterGameTests {
     place(helper, owner);
 
     helper.assertFalse(GameTestActions.breakBy(helper, stranger, INVERTER), BROKEN);
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_INVERTER.get(), INVERTER);
+    ModuleParts.assertPresent(helper, INVERTER);
     helper.assertTrue(GameTestActions.breakBy(helper, owner, INVERTER), BROKEN);
     helper.succeed();
   }
@@ -93,17 +90,16 @@ public final class SignalInverterGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     place(helper, owner);
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.TOGGLE);
-    SignalInverterBlockEntity inverter = helper.getBlockEntity(INVERTER);
+    InverterPart inverter = ModuleParts.only(helper, INVERTER, InverterPart.class);
 
     helper
         .startSequence()
-        .thenWaitUntil(
-            () -> helper.assertBlockProperty(INVERTER, SignalInverterBlock.POWERED, true))
+        .thenWaitUntil(() -> ModuleParts.assertPowered(helper, INVERTER, true))
         .thenExecute(() -> NodeScene.click(helper, owner, INVERTER))
         .thenExecute(() -> helper.assertTrue(inverter.toggle().isPresent(), NO_WARNING))
         .thenExecute(
             () -> helper.assertValueEqual(inverter.inverter().state(), InverterState.ON, TOGGLED))
-        .thenExecute(() -> helper.assertBlockProperty(INVERTER, SignalInverterBlock.POWERED, true))
+        .thenExecute(() -> ModuleParts.assertPowered(helper, INVERTER, true))
         .thenSucceed();
   }
 
@@ -112,9 +108,9 @@ public final class SignalInverterGameTests {
   public static void anInverterKeepsItsSaveWhole(GameTestHelper helper) {
     CompoundTag saved = fullSave(BURNOUT);
 
-    SignalInverterBlockEntity loaded = load(helper, saved);
+    InverterPart loaded = load(saved);
 
-    CompoundTag written = loaded.saveWithoutMetadata(helper.getLevel().registryAccess());
+    CompoundTag written = loaded.save();
     helper.assertValueEqual(written, saved, NOT_KEPT);
     helper.succeed();
   }
@@ -122,7 +118,7 @@ public final class SignalInverterGameTests {
   /** A negative burnout is dropped with a warning, and the inverter works (rule 14). */
   @GameTest(template = EMPTY)
   public static void aDamagedBurnoutFallsBackToNone(GameTestHelper helper) {
-    SignalInverterBlockEntity loaded = load(helper, fullSave(DAMAGED_BURNOUT));
+    InverterPart loaded = load(fullSave(DAMAGED_BURNOUT));
 
     helper.assertValueEqual(loaded.inverter().burnoutTicks(), 0, NOT_SAFE);
     helper.succeed();
@@ -135,13 +131,9 @@ public final class SignalInverterGameTests {
         helper, player, new ItemStack(RedweaveItems.SIGNAL_INVERTER.get()), STONE, Direction.UP);
   }
 
-  /** An inverter block entity at the plate, read from the tag as the game reads a chunk. */
-  private static SignalInverterBlockEntity load(GameTestHelper helper, CompoundTag tag) {
-    BlockState state = RedweaveBlocks.SIGNAL_INVERTER.get().defaultBlockState();
-    SignalInverterBlockEntity loaded =
-        new SignalInverterBlockEntity(helper.absolutePos(INVERTER), state);
-    loaded.loadWithComponents(tag, helper.getLevel().registryAccess());
-    return loaded;
+  /** The part on the floor, read from its tag as the space reads it (answer 543). */
+  private static InverterPart load(CompoundTag tag) {
+    return InverterPart.load(Direction.DOWN, tag);
   }
 
   /** The save of a burnt inverter with a name, a network and both connections on channels. */
@@ -154,11 +146,15 @@ public final class SignalInverterGameTests {
     tag.putString(Keys.INPUT, YELLOW);
     tag.putString(Keys.OUTPUT, RED);
     tag.putInt(Keys.BURNOUT, burnout);
+    tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
+    tag.putBoolean(Keys.POWERED, true);
     return tag;
   }
 
   /** The keys of answer 450, written here again, so a renamed key fails the test (rule 15). */
   private static final class Keys {
+    static final String FRONT = "front";
+    static final String POWERED = "powered";
     static final String MODULE_ID = "module_id";
     static final String OWNER = "owner";
     static final String NAME = "name";

@@ -1,14 +1,11 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.DetectorMode;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.WeatherMode;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -21,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RedstoneLampBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -61,14 +57,14 @@ public final class WeatherDetectorGameTests {
     helper.setBlock(LAMP_IN_FRONT, Blocks.REDSTONE_LAMP);
     place(helper, player);
 
-    WeatherDetectorBlockEntity placed = helper.getBlockEntity(DETECTOR);
+    DetectorPart placed = ModuleParts.only(helper, DETECTOR, DetectorPart.class);
     helper.assertTrue(
         placed.module().orElseThrow().isOwner(new PlayerId(player.getUUID())), NOT_OWNER);
     helper.assertValueEqual(placed.detector().mode(), WeatherMode.RAIN, NOT_RAIN);
     helper.assertValueEqual(placed.output(), Connection.EDGE, NOT_RAIN);
     helper.succeedWhen(() -> {
-      helper.assertBlockProperty(DETECTOR, WeatherDetectorBlock.MODE, DetectorMode.RAIN);
-      helper.assertBlockProperty(DETECTOR, WeatherDetectorBlock.POWERED, false);
+      ModuleParts.assertMode(helper, DETECTOR, WeatherMode.RAIN);
+      ModuleParts.assertPowered(helper, DETECTOR, false);
       helper.assertBlockProperty(LAMP_IN_FRONT, RedstoneLampBlock.LIT, false);
     });
   }
@@ -80,15 +76,15 @@ public final class WeatherDetectorGameTests {
     helper.setBlock(LAMP_IN_FRONT, Blocks.REDSTONE_LAMP);
     place(helper, owner);
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.TOGGLE);
-    WeatherDetectorBlockEntity detector = helper.getBlockEntity(DETECTOR);
+    DetectorPart detector = ModuleParts.only(helper, DETECTOR, DetectorPart.class);
 
     NodeScene.click(helper, owner, DETECTOR);
     NodeScene.click(helper, owner, DETECTOR);
 
     helper.assertValueEqual(detector.detector().mode(), WeatherMode.CLEAR, NOT_CLEAR);
     helper.succeedWhen(() -> {
-      helper.assertBlockProperty(DETECTOR, WeatherDetectorBlock.MODE, DetectorMode.CLEAR);
-      helper.assertBlockProperty(DETECTOR, WeatherDetectorBlock.POWERED, true);
+      ModuleParts.assertMode(helper, DETECTOR, WeatherMode.CLEAR);
+      ModuleParts.assertPowered(helper, DETECTOR, true);
       helper.assertBlockProperty(LAMP_IN_FRONT, RedstoneLampBlock.LIT, true);
     });
   }
@@ -101,7 +97,7 @@ public final class WeatherDetectorGameTests {
     place(helper, owner);
 
     helper.assertFalse(GameTestActions.breakBy(helper, stranger, DETECTOR), BROKEN);
-    helper.assertBlockPresent(RedweaveBlocks.WEATHER_DETECTOR.get(), DETECTOR);
+    ModuleParts.assertPresent(helper, DETECTOR);
     helper.assertTrue(GameTestActions.breakBy(helper, owner, DETECTOR), BROKEN);
     helper.succeed();
   }
@@ -111,9 +107,9 @@ public final class WeatherDetectorGameTests {
   public static void aDetectorKeepsItsSaveWhole(GameTestHelper helper) {
     CompoundTag saved = fullSave(THUNDER);
 
-    WeatherDetectorBlockEntity loaded = load(helper, saved);
+    DetectorPart loaded = load(saved);
 
-    CompoundTag written = loaded.saveWithoutMetadata(helper.getLevel().registryAccess());
+    CompoundTag written = loaded.save();
     helper.assertValueEqual(written, saved, NOT_KEPT);
     helper.succeed();
   }
@@ -121,7 +117,7 @@ public final class WeatherDetectorGameTests {
   /** A damaged mode falls back to the rain, with a warning, and the detector works (rule 14). */
   @GameTest(template = EMPTY)
   public static void aDamagedModeFallsBackToTheRain(GameTestHelper helper) {
-    WeatherDetectorBlockEntity loaded = load(helper, fullSave(DAMAGED));
+    DetectorPart loaded = load(fullSave(DAMAGED));
 
     helper.assertValueEqual(loaded.detector().mode(), WeatherMode.RAIN, NOT_SAFE);
     helper.succeed();
@@ -134,13 +130,9 @@ public final class WeatherDetectorGameTests {
         helper, player, new ItemStack(RedweaveItems.WEATHER_DETECTOR.get()), STONE, Direction.UP);
   }
 
-  /** A detector block entity at the plate, read from the tag as the game reads a chunk. */
-  private static WeatherDetectorBlockEntity load(GameTestHelper helper, CompoundTag tag) {
-    BlockState state = RedweaveBlocks.WEATHER_DETECTOR.get().defaultBlockState();
-    WeatherDetectorBlockEntity loaded =
-        new WeatherDetectorBlockEntity(helper.absolutePos(DETECTOR), state);
-    loaded.loadWithComponents(tag, helper.getLevel().registryAccess());
-    return loaded;
+  /** The part on the floor, read from its tag as the space reads it (answer 543). */
+  private static DetectorPart load(CompoundTag tag) {
+    return DetectorPart.load(Direction.DOWN, tag);
   }
 
   /** The save of a detector with a name, a network and its output on a channel. */
@@ -152,11 +144,15 @@ public final class WeatherDetectorGameTests {
     tag.putUUID(Keys.NETWORK, NETWORK);
     tag.putString(Keys.MODE, mode);
     tag.putString(Keys.OUTPUT, RED);
+    tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
+    tag.putBoolean(Keys.POWERED, true);
     return tag;
   }
 
   /** The keys of answer 467, written here again, so a renamed key fails the test (rule 15). */
   private static final class Keys {
+    static final String FRONT = "front";
+    static final String POWERED = "powered";
     static final String MODULE_ID = "module_id";
     static final String OWNER = "owner";
     static final String NAME = "name";

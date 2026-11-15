@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.client;
 
 import com.mojang.math.Transformation;
+import io.github.marcelofabianov.redweave.block.part.PartLook;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -12,33 +13,30 @@ import net.neoforged.neoforge.client.model.QuadTransformers;
 import net.neoforged.neoforge.client.model.data.ModelData;
 
 /**
- * The quads of a part: its model, drawn on the floor, turned to its `facing` with the same turns
- * the blockstates of the plates used, and its tints moved to the side of the part, so two parts of
- * one space never share a tint (answers 534 and 536).
+ * The quads of a part: its model, drawn on the floor, turned to its place with the turns the
+ * blockstates of the plates used, and its tints moved to the side of the part, so two parts of one
+ * space never share a tint (answers 534 and 536).
  */
 final class PartQuads {
   /** The tints of one part, as the 4 corners of a node (answer 87). */
   static final int TINTS_PER_PART = 4;
 
-  private static final int HALF_TURN = 180;
-  private static final int QUARTER_TURN = 90;
-  private static final int FULL_TURN = 360;
   private static final long SEED = 42L;
 
   private PartQuads() {}
 
-  /** The quads of the model turned to the facing, with the tints of that side. */
-  static List<BakedQuad> of(BakedModel model, Direction facing) {
-    Transformation turn = turnOf(facing);
+  /** The quads of the model turned as the look says, with the tints of its side. */
+  static List<BakedQuad> of(BakedModel model, PartLook look) {
+    Transformation turn = BlockModelRotation.by(look.turn().x(), look.turn().y()).getRotation();
     List<BakedQuad> quads = new ArrayList<>();
     for (BakedQuad quad : all(model)) {
-      quads.add(turned(quad, turn, facing));
+      quads.add(turned(quad, turn, look.face()));
     }
     return List.copyOf(quads);
   }
 
-  /** The side of a tint, which the colors of the client read back. */
-  static Direction facingOf(int tintIndex) {
+  /** The side of the part of a tint, which the colors of the client read back. */
+  static Direction faceOf(int tintIndex) {
     return Direction.from3DDataValue(tintIndex / TINTS_PER_PART);
   }
 
@@ -56,10 +54,10 @@ final class PartQuads {
     return quads;
   }
 
-  private static BakedQuad turned(BakedQuad quad, Transformation turn, Direction facing) {
+  private static BakedQuad turned(BakedQuad quad, Transformation turn, Direction face) {
     int tint =
         quad.isTinted()
-            ? facing.get3DDataValue() * TINTS_PER_PART + quad.getTintIndex()
+            ? face.get3DDataValue() * TINTS_PER_PART + quad.getTintIndex()
             : quad.getTintIndex();
     BakedQuad copy =
         new BakedQuad(
@@ -71,13 +69,5 @@ final class PartQuads {
             quad.hasAmbientOcclusion());
     QuadTransformers.applying(turn.blockCenterToCorner()).processInPlace(copy);
     return copy;
-  }
-
-  /** The turns of `directionalBlock`: the model on the floor points up (answer 72). */
-  private static Transformation turnOf(Direction facing) {
-    int x =
-        facing == Direction.DOWN ? HALF_TURN : facing.getAxis().isHorizontal() ? QUARTER_TURN : 0;
-    int y = facing.getAxis().isVertical() ? 0 : ((int) facing.toYRot() + HALF_TURN) % FULL_TURN;
-    return BlockModelRotation.by(x, y).getRotation();
   }
 }

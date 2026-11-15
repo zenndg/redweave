@@ -26,15 +26,12 @@ public final class NodeSignals {
     if (node.isEmpty()) {
       return;
     }
-    Direction stuckTo = spot.face().getOpposite();
     List<Optional<ChannelSlot>> slots = node.get().slots();
     for (int index = 0; index < slots.size(); index++) {
       Optional<ChannelSlot> input = slots.get(index).filter(ChannelSlot::reads);
       if (input.isPresent()) {
         Direction face = Faces.toDirection(input.get().face());
-        server
-            .readInput()
-            .read(id.get(), index, NodeReading.read(level, spot.pos(), stuckTo, face));
+        server.readInput().read(id.get(), index, NodeReading.read(level, spot, face));
       }
     }
   }

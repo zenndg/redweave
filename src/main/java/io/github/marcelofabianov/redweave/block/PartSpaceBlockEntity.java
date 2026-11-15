@@ -1,10 +1,13 @@
 package io.github.marcelofabianov.redweave.block;
 
 import io.github.marcelofabianov.redweave.block.part.ClientPart;
+import io.github.marcelofabianov.redweave.block.part.HostedPart;
+import io.github.marcelofabianov.redweave.block.part.LivePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartLook;
 import io.github.marcelofabianov.redweave.block.part.PartSave;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.block.part.TickingPart;
 import io.github.marcelofabianov.redweave.domain.part.Fit;
 import io.github.marcelofabianov.redweave.domain.part.PartKind;
 import io.github.marcelofabianov.redweave.domain.part.PartSpace;
@@ -88,6 +91,7 @@ public final class PartSpaceBlockEntity extends BlockEntity {
   public void add(Part part) {
     space().with(Faces.of(part.face()), part.kind());
     parts.put(part.face(), part);
+    attach(part);
     changed();
   }
 
@@ -105,12 +109,57 @@ public final class PartSpaceBlockEntity extends BlockEntity {
     }
   }
 
-  /** A space that loads again lets its parts read and take their signal on the next tick. */
+  /**
+   * The strongest signal the parts other than the given one give to the side, as a node reads its
+   * block of support without its own output (answer 514).
+   */
+  public int signalWithout(Part left, Direction side) {
+    return parts.values().stream()
+        .filter(part -> part != left)
+        .mapToInt(part -> part.signal(side))
+        .max()
+        .orElse(0);
+  }
+
+  /**
+   * A space that loads again lets its parts settle, as a block entity loads, and read and take
+   * their signal on the next tick.
+   */
   @Override
   public void onLoad() {
     super.onLoad();
     if (level != null && !level.isClientSide) {
+      parts.values().stream()
+          .filter(LivePart.class::isInstance)
+          .forEach(part -> ((LivePart) part).loaded(this));
       level.scheduleTick(worldPosition, getBlockState().getBlock(), 1);
+    }
+  }
+
+  /**
+   * The other parts of the space hear the change of a part, as neighbors do, which the updates of
+   * the game skip, as they never wake the block that changed (answer 514).
+   */
+  public void wakeOthers(Part changed) {
+    for (Part part : parts()) {
+      if (part != changed && part instanceof LivePart live) {
+        live.neighborChanged(this);
+      }
+    }
+  }
+
+  /** Every part that ticks, on the server, once a tick (answer 381). */
+  public void tickParts() {
+    for (Part part : parts()) {
+      if (part instanceof TickingPart ticking && parts.get(part.face()) == part) {
+        ticking.serverTick(this);
+      }
+    }
+  }
+
+  private void attach(Part part) {
+    if (part instanceof HostedPart hosted) {
+      hosted.attach(this);
     }
   }
 
@@ -124,6 +173,7 @@ public final class PartSpaceBlockEntity extends BlockEntity {
   protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
     parts = PartSave.read(tag, PartSpaceBlockEntity::readClient);
+    parts.values().forEach(this::attach);
     if (level != null && level.isClientSide) {
       requestModelDataUpdate();
       level.sendBlockUpdated(

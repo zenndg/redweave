@@ -1,4 +1,4 @@
-package io.github.marcelofabianov.redweave.block;
+package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.domain.module.Draws;
 import net.minecraft.util.RandomSource;

@@ -2,7 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.DetectorState;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
@@ -81,7 +81,7 @@ public final class DetectorMenuGameTests {
     click(menu, viewer, DetectorAction.choose(0));
     click(menu, viewer, red);
 
-    WeatherDetectorBlockEntity block = helper.getBlockEntity(DETECTOR);
+    DetectorPart block = ModuleParts.only(helper, DETECTOR, DetectorPart.class);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::network), Optional.of(network), NOT_JOINED);
     helper.assertValueEqual(menu.output(), Connection.on(ChannelColor.RED), NOT_JOINED);
@@ -133,7 +133,7 @@ public final class DetectorMenuGameTests {
   }
 
   private static DetectorMenu menuOf(GameTestHelper helper, ServerPlayer viewer) {
-    return new DetectorMenu(MENU_ID, viewer, helper.absolutePos(DETECTOR));
+    return new DetectorMenu(MENU_ID, viewer, ModuleParts.spotOf(helper, DETECTOR));
   }
 
   private static void click(DetectorMenu menu, ServerPlayer viewer, DetectorAction action) {

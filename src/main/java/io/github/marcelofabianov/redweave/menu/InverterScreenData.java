@@ -1,8 +1,9 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import java.util.Optional;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ContainerData;
 
@@ -12,25 +13,25 @@ import net.minecraft.world.inventory.ContainerData;
  */
 final class InverterScreenData implements ContainerData {
   private final ServerPlayer viewer;
-  private final BlockPos pos;
+  private final PartSpot spot;
 
-  InverterScreenData(ServerPlayer viewer, BlockPos pos) {
+  InverterScreenData(ServerPlayer viewer, PartSpot spot) {
     this.viewer = viewer;
-    this.pos = pos;
+    this.spot = spot;
   }
 
   @Override
   public int get(int index) {
-    Optional<SignalInverterBlockEntity> block = block();
+    Optional<InverterPart> block = block();
     if (block.isEmpty()) {
       return ModuleScreenValues.NONE;
     }
-    SignalInverterBlockEntity found = block.get();
+    InverterPart found = block.get();
     return switch (index) {
       case InverterScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case InverterScreenLayout.STATE -> found.inverter().state().ordinal() + 1;
       case InverterScreenLayout.NETWORK_STATE ->
-          ModuleScreenValues.networkState(viewer, pos, found);
+          ModuleScreenValues.networkState(viewer, spot, found);
       case InverterScreenLayout.INPUT -> ModuleScreenValues.code(found.input());
       case InverterScreenLayout.OUTPUT -> ModuleScreenValues.code(found.output());
       case InverterScreenLayout.INPUT_ON -> found.inputOn() ? 1 : 0;
@@ -38,10 +39,8 @@ final class InverterScreenData implements ContainerData {
     };
   }
 
-  private Optional<SignalInverterBlockEntity> block() {
-    return viewer.level().getBlockEntity(pos) instanceof SignalInverterBlockEntity found
-        ? Optional.of(found)
-        : Optional.empty();
+  private Optional<InverterPart> block() {
+    return ModulePart.at(viewer.level(), spot, InverterPart.class);
   }
 
   @Override

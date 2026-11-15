@@ -3,7 +3,12 @@ package io.github.marcelofabianov.redweave.client;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
@@ -15,7 +20,9 @@ import io.github.marcelofabianov.redweave.client.screen.TimerScreen;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -57,7 +64,14 @@ public final class RedweaveClient {
   /** The models of the parts, which no blockstate names, so the part space can join them (536). */
   @SubscribeEvent
   public static void registerPartModels(ModelEvent.RegisterAdditional event) {
-    NodePart.MODELS.forEach(model -> event.register(ModelResourceLocation.standalone(model)));
+    Stream.of(
+            NodePart.MODELS,
+            ModulePart.models(TimerPart.ID, TimerPart.LOOKS),
+            ModulePart.models(InverterPart.ID, InverterPart.LOOKS),
+            ModulePart.models(DetectorPart.ID, DetectorPart.LOOKS),
+            ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS))
+        .flatMap(List::stream)
+        .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }
 
   /** The part space draws with the models of its parts (answer 536). */
@@ -88,7 +102,7 @@ public final class RedweaveClient {
     }
     int channel =
         space
-            .at(PartQuads.facingOf(tintIndex).getOpposite())
+            .at(PartQuads.faceOf(tintIndex))
             .filter(NodePart.class::isInstance)
             .map(part -> ((NodePart) part).corner(PartQuads.slotOf(tintIndex)))
             .orElse(NodeLook.FREE);

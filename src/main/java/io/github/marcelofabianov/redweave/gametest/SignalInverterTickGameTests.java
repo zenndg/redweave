@@ -1,8 +1,8 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
@@ -15,7 +15,6 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.function.Consumer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -60,8 +59,7 @@ public final class SignalInverterTickGameTests {
 
     helper
         .startSequence()
-        .thenWaitUntil(
-            () -> helper.assertBlockProperty(INVERTER, SignalInverterBlock.POWERED, true))
+        .thenWaitUntil(() -> ModuleParts.assertPowered(helper, INVERTER, true))
         .thenExecute(() -> helper.setBlock(BEHIND, Blocks.REDSTONE_BLOCK))
         .thenIdle(1)
         .thenExecute(() -> powered(helper, true))
@@ -114,9 +112,9 @@ public final class SignalInverterTickGameTests {
           tag.putString(OUTPUT, CHANNEL.key());
         });
 
-    SignalInverterBlockEntity inverter = helper.getBlockEntity(INVERTER);
+    InverterPart inverter = ModuleParts.only(helper, INVERTER, InverterPart.class);
     helper.succeedWhen(() -> {
-      helper.assertBlockProperty(INVERTER, SignalInverterBlock.BURNT, true);
+      ModuleParts.assertBurnt(helper, INVERTER, true);
       powered(helper, false);
       helper.assertValueEqual(inverter.inverter().state(), InverterState.BURNT_OUT, NOT_BURNT);
     });
@@ -149,14 +147,12 @@ public final class SignalInverterTickGameTests {
 
   /** Changes the NBT of the inverter, as a `/data merge` would. */
   private static void change(GameTestHelper helper, Consumer<CompoundTag> changes) {
-    SignalInverterBlockEntity inverter = helper.getBlockEntity(INVERTER);
-    RegistryAccess registries = helper.getLevel().registryAccess();
-    CompoundTag tag = inverter.saveWithoutMetadata(registries);
+    CompoundTag tag = ModuleParts.only(helper, INVERTER, ModulePart.class).save();
     changes.accept(tag);
-    inverter.loadWithComponents(tag, registries);
+    ModuleParts.reload(helper, INVERTER, tag);
   }
 
   private static void powered(GameTestHelper helper, boolean on) {
-    helper.assertBlockProperty(INVERTER, SignalInverterBlock.POWERED, on);
+    ModuleParts.assertPowered(helper, INVERTER, on);
   }
 }

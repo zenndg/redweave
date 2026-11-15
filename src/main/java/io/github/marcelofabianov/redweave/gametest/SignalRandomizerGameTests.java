@@ -1,15 +1,13 @@
 package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.RandomizerMode;
 import io.github.marcelofabianov.redweave.domain.module.RandomizerState;
 import io.github.marcelofabianov.redweave.domain.module.SignalRandomizer;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
-import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -68,7 +65,7 @@ public final class SignalRandomizerGameTests {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     place(helper, player);
 
-    SignalRandomizerBlockEntity placed = helper.getBlockEntity(RANDOMIZER);
+    RandomizerPart placed = ModuleParts.only(helper, RANDOMIZER, RandomizerPart.class);
     SignalRandomizer randomizer = placed.randomizer().orElseThrow();
     helper.assertTrue(
         placed.module().orElseThrow().isOwner(new PlayerId(player.getUUID())), NOT_OWNER);
@@ -76,8 +73,8 @@ public final class SignalRandomizerGameTests {
     helper.assertValueEqual(randomizer.mode(), RandomizerMode.BINARY, NOT_STOPPED);
     helper.assertValueEqual(placed.output(), Connection.EDGE, NOT_STOPPED);
     helper.succeedWhen(() -> {
-      helper.assertBlockProperty(RANDOMIZER, SignalRandomizerBlock.RUNNING, false);
-      helper.assertBlockProperty(RANDOMIZER, SignalRandomizerBlock.POWERED, false);
+      ModuleParts.assertRandomizerRunning(helper, RANDOMIZER, false);
+      ModuleParts.assertPowered(helper, RANDOMIZER, false);
     });
   }
 
@@ -87,20 +84,19 @@ public final class SignalRandomizerGameTests {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     place(helper, owner);
     ConfiguratorGameTests.holdConfigurator(owner, ConfiguratorMode.TOGGLE);
-    SignalRandomizerBlockEntity block = helper.getBlockEntity(RANDOMIZER);
+    RandomizerPart block = ModuleParts.only(helper, RANDOMIZER, RandomizerPart.class);
 
     NodeScene.click(helper, owner, RANDOMIZER);
 
     helper
         .startSequence()
         .thenExecute(() -> helper.assertValueEqual(state(block), RUNNING, NOT_RUNNING))
-        .thenWaitUntil(
-            () -> helper.assertBlockProperty(RANDOMIZER, SignalRandomizerBlock.RUNNING, true))
+        .thenWaitUntil(() -> ModuleParts.assertRandomizerRunning(helper, RANDOMIZER, true))
         .thenExecute(() -> NodeScene.click(helper, owner, RANDOMIZER))
         .thenExecute(() -> helper.assertValueEqual(state(block), STOPPED, NOT_STOPPED_AGAIN))
         .thenWaitUntil(() -> {
-          helper.assertBlockProperty(RANDOMIZER, SignalRandomizerBlock.RUNNING, false);
-          helper.assertBlockProperty(RANDOMIZER, SignalRandomizerBlock.POWERED, false);
+          ModuleParts.assertRandomizerRunning(helper, RANDOMIZER, false);
+          ModuleParts.assertPowered(helper, RANDOMIZER, false);
         })
         .thenSucceed();
   }
@@ -113,7 +109,7 @@ public final class SignalRandomizerGameTests {
     place(helper, owner);
 
     helper.assertFalse(GameTestActions.breakBy(helper, stranger, RANDOMIZER), BROKEN);
-    helper.assertBlockPresent(RedweaveBlocks.SIGNAL_RANDOMIZER.get(), RANDOMIZER);
+    ModuleParts.assertPresent(helper, RANDOMIZER);
     helper.assertTrue(GameTestActions.breakBy(helper, owner, RANDOMIZER), BROKEN);
     helper.succeed();
   }
@@ -123,9 +119,9 @@ public final class SignalRandomizerGameTests {
   public static void aRandomizerKeepsItsSaveWhole(GameTestHelper helper) {
     CompoundTag saved = fullSave(ANALOG, INTERVAL);
 
-    SignalRandomizerBlockEntity loaded = load(helper, saved);
+    RandomizerPart loaded = load(saved);
 
-    CompoundTag written = loaded.saveWithoutMetadata(helper.getLevel().registryAccess());
+    CompoundTag written = loaded.save();
     helper.assertValueEqual(written, saved, NOT_KEPT);
     helper.succeed();
   }
@@ -133,7 +129,7 @@ public final class SignalRandomizerGameTests {
   /** A damaged mode falls back to binary, with a warning (rule 14). */
   @GameTest(template = EMPTY)
   public static void aDamagedModeFallsBackToBinary(GameTestHelper helper) {
-    SignalRandomizerBlockEntity loaded = load(helper, fullSave(DAMAGED, INTERVAL));
+    RandomizerPart loaded = load(fullSave(DAMAGED, INTERVAL));
 
     helper.assertValueEqual(
         loaded.randomizer().map(SignalRandomizer::mode),
@@ -145,13 +141,13 @@ public final class SignalRandomizerGameTests {
   /** A damaged interval drops the randomizer, and the block starts a new one on load (14). */
   @GameTest(template = EMPTY)
   public static void aDamagedIntervalDropsTheRandomizer(GameTestHelper helper) {
-    SignalRandomizerBlockEntity loaded = load(helper, fullSave(ANALOG, TOO_SHORT));
+    RandomizerPart loaded = load(fullSave(ANALOG, TOO_SHORT));
 
     helper.assertTrue(loaded.randomizer().isEmpty(), NOT_DROPPED);
     helper.succeed();
   }
 
-  private static RandomizerState state(SignalRandomizerBlockEntity block) {
+  private static RandomizerState state(RandomizerPart block) {
     return block.randomizer().orElseThrow().state();
   }
 
@@ -162,13 +158,9 @@ public final class SignalRandomizerGameTests {
         helper, player, new ItemStack(RedweaveItems.SIGNAL_RANDOMIZER.get()), STONE, Direction.UP);
   }
 
-  /** A randomizer block entity at the plate, read from the tag as the game reads a chunk. */
-  private static SignalRandomizerBlockEntity load(GameTestHelper helper, CompoundTag tag) {
-    BlockState state = RedweaveBlocks.SIGNAL_RANDOMIZER.get().defaultBlockState();
-    SignalRandomizerBlockEntity loaded =
-        new SignalRandomizerBlockEntity(helper.absolutePos(RANDOMIZER), state);
-    loaded.loadWithComponents(tag, helper.getLevel().registryAccess());
-    return loaded;
+  /** The part on the floor, read from its tag as the space reads it (answer 543). */
+  private static RandomizerPart load(CompoundTag tag) {
+    return RandomizerPart.load(Direction.DOWN, tag);
   }
 
   /** The save of a running randomizer with a name, a network and its output on a channel. */
@@ -184,11 +176,15 @@ public final class SignalRandomizerGameTests {
     tag.putInt(Keys.ELAPSED, ELAPSED);
     tag.putInt(Keys.VALUE, VALUE);
     tag.putString(Keys.OUTPUT, RED);
+    tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
+    tag.putBoolean(Keys.POWERED, true);
     return tag;
   }
 
   /** The keys of answer 481, written here again, so a renamed key fails the test (rule 15). */
   private static final class Keys {
+    static final String FRONT = "front";
+    static final String POWERED = "powered";
     static final String MODULE_ID = "module_id";
     static final String OWNER = "owner";
     static final String NAME = "name";

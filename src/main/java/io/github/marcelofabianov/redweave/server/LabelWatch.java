@@ -4,8 +4,8 @@ import io.github.marcelofabianov.redweave.application.LabelChanges;
 import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabels;
-import io.github.marcelofabianov.redweave.block.ModuleBlockEntity;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.config.NeoForgeLabelRange;
@@ -123,28 +123,28 @@ public final class LabelWatch {
         continue;
       }
       if (entity instanceof PartSpaceBlockEntity space) {
-        addNodes(space, near);
-      } else if (entity instanceof ModuleBlockEntity module) {
-        addModule(module, near);
+        addParts(space, near);
       }
     }
   }
 
-  private static void addNodes(PartSpaceBlockEntity space, Near near) {
+  private static void addParts(PartSpaceBlockEntity space, Near near) {
     for (Part part : space.parts()) {
       if (part instanceof NodePart node) {
         node.node().ifPresent(id -> near.nodes().put(id, space.getBlockPos()));
+      } else if (part instanceof ModulePart module) {
+        addModule(module, space.getBlockPos(), near);
       }
     }
   }
 
   /** The name, the state and the channel of the output of a module (answer 417). */
-  private static void addModule(ModuleBlockEntity module, Near near) {
+  private static void addModule(ModulePart module, BlockPos pos, Near near) {
     if (module.module().isEmpty() || module.stateKey().isEmpty()) {
       return;
     }
     ModuleId id = module.module().get().id();
-    near.modules().put(id, module.getBlockPos());
+    near.modules().put(id, pos);
     near.moduleLabels()
         .put(
             id,

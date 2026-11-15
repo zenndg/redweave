@@ -27,7 +27,7 @@ public final class Plates {
    * The front of a plate turned 90° clockwise, seen from the front of the plate: the cross product
    * of the front and the face it sticks on (answer 403).
    */
-  static Direction clockwise(Direction facing, Direction front) {
+  public static Direction clockwise(Direction facing, Direction front) {
     Vec3i turned = front.getNormal().cross(facing.getNormal());
     return Direction.fromDelta(turned.getX(), turned.getY(), turned.getZ());
   }

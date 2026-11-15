@@ -1,28 +1,22 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
-import io.github.marcelofabianov.redweave.block.ModulePlateBlock;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
-import io.github.marcelofabianov.redweave.block.SignalInverterBlock;
-import io.github.marcelofabianov.redweave.block.SignalRandomizerBlock;
-import io.github.marcelofabianov.redweave.block.SignalTimerBlock;
-import io.github.marcelofabianov.redweave.block.WeatherDetectorBlock;
+import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
+import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.item.RemoteLook;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.function.Function;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -76,15 +70,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
   private static final float PLATE_EDGE = 3;
   private static final float PLATE_FAR_EDGE = 13;
   private static final float PLATE_THICKNESS = 2;
-  private static final String TIMER = "signal_timer";
-  private static final String INVERTER = "signal_inverter";
-  private static final String BURNT_SUFFIX = "_burnt";
-  private static final String DETECTOR = "weather_detector";
-  private static final String RANDOMIZER = "signal_randomizer";
-  private static final String SEPARATOR = "_";
-  private static final String RUNNING_SUFFIX = "_running";
   private static final String TURNED_SUFFIX = "_turned";
-  private static final String NO_SUFFIX = "";
   private static final String PART_SPACE = "part_space";
 
   RedweaveBlockStates(PackOutput output, ExistingFileHelper files) {
@@ -117,19 +103,10 @@ final class RedweaveBlockStates extends BlockStateProvider {
 
   /**
    * The Signal Timer: one model for each pair of LEDs, in two versions, with the top turned or not,
-   * so the plate reaches the 24 pairs of `facing` and `front` (answers 401 and 429).
+   * so the part space reaches the 24 pairs of `facing` and `front` (answers 401, 429 and 536).
    */
   private void timerModels() {
-    plateModels(
-        RedweaveBlocks.SIGNAL_TIMER.get(),
-        RedweaveItems.SIGNAL_TIMER.get(),
-        TIMER,
-        RedweaveBlockStates::timerLeds);
-  }
-
-  /** The suffix of the top for the LEDs, in the order of the sheet of the art (answer 418). */
-  private static String timerLeds(BlockState state) {
-    return leds(state.getValue(SignalTimerBlock.RUNNING), state.getValue(SignalTimerBlock.POWERED));
+    plateModels(RedweaveItems.SIGNAL_TIMER.get(), TimerPart.ID, TimerPart.LOOKS);
   }
 
   /**
@@ -137,42 +114,15 @@ final class RedweaveBlockStates extends BlockStateProvider {
    * the top turned or not, as the timer (answers 429 and 488).
    */
   private void randomizerModels() {
-    plateModels(
-        RedweaveBlocks.SIGNAL_RANDOMIZER.get(),
-        RedweaveItems.SIGNAL_RANDOMIZER.get(),
-        RANDOMIZER,
-        RedweaveBlockStates::randomizerLeds);
-  }
-
-  /** The suffix of the top for the LED and the arrow, in the order of the sheet (488). */
-  private static String randomizerLeds(BlockState state) {
-    return leds(
-        state.getValue(SignalRandomizerBlock.RUNNING),
-        state.getValue(SignalRandomizerBlock.POWERED));
-  }
-
-  private static String leds(boolean running, boolean powered) {
-    return (running ? RUNNING_SUFFIX : NO_SUFFIX) + (powered ? POWERED_SUFFIX : NO_SUFFIX);
+    plateModels(RedweaveItems.SIGNAL_RANDOMIZER.get(), RandomizerPart.ID, RandomizerPart.LOOKS);
   }
 
   /**
    * The Signal Inverter: one model for each look, off, on or burnt, in two versions, with the top
-   * turned or not, as the timer (answers 429, 452 and 455). Burnt wins over powered.
+   * turned or not, as the timer (answers 429, 452 and 455).
    */
   private void inverterModels() {
-    plateModels(
-        RedweaveBlocks.SIGNAL_INVERTER.get(),
-        RedweaveItems.SIGNAL_INVERTER.get(),
-        INVERTER,
-        RedweaveBlockStates::inverterLook);
-  }
-
-  /** The suffix of the top for the look, in the order of the sheet of the art (answer 452). */
-  private static String inverterLook(BlockState state) {
-    if (state.getValue(SignalInverterBlock.BURNT)) {
-      return BURNT_SUFFIX;
-    }
-    return state.getValue(SignalInverterBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX;
+    plateModels(RedweaveItems.SIGNAL_INVERTER.get(), InverterPart.ID, InverterPart.LOOKS);
   }
 
   /**
@@ -180,41 +130,19 @@ final class RedweaveBlockStates extends BlockStateProvider {
    * the top turned or not, as the other modules (answers 429 and 471).
    */
   private void detectorModels() {
-    plateModels(
-        RedweaveBlocks.WEATHER_DETECTOR.get(),
-        RedweaveItems.WEATHER_DETECTOR.get(),
-        DETECTOR,
-        RedweaveBlockStates::detectorLook);
-  }
-
-  /** The suffix of the top: the mode and, with the output on, the lit arrow (answer 471). */
-  private static String detectorLook(BlockState state) {
-    String mode = SEPARATOR + state.getValue(WeatherDetectorBlock.MODE).getSerializedName();
-    return mode + (state.getValue(WeatherDetectorBlock.POWERED) ? POWERED_SUFFIX : NO_SUFFIX);
+    plateModels(RedweaveItems.WEATHER_DETECTOR.get(), DetectorPart.ID, DetectorPart.LOOKS);
   }
 
   /**
-   * Every state of a module plate: the model of its look, in two versions, with the top turned or
-   * not, so the plate reaches the 24 pairs of `facing` and `front` (answer 429), and its item.
+   * Every look of a module plate, in two versions, with the top turned or not, which the part space
+   * turns to the 24 pairs of `facing` and `front` (answers 429 and 536), and its item.
    */
-  private void plateModels(Block block, Item item, String id, Function<BlockState, String> look) {
-    Map<String, ModelFile> models = new HashMap<>();
-    getVariantBuilder(block)
-        .forAllStates(state -> {
-          PlateTurn turn =
-              PlateTurn.of(
-                  state.getValue(ModulePlateBlock.FACING), state.getValue(ModulePlateBlock.FRONT));
-          String suffix = look.apply(state);
-          String name = id + suffix + (turn.turned() ? TURNED_SUFFIX : NO_SUFFIX);
-          ResourceLocation front = modLoc(BLOCK_FOLDER + id + NODE_FRONT + suffix);
-          ModelFile model =
-              models.computeIfAbsent(name, key -> plateModel(key, front, turn.turned()));
-          return ConfiguredModel.builder()
-              .modelFile(model)
-              .rotationX(turn.x())
-              .rotationY(turn.y())
-              .build();
-        });
+  private void plateModels(Item item, String id, List<String> looks) {
+    for (String look : looks) {
+      ResourceLocation front = modLoc(BLOCK_FOLDER + id + NODE_FRONT + look);
+      plateModel(id + look, front, false);
+      plateModel(id + look + TURNED_SUFFIX, front, true);
+    }
     itemModels().basicItem(item);
   }
 
@@ -242,7 +170,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
   }
 
   private ResourceLocation timerTexture(String part) {
-    return modLoc(BLOCK_FOLDER + TIMER + part);
+    return modLoc(BLOCK_FOLDER + TimerPart.ID + part);
   }
 
   /**

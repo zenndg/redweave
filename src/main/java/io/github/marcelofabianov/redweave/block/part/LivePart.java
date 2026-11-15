@@ -12,6 +12,9 @@ public interface LivePart {
   /** The tick scheduled when the space loads or a part asks for it. */
   void tick(PartSpaceBlockEntity space);
 
+  /** The space loaded on the server, before its first tick, as a block entity loads. */
+  default void loaded(PartSpaceBlockEntity space) {}
+
   /** Gone by any means: broken, picked up, fallen or replaced. */
   void removed(PartSpaceBlockEntity space);
 }

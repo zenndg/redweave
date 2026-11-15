@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.part.LivePart;
 import io.github.marcelofabianov.redweave.block.part.OwnedPart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartTargets;
+import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +23,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -51,6 +54,20 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
     return new PartSpaceBlockEntity(pos, state);
+  }
+
+  /** Only the server ticks the parts; the client sees them in their looks (answer 401). */
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState state, BlockEntityType<T> type) {
+    if (level.isClientSide || type != RedweaveBlockEntities.PART_SPACE.get()) {
+      return null;
+    }
+    return (tickLevel, pos, tickState, entity) -> {
+      if (entity instanceof PartSpaceBlockEntity space) {
+        space.tickParts();
+      }
+    };
   }
 
   /**

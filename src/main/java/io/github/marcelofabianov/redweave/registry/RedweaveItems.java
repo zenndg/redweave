@@ -7,7 +7,6 @@ import io.github.marcelofabianov.redweave.item.NetworkTerminalItem;
 import io.github.marcelofabianov.redweave.item.PartItem;
 import io.github.marcelofabianov.redweave.item.SignalRemoteItem;
 import java.util.Collection;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -58,21 +57,21 @@ public final class RedweaveItems {
       ITEMS.register(
           SIGNAL_REMOTE_ID, () -> new SignalRemoteItem(new Item.Properties().stacksTo(1)));
 
-  /** A plain item that stacks and keeps no setting, as the node (answer 394). */
-  public static final DeferredItem<BlockItem> SIGNAL_TIMER =
-      ITEMS.registerSimpleBlockItem(SIGNAL_TIMER_ID, RedweaveBlocks.SIGNAL_TIMER);
+  /** A part of the part space that stacks and keeps no setting, with its old ID (394 and 523). */
+  public static final DeferredItem<PartItem> SIGNAL_TIMER =
+      ITEMS.register(SIGNAL_TIMER_ID, () -> new PartItem(new Item.Properties()));
 
-  /** A plain item that stacks and keeps no setting, as the timer (answer 394). */
-  public static final DeferredItem<BlockItem> SIGNAL_INVERTER =
-      ITEMS.registerSimpleBlockItem(SIGNAL_INVERTER_ID, RedweaveBlocks.SIGNAL_INVERTER);
+  /** A part of the part space that stacks and keeps no setting, with its old ID (394 and 523). */
+  public static final DeferredItem<PartItem> SIGNAL_INVERTER =
+      ITEMS.register(SIGNAL_INVERTER_ID, () -> new PartItem(new Item.Properties()));
 
-  /** A plain item that stacks and keeps no setting, as the other modules (answer 394). */
-  public static final DeferredItem<BlockItem> WEATHER_DETECTOR =
-      ITEMS.registerSimpleBlockItem(WEATHER_DETECTOR_ID, RedweaveBlocks.WEATHER_DETECTOR);
+  /** A part of the part space that stacks and keeps no setting, with its old ID (394 and 523). */
+  public static final DeferredItem<PartItem> WEATHER_DETECTOR =
+      ITEMS.register(WEATHER_DETECTOR_ID, () -> new PartItem(new Item.Properties()));
 
-  /** A plain item that stacks and keeps no setting, as the other modules (answer 394). */
-  public static final DeferredItem<BlockItem> SIGNAL_RANDOMIZER =
-      ITEMS.registerSimpleBlockItem(SIGNAL_RANDOMIZER_ID, RedweaveBlocks.SIGNAL_RANDOMIZER);
+  /** A part of the part space that stacks and keeps no setting, with its old ID (394 and 523). */
+  public static final DeferredItem<PartItem> SIGNAL_RANDOMIZER =
+      ITEMS.register(SIGNAL_RANDOMIZER_ID, () -> new PartItem(new Item.Properties()));
 
   private RedweaveItems() {}
 
