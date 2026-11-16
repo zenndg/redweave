@@ -67,17 +67,13 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 | ID | `redweave:network_terminal`, o mesmo do bloco. É contrato e fica fixado na #26 (pergunta 155) |
 | Nome | `Network Terminal`, e `Terminal de Rede` em português |
 | Aba do criativo | `Redweave` (pergunta 69) |
-
-## Pendências
-
-| Ponto | Depende de |
-|---|---|
-| A receita | Issue #24 |
+| Receita | Na mesa de trabalho, em [`itens.md`](../itens.md#receitas) (pergunta 748) |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 748), e a seção de pendências sai. |
 | Zennd | 2026-11-12 19:23 | O modo `Open` do Configurator abre o Terminal, como a mão vazia (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Aponta a confirmação para o `Clear log` e inclui o `Toggle` na rede `Offline` (pergunta 241). |
 | Zennd | 2026-11-12 09:49 | Aplica as perguntas 251 a 256: o conceito do bloco, a barra de ações, os textos e o Terminal perdido; adiciona o desenho da tela. |

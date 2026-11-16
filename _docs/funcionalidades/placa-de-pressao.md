@@ -139,12 +139,13 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 ## Fora desta página
 
 - A alavanca, em [`alavanca.md`](alavanca.md), e o botão, em [`botao.md`](botao.md).
-- A receita, na #24, com as dos outros itens da `v0.1.0`.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 758).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 08:10 | A parte e o domínio da placa passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 15:07 | Marca a placa como implementada na #132, com o custo por tick, a tela, as mensagens, o save, o desenho, o código e os testes. |

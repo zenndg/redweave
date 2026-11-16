@@ -5,7 +5,7 @@ O que os testes automáticos não cobrem e um player precisa conferir no jogo: o
 ## Como preparar
 
 1. `make client`, num mundo novo em criativo, com os comandos liberados. Monte tudo a uns 300 blocos do spawn, porque o jogo mantém os chunks do spawn sempre carregados, e isso atrapalha o passo 20 (pergunta 102).
-2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod, mesmo os que ainda não têm receita: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote, os Signal Modules, incluindo o Signal Lever e o Signal Button, e o Signal Cable nas 16 cores (perguntas 69, 564 e 601). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
+2. Abra a aba `Redweave` do inventário criativo. Ela tem todos os itens do mod, com ou sem receita: o Network Controller, o Signal Node, o Configurator, o Network Terminal, o Signal Remote, os Signal Modules, incluindo o Signal Lever e o Signal Button, e o Signal Cable nas 16 cores (perguntas 69, 564 e 601). Pegue um Configurator: ele começa no modo `Open`, que abre a Tela do Nó (pergunta 188).
 3. Para o passo de outro player, abra um segundo cliente com outro nome, ou peça a alguém para entrar no mundo pela LAN.
 
 ## Fase 1: o primeiro circuito
@@ -334,7 +334,7 @@ Entregue com a issue #44 (perguntas 494 a 575). Confere a forma, a arte, a mira 
 | 187 | Mire em cada parte do espaço e quebre uma delas | O contorno mostra só a parte mirada; a quebra tira só ela, e só o item dela cai |
 | 188 | Com um item de parte na mão, clique numa face ocupada; depois coloque 2 cabos num espaço e tente um terceiro | A parte não é colocada, e a action bar mostra `This face is taken.` e, no terceiro cabo, `This space already has 2 cables.` |
 | 189 | Com dois nós no mesmo espaço, segure o Configurator | Cada rótulo se desloca para o lado da sua parte, sem se sobrepor |
-| 190 | Na mesa de trabalho, ponha 8 cabos em volta de um corante vermelho; depois tinja um cabo vermelho de branco | 8 `Red Signal Cable`, com o item tingido; o corante branco o leva de volta a `Signal Cable`. Cores diferentes não empilham |
+| 190 | Na mesa de trabalho, ponha 8 cabos brancos em volta de um corante vermelho; depois ponha 8 cabos vermelhos em volta de um corante azul, e 8 brancos em volta de um corante branco | 8 `Red Signal Cable`; os cabos vermelhos e o corante branco não dão nada, porque só o cabo branco é tingido. Cores diferentes não empilham |
 | 191 | Coloque um cabo vermelho sozinho no chão | Uma cruz de 4 × 3 px, um pouco mais alta que a placa do nó, com o isolamento vermelho, as bordas claras no topo e o filete vermelho escuro |
 | 192 | Ponha um bloco de redstone ao lado e faça uma linha de cabos até uma lâmpada | O filete fica vermelho vivo e escurece bloco a bloco; a lâmpada acende enquanto a força chega a ela, e apaga depois de 15 blocos |
 | 193 | Monte uma reta, um L e um T | Os braços se juntam sem vão, com tampa só nas pontas soltas |
@@ -569,10 +569,23 @@ Entregue com a issue #142 (perguntas 643 a 649 e 737 a 744). Use uma rede sua, d
 | 357 | Salve e recarregue com o alarme tocando | Ele continua e para no fim (pergunta 744) |
 | 358 | Troque o idioma para Português | `Alarme de Sinal`, `Alarme <nome>: Disparando...`, `Tocando`/`Quieto`, `Quem ouve`, `Dono`/`Rede`/`Todos`, `Toques`, `Duração` e `Silenciado` |
 
+## Fase 1 e 2: as receitas
+
+Num mundo em sobrevivência, ou em criativo com a mesa de trabalho, confira cada receita de [`itens.md`](../itens.md#receitas) (perguntas 745 a 764).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 359 | Pegue uma redstone e abra o livro de receitas | As receitas do Redweave aparecem desbloqueadas na aba de redstone |
+| 360 | Monte, na mesa, a receita do Network Controller, do Network Terminal, do Configurator e do Signal Remote | 1 item de cada |
+| 361 | Monte a receita do Signal Node e a do Signal Cable | 2 `Signal Node` e 8 `Signal Cable` brancos, que empilham com os brancos do criativo |
+| 362 | Monte a receita de cada um dos 11 Signal Modules, trocando só o item de cima | 1 módulo de cada, conforme o item de cima |
+| 363 | Troque o idioma para Português e repita um dos passos | Os mesmos resultados, com os nomes em português |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | Adiciona os passos 359 a 363, das receitas, e muda o passo 190, do tingir só do cabo branco (perguntas 745 a 764). |
 | Zennd | 2026-11-16 15:21 | Adiciona a seção do Signal Alarm, passos 342 a 358. |
 | Zennd | 2026-11-16 14:00 | Adiciona os passos 331 a 341, da cópia de todos os itens da #154. |
 | Zennd | 2026-11-16 13:19 | Adiciona os passos 315 a 330, do Signal Lamp. |

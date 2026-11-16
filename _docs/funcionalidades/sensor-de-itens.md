@@ -96,11 +96,12 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 ## Fora desta página
 
 - O [Signal Lock](fechadura.md) e os outros itens novos, de #141 a #147.
-- A receita, na #24, e o Jade e o The One Probe, na #23.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 759), e o Jade e o The One Probe, na #23.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 759). |
 | Zennd | 2026-11-16 11:27 | Leva o conceito ao implementado na #148: o código, a tela, as mensagens, o save, os padrões, o rótulo e a luz (perguntas 700 a 704). |
 | Zennd | 2026-11-16 10:12 | Cria o conceito do Signal Item Sensor, com as decisões 689 a 698. |

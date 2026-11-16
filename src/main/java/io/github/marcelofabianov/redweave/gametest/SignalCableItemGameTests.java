@@ -25,8 +25,8 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 /**
  * The Signal Cable as an item: the color in the component `cable_color`, none for white, which
- * survives the save, stacks only with the same color, and the 16 dye recipes (answers 494, 506 and
- * 561 to 563).
+ * survives the save, stacks only with the same color, and the 15 dye recipes, which take only white
+ * cables (answers 494, 561 to 563, 762 and 763).
  */
 @GameTestHolder(RedweaveMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -46,6 +46,8 @@ public final class SignalCableItemGameTests {
   private static final String WRONG_COUNT = "The recipe should give 8 cables";
   private static final String SHOULD_STACK = "Cables of one color should stack";
   private static final String SHOULD_NOT_STACK = "Cables of two colors should not stack";
+  private static final String DYED_TAKES_DYE = "A dyed cable should not take another dye";
+  private static final String WHITE_DYE_RECIPE = "White cables and a white dye should not match";
 
   private SignalCableItemGameTests() {}
 
@@ -115,16 +117,15 @@ public final class SignalCableItemGameTests {
     helper.succeed();
   }
 
-  /** Each dye turns 8 cables of any color into 8 of its color, and white takes the color off. */
+  /** Each dye but white turns 8 white cables into 8 of its color (answers 762 and 763). */
   @GameTest(template = EMPTY)
-  public static void eachDyeColorsEightCables(GameTestHelper helper) {
+  public static void eachDyeColorsEightWhiteCables(GameTestHelper helper) {
     for (ChannelColor color : ChannelColor.values()) {
-      CraftingInput input = CraftingInput.of(GRID, GRID, grid(color));
-      Optional<RecipeHolder<CraftingRecipe>> recipe =
-          helper
-              .getLevel()
-              .getRecipeManager()
-              .getRecipeFor(RecipeType.CRAFTING, input, helper.getLevel());
+      if (color == ChannelColor.WHITE) {
+        continue;
+      }
+      CraftingInput input = CraftingInput.of(GRID, GRID, grid(ChannelColor.WHITE, color));
+      Optional<RecipeHolder<CraftingRecipe>> recipe = recipeFor(helper, input);
       helper.assertTrue(recipe.isPresent(), NO_RECIPE);
       helper.assertValueEqual(RedweaveRecipes.idOf(color), recipe.get().id(), WRONG_RECIPE);
       ItemStack result = recipe.get().value().assemble(input, helper.getLevel().registryAccess());
@@ -136,14 +137,33 @@ public final class SignalCableItemGameTests {
     helper.succeed();
   }
 
-  /** Cables of two colors, so the recipe takes cables of any color, around the dye. */
-  private static List<ItemStack> grid(ChannelColor color) {
+  /** A dyed cable does not take another dye, and the white dye has no recipe (762 and 763). */
+  @GameTest(template = EMPTY)
+  public static void onlyWhiteCablesTakeADye(GameTestHelper helper) {
+    CraftingInput dyed = CraftingInput.of(GRID, GRID, grid(ChannelColor.BLUE, ChannelColor.RED));
+    CraftingInput white =
+        CraftingInput.of(GRID, GRID, grid(ChannelColor.WHITE, ChannelColor.WHITE));
+
+    helper.assertTrue(recipeFor(helper, dyed).isEmpty(), DYED_TAKES_DYE);
+    helper.assertTrue(recipeFor(helper, white).isEmpty(), WHITE_DYE_RECIPE);
+    helper.succeed();
+  }
+
+  private static Optional<RecipeHolder<CraftingRecipe>> recipeFor(
+      GameTestHelper helper, CraftingInput input) {
+    return helper
+        .getLevel()
+        .getRecipeManager()
+        .getRecipeFor(RecipeType.CRAFTING, input, helper.getLevel());
+  }
+
+  /** Eight cables of one color around a dye. */
+  private static List<ItemStack> grid(ChannelColor around, ChannelColor dye) {
     List<ItemStack> grid = new ArrayList<>();
     for (int slot = 0; slot < GRID * GRID; slot++) {
-      ChannelColor around = slot % 2 == 0 ? ChannelColor.BLUE : ChannelColor.WHITE;
       grid.add(SignalCableItem.stackOf(around, 1));
     }
-    grid.set(CENTER, new ItemStack(DyeItem.byColor(DyeColor.byId(color.ordinal()))));
+    grid.set(CENTER, new ItemStack(DyeItem.byColor(DyeColor.byId(dye.ordinal()))));
     return grid;
   }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_signal_cable": {
+    "has_redstone": {
       "conditions": {
         "items": [
           {
-            "items": "redweave:signal_cable"
+            "items": "minecraft:redstone"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "redweave:white_signal_cable"
+        "recipe": "redweave:signal_remote"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_signal_cable"
+      "has_redstone"
     ]
   ],
   "rewards": {
     "recipes": [
-      "redweave:white_signal_cable"
+      "redweave:signal_remote"
     ]
   }
 }

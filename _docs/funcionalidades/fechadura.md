@@ -106,12 +106,13 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 
 - O cartão, em [`cartao.md`](cartao.md), e a proteção dos blocos, em [`protecao.md`](protecao.md).
 - O `Threshold` (#115), que liga acima de um limiar; o Signal Lock testa igualdade.
-- A receita, na #24.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 760).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 760). |
 | Zennd | 2026-11-16 13:59 | O Signal Lock nunca é copiado nem colado (pergunta 731). |
 | Zennd | 2026-11-16 12:22 | Marca como implementado na #141, com a tela, as mensagens, o save, o desenho, a proteção, o código e os testes (perguntas 707 a 714). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 633 a 642. |
