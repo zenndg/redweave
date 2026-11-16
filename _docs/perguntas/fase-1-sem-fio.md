@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 706 | Qual a ordem do Signal Lock, da Signal Lamp e do Signal Alarm? | O Signal Lock (passo 18), depois a Signal Lamp (passo 19) e depois o Signal Alarm (passo 20). O Keypad, o Card, a proteção e o Gate seguem depois, porque dependem do Lock. Muda a ordem da pergunta 642 |
 | 705 | Onde fica o resumo de cada item do mod? | Num catálogo, `_docs/itens.md`, em português, com uma linha por item: o nome em inglês e em português, o ID, a família, o que faz, o estado e o link para o conceito; e numa seção `Items` do `README.md`, em inglês, com a tabela resumida. Todo item novo, mudado ou planejado atualiza os dois no mesmo PR, como regra do `AGENTS.md` (#150) |
 | 704 | Como fica a tela do Signal Item Sensor? | Com o inventário do dono embaixo, para ele pegar o item com o cursor e clicar no slot fantasma, com cerca de 260 px de altura. Completa a pergunta 696 |
 | 703 | O que o rótulo do Signal Item Sensor mostra? | O nome e, embaixo, `On` ou `Off` (`Ligado` ou `Desligado`) e o canal da saída, como os módulos, sem a contagem |
@@ -705,6 +706,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:45 | Registra a resposta 706, da ordem do Lock, da Lamp e do Alarm. |
 | Zennd | 2026-11-16 11:34 | Registra a resposta 705, do catálogo de itens. |
 | Zennd | 2026-11-16 11:25 | Registra as respostas 700 a 704, do Signal Item Sensor. |
 | Zennd | 2026-11-16 10:56 | Registra a resposta 699, dos links de leitura nos prompts de arte. |
