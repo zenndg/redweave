@@ -80,12 +80,14 @@ Desde a #44, o nó é uma parte do [multipart](multipart.md), e o visual fica em
 ## Fora desta funcionalidade
 
 - A Tela do Nó e a configuração dos slots ([`telas.md`](telas.md#tela-do-nó)).
-- As camadas emissivas e a receita (issue #24).
+- As camadas emissivas (issue #24).
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 749).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 749). |
 | Zennd | 2026-11-15 09:35 | Leva o visual do nó para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 543 e 546). |
 | Zennd | 2026-11-15 09:07 | O nó troca sinal com o Signal Cable e o pó do jogo no espaço vizinho (pergunta 574). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco do nó para a parte (pergunta 534). |

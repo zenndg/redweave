@@ -102,11 +102,12 @@ A arte seguiu as perguntas 185 e 186: o prompt em `tmp/arte/signal_lamp/`, com a
 
 ## Fora desta página
 
-- A receita, na #24.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 758).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 13:19 | Marca o Signal Lamp como implementado na #143: a luz no estado do bloco, o `Toggle` offline, o contador, o save, os padrões, os textos, o rótulo, a tela, o desenho e o código (perguntas 715 a 721). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 650 a 658. |

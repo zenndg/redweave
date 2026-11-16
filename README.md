@@ -74,7 +74,7 @@ Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work 
 
 ## Items
 
-Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, even before it has a recipe; recipes come with #24.
+Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials with at least one redstone, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157).
 
 | Item | What it does | Status |
 | --- | --- | --- |

@@ -92,12 +92,13 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 
 ## Fora desta página
 
-- A receita, na #24.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 761).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 761). |
 | Zennd | 2026-11-16 15:21 | Marca como implementado na #142, com as decisões 737 a 744: os 10 toques, o texto, o `pling` duplo, a duração que acompanha os toques, `Network`, o config, a tela, as mensagens, o save e o desenho. |
 | Zennd | 2026-11-16 13:59 | O Signal Alarm entra na cópia do Configurator (pergunta 727). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 643 a 649. |

@@ -95,12 +95,13 @@ Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apag
 
 ## Fora desta página
 
-- A receita, na #24, e o Jade e o The One Probe, na #23.
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 756), e o Jade e o The One Probe, na #23.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 756). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |
 | Zennd | 2026-11-14 17:10 | Aponta para a prancha da tela no `telas.md` (pergunta 470). |

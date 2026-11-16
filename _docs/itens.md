@@ -2,7 +2,7 @@
 
 O catálogo de todos os itens do Redweave: os entregues, os planejados e os que ficaram como talvez, com uma linha por item. Cada linha dá o nome em inglês e em português, o ID, a família, o que o item faz e o estado, e aponta para a página de conceito, onde estão as regras completas (pergunta 705). Os termos são os do [`glossario.md`](glossario.md), as páginas de conceito estão em [`funcionalidades/`](funcionalidades/README.md), e as respostas em [`perguntas/`](perguntas/README.md) prevalecem sobre este catálogo.
 
-Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do [`README.md`](../README.md) no mesmo PR (pergunta 705). Todo item entregue fica na aba criativa do Redweave, para os testes, mesmo antes de ter receita (pergunta 601). As receitas entram na #24.
+Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do [`README.md`](../README.md) no mesmo PR (pergunta 705). Todo item entregue fica na aba criativa do Redweave, para os testes, com ou sem receita (pergunta 601). As receitas dos itens entregues estão em [Receitas](#receitas) (#157); as dos itens planejados ainda não foram decididas.
 
 ## Rede
 
@@ -90,10 +90,48 @@ Alguns blocos do mod não são itens e não aparecem na aba criativa:
 | Espaço de partes | `redweave:part_space` | O bloco contêiner do multipart, que guarda as partes de um espaço de bloco: nós, módulos e cabos (pergunta 523) |
 | Campo do portão | `redweave:signal_gate_field` | O campo do Signal Gate, que nasce com a moldura completa (planejado na #147) |
 
+## Receitas
+
+As receitas dos itens entregues, na mesa de trabalho, com materiais só do jogo puro e pelo menos uma redstone em cada receita de fabricar (perguntas 745, 746 e 764). Cada uma tem o ID do item, como `redweave:signal_node`, e fica em JSON de datapack gerado pelo datagen, que o pack pode sobrescrever com KubeJS (regra 4). Todas se desbloqueiam ao pegar uma redstone. Um GameTest (`ItemRecipeGameTests`) confere que todo item registrado tem receita, com redstone, e cada grade abaixo.
+
+Na grade, cada linha da mesa vai separada por `/`, e `·` é um slot vazio.
+
+| Item | Grade | Dá | Pergunta |
+|---|---|---|---|
+| Network Controller | Deepslate polido, redstone, deepslate polido / barra de cobre, olho do ender, barra de cobre / deepslate polido, bloco de redstone, deepslate polido | 1 | 747 |
+| Network Terminal | Deepslate polido, painel de vidro, deepslate polido / barra de cobre, pérola do ender, barra de cobre / deepslate polido, redstone, deepslate polido | 1 | 748 |
+| Signal Node | Barra de cobre, redstone, barra de cobre / deepslate polido, pérola do ender, deepslate polido | 2 | 749 |
+| Signal Cable (branco) | Lã branca × 3 / barra de cobre, redstone, barra de cobre / lã branca × 3 | 8 | 750 |
+| Configurator | ·, ·, redstone / ·, barra de cobre, · / barra de cobre, ·, · | 1 | 751 |
+| Signal Remote | Barra de cobre, painel de vidro, barra de cobre / barra de cobre, pérola do ender, barra de cobre / barra de cobre, redstone, barra de cobre | 1 | 752 |
+
+### Signal Modules
+
+Os 11 módulos entregues têm a mesma forma, para o player aprender uma vez: o item do jogo de cada módulo no topo, `·, X, · / barra de cobre, redstone, barra de cobre / deepslate polido × 3`, que dá 1 módulo (pergunta 753).
+
+| Módulo | X | Pergunta |
+|---|---|---|
+| Signal Timer | Relógio | 754 |
+| Signal Inverter | Tocha de redstone | 755 |
+| Weather Detector | Para-raios | 756 |
+| Signal Randomizer | Liberador | 757 |
+| Signal Lever | Alavanca | 758 |
+| Signal Button | Botão de pedra | 758 |
+| Signal Pressure Plate | Placa de pressão de pedra | 758 |
+| Signal Lamp | Lâmpada de redstone | 758 |
+| Signal Item Sensor | Comparador | 759 |
+| Signal Lock | Gancho de armadilha | 760 |
+| Signal Alarm | Bloco musical | 761 |
+
+### Tingir o Signal Cable
+
+8 cabos brancos em volta de 1 corante dão 8 cabos da cor do corante. Só o cabo branco, sem o componente `cable_color`, entra na receita, e um cabo tingido não troca mais de cor. São 15 receitas, uma por cor menos o branco, com o ID `redweave:<cor>_signal_cable`, como `redweave:red_signal_cable` (perguntas 562, 563, 762 e 763).
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | Adiciona as receitas dos itens entregues e o tingir só do cabo branco (perguntas 745 a 764, #157). |
 | Zennd | 2026-11-16 15:20 | O Signal Alarm passa a entregue na #142. |
 | Zennd | 2026-11-16 13:18 | Marca o Signal Lamp como entregue na #143. |
 | Zennd | 2026-11-16 12:23 | Marca o Signal Lock como entregue na #141. |

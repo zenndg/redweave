@@ -95,12 +95,14 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 ## Fora desta funcionalidade
 
 - O Network Terminal, que administra as redes do player ([`terminal-de-rede.md`](terminal-de-rede.md)).
-- A textura final, os LEDs ao vivo e a receita (issue #24).
+- A textura final e os LEDs ao vivo (issue #24).
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 747).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 747). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle`, o topo aceso só com a rede `Online` e as chaves `node.name_length` e `configurator.label_range` (perguntas 144, 177, 241 e 268). |
 | Zennd | 2026-11-12 09:39 | Atualiza as chaves do config: sai `node.slots` e entram `network.max_per_player` e `log.size` (perguntas 145, 147 e 224). |
 | Zennd | 2026-11-11 16:12 | O Configurator no modo `Open` abre a Tela do Controlador (pergunta 232). |

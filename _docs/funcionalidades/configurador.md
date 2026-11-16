@@ -180,12 +180,13 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 ## Fora desta funcionalidade
 
-- A receita (issue #24).
+- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 751).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 751). |
 | Zennd | 2026-11-16 15:19 | Leva o `Toggle`, a rede `Offline`, o rótulo e a cópia ao Signal Alarm (perguntas 649, 727, 743 e 744). |
 | Zennd | 2026-11-16 13:59 | A cópia de todos os itens da #154 passa a implementada, com as chaves por módulo, o `redweave:module_copy`, a rede levada na cópia e a recusa do Signal Lock (perguntas 722 a 736). |
 | Zennd | 2026-11-16 13:35 | O Signal Lock e o Signal Keypad nunca são copiados, e a cópia leva a rede e os canais (perguntas 731 e 732). |

@@ -2,7 +2,7 @@
 
 O Signal Cable (`redweave:signal_cable`, `Cabo de Sinal` em português) é o cabo físico de redstone do Redweave, no estilo do More Red e do Project Red: grudado em qualquer face, ele faz o papel do fio de redstone do jogo, em 16 cores que isolam os cabos uns dos outros (perguntas 494, 495 e 505). É uma parte do [multipart](multipart.md) e entra na #44, junto com ele, na `v0.1.0` (perguntas 516 e 524). Os termos são os do [`glossario.md`](../glossario.md).
 
-**Estado:** implementado na #44, com a receita do cabo branco pendente na #24.
+**Estado:** implementado na #44, com a receita do cabo branco na #157.
 
 ## Em uma frase
 
@@ -15,8 +15,8 @@ Um cabo de 4 × 3 px, em qualquer face, que se liga sozinho aos cabos da mesma c
 | Item único | Um item só, `redweave:signal_cable`, que nasce branco. A cor fica no data component `redweave:cable_color`, com a chave da cor (regra 7), e o branco fica sem ele. Cabos de cores diferentes não empilham entre si | 494, 505 e 561 |
 | Nome | Leva a cor, como `Red Signal Cable` e `Cabo de Sinal Vermelho`; o branco é `Signal Cable`. A aba criativa mostra as 16 cores | 564 |
 | Cores | As 16 cores de lã, as mesmas dos slots do Signal Node e dos canais da rede (pergunta 224) | 494 |
-| Tingir | 8 cabos de qualquer cor em volta de 1 corante, na mesa de trabalho, dão 8 cabos da cor do corante, como o vidro e a terracota tingidos. Um cabo tingido pode trocar de cor, e o corante branco o leva de volta ao branco. As 16 receitas saem do datagen, com o ID `redweave:<cor>_signal_cable` | 506, 562 e 563 |
-| Receita | A do cabo branco fica para a #24, com materiais do jogo puro (regra 4), em JSON de datapack. Até lá, o cabo vem do criativo | 520 |
+| Tingir | 8 cabos brancos em volta de 1 corante, na mesa de trabalho, dão 8 cabos da cor do corante, como o vidro e a terracota tingidos. Só o cabo branco, sem o componente `cable_color`, entra na receita, e um cabo tingido não troca mais de cor. São 15 receitas, uma por cor menos o branco, do datagen, com o ID `redweave:<cor>_signal_cable` | 506, 562, 563, 762 e 763 |
+| Receita | Lã branca na linha de cima e na de baixo, e barra de cobre, redstone e barra de cobre no meio, dão 8 cabos brancos, com o ID `redweave:signal_cable`, em [`itens.md`](../itens.md#receitas) | 520 e 750 |
 
 ## Forma
 
@@ -104,13 +104,14 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 ## Fora desta página
 
 - O multipart, em [`multipart.md`](multipart.md).
-- A receita, na #24, e o Jade e o The One Probe, na #23.
+- O Jade e o The One Probe, na #23.
 - O cabo agrupado de 16 canais, que saiu do roadmap, com a #46 fechada (pergunta 519).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 16:05 | A receita do cabo branco entra na #157, e tingir passa a aceitar só o cabo branco, em 15 receitas (perguntas 750, 762 e 763). |
 | Zennd | 2026-11-15 14:38 | O modo `Rotate` no cabo mostra `Only modules can be turned.` (pergunta 617). |
 | Zennd | 2026-11-15 09:34 | Marca o cabo como implementado na #44, com o código, os testes e a busca até 30. |
 | Zennd | 2026-11-15 09:08 | Registra a decisão 575, do encosto na placa vizinha. |
