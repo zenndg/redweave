@@ -226,6 +226,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cópias no Configurator | Uma por vez | 734 |
 | Quem copia um módulo | Só o dono | 735 |
 | Textos da cópia | Canais limpos no lugar de `Pasted`; recusa do Lock; dica nova | 736 |
+| Toques do alarme | Até 10; muda a 646 | 737 |
+| Notificação do alarme | `Alarm <nome>: Ringing...` / `Alarme <nome>: Disparando...`; muda a 647 | 738 |
+| Som do alarme | Dois `pling` juntos, uma oitava acima | 739 |
+| Duração do alarme | Nunca menor que toques × intervalo; muda a 648 | 740 |
+| `Network` no alarme | O dono e quem tem um Signal Remote da rede | 741 |
+| Config e padrões do alarme | Faixas no config; 3 toques, 1 s, 5 s, `Dono` | 742 |
+| Textos do alarme | Curtos no botão; `Silenciado`; rótulo com o estado | 743 |
+| Resto do alarme | `Toggle` offline, fora do contador, luz em sincronia, NBT | 744 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -712,6 +720,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:18 | Registra as decisões 737 a 744, do Signal Alarm. |
 | Zennd | 2026-11-16 13:35 | Registra as decisões 731 a 736. |
 | Zennd | 2026-11-16 13:30 | Registra as decisões 722 a 730, da cópia de todos os itens. |
 | Zennd | 2026-11-16 13:15 | Registra as decisões 715 a 721, da Signal Lamp. |

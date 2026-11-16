@@ -11,6 +11,14 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 744 | O resto do Signal Alarm fica como foi implementado? | Sim: o `Toggle` funciona com a rede `Offline`, como o Lock e a Lamp (707 e 716); fica fora do contador `modules on` (717); a mão vazia mostra a mensagem dos módulos; a luz pisca durante toda a duração, em sincronia entre alarmes, por uma textura animada, sem pacote por pulso; o NBT tem `listeners`, `repeats`, `interval`, `duration`, `remaining`, `rings_left`, `until_ring`, `last_input` e `input`, com o toque em andamento salvo, fixado na #26 (regra 15) |
+| 743 | Quais os textos e o rótulo do Signal Alarm? | `Quiet`/`Quieto`, `Ringing`/`Tocando`, `Heard by`/`Quem ouve`, `Rings`/`Toques`, `Interval`/`Intervalo`, `Duration`/`Duração`, `Owner`/`Dono`, `Network`/`Rede`, `Everyone`/`Todos` (curtos, para caber no botão) e `%s: Silenced`/`%s: Silenciado`. O rótulo mostra o nome, `Ringing` ou `Quiet` e o canal de entrada |
+| 742 | Quais as faixas do config e os padrões da tela do Signal Alarm? | Config: `alarm.max_repeats` 10 (de 1 a 10), `alarm.min_interval_ticks` 20 (de 2 a 200), `alarm.max_interval_ticks` 200 (de 2 a 1200), `alarm.max_duration_ticks` 600 (de 2 a 6000) e `alarm.range` 16 (de 4 a 32). Ao colocar: 3 toques, 1 s de intervalo, 5 s de duração e `Dono` escutando. Muda a pergunta 646 (o máximo de toques passa de 5 para 10) |
+| 741 | O que significa `Network` em quem escuta o Signal Alarm? | O dono e os players com um Signal Remote ligado à rede do alarme, dentro do alcance, porque a rede não tem lista de membros. Completa a pergunta 645 |
+| 740 | Como a duração do Signal Alarm se relaciona com os toques? | A duração nunca fica menor que toques × intervalo, para todos os toques escolhidos soarem: ao aumentar os toques ou o intervalo, ela sobe junto na tela, e o `−` para nesse mínimo. Uma duração maior deixa a luz piscando depois do último toque. Muda a pergunta 648 |
+| 739 | O som do Signal Alarm pode ser mais alto? | O volume já é o máximo do jogo (1.0); acima disso, o som só vai mais longe. Cada toque passa a ser dois `pling` juntos, um no tom normal e outro uma oitava acima, mais cheio. Completa a pergunta 644 |
+| 738 | Qual o texto da notificação do Signal Alarm? | `Alarm <nome>: Ringing...` em inglês e `Alarme <nome>: Disparando...` em português, em vermelho, na action bar de quem escuta. Muda a pergunta 647 |
+| 737 | Até quantos toques o Signal Alarm vai? | Até 10: o padrão de `alarm.max_repeats` passa de 5 para 10. Muda a pergunta 646 |
 | 736 | Quais os textos da cópia e o que acontece com valores de um config mais folgado? | `Channels were cleared: the network is not available.` (`Os canais foram limpos: a rede não está disponível.`), no lugar de `Pasted`, para rede apagada, de outro player ou `Offline`; `This item cannot be copied.` (`Este item não pode ser copiado.`); a dica `Click a node or module to copy it, Shift + click to paste.`. Os valores colados passam pela validação do save, sem reajuste a um config mais rígido. Completa a pergunta 728 |
 | 735 | Quem pode copiar um Signal Module? | Só o dono; os outros veem a mensagem de dono. A cópia do Signal Node continua como hoje |
 | 734 | O Configurator guarda uma cópia por vez? | Sim: copiar um módulo apaga a cópia do nó, e copiar um nó apaga a do módulo. Colar no tipo errado mostra `This copy is from a <tipo>.`, e o Shift + clique no ar apaga a cópia |
@@ -736,6 +744,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:18 | Registra as respostas 737 a 744, do Signal Alarm. |
 | Zennd | 2026-11-16 13:35 | Registra as respostas 731 a 736, da cópia de todos os itens. |
 | Zennd | 2026-11-16 13:30 | Registra as respostas 722 a 730, da cópia de todos os itens. |
 | Zennd | 2026-11-16 13:15 | Registra as respostas 715 a 721, da Signal Lamp. |
