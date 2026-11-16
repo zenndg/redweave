@@ -30,12 +30,23 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`alavanca.md`](alavanca.md) | 2 | O Signal Lever, entregue na #130: fonte ligada e desligada pelo dono, com a força na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`botao.md`](botao.md) | 2 | O Signal Button, entregue na #131: fonte apertada pelo dono, que volta sozinha depois do tempo ligado, com a força e o tempo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | O Signal Pressure Plate, entregue na #132: fonte só no chão, ligada enquanto algo do modo (`Players`, `Passive`, `Hostile` ou `Items`) está sobre ela, com a força e o modo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
+| [`sensor-de-itens.md`](sensor-de-itens.md) | 2 | O Signal Item Sensor, entregue na #148: uma placa num inventário que emite sinal com a quantidade exata de um item |
+| [`fechadura.md`](fechadura.md) | 2 | Conceito: O Signal Lock: abre só com a força exata da chave (#141) |
+| [`alarme.md`](alarme.md) | 2 | Conceito: O Signal Alarm: som, texto e luz pulsando ao receber sinal (#142) |
+| [`lampada.md`](lampada.md) | 2 | Conceito: O Signal Lamp: barra de LED na cor do canal (#143) |
+| [`teclado.md`](teclado.md) | 2 | Conceito: O Signal Keypad: senha numérica que libera o sinal (#144) |
+| [`cartao.md`](cartao.md) | 2 | Conceito: O Signal Card: cartão de acesso vinculado (#145) |
+| [`protecao.md`](protecao.md) | 2 | Conceito: A proteção dos blocos da porta pela fechadura e pelo teclado (#146) |
+| [`portao.md`](portao.md) | 2 | Conceito: O Signal Gate: portão que só deixa passar o autorizado (#147) |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:27 | Marca o Signal Item Sensor como entregue na #148. |
+| Zennd | 2026-11-16 10:12 | Adiciona o conceito do Signal Item Sensor. |
+| Zennd | 2026-11-16 09:34 | Adiciona os conceitos de #141 a #147. |
 | Zennd | 2026-11-16 08:01 | Adiciona a página da família dos emissores. |
 | Zennd | 2026-11-15 15:09 | Marca a placa de pressão como entregue na #132. |
 | Zennd | 2026-11-15 14:04 | Marca o botão como entregue na #131. |

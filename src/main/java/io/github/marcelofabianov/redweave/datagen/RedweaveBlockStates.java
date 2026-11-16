@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
@@ -109,8 +110,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     detectorModels();
     randomizerModels();
     leverModels();
-    buttonModels();
-    pressurePlateModels();
+    piecedModules();
   }
 
   /**
@@ -162,43 +162,51 @@ final class RedweaveBlockStates extends BlockStateProvider {
   }
 
   /**
-   * The Signal Button: its plate, released or pressed, with the 3D ring, push button and light over
-   * it, in two versions, with the top turned or not, as the other modules (429, 548 and 595).
+   * The Signal Button, the Signal Pressure Plate and the Signal Item Sensor: each plate with its 3D
+   * pieces and the light over it, in two versions, with the top turned or not (429, 595, 609, 697).
    */
-  private void buttonModels() {
-    ResourceLocation parts = modLoc(BLOCK_FOLDER + ButtonPart.ID + LEVER_PARTS);
-    ResourceLocation light = modLoc(BLOCK_FOLDER + LeverPart.ID + LEVER_PARTS);
-    for (String look : ButtonPart.LOOKS) {
-      ResourceLocation front = modLoc(BLOCK_FOLDER + ButtonPart.ID + NODE_FRONT + look);
-      boolean on = !look.isEmpty();
-      ButtonModels.addPieces(
-          plateModel(ButtonPart.ID + look, front, false), parts, light, on, false);
-      ButtonModels.addPieces(
-          plateModel(ButtonPart.ID + look + TURNED_SUFFIX, front, true), parts, light, on, true);
-    }
-    itemModels().basicItem(RedweaveItems.SIGNAL_BUTTON.get());
+  private void piecedModules() {
+    piecedModels(
+        RedweaveItems.SIGNAL_BUTTON.get(),
+        ButtonPart.ID,
+        ButtonPart.LOOKS,
+        ButtonModels::addPieces);
+    piecedModels(
+        RedweaveItems.SIGNAL_PRESSURE_PLATE.get(),
+        PressurePlatePart.ID,
+        PressurePlatePart.LOOKS,
+        PressurePlateModels::addPieces);
+    piecedModels(
+        RedweaveItems.SIGNAL_ITEM_SENSOR.get(),
+        ItemSensorPart.ID,
+        ItemSensorPart.LOOKS,
+        ItemSensorModels::addPieces);
   }
 
   /**
-   * The Signal Pressure Plate: its plate, off or on, with the 3D tread and the light over it, in
-   * two versions, with the top turned or not, as the other modules (429, 548 and 609).
+   * A module with 3D pieces and the light of the lever over its plate: every look, off or on, in
+   * two versions, with the top turned or not, and its item (answers 429 and 554).
    */
-  private void pressurePlateModels() {
-    ResourceLocation parts = modLoc(BLOCK_FOLDER + PressurePlatePart.ID + LEVER_PARTS);
+  private void piecedModels(Item item, String id, List<String> looks, Pieces pieces) {
+    ResourceLocation parts = modLoc(BLOCK_FOLDER + id + LEVER_PARTS);
     ResourceLocation light = modLoc(BLOCK_FOLDER + LeverPart.ID + LEVER_PARTS);
-    for (String look : PressurePlatePart.LOOKS) {
-      ResourceLocation front = modLoc(BLOCK_FOLDER + PressurePlatePart.ID + NODE_FRONT + look);
+    for (String look : looks) {
+      ResourceLocation front = modLoc(BLOCK_FOLDER + id + NODE_FRONT + look);
       boolean on = !look.isEmpty();
-      PressurePlateModels.addPieces(
-          plateModel(PressurePlatePart.ID + look, front, false), parts, light, on, false);
-      PressurePlateModels.addPieces(
-          plateModel(PressurePlatePart.ID + look + TURNED_SUFFIX, front, true),
-          parts,
-          light,
-          on,
-          true);
+      pieces.add(plateModel(id + look, front, false), parts, light, on, false);
+      pieces.add(plateModel(id + look + TURNED_SUFFIX, front, true), parts, light, on, true);
     }
-    itemModels().basicItem(RedweaveItems.SIGNAL_PRESSURE_PLATE.get());
+    itemModels().basicItem(item);
+  }
+
+  /** How a module adds its 3D pieces to one model of its plate. */
+  private interface Pieces {
+    void add(
+        BlockModelBuilder model,
+        ResourceLocation parts,
+        ResourceLocation light,
+        boolean on,
+        boolean turned);
   }
 
   /**

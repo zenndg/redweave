@@ -54,10 +54,7 @@ final class PortugueseTexts {
     TerminalPortugueseTexts.addTo(add);
     ConfiguratorPortugueseTexts.addTo(add);
     RemotePortugueseTexts.addTo(add);
-    ModulePortugueseTexts.addTo(add);
-    LeverPortugueseTexts.addTo(add);
-    ButtonPortugueseTexts.addTo(add);
-    PressurePlatePortugueseTexts.addTo(add);
+    addModules(add);
     add.accept(RedweaveItems.SIGNAL_NODE.get().getDescriptionId(), SIGNAL_NODE);
     String cable = RedweaveItems.SIGNAL_CABLE.get().getDescriptionId();
     add.accept(cable, SIGNAL_CABLE);
@@ -71,5 +68,14 @@ final class PortugueseTexts {
     add.accept(ControllerMessages.NO_NETWORK, NO_NETWORK);
     add.accept(ControllerMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ControllerMessages.ALREADY_PLACED, ALREADY_PLACED);
+  }
+
+  /** The texts of the Signal Modules, each family in its own file. */
+  private static void addModules(BiConsumer<String, String> add) {
+    ModulePortugueseTexts.addTo(add);
+    LeverPortugueseTexts.addTo(add);
+    ButtonPortugueseTexts.addTo(add);
+    PressurePlatePortugueseTexts.addTo(add);
+    ItemSensorPortugueseTexts.addTo(add);
   }
 }

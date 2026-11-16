@@ -453,10 +453,37 @@ Entregue com a issue #132 (perguntas 548 a 558, 602 a 611 e 621 a 626). Use o ci
 
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
+## Fase 2: o Signal Item Sensor
+
+Entregue com a issue #148 (perguntas 689 a 698 e 700 a 704). Use um baú, um barril, diamantes, uma lâmpada, uma rede com um nó de saída e um segundo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 278 | Abra a aba `Redweave` do criativo e pegue um Signal Item Sensor | O sensor está na aba (pergunta 601), com o nome `Signal Item Sensor` e o ícone do visor com um diamante e a luz vermelha |
+| 279 | Tente colocar o sensor numa pedra | A colocação é recusada, o item fica na mão e a action bar mostra `This needs a container.` (pergunta 694) |
+| 280 | Coloque o sensor em cima de um baú, olhando para o norte | A placa aparece com o anel de aço, o visor escuro, a luz vermelha e a seta de cobre |
+| 281 | Com o Configurator no `Open`, abra o sensor | A tela mostra `Off`, `0 / 1`, o slot fantasma com `None`, `Count` 1, `Strength` 15, `Output` `Edge` e o seu inventário embaixo (perguntas 701 e 704) |
+| 282 | Pegue um diamante com o cursor e clique no slot fantasma | O diamante aparece no slot, com o nome ao lado, e continua no cursor (pergunta 696) |
+| 283 | Feche a tela e olhe a placa | O diamante aparece pequeno no visor |
+| 284 | Ponha `Count` em 10, com Shift + `+` e depois `−` | A quantidade fica em 10 |
+| 285 | Ponha uma lâmpada na frente do sensor e 9 diamantes no baú, em duas pilhas | A tela mostra `9 / 10` e `Off`, a luz fica vermelha e a lâmpada apagada |
+| 286 | Ponha mais 1 diamante no baú | Em cerca de meio segundo, o sensor liga: `On`, `10 / 10`, a luz **verde**, a seta vermelha e a lâmpada acesa (pergunta 692) |
+| 287 | Ponha mais 1 diamante no baú | O sensor desliga, com `11 / 10`, a luz vermelha e a lâmpada apagada |
+| 288 | Tire 1 diamante e saia e volte ao mundo | Depois de carregar, o sensor lê o baú de novo e liga, com a luz verde |
+| 289 | Clique no slot fantasma com o cursor vazio | O item é limpo, o visor fica vazio e o sensor desliga (pergunta 702) |
+| 290 | Coloque um sensor num barril e outro na lateral de um baú | Os dois funcionam igual, com o item desenhado virado para fora da face |
+| 291 | Ponha a saída no canal Red, com um nó de saída Red numa lâmpada, e chegue à contagem exata | A lâmpada do nó acende só com a contagem exata, a da frente fica apagada e a luz da placa fica verde, mesmo sem sinal na borda |
+| 292 | Peça a um segundo player para abrir a tela | A tela abre só para leitura: os botões ficam desativados e o slot fantasma não responde |
+| 293 | Com o Configurator no `Toggle`, clique no sensor | A action bar mostra `Signal Item Sensor has nothing to toggle.` |
+| 294 | Segure o Configurator perto do sensor | O rótulo mostra o nome e, embaixo, `On` ou `Off` e o canal, sem a contagem (pergunta 703) |
+| 295 | Se tiver um mod com inventário, coloque o sensor nele | O sensor lê o inventário do outro mod pela capability de itens |
+| 296 | Troque o idioma para Português (Brasil) e repita os passos 279, 281 e 286 | `Sensor de Itens de Sinal`, `Isto precisa de um baú ou outro inventário.`, `Quantidade`, `Nenhum`, `Ligado` e `Desligado` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:27 | Adiciona a seção do Signal Item Sensor, passos 278 a 296, com a luz verde na contagem exata (#148). |
 | Zennd | 2026-11-15 15:09 | Adiciona os passos 257 a 277, do Signal Pressure Plate (perguntas 602 a 611 e 621 a 626). |
 | Zennd | 2026-11-15 14:38 | Os giros passam ao modo `Rotate`, e entra a seção do modo, com os passos 246 a 256 (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:04 | Adiciona os passos 227 a 245, do Signal Button e da aba criativa com todos os itens (perguntas 588 a 600 e 601). |

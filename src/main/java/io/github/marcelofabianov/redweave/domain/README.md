@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, e o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139, e o Signal Item Sensor, da #148 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -104,6 +104,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `ButtonLimits` | Em `module/`: os limites do tempo ligado do Signal Button no config, `button.min_interval_ticks` e `button.max_interval_ticks`, separados dos do timer. O domínio define, e o `config/` implementa (pergunta 592) | #131 |
 | `PlateMode` | Em `module/`: o que o Signal Pressure Plate sente, um por vez, na ordem do `Toggle`: `PLAYERS`, `PASSIVE`, `HOSTILE` e `ITEMS`, com a chave do save em minúsculas. O domínio não conhece as entidades do jogo; o adaptador classifica cada uma num modo (perguntas 603, 621 e 623) | #132 |
 | `SignalPressurePlate` | Em `module/`: a regra do Signal Pressure Plate. Liga quando algo do seu modo está entre o que pisa nela e desliga quando não há mais; a saída é a força, de 1 a 15, ligada e 0 desligada. Nasce desligada, com 15 e no modo `PLAYERS`. Quando conferir de novo, a cada `pressure_plate.check_ticks`, fica no adaptador, porque é custo de tick, não regra (perguntas 552, 604, 607 e 621) | #132 |
+| `ItemSensor` | Em `module/`: a regra do Signal Item Sensor. Liga só quando há um item escolhido e a contagem lida é exatamente a esperada; a saída é a força, de 1 a 15, ligada e 0 desligada. O item é a chave do tipo, como `minecraft:diamond`, sem os componentes. Nasce sem item, com 1 e 15. A quantidade fica presa de 1 ao máximo do config. Ler o inventário fica no adaptador, porque é mundo, não regra. Não é um `Emitter` (perguntas 632, 692, 693, 696, 697 e 701) | #148 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 | `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
 | `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |

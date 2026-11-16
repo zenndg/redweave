@@ -188,6 +188,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Lista de nós | Nome, tipo, sinal da lente e estado; ao expandir, a posição, só para o dono, e os canais ativos (234, 281, 335) | 179, 234, 281, 335 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
 | Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
+| Começo do `prompt.md` | Os links para o conceito do item e as perguntas da arte | 699 |
+| NBT do sensor | `item`, `count`, `strength` e `output` | 700 |
+| Padrões do sensor | Sem item, quantidade 1, força 15, borda | 701 |
+| Slot fantasma vazio | Limpa o item | 702 |
+| Rótulo do sensor | `On`/`Off` e o canal, sem a contagem | 703 |
+| Tela do sensor | Com o inventário do dono embaixo | 704 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -602,6 +608,71 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Base dos emissores no código | `EmitterPart`, filha de `ModulePart`, sem mudar save nem comportamento | 630 |
 | Ordem da #139 | Passo 16, antes da #110 | 631 |
 | Randomizer e Weather Detector | Fora dos emissores; a família é a dos módulos acionados por um gatilho | 632 |
+| Signal Lock | Fechadura de Sinal: abre só com a força exata da chave e emite a força definida (#141) | 633 |
+| Saída da fechadura | Ligada enquanto a entrada bate com a chave | 634 |
+| Conexões da fechadura | Entrada atrás ou canal; saída na frente ou canal | 635 |
+| Padrões da fechadura | Chave 15 e saída 15, de 1 a 15; a força 0 nunca abre | 636 |
+| Segredo da fechadura | Só o dono vê a chave; o rótulo mostra `Locked` ou `Unlocked` | 637 |
+| Visual da fechadura | Luz dos emissores e um cadeado 3D | 638 |
+| `Toggle` da fechadura | Abre por um pulso, de 1 s, de 2 ticks a 10 s, ajustado pelo dono | 639 e 640 |
+| Retirada da fechadura e do teclado | Só o dono, pelo `Wrench`; criativo, qualquer um; resistem a explosão com o bloco de apoio; muda a 394 para os dois | 641 |
+| Ordem dos itens novos | Fechadura, alarme, lâmpada, teclado, cartão, proteção e portão, antes da #110 | 642 |
+| Signal Alarm | Alarme de Sinal: som, texto e luz pulsando ao receber sinal (#142) | 643 |
+| Som do alarme | O `pling` do note block | 644 |
+| Quem escuta o alarme | `Owner`, `Owner and network` ou `Everyone in range` | 645 |
+| Limites do alarme | Alcance 16; repetições até 5; intervalo de 1 a 10 s | 646 |
+| Texto do alarme | `⚠ <nome>` na action bar | 647 |
+| Duração do alarme | Escolhida pelo dono, 5 s, até 30 s; dispara de novo só depois do sinal desligar | 648 |
+| Entrada, luz e `Toggle` do alarme | Entrada atrás ou canal; luz vermelha pulsando; o `Toggle` silencia | 649 |
+| Signal Lamp | Lâmpada de Sinal: um canal, a cor dele e o nível de luz pela força, estático (#143) | 650 |
+| Força da lâmpada | Acesa, emite a força escolhida, de 1 a 15 | 651 |
+| Forma da lâmpada | Barra de LED de 12 × 4 × 2 px no multipart, gira com o `Rotate` | 652 |
+| Saída da lâmpada | No bloco de apoio, como o Signal Node | 653 |
+| Lâmpada sem rede | Apaga e não emite | 654 |
+| Luz da lâmpada | Muda no máximo a cada `lamp.min_light_update_ticks` (4) | 655 |
+| Controle da lâmpada | Canal opcional, `Hold` ou `Pulse`, padrão `Hold` | 656 |
+| Lâmpada desligada pelo controle | Apaga e não emite | 657 |
+| `Toggle` da lâmpada | Liga e desliga à mão | 658 |
+| Signal Keypad | Teclado de Sinal: senha numérica de 1 a 6 dígitos (#144) | 659 |
+| Senha do teclado | Só no servidor; o dono vê `••••` | 660 |
+| Entrada do teclado | Só por canal; sem sinal, `No power.` | 661 |
+| Tela do teclado | Teclado 3 × 4, aberto à mão vazia por qualquer player | 662 |
+| Senha certa | Emite a força escolhida pelo tempo aberto, 3 s, de 1 a 30 s | 663 |
+| Tentativas do teclado | Por player | 664 |
+| Espera do teclado | 3 livres por 60 s; depois dobra a partir de 5 s até 5 min | 665 |
+| Aviso do teclado | No chat do dono a partir do 4º erro; resumo ao entrar | 666 |
+| Indicadores e `Toggle` do teclado | Luz, ponto do canal e teclado 3D; o `Toggle` abre para testar | 667 |
+| Signal Card | Cartão de Sinal com ID único, sem cópia (#145) | 668 |
+| Vínculo do cartão | Pelo slot da tela; o item guarda até 8 cartões; o dono revoga | 669 |
+| Uso do cartão | Abre pelo tempo aberto; no teclado, com sinal na entrada | 670 |
+| Cartão errado | Mensagem, sem contar como erro de senha | 671 |
+| Proteção dos blocos | Ligada a uma fechadura ou teclado, não ao terreno (#146) | 672 |
+| Limites da proteção | 16 blocos num raio de 4 | 673 |
+| Escolha dos blocos | Pelo modo `Copy` do Configurator | 674 |
+| Cobertura da proteção | Explosão, quebra por outros e pistão | 675 |
+| Fim da proteção | Acaba com a retirada do item | 676 |
+| Portal | Uma barreira seletiva, não um teletransporte | 677 |
+| Signal Gate | Portão de Sinal, com moldura, controlador e campo (#147) | 678 |
+| Forma do portão | Vão de 2 × 2 a 3 × 3, na vertical ou na horizontal | 679 |
+| Campo do portão | Onda vermelha; atravessável só para o autorizado | 680 |
+| Entrada do portão | Com sinal, filtra; sem sinal, o vão fica livre | 681 |
+| Regras do portão | Dono, cartão, players, passivos, hostis e tags; qualquer uma passa | 682 |
+| Tags do portão | Até 4; o mod publica `#redweave:gate_passers` | 683 |
+| Saída do portão | Um pulso por passagem autorizada | 684 |
+| Proteção do portão | Como a fechadura | 685 |
+| Teletransporte perto do portão | Bloqueado para quem não é autorizado | 686 |
+| Família do portão | O controlador é um Signal Module de transformação | 687 |
+| Esteiras | Um talvez, sem planejamento | 688 |
+| Receptor de Itens | Só as funções de sinal; sem guardar nem mover itens (regra 2) | 689 |
+| Origem dos itens do sensor | O inventário vizinho, sem guardar nada | 690 |
+| Nome do sensor | `Signal Item Sensor` (`Sensor de Itens de Sinal`) | 691 |
+| Disparo do sensor | Exatamente N itens, somando todos os slots | 692 |
+| Teto do sensor | `item_sensor.max_count` 3456 | 693 |
+| Onde fica o sensor | Placa grudada no inventário; recusa sem inventário | 694 |
+| Leitura do sensor | A cada `item_sensor.check_ticks` (10) | 695 |
+| Saída e tela do sensor | Borda ou canal, força 1 a 15, slot fantasma, quantidade e `7 / 10` | 696 |
+| Visual e comparação do sensor | Luz e ícone do item; `Toggle` sem efeito; só o tipo do item | 697 |
+| Ordem do sensor | Primeiro dos itens novos, no passo 17, antes do Lock | 698 |
 
 Não há perguntas pendentes da concepção.
 
@@ -609,6 +680,10 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:25 | Registra as decisões 700 a 704, do Signal Item Sensor. |
+| Zennd | 2026-11-16 10:56 | Registra a decisão 699. |
+| Zennd | 2026-11-16 10:11 | Registra as decisões 689 a 698, do Signal Item Sensor. |
+| Zennd | 2026-11-16 09:34 | Registra as decisões 633 a 688, dos itens novos de #141 a #147 e das esteiras. |
 | Zennd | 2026-11-16 08:13 | Registra a decisão 632. |
 | Zennd | 2026-11-16 08:01 | Registra as decisões 627 a 631, da família dos emissores. |
 | Zennd | 2026-11-15 15:10 | Marca a detecção da placa (557) como mudada pela 621. |
