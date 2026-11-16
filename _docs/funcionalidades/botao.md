@@ -111,10 +111,10 @@ Os campos comuns `front` e `powered` seguem a base (pergunta 560). As chaves fic
 
 | Camada | Classes |
 |---|---|
-| Domínio | `domain/module/SignalButton`: o estado, a força, o tempo ligado e os ticks que faltam, e a saída, que é a força apertado e 0 solto. `ButtonTime`: o tempo ligado, com mínimo de 2 ticks e o ajuste do `Interval`. `ButtonLimits`: os limites do config |
+| Domínio | `domain/module/SignalButton`, que implementa o `Emitter` dos [emissores](emissores.md#código): o estado, a força, o tempo ligado e os ticks que faltam, e a saída, que é a força apertado e 0 solto. `ButtonTime`: o tempo ligado, com mínimo de 2 ticks e o ajuste do `Interval`. `ButtonLimits`: os limites do config |
 | Aplicação | `application/ChangeButton`: só o dono aperta e muda a força e o tempo ligado |
 | Config | `config/NeoForgeButtonLimits`, com a seção `button` do `RedweaveConfig` |
-| Parte | `block/part/ButtonPart`, `ButtonSave` e `ButtonShapes`, sobre o `ModulePart`, com `StrengthSave` e `RaisedShapes` divididos com a alavanca |
+| Parte | `block/part/ButtonPart`, `ButtonSave` e `ButtonShapes`, sobre o `EmitterPart` dos [emissores](emissores.md#código), com `StrengthSave` e `RaisedShapes` divididos com a alavanca |
 | Tela | `menu/ButtonMenu` e as classes `ButtonScreen*` e `ButtonAction`, e `client/screen/ButtonScreen` |
 | Datagen | `datagen/ButtonModels`, com `PlatePieces` dividido com a alavanca, `ButtonEnglishTexts` e `ButtonPortugueseTexts` |
 | Testes | `SignalButtonTest`, `ButtonTimeTest`, `ChangeButtonTest`, `SignalButtonGameTests` e `ButtonMenuGameTests` |
@@ -138,6 +138,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:10 | A parte e o domínio do botão passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 14:03 | Marca o botão como implementado na #131, com a tela, as mensagens, o save, o desenho e o código. |
 | Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do tempo ligado, dos textos e do Toggle. |

@@ -117,10 +117,10 @@ Os campos comuns `front` e `powered` seguem a base (pergunta 560). As chaves fic
 
 | Camada | Classes |
 |---|---|
-| Domínio | `domain/module/PlateMode`: os 4 modos, na ordem do `Toggle`, com a chave do save. `SignalPressurePlate`: o estado, a força e o modo, ligado quando algo do modo está sobre ela, e a saída, que é a força ligada e 0 desligada |
+| Domínio | `domain/module/PlateMode`: os 4 modos, na ordem do `Toggle`, com a chave do save. `SignalPressurePlate`, que implementa o `Emitter` dos [emissores](emissores.md#código): o estado, a força e o modo, ligado quando algo do modo está sobre ela, e a saída, que é a força ligada e 0 desligada |
 | Aplicação | `application/ChangePressurePlate`: só o dono muda a força e o modo pela tela |
 | Config | `config/NeoForgePressurePlateCheck`, com a seção `pressure_plate` do `RedweaveConfig` |
-| Parte | `block/part/PressurePlatePart`, `PressurePlateSave` e `PressurePlateShapes`, sobre o `ModulePart`, com `StrengthSave` e `RaisedShapes` divididos com a alavanca e o botão. `PlateSensing` classifica cada entidade num modo. `SteppedPart` é o gancho que o `PartSpaceBlock.entityInside` chama |
+| Parte | `block/part/PressurePlatePart`, `PressurePlateSave` e `PressurePlateShapes`, sobre o `EmitterPart` dos [emissores](emissores.md#código), com `StrengthSave` e `RaisedShapes` divididos com a alavanca e o botão. `PlateSensing` classifica cada entidade num modo. `SteppedPart` é o gancho que o `PartSpaceBlock.entityInside` chama |
 | Item | `item/PressurePlateItem`, que recusa as faces fora do chão pelo gancho `refusalOn` do `PartItem` |
 | Tela | `menu/PressurePlateMenu` e as classes `PressurePlateScreen*` e `PressurePlateAction`, e `client/screen/PressurePlateScreen` |
 | Datagen | `datagen/PressurePlateModels`, com `PlatePieces`, `PressurePlateEnglishTexts` e `PressurePlatePortugueseTexts` |
@@ -145,6 +145,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:10 | A parte e o domínio da placa passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 15:07 | Marca a placa como implementada na #132, com o custo por tick, a tela, as mensagens, o save, o desenho, o código e os testes. |
 | Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, do suporte de armadura, da sapata e da mensagem. |

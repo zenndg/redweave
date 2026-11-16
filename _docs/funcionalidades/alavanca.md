@@ -103,9 +103,9 @@ Os campos comuns `front` e `powered` seguem a base (pergunta 560). As chaves fic
 
 | Camada | Classes |
 |---|---|
-| Domínio | `domain/module/SignalLever`: o estado e a força, e a saída, que é a força ligada e 0 desligada |
+| Domínio | `domain/module/SignalLever`, que implementa o `Emitter` dos [emissores](emissores.md#código): o estado e a força, e a saída, que é a força ligada e 0 desligada |
 | Aplicação | `application/ChangeLever`: só o dono liga, desliga e muda a força |
-| Parte | `block/part/LeverPart`, `LeverSave` e `LeverShapes`, sobre o `ModulePart` |
+| Parte | `block/part/LeverPart`, `LeverSave` e `LeverShapes`, sobre o `EmitterPart` dos [emissores](emissores.md#código) |
 | Tela | `menu/LeverMenu` e as classes `LeverScreen*`, e `client/screen/LeverScreen` |
 | Datagen | `datagen/LeverModels`, `LeverEnglishTexts` e `LeverPortugueseTexts` |
 | Testes | `SignalLeverTest`, `ChangeLeverTest`, `SignalLeverGameTests` e `LeverMenuGameTests` |
@@ -129,6 +129,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:10 | A parte e o domínio da alavanca passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 13:15 | Marca a alavanca como implementada na #130, com a tela, as mensagens, o save, o desenho e o código. |
 | Zennd | 2026-11-15 12:27 | Registra as decisões 584 a 587, da força no save, da mensagem, da inclinação e do tempo. |

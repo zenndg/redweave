@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, e o Signal Pressure Plate, da #132 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, e o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -97,6 +97,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `RandomizerMode` | Em `module/`: `ANALOG`, de 0 a 15, ou `BINARY`, 0 ou 15, com a chave do save e o sorteio de cada um (perguntas 476 e 481) | #109 |
 | `RandomizerState` | Em `module/`: `RUNNING` ou `STOPPED` (pergunta 484) | #109 |
 | `SignalRandomizer` | Em `module/`: a regra do Signal Randomizer, um tick por vez. Nasce parado; ligado, sorteia na hora e a cada intervalo, e mantém o valor até o próximo sorteio. Trocar o modo rodando sorteia de novo, e mudar o intervalo o recomeça (perguntas 478, 480, 482, 492 e 493) | #109 |
+| `Emitter` | Em `module/`: a interface dos Signal Emitters, os módulos de onde o sinal nasce por um gatilho (perguntas 627 a 630). Tem `on()` e `strength()`, e a saída, que é a força ligado e 0 desligado; `stepped` mantém a força de 1 a 15. O `SignalLever`, o `SignalButton` e o `SignalPressurePlate` a implementam | #139 |
 | `SignalLever` | Em `module/`: a regra do Signal Lever, ligado ou desligado pelo player, com a força de 1 a 15, 15 ao ser colocado. A saída é a força ligado e 0 desligado. Não tem tick próprio: só o player o muda, e o `ChangeLever`, em `application/`, só aceita o dono (perguntas 552, 576, 577 e 579) | #130 |
 | `SignalButton` | Em `module/`: a regra do Signal Button. Apertado, liga com a força de 1 a 15 durante o tempo ligado e desliga sozinho no último tick; apertar de novo ligado não muda nada. Guarda os ticks que faltam, para um recarregamento continuar de onde parou. O `ChangeButton`, em `application/`, só aceita o dono (perguntas 552, 556, 588, 590 e 591) | #131 |
 | `ButtonTime` | Em `module/`: o tempo ligado do Signal Button, em ticks inteiros, 1 s ao ser colocado. Segue a regra de ajuste do `Interval`, com o piso de 2 ticks, um passo da tela, em vez dos 4 do timer (perguntas 556, 592 e 596) | #131 |
