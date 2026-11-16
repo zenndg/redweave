@@ -25,7 +25,7 @@ public abstract class EmitterPart extends ModulePart {
   /** The looks of the top: off, with the red light, and on, with the green one (554). */
   public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
 
-  private static final String OUTPUT = "output";
+  static final String OUTPUT = "output";
 
   private Connection output = Connection.EDGE;
 
@@ -43,6 +43,12 @@ public abstract class EmitterPart extends ModulePart {
   protected void afterOutput(PartSpaceBlockEntity space) {}
 
   /** The output saved with the plate, on its edges or a channel. */
+  /** Its one output off its channel, for a paste out of its network (answer 732). */
+  @Override
+  protected final void dropChannels(ChannelDrop drop) {
+    output = drop.of(output);
+  }
+
   protected final void loadOutput(CompoundTag tag) {
     output = ModuleSave.readConnection(tag, OUTPUT);
   }

@@ -51,11 +51,29 @@ public final class InverterPart extends ModulePart {
     InverterPart part = new InverterPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.input = ModuleSave.readConnection(tag, InverterSave.INPUT);
-      part.output = ModuleSave.readConnection(tag, InverterSave.OUTPUT);
-      part.inverter = SignalInverter.restore(InverterSave.readBurnout(tag));
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(InverterSave.INPUT, InverterSave.OUTPUT);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    input = drop.of(input);
+    output = drop.of(output);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    input = ModuleSave.readConnection(tag, InverterSave.INPUT);
+    output = ModuleSave.readConnection(tag, InverterSave.OUTPUT);
+    inverter = SignalInverter.restore(InverterSave.readBurnout(tag));
   }
 
   @Override

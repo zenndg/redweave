@@ -8,6 +8,8 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.CableColorCodec;
 import io.github.marcelofabianov.redweave.item.ConfiguratorCopy;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
+import io.github.marcelofabianov.redweave.item.ModuleCopy;
+import io.github.marcelofabianov.redweave.item.ModuleCopyCodec;
 import io.github.marcelofabianov.redweave.item.NodeSlotsCodec;
 import io.github.marcelofabianov.redweave.item.RemoteLabel;
 import io.github.marcelofabianov.redweave.item.RemoteState;
@@ -26,6 +28,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class RedweaveDataComponents {
   private static final String NETWORK_ID = "network";
   private static final String NODE_SLOTS_ID = "node_slots";
+  private static final String MODULE_COPY_ID = "module_copy";
   private static final String CONFIGURATOR_MODE_ID = "configurator_mode";
   private static final String SIGNAL_REMOTE_ID = "signal_remote";
   private static final String SIGNAL_REMOTE_LABEL_ID = "signal_remote_label";
@@ -62,6 +65,15 @@ public final class RedweaveDataComponents {
               builder
                   .persistent(NodeSlotsCodec.CODEC)
                   .networkSynchronized(ByteBufCodecs.fromCodec(NodeSlotsCodec.CODEC)));
+
+  /** The settings of a Signal Module copied by the Configurator (answers 722 to 729). */
+  public static final Supplier<DataComponentType<ModuleCopy>> MODULE_COPY =
+      COMPONENTS.registerComponentType(
+          MODULE_COPY_ID,
+          builder ->
+              builder
+                  .persistent(ModuleCopyCodec.CODEC)
+                  .networkSynchronized(ByteBufCodecs.fromCodec(ModuleCopyCodec.CODEC)));
 
   /** The mode of the Configurator, switched with Shift + scroll (answers 143 and 173). */
   public static final Supplier<DataComponentType<ConfiguratorMode>> CONFIGURATOR_MODE =

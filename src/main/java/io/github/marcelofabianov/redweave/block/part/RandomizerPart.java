@@ -51,10 +51,27 @@ public final class RandomizerPart extends ModulePart {
     RandomizerPart part = new RandomizerPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.randomizer = RandomizerSave.readRandomizer(tag);
-      part.output = ModuleSave.readConnection(tag, RandomizerSave.OUTPUT);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(RandomizerSave.MODE, RandomizerSave.INTERVAL, RandomizerSave.OUTPUT);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    output = drop.of(output);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    randomizer = RandomizerSave.readRandomizer(tag);
+    output = ModuleSave.readConnection(tag, RandomizerSave.OUTPUT);
   }
 
   @Override

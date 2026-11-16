@@ -103,7 +103,8 @@ final class ConfiguratorActions {
     }
     ConfiguratorCopy copy = stack.get(RedweaveDataComponents.NODE_SLOTS.get());
     if (copy == null) {
-      return Optional.empty();
+      return Optional.ofNullable(stack.get(RedweaveDataComponents.MODULE_COPY.get()))
+          .map(module -> ModuleCopying.wrongType(ModuleCopying.nameOf(module)));
     }
     Component message = ConfiguratorPaste.paste(server, player, context.getLevel(), spot, copy);
     refresh(server, context.getLevel(), spot);
@@ -119,6 +120,7 @@ final class ConfiguratorActions {
     stack.set(
         RedweaveDataComponents.NODE_SLOTS.get(),
         new ConfiguratorCopy(network.get().id(), copy.get()));
+    stack.remove(RedweaveDataComponents.MODULE_COPY.get());
     return Component.translatable(ConfiguratorMessages.COPIED, copy.get().configured());
   }
 

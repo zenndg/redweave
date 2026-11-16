@@ -17,9 +17,9 @@ import org.slf4j.Logger;
 final class RandomizerSave {
   static final String OUTPUT = "output";
 
-  private static final String MODE = "mode";
+  static final String MODE = "mode";
   private static final String RUNNING = "running";
-  private static final String INTERVAL = "interval_ticks";
+  static final String INTERVAL = "interval_ticks";
   private static final String ELAPSED = "elapsed_ticks";
   private static final String VALUE = "value";
   private static final Logger LOGGER = LogUtils.getLogger();

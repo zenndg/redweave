@@ -21,7 +21,7 @@ final class LampSave {
   static final String INTENSITY = "intensity";
   static final String CONTROL = "control";
 
-  private static final String MODE = "mode";
+  static final String MODE = "mode";
   private static final String OFF = "off";
   private static final String LAST_CONTROL = "last_control";
   private static final String LIGHT = "light";

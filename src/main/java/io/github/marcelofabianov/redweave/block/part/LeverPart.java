@@ -47,10 +47,22 @@ public final class LeverPart extends EmitterPart {
     LeverPart part = new LeverPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.lever = LeverSave.readLever(tag);
-      part.loadOutput(tag);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(StrengthSave.STRENGTH, EmitterPart.OUTPUT);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    lever = LeverSave.readLever(tag);
+    loadOutput(tag);
   }
 
   @Override

@@ -18,7 +18,6 @@ final class ModulePortugueseTexts {
   private static final String PICKED_UP = "Módulo recolhido";
   private static final String NOT_OWNER = "Só quem colocou este módulo pode alterá-lo.";
   private static final String OUTPUT = "Saída: %s";
-  private static final String NOT_COPIED = "Módulos ainda não podem ser copiados.";
   private static final String TIMER_RUNNING = "%s: rodando";
   private static final String TIMER_STOPPED = "%s: parado";
   private static final String SCREEN_INTERVAL = "Intervalo";
@@ -61,7 +60,6 @@ final class ModulePortugueseTexts {
     add.accept(ModuleMessages.PICKED_UP, PICKED_UP);
     add.accept(ModuleMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ModuleMessages.OUTPUT, OUTPUT);
-    add.accept(ModuleMessages.NOT_COPIED, NOT_COPIED);
     add.accept(ModuleMessages.TIMER_RUNNING, TIMER_RUNNING);
     add.accept(ModuleMessages.TIMER_STOPPED, TIMER_STOPPED);
     add.accept(TimerScreenTexts.INTERVAL, SCREEN_INTERVAL);

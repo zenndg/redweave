@@ -55,10 +55,22 @@ public final class PressurePlatePart extends EmitterPart implements SteppedPart 
     PressurePlatePart part = new PressurePlatePart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.plate = PressurePlateSave.readPlate(tag);
-      part.loadOutput(tag);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(StrengthSave.STRENGTH, PressurePlateSave.MODE, EmitterPart.OUTPUT);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    plate = PressurePlateSave.readPlate(tag);
+    loadOutput(tag);
   }
 
   @Override

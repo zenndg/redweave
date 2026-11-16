@@ -19,7 +19,6 @@ public final class ModuleMessages {
   public static final String PICKED_UP = PREFIX + "picked_up";
   public static final String NOT_OWNER = PREFIX + "not_owner";
   public static final String OUTPUT = PREFIX + "output";
-  public static final String NOT_COPIED = PREFIX + "not_copied";
   public static final String WRENCH_ONLY = PREFIX + "wrench_only";
   public static final String TIMER_RUNNING = TIMER + "running";
   public static final String TIMER_STOPPED = TIMER + "stopped";

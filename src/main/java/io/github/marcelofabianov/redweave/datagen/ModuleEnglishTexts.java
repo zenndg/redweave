@@ -18,7 +18,6 @@ final class ModuleEnglishTexts {
   private static final String PICKED_UP = "Module picked up";
   private static final String NOT_OWNER = "Only the player who placed this module can change it.";
   private static final String OUTPUT = "Output: %s";
-  private static final String NOT_COPIED = "Modules cannot be copied yet.";
   private static final String TIMER_RUNNING = "%s: Running";
   private static final String TIMER_STOPPED = "%s: Stopped";
   private static final String SCREEN_INTERVAL = "Interval";
@@ -61,7 +60,6 @@ final class ModuleEnglishTexts {
     add.accept(ModuleMessages.PICKED_UP, PICKED_UP);
     add.accept(ModuleMessages.NOT_OWNER, NOT_OWNER);
     add.accept(ModuleMessages.OUTPUT, OUTPUT);
-    add.accept(ModuleMessages.NOT_COPIED, NOT_COPIED);
     add.accept(ModuleMessages.TIMER_RUNNING, TIMER_RUNNING);
     add.accept(ModuleMessages.TIMER_STOPPED, TIMER_STOPPED);
     add.accept(TimerScreenTexts.INTERVAL, SCREEN_INTERVAL);

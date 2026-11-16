@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 final class ButtonSave {
 
   private static final String ON = "on";
-  private static final String INTERVAL = "interval";
+  static final String INTERVAL = "interval";
   private static final String REMAINING = "remaining";
   private static final String MODULE = "Signal Button";
   private static final Logger LOGGER = LogUtils.getLogger();

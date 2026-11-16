@@ -48,10 +48,27 @@ public final class DetectorPart extends ModulePart {
     DetectorPart part = new DetectorPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.detector = new WeatherDetector(DetectorSave.readMode(tag));
-      part.output = ModuleSave.readConnection(tag, DetectorSave.OUTPUT);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(DetectorSave.MODE, DetectorSave.OUTPUT);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    output = drop.of(output);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    detector = new WeatherDetector(DetectorSave.readMode(tag));
+    output = ModuleSave.readConnection(tag, DetectorSave.OUTPUT);
   }
 
   private static List<String> lookNames() {
