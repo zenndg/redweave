@@ -2,6 +2,8 @@
 
 A alavanca do Redweave, o Signal Lever (`redweave:signal_lever`, `Alavanca de Sinal` em português), é uma fonte de sinal ligada e desligada pelo player, parecida com a alavanca do jogo, mas com uma aparência 3D mais realista e um indicador de cor, uma luz vermelha desligada e verde ligada, a mesma nos três itens (pergunta 554). Tem uma tela parecida com a dos [Módulos de Sinal](modulos-de-sinal.md), em que o player escolhe se o sinal sai sem fio, por um canal da rede, como um [Signal Node](no-de-sinal.md), ou pela redstone, no mundo (pergunta 548). Entra depois do [Signal Cable](signal-cable.md), numa issue própria, a #130, como o [Botão](botao.md) e a [Placa de pressão](placa-de-pressao.md). Os termos são os do [`glossario.md`](../glossario.md).
 
+É um dos [Emissores de Sinal](emissores.md) e segue o contrato comum da família: força, luz, saída, tempo, rede `Offline` e mensagem (perguntas 627 a 629).
+
 **Estado:** implementada na #130, com as perguntas 549 a 555, 558 e 576 a 587 respondidas (regra 9).
 
 ## Em uma frase
@@ -127,6 +129,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 13:15 | Marca a alavanca como implementada na #130, com a tela, as mensagens, o save, o desenho e o código. |
 | Zennd | 2026-11-15 12:27 | Registra as decisões 584 a 587, da força no save, da mensagem, da inclinação e do tempo. |
 | Zennd | 2026-11-15 11:47 | Registra as decisões 576 a 583, do uso, do save, do som, da luz, da tela e dos testes. |

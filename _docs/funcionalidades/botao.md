@@ -2,6 +2,8 @@
 
 O botão do Redweave, o Signal Button (`redweave:signal_button`, `Botão de Sinal` em português), é uma fonte de sinal que o player aperta e que volta sozinha, parecida com o botão do jogo, na mesma ideia da [Alavanca](alavanca.md): aparência 3D mais realista, um indicador de cor, uma luz vermelha desligado e verde ligado, e uma tela parecida com a dos [Módulos de Sinal](modulos-de-sinal.md), em que o player escolhe se o sinal sai sem fio, por um canal da rede, como um [Signal Node](no-de-sinal.md), ou pela redstone, no mundo (pergunta 548). Entra depois do [Signal Cable](signal-cable.md), numa issue própria, a #131. Os termos são os do [`glossario.md`](../glossario.md).
 
+É um dos [Emissores de Sinal](emissores.md) e segue o contrato comum da família: força, luz, saída, tempo, rede `Offline` e mensagem (perguntas 627 a 629).
+
 **Estado:** implementado na #131, com as perguntas 549 a 556, 558 e 588 a 600 respondidas (regra 9).
 
 ## Em uma frase
@@ -136,6 +138,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 14:03 | Marca o botão como implementado na #131, com a tela, as mensagens, o save, o desenho e o código. |
 | Zennd | 2026-11-15 13:59 | Registra as decisões 596 a 600, do tempo ligado, dos textos e do Toggle. |
 | Zennd | 2026-11-15 13:42 | Registra as decisões 588 a 595, do uso, do som, do save, do config, da mensagem e do visual. |
