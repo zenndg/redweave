@@ -18,6 +18,21 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Rota
 | `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
 
+### Copiar e colar todos os itens, na #154
+
+O `Copy` passa a copiar e colar a configuração de todos os itens configuráveis do mod, não só do Signal Node (perguntas 722 a 730):
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Gesto | O clique copia, o Shift + clique cola, e o Shift + clique no ar apaga a cópia, como no nó | 722 |
+| Itens | O Signal Node e todos os Signal Modules; o Signal Alarm, o Signal Keypad e o Signal Gate entram ao nascer. O Signal Cable e o Network Controller ficam fora | 727 |
+| O que entra | A configuração: força, tempos, modos, item esperado, quantidade, canais e conexões. Ficam fora o dono, o nome e o estado do momento | 725 |
+| Segredos | A chave do Signal Lock e a senha do Signal Keypad não entram | 724 |
+| Onde cola | Só num item do mesmo tipo de que o player é dono. Numa rede diferente, os canais ficam sem canal, com aviso | 726 |
+| Mensagens | `Copied <tipo>`, `Pasted`, `This copy is from a <tipo>.` e `Channels were cleared: other network.` (em português, `Copiado: <tipo>`, `Colado`, `Esta cópia é de um(a) <tipo>.` e `Os canais foram limpos: outra rede.`) | 728 |
+| Save | Um data component do Configurator, com o tipo do item e a configuração | 729 |
+| Proteção dos blocos | A seleção dos blocos protegidos da #146 sai do `Copy` e vai para um modo novo, `Protect` | 723 |
+
 ### Modo `Rotate`
 
 Desde a #136, o giro dos Signal Modules tem um modo próprio, e o Shift + clique no `Open` não gira mais (perguntas 610 e 613 a 620):
@@ -143,6 +158,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:30 | Descreve a cópia de todos os itens da #154 (perguntas 722 a 730). |
 | Zennd | 2026-11-16 13:18 | Leva o `Toggle`, a rede `Offline` e o rótulo ao Signal Lamp (perguntas 658, 716 e 721). |
 | Zennd | 2026-11-16 12:23 | Leva o `Toggle`, a rede `Offline`, o `Wrench` e o rótulo ao Signal Lock (perguntas 637, 639, 641, 707 e 711). |
 | Zennd | 2026-11-16 11:27 | Leva o `Toggle` e o rótulo ao Signal Item Sensor (perguntas 697 e 703). |

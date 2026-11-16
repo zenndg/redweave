@@ -11,6 +11,15 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 730 | Em que ponto do roadmap entra a #154, a cópia de todos os itens? | No passo 20, antes do Signal Alarm, para o alarme, o teclado e o portão já nascerem com a cópia. O modo `Protect` entra na #146 |
+| 729 | Onde a cópia de um item fica guardada? | Num data component do item Configurator, com o tipo do item e a configuração (regra 7), separado da cópia do nó de hoje ou junto dela, como o código pedir. Fica fixado na #26 (regra 15) |
+| 728 | Quais as mensagens da cópia? | `Copied <tipo>` ao copiar, `Pasted` ao colar, `This copy is from a <tipo>.` num item de outro tipo e `Channels were cleared: other network.` quando a rede é outra; em português, `Copiado: <tipo>`, `Colado`, `Esta cópia é de um(a) <tipo>.` e `Os canais foram limpos: outra rede.` |
+| 727 | Quais itens o `Copy` copia e cola? | O Signal Node, como hoje, e todos os Signal Modules: o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer, o Signal Lever, o Signal Button, o Signal Pressure Plate, o Signal Item Sensor, o Signal Lock e a Signal Lamp. O Signal Alarm, o Signal Keypad e o Signal Gate entram ao nascer. O Signal Cable e o Network Controller ficam fora, porque não têm configuração. Muda as perguntas 395 e 421 |
+| 726 | Onde a cópia cola? | Só num item do mesmo tipo de que o player é dono. Numa rede diferente, cola o resto, e as conexões em canal ficam sem canal, com um aviso |
+| 725 | O que entra na cópia de um item? | A configuração: a força, os tempos, os modos, o item esperado, a quantidade, os canais e as conexões. Ficam fora o dono, o nome e o estado do momento, como ligado, apertado, a contagem, a luz e o pulso em andamento |
+| 724 | A chave do Signal Lock e a senha do Signal Keypad entram na cópia? | Não: a cópia fica no item Configurator, que vai ao cliente, e os segredos não podem vazar. O dono define a chave e a senha em cada item |
+| 723 | Com o Shift + clique do `Copy` sendo colar, onde fica a seleção dos blocos protegidos da #146? | Num sexto modo do Configurator, `Protect`, que só age no Signal Lock, no Signal Keypad e nos blocos em volta: o clique no item o seleciona, e o clique num bloco liga ou desliga a proteção. Os detalhes do modo ficam para a #146. Muda a pergunta 674 |
+| 722 | Qual o gesto do `Copy` nos itens? | O mesmo do Signal Node: o clique copia, o Shift + clique cola, e o Shift + clique no ar apaga a cópia (perguntas 127, 128 e 143) |
 | 721 | O que o rótulo da Signal Lamp mostra, e como fica a cor do difusor? | O rótulo mostra `Offline` ou `Out of range`, como o nó; nos outros casos, `On` ou `Off` e o canal de intensidade. O difusor tem a cor do canal, de 40% a 100% do brilho conforme a luz, 25% apagado, e cinza sem canal |
 | 720 | Quais os textos da Signal Lamp? | `Intensity`/`Intensidade`, `Control`/`Controle`, `Mode`/`Modo`, `Hold`/`Manter`, `Pulse`/`Pulso`, `None`/`Nenhum`, `Light`/`Luz`; `On`, `Off` e `Strength` reaproveitam as chaves da alavanca, no feminino (`Ligada`/`Desligada`) |
 | 719 | Quais os padrões da Signal Lamp ao ser colocada? | Sem canal de intensidade, apagada e com o difusor cinza; sem controle; força 15; modo `Hold`. Acende quando o dono escolhe o canal |
@@ -721,6 +730,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:30 | Registra as respostas 722 a 730, da cópia de todos os itens. |
 | Zennd | 2026-11-16 13:15 | Registra as respostas 715 a 721, da Signal Lamp. |
 | Zennd | 2026-11-16 12:17 | Registra as respostas 707 a 714, do Signal Lock. |
 | Zennd | 2026-11-16 11:45 | Registra a resposta 706, da ordem do Lock, da Lamp e do Alarm. |

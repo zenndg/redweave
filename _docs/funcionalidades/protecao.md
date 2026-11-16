@@ -14,7 +14,7 @@ O dono escolhe, com o modo `Copy` do Configurator, até 16 blocos perto de um Si
 |---|---|---|
 | Escopo | Só os blocos ligados a um Signal Lock ou Signal Keypad; blocos inquebráveis em qualquer lugar do mundo ficaram de fora (regra 2) | 672 |
 | Limites | Até 16 blocos por item, dentro de 4 blocos dele, no config, em [`limites.md`](../limites.md) | 673 |
-| Escolha | `Copy` + clique no item o seleciona; cada clique com `Copy` num bloco liga ou desliga a proteção, com `Protected (3/16)`; o Shift + clique no ar solta a seleção. Com o Configurator na mão, os blocos protegidos têm um contorno | 674 |
+| Escolha | Um modo novo do Configurator, `Protect`: o clique no item o seleciona, e cada clique num bloco liga ou desliga a proteção, com `Protected (3/16)`. Com o Configurator na mão, os blocos protegidos têm um contorno. O `Copy` ficou para a cópia de todos os itens (#154). Os detalhes do modo `Protect` fecham no refinamento da #146 | 674 e 723 |
 | Cobertura | Não quebram por explosão, não são quebrados por outros players no survival (só o dono; no criativo, qualquer um) e não são empurrados por pistões. A porta continua abrindo pelo sinal | 675 |
 | Fim | Retirado o item pelo `Wrench`, os blocos perdem a proteção; um bloco quebrado pelo dono sai da lista. A lista fica no NBT do item | 676 |
 
@@ -32,4 +32,5 @@ GameTests no mundo: a escolha pelo `Copy`, a explosão, outro player, o pistão,
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:30 | A seleção dos blocos vai para o modo `Protect` (pergunta 723). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 672 a 676. |
