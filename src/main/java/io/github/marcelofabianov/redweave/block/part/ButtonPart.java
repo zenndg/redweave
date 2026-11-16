@@ -56,10 +56,22 @@ public final class ButtonPart extends EmitterPart {
     ButtonPart part = new ButtonPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.button = ButtonSave.readButton(tag);
-      part.loadOutput(tag);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(StrengthSave.STRENGTH, ButtonSave.INTERVAL, EmitterPart.OUTPUT);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    button = ButtonSave.readButton(tag);
+    loadOutput(tag);
   }
 
   @Override

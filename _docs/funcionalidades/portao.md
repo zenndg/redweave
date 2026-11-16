@@ -25,6 +25,7 @@ Com sinal no canal do controlador, o campo de onda vermelha deixa passar só que
 | Proteção | Como o [Signal Lock](fechadura.md): a moldura e o controlador só saem pelo `Wrench` do dono; resistem a explosão e a pistão, e o campo não é destruído por explosão | 685 |
 | Teletransporte | Cancelado para entidades não autorizadas quando o destino está perto do campo de um portão ativo, com a distância em [`limites.md`](../limites.md); a entidade autorizada se teletransporta | 686 |
 | Família | O controlador é um Signal Module de transformação | 687 |
+| Cópia | O controlador entra na cópia do Configurator ao nascer: o `Copy` copia a configuração e a cola noutro controlador, levando a rede, como os outros módulos. Veja [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens) | 727 e 732 |
 
 Os números ficam em [`limites.md`](../limites.md).
 
@@ -46,4 +47,5 @@ JUnit das regras (as caixas, as tags, a combinação); GameTests da colisão por
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | O controlador do Signal Gate entra na cópia do Configurator (pergunta 727). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 677 a 687. |

@@ -25,6 +25,7 @@ Com a força da chave na entrada, o Signal Lock abre, acende a luz verde e emite
 | Explosão | Resiste e protege o próprio bloco de apoio. A proteção vale para o espaço de bloco inteiro, com as outras partes dele, como um cabo ou um nó | 641 e 708 |
 | Mão vazia | Mostra `Use a Configurator to open this module.`, como os outros módulos; a fechadura não abre à mão | 709 |
 | Mira | A placa e o cadeado, de 4 × 4 px e 6 px de altura | 714 |
+| Cópia | Nunca é copiado nem colado pelo `Copy` do Configurator: copiar nele ou colar nele mostra `This item cannot be copied.` (`Este item não pode ser copiado.`), e a cópia que estava no Configurator continua. Veja [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens) | 731 e 736 |
 | Cartão | Abre com um [Signal Card](cartao.md) vinculado, como o pulso do `Toggle` | 669 e 670 |
 | Proteção da porta | Protege os blocos escolhidos pelo dono, na [proteção dos blocos](protecao.md) | 672 a 676 |
 | Ordem | No passo 18 do roadmap, depois do Signal Item Sensor e antes da Signal Lamp e do módulo de memória (#110) | 642, 698 e 706 |
@@ -111,5 +112,6 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | O Signal Lock nunca é copiado nem colado (pergunta 731). |
 | Zennd | 2026-11-16 12:22 | Marca como implementado na #141, com a tela, as mensagens, o save, o desenho, a proteção, o código e os testes (perguntas 707 a 714). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 633 a 642. |

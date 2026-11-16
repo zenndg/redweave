@@ -53,11 +53,29 @@ public final class TimerPart extends ModulePart {
     TimerPart part = new TimerPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.timer = TimerSave.readTimer(tag);
-      part.output = ModuleSave.readConnection(tag, TimerSave.OUTPUT);
-      part.pause = ModuleSave.readConnection(tag, TimerSave.PAUSE);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(TimerSave.INTERVAL, TimerSave.PULSE, TimerSave.OUTPUT, TimerSave.PAUSE);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    output = drop.of(output);
+    pause = drop.of(pause);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    timer = TimerSave.readTimer(tag);
+    output = ModuleSave.readConnection(tag, TimerSave.OUTPUT);
+    pause = ModuleSave.readConnection(tag, TimerSave.PAUSE);
   }
 
   @Override

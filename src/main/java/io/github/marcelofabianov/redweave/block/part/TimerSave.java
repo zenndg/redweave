@@ -17,8 +17,8 @@ final class TimerSave {
   static final String PAUSE = "pause";
 
   private static final String RUNNING = "running";
-  private static final String INTERVAL = "interval_ticks";
-  private static final String PULSE = "pulse_ticks";
+  static final String INTERVAL = "interval_ticks";
+  static final String PULSE = "pulse_ticks";
   private static final String ELAPSED = "elapsed_ticks";
 
   private static final Logger LOGGER = LogUtils.getLogger();

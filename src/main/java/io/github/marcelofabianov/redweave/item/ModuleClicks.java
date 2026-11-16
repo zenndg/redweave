@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.block.PartSpaces;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
+import io.github.marcelofabianov.redweave.block.part.PartSettings;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
@@ -36,14 +37,18 @@ final class ModuleClicks {
       Player player,
       PartSpaceBlockEntity space,
       ModulePart part,
-      ConfiguratorMode mode) {
+      ConfiguratorMode mode,
+      ItemStack stack) {
     return switch (mode) {
       case OPEN ->
           player.isSecondaryUseActive()
               ? Optional.empty()
               : unlessOffline(server, space, part, () -> open(player, part));
       case ROTATE -> owned(player, part, () -> turn(part, player.isSecondaryUseActive()));
-      case COPY -> message(ModuleMessages.NOT_COPIED);
+      case COPY ->
+          PartSettings.copiable(part)
+              ? owned(player, part, () -> ModuleCopying.copyOrPaste(server, player, stack, part))
+              : message(ConfiguratorMessages.NOT_COPIABLE);
       case TOGGLE ->
           part.togglesOffline()
               ? owned(player, part, part::toggle)

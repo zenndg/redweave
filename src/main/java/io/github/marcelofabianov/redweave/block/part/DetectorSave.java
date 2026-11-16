@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 final class DetectorSave {
   static final String OUTPUT = "output";
 
-  private static final String MODE = "mode";
+  static final String MODE = "mode";
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String DROPPED = "Dropped an invalid {} from a Weather Detector: {}";
 

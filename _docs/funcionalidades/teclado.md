@@ -23,6 +23,7 @@ Com sinal na entrada, qualquer player clica com a mão vazia, digita a senha e, 
 | Aviso ao dono | A partir da 4ª tentativa errada, uma linha no chat do dono, `⚠ <player> missed the code of <nome> (<n> tries)`; offline, um resumo ao entrar | 666 |
 | Indicadores | Um teclado 3D na placa, a luz vermelha fechado e verde aberto e um ponto na cor do canal de entrada | 667 |
 | `Toggle` | Abre pelo tempo aberto, só para o dono testar, com `<nome>: Unlocked` | 667 |
+| Cópia | Nunca é copiado nem colado pelo `Copy` do Configurator, como o [Signal Lock](fechadura.md): copiar nele ou colar nele mostra `This item cannot be copied.`. Veja [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens) | 731 |
 | Retirada e explosão | Como o [Signal Lock](fechadura.md): só o dono, pelo `Wrench`; resiste a explosão com o bloco de apoio | 641 e 667 |
 | Cartão | Abre com um [Signal Card](cartao.md) vinculado, como a senha certa, com sinal na entrada | 669 e 670 |
 | Proteção da porta | Protege os blocos escolhidos pelo dono, na [proteção dos blocos](protecao.md) | 672 a 676 |
@@ -46,4 +47,5 @@ JUnit da regra e da espera (os dígitos, a senha certa e errada, a espera expone
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | O Signal Keypad nunca é copiado nem colado (pergunta 731). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 659 a 667. |

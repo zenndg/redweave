@@ -81,18 +81,27 @@ public final class ConfiguratorItem extends Item {
     if (player == null || server.isEmpty()) {
       return InteractionResult.FAIL;
     }
-    ConfiguratorMode mode = modeOf(context.getItemInHand());
-    Optional<Component> message =
-        switch (part.get()) {
-          case NodePart node ->
-              ConfiguratorActions.onNode(
-                  server.get(), player, context, space.spotOf(node), node, mode);
-          case CablePart cable -> Optional.of(CableClicks.onCable(player, space, cable, mode));
-          default ->
-              ModuleClicks.onModule(server.get(), player, space, (ModulePart) part.get(), mode);
-        };
-    message.ifPresent(found -> player.displayClientMessage(found, true));
+    onPart(server.get(), player, context, space, part.get())
+        .ifPresent(found -> player.displayClientMessage(found, true));
     return InteractionResult.CONSUME;
+  }
+
+  /** The action of the mode on the part, with the message of the action bar, if any. */
+  private static Optional<Component> onPart(
+      RedweaveServer server,
+      Player player,
+      UseOnContext context,
+      PartSpaceBlockEntity space,
+      Part part) {
+    ConfiguratorMode mode = modeOf(context.getItemInHand());
+    return switch (part) {
+      case NodePart node ->
+          ConfiguratorActions.onNode(server, player, context, space.spotOf(node), node, mode);
+      case CablePart cable -> Optional.of(CableClicks.onCable(player, space, cable, mode));
+      default ->
+          ModuleClicks.onModule(
+              server, player, space, (ModulePart) part, mode, context.getItemInHand());
+    };
   }
 
   private static boolean takes(Part part, ConfiguratorMode mode) {
@@ -113,11 +122,12 @@ public final class ConfiguratorItem extends Item {
   @Override
   public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
     ItemStack stack = player.getItemInHand(hand);
-    if (!player.isSecondaryUseActive() || !stack.has(RedweaveDataComponents.NODE_SLOTS.get())) {
+    if (!player.isSecondaryUseActive() || !hasCopy(stack)) {
       return InteractionResultHolder.pass(stack);
     }
     if (!level.isClientSide) {
       stack.remove(RedweaveDataComponents.NODE_SLOTS.get());
+      stack.remove(RedweaveDataComponents.MODULE_COPY.get());
       player.displayClientMessage(Component.translatable(ConfiguratorMessages.CLEARED), true);
     }
     return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
@@ -134,11 +144,23 @@ public final class ConfiguratorItem extends Item {
           Component.translatable(ConfiguratorMessages.COPY, copy.slots().configured())
               .withStyle(ChatFormatting.GRAY));
     }
+    ModuleCopy module = stack.get(RedweaveDataComponents.MODULE_COPY.get());
+    if (module != null) {
+      tooltip.add(
+          Component.translatable(ConfiguratorMessages.COPY_ITEM, ModuleCopying.nameOf(module))
+              .withStyle(ChatFormatting.GRAY));
+    }
     tooltip.add(hint(ConfiguratorMessages.hintOf(mode)));
     if (mode == ConfiguratorMode.TOGGLE) {
       tooltip.add(hint(ConfiguratorMessages.HINT_TOGGLE_MODULE));
     }
     tooltip.add(hint(ConfiguratorMessages.HINT_SCROLL));
+  }
+
+  /** Whether the Configurator keeps a copy, of a node or of a module (answer 729). */
+  private static boolean hasCopy(ItemStack stack) {
+    return stack.has(RedweaveDataComponents.NODE_SLOTS.get())
+        || stack.has(RedweaveDataComponents.MODULE_COPY.get());
   }
 
   /** The name of the mode, always written, in the color of the mode (answer 168). */

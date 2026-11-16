@@ -62,11 +62,26 @@ public final class LockPart extends ModulePart implements SecuredPart {
     LockPart part = new LockPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.lock = LockSave.read(tag);
-      part.input = ModuleSave.readConnection(tag, LockSave.INPUT);
-      part.output = ModuleSave.readConnection(tag, LockSave.OUTPUT);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** The Signal Lock is never copied nor pasted (answer 731). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of();
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {}
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    lock = LockSave.read(tag);
+    input = ModuleSave.readConnection(tag, LockSave.INPUT);
+    output = ModuleSave.readConnection(tag, LockSave.OUTPUT);
   }
 
   @Override

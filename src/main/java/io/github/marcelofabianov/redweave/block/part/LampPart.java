@@ -59,12 +59,30 @@ public final class LampPart extends ModulePart {
     LampPart part = new LampPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.lamp = LampSave.read(tag);
-      part.light = LampSave.readLight(tag);
-      part.intensity = LampSave.readChannel(tag, LampSave.INTENSITY);
-      part.control = LampSave.readChannel(tag, LampSave.CONTROL);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(StrengthSave.STRENGTH, LampSave.MODE, LampSave.INTENSITY, LampSave.CONTROL);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    intensity = drop.of(intensity);
+    control = drop.of(control);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    lamp = LampSave.read(tag);
+    light = LampSave.readLight(tag);
+    intensity = LampSave.readChannel(tag, LampSave.INTENSITY);
+    control = LampSave.readChannel(tag, LampSave.CONTROL);
   }
 
   @Override

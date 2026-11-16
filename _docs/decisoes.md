@@ -211,6 +211,21 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Padrões da Lamp | Sem canal, sem controle, força 15, `Hold` | 719 |
 | Textos da Lamp | `Intensidade`, `Controle`, `Manter`/`Pulso`, `Luz`, `Ligada`/`Desligada` | 720 |
 | Rótulo e cor da Lamp | Como o nó, e o difusor de 25% a 100% do brilho | 721 |
+| Gesto da cópia | Clique copia, Shift + clique cola, Shift no ar apaga | 722 |
+| Seleção dos blocos protegidos | Modo novo `Protect`; muda a 674 | 723 |
+| Segredos na cópia | A chave e a senha ficam fora | 724 |
+| Conteúdo da cópia | A configuração, sem dono, nome e estado | 725 |
+| Onde a cópia cola | Mesmo tipo e dono; outra rede limpa os canais | 726 |
+| Itens da cópia | O nó e todos os módulos; muda a 395 e a 421 | 727 |
+| Mensagens da cópia | `Copied <tipo>`, `Pasted`, `This copy is from a <tipo>.` | 728 |
+| Save da cópia | Data component do Configurator | 729 |
+| Ordem da #154 | Passo 20, antes do Alarm | 730 |
+| Lock e Keypad na cópia | Nunca copiados nem colados; muda a 724 e a 727 | 731 |
+| Rede e canais na cópia | Colar leva a rede da cópia e os canais, com uma rede do player; rede apagada limpa os canais; muda a 725 e a 726 | 732 |
+| Componente da cópia | `redweave:module_copy`, com `type`, `network` e `settings` | 733 |
+| Cópias no Configurator | Uma por vez | 734 |
+| Quem copia um módulo | Só o dono | 735 |
+| Textos da cópia | Canais limpos no lugar de `Pasted`; recusa do Lock; dica nova | 736 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -697,6 +712,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:35 | Registra as decisões 731 a 736. |
+| Zennd | 2026-11-16 13:30 | Registra as decisões 722 a 730, da cópia de todos os itens. |
 | Zennd | 2026-11-16 13:15 | Registra as decisões 715 a 721, da Signal Lamp. |
 | Zennd | 2026-11-16 12:17 | Registra as decisões 707 a 714, do Signal Lock. |
 | Zennd | 2026-11-16 11:45 | Registra a decisão 706. |

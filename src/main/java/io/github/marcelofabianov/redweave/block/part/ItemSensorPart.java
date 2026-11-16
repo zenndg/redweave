@@ -59,10 +59,28 @@ public final class ItemSensorPart extends ModulePart {
     ItemSensorPart part = new ItemSensorPart(face);
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
-      part.sensor = ItemSensorSave.read(tag);
-      part.output = ModuleSave.readConnection(tag, ItemSensorSave.OUTPUT);
+      part.readRule(tag);
     }
     return part;
+  }
+
+  /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
+  @Override
+  protected List<String> copiedKeys() {
+    return List.of(
+        ItemSensorSave.ITEM, ItemSensorSave.COUNT, StrengthSave.STRENGTH, ItemSensorSave.OUTPUT);
+  }
+
+  @Override
+  protected void dropChannels(ChannelDrop drop) {
+    output = drop.of(output);
+  }
+
+  /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
+  @Override
+  protected void readRule(CompoundTag tag) {
+    sensor = ItemSensorSave.read(tag);
+    output = ModuleSave.readConnection(tag, ItemSensorSave.OUTPUT);
   }
 
   @Override

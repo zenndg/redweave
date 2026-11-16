@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 final class PressurePlateSave {
 
   private static final String ON = "on";
-  private static final String MODE = "mode";
+  static final String MODE = "mode";
   private static final String MODULE = "Signal Pressure Plate";
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String DROPPED = "Dropped an invalid mode of a Signal Pressure Plate: {}";

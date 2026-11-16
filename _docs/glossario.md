@@ -56,7 +56,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Simulador | `Simulator` | Avalia cada rede uma vez por tick, só quando um canal mudou |
 | Network Controller | `network_controller` | O bloco que é uma rede: colocá-lo cria a rede, e a tela dele a gerencia, com a lista de nós e o log |
 | Network Terminal | `network_terminal` | O bloco que administra todas as redes do dono: renomear, desligar, religar, limpar os nós e apagar as `Unplaced`. Não cria redes (perguntas 130 e 131) |
-| Configurador | `configurator` | Ferramenta com cinco modos: `Open` abre a Tela do Nó, `Rotate` gira os Signal Modules, `Copy` copia e cola a configuração de um nó, `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela, `Rotate` gira a placa, no sentido horário ou, com Shift, no anti-horário, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 143, 161, 241, 393, 395, 610 e 613 a 618) |
+| Configurador | `configurator` | Ferramenta com cinco modos: `Open` abre a Tela do Nó, `Rotate` gira os Signal Modules, `Copy` copia e cola a configuração de um nó ou de um Signal Module, menos o Signal Lock e o Signal Keypad (perguntas 722 a 736), `Toggle` ativa ou desativa todos os canais configurados de um nó, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela, `Rotate` gira a placa, no sentido horário ou, com Shift, no anti-horário, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 143, 161, 241, 393, 395, 610 e 613 a 618) |
 | Modo | — | O modo atual do Configurator, trocado com Shift + scroll e mostrado com uma cor e o nome (perguntas 143 e 167) |
 | Log | — | A lista das últimas mudanças de valor das entradas e saídas de uma rede, na tela do Network Controller (pergunta 147) |
 | Signal Remote | `signal_remote` | Item de mão com aparência de tablet, `Controle de Sinal` em português, vinculado a um slot de input de um nó, que age como alavanca ou botão no canal desse slot, sempre com 15 (perguntas 15, 279, 282, 288, 352 e 368). Na rede, é uma entrada sem posição, a parte `RemoteInputs` (perguntas 27 e 360) |
@@ -66,6 +66,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 14:00 | O `Copy` do Configurador também copia os Signal Modules (perguntas 722 a 736). |
 | Zennd | 2026-11-16 13:18 | Leva o Signal Lamp à lista de módulos e diz o que entrou na #143. |
 | Zennd | 2026-11-16 12:23 | Leva o Signal Lock à lista de módulos e diz o que entrou na #141. |
 | Zennd | 2026-11-16 11:27 | Leva o Signal Item Sensor à lista de módulos e diz o que entrou na #148. |

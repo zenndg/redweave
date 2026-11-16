@@ -1,10 +1,10 @@
 # Configurador
 
-O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes, abre, gira, alterna e retira os Signal Modules (perguntas 393, 395, 399 e 610), e retira os Signal Cables (pergunta 525). Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
+O Configurator (`redweave:configurator`) é a ferramenta que abre, copia, cola e retira os Signal Nodes, abre, gira, alterna, copia, cola e retira os Signal Modules (perguntas 393, 395, 399, 610 e 722 a 736), e retira os Signal Cables (pergunta 525). Esta página descreve o item na Fase 1. A issue #17 entregou o item com outro comportamento, o de guardar a rede e ligar nós, que sai com as perguntas 126 a 168. O comportamento da rede está em [`rede-e-canais.md`](rede-e-canais.md), o nó em [`no-de-sinal.md`](no-de-sinal.md) e o visual em [`visual.md`](../conceito/visual.md#configurator). Os termos são os do [`glossario.md`](../glossario.md).
 
 ## Em uma frase
 
-Com o Configurator na mão, Shift + scroll escolhe um dos cinco modos: `Open` abre a Tela do Nó, `Rotate` gira os Signal Modules, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela, `Rotate` gira a placa nos dois sentidos, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 393, 395, 610, 616 e 618). Num Signal Cable, só o `Wrench` faz algo: retira o cabo (pergunta 525).
+Com o Configurator na mão, Shift + scroll escolhe um dos cinco modos: `Open` abre a Tela do Nó, `Rotate` gira os Signal Modules, `Copy` copia e cola a configuração de um nó, `Toggle` ativa e desativa os canais configurados dele, e `Wrench` retira o nó como item. Num Signal Module, `Open` abre a tela, `Rotate` gira a placa nos dois sentidos, `Copy` copia e cola a configuração num módulo do mesmo tipo, `Toggle` faz o que o módulo define, e `Wrench` o retira (perguntas 393, 395, 610, 616, 618 e 722 a 736). O Signal Lock nunca é copiado (pergunta 731). Num Signal Cable, só o `Wrench` faz algo: retira o cabo (pergunta 525).
 
 ## Modos
 
@@ -14,9 +14,45 @@ O Shift + scroll com o Configurator na mão troca o modo, na ordem `Open`, `Rota
 |---|---|---|---|---|---|
 | `Open` | `Abrir` | Azul | Abre a Tela do Nó e, como a mão vazia, as telas do Network Controller e do Network Terminal | — | 140, 143, 232 e 343 |
 | `Rotate` | `Girar` | Roxo | Nada, com `Only modules can be turned.` | Nada, com a mesma mensagem | 613 a 617 |
-| `Copy` | `Copiar` | Verde | Copia a configuração dos slots | Cola a cópia | 127 e 143 |
+| `Copy` | `Copiar` | Verde | Copia a configuração dos slots; num Signal Module, copia a configuração dele | Cola a cópia, num nó ou num módulo do mesmo tipo | 127, 143 e 722 |
 | `Toggle` | `Alternar` | Âmbar | Ativa todos os canais configurados do nó | Desativa todos os canais configurados | 241 |
 | `Wrench` | `Chave` | Vermelho | Retira o nó como item | — | 161 |
+
+### Copiar e colar todos os itens
+
+Desde a #154, o `Copy` copia e cola a configuração de todos os itens configuráveis do mod, não só do Signal Node (perguntas 722 a 736):
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Gesto | O clique copia, o Shift + clique cola, e o Shift + clique no ar apaga a cópia, como no nó | 722 |
+| Itens | O Signal Node e todos os Signal Modules: o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer, o Signal Lever, o Signal Button, o Signal Pressure Plate, o Signal Item Sensor e a Signal Lamp. O Signal Alarm e o Signal Gate entram ao nascer. O Signal Cable e o Network Controller ficam fora, porque não têm configuração | 727 |
+| Signal Lock e Signal Keypad | Nunca são copiados nem colados, nem as configurações sem segredo: copiar neles ou colar neles mostra `This item cannot be copied.` (`Este item não pode ser copiado.`), e a cópia que estava no Configurator continua | 724 e 731 |
+| Quem copia | Só o dono do módulo; os outros veem a mensagem de dono. A cópia do nó continua como antes | 735 |
+| O que entra | As chaves de configuração de cada módulo, tiradas do save dele, a rede de origem e o tipo do item. Ficam fora o dono, o nome e o estado do momento (ligado, apertado, contagem, luz, pulso em andamento) | 725 e 732 |
+| Onde cola | Só num módulo do mesmo tipo de que o player é dono, com o Shift + clique. O módulo entra na rede da cópia pelo mesmo caminho da escolha de rede na tela (`ChooseModuleNetwork`): a rede precisa existir, ser do player e estar `Online` (regra 17). Assim, um módulo recém-colocado, sem rede, recebe a rede e os canais. Um módulo noutra rede do player troca para a rede copiada | 726 e 732 |
+| Rede indisponível | Se a rede da cópia foi apagada, é de outro player ou está `Offline`, o resto cola sem rede, e as conexões em canal viram borda ou nenhuma, com `Channels were cleared: the network is not available.` (`Os canais foram limpos: a rede não está disponível.`) no lugar de `Pasted` | 732 e 736 |
+| Estado do destino | Colar troca só as chaves copiadas e lê o resultado pelas validações do save do próprio módulo (regra 14); o estado do momento do módulo de destino fica. Valores de um config mais folgado não são reajustados ao config do servidor | 725 e 736 |
+| Uma cópia por vez | Copiar um módulo apaga a cópia de nó, e copiar um nó apaga a de módulo. Colar no tipo errado mostra `This copy is from a <tipo>.` (`Esta cópia é de um(a) <tipo>.`) e não muda nada | 734 |
+| Save | O data component `redweave:module_copy`, ao lado do `redweave:node_slots`, com `type` (o ID do item), `network` (o UUID da rede, opcional) e `settings` (as chaves de configuração). Fica fixado na #26 (regra 15) | 729 e 733 |
+| Proteção dos blocos | A seleção dos blocos protegidos da #146 sai do `Copy` e vai para um modo novo, `Protect` | 723 |
+| Ordem | Passo 20 do roadmap, antes do Signal Alarm | 730 |
+
+As chaves que cada módulo copia:
+
+| Módulo | Chaves copiadas |
+|---|---|
+| Signal Lever | `strength`, `output` |
+| Signal Button | `strength`, `interval`, `output` |
+| Signal Pressure Plate | `strength`, `mode`, `output` |
+| Signal Item Sensor | `item`, `count`, `strength`, `output` |
+| Signal Lamp | `strength`, `mode`, `intensity`, `control` |
+| Signal Timer | `interval_ticks`, `pulse_ticks`, `output`, `pause` |
+| Signal Inverter | `input`, `output` |
+| Weather Detector | `mode`, `output` |
+| Signal Randomizer | `mode`, `interval_ticks`, `output` |
+| Signal Lock | Nenhuma: não é copiável (pergunta 731) |
+
+Um módulo novo declara as suas chaves copiáveis ao nascer; uma chave esquecida não é copiada.
 
 ### Modo `Rotate`
 
@@ -31,7 +67,7 @@ Desde a #136, o giro dos Signal Modules tem um modo próprio, e o Shift + clique
 | `Open` com Shift num módulo | Nada; o `Open` só abre a tela | 618 |
 | Tooltip | `Click to turn a module, Shift + click to turn it back.` (`Clique para girar um módulo, Shift + clique para voltar.`) | 619 |
 
-Num Signal Module, o `Open` só abre a tela, e o Shift + clique nele não faz nada; o `Rotate` gira a placa 90°, no sentido horário com o clique e no anti-horário com Shift (perguntas 616 e 618); o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer, ligar e desligar o [Signal Lever](alavanca.md), com `<nome>: On` ou `<nome>: Off`, apertar o [Signal Button](botao.md), com `<nome>: Pressed`, mesmo com ele já apertado, ou trocar o modo do [Signal Pressure Plate](placa-de-pressao.md), na ordem `Players`, `Passive`, `Hostile` e `Items`, com `<nome>: <modo>`, enquanto no [Signal Item Sensor](sensor-de-itens.md) ele não faz nada e mostra `Signal Item Sensor has nothing to toggle.` (pergunta 697), e no [Signal Lock](fechadura.md) ele abre a fechadura pelo pulso escolhido na tela, com `<nome>: Unlocked`, sem reiniciar um pulso em andamento (perguntas 639 e 711), e no [Signal Lamp](lampada.md) ele liga e desliga a lâmpada, como um pulso no canal de controle, com `<nome>: On` ou `<nome>: Off` (pergunta 658); o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. No Signal Lever, no Signal Button, no Signal Pressure Plate, no Signal Lock e no Signal Lamp, o `Toggle` funciona mesmo com a rede `Offline` (perguntas 578, 588, 593, 600, 603, 606, 707 e 716). O Signal Lock só sai pelo `Wrench` do dono: no survival, ninguém o quebra à mão, e a action bar mostra `Only the owner can remove this with a Configurator.` (pergunta 641). O `Rotate` também gira o Signal Pressure Plate, no chão. O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
+Num Signal Module, o `Open` só abre a tela, e o Shift + clique nele não faz nada; o `Rotate` gira a placa 90°, no sentido horário com o clique e no anti-horário com Shift (perguntas 616 e 618); o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer, ligar e desligar o [Signal Lever](alavanca.md), com `<nome>: On` ou `<nome>: Off`, apertar o [Signal Button](botao.md), com `<nome>: Pressed`, mesmo com ele já apertado, ou trocar o modo do [Signal Pressure Plate](placa-de-pressao.md), na ordem `Players`, `Passive`, `Hostile` e `Items`, com `<nome>: <modo>`, enquanto no [Signal Item Sensor](sensor-de-itens.md) ele não faz nada e mostra `Signal Item Sensor has nothing to toggle.` (pergunta 697), e no [Signal Lock](fechadura.md) ele abre a fechadura pelo pulso escolhido na tela, com `<nome>: Unlocked`, sem reiniciar um pulso em andamento (perguntas 639 e 711), e no [Signal Lamp](lampada.md) ele liga e desliga a lâmpada, como um pulso no canal de controle, com `<nome>: On` ou `<nome>: Off` (pergunta 658); o `Wrench` o retira; e o `Copy` copia a configuração do módulo e a cola noutro do mesmo tipo, menos no Signal Lock, que nunca é copiado (perguntas 722 a 736). No Signal Lever, no Signal Button, no Signal Pressure Plate, no Signal Lock e no Signal Lamp, o `Toggle` funciona mesmo com a rede `Offline` (perguntas 578, 588, 593, 600, 603, 606, 707 e 716). O Signal Lock só sai pelo `Wrench` do dono: no survival, ninguém o quebra à mão, e a action bar mostra `Only the owner can remove this with a Configurator.` (pergunta 641). O `Rotate` também gira o Signal Pressure Plate, no chão. O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
 
 Num [Signal Cable](signal-cable.md), o `Wrench` o retira, o `Rotate` mostra `Only modules can be turned.`, e `Open`, `Copy` e `Toggle` não fazem nada, porque o cabo não tem tela nem estado (perguntas 525 e 617). Num espaço com várias partes, o clique vale só para a parte sob a mira (pergunta 515).
 
@@ -105,6 +141,12 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Colar | Nó sem rede, rede da cópia de outro dono | `Only the owner of <rede> can change this node.` |
 | Colar | Nó sem rede, rede da cópia desligada | `<rede> is offline. Turn it on at a Network Terminal.` |
 | Colar | Nó sem rede, rede da cópia que não existe mais | `No network` |
+| Copiar | Copiou um módulo | `Copied <tipo>`, como `Copied Signal Lever` (`Copiado: Alavanca de Sinal`) (pergunta 728) |
+| Copiar ou colar | Signal Lock | `This item cannot be copied.` (`Este item não pode ser copiado.`) (perguntas 731 e 736) |
+| Colar | Colou num módulo | `Pasted` (`Colado`) (pergunta 728) |
+| Colar | Módulo, rede da cópia indisponível | `Channels were cleared: the network is not available.` (`Os canais foram limpos: a rede não está disponível.`), no lugar de `Pasted` (perguntas 732 e 736) |
+| Colar | Item de outro tipo | `This copy is from a <tipo>.` (`Esta cópia é de um(a) <tipo>.`) (perguntas 728 e 734) |
+| Copiar ou colar | Módulo de outro player | `Only the player who placed this module can change it.` (pergunta 735) |
 | Limpar | Apagou | `Copy cleared` |
 | Trocar de modo | Trocou | `Mode: <modo>`, com o nome na cor do modo |
 | Girar | Nó ou cabo | `Only modules can be turned.` (pergunta 617) |
@@ -116,7 +158,7 @@ Na action bar, em inglês e em português (perguntas 108 e 143).
 | Mão vazia no nó | — | `Use a Configurator to open this node.` |
 | Qualquer modo | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` O `Rotate` num nó mostra `Only modules can be turned.` mesmo assim |
 
-O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia, a dica do modo (`Click to open a node or module.`, `Click to turn a module, Shift + click to turn it back.`, `Click a node to copy it, Shift + click to paste.`, `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node, module or cable to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241, 430 e 619).
+O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` quando há cópia de um nó, ou `Copy: <item>`, como `Copy: Signal Lever` (`Cópia: Alavanca de Sinal`), quando há cópia de um módulo, a dica do modo (`Click to open a node or module.`, `Click to turn a module, Shift + click to turn it back.`, `Click a node or module to copy it, Shift + click to paste.` (`Clique num nó ou módulo para copiá-lo, Shift + clique para colar.`), `Click a node to enable its channels, Shift + click to disable them.` com `Click a module to start or stop it.` embaixo, ou `Click a node, module or cable to pick it up.`) e `Shift + scroll to change the mode.` (perguntas 190, 241, 430, 619 e 736).
 
 ## Item
 
@@ -127,7 +169,7 @@ O tooltip mostra `Mode: <modo>`, com o nome na cor do modo, `Copy: <n> slots` qu
 | Pilha | 1, porque cada item guarda o seu modo e a sua cópia |
 | Aba do criativo | `Redweave` (pergunta 69) |
 | Textura | `configurator`, da prancha [`texturas.png`](../imagens/conceito/texturas.png) (pergunta 51), com as camadas do visor: `configurator_display`, os 2×2 pixels pintados na cor do modo, e `configurator_copy`, o pixel aceso quando há cópia (pergunta 271) |
-| Data components | `redweave:node_slots`, com a cópia, e `redweave:configurator_mode`, com o modo: `open`, `copy`, `toggle` ou `wrench` (perguntas 173 e 241). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
+| Data components | `redweave:node_slots`, com a cópia de um nó, `redweave:module_copy`, com a cópia de um módulo (pergunta 733), e `redweave:configurator_mode`, com o modo: `open`, `rotate`, `copy`, `toggle` ou `wrench` (perguntas 173, 241 e 613). Os IDs são contrato de save e ficam fixados na #26 (regras 7 e 15) |
 
 O item não guarda mais a rede atual: os componentes `redweave:network` e `redweave:network_name` saem do Configurator (pergunta 126). A cópia guarda a rede do nó copiado, para colar num nó sem rede (pergunta 238). O `redweave:network` continua no item do Network Controller.
 
@@ -143,6 +185,9 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | A cópia de todos os itens da #154 passa a implementada, com as chaves por módulo, o `redweave:module_copy`, a rede levada na cópia e a recusa do Signal Lock (perguntas 722 a 736). |
+| Zennd | 2026-11-16 13:35 | O Signal Lock e o Signal Keypad nunca são copiados, e a cópia leva a rede e os canais (perguntas 731 e 732). |
+| Zennd | 2026-11-16 13:30 | Descreve a cópia de todos os itens da #154 (perguntas 722 a 730). |
 | Zennd | 2026-11-16 13:18 | Leva o `Toggle`, a rede `Offline` e o rótulo ao Signal Lamp (perguntas 658, 716 e 721). |
 | Zennd | 2026-11-16 12:23 | Leva o `Toggle`, a rede `Offline`, o `Wrench` e o rótulo ao Signal Lock (perguntas 637, 639, 641, 707 e 711). |
 | Zennd | 2026-11-16 11:27 | Leva o `Toggle` e o rótulo ao Signal Item Sensor (perguntas 697 e 703). |

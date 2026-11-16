@@ -21,6 +21,12 @@ public final class ConfiguratorMessages {
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String ONLY_MODULES = PREFIX + "only_modules";
   public static final String COPY = TOOLTIP + "copy";
+  public static final String COPY_ITEM = TOOLTIP + "copy_item";
+  public static final String COPIED_ITEM = PREFIX + "copied_item";
+  public static final String PASTED_ITEM = PREFIX + "pasted_item";
+  public static final String WRONG_TYPE = PREFIX + "wrong_type";
+  public static final String CHANNELS_CLEARED = PREFIX + "channels_cleared";
+  public static final String NOT_COPIABLE = PREFIX + "not_copiable";
   public static final String HINT_SCROLL = TOOLTIP + "hint_scroll";
   public static final String HINT_TOGGLE_MODULE = MODE_HINT + "toggle_module";
 

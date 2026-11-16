@@ -112,6 +112,18 @@ public abstract class ModulePart
 
   protected abstract void saveRule(CompoundTag tag);
 
+  /** Reads its rule from a save, as its load does and as the Configurator pastes (725). */
+  protected abstract void readRule(CompoundTag tag);
+
+  /**
+   * The keys of its save that are its settings, which the Configurator copies and pastes; none for
+   * an item that cannot be copied, as the Signal Lock (answers 725 and 731).
+   */
+  protected abstract List<String> copiedKeys();
+
+  /** Takes each of its connections off its channel, for a paste out of its network (732). */
+  protected abstract void dropChannels(ChannelDrop drop);
+
   /** The `Toggle` of the Configurator, with the message of the action bar, if any (395). */
   public abstract Optional<Component> toggle();
 

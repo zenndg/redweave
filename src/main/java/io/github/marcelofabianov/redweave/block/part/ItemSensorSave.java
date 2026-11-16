@@ -18,8 +18,8 @@ import org.slf4j.Logger;
 final class ItemSensorSave {
   static final String OUTPUT = "output";
 
-  private static final String ITEM = "item";
-  private static final String COUNT = "count";
+  static final String ITEM = "item";
+  static final String COUNT = "count";
   private static final String MODULE = "Signal Item Sensor";
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String DROPPED_ITEM = "Dropped an unknown item of a Signal Item Sensor: {}";

@@ -35,9 +35,20 @@ final class ConfiguratorPortugueseTexts {
   private static final String HINT_ROTATE = ROTATE_CLICK + ROTATE_SHIFT;
   private static final String ONLY_MODULES = "Só os módulos giram.";
   private static final String HINT_TOGGLE_MODULE = "Clique num módulo para ligá-lo ou pará-lo.";
-  private static final String HINT_COPY = "Clique num nó para copiá-lo, Shift + clique para colar.";
+  private static final String COPY_CLICK = "Clique num nó ou módulo para copiá-lo,";
+  private static final String COPY_SHIFT = " Shift + clique para colar.";
+  private static final String HINT_COPY = COPY_CLICK + COPY_SHIFT;
   private static final String HINT_WRENCH = "Clique num nó, módulo ou cabo para retirá-lo.";
   private static final String HINT_SCROLL = "Shift + scroll para trocar o modo.";
+
+  private static final String COPY_ITEM = "Cópia: %s";
+  private static final String COPIED_ITEM = "Copiado: %s";
+  private static final String PASTED_ITEM = "Colado";
+  private static final String WRONG_TYPE = "Esta cópia é de um(a) %s.";
+  private static final String CLEARED_START = "Os canais foram limpos:";
+  private static final String CLEARED_WHY = " a rede não está disponível.";
+  private static final String CHANNELS_CLEARED = CLEARED_START + CLEARED_WHY;
+  private static final String NOT_COPIABLE = "Este item não pode ser copiado.";
 
   private ConfiguratorPortugueseTexts() {}
 
@@ -67,5 +78,16 @@ final class ConfiguratorPortugueseTexts {
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.COPY), HINT_COPY);
     add.accept(ConfiguratorMessages.hintOf(ConfiguratorMode.WRENCH), HINT_WRENCH);
     add.accept(ConfiguratorMessages.HINT_SCROLL, HINT_SCROLL);
+    addCopy(add);
+  }
+
+  /** The texts of the copy of every item (answers 728 and 731). */
+  private static void addCopy(BiConsumer<String, String> add) {
+    add.accept(ConfiguratorMessages.COPY_ITEM, COPY_ITEM);
+    add.accept(ConfiguratorMessages.COPIED_ITEM, COPIED_ITEM);
+    add.accept(ConfiguratorMessages.PASTED_ITEM, PASTED_ITEM);
+    add.accept(ConfiguratorMessages.WRONG_TYPE, WRONG_TYPE);
+    add.accept(ConfiguratorMessages.CHANNELS_CLEARED, CHANNELS_CLEARED);
+    add.accept(ConfiguratorMessages.NOT_COPIABLE, NOT_COPIABLE);
   }
 }
