@@ -4,7 +4,10 @@
   "group": "signal_cable",
   "key": {
     "#": {
-      "item": "redweave:signal_cable"
+      "type": "neoforge:components",
+      "components": {},
+      "items": "redweave:signal_cable",
+      "strict": true
     },
     "D": {
       "item": "minecraft:cyan_dye"

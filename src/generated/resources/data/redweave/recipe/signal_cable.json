@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
-  "group": "signal_cable",
   "key": {
-    "#": {
-      "item": "redweave:signal_cable"
+    "C": {
+      "item": "minecraft:copper_ingot"
     },
-    "D": {
-      "item": "minecraft:white_dye"
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
     }
   },
   "pattern": [
-    "###",
-    "#D#",
-    "###"
+    "WWW",
+    "CRC",
+    "WWW"
   ],
   "result": {
     "count": 8,
