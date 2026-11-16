@@ -204,6 +204,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Config do pulso do Lock | De 2 a 200 ticks nas duas chaves | 712 |
 | Textos do Lock | `Locked`/`Unlocked`, `Trancada`/`Aberta`, `Chave`, `Pulso` | 713 |
 | Mira do Lock | A placa e o cadeado | 714 |
+| Luz da Lamp no mundo | Propriedade `light` (0 a 15) no estado do `part_space` | 715 |
+| `Toggle` da Lamp offline | Funciona, como o Lock | 716 |
+| Lamp no contador da rede | Fica fora: só lê | 717 |
+| NBT da Lamp | `strength`, `mode`, `off`, `last_control`, `light`, `intensity` e `control` | 718 |
+| Padrões da Lamp | Sem canal, sem controle, força 15, `Hold` | 719 |
+| Textos da Lamp | `Intensidade`, `Controle`, `Manter`/`Pulso`, `Luz`, `Ligada`/`Desligada` | 720 |
+| Rótulo e cor da Lamp | Como o nó, e o difusor de 25% a 100% do brilho | 721 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -690,6 +697,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:15 | Registra as decisões 715 a 721, da Signal Lamp. |
 | Zennd | 2026-11-16 12:17 | Registra as decisões 707 a 714, do Signal Lock. |
 | Zennd | 2026-11-16 11:45 | Registra a decisão 706. |
 | Zennd | 2026-11-16 11:34 | Registra a decisão 705, do catálogo de itens. |
