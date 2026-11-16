@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
+import io.github.marcelofabianov.redweave.block.part.LampPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.LockPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
@@ -21,6 +22,7 @@ import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
 import io.github.marcelofabianov.redweave.client.screen.ItemSensorScreen;
+import io.github.marcelofabianov.redweave.client.screen.LampScreen;
 import io.github.marcelofabianov.redweave.client.screen.LeverScreen;
 import io.github.marcelofabianov.redweave.client.screen.LockScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
@@ -85,6 +87,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.PRESSURE_PLATE.get(), PressurePlateScreen::new);
     event.register(RedweaveMenus.ITEM_SENSOR.get(), ItemSensorScreen::new);
     event.register(RedweaveMenus.LOCK.get(), LockScreen::new);
+    event.register(RedweaveMenus.LAMP.get(), LampScreen::new);
   }
 
   /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
@@ -124,7 +127,8 @@ public final class RedweaveClient {
             ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS),
             ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS),
             ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS),
-            ModulePart.models(LockPart.ID, LockPart.LOOKS))
+            ModulePart.models(LockPart.ID, LockPart.LOOKS),
+            ModulePart.models(LampPart.ID, LampPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }
@@ -159,6 +163,9 @@ public final class RedweaveClient {
     Optional<Part> part = space.at(PartQuads.faceOf(tintIndex));
     if (part.isPresent() && part.get() instanceof CablePart cable) {
       return cableColor(cable, PartQuads.slotOf(tintIndex));
+    }
+    if (part.isPresent() && part.get() instanceof LampPart lamp) {
+      return LampColors.of(lamp);
     }
     int channel =
         part.filter(NodePart.class::isInstance)

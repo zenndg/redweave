@@ -11,6 +11,13 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 721 | O que o rótulo da Signal Lamp mostra, e como fica a cor do difusor? | O rótulo mostra `Offline` ou `Out of range`, como o nó; nos outros casos, `On` ou `Off` e o canal de intensidade. O difusor tem a cor do canal, de 40% a 100% do brilho conforme a luz, 25% apagado, e cinza sem canal |
+| 720 | Quais os textos da Signal Lamp? | `Intensity`/`Intensidade`, `Control`/`Controle`, `Mode`/`Modo`, `Hold`/`Manter`, `Pulse`/`Pulso`, `None`/`Nenhum`, `Light`/`Luz`; `On`, `Off` e `Strength` reaproveitam as chaves da alavanca, no feminino (`Ligada`/`Desligada`) |
+| 719 | Quais os padrões da Signal Lamp ao ser colocada? | Sem canal de intensidade, apagada e com o difusor cinza; sem controle; força 15; modo `Hold`. Acende quando o dono escolhe o canal |
+| 718 | Quais chaves do NBT a Signal Lamp usa? | `strength`, `mode` (`hold` ou `pulse`), `off`, `last_control`, `light`, `intensity` e `control` (a cor do canal, ausente sem canal), além das chaves comuns dos módulos. Valores inválidos voltam ao padrão com aviso no log (regra 14). Ficam fixadas na #26 (regra 15) |
+| 717 | A Signal Lamp entra no contador `modules on` da Tela do Controlador? | Não: o contador conta quem escreve num canal (perguntas 388 e 424), e a Lamp só lê, como a entrada de um nó |
+| 716 | O `Toggle` do Configurator liga e desliga a Signal Lamp com a rede `Offline`? | Sim, como o Signal Lock (pergunta 707): o interruptor manual troca mesmo com a rede `Offline`, e a luz só acende quando a rede voltar. Completa a pergunta 658 |
+| 715 | Onde fica a luz que a Signal Lamp acende no mundo? | Numa propriedade nova do estado do bloco `part_space`, `light`, de 0 a 15, que o motor de luz do jogo lê, porque ele não enxerga os dados da parte. Só muda quando o valor muda, no ritmo de `lamp.min_light_update_ticks`. Mundos antigos carregam com 0. Vira contrato de save, fixado na #26 (regra 15) |
 | 714 | Qual a caixa de mira do Signal Lock? | A placa mais o cadeado, de 4 × 4 px e 6 px de altura, como a alça da alavanca |
 | 713 | Quais os textos do Signal Lock? | Em inglês, `Locked` e `Unlocked`, `Key`, `Pulse` e `<nome>: Unlocked`; em português, `Fechadura de Sinal`, `Trancada` e `Aberta`, `Chave`, `Pulso` e `<nome>: Aberta`, no feminino |
 | 712 | Quais as faixas do config do pulso do Signal Lock? | De 2 a 200 ticks para as duas chaves: `lock.min_pulse_ticks`, padrão 2, e `lock.max_pulse_ticks`, padrão 200. Completa a pergunta 640 |
@@ -714,6 +721,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:15 | Registra as respostas 715 a 721, da Signal Lamp. |
 | Zennd | 2026-11-16 12:17 | Registra as respostas 707 a 714, do Signal Lock. |
 | Zennd | 2026-11-16 11:45 | Registra a resposta 706, da ordem do Lock, da Lamp e do Alarm. |
 | Zennd | 2026-11-16 11:34 | Registra a resposta 705, do catálogo de itens. |

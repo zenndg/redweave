@@ -32,6 +32,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -46,10 +48,23 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * and hands each event to them; only the part under the aim answers a click or a break (515).
  */
 public final class PartSpaceBlock extends Block implements EntityBlock {
+  private static final int MAX_LIGHT = 15;
   public static final MapCodec<PartSpaceBlock> CODEC = simpleCodec(PartSpaceBlock::new);
+
+  /**
+   * The strongest light of its parts, as a Signal Lamp (answer 650), kept in the state so the light
+   * engine of the game, which runs on its own thread, reads it without the block entity.
+   */
+  public static final IntegerProperty LIGHT = IntegerProperty.create("light", 0, MAX_LIGHT);
 
   public PartSpaceBlock(Properties properties) {
     super(properties);
+    registerDefaultState(stateDefinition.any().setValue(LIGHT, 0));
+  }
+
+  /** The light the state gives to the world, which the light engine reads (answer 650). */
+  public static int lightOf(BlockState state) {
+    return state.getValue(LIGHT);
   }
 
   @Override
@@ -96,6 +111,11 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
   @Override
   protected boolean isSignalSource(BlockState state) {
     return true;
+  }
+
+  @Override
+  protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    builder.add(LIGHT);
   }
 
   /**

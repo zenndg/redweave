@@ -117,7 +117,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 15. [x] Signal Pressure Plate: the same idea as the lever, on the floor only, on while something of its mode stands on it (players, passive mobs, hostile mobs or items), with the mode and its strength from 1 to 15 on its screen (#132 · questions 548 to 558, 602 to 611 and 621 to 626)
 16. [x] Signal Emitters: the family of the modules where the signal starts, with one shared contract and one code base for the lever, the button and the pressure plate, with no change in behavior (#139 · questions 627 to 631)
 17. [x] Signal Item Sensor: a plate on a container that emits its strength when the container holds exactly the chosen amount of the chosen item; it only reads, never stores or moves items (#148 · questions 689 to 698)
-18. [ ] Signal Lock: a lock that only opens with the exact strength of its key, owner-only removal (#141 · questions 633 to 642)
+18. [x] Signal Lock: a lock that only opens with the exact strength of its key, owner-only removal (#141 · questions 633 to 642)
 19. [ ] Signal Lamp: a multipart LED bar in the color of its channel, with the light level of the strength it gets, an optional control channel (`Hold` or `Pulse`) and the strength it emits when lit set on its screen (#143 · questions 650 to 658)
 20. [ ] Signal Alarm: a note block sound, a text and a pulsing red light when it gets a signal, for a time its owner chooses (#142 · questions 643 to 649)
 21. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)

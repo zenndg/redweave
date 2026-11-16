@@ -25,7 +25,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
-| Força do Signal Lever, do Signal Button, do Signal Pressure Plate, do Signal Item Sensor e do Signal Lock, e a chave do Signal Lock | 1 a 15, 15 ao ser colocado (perguntas 552, 636 e 701) | fixo, contrato com a redstone do jogo | 2 |
+| Força do Signal Lever, do Signal Button, do Signal Pressure Plate, do Signal Item Sensor, do Signal Lock e do Signal Lamp, e a chave do Signal Lock | 1 a 15, 15 ao ser colocado (perguntas 552, 636, 701 e 719) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Tempo ligado mínimo do Signal Button | 2 ticks, de 2 a 200, nunca abaixo de 2, um passo da tela (perguntas 592 e 596) | `button.min_interval_ticks` | 2 |
@@ -40,7 +40,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do som do Signal Alarm | 20 ticks, 1 s (pergunta 646) | `alarm.min_interval_ticks` | 2 |
 | Intervalo máximo do som do Signal Alarm | 200 ticks, 10 s (pergunta 646) | `alarm.max_interval_ticks` | 2 |
 | Duração máxima do Signal Alarm | 600 ticks, 30 s; o padrão é 5 s (pergunta 648) | `alarm.max_duration_ticks` | 2 |
-| Atualização da luz do Signal Lamp | No máximo a cada 4 ticks, de 1 a 20 (pergunta 655) | `lamp.min_light_update_ticks` | 2 |
+| Atualização da luz do Signal Lamp | No máximo a cada 4 ticks, de 1 a 20: a luz no mundo espera esse tempo entre uma mudança e outra; o sinal emitido segue sem atraso (perguntas 655 e 715) | `lamp.min_light_update_ticks` | 2 |
 | Tempo aberto mínimo do Signal Keypad | 20 ticks, 1 s; o padrão é 3 s (pergunta 663) | `keypad.min_open_ticks` | 2 |
 | Tempo aberto máximo do Signal Keypad | 600 ticks, 30 s (pergunta 663) | `keypad.max_open_ticks` | 2 |
 | Janela das tentativas livres do Signal Keypad | 1200 ticks, 60 s, com 3 tentativas livres (pergunta 665) | `keypad.free_window_ticks` | 2 |
@@ -63,6 +63,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:18 | Explica a atualização da luz do Signal Lamp e leva a força dele à linha comum (perguntas 715 e 719). |
 | Zennd | 2026-11-16 12:23 | Dá as faixas do pulso do Signal Lock (pergunta 712). |
 | Zennd | 2026-11-16 11:27 | Explica os limites do Signal Item Sensor e leva a força a ele (perguntas 693, 695 e 701). |
 | Zennd | 2026-11-16 10:12 | Adiciona os limites do Signal Item Sensor (perguntas 693 e 695). |

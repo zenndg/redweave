@@ -20,7 +20,7 @@ O jogo guarda um bloco só por espaço. Para um cabo passar no chão de um espa�
 | Código | A ocupação fica em `domain/part/` (`PartSpace`, `PartKind` e `Fit`). No adaptador, o contêiner é o `PartSpaceBlock` com o `PartSpaceBlockEntity`, em `block/`, e as partes ficam em `block/part/`, com uma interface `Part` curta (forma, sinal, desenho, save e drop), o tick e o clique em interfaces separadas (`TickingPart` e `HandPart`), e uma classe por tipo: `NodePart`, `CablePart` e as 4 partes de módulo sobre o `ModulePart`. Uma parte é endereçada pela posição e pela face (`PartSpot`) | 537, 538 e 542 |
 | Desenho | Um modelo dinâmico, o `PartSpaceModel`, junta os modelos JSON de cada parte na malha do chunk e só é refeito quando uma parte muda, sem custo por frame | 536 e 573 |
 | Drop | No código: cada parte devolve o próprio item, e o `part_space` não tem loot table | 539 |
-| Partes | O Signal Cable, o Signal Node e os Signal Modules (o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer, o Signal Lever, o Signal Button, o Signal Pressure Plate, o Signal Item Sensor, o Signal Lock e os próximos) | 511 |
+| Partes | O Signal Cable, o Signal Node e os Signal Modules (o Signal Timer, o Signal Inverter, o Weather Detector, o Signal Randomizer, o Signal Lever, o Signal Button, o Signal Pressure Plate, o Signal Item Sensor, o Signal Lock, o Signal Lamp e os próximos) | 511 |
 | Ocupação | Uma parte por face: em cada uma das 6 faces do espaço, ou um cabo, ou um nó, ou um módulo, nunca dois na mesma face. No máximo 2 cabos por espaço | 498 e 513 |
 | Clique numa parte | Com um item de parte na mão, clicar numa parte que já existe mira o mesmo espaço, na face oposta à clicada, como se a parte fosse transparente. Um nó clicado no topo de um cabo no chão mira a face `down`, já ocupada | 545 |
 | Face ocupada | Colocar numa face ocupada, ou um terceiro cabo num espaço, não coloca a parte: o item fica na mão, e a action bar mostra `This face is taken.` ou `This space already has 2 cables.`, em inglês e em português | 533 |
@@ -36,11 +36,12 @@ O jogo guarda um bloco só por espaço. Para um cabo passar no chão de um espa�
 | Bloco | Um bloco contêiner com ID próprio, `redweave:part_space` | 523 |
 | Itens | Mantêm os IDs de hoje: `signal_node`, `signal_timer`, `signal_inverter`, `weather_detector`, `signal_randomizer` e os próximos módulos, e `signal_cable` | 523 |
 | NBT | O contêiner guarda `parts`, uma lista em que cada parte tem `type`, o ID do item, `face`, o lado do espaço onde ela encosta, como `down`, e `data`, com o NBT da parte (perguntas 76, 165, 411, 450, 467 e 481). O cabo guarda em `data` só `color` e `owner` | 523, 543, 544 e 567 |
+| Estado do bloco | O `part_space` tem uma propriedade `light`, de 0 a 15, com a luz mais forte das partes dele, como a do Signal Lamp. O motor de luz do jogo roda na sua própria thread e não lê o block entity, então a luz fica no estado do bloco; ela só muda quando o valor muda. Mundos anteriores carregam com 0. Fica fixada na #26 (regra 15) | 715 |
 | Migração | Nenhuma: o Signal Node e os 4 módulos existentes viram partes antes da primeira versão publicada, e nada foi publicado. Tudo fica fixado na #26 (regra 15) | 516 |
 
 ## Conversão do que já existe
 
-Na #44, o Signal Node e os 4 Signal Modules entregues até a #109 deixaram de ser blocos próprios e viraram partes, sem mudar o que o player vê nem o que eles fazem. Os módulos novos, como o Signal Lever da #130, o Signal Button da #131, o Signal Pressure Plate da #132, o Signal Item Sensor da #148 e o Signal Lock da #141, já nascem como partes (pergunta 516). As regras desses blocos, como a placa, o dono, a rede, as conexões, o Configurator e as telas, continuam as das páginas de cada um.
+Na #44, o Signal Node e os 4 Signal Modules entregues até a #109 deixaram de ser blocos próprios e viraram partes, sem mudar o que o player vê nem o que eles fazem. Os módulos novos, como o Signal Lever da #130, o Signal Button da #131, o Signal Pressure Plate da #132, o Signal Item Sensor da #148, o Signal Lock da #141 e o Signal Lamp da #143, já nascem como partes (pergunta 516). As regras desses blocos, como a placa, o dono, a rede, as conexões, o Configurator e as telas, continuam as das páginas de cada um.
 
 ## Testes
 
@@ -61,6 +62,7 @@ Até a #44, o Signal Node e os módulos guardavam o seu visual em estados do blo
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:18 | Leva o Signal Lamp à lista de partes e registra a propriedade `light` do `part_space` (pergunta 715). |
 | Zennd | 2026-11-16 12:23 | Leva o Signal Lock à lista de partes. |
 | Zennd | 2026-11-16 11:27 | Leva o Signal Item Sensor à lista de partes. |
 | Zennd | 2026-11-15 15:09 | Leva o Signal Pressure Plate à lista de partes. |

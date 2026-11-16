@@ -33,7 +33,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`sensor-de-itens.md`](sensor-de-itens.md) | 2 | O Signal Item Sensor, entregue na #148: uma placa num inventário que emite sinal com a quantidade exata de um item |
 | [`fechadura.md`](fechadura.md) | 2 | O Signal Lock, entregue na #141: abre só com a força exata da chave e só sai pelo `Wrench` do dono |
 | [`alarme.md`](alarme.md) | 2 | Conceito: O Signal Alarm: som, texto e luz pulsando ao receber sinal (#142) |
-| [`lampada.md`](lampada.md) | 2 | Conceito: O Signal Lamp: barra de LED na cor do canal (#143) |
+| [`lampada.md`](lampada.md) | 2 | O Signal Lamp, entregue na #143: barra de LED na cor do canal, com a luz pela força e um canal de controle |
 | [`teclado.md`](teclado.md) | 2 | Conceito: O Signal Keypad: senha numérica que libera o sinal (#144) |
 | [`cartao.md`](cartao.md) | 2 | Conceito: O Signal Card: cartão de acesso vinculado (#145) |
 | [`protecao.md`](protecao.md) | 2 | Conceito: A proteção dos blocos da porta pela fechadura e pelo teclado (#146) |
@@ -44,6 +44,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:18 | Marca o Signal Lamp como entregue na #143. |
 | Zennd | 2026-11-16 12:23 | Marca o Signal Lock como entregue na #141. |
 | Zennd | 2026-11-16 11:34 | Aponta para o catálogo de itens (pergunta 705). |
 | Zennd | 2026-11-16 11:27 | Marca o Signal Item Sensor como entregue na #148. |

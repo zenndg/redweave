@@ -46,6 +46,11 @@ public interface Part {
     return true;
   }
 
+  /** The light the part gives to the world, from 0 to 15, as the Signal Lamp (answer 650). */
+  default int light() {
+    return 0;
+  }
+
   /** What the client draws for the part, which the model of the space joins (answer 536). */
   List<PartLook> looks();
 

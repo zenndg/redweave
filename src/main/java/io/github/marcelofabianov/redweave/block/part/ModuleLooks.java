@@ -10,6 +10,7 @@ import java.util.List;
 public final class ModuleLooks {
   static final String NONE = "";
   static final String ON = "_on";
+  static final String OFF = "_off";
   static final String RUNNING = "_running";
   static final String BURNT = "_burnt";
   static final String SEPARATOR = "_";

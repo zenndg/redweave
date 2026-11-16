@@ -106,6 +106,22 @@ public final class PartSpaceBlockEntity extends BlockEntity {
     return removed;
   }
 
+  /**
+   * Puts the strongest light of the parts in the state of the space, which the light engine reads
+   * and the clients receive, only when it changed (answer 650).
+   */
+  public void refreshLight() {
+    if (level == null || level.isClientSide || isRemoved()) {
+      return;
+    }
+    int light = parts.values().stream().mapToInt(Part::light).max().orElse(0);
+    BlockState state = level.getBlockState(worldPosition);
+    if (state.getBlock() instanceof PartSpaceBlock && PartSpaceBlock.lightOf(state) != light) {
+      level.setBlock(
+          worldPosition, state.setValue(PartSpaceBlock.LIGHT, light), Block.UPDATE_CLIENTS);
+    }
+  }
+
   /** Saves the space and sends it to the clients, after a part changed. */
   public void changed() {
     setChanged();
