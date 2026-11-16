@@ -504,10 +504,34 @@ Entregue com a issue #141 (perguntas 633 a 642 e 707 a 714). Use uma pedra, um b
 | 313 | Salve, saia e entre de novo no mundo | A chave, a força, o pulso e as duas pontas continuam iguais |
 | 314 | Troque o idioma para Português (Brasil) e repita os passos 297, 300 e 303 | `Fechadura de Sinal`, `Trancada` e `Aberta`, `Chave`, `Pulso` e `<nome>: Aberta` |
 
+## Fase 2: o Signal Lamp
+
+Entregue com a issue #143 (perguntas 650 a 658 e 715 a 721). Use uma rede, duas Signal Levers, um comparador, um Signal Cable e um segundo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 315 | Abra a aba `Redweave` do criativo e pegue um Signal Lamp | O Signal Lamp está na aba (pergunta 601), com o nome `Signal Lamp` e o ícone da barra de LED |
+| 316 | Coloque o Signal Lamp no chão e depois numa parede | Um trilho escuro com as pontas de cobre e o difusor cinza, deitado no sentido para onde você olhava (pergunta 652) |
+| 317 | Monte uma rede com um Signal Lever escrevendo no canal Red com força 9; na lâmpada, use o `Open` e escolha `Channel` Red em `Intensity`; ligue a alavanca | O difusor brilha vermelho, o chão em volta recebe luz 9, e a tela mostra `Light: 9` (pergunta 650) |
+| 318 | Use `/time set midnight` e olhe a lâmpada acesa | A luz no mundo é branca, e só o difusor tem a cor do canal (pergunta 650) |
+| 319 | Mude a força da alavanca para 15 e depois para 3 | A luz aumenta e depois diminui, e fica parada enquanto o sinal não muda (perguntas 650 e 655) |
+| 320 | Ponha `Strength` em 6 e um comparador no bloco de apoio | O comparador lê 6 (pergunta 651) |
+| 321 | Ponha um Signal Cable ao lado da lâmpada, na mesma face | O cabo acende com a força da lâmpada (pergunta 653) |
+| 322 | Desligue a rede no Terminal | A lâmpada apaga, para de emitir, e o rótulo mostra `Offline` (pergunta 654) |
+| 323 | Em `Control`, escolha `Channel` Blue, com uma segunda alavanca no Blue, no modo `Hold` | Com o Blue ligado, a lâmpada apaga e mostra o indicador vermelho; com ele desligado, acende de novo (perguntas 656 e 657) |
+| 324 | Mude o modo para `Pulse` e dê pulsos no Blue | Cada pulso liga ou desliga a lâmpada, e ela fica no estado novo (pergunta 656) |
+| 325 | Use o `Toggle`, também com a rede desligada no Terminal | Aparece `<nome>: Off` ou `<nome>: On`, e a lâmpada troca, mesmo com a rede `Offline` (perguntas 658 e 716) |
+| 326 | Abra a tela com outro player | A tela é só para leitura |
+| 327 | Use o `Rotate` | A barra gira 90° |
+| 328 | Salve, saia e entre de novo no mundo com a lâmpada acesa | A cor, a luz e as configurações continuam iguais |
+| 329 | Quebre a lâmpada | A luz do mundo some |
+| 330 | Troque o idioma para Português (Brasil) e abra a tela | `Lâmpada de Sinal`, `Intensidade`, `Controle`, `Manter` e `Pulso`, `Ligada` e `Desligada` (pergunta 720) |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:19 | Adiciona os passos 315 a 330, do Signal Lamp. |
 | Zennd | 2026-11-16 12:24 | Adiciona a seção do Signal Lock, passos 297 a 314 (#141). |
 | Zennd | 2026-11-16 11:27 | Adiciona a seção do Signal Item Sensor, passos 278 a 296, com a luz verde na contagem exata (#148). |
 | Zennd | 2026-11-15 15:09 | Adiciona os passos 257 a 277, do Signal Pressure Plate (perguntas 602 a 611 e 621 a 626). |

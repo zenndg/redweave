@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor e Signal Lock. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock e Signal Lamp. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -281,6 +281,22 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 
 O servidor só manda a chave ao cliente do dono (pergunta 637). Em português, `Fechadura de Sinal`, `Trancada`, `Aberta`, `Chave`, `Pulso`, `Força`, `Entrada` e `Saída`.
 
+## Tela do Signal Lamp
+
+Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas dos módulos, sem botão para acender: a lâmpada acende pelo canal de intensidade, e o `Toggle` a liga e desliga (perguntas 650 e 658). O comportamento está em [`lampada.md`](lampada.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Lamp` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 650 |
+| Esquerda | `On` grande, em verde, ou `Off` apagado, e embaixo `Light: <n>`, o nível de luz que a lâmpada dá ao mundo agora | 650 e 720 |
+| `Strength` | A força emitida acesa, de 1 a 15, entre `−` e `+` | 651 |
+| `Intensity` | O canal de intensidade, que dá a cor e a luz: `None` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 650 |
+| `Control` | O canal de controle opcional, de qualquer cor: `None` ou `Channel`, com a mesma grade | 656 |
+| `Mode` | `Hold` ou `Pulse`, o modo do controle | 656 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura | 400 |
+
+Em português, `Lâmpada de Sinal`, `Ligada`, `Desligada`, `Luz`, `Força`, `Intensidade`, `Controle`, `Modo`, `Manter`, `Pulso` e `Nenhum` (pergunta 720).
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -291,6 +307,7 @@ O servidor só manda a chave ao cliente do dono (pergunta 637). Em português, `
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:19 | Adiciona a Tela do Signal Lamp (perguntas 650, 651, 656 e 720). |
 | Zennd | 2026-11-16 12:23 | Adiciona a Tela do Signal Lock, sem a prancha (perguntas 636, 637, 640 e 712). |
 | Zennd | 2026-11-16 11:27 | Adiciona a Tela do Signal Item Sensor, sem a prancha (perguntas 696, 702 e 704). |
 | Zennd | 2026-11-15 15:08 | Adiciona a Tela do Signal Pressure Plate, sem a prancha (perguntas 602, 606, 621 e 622). |

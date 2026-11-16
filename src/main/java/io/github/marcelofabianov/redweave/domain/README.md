@@ -12,7 +12,7 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139, o Signal Item Sensor, da #148, e o Signal Lock, da #141 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139, o Signal Item Sensor, da #148, o Signal Lock, da #141, e o Signal Lamp, da #143 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -108,6 +108,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `SignalLock` | Em `module/`: a regra do Signal Lock. Aberta quando a entrada tem exatamente a força da chave, ou durante o pulso do `Toggle`; a entrada 0 nunca abre. A saída é a força escolhida aberta e 0 trancada. A chave e a força vão de 1 a 15, e uma fechadura nova nasce com a chave 15, a força 15 e o pulso de 20 ticks. O `Toggle` não reinicia um pulso em andamento (perguntas 633 a 640 e 711) | #141 |
 | `LockPulse` | Em `module/`: o tempo do pulso do `Toggle` do Signal Lock, em ticks, com o mínimo do intervalo comum e preso aos limites do config, pela mesma regra de ajuste do `Interval` (perguntas 640 e 712) | #141 |
 | `LockLimits` | Em `module/`: a porta dos limites do pulso do Signal Lock, que o config implementa (`lock.min_pulse_ticks` e `lock.max_pulse_ticks`) | #141 |
+| `SignalLamp` | Em `module/`: a regra do Signal Lamp. A luz é a força do canal de intensidade, ou nada enquanto ela está desligada: pelo interruptor manual do `Toggle`, ou pelo controle em `HOLD`. Em `PULSE`, um pulso do controle que começa troca o interruptor, e `controlWasOn` guarda o controle do tick anterior para ver só o começo. Acesa, a saída é a força da tela, de 1 a 15; apagada, 0. Uma lâmpada nova nasce com a força 15, em `HOLD` e ligada (perguntas 650, 651, 656, 657 e 719) | #143 |
+| `LampMode` | Em `module/`: como o canal de controle do Signal Lamp a desliga: `HOLD` a mantém desligada enquanto o controle tem sinal, como uma alavanca, e `PULSE` a desliga ou religa a cada pulso que começa, como um T flip-flop. A chave (`hold` ou `pulse`) é parte do save (perguntas 656 e 718) | #143 |
 | `SlotOutputs` | O que cada slot de saída de uma rede emitiu na última olhada, para o log saber qual mudou. A primeira olhada só aprende os valores, e um slot que não emite vale 0 (perguntas 243, 244 e 246) | #90 |
 | `PartKind` | Em `part/`: o que ocupa uma face de um espaço de bloco, `CABLE` ou `PLATE`, que é um Signal Node ou um Signal Module (pergunta 513) | #44 |
 | `Fit` | Em `part/`: se uma parte cabe numa face, `FITS`, ou o motivo da recusa, `FACE_TAKEN` ou `CABLES_FULL`, que a action bar mostra (pergunta 533) | #44 |

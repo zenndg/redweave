@@ -64,7 +64,7 @@ As placas de lógica, com a base comum de [`modulos-de-sinal.md`](funcionalidade
 
 | Item | ID | O que faz | Estado | Conceito |
 |---|---|---|---|---|
-| Signal Lamp (`Lâmpada de Sinal`) | `redweave:signal_lamp` | Barra de LED do multipart na cor do seu canal, com o nível de luz pela força recebida, e um canal de controle opcional | Planejado na #143 | [`lampada.md`](funcionalidades/lampada.md) |
+| Signal Lamp (`Lâmpada de Sinal`) | `redweave:signal_lamp` | Barra de LED do multipart na cor do seu canal, com o nível de luz pela força recebida, e um canal de controle opcional | Entregue na #143 | [`lampada.md`](funcionalidades/lampada.md) |
 
 ## Acesso
 
@@ -94,5 +94,6 @@ Alguns blocos do mod não são itens e não aparecem na aba criativa:
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:18 | Marca o Signal Lamp como entregue na #143. |
 | Zennd | 2026-11-16 12:23 | Marca o Signal Lock como entregue na #141. |
 | Zennd | 2026-11-16 11:34 | Cria o catálogo de itens, com os entregues, os planejados e os talvez (pergunta 705, #150). |
