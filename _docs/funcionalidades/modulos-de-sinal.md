@@ -1,6 +1,6 @@
 # Módulos de Sinal
 
-Os Signal Modules (`Módulos de Sinal` em português) são a família de placas que guarda toda a lógica de sinal do Redweave (perguntas 297, 300 e 308). Esta página descreve a base comum, que todo módulo herda, entregue na #103 com o primeiro módulo, o [Signal Timer](signal-timer.md). Cada módulo tem a sua página, com o que só ele faz, e aponta para esta: o [Signal Timer](signal-timer.md), o [Signal Inverter](signal-inverter.md), o [Weather Detector](weather-detector.md), o [Signal Randomizer](signal-randomizer.md), e o [Signal Lever](alavanca.md) e o [Signal Button](botao.md), módulos de fonte (pergunta 549). A rede está em [`rede-e-canais.md`](rede-e-canais.md), as telas em [`telas.md`](telas.md), e os termos são os do [`glossario.md`](../glossario.md).
+Os Signal Modules (`Módulos de Sinal` em português) são a família de placas que guarda toda a lógica de sinal do Redweave (perguntas 297, 300 e 308). Esta página descreve a base comum, que todo módulo herda, entregue na #103 com o primeiro módulo, o [Signal Timer](signal-timer.md). Cada módulo tem a sua página, com o que só ele faz, e aponta para esta: o [Signal Timer](signal-timer.md), o [Signal Inverter](signal-inverter.md), o [Weather Detector](weather-detector.md), o [Signal Randomizer](signal-randomizer.md), e o [Signal Lever](alavanca.md), o [Signal Button](botao.md) e o [Signal Pressure Plate](placa-de-pressao.md), módulos de fonte (pergunta 549). A rede está em [`rede-e-canais.md`](rede-e-canais.md), as telas em [`telas.md`](telas.md), e os termos são os do [`glossario.md`](../glossario.md).
 
 ## Em uma frase
 
@@ -28,7 +28,7 @@ Resposta 415.
 | Rotação | Ao colocar, a frente aponta para onde o player olha, projetada na face, como o repetidor do jogo | 399 |
 | Giro | O modo `Rotate` do Configurator gira a placa 90°: o clique no sentido horário e o Shift + clique no anti-horário, olhando-a de frente, com o clique do comparador e a borda da saída na action bar, como `Output: North`. Só o dono gira. Desde a #136, o Shift + clique no `Open` não gira mais | 399, 403, 432, 610, 616 e 618 |
 | Bordas | As 4 bordas, frente, trás, esquerda e direita, ligadas aos vizinhos na mesma camada. Quais são entrada e quais são saída é fixo por módulo, e a textura mostra a seta | 314 e 377 |
-| Bloco de apoio | Não recebe sinal do módulo. As exceções são o Signal Lever e o Signal Button, que o energizam com força, como uma alavanca grudada. Se ele some, a placa cai como item | 394, 407 e 553 |
+| Bloco de apoio | Não recebe sinal do módulo. As exceções são o Signal Lever, o Signal Button e o Signal Pressure Plate, que o energizam com força, como uma alavanca grudada. Se ele some, a placa cai como item | 394, 407, 553 e 606 |
 
 ## Conexões
 
@@ -74,16 +74,16 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 
 | Com | Clique | Pergunta |
 |---|---|---|
-| Mão vazia | Não abre nada e mostra `Use a Configurator to open this module.` No Signal Lever, a mão vazia ou um item que não seja o Configurator liga e desliga a alavanca, e no Signal Button, aperta o botão, só pelo dono | 395, 576, 577 e 588 |
+| Mão vazia | Não abre nada e mostra `Use a Configurator to open this module.` No Signal Lever, a mão vazia ou um item que não seja o Configurator liga e desliga a alavanca, e no Signal Button, aperta o botão, só pelo dono. No Signal Pressure Plate, a mão não faz nada, sem mensagem | 395, 576, 577, 588 e 606 |
 | `Open` | Abre a tela do módulo | 393 |
 | `Open`, com Shift | Nada; o `Open` só abre a tela | 618 |
 | `Rotate` | Gira a placa 90° no sentido horário, só pelo dono | 403, 613 e 616 |
 | `Rotate`, com Shift | Gira a placa 90° no sentido anti-horário, só pelo dono | 403 e 616 |
 | `Copy` | Nada na v0.1.0, só a mensagem | 395 e 421 |
-| `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, alterna `Running` e `Stopped`, no Signal Inverter não faz nada, no Weather Detector troca o modo, no Signal Lever liga e desliga, e no Signal Button aperta | 395, 443, 462, 480 e 555 |
+| `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, alterna `Running` e `Stopped`, no Signal Inverter não faz nada, no Weather Detector troca o modo, no Signal Lever liga e desliga, no Signal Button aperta, e no Signal Pressure Plate troca o modo | 395, 443, 462, 480, 555 e 603 |
 | `Wrench` | Retira o módulo como item, só pelo dono | 395 |
 
-Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. No Signal Lever e no Signal Button, o `Toggle` e a mão continuam funcionando, e o canal só não conta enquanto a rede está `Offline` (perguntas 578 e 588). O `Wrench` funciona, e o `Rotate` também gira a placa, porque o giro não toca na rede (pergunta 619). Um módulo sem rede abre normalmente (perguntas 402 e 431).
+Numa rede `Offline`, como no nó, o `Open` e o `Toggle` não fazem nada, e a action bar mostra `<rede> is offline. Turn it on at a Network Terminal.`. No Signal Lever e no Signal Button, o `Toggle` e a mão continuam funcionando, e no Signal Pressure Plate, o `Toggle` continua trocando o modo; o canal só não conta enquanto a rede está `Offline` (perguntas 578, 588 e 606). O `Wrench` funciona, e o `Rotate` também gira a placa, porque o giro não toca na rede (pergunta 619). Um módulo sem rede abre normalmente (perguntas 402 e 431).
 
 ### Mensagens
 
@@ -93,15 +93,15 @@ Na action bar, em inglês e em português (pergunta 421):
 |---|---|
 | `Wrench` | `Module picked up` |
 | Qualquer ação de quem não é o dono | `Only the player who placed this module can change it.` |
-| `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, `<nome>: Running` ou `<nome>: Stopped`; no Signal Inverter, `Signal Inverter has nothing to toggle.`; no Weather Detector, `<nome>: <modo>`, como `<nome>: Thunder`; no Signal Lever, `<nome>: On` ou `<nome>: Off`; e no Signal Button, `<nome>: Pressed`, também com o botão já apertado (perguntas 593 e 600) |
+| `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, `<nome>: Running` ou `<nome>: Stopped`; no Signal Inverter, `Signal Inverter has nothing to toggle.`; no Weather Detector, `<nome>: <modo>`, como `<nome>: Thunder`; no Signal Lever, `<nome>: On` ou `<nome>: Off`; no Signal Button, `<nome>: Pressed`, também com o botão já apertado (perguntas 593 e 600); e no Signal Pressure Plate, `<nome>: <modo>`, como `<nome>: Passive` (perguntas 603 e 621) |
 | Giro, com o `Rotate` | `Output: <borda>`, como `Output: North` |
-| Mão vazia | `Use a Configurator to open this module.`, menos no Signal Lever e no Signal Button, que não mostram nada (perguntas 585 e 588) |
+| Mão vazia | `Use a Configurator to open this module.`, menos no Signal Lever, no Signal Button e no Signal Pressure Plate, que não mostram nada (perguntas 585, 588 e 606) |
 | `Copy` | `Modules cannot be copied yet.` |
 | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
 ### Rótulo sobre os módulos
 
-Com o Configurator na mão, cada módulo dentro de `configurator.label_range` mostra um rótulo de duas linhas, como os nós: em cima, o nome do módulo; embaixo, o estado e o canal da saída, se ela estiver num canal. Os estados são os que o módulo define; no Signal Timer, `Running`, `Stopped` ou `Paused`, no [Signal Inverter](signal-inverter.md), `On`, `Off` ou `Burnt out`; no [Weather Detector](weather-detector.md), `On`, `Off` ou `No weather`; no [Signal Randomizer](signal-randomizer.md), `Running` ou `Stopped`; no [Signal Lever](alavanca.md), `On` ou `Off`; e no [Signal Button](botao.md), `On` ou `Off` (perguntas 417, 448, 465, 484, 582 e 595).
+Com o Configurator na mão, cada módulo dentro de `configurator.label_range` mostra um rótulo de duas linhas, como os nós: em cima, o nome do módulo; embaixo, o estado e o canal da saída, se ela estiver num canal. Os estados são os que o módulo define; no Signal Timer, `Running`, `Stopped` ou `Paused`, no [Signal Inverter](signal-inverter.md), `On`, `Off` ou `Burnt out`; no [Weather Detector](weather-detector.md), `On`, `Off` ou `No weather`; no [Signal Randomizer](signal-randomizer.md), `Running` ou `Stopped`; no [Signal Lever](alavanca.md), `On` ou `Off`; no [Signal Button](botao.md), `On` ou `Off`; e no [Signal Pressure Plate](placa-de-pressao.md), o estado e o modo, como `On · Players` (perguntas 417, 448, 465, 484, 582, 595 e 609).
 
 ## Nome
 
@@ -171,6 +171,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:07 | Leva o Signal Pressure Plate à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 603, 606, 609 e 621). |
 | Zennd | 2026-11-15 14:37 | O giro passa ao modo `Rotate`, nos dois sentidos, e o Shift + clique no `Open` não faz nada (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:26 | O giro vai para um modo próprio do Configurator na #136 (pergunta 610). |
 | Zennd | 2026-11-15 14:04 | Leva o Signal Button à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 553, 588, 593, 595 e 600). |

@@ -24,6 +24,7 @@ public final class PartTypes {
           RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load,
           RedweaveItems.SIGNAL_LEVER.getId(), LeverPart::load,
           RedweaveItems.SIGNAL_BUTTON.getId(), ButtonPart::load,
+          RedweaveItems.SIGNAL_PRESSURE_PLATE.getId(), PressurePlatePart::load,
           RedweaveItems.SIGNAL_CABLE.getId(), CablePart::load);
 
   private PartTypes() {}

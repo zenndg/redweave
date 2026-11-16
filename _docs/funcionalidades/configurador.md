@@ -31,7 +31,7 @@ Desde a #136, o giro dos Signal Modules tem um modo próprio, e o Shift + clique
 | `Open` com Shift num módulo | Nada; o `Open` só abre a tela | 618 |
 | Tooltip | `Click to turn a module, Shift + click to turn it back.` (`Clique para girar um módulo, Shift + clique para voltar.`) | 619 |
 
-Num Signal Module, o `Open` só abre a tela, e o Shift + clique nele não faz nada; o `Rotate` gira a placa 90°, no sentido horário com o clique e no anti-horário com Shift (perguntas 616 e 618); o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer ligar e desligar o [Signal Lever](alavanca.md), com `<nome>: On` ou `<nome>: Off`, ou apertar o [Signal Button](botao.md), com `<nome>: Pressed`, mesmo com ele já apertado; o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. No Signal Lever e no Signal Button, o `Toggle` funciona mesmo com a rede `Offline` (perguntas 578, 588, 593 e 600). O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
+Num Signal Module, o `Open` só abre a tela, e o Shift + clique nele não faz nada; o `Rotate` gira a placa 90°, no sentido horário com o clique e no anti-horário com Shift (perguntas 616 e 618); o `Toggle` faz o que o módulo define, como alternar `Running` e `Stopped` no Signal Timer, ligar e desligar o [Signal Lever](alavanca.md), com `<nome>: On` ou `<nome>: Off`, apertar o [Signal Button](botao.md), com `<nome>: Pressed`, mesmo com ele já apertado, ou trocar o modo do [Signal Pressure Plate](placa-de-pressao.md), na ordem `Players`, `Passive`, `Hostile` e `Items`, com `<nome>: <modo>`; o `Wrench` o retira; e o `Copy` não faz nada na v0.1.0. No Signal Lever, no Signal Button e no Signal Pressure Plate, o `Toggle` funciona mesmo com a rede `Offline` (perguntas 578, 588, 593, 600, 603 e 606). O `Rotate` também gira o Signal Pressure Plate, no chão. O detalhe está em [`modulos-de-sinal.md`](modulos-de-sinal.md#configurator-e-mão-vazia).
 
 Num [Signal Cable](signal-cable.md), o `Wrench` o retira, o `Rotate` mostra `Only modules can be turned.`, e `Open`, `Copy` e `Toggle` não fazem nada, porque o cabo não tem tela nem estado (perguntas 525 e 617). Num espaço com várias partes, o clique vale só para a parte sob a mira (pergunta 515).
 
@@ -50,7 +50,7 @@ Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `c
 
 Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276).
 
-Cada Signal Module dentro do mesmo raio também mostra um rótulo de duas linhas: o nome do módulo e, embaixo, o estado e o canal da saída, se ela estiver num canal, como `On` ou `Off` no Signal Lever e no Signal Button (perguntas 417, 582 e 595).
+Cada Signal Module dentro do mesmo raio também mostra um rótulo de duas linhas: o nome do módulo e, embaixo, o estado e o canal da saída, se ela estiver num canal, como `On` ou `Off` no Signal Lever e no Signal Button, e o estado com o modo, como `On · Players`, no Signal Pressure Plate (perguntas 417, 582, 595 e 609).
 
 Cada Signal Cable dentro do mesmo raio mostra um rótulo de uma linha: um quadradinho na cor do cabo, o número e o nome da cor e a força, como `15 Red · 12` (pergunta 525). Num espaço com mais de uma parte com rótulo, cada rótulo se desloca para o lado da sua parte (pergunta 547).
 
@@ -143,6 +143,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:08 | Leva o `Toggle`, o `Rotate` e o rótulo ao Signal Pressure Plate (perguntas 603, 606 e 609). |
 | Zennd | 2026-11-15 14:37 | O modo `Rotate` entra, na #136: cinco modos, a ordem nova, as mensagens e as dicas (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:30 | Descreve o modo Rotate da #136 (perguntas 613 a 620). |
 | Zennd | 2026-11-15 14:26 | O giro dos módulos vai para um modo próprio na #136 (pergunta 610). |

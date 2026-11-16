@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever e Signal Button. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button e Signal Pressure Plate. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -233,6 +233,22 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma da Tela do 
 
 Em português, `Botão de Sinal`, `Ligado`, `Desligado`, `Força`, `Tempo ligado` e `Saída` (perguntas 597 e 598).
 
+## Tela do Signal Pressure Plate
+
+Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma da Tela do Signal Lever, com o modo a mais, e não tem botão para ligar: a placa liga pelo que pisa nela (pergunta 606). O comportamento está em [`placa-de-pressao.md`](placa-de-pressao.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Pressure Plate` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 550 |
+| Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz da placa | 554 e 609 |
+| `Mode` | Os 4 modos em botões, em duas linhas de dois, porque os quatro não cabem numa linha: `Players` e `Passive` em cima, `Hostile` e `Items` embaixo, com o escolhido aceso | 602 e 621 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+` | 552 |
+| Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 549 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 |
+| Rede `Offline` | A tela não abre, como a do nó; o `Toggle` ainda troca o modo | 402 e 606 |
+
+Em português, `Placa de Pressão de Sinal`, `Ligada`, `Desligada`, `Modo`, `Players`, `Passivos`, `Hostis`, `Itens`, `Força` e `Saída` (pergunta 622).
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -243,6 +259,7 @@ Em português, `Botão de Sinal`, `Ligado`, `Desligado`, `Força`, `Tempo ligado
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:08 | Adiciona a Tela do Signal Pressure Plate, sem a prancha (perguntas 602, 606, 621 e 622). |
 | Zennd | 2026-11-15 14:04 | Adiciona a Tela do Signal Button, sem a prancha (perguntas 588, 592, 597 e 598). |
 | Zennd | 2026-11-15 13:16 | Adiciona a Tela do Signal Lever, sem a prancha (perguntas 578 e 582). |
 | Zennd | 2026-11-14 19:21 | Lista as telas dos quatro Signal Modules na introdução. |

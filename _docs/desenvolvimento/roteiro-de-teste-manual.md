@@ -423,12 +423,41 @@ Entregue com a issue #136 (perguntas 610 e 613 a 620). Use um Signal Timer, um S
 | 255 | Troque o idioma para Português (Brasil) e repita os passos 246, 247 e 253 | `Girar`, `Clique para girar um módulo, Shift + clique para voltar.` e `Só os módulos giram.` |
 | 256 | Saia do mundo com o Configurator no `Rotate` e entre de novo | O Configurator continua no `Rotate` |
 
+## Fase 2: o Signal Pressure Plate
+
+Entregue com a issue #132 (perguntas 548 a 558, 602 a 611 e 621 a 626). Use o circuito dos passos 1 a 8, com a lâmpada, dois players, uma vaca ou um aldeão, um zumbi, um suporte de armadura, um arco com flechas e um item qualquer.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 257 | Abra a aba `Redweave` do criativo e pegue um Signal Pressure Plate | A placa está na aba (pergunta 601), com o nome `Signal Pressure Plate` e o ícone da sapata com a luz vermelha |
+| 258 | Olhando para o norte, coloque a placa no chão, com uma lâmpada ao norte e outra ao lado do bloco de apoio | A placa com a seta para o norte, a sapata de deepslate levantada, a luz vermelha, e as lâmpadas apagadas |
+| 259 | Tente colocar outra placa numa parede e no teto | `The Signal Pressure Plate only goes on the floor.`, e o item continua na mão |
+| 260 | No modo `Players`, pise na placa | O clique da placa de pressão de pedra; a sapata afunda, a luz fica verde e a seta vermelha, e as duas lâmpadas acendem |
+| 261 | Saia de cima da placa | Cerca de 1 s depois, o clique de soltar, a luz vermelha e as lâmpadas apagadas |
+| 262 | Clique na placa com a mão vazia e depois com um item | Nada acontece, sem mensagem, e o item não é colocado |
+| 263 | Use o `Toggle` do Configurator quatro vezes | `<nome>: Passive`, `<nome>: Hostile`, `<nome>: Items` e `<nome>: Players` |
+| 264 | No modo `Passive`, leve uma vaca ou um aldeão até a placa; depois, um zumbi | A vaca ou o aldeão liga a placa; o zumbi não |
+| 265 | No modo `Hostile`, leve um zumbi até a placa; depois, uma vaca | O zumbi liga a placa; a vaca não |
+| 266 | No modo `Passive`, ponha um suporte de armadura sobre a placa | A placa não liga, em nenhum modo (pergunta 624) |
+| 267 | No modo `Items`, solte um item sobre a placa; depois, atire uma flecha nela | O item liga a placa; a flecha nunca liga |
+| 268 | Clique na placa com o Configurator no `Open` | A Tela do Signal Pressure Plate: `Off` ou `On` grande à esquerda e, à direita, `Mode` com os 4 botões em duas linhas, `Strength 15` e `Output`, sem botão de ligar |
+| 269 | Escolha um modo na tela e aperte `−` três vezes na força, com um comparador ou um Signal Cable na frente, e ligue a placa | O modo escolhido aceso, a força 12, e o comparador ou o cabo lê 12 enquanto a placa está ligada |
+| 270 | Ponha a saída no canal `15` de uma rede, com um nó de saída no `15` sobre uma lâmpada, e pise na placa | A lâmpada do nó acende, e a da frente fica apagada |
+| 271 | Desligue a rede no Network Terminal e use o `Toggle` | O modo muda mesmo assim, o canal fica em 0 enquanto a rede está `Offline`, e o `Open` mostra a mensagem de rede `Offline` |
+| 272 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, o estado com o modo, como `On · Players`, e o canal |
+| 273 | Coloque um Signal Cable na frente da placa e pise nela | O braço do cabo encosta na placa, e o cabo acende com força 15 |
+| 274 | Use o `Rotate` do Configurator na placa, com clique e com Shift + clique | A placa gira nos dois sentidos, e a sapata e a luz seguem a frente |
+| 275 | Com algo do modo sobre a placa, saia do mundo e entre de novo; depois repita sem nada sobre ela | Com algo em cima, a placa continua ligada; sem nada, desliga em cerca de 1 s |
+| 276 | Peça ao segundo player para pisar na placa no modo `Players`, abrir a tela e quebrá-la | A placa liga com ele; a tela só para leitura, com o cadeado, e a placa não quebra |
+| 277 | Troque o idioma para Português (Brasil) e repita os passos 259, 263, 268 e 272 | `Placa de Pressão de Sinal`, `A Placa de Pressão de Sinal só vai no chão.`, `Modo`, `Passivos`, `Hostis`, `Itens`, `Força`, `Saída` e `Ligada · Passivos` no rótulo |
+
 Anote cada desvio com o número do passo e uma captura de tela. Um desvio vira issue, e o PR que fecha a fase só segue depois de o roteiro passar.
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:09 | Adiciona os passos 257 a 277, do Signal Pressure Plate (perguntas 602 a 611 e 621 a 626). |
 | Zennd | 2026-11-15 14:38 | Os giros passam ao modo `Rotate`, e entra a seção do modo, com os passos 246 a 256 (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:04 | Adiciona os passos 227 a 245, do Signal Button e da aba criativa com todos os itens (perguntas 588 a 600 e 601). |
 | Zennd | 2026-11-15 13:19 | Adiciona os passos 211 a 226, do Signal Lever (pergunta 583). |

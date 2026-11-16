@@ -28,13 +28,14 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`signal-cable.md`](signal-cable.md) | 2 | O Signal Cable: o item tingido, a forma, a ligação por cor e por dono, o sinal como o fio do jogo e o cálculo por trecho |
 | [`alavanca.md`](alavanca.md) | 2 | O Signal Lever, entregue na #130: fonte ligada e desligada pelo dono, com a força na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`botao.md`](botao.md) | 2 | O Signal Button, entregue na #131: fonte apertada pelo dono, que volta sozinha depois do tempo ligado, com a força e o tempo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
-| [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | Conceito da placa de pressão: fonte ligada enquanto algo está sobre ela, na mesma ideia da alavanca |
+| [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | O Signal Pressure Plate, entregue na #132: fonte só no chão, ligada enquanto algo do modo (`Players`, `Passive`, `Hostile` ou `Items`) está sobre ela, com a força e o modo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`portas-logicas.md`](portas-logicas.md) | 2 | As portas AND, OR, XOR e NAND e a regra NOT no domínio, que o módulo de porta e o Signal Inverter usam |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:09 | Marca a placa de pressão como entregue na #132. |
 | Zennd | 2026-11-15 14:04 | Marca o botão como entregue na #131. |
 | Zennd | 2026-11-15 13:19 | Marca a alavanca como entregue na #130. |
 | Zennd | 2026-11-14 21:23 | Ajusta a descrição da alavanca ao indicador da pergunta 554. |

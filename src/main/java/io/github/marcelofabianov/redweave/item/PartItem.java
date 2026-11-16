@@ -43,10 +43,10 @@ public class PartItem extends Item {
     if (player == null || part.isEmpty() || !fitsInto(level, spot)) {
       return InteractionResult.FAIL;
     }
-    Fit fit = fitOf(level, spot, part.get());
-    if (fit != Fit.FITS) {
+    Optional<String> refusal = refusalOf(level, spot, part.get());
+    if (refusal.isPresent()) {
       if (!level.isClientSide) {
-        player.displayClientMessage(Component.translatable(PartMessages.of(fit)), true);
+        player.displayClientMessage(Component.translatable(refusal.get()), true);
       }
       return InteractionResult.FAIL;
     }
@@ -57,9 +57,27 @@ public class PartItem extends Item {
     return InteractionResult.sidedSuccess(level.isClientSide);
   }
 
+  /** Why the part does not go there: the side it refuses, or a taken face or a full space (533). */
+  private Optional<String> refusalOf(Level level, PartSpot spot, Part part) {
+    Optional<String> side = refusalOn(spot.face());
+    if (side.isPresent()) {
+      return side;
+    }
+    Fit fit = fitOf(level, spot, part);
+    return fit == Fit.FITS ? Optional.empty() : Optional.of(PartMessages.of(fit));
+  }
+
   /** The new part the stack places on the side; the Signal Cable carries its color (answer 561). */
   protected Optional<Part> partOf(ItemStack stack, Direction face) {
     return PartTypes.placed(this, face);
+  }
+
+  /**
+   * The text of why the part does not go on the side, as the floor-only Signal Pressure Plate
+   * (answer 611), or none where it goes.
+   */
+  protected Optional<String> refusalOn(Direction face) {
+    return Optional.empty();
   }
 
   /**

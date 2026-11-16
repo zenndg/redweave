@@ -25,6 +25,8 @@ public final class RedweaveConfig {
   private static final String MODULE = "module";
   private static final String RANDOMIZER = "randomizer";
   private static final String BUTTON = "button";
+  private static final String PRESSURE_PLATE = "pressure_plate";
+  private static final String CHECK_TICKS_KEY = "check_ticks";
   private static final String INVERTER = "inverter";
   private static final String BURNOUT_TOGGLES_KEY = "burnout_toggles";
   private static final String BURNOUT_WINDOW_KEY = "burnout_window_ticks";
@@ -48,6 +50,7 @@ public final class RedweaveConfig {
   private static final String MAX_DRAW_COMMENT = "Longest Signal Randomizer interval, in ticks.";
   private static final String MIN_PRESS_COMMENT = "Shortest Signal Button on time, in ticks.";
   private static final String MAX_PRESS_COMMENT = "Longest Signal Button on time, in ticks.";
+  private static final String CHECK_COMMENT = "Ticks between checks of a Signal Pressure Plate.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
@@ -81,6 +84,9 @@ public final class RedweaveConfig {
   private static final int HIGHEST_MAX_INTERVAL = 72_000;
   private static final int DEFAULT_MIN_PRESS = 2;
   private static final int LOWEST_MIN_PRESS = 2;
+  private static final int DEFAULT_CHECK = 20;
+  private static final int MIN_CHECK = 2;
+  private static final int MAX_CHECK = 200;
   private static final int DEFAULT_MODULE_NAME = 16;
   private static final int DEFAULT_TOGGLES = 8;
   private static final int MIN_TOGGLES = 2;
@@ -107,6 +113,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue RANDOMIZER_MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue BUTTON_MIN_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue BUTTON_MAX_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue PRESSURE_PLATE_CHECK_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
@@ -196,6 +203,12 @@ public final class RedweaveConfig {
             .comment(MAX_PRESS_COMMENT)
             .defineInRange(
                 MAX_INTERVAL_KEY, DEFAULT_MAX_INTERVAL, LOWEST_MAX_INTERVAL, HIGHEST_MAX_INTERVAL);
+    builder.pop();
+    builder.push(PRESSURE_PLATE);
+    PRESSURE_PLATE_CHECK_TICKS =
+        builder
+            .comment(CHECK_COMMENT)
+            .defineInRange(CHECK_TICKS_KEY, DEFAULT_CHECK, MIN_CHECK, MAX_CHECK);
     builder.pop();
     builder.push(INVERTER);
     BURNOUT_TOGGLES =

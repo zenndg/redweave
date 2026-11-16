@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.server;
 import io.github.marcelofabianov.redweave.application.ApplyModules;
 import io.github.marcelofabianov.redweave.application.ChangeButton;
 import io.github.marcelofabianov.redweave.application.ChangeLever;
+import io.github.marcelofabianov.redweave.application.ChangePressurePlate;
 import io.github.marcelofabianov.redweave.application.ChangeRandomizer;
 import io.github.marcelofabianov.redweave.application.ChangeTimer;
 import io.github.marcelofabianov.redweave.application.ChangeWeatherDetector;
@@ -29,6 +30,7 @@ public final class ModuleServices {
   private final ChangeRandomizer changeRandomizer = new ChangeRandomizer();
   private final ChangeLever changeLever = new ChangeLever();
   private final ChangeButton changeButton = new ChangeButton();
+  private final ChangePressurePlate changePressurePlate = new ChangePressurePlate();
   private final ChooseModuleNetwork chooseNetwork;
 
   ModuleServices(IdGenerator ids, SavedDataNetworks networks, SignalLogs logs, ServerClock clock) {
@@ -73,6 +75,10 @@ public final class ModuleServices {
 
   public ChangeButton changeButton() {
     return changeButton;
+  }
+
+  public ChangePressurePlate changePressurePlate() {
+    return changePressurePlate;
   }
 
   public ChooseModuleNetwork chooseNetwork() {

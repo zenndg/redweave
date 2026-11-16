@@ -25,12 +25,12 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
-| Força do Signal Lever e do Signal Button | 1 a 15, 15 ao ser colocado (pergunta 552) | fixo, contrato com a redstone do jogo | 2 |
+| Força do Signal Lever, do Signal Button e do Signal Pressure Plate | 1 a 15, 15 ao ser colocado (pergunta 552) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Tempo ligado mínimo do Signal Button | 2 ticks, de 2 a 200, nunca abaixo de 2, um passo da tela (perguntas 592 e 596) | `button.min_interval_ticks` | 2 |
 | Tempo ligado máximo do Signal Button | 6000 ticks (5 min), de 200 a 72000 (1 h); o padrão de um botão novo é 20 ticks, 1 s (perguntas 556 e 592) | `button.max_interval_ticks` | 2 |
-| Conferência do Signal Pressure Plate ligado | 20 ticks (1 s), de 2 a 200 (pergunta 607) | `pressure_plate.check_ticks` | 2 |
+| Conferência do Signal Pressure Plate ligado | 20 ticks (1 s), de 2 a 200: de quanto em quanto tempo uma placa ligada procura de novo o que está sobre ela; desligada, ela não procura (pergunta 607) | `pressure_plate.check_ticks` | 2 |
 | Trocas que queimam um Signal Inverter | 8, de 2 a 64 (pergunta 449) | `inverter.burnout_toggles` | 2 |
 | Janela das trocas do Signal Inverter | 60 ticks, de 20 a 1200 (pergunta 449) | `inverter.burnout_window_ticks` | 2 |
 | Tempo de queima do Signal Inverter | 160 ticks, de 20 a 6000 (pergunta 449) | `inverter.burnout_ticks` | 2 |
@@ -43,6 +43,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:08 | Leva a força ao Signal Pressure Plate e explica a conferência da placa ligada (pergunta 607). |
 | Zennd | 2026-11-15 14:26 | Adiciona a conferência do Signal Pressure Plate (pergunta 607). |
 | Zennd | 2026-11-15 14:04 | Leva a força ao Signal Button e completa os limites do tempo ligado (perguntas 556 e 596). |
 | Zennd | 2026-11-15 13:42 | Adiciona os limites do tempo ligado do Signal Button (pergunta 592). |

@@ -11,6 +11,7 @@ public final class ModuleMessages {
   private static final String RANDOMIZER = "message." + RedweaveMod.MOD_ID + ".signal_randomizer.";
   private static final String LEVER = "message." + RedweaveMod.MOD_ID + ".signal_lever.";
   private static final String BUTTON = "message." + RedweaveMod.MOD_ID + ".signal_button.";
+  private static final String PLATE = "message." + RedweaveMod.MOD_ID + ".signal_pressure_plate.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
@@ -26,6 +27,7 @@ public final class ModuleMessages {
   public static final String LEVER_ON = LEVER + "on";
   public static final String LEVER_OFF = LEVER + "off";
   public static final String BUTTON_PRESSED = BUTTON + "pressed";
+  public static final String PRESSURE_PLATE_MODE = PLATE + "mode";
 
   private ModuleMessages() {}
 }

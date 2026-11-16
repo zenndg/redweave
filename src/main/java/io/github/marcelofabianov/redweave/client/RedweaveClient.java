@@ -11,6 +11,7 @@ import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
+import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
 import io.github.marcelofabianov.redweave.client.screen.ButtonScreen;
@@ -19,6 +20,7 @@ import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
 import io.github.marcelofabianov.redweave.client.screen.LeverScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
+import io.github.marcelofabianov.redweave.client.screen.PressurePlateScreen;
 import io.github.marcelofabianov.redweave.client.screen.RandomizerScreen;
 import io.github.marcelofabianov.redweave.client.screen.RemoteLinkScreen;
 import io.github.marcelofabianov.redweave.client.screen.TerminalScreen;
@@ -74,6 +76,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.RANDOMIZER.get(), RandomizerScreen::new);
     event.register(RedweaveMenus.LEVER.get(), LeverScreen::new);
     event.register(RedweaveMenus.BUTTON.get(), ButtonScreen::new);
+    event.register(RedweaveMenus.PRESSURE_PLATE.get(), PressurePlateScreen::new);
   }
 
   @SubscribeEvent
@@ -103,7 +106,8 @@ public final class RedweaveClient {
             ModulePart.models(DetectorPart.ID, DetectorPart.LOOKS),
             ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS),
             ModulePart.models(LeverPart.ID, LeverPart.LOOKS),
-            ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS))
+            ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS),
+            ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }

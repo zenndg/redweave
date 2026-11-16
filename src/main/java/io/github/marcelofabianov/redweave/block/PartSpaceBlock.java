@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.part.LivePart;
 import io.github.marcelofabianov.redweave.block.part.OwnedPart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartTargets;
+import io.github.marcelofabianov.redweave.block.part.SteppedPart;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -154,6 +156,19 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
       space.parts().stream()
           .filter(LivePart.class::isInstance)
           .forEach(part -> ((LivePart) part).tick(space));
+    }
+  }
+
+  /**
+   * An entity inside the space: each part that feels it, as the Signal Pressure Plate, looks only
+   * at that entity, on the server (answer 607).
+   */
+  @Override
+  protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+    if (!level.isClientSide && level.getBlockEntity(pos) instanceof PartSpaceBlockEntity space) {
+      space.parts().stream()
+          .filter(SteppedPart.class::isInstance)
+          .forEach(part -> ((SteppedPart) part).steppedOn(space, entity));
     }
   }
 

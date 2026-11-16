@@ -532,7 +532,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Indicador | Uma luz que troca de vermelho para verde, a mesma nos três | 554 |
 | Dono, rede e `Toggle` | Iguais aos módulos | 555 |
 | Tempo do botão | Ajustável na tela, padrão 1 s | 556 |
-| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players` | 557 |
+| Detecção da placa | Modo na tela: `Everything`, `Mobs` ou `Players`; mudado pela 621 | 557 |
 | Ordem | Alavanca, botão e placa de pressão | 558 |
 | `facing` dos módulos | Não vai para o save, como no nó | 559 |
 | `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
@@ -575,10 +575,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Textos do botão | `On time`/`Tempo ligado`, `Ligado`/`Desligado` e `<nome>: Apertado` | 597 a 599 |
 | `Toggle` no botão apertado | Mostra `<nome>: Pressed`; o aperto não faz nada | 600 |
 | Aba criativa | Todo item terminado fica nela, para os testes, mesmo sem receita; um GameTest confere | 601 |
-| Modos da placa de pressão | `Mobs`, `Players` e `Items`, um por vez; muda a 557 | 602 |
+| Modos da placa de pressão | `Mobs`, `Players` e `Items`, um por vez; muda a 557; mudado pela 621 | 602 |
 | `Toggle` da placa | Troca o modo | 603 |
 | Modo padrão da placa | `Players` | 604 |
-| O que conta na placa | Mobs vivos sem players; players sem espectador; itens soltos | 605 |
+| O que conta na placa | Mobs vivos sem players; players sem espectador; itens soltos; mudado pela 621 | 605 |
 | Placa e as decisões da alavanca | Herda 578, 581, 583 a 585 e 587; a mão não faz nada | 606 |
 | Detecção da placa | No contato; confere a cada `pressure_plate.check_ticks` (20) enquanto ligada | 607 |
 | NBT da placa | `on`, `strength` e `mode` | 608 |
@@ -592,6 +592,10 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Shift + `Open` num módulo | Nada; muda a 399 | 618 |
 | Regras do giro | Continuam: dono, `Offline` e `Output: <borda>` | 619 |
 | Testes da #136 | GameTests e roteiro manual | 620 |
+| Modos da placa de pressão | `Players`, `Passive`, `Hostile` e `Items`, pela marca `Enemy` do jogo; em português `Players`, `Passivos`, `Hostis` e `Itens`; salvos como `players`, `passive`, `hostile` e `items`; muda a 602, a 603, a 605 e a 608 | 621 a 623 |
+| Suporte de armadura na placa | Não conta em nenhum modo | 624 |
+| Sapata ligada | 0,25 px acima da placa, para não piscar | 625 |
+| Placa fora do chão, em português | `A Placa de Pressão de Sinal só vai no chão.` | 626 |
 
 Não há perguntas pendentes da concepção.
 
@@ -599,6 +603,9 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-15 15:10 | Marca a detecção da placa (557) como mudada pela 621. |
+| Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, da placa de pressão. |
+| Zennd | 2026-11-15 14:49 | Registra as decisões 621 a 623, dos modos da placa de pressão. |
 | Zennd | 2026-11-15 14:37 | Atualiza os resumos do giro e dos modos mudados pela #136 (perguntas 399, 403, 431 e 241). |
 | Zennd | 2026-11-15 14:30 | Registra as decisões 613 a 620, do modo Rotate. |
 | Zennd | 2026-11-15 14:25 | Registra as decisões 602 a 612. |
