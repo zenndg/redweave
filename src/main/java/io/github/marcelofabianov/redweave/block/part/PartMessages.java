@@ -11,6 +11,7 @@ public final class PartMessages {
   private static final String PREFIX = "message." + RedweaveMod.MOD_ID + ".part.";
   private static final String CABLE = "message." + RedweaveMod.MOD_ID + ".signal_cable.";
   private static final String PLATE = "message." + RedweaveMod.MOD_ID + ".signal_pressure_plate.";
+  private static final String SENSOR = "message." + RedweaveMod.MOD_ID + ".signal_item_sensor.";
   public static final String FACE_TAKEN = PREFIX + "face_taken";
   public static final String CABLES_FULL = PREFIX + "cables_full";
 
@@ -22,6 +23,9 @@ public final class PartMessages {
 
   /** The Signal Pressure Plate only goes on the floor (answer 611). */
   public static final String FLOOR_ONLY = PLATE + "floor_only";
+
+  /** A Signal Item Sensor only goes on a container (answer 694). */
+  public static final String NEEDS_CONTAINER = SENSOR + "needs_container";
 
   private PartMessages() {}
 

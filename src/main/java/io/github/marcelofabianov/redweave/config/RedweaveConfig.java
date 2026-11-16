@@ -27,6 +27,8 @@ public final class RedweaveConfig {
   private static final String BUTTON = "button";
   private static final String PRESSURE_PLATE = "pressure_plate";
   private static final String CHECK_TICKS_KEY = "check_ticks";
+  private static final String ITEM_SENSOR = "item_sensor";
+  private static final String MAX_COUNT_KEY = "max_count";
   private static final String INVERTER = "inverter";
   private static final String BURNOUT_TOGGLES_KEY = "burnout_toggles";
   private static final String BURNOUT_WINDOW_KEY = "burnout_window_ticks";
@@ -51,6 +53,8 @@ public final class RedweaveConfig {
   private static final String MIN_PRESS_COMMENT = "Shortest Signal Button on time, in ticks.";
   private static final String MAX_PRESS_COMMENT = "Longest Signal Button on time, in ticks.";
   private static final String CHECK_COMMENT = "Ticks between checks of a Signal Pressure Plate.";
+  private static final String MAX_COUNT_COMMENT = "Most items a Signal Item Sensor may expect.";
+  private static final String SENSOR_CHECK_COMMENT = "Ticks between reads of a Signal Item Sensor.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
@@ -87,6 +91,10 @@ public final class RedweaveConfig {
   private static final int DEFAULT_CHECK = 20;
   private static final int MIN_CHECK = 2;
   private static final int MAX_CHECK = 200;
+  private static final int DEFAULT_MAX_COUNT = 3456;
+  private static final int HIGHEST_MAX_COUNT = 100_000;
+  private static final int DEFAULT_SENSOR_CHECK = 10;
+  private static final int MAX_SENSOR_CHECK = 100;
   private static final int DEFAULT_MODULE_NAME = 16;
   private static final int DEFAULT_TOGGLES = 8;
   private static final int MIN_TOGGLES = 2;
@@ -114,6 +122,8 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue BUTTON_MIN_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue BUTTON_MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue PRESSURE_PLATE_CHECK_TICKS;
+  static final ModConfigSpec.IntValue ITEM_SENSOR_MAX_COUNT;
+  static final ModConfigSpec.IntValue ITEM_SENSOR_CHECK_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
@@ -209,6 +219,16 @@ public final class RedweaveConfig {
         builder
             .comment(CHECK_COMMENT)
             .defineInRange(CHECK_TICKS_KEY, DEFAULT_CHECK, MIN_CHECK, MAX_CHECK);
+    builder.pop();
+    builder.push(ITEM_SENSOR);
+    ITEM_SENSOR_MAX_COUNT =
+        builder
+            .comment(MAX_COUNT_COMMENT)
+            .defineInRange(MAX_COUNT_KEY, DEFAULT_MAX_COUNT, 1, HIGHEST_MAX_COUNT);
+    ITEM_SENSOR_CHECK_TICKS =
+        builder
+            .comment(SENSOR_CHECK_COMMENT)
+            .defineInRange(CHECK_TICKS_KEY, DEFAULT_SENSOR_CHECK, MIN_CHECK, MAX_SENSOR_CHECK);
     builder.pop();
     builder.push(INVERTER);
     BURNOUT_TOGGLES =

@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
+import io.github.marcelofabianov.redweave.item.ItemSensorItem;
 import io.github.marcelofabianov.redweave.item.NetworkControllerItem;
 import io.github.marcelofabianov.redweave.item.NetworkTerminalItem;
 import io.github.marcelofabianov.redweave.item.PartItem;
@@ -29,6 +30,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_LEVER_ID = "signal_lever";
   private static final String SIGNAL_BUTTON_ID = "signal_button";
   private static final String SIGNAL_PRESSURE_PLATE_ID = "signal_pressure_plate";
+  private static final String SIGNAL_ITEM_SENSOR_ID = "signal_item_sensor";
   private static final String SIGNAL_CABLE_ID = "signal_cable";
 
   private static final DeferredRegister.Items ITEMS =
@@ -90,6 +92,10 @@ public final class RedweaveItems {
   /** A part that only goes on the floor, as the pressure plate of the game (551 and 611). */
   public static final DeferredItem<PressurePlateItem> SIGNAL_PRESSURE_PLATE =
       ITEMS.register(SIGNAL_PRESSURE_PLATE_ID, () -> new PressurePlateItem(new Item.Properties()));
+
+  /** A part that only goes on a container, which it reads (answers 690 and 694). */
+  public static final DeferredItem<ItemSensorItem> SIGNAL_ITEM_SENSOR =
+      ITEMS.register(SIGNAL_ITEM_SENSOR_ID, () -> new ItemSensorItem(new Item.Properties()));
 
   /** The Signal Cable, white until dyed; cables of one color stack (answers 494 and 505). */
   public static final DeferredItem<SignalCableItem> SIGNAL_CABLE =

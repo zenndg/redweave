@@ -59,7 +59,7 @@ public class PartItem extends Item {
 
   /** Why the part does not go there: the side it refuses, or a taken face or a full space (533). */
   private Optional<String> refusalOf(Level level, PartSpot spot, Part part) {
-    Optional<String> side = refusalOn(spot.face());
+    Optional<String> side = refusalOn(level, spot);
     if (side.isPresent()) {
       return side;
     }
@@ -74,9 +74,9 @@ public class PartItem extends Item {
 
   /**
    * The text of why the part does not go on the side, as the floor-only Signal Pressure Plate
-   * (answer 611), or none where it goes.
+   * (answer 611) or the Signal Item Sensor without a container (answer 694), or none where it goes.
    */
-  protected Optional<String> refusalOn(Direction face) {
+  protected Optional<String> refusalOn(Level level, PartSpot spot) {
     return Optional.empty();
   }
 

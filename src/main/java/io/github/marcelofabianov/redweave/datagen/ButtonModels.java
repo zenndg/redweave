@@ -41,12 +41,21 @@ final class ButtonModels {
       boolean turned) {
     model.texture(LeverModels.PARTS_KEY, parts).texture(LIGHT_KEY, light);
     Look look = new Look(LeverModels.PARTS_REF, turned);
+    ring(model, look);
+    PlatePieces.piece(
+        model, on ? PRESSED : RELEASED, BUTTON_TOP, on ? PRESSED_SIDE : RELEASED_SIDE, look);
+    LeverModels.light(model, new Look(LIGHT_REF, turned), on);
+  }
+
+  /**
+   * The 6 × 6 ring of four bars at columns and rows 6 to 11, from the top left of the parts
+   * texture, which the window of the Signal Item Sensor has too
+   * (tmp/arte/signal_item_sensor/prompt.md).
+   */
+  static void ring(BlockModelBuilder model, Look look) {
     PlatePieces.piece(model, RING_NORTH, RING_NORTH_TOP, RING_SIDE, look);
     PlatePieces.piece(model, RING_SOUTH, RING_SOUTH_TOP, RING_SIDE, look);
     PlatePieces.piece(model, RING_WEST, RING_WEST_TOP, RING_SIDE, look);
     PlatePieces.piece(model, RING_EAST, RING_EAST_TOP, RING_SIDE, look);
-    PlatePieces.piece(
-        model, on ? PRESSED : RELEASED, BUTTON_TOP, on ? PRESSED_SIDE : RELEASED_SIDE, look);
-    LeverModels.light(model, new Look(LIGHT_REF, turned), on);
   }
 }

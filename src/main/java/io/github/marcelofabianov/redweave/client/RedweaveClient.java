@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
+import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
@@ -18,6 +19,7 @@ import io.github.marcelofabianov.redweave.client.screen.ButtonScreen;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
+import io.github.marcelofabianov.redweave.client.screen.ItemSensorScreen;
 import io.github.marcelofabianov.redweave.client.screen.LeverScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.client.screen.PressurePlateScreen;
@@ -27,6 +29,7 @@ import io.github.marcelofabianov.redweave.client.screen.TerminalScreen;
 import io.github.marcelofabianov.redweave.client.screen.TimerScreen;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.SignalCableItem;
+import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.registry.RedweaveMenus;
@@ -44,6 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -77,6 +81,14 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.LEVER.get(), LeverScreen::new);
     event.register(RedweaveMenus.BUTTON.get(), ButtonScreen::new);
     event.register(RedweaveMenus.PRESSURE_PLATE.get(), PressurePlateScreen::new);
+    event.register(RedweaveMenus.ITEM_SENSOR.get(), ItemSensorScreen::new);
+  }
+
+  /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
+  @SubscribeEvent
+  public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    event.registerBlockEntityRenderer(
+        RedweaveBlockEntities.PART_SPACE.get(), ItemSensorRenderer::new);
   }
 
   @SubscribeEvent
@@ -107,7 +119,8 @@ public final class RedweaveClient {
             ModulePart.models(RandomizerPart.ID, RandomizerPart.LOOKS),
             ModulePart.models(LeverPart.ID, LeverPart.LOOKS),
             ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS),
-            ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS))
+            ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS),
+            ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }
