@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button e Signal Pressure Plate. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate e Signal Item Sensor. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -249,6 +249,23 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma da Tela do 
 
 Em português, `Placa de Pressão de Sinal`, `Ligada`, `Desligada`, `Modo`, `Players`, `Passivos`, `Hostis`, `Itens`, `Força` e `Saída` (pergunta 622).
 
+## Tela do Signal Item Sensor
+
+Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas dos módulos, com o slot fantasma do item e o inventário do dono embaixo, e não tem botão para ligar: o sensor liga pela contagem do inventário (pergunta 692). O comportamento está em [`sensor-de-itens.md`](sensor-de-itens.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Item Sensor` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 691 |
+| Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz da placa, e embaixo a contagem atual, como `7 / 10` | 696 |
+| `Item` | O slot fantasma: o dono clica com um item no cursor para escolher, sem consumir o item; com o cursor vazio, limpa o item. Sem item, `None`. A dica do slot: `Click with an item on the cursor; empty, it clears.` | 696 e 702 |
+| `Count` | A quantidade, entre `−` e `+`; com Shift, de 10 em 10, até `item_sensor.max_count` | 693 e 696 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+` | 696 |
+| Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 696 |
+| Inventário | O inventário do dono embaixo, para pegar o item com o cursor; a tela fica com cerca de 260 px de altura | 704 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura, e o slot fantasma não responde | 400 e 689 |
+
+Em português, `Sensor de Itens de Sinal`, `Ligado`, `Desligado`, `Item`, `Quantidade`, `Nenhum`, `Força` e `Saída`.
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -259,6 +276,7 @@ Em português, `Placa de Pressão de Sinal`, `Ligada`, `Desligada`, `Modo`, `Pla
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:27 | Adiciona a Tela do Signal Item Sensor, sem a prancha (perguntas 696, 702 e 704). |
 | Zennd | 2026-11-15 15:08 | Adiciona a Tela do Signal Pressure Plate, sem a prancha (perguntas 602, 606, 621 e 622). |
 | Zennd | 2026-11-15 14:04 | Adiciona a Tela do Signal Button, sem a prancha (perguntas 588, 592, 597 e 598). |
 | Zennd | 2026-11-15 13:16 | Adiciona a Tela do Signal Lever, sem a prancha (perguntas 578 e 582). |

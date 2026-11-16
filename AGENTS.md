@@ -189,7 +189,7 @@ io.github.marcelofabianov.redweave
 │   ├── signal/             // Signal (0 a 15), ChannelColor
 │   ├── network/            // Network (agregado), Node, Channel, permissões, NetworkLimits (interface)
 │   ├── circuit/            // portas e a regra NOT (#28), chips (Fase 3)
-│   ├── module/             // regras dos Signal Modules: conexões, o intervalo comum e as regras do Signal Timer, do Signal Inverter, do Weather Detector, do Signal Randomizer, do Signal Lever, do Signal Button e do Signal Pressure Plate
+│   ├── module/             // regras dos Signal Modules: conexões, o intervalo comum e as regras do Signal Timer, do Signal Inverter, do Weather Detector, do Signal Randomizer, do Signal Lever, do Signal Button, do Signal Pressure Plate e do Signal Item Sensor
 │   ├── part/               // ocupação do espaço do multipart: uma parte por face e até 2 cabos
 │   ├── cable/              // trecho do Signal Cable: isolamento, ligações e a força de cada pedaço
 │   └── simulation/         // compilação do grafo, avaliação por tick, loops e oscilação
