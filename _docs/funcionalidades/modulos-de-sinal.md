@@ -81,7 +81,7 @@ O módulo escreve direto num canal, sem nó (pergunta 375).
 | `Open`, com Shift | Nada; o `Open` só abre a tela | 618 |
 | `Rotate` | Gira a placa 90° no sentido horário, só pelo dono | 403, 613 e 616 |
 | `Rotate`, com Shift | Gira a placa 90° no sentido anti-horário, só pelo dono | 403 e 616 |
-| `Copy` | Nada na v0.1.0, só a mensagem | 395 e 421 |
+| `Copy` | O clique copia a configuração do módulo, e o Shift + clique a cola noutro módulo do mesmo tipo, levando a rede e os canais. Só o dono copia e cola. O Signal Lock nunca é copiado nem colado. O detalhe está em [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens). Muda as perguntas 395 e 421 | 722 a 736 |
 | `Toggle` | O que o módulo define; no Signal Timer e no Signal Randomizer, alterna `Running` e `Stopped`, no Signal Inverter não faz nada, no Weather Detector troca o modo, no Signal Lever liga e desliga, no Signal Button aperta, no Signal Pressure Plate troca o modo, no Signal Item Sensor não faz nada, e no Signal Lock abre por um pulso, e no Signal Lamp liga e desliga, como um pulso no controle | 395, 443, 462, 480, 555, 603, 639, 658 e 697 |
 | `Wrench` | Retira o módulo como item, só pelo dono. No Signal Lock, é o único jeito de retirar no survival | 395 e 641 |
 
@@ -99,7 +99,7 @@ Na action bar, em inglês e em português (pergunta 421):
 | Giro, com o `Rotate` | `Output: <borda>`, como `Output: North` |
 | Mão vazia | `Use a Configurator to open this module.`, menos no Signal Lever, no Signal Button e no Signal Pressure Plate, que não mostram nada (perguntas 585, 588 e 606) |
 | Quebrar o Signal Lock à mão no survival | `Only the owner can remove this with a Configurator.` (pergunta 641) |
-| `Copy` | `Modules cannot be copied yet.` |
+| `Copy` | `Copied <tipo>` ao copiar e `Pasted` ao colar; `This copy is from a <tipo>.` num módulo de outro tipo; `Channels were cleared: the network is not available.` quando a rede da cópia não está disponível; `This item cannot be copied.` no Signal Lock (perguntas 728, 731 e 736) |
 | Rede `Offline` | `<rede> is offline. Turn it on at a Network Terminal.` |
 
 ### Rótulo sobre os módulos
@@ -169,13 +169,14 @@ Os valores ficam em [`limites.md`](../limites.md).
 ## Fora desta página
 
 - O que cada módulo faz, na página dele.
-- Copiar a configuração de um módulo com o `Copy`.
+- Copiar e colar a configuração de um módulo com o `Copy`, em [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens).
 - A prévia de posicionamento (#33), o Jade e o The One Probe (#23) e as receitas (#24).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | O `Copy` copia e cola a configuração dos módulos, menos o Signal Lock (perguntas 722 a 736). |
 | Zennd | 2026-11-16 13:18 | Leva o Signal Lamp à base: a lista de módulos, o `Toggle`, a rede `Offline`, as mensagens e o rótulo (perguntas 650, 658, 716 e 721). |
 | Zennd | 2026-11-16 12:23 | Leva o Signal Lock à base: a lista de módulos, o `Toggle` numa rede `Offline`, o `Wrench`, a quebra, as mensagens e o rótulo (perguntas 633, 639, 641, 707, 708 e 711). |
 | Zennd | 2026-11-16 11:27 | Leva o Signal Item Sensor à lista de módulos, ao `Toggle`, às mensagens e ao rótulo (perguntas 689, 697 e 703). |

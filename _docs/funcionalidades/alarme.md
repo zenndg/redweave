@@ -22,6 +22,7 @@ Com sinal na entrada, o Signal Alarm toca o `pling` do note block, mostra `⚠ <
 | Duração | Escolhida na tela, com padrão de 5 s e máximo no config. Dentro dela, o som toca no intervalo até as repetições, e a luz pulsa; no fim, tudo para, mesmo com o sinal ligado, e só dispara de novo quando o sinal desliga e liga | 648 |
 | Luz | Pulsa vermelha enquanto o alarme toca, e fica apagada sem sinal | 649 |
 | `Toggle` | Silencia o alarme até o sinal desligar, com `<nome>: Silenced` | 649 |
+| Cópia | Entra na cópia do Configurator ao nascer: o `Copy` copia a configuração e a cola noutro Signal Alarm, levando a rede, como os outros módulos. Veja [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens) | 727 e 732 |
 
 Os números ficam em [`limites.md`](../limites.md).
 
@@ -41,4 +42,5 @@ JUnit da regra (a duração, as repetições, o disparo de novo só depois do si
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 13:59 | O Signal Alarm entra na cópia do Configurator (pergunta 727). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 643 a 649. |

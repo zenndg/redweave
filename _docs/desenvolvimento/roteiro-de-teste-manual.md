@@ -250,7 +250,7 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 | 131 | Pegue um Signal Timer no criativo e passe o mouse sobre ele | O ícone da placa, com a seta centrada no mostrador e o LED verde apagado |
 | 132 | Olhando para o norte, coloque o timer no chão, ao lado de uma lâmpada ao norte; depois coloque outros na parede e no teto | A placa de 10 × 10 com a seta apontando para onde você olhava, centrada no mostrador, nas 3 posições |
 | 133 | Com o Configurator no `Rotate`, clique na placa 4 vezes | A seta gira 90° no sentido horário a cada clique, com o clique do comparador e `Output: <borda>` na action bar, e volta ao início |
-| 134 | Clique na placa com a mão vazia; depois com o Configurator no `Copy` | `Use a Configurator to open this module.`; depois `Modules cannot be copied yet.` |
+| 134 | Clique na placa com a mão vazia; depois com o Configurator no `Copy` | `Use a Configurator to open this module.`; depois `Copied Signal Timer`, desde a #154 (perguntas 722 a 736) |
 | 135 | Com o Configurator no `Toggle`, clique no timer virado para a lâmpada | `<nome>: Running`, o LED verde acende, e a lâmpada pisca a cada 1 s por 0,5 s, com só a seta vermelha no pulso |
 | 136 | Ponha um bloco de redstone atrás da placa; depois tire | A lâmpada para de piscar enquanto o bloco está lá e volta a piscar logo que ele sai |
 | 137 | Clique na placa com o Configurator no `Open` | A Tela do Signal Timer, como a prancha: o relógio com o anel de cobre enchendo e o arco vermelho do pulso, o tempo até o próximo pulso no centro e `● Running` embaixo |
@@ -527,10 +527,29 @@ Entregue com a issue #143 (perguntas 650 a 658 e 715 a 721). Use uma rede, duas 
 | 329 | Quebre a lâmpada | A luz do mundo some |
 | 330 | Troque o idioma para Português (Brasil) e abra a tela | `Lâmpada de Sinal`, `Intensidade`, `Controle`, `Manter` e `Pulso`, `Ligada` e `Desligada` (pergunta 720) |
 
+## Fase 2: copiar e colar todos os itens
+
+Entregue com a issue #154 (perguntas 722 a 736). Use uma rede sua, uma segunda rede sua, Signal Levers, um Signal Button, uma Signal Lamp, um Signal Item Sensor, um Signal Timer, um Signal Lock, um Signal Node e um segundo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 331 | Numa alavanca da sua rede, com a saída no canal Red e a força 5, clique com o Configurator no `Copy` | `Copied Signal Lever`, e o tooltip do Configurator mostra `Copy: Signal Lever` |
+| 332 | Coloque uma alavanca nova, sem rede, e faça Shift + clique nela com o `Copy` | `Pasted`; ela entra na sua rede, com a saída no Red e a força 5, e continua desligada (pergunta 732) |
+| 333 | Faça Shift + clique numa alavanca que está na sua segunda rede | Ela troca para a rede copiada e fica com o Red |
+| 334 | Apague a rede copiada no Terminal, ou deixe-a `Offline`, e cole numa alavanca | `Channels were cleared: the network is not available.`, e a saída fica na borda |
+| 335 | Com a cópia da alavanca, faça Shift + clique num Signal Button | `This copy is from a Signal Lever.`, e nada muda no botão |
+| 336 | Copie e cole uma Signal Lamp, um Signal Item Sensor e um Signal Timer em outros do mesmo tipo | As configurações ficam iguais, e o estado do momento (ligado, contagem, rodando) não muda |
+| 337 | Clique num Signal Lock com o `Copy`; depois, com a cópia da alavanca, faça Shift + clique num Signal Lock | `This item cannot be copied.` nas duas vezes; a cópia continua no Configurator, e a fechadura não muda (pergunta 731) |
+| 338 | Com o segundo player, tente copiar e colar na sua alavanca | `Only the player who placed this module can change it.`, e nada muda (pergunta 735) |
+| 339 | Copie um Signal Node e faça Shift + clique numa alavanca | `This copy is from a Signal Node.` (pergunta 734) |
+| 340 | Faça Shift + clique no ar; depois copie uma alavanca, salve, saia e volte ao mundo | `Copy cleared`; depois do recarregamento, o tooltip ainda mostra `Copy: Signal Lever` |
+| 341 | Troque o idioma para Português e repita uma cópia, uma colagem e a recusa da fechadura | `Copiado: Alavanca de Sinal`, `Colado`, `Os canais foram limpos: a rede não está disponível.` e `Este item não pode ser copiado.` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 14:00 | Adiciona os passos 331 a 341, da cópia de todos os itens da #154. |
 | Zennd | 2026-11-16 13:19 | Adiciona os passos 315 a 330, do Signal Lamp. |
 | Zennd | 2026-11-16 12:24 | Adiciona a seção do Signal Lock, passos 297 a 314 (#141). |
 | Zennd | 2026-11-16 11:27 | Adiciona a seção do Signal Item Sensor, passos 278 a 296, com a luz verde na contagem exata (#148). |
