@@ -9,6 +9,7 @@ import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
+import io.github.marcelofabianov.redweave.block.part.LockPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.Part;
@@ -21,6 +22,7 @@ import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
 import io.github.marcelofabianov.redweave.client.screen.ItemSensorScreen;
 import io.github.marcelofabianov.redweave.client.screen.LeverScreen;
+import io.github.marcelofabianov.redweave.client.screen.LockScreen;
 import io.github.marcelofabianov.redweave.client.screen.NodeScreen;
 import io.github.marcelofabianov.redweave.client.screen.PressurePlateScreen;
 import io.github.marcelofabianov.redweave.client.screen.RandomizerScreen;
@@ -82,6 +84,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.BUTTON.get(), ButtonScreen::new);
     event.register(RedweaveMenus.PRESSURE_PLATE.get(), PressurePlateScreen::new);
     event.register(RedweaveMenus.ITEM_SENSOR.get(), ItemSensorScreen::new);
+    event.register(RedweaveMenus.LOCK.get(), LockScreen::new);
   }
 
   /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
@@ -120,7 +123,8 @@ public final class RedweaveClient {
             ModulePart.models(LeverPart.ID, LeverPart.LOOKS),
             ModulePart.models(ButtonPart.ID, ButtonPart.LOOKS),
             ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS),
-            ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS))
+            ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS),
+            ModulePart.models(LockPart.ID, LockPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }

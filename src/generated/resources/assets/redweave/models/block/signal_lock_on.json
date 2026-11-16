@@ -1,0 +1,343 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "east": {
+          "texture": "#edge"
+        },
+        "north": {
+          "texture": "#edge"
+        },
+        "south": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#front"
+        },
+        "west": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        2,
+        13
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            3.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            3.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            3.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            5.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            3.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        2,
+        7
+      ],
+      "to": [
+        10,
+        5,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        7,
+        7.5
+      ],
+      "to": [
+        7,
+        8,
+        11.5
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        6,
+        7.5
+      ],
+      "to": [
+        7,
+        7,
+        8.5
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            6.0,
+            1.0,
+            7.0,
+            3.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        6,
+        10.5
+      ],
+      "to": [
+        7,
+        7,
+        11.5
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            6.0,
+            14.0,
+            7.0
+          ]
+        },
+        "north": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            6.0,
+            14.0,
+            7.0
+          ]
+        },
+        "south": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            6.0,
+            14.0,
+            7.0
+          ]
+        },
+        "up": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            4.0,
+            14.0,
+            6.0
+          ]
+        },
+        "west": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            6.0,
+            14.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        4,
+        2,
+        10
+      ],
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "to": [
+        6,
+        3,
+        12
+      ]
+    }
+  ],
+  "textures": {
+    "edge": "redweave:block/signal_timer_edge",
+    "front": "redweave:block/signal_lock_front_on",
+    "light": "redweave:block/signal_lever_parts",
+    "particle": "redweave:block/signal_timer_edge",
+    "parts": "redweave:block/signal_lock_parts"
+  }
+}

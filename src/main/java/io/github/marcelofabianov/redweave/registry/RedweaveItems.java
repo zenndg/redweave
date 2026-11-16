@@ -31,6 +31,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_BUTTON_ID = "signal_button";
   private static final String SIGNAL_PRESSURE_PLATE_ID = "signal_pressure_plate";
   private static final String SIGNAL_ITEM_SENSOR_ID = "signal_item_sensor";
+  private static final String SIGNAL_LOCK_ID = "signal_lock";
   private static final String SIGNAL_CABLE_ID = "signal_cable";
 
   private static final DeferredRegister.Items ITEMS =
@@ -96,6 +97,10 @@ public final class RedweaveItems {
   /** A part that only goes on a container, which it reads (answers 690 and 694). */
   public static final DeferredItem<ItemSensorItem> SIGNAL_ITEM_SENSOR =
       ITEMS.register(SIGNAL_ITEM_SENSOR_ID, () -> new ItemSensorItem(new Item.Properties()));
+
+  /** A part of the part space that stacks and keeps no setting, as the other modules (641). */
+  public static final DeferredItem<PartItem> SIGNAL_LOCK =
+      ITEMS.register(SIGNAL_LOCK_ID, () -> new PartItem(new Item.Properties()));
 
   /** The Signal Cable, white until dyed; cables of one color stack (answers 494 and 505). */
   public static final DeferredItem<SignalCableItem> SIGNAL_CABLE =

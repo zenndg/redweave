@@ -78,6 +78,7 @@ final class EnglishTexts {
     ModuleEnglishTexts.addTo(add);
     LeverEnglishTexts.addTo(add);
     ButtonEnglishTexts.addTo(add);
+    LockEnglishTexts.addTo(add);
     PressurePlateEnglishTexts.addTo(add);
     ItemSensorEnglishTexts.addTo(add);
   }

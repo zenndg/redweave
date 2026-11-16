@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.block.part.LivePart;
 import io.github.marcelofabianov.redweave.block.part.OwnedPart;
 import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartTargets;
+import io.github.marcelofabianov.redweave.block.part.SecuredPart;
 import io.github.marcelofabianov.redweave.block.part.SteppedPart;
 import io.github.marcelofabianov.redweave.item.ConfiguratorItem;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlockEntities;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -180,6 +182,20 @@ public final class PartSpaceBlock extends Block implements EntityBlock {
         player.isCreative()
             || aimed(level, pos, player).map(part -> mayBreak(part, player)).orElse(true);
     return allowed ? super.getDestroyProgress(state, player, level, pos) : 0;
+  }
+
+  /**
+   * A secured part, as the Signal Lock, does not break by hand in survival, and the action bar says
+   * how it comes out: with the `Wrench` of its owner (answer 641).
+   */
+  @Override
+  protected void attack(BlockState state, Level level, BlockPos pos, Player player) {
+    if (!level.isClientSide
+        && !player.isCreative()
+        && aimed(level, pos, player).filter(SecuredPart.class::isInstance).isPresent()) {
+      player.displayClientMessage(Component.translatable(ModuleMessages.WRENCH_ONLY), true);
+    }
+    super.attack(state, level, pos, player);
   }
 
   /**

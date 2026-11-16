@@ -28,6 +28,9 @@ public final class RedweaveConfig {
   private static final String PRESSURE_PLATE = "pressure_plate";
   private static final String CHECK_TICKS_KEY = "check_ticks";
   private static final String ITEM_SENSOR = "item_sensor";
+  private static final String LOCK = "lock";
+  private static final String MIN_PULSE_KEY = "min_pulse_ticks";
+  private static final String MAX_PULSE_KEY = "max_pulse_ticks";
   private static final String MAX_COUNT_KEY = "max_count";
   private static final String INVERTER = "inverter";
   private static final String BURNOUT_TOGGLES_KEY = "burnout_toggles";
@@ -55,6 +58,8 @@ public final class RedweaveConfig {
   private static final String CHECK_COMMENT = "Ticks between checks of a Signal Pressure Plate.";
   private static final String MAX_COUNT_COMMENT = "Most items a Signal Item Sensor may expect.";
   private static final String SENSOR_CHECK_COMMENT = "Ticks between reads of a Signal Item Sensor.";
+  private static final String MIN_LOCK_COMMENT = "Shortest Signal Lock Toggle pulse, in ticks.";
+  private static final String MAX_LOCK_COMMENT = "Longest Signal Lock Toggle pulse, in ticks.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
@@ -124,6 +129,8 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue PRESSURE_PLATE_CHECK_TICKS;
   static final ModConfigSpec.IntValue ITEM_SENSOR_MAX_COUNT;
   static final ModConfigSpec.IntValue ITEM_SENSOR_CHECK_TICKS;
+  static final ModConfigSpec.IntValue LOCK_MIN_PULSE_TICKS;
+  static final ModConfigSpec.IntValue LOCK_MAX_PULSE_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
@@ -229,6 +236,16 @@ public final class RedweaveConfig {
         builder
             .comment(SENSOR_CHECK_COMMENT)
             .defineInRange(CHECK_TICKS_KEY, DEFAULT_SENSOR_CHECK, MIN_CHECK, MAX_SENSOR_CHECK);
+    builder.pop();
+    builder.push(LOCK);
+    LOCK_MIN_PULSE_TICKS =
+        builder
+            .comment(MIN_LOCK_COMMENT)
+            .defineInRange(MIN_PULSE_KEY, MIN_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
+    LOCK_MAX_PULSE_TICKS =
+        builder
+            .comment(MAX_LOCK_COMMENT)
+            .defineInRange(MAX_PULSE_KEY, MAX_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
     builder.pop();
     builder.push(INVERTER);
     BURNOUT_TOGGLES =
