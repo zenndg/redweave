@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 699 | O que todo `prompt.md` de arte traz no começo? | Os links para a leitura do conceito do item em `_docs/funcionalidades/` e das perguntas que decidem a arte, para quem gera a imagem entender o item. Vira regra no `AGENTS.md`. Completa as perguntas 185 e 186 |
 | 698 | Em que ponto do roadmap entra o Signal Item Sensor (#148)? | Como o primeiro dos itens novos, no passo 17, antes do Signal Lock (#141), porque o desenvolvedor quer testá-lo logo. Muda a ordem da pergunta 642 |
 | 697 | Qual o visual, o `Toggle`, a comparação de itens e os testes do Signal Item Sensor? | A luz vermelha e verde dos emissores e o ícone do item esperado desenhado na placa; o `Toggle` não faz nada; compara só o tipo do item (diamante é diamante, sem olhar nome, encantamento ou dano); testes nas três fronteiras: JUnit da regra, GameTests no mundo e roteiro manual. A arte fica em `tmp/arte/signal_item_sensor/` |
 | 696 | Qual a saída e a tela do Signal Item Sensor? | Saída pela borda da frente ou por um canal, com a força de 1 a 15 (padrão 15). Na tela do dono: um slot fantasma em que ele clica com o item para escolher, sem consumir o item; a quantidade com `−` e `+` (Shift muda 10); a força e a saída; e a contagem atual, como `7 / 10` |
@@ -698,6 +699,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:56 | Registra a resposta 699, dos links de leitura nos prompts de arte. |
 | Zennd | 2026-11-16 10:11 | Registra as respostas 689 a 698, do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Registra as respostas 633 a 688: o Signal Lock, o Signal Alarm, o Signal Lamp, o Signal Keypad, o Signal Card, a proteção dos blocos, o Signal Gate e as esteiras. |
 | Zennd | 2026-11-16 08:13 | Registra a resposta 632, do limite da família dos emissores. |

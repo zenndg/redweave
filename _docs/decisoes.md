@@ -188,6 +188,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Lista de nós | Nome, tipo, sinal da lente e estado; ao expandir, a posição, só para o dono, e os canais ativos (234, 281, 335) | 179, 234, 281, 335 |
 | Imagens do mod | Toda tela, ícone, item e bloco tem textura, gerada pelo desenvolvedor a partir do prompt do agente | 185 |
 | Onde fica a arte | `tmp/arte/{id}/`, com o `prompt.md` e a imagem pronta | 186 |
+| Começo do `prompt.md` | Os links para o conceito do item e as perguntas da arte | 699 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -674,6 +675,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:56 | Registra a decisão 699. |
 | Zennd | 2026-11-16 10:11 | Registra as decisões 689 a 698, do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Registra as decisões 633 a 688, dos itens novos de #141 a #147 e das esteiras. |
 | Zennd | 2026-11-16 08:13 | Registra a decisão 632. |

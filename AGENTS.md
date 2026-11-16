@@ -17,7 +17,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 - **Decisões:** o resumo do que foi decidido fica em `_docs/decisoes.md`.
 - **Histórico:** todo `.md` em `_docs/` termina com uma tabela de histórico de modificações, e quem altera o arquivo adiciona uma linha no topo dela. Fora de `_docs/`, os `.md` não têm essa tabela.
 - **Imagens:** ficam em `_docs/imagens/`.
-- **Arte do mod:** toda tela, ícone, item e bloco tem textura, e o desenvolvedor gera cada imagem numa ferramenta de IA. O agente cria `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`, e escreve ali o `prompt.md`. O desenvolvedor deixa a imagem pronta no mesmo diretório, e o agente a confere (grade, paleta e silhueta) antes de levá-la ao mod (perguntas 185 e 186).
+- **Arte do mod:** toda tela, ícone, item e bloco tem textura, e o desenvolvedor gera cada imagem numa ferramenta de IA. O agente cria `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`, e escreve ali o `prompt.md`. O desenvolvedor deixa a imagem pronta no mesmo diretório, e o agente a confere (grade, paleta e silhueta) antes de levá-la ao mod (perguntas 185 e 186). Todo `prompt.md` começa com os links para a leitura do conceito do item em `_docs/funcionalidades/` e das perguntas que decidem a arte, para quem gera a imagem entender o item (pergunta 699).
 - **Rascunhos:** conversas e ideias vão para `tmp/`, que o Git ignora.
 - **Fluxo de trabalho:** o passo a passo de uma tarefa está em [`_docs/desenvolvimento/fluxo-de-trabalho.md`](_docs/desenvolvimento/fluxo-de-trabalho.md).
 
