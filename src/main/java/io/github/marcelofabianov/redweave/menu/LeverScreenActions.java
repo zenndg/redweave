@@ -1,12 +1,8 @@
 package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
-import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.module.SignalLever;
-import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.server.RedweaveServer;
-import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -17,23 +13,23 @@ final class LeverScreenActions {
   private LeverScreenActions() {}
 
   static void apply(Player player, PartSpot spot, LeverAction action) {
-    Optional<LeverPart> found = ModulePart.at(player.level(), spot, LeverPart.class);
-    Optional<RedweaveServer> server = RedweaveServer.running();
-    if (found.isEmpty() || found.get().module().isEmpty() || server.isEmpty()) {
-      return;
-    }
-    LeverPart part = found.get();
-    PlayerId requester = new PlayerId(player.getUUID());
+    EmitterScreenActions.target(player, spot, LeverPart.class)
+        .ifPresent(target -> apply(target, action));
+  }
+
+  private static void apply(EmitterScreenActions.Target<LeverPart> target, LeverAction action) {
     if (action.kind() == LeverAction.Kind.OUTPUT) {
-      ModuleScreenActions.connect(requester, part, action.channel(), part::connectOutput);
+      target.connect(action.channel());
       return;
     }
+    LeverPart part = target.part();
     SignalLever now = part.lever();
-    server
-        .get()
+    target
+        .server()
         .modules()
         .changeLever()
-        .strength(requester, part.module().get(), now, now.strength().strength() + action.step())
+        .strength(
+            target.requester(), target.module(), now, now.strength().strength() + action.step())
         .ifPresent(part::setLever);
   }
 }

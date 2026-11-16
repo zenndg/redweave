@@ -8,10 +8,7 @@ import java.util.Objects;
  * on, from 1 to 15, 15 when placed (answers 548, 552 and 579). Off, its output is off; nothing
  * changes it but the player, so it has no tick of its own.
  */
-public record SignalLever(boolean on, Signal strength) {
-  /** The weakest signal a lever gives while on (answer 552). */
-  public static final int WEAKEST = 1;
-
+public record SignalLever(boolean on, Signal strength) implements Emitter {
   private static final String TOO_WEAK = "A lever gives from 1 to 15, got %d";
 
   public SignalLever {
@@ -33,11 +30,6 @@ public record SignalLever(boolean on, Signal strength) {
 
   /** Another strength, kept from 1 to 15, as the `−` and `+` of the screen step it (582). */
   public SignalLever withStrength(int next) {
-    return new SignalLever(on, Signal.clamped(Math.max(next, WEAKEST)));
-  }
-
-  /** The strength while on, nothing while off. */
-  public Signal output() {
-    return on ? strength : Signal.OFF;
+    return new SignalLever(on, Emitter.stepped(next));
   }
 }

@@ -596,6 +596,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Suporte de armadura na placa | Não conta em nenhum modo | 624 |
 | Sapata ligada | 0,25 px acima da placa, para não piscar | 625 |
 | Placa fora do chão, em português | `A Placa de Pressão de Sinal só vai no chão.` | 626 |
+| Família dos emissores | `Signal Emitters` (`Emissores de Sinal`): alavanca, botão e placa de pressão | 627 |
+| Conceito dos emissores | Página própria, `emissores.md` | 628 |
+| Contrato dos emissores | Força, luz, saída, tick seguinte, `Offline`, mensagem só no `Toggle` e a base dos módulos; cada um define gatilho, som, peça 3D e `Toggle` | 629 |
+| Base dos emissores no código | `EmitterPart`, filha de `ModulePart`, sem mudar save nem comportamento | 630 |
+| Ordem da #139 | Passo 16, antes da #110 | 631 |
+| Randomizer e Weather Detector | Fora dos emissores; a família é a dos módulos acionados por um gatilho | 632 |
 
 Não há perguntas pendentes da concepção.
 
@@ -603,6 +609,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:13 | Registra a decisão 632. |
+| Zennd | 2026-11-16 08:01 | Registra as decisões 627 a 631, da família dos emissores. |
 | Zennd | 2026-11-15 15:10 | Marca a detecção da placa (557) como mudada pela 621. |
 | Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, da placa de pressão. |
 | Zennd | 2026-11-15 14:49 | Registra as decisões 621 a 623, dos modos da placa de pressão. |

@@ -9,10 +9,8 @@ import java.util.Objects;
  * nothing, and the time does not start over (answer 590). `remaining` is the ticks left while on,
  * saved so a reload goes on from there (answer 591), and 0 while off.
  */
-public record SignalButton(boolean on, Signal strength, ButtonTime time, int remaining) {
-  /** The weakest signal a button gives while on (answer 552). */
-  public static final int WEAKEST = 1;
-
+public record SignalButton(boolean on, Signal strength, ButtonTime time, int remaining)
+    implements Emitter {
   private static final String TOO_WEAK = "A button gives from 1 to 15, got %d";
   private static final String INVALID_REMAINING = "%d ticks left on a button that is %s";
   private static final String ON = "on";
@@ -52,7 +50,7 @@ public record SignalButton(boolean on, Signal strength, ButtonTime time, int rem
 
   /** Another strength, kept from 1 to 15, as the `−` and `+` of the screen step it. */
   public SignalButton withStrength(int next) {
-    return new SignalButton(on, Signal.clamped(Math.max(next, WEAKEST)), time, remaining);
+    return new SignalButton(on, Emitter.stepped(next), time, remaining);
   }
 
   /** Another on time, within the limits; a press under way keeps the ticks it has left. */
@@ -68,10 +66,5 @@ public record SignalButton(boolean on, Signal strength, ButtonTime time, int rem
   /** The same button with its on time within the limits of now (answer 425). */
   public SignalButton fittedTo(ButtonLimits limits) {
     return new SignalButton(on, strength, time.fittedTo(limits), remaining);
-  }
-
-  /** The strength while on, nothing while off. */
-  public Signal output() {
-    return on ? strength : Signal.OFF;
   }
 }

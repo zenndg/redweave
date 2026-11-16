@@ -11,6 +11,12 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 632 | O Signal Randomizer e o Weather Detector, que também não têm entrada, fazem parte dos Signal Emitters? | Não: ficam como estão. A família é a dos módulos sem entrada acionados por um gatilho no mundo, como o clique, o aperto ou algo pisando. O Randomizer sorteia pelo tempo e o Detector reage ao clima, e nenhum dos dois segue o contrato da força de 1 a 15 e da luz vermelha e verde. Completa a pergunta 627 |
+| 631 | Em que ponto do roadmap entra a #139, a família dos emissores? | No passo 16, antes da #110, para a próxima família de módulos já encontrar a base organizada |
+| 630 | Como fica a base dos emissores no código? | Uma classe abstrata `EmitterPart`, filha de `ModulePart`, com os ganchos fixos (alimenta o bloco de apoio, o `Toggle` funciona com a rede `Offline`), a força, o save da força e a luz. O Signal Lever, o Signal Button e o Signal Pressure Plate herdam dela, sem mudar save, IDs nem comportamento (regra 15) |
+| 629 | O que entra no contrato comum dos emissores? | A força de 1 a 15 na tela, salva em `strength` (552 e 584); a luz vermelha e verde pelo estado (554 e 581); a saída pela borda, forte no bloco de apoio e na frente, ou por um canal (553); a saída no tick seguinte (587); o funcionamento com a rede `Offline` (578); a mensagem só no `Toggle` (585); e o dono, a rede e o Configurator da base dos Signal Modules. Cada emissor define só o seu gatilho, o som, a peça 3D e o que o `Toggle` faz |
+| 628 | Onde fica o conceito da família dos emissores? | Numa página própria, `_docs/funcionalidades/emissores.md`, como subfamília dos Signal Modules. O `modulos-de-sinal.md` aponta para ela, e o glossário ganha o termo |
+| 627 | Qual o nome da família dos emissores, os Signal Modules de onde o sinal nasce, sem entrada? | `Signal Emitters` em inglês e `Emissores de Sinal` em português. Hoje são o Signal Lever, o Signal Button e o Signal Pressure Plate. Dá nome aos módulos de fonte da pergunta 549 |
 | 626 | Qual a mensagem em português ao tentar colocar o Signal Pressure Plate fora do chão? | `A Placa de Pressão de Sinal só vai no chão.`, a tradução de `The Signal Pressure Plate only goes on the floor.` (pergunta 611) |
 | 625 | A sapata do Signal Pressure Plate ligada fica 0,25 px acima da placa, em vez de rente, para evitar que duas superfícies na mesma altura pisquem. Fica assim? | Sim: ligada, a sapata afunda 0,75 px e fica 0,25 px acima da placa, o que parece rente e não pisca. Completa a pergunta 609 |
 | 624 | O suporte de armadura, que o jogo trata como entidade viva, conta no modo `Passive` do Signal Pressure Plate? | Não: `Passive` quer dizer criaturas, e o suporte de armadura não liga a placa em nenhum modo. Completa a pergunta 621 |
@@ -626,6 +632,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:13 | Registra a resposta 632, do limite da família dos emissores. |
+| Zennd | 2026-11-16 08:01 | Registra as respostas 627 a 631, da família dos emissores. |
 | Zennd | 2026-11-15 15:05 | Registra as respostas 624 a 626, da placa de pressão. |
 | Zennd | 2026-11-15 14:49 | Registra as respostas 621 a 623, dos quatro modos da placa de pressão. |
 | Zennd | 2026-11-15 14:30 | Registra as respostas 613 a 620, do modo Rotate do Configurator. |

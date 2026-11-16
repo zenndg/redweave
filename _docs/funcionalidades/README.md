@@ -26,6 +26,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`signal-randomizer.md`](signal-randomizer.md) | 2 | O Signal Randomizer: os modos do sorteio, o intervalo, o controle, a tela e o save |
 | [`multipart.md`](multipart.md) | 2 | O multipart de todo o mod: o bloco contêiner, as partes, a ocupação por face, a mira e o save |
 | [`signal-cable.md`](signal-cable.md) | 2 | O Signal Cable: o item tingido, a forma, a ligação por cor e por dono, o sinal como o fio do jogo e o cálculo por trecho |
+| [`emissores.md`](emissores.md) | 2 | Os Signal Emitters: a família dos módulos de onde o sinal nasce, com o contrato comum da alavanca, do botão e da placa de pressão (#139) |
 | [`alavanca.md`](alavanca.md) | 2 | O Signal Lever, entregue na #130: fonte ligada e desligada pelo dono, com a força na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`botao.md`](botao.md) | 2 | O Signal Button, entregue na #131: fonte apertada pelo dono, que volta sozinha depois do tempo ligado, com a força e o tempo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | O Signal Pressure Plate, entregue na #132: fonte só no chão, ligada enquanto algo do modo (`Players`, `Passive`, `Hostile` ou `Items`) está sobre ela, com a força e o modo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
@@ -35,6 +36,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:01 | Adiciona a página da família dos emissores. |
 | Zennd | 2026-11-15 15:09 | Marca a placa de pressão como entregue na #132. |
 | Zennd | 2026-11-15 14:04 | Marca o botão como entregue na #131. |
 | Zennd | 2026-11-15 13:19 | Marca a alavanca como entregue na #130. |

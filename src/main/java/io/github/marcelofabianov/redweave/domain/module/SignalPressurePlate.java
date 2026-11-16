@@ -9,10 +9,7 @@ import java.util.Objects;
  * it gives while on, from 1 to 15, 15 when placed (answers 552, 604 and 621). It senses players
  * when placed. What stands on it comes from the world, as the kinds of thing found there.
  */
-public record SignalPressurePlate(boolean on, Signal strength, PlateMode mode) {
-  /** The weakest signal a plate gives while on (answer 552). */
-  public static final int WEAKEST = 1;
-
+public record SignalPressurePlate(boolean on, Signal strength, PlateMode mode) implements Emitter {
   private static final String TOO_WEAK = "A pressure plate gives from 1 to 15, got %d";
 
   public SignalPressurePlate {
@@ -50,11 +47,6 @@ public record SignalPressurePlate(boolean on, Signal strength, PlateMode mode) {
 
   /** Another strength, kept from 1 to 15, as the `−` and `+` of the screen step it (552). */
   public SignalPressurePlate withStrength(int next) {
-    return new SignalPressurePlate(on, Signal.clamped(Math.max(next, WEAKEST)), mode);
-  }
-
-  /** The strength while on, nothing while off. */
-  public Signal output() {
-    return on ? strength : Signal.OFF;
+    return new SignalPressurePlate(on, Emitter.stepped(next), mode);
   }
 }

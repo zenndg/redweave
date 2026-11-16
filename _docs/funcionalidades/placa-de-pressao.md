@@ -2,6 +2,8 @@
 
 A placa de pressão do Redweave, o Signal Pressure Plate (`redweave:signal_pressure_plate`, `Placa de Pressão de Sinal` em português), é uma fonte de sinal que liga enquanto algo está sobre ela, parecida com a placa de pressão do jogo, na mesma ideia da [Alavanca](alavanca.md): aparência 3D mais realista, um indicador de cor, uma luz vermelha desligada e verde ligada, e uma tela parecida com a dos [Módulos de Sinal](modulos-de-sinal.md), em que o player escolhe se o sinal sai sem fio, por um canal da rede, como um [Signal Node](no-de-sinal.md), ou pela redstone, no mundo (pergunta 548). Entra depois do [Signal Cable](signal-cable.md), numa issue própria, a #132. Os termos são os do [`glossario.md`](../glossario.md).
 
+É um dos [Emissores de Sinal](emissores.md) e segue o contrato comum da família: força, luz, saída, tempo, rede `Offline` e mensagem (perguntas 627 a 629).
+
 **Estado:** implementado na #132, com as perguntas 549 a 555, 557, 558, 602 a 611 e 621 a 626 respondidas (regra 9). Entrou depois da #136, o modo de girar do Configurator (pergunta 612).
 
 ## Em uma frase
@@ -115,10 +117,10 @@ Os campos comuns `front` e `powered` seguem a base (pergunta 560). As chaves fic
 
 | Camada | Classes |
 |---|---|
-| Domínio | `domain/module/PlateMode`: os 4 modos, na ordem do `Toggle`, com a chave do save. `SignalPressurePlate`: o estado, a força e o modo, ligado quando algo do modo está sobre ela, e a saída, que é a força ligada e 0 desligada |
+| Domínio | `domain/module/PlateMode`: os 4 modos, na ordem do `Toggle`, com a chave do save. `SignalPressurePlate`, que implementa o `Emitter` dos [emissores](emissores.md#código): o estado, a força e o modo, ligado quando algo do modo está sobre ela, e a saída, que é a força ligada e 0 desligada |
 | Aplicação | `application/ChangePressurePlate`: só o dono muda a força e o modo pela tela |
 | Config | `config/NeoForgePressurePlateCheck`, com a seção `pressure_plate` do `RedweaveConfig` |
-| Parte | `block/part/PressurePlatePart`, `PressurePlateSave` e `PressurePlateShapes`, sobre o `ModulePart`, com `StrengthSave` e `RaisedShapes` divididos com a alavanca e o botão. `PlateSensing` classifica cada entidade num modo. `SteppedPart` é o gancho que o `PartSpaceBlock.entityInside` chama |
+| Parte | `block/part/PressurePlatePart`, `PressurePlateSave` e `PressurePlateShapes`, sobre o `EmitterPart` dos [emissores](emissores.md#código), com `StrengthSave` e `RaisedShapes` divididos com a alavanca e o botão. `PlateSensing` classifica cada entidade num modo. `SteppedPart` é o gancho que o `PartSpaceBlock.entityInside` chama |
 | Item | `item/PressurePlateItem`, que recusa as faces fora do chão pelo gancho `refusalOn` do `PartItem` |
 | Tela | `menu/PressurePlateMenu` e as classes `PressurePlateScreen*` e `PressurePlateAction`, e `client/screen/PressurePlateScreen` |
 | Datagen | `datagen/PressurePlateModels`, com `PlatePieces`, `PressurePlateEnglishTexts` e `PressurePlatePortugueseTexts` |
@@ -143,6 +145,8 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:10 | A parte e o domínio da placa passam a usar a base dos emissores (#139). |
+| Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
 | Zennd | 2026-11-15 15:07 | Marca a placa como implementada na #132, com o custo por tick, a tela, as mensagens, o save, o desenho, o código e os testes. |
 | Zennd | 2026-11-15 15:05 | Registra as decisões 624 a 626, do suporte de armadura, da sapata e da mensagem. |
 | Zennd | 2026-11-15 14:49 | Troca os modos por `Players`, `Passive`, `Hostile` e `Items` (pergunta 621). |

@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
  * with a warning (rule 14).
  */
 final class LeverSave {
-  static final String OUTPUT = "output";
 
   private static final String ON = "on";
   private static final String MODULE = "Signal Lever";

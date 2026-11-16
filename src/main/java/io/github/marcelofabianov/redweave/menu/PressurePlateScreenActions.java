@@ -1,6 +1,5 @@
 package io.github.marcelofabianov.redweave.menu;
 
-import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
@@ -19,19 +18,18 @@ final class PressurePlateScreenActions {
   private PressurePlateScreenActions() {}
 
   static void apply(Player player, PartSpot spot, PressurePlateAction action) {
-    Optional<PressurePlatePart> found =
-        ModulePart.at(player.level(), spot, PressurePlatePart.class);
-    Optional<RedweaveServer> server = RedweaveServer.running();
-    if (found.isEmpty() || found.get().module().isEmpty() || server.isEmpty()) {
-      return;
-    }
-    PressurePlatePart part = found.get();
-    PlayerId requester = new PlayerId(player.getUUID());
+    EmitterScreenActions.target(player, spot, PressurePlatePart.class)
+        .ifPresent(target -> apply(target, action));
+  }
+
+  private static void apply(
+      EmitterScreenActions.Target<PressurePlatePart> target, PressurePlateAction action) {
     if (action.kind() == PressurePlateAction.Kind.OUTPUT) {
-      ModuleScreenActions.connect(requester, part, action.channel(), part::connectOutput);
+      target.connect(action.channel());
       return;
     }
-    changed(server.get(), requester, part, action).ifPresent(part::setPlate);
+    PressurePlatePart part = target.part();
+    changed(target.server(), target.requester(), part, action).ifPresent(part::setPlate);
   }
 
   private static Optional<SignalPressurePlate> changed(

@@ -6,13 +6,12 @@ import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeButtonLimits;
 import io.github.marcelofabianov.redweave.domain.module.ButtonLimits;
 import io.github.marcelofabianov.redweave.domain.module.ButtonTime;
-import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.Emitter;
 import io.github.marcelofabianov.redweave.domain.module.SignalButton;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.ButtonMenu;
 import io.github.marcelofabianov.redweave.menu.ButtonScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import io.github.marcelofabianov.redweave.server.ModuleServices;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Direction;
@@ -20,7 +19,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,11 +33,11 @@ import org.slf4j.Logger;
  * On, it feeds its block of support and the block in front with strength, or writes on its channel
  * (answer 553). Only the player presses it: no arrow nor other entity does (answer 594).
  */
-public final class ButtonPart extends ModulePart {
+public final class ButtonPart extends EmitterPart {
   public static final String ID = "signal_button";
 
   /** The looks of the top: released, with the red light, and pressed, with the green one (595). */
-  public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
+  public static final List<String> LOOKS = EmitterPart.LOOKS;
 
   private static final float VOLUME = 1.0F;
   private static final float PITCH = 1.0F;
@@ -48,7 +46,6 @@ public final class ButtonPart extends ModulePart {
 
   private SignalButton button =
       new SignalButton(false, Signal.MAX, new ButtonTime(ButtonTime.PLACED_TICKS), 0);
-  private Connection output = Connection.EDGE;
 
   private ButtonPart(Direction face) {
     super(face);
@@ -60,7 +57,7 @@ public final class ButtonPart extends ModulePart {
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
       part.button = ButtonSave.readButton(tag);
-      part.output = ModuleSave.readConnection(tag, ButtonSave.OUTPUT);
+      part.loadOutput(tag);
     }
     return part;
   }
@@ -75,12 +72,6 @@ public final class ButtonPart extends ModulePart {
     return RedweaveItems.SIGNAL_BUTTON.get();
   }
 
-  /** The light and the push button follow the button, never what reaches its channel (581). */
-  @Override
-  protected String lookSuffix() {
-    return button.on() ? ModuleLooks.ON : ModuleLooks.NONE;
-  }
-
   /** The plate and the push button over it, so the button can be aimed at too. */
   @Override
   public VoxelShape shape() {
@@ -91,16 +82,20 @@ public final class ButtonPart extends ModulePart {
   @Override
   protected void placeRule() {
     button = SignalButton.placed(new NeoForgeButtonLimits());
-    output = Connection.EDGE;
+    placeOutput();
+  }
+
+  @Override
+  protected Emitter emitter() {
+    return button;
   }
 
   /**
-   * Gives what the button holds, each tick, on its edges or its channel (553), and counts its on
-   * time down; the last tick releases it with the click of the stone button (answer 589).
+   * After its output, it counts its on time down; the last tick releases it with the click of the
+   * stone button (answer 589).
    */
   @Override
-  protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
-    ModuleTicks.write(modules, space, this, button.output());
+  protected void afterOutput(PartSpaceBlockEntity space) {
     SignalButton next = button.tick();
     if (next.equals(button)) {
       return;
@@ -113,28 +108,12 @@ public final class ButtonPart extends ModulePart {
   }
 
   @Override
-  protected boolean feedsSupport() {
-    return true;
-  }
-
-  @Override
-  public boolean togglesOffline() {
-    return true;
-  }
-
-  @Override
-  protected void saveRule(CompoundTag tag) {
+  protected void writeEmitter(CompoundTag tag) {
     ButtonSave.writeButton(tag, button);
-    ModuleSave.writeConnection(tag, ButtonSave.OUTPUT, output);
   }
 
   public SignalButton button() {
     return button;
-  }
-
-  @Override
-  public Connection output() {
-    return output;
   }
 
   /** The `Toggle` presses it, and says so with its name (answers 555 and 593). */
@@ -148,11 +127,7 @@ public final class ButtonPart extends ModulePart {
   /** The hand of the owner presses it; anyone else is told whose it is (576, 577 and 588). */
   @Override
   public void emptyHand(Player player) {
-    if (!isOwner(player)) {
-      player.displayClientMessage(Component.translatable(ModuleMessages.NOT_OWNER), true);
-      return;
-    }
-    setButton(button.press());
+    byOwner(player, () -> setButton(button.press()));
   }
 
   @Override
@@ -185,12 +160,6 @@ public final class ButtonPart extends ModulePart {
     }
   }
 
-  /** The owner moved the output to its edges or to a channel (answers 548 and 549). */
-  public void connectOutput(Connection connection) {
-    output = connection;
-    changed();
-  }
-
   /**
    * On the server, a loaded button fits the limits of the config of now: an on time outside them
    * goes to the nearest limit, with a warning (answers 425 and 592, rule 14).
@@ -207,14 +176,9 @@ public final class ButtonPart extends ModulePart {
 
   /** The click of the stone button of the game: on when pressed, off when released (589). */
   private void click(boolean pressed) {
-    level()
-        .ifPresent(found ->
-            found.playSound(
-                null,
-                spot().pos(),
-                pressed ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF,
-                SoundSource.BLOCKS,
-                VOLUME,
-                PITCH));
+    click(
+        pressed ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF,
+        VOLUME,
+        PITCH);
   }
 }

@@ -2,6 +2,8 @@
 
 Os Signal Modules (`Módulos de Sinal` em português) são a família de placas que guarda toda a lógica de sinal do Redweave (perguntas 297, 300 e 308). Esta página descreve a base comum, que todo módulo herda, entregue na #103 com o primeiro módulo, o [Signal Timer](signal-timer.md). Cada módulo tem a sua página, com o que só ele faz, e aponta para esta: o [Signal Timer](signal-timer.md), o [Signal Inverter](signal-inverter.md), o [Weather Detector](weather-detector.md), o [Signal Randomizer](signal-randomizer.md), e o [Signal Lever](alavanca.md), o [Signal Button](botao.md) e o [Signal Pressure Plate](placa-de-pressao.md), módulos de fonte (pergunta 549). A rede está em [`rede-e-canais.md`](rede-e-canais.md), as telas em [`telas.md`](telas.md), e os termos são os do [`glossario.md`](../glossario.md).
 
+O Signal Lever, o Signal Button e o Signal Pressure Plate, os módulos de onde o sinal nasce por um gatilho, formam a família dos [Emissores de Sinal](emissores.md), com um contrato comum de força, luz e saída e a base `EmitterPart` no código (perguntas 627 a 630).
+
 ## Em uma frase
 
 Uma placa grudada em qualquer face de um bloco, com um dono, que lê e escreve sinal pelas bordas ou por canais de uma rede, e em que cada módulo só implementa a sua regra (perguntas 313, 314, 375 e 415).
@@ -171,6 +173,8 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 08:10 | A frase da família dos emissores nomeia os três emissores e a base `EmitterPart` (#139). |
+| Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (perguntas 627 e 628). |
 | Zennd | 2026-11-15 15:07 | Leva o Signal Pressure Plate à base: o bloco de apoio, a mão, o `Toggle` numa rede `Offline`, as mensagens e o rótulo (perguntas 603, 606, 609 e 621). |
 | Zennd | 2026-11-15 14:37 | O giro passa ao modo `Rotate`, nos dois sentidos, e o Shift + clique no `Open` não faz nada (perguntas 610 e 613 a 620). |
 | Zennd | 2026-11-15 14:26 | O giro vai para um modo próprio do Configurator na #136 (pergunta 610). |

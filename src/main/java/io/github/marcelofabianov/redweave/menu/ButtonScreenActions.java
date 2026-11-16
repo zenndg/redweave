@@ -2,13 +2,11 @@ package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.application.ChangeButton;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
-import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.config.NeoForgeButtonLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalButton;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
-import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
 
@@ -21,18 +19,17 @@ final class ButtonScreenActions {
   private ButtonScreenActions() {}
 
   static void apply(Player player, PartSpot spot, ButtonAction action) {
-    Optional<ButtonPart> found = ModulePart.at(player.level(), spot, ButtonPart.class);
-    Optional<RedweaveServer> server = RedweaveServer.running();
-    if (found.isEmpty() || found.get().module().isEmpty() || server.isEmpty()) {
-      return;
-    }
-    ButtonPart part = found.get();
-    PlayerId requester = new PlayerId(player.getUUID());
+    EmitterScreenActions.target(player, spot, ButtonPart.class)
+        .ifPresent(target -> apply(target, action));
+  }
+
+  private static void apply(EmitterScreenActions.Target<ButtonPart> target, ButtonAction action) {
     if (action.kind() == ButtonAction.Kind.OUTPUT) {
-      ModuleScreenActions.connect(requester, part, action.channel(), part::connectOutput);
+      target.connect(action.channel());
       return;
     }
-    change(server.get().modules().changeButton(), requester, part, action)
+    ButtonPart part = target.part();
+    change(target.server().modules().changeButton(), target.requester(), part, action)
         .ifPresent(part::setButton);
   }
 

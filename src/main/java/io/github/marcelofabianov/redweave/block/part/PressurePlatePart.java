@@ -3,13 +3,12 @@ package io.github.marcelofabianov.redweave.block.part;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgePressurePlateCheck;
-import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.Emitter;
 import io.github.marcelofabianov.redweave.domain.module.PlateMode;
 import io.github.marcelofabianov.redweave.domain.module.SignalPressurePlate;
 import io.github.marcelofabianov.redweave.menu.PressurePlateMenu;
 import io.github.marcelofabianov.redweave.menu.PressurePlateScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import io.github.marcelofabianov.redweave.server.ModuleServices;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Direction;
@@ -17,7 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -33,18 +31,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * feeds its block of support and the block in front with strength, or writes on its channel
  * (answers 553 and 606).
  */
-public final class PressurePlatePart extends ModulePart implements SteppedPart {
+public final class PressurePlatePart extends EmitterPart implements SteppedPart {
   public static final String ID = "signal_pressure_plate";
 
   /** The looks of the top: off, with the red light, and on, with the green one (609). */
-  public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
+  public static final List<String> LOOKS = EmitterPart.LOOKS;
 
   private static final float VOLUME = 0.3F;
   private static final float PITCH_ON = 0.6F;
   private static final float PITCH_OFF = 0.5F;
 
   private SignalPressurePlate plate = SignalPressurePlate.placed();
-  private Connection output = Connection.EDGE;
 
   /** The ticks until an on plate looks again; not saved, so a loaded plate looks at once. */
   private int countdown;
@@ -59,7 +56,7 @@ public final class PressurePlatePart extends ModulePart implements SteppedPart {
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
       part.plate = PressurePlateSave.readPlate(tag);
-      part.output = ModuleSave.readConnection(tag, PressurePlateSave.OUTPUT);
+      part.loadOutput(tag);
     }
     return part;
   }
@@ -74,12 +71,6 @@ public final class PressurePlatePart extends ModulePart implements SteppedPart {
     return RedweaveItems.SIGNAL_PRESSURE_PLATE.get();
   }
 
-  /** The light and the tread follow the plate, never what reaches its channel (581 and 609). */
-  @Override
-  protected String lookSuffix() {
-    return plate.on() ? ModuleLooks.ON : ModuleLooks.NONE;
-  }
-
   /** The plate and the tread over it, so the tread can be aimed at too. */
   @Override
   public VoxelShape shape() {
@@ -90,16 +81,20 @@ public final class PressurePlatePart extends ModulePart implements SteppedPart {
   @Override
   protected void placeRule() {
     plate = SignalPressurePlate.placed();
-    output = Connection.EDGE;
+    placeOutput();
+  }
+
+  @Override
+  protected Emitter emitter() {
+    return plate;
   }
 
   /**
-   * Gives what the plate holds, each tick, on its edges or its channel (553); on, it counts down to
-   * its next look and turns off when nothing of its mode is left on it (answer 607).
+   * After its output, an on plate counts down to its next look and turns off when nothing of its
+   * mode is left on it (answer 607).
    */
   @Override
-  protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
-    ModuleTicks.write(modules, space, this, plate.output());
+  protected void afterOutput(PartSpaceBlockEntity space) {
     if (!plate.on() || --countdown > 0) {
       return;
     }
@@ -129,28 +124,12 @@ public final class PressurePlatePart extends ModulePart implements SteppedPart {
   }
 
   @Override
-  protected boolean feedsSupport() {
-    return true;
-  }
-
-  @Override
-  public boolean togglesOffline() {
-    return true;
-  }
-
-  @Override
-  protected void saveRule(CompoundTag tag) {
+  protected void writeEmitter(CompoundTag tag) {
     PressurePlateSave.writePlate(tag, plate);
-    ModuleSave.writeConnection(tag, PressurePlateSave.OUTPUT, output);
   }
 
   public SignalPressurePlate plate() {
     return plate;
-  }
-
-  @Override
-  public Connection output() {
-    return output;
   }
 
   /**
@@ -196,23 +175,12 @@ public final class PressurePlatePart extends ModulePart implements SteppedPart {
     plate = next;
     changed();
     if (turned) {
-      level()
-          .ifPresent(found ->
-              found.playSound(
-                  null,
-                  spot().pos(),
-                  next.on()
-                      ? SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON
-                      : SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF,
-                  SoundSource.BLOCKS,
-                  VOLUME,
-                  next.on() ? PITCH_ON : PITCH_OFF));
+      click(
+          next.on()
+              ? SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON
+              : SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF,
+          VOLUME,
+          next.on() ? PITCH_ON : PITCH_OFF);
     }
-  }
-
-  /** The owner moved the output to its edges or to a channel (answers 548 and 549). */
-  public void connectOutput(Connection connection) {
-    output = connection;
-    changed();
   }
 }

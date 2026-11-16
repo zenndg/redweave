@@ -14,7 +14,6 @@ import org.slf4j.Logger;
  * 14).
  */
 final class PressurePlateSave {
-  static final String OUTPUT = "output";
 
   private static final String ON = "on";
   private static final String MODE = "mode";

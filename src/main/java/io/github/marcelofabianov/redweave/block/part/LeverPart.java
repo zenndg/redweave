@@ -1,13 +1,11 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
-import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
-import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.Emitter;
 import io.github.marcelofabianov.redweave.domain.module.SignalLever;
 import io.github.marcelofabianov.redweave.menu.LeverMenu;
 import io.github.marcelofabianov.redweave.menu.LeverScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
-import io.github.marcelofabianov.redweave.server.ModuleServices;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Direction;
@@ -15,7 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -29,18 +26,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * the block in front with strength, or writes on its channel (answer 553). Its light and its handle
  * show whether it is on (answers 554 and 581).
  */
-public final class LeverPart extends ModulePart {
+public final class LeverPart extends EmitterPart {
   public static final String ID = "signal_lever";
 
   /** The looks of the top: off, with the red light, and on, with the green one (554). */
-  public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
+  public static final List<String> LOOKS = EmitterPart.LOOKS;
 
   private static final float VOLUME = 0.3F;
   private static final float PITCH_ON = 0.6F;
   private static final float PITCH_OFF = 0.5F;
 
   private SignalLever lever = SignalLever.placed();
-  private Connection output = Connection.EDGE;
 
   private LeverPart(Direction face) {
     super(face);
@@ -52,7 +48,7 @@ public final class LeverPart extends ModulePart {
     part.loadPlate(tag);
     if (!tag.isEmpty()) {
       part.lever = LeverSave.readLever(tag);
-      part.output = ModuleSave.readConnection(tag, LeverSave.OUTPUT);
+      part.loadOutput(tag);
     }
     return part;
   }
@@ -67,12 +63,6 @@ public final class LeverPart extends ModulePart {
     return RedweaveItems.SIGNAL_LEVER.get();
   }
 
-  /** The light and the handle follow the lever, never what reaches its channel (581). */
-  @Override
-  protected String lookSuffix() {
-    return lever.on() ? ModuleLooks.ON : ModuleLooks.NONE;
-  }
-
   /** The plate and the handle over it, so the handle can be aimed at too. */
   @Override
   public VoxelShape shape() {
@@ -83,38 +73,21 @@ public final class LeverPart extends ModulePart {
   @Override
   protected void placeRule() {
     lever = SignalLever.placed();
-    output = Connection.EDGE;
-  }
-
-  /** It only gives what the player left, each tick, on its edges or its channel (553). */
-  @Override
-  protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
-    ModuleTicks.write(modules, space, this, lever.output());
+    placeOutput();
   }
 
   @Override
-  protected boolean feedsSupport() {
-    return true;
-  }
-
-  @Override
-  public boolean togglesOffline() {
-    return true;
-  }
-
-  @Override
-  protected void saveRule(CompoundTag tag) {
-    LeverSave.writeLever(tag, lever);
-    ModuleSave.writeConnection(tag, LeverSave.OUTPUT, output);
-  }
-
-  public SignalLever lever() {
+  protected Emitter emitter() {
     return lever;
   }
 
   @Override
-  public Connection output() {
-    return output;
+  protected void writeEmitter(CompoundTag tag) {
+    LeverSave.writeLever(tag, lever);
+  }
+
+  public SignalLever lever() {
+    return lever;
   }
 
   /** The `Toggle` turns it on or off, and says so with its name, as the timer (555 and 421). */
@@ -128,11 +101,7 @@ public final class LeverPart extends ModulePart {
   /** The hand of the owner turns it on or off; anyone else is told whose it is (576 and 577). */
   @Override
   public void emptyHand(Player player) {
-    if (!isOwner(player)) {
-      player.displayClientMessage(Component.translatable(ModuleMessages.NOT_OWNER), true);
-      return;
-    }
-    setLever(lever.toggle());
+    byOwner(player, () -> setLever(lever.toggle()));
   }
 
   @Override
@@ -164,21 +133,7 @@ public final class LeverPart extends ModulePart {
     lever = next;
     changed();
     if (turned) {
-      level()
-          .ifPresent(found ->
-              found.playSound(
-                  null,
-                  spot().pos(),
-                  SoundEvents.LEVER_CLICK,
-                  SoundSource.BLOCKS,
-                  VOLUME,
-                  next.on() ? PITCH_ON : PITCH_OFF));
+      click(SoundEvents.LEVER_CLICK, VOLUME, next.on() ? PITCH_ON : PITCH_OFF);
     }
-  }
-
-  /** The owner moved the output to its edges or to a channel (answers 548 and 549). */
-  public void connectOutput(Connection connection) {
-    output = connection;
-    changed();
   }
 }
