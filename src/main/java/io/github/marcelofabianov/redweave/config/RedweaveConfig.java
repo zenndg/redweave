@@ -30,6 +30,10 @@ public final class RedweaveConfig {
   private static final String ITEM_SENSOR = "item_sensor";
   private static final String LOCK = "lock";
   private static final String LAMP = "lamp";
+  private static final String ALARM = "alarm";
+  private static final String ALARM_RANGE_KEY = "range";
+  private static final String MAX_REPEATS_KEY = "max_repeats";
+  private static final String MAX_DURATION_KEY = "max_duration_ticks";
   private static final String LIGHT_UPDATE_KEY = "min_light_update_ticks";
   private static final String LIGHT_UPDATE_COMMENT = "Fewest ticks between Signal Lamp lights.";
   private static final String MIN_PULSE_KEY = "min_pulse_ticks";
@@ -63,6 +67,11 @@ public final class RedweaveConfig {
   private static final String SENSOR_CHECK_COMMENT = "Ticks between reads of a Signal Item Sensor.";
   private static final String MIN_LOCK_COMMENT = "Shortest Signal Lock Toggle pulse, in ticks.";
   private static final String MAX_LOCK_COMMENT = "Longest Signal Lock Toggle pulse, in ticks.";
+  private static final String ALARM_RANGE_COMMENT = "Blocks within which a Signal Alarm is heard.";
+  private static final String MAX_REPEATS_COMMENT = "Most rings a Signal Alarm may have.";
+  private static final String MIN_RING_COMMENT = "Shortest gap of Signal Alarm rings, in ticks.";
+  private static final String MAX_RING_COMMENT = "Longest gap of Signal Alarm rings, in ticks.";
+  private static final String MAX_DURATION_COMMENT = "Longest a Signal Alarm rings, in ticks.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
@@ -106,6 +115,17 @@ public final class RedweaveConfig {
   private static final int DEFAULT_LIGHT_UPDATE = 4;
   private static final int MAX_LIGHT_UPDATE = 20;
   private static final int DEFAULT_MODULE_NAME = 16;
+  private static final int DEFAULT_ALARM_RANGE = 16;
+  private static final int MIN_ALARM_RANGE = 4;
+  private static final int MAX_ALARM_RANGE = 32;
+  private static final int DEFAULT_MAX_REPEATS = 10;
+  private static final int HIGHEST_MAX_REPEATS = 10;
+  private static final int DEFAULT_MIN_RING = 20;
+  private static final int HIGHEST_MIN_RING = 200;
+  private static final int DEFAULT_MAX_RING = 200;
+  private static final int HIGHEST_MAX_RING = 1200;
+  private static final int DEFAULT_MAX_DURATION = 600;
+  private static final int HIGHEST_MAX_DURATION = 6000;
   private static final int DEFAULT_TOGGLES = 8;
   private static final int MIN_TOGGLES = 2;
   private static final int MAX_TOGGLES = 64;
@@ -137,6 +157,11 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue LOCK_MIN_PULSE_TICKS;
   static final ModConfigSpec.IntValue LAMP_MIN_LIGHT_UPDATE_TICKS;
   static final ModConfigSpec.IntValue LOCK_MAX_PULSE_TICKS;
+  static final ModConfigSpec.IntValue ALARM_RANGE;
+  static final ModConfigSpec.IntValue ALARM_MAX_REPEATS;
+  static final ModConfigSpec.IntValue ALARM_MIN_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue ALARM_MAX_INTERVAL_TICKS;
+  static final ModConfigSpec.IntValue ALARM_MAX_DURATION_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
@@ -252,6 +277,29 @@ public final class RedweaveConfig {
         builder
             .comment(MAX_LOCK_COMMENT)
             .defineInRange(MAX_PULSE_KEY, MAX_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
+    builder.pop();
+    builder.push(ALARM);
+    ALARM_RANGE =
+        builder
+            .comment(ALARM_RANGE_COMMENT)
+            .defineInRange(ALARM_RANGE_KEY, DEFAULT_ALARM_RANGE, MIN_ALARM_RANGE, MAX_ALARM_RANGE);
+    ALARM_MAX_REPEATS =
+        builder
+            .comment(MAX_REPEATS_COMMENT)
+            .defineInRange(MAX_REPEATS_KEY, DEFAULT_MAX_REPEATS, 1, HIGHEST_MAX_REPEATS);
+    ALARM_MIN_INTERVAL_TICKS =
+        builder
+            .comment(MIN_RING_COMMENT)
+            .defineInRange(MIN_INTERVAL_KEY, DEFAULT_MIN_RING, MIN_PULSE_TICKS, HIGHEST_MIN_RING);
+    ALARM_MAX_INTERVAL_TICKS =
+        builder
+            .comment(MAX_RING_COMMENT)
+            .defineInRange(MAX_INTERVAL_KEY, DEFAULT_MAX_RING, MIN_PULSE_TICKS, HIGHEST_MAX_RING);
+    ALARM_MAX_DURATION_TICKS =
+        builder
+            .comment(MAX_DURATION_COMMENT)
+            .defineInRange(
+                MAX_DURATION_KEY, DEFAULT_MAX_DURATION, MIN_PULSE_TICKS, HIGHEST_MAX_DURATION);
     builder.pop();
     builder.push(LAMP);
     LAMP_MIN_LIGHT_UPDATE_TICKS =

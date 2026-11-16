@@ -22,7 +22,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: status, direção, face do bloco e canal da rede. Não tem lógica: o nó só lê e emite (pergunta 308) |
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
 | Signal Modules | — | `Módulos de Sinal` em português: a família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. Cada uma tem um dono, quem a colocou, e escreve direto num canal, sem nó. Cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313, 314, 375, 378, 410 e 415) |
-| Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`), o `Signal Inverter` (`signal_inverter`), o `Weather Detector` (`weather_detector`), o `Signal Randomizer` (`signal_randomizer`), o `Signal Lever` (`signal_lever`), o `Signal Button` (`signal_button`) o `Signal Pressure Plate` (`signal_pressure_plate`), o `Signal Item Sensor` (`signal_item_sensor`), o `Signal Lock` (`signal_lock`) e o `Signal Lamp` (`signal_lamp`) (perguntas 300, 457, 475, 550, 633, 650 e 691) |
+| Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`), o `Signal Inverter` (`signal_inverter`), o `Weather Detector` (`weather_detector`), o `Signal Randomizer` (`signal_randomizer`), o `Signal Lever` (`signal_lever`), o `Signal Button` (`signal_button`) o `Signal Pressure Plate` (`signal_pressure_plate`), o `Signal Item Sensor` (`signal_item_sensor`), o `Signal Lock` (`signal_lock`), o `Signal Lamp` (`signal_lamp`) e o `Signal Alarm` (`signal_alarm`) (perguntas 300, 457, 475, 550, 633, 643, 650 e 691) |
 | Conexão | `Connection` | Uma entrada ou uma saída de um módulo, ligada a uma borda da placa (`Edge`) ou a um canal da rede do módulo (`Channel`), nunca aos dois. Não é uma porta (perguntas 376 e 420) |
 | Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha, e queima num laço (perguntas 296, 310, 444, 445 e 447) |
 | Signal Randomizer | `signal_randomizer` | `Sorteador de Sinal` em português: o módulo de fonte que, ligado, sorteia a cada intervalo um valor de 0 a 15 (`Analog`) ou 0 ou 15 (`Binary`) e o mantém na saída até o próximo sorteio (perguntas 475, 476, 478 e 486) |
@@ -30,7 +30,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
 | Parte | `Part` | Uma peça do multipart, numa face de um espaço de bloco: um Signal Cable, um Signal Node ou um Signal Module. Responde por si à mira, ao clique, à quebra e ao Configurator (perguntas 511 e 515) |
 | Signal Emitters | — | `Emissores de Sinal` em português: a família dos Signal Modules sem entrada acionados por um gatilho, como o clique, o aperto ou algo pisando, de onde o sinal nasce, com um contrato comum de força, luz e saída. Hoje, o Signal Lever, o Signal Button e o Signal Pressure Plate (perguntas 627 a 629 e 632, [`emissores.md`](funcionalidades/emissores.md)) |
-| Signal Alarm | `signal_alarm` | `Alarme de Sinal` em português: um Signal Module de saída que toca um som, mostra um texto e pulsa uma luz vermelha ao receber sinal (perguntas 643 a 649, [`alarme.md`](funcionalidades/alarme.md)) |
+| Signal Alarm | `signal_alarm` | `Alarme de Sinal` em português: um Signal Module de saída que toca um som, mostra um texto e pulsa uma luz vermelha ao receber sinal, para quem o dono escolhe e no alcance do config. Entregue na #142 (perguntas 643 a 649 e 737 a 744, [`alarme.md`](funcionalidades/alarme.md)) |
 | Signal Card | `signal_card` | `Cartão de Sinal` em português: um cartão de acesso com ID único, vinculado pelo dono a fechaduras, teclados e portões (perguntas 668 a 671, [`cartao.md`](funcionalidades/cartao.md)) |
 | Signal Gate | `signal_gate_controller` | `Portão de Sinal` em português: uma moldura com um campo que só deixa passar quem se enquadra nas regras; não teletransporta (perguntas 677 a 687, [`portao.md`](funcionalidades/portao.md)) |
 | Signal Keypad | `signal_keypad` | `Teclado de Sinal` em português: um Signal Module que libera o sinal com uma senha numérica (perguntas 659 a 667, [`teclado.md`](funcionalidades/teclado.md)) |
@@ -66,6 +66,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:20 | Leva o Signal Alarm à lista de módulos e diz o que entrou na #142. |
 | Zennd | 2026-11-16 14:00 | O `Copy` do Configurador também copia os Signal Modules (perguntas 722 a 736). |
 | Zennd | 2026-11-16 13:18 | Leva o Signal Lamp à lista de módulos e diz o que entrou na #143. |
 | Zennd | 2026-11-16 12:23 | Leva o Signal Lock à lista de módulos e diz o que entrou na #141. |

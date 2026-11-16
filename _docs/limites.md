@@ -36,7 +36,7 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Quantidade máxima do Signal Item Sensor | 3456, de 1 a 100000: a maior quantidade que o dono pode escolher na tela; não há teto de uma pilha, porque o sensor soma todos os slots (pergunta 693) | `item_sensor.max_count` | 2 |
 | Leitura do Signal Item Sensor | A cada 10 ticks, de 2 a 100: de quanto em quanto tempo o sensor conta o inventário; a rede só é avaliada quando a saída muda (pergunta 695) | `item_sensor.check_ticks` | 2 |
 | Alcance do Signal Alarm | 16 blocos, de 4 a 32 (pergunta 646) | `alarm.range` | 2 |
-| Repetições máximas do Signal Alarm | 5, até 10 (pergunta 646) | `alarm.max_repeats` | 2 |
+| Repetições máximas do Signal Alarm | 10, de 1 a 10 (perguntas 646 e 737) | `alarm.max_repeats` | 2 |
 | Intervalo mínimo do som do Signal Alarm | 20 ticks, 1 s (pergunta 646) | `alarm.min_interval_ticks` | 2 |
 | Intervalo máximo do som do Signal Alarm | 200 ticks, 10 s (pergunta 646) | `alarm.max_interval_ticks` | 2 |
 | Duração máxima do Signal Alarm | 600 ticks, 30 s; o padrão é 5 s (pergunta 648) | `alarm.max_duration_ticks` | 2 |
@@ -63,6 +63,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:18 | O máximo de toques do Signal Alarm passa a 10 (pergunta 737). |
 | Zennd | 2026-11-16 13:18 | Explica a atualização da luz do Signal Lamp e leva a força dele à linha comum (perguntas 715 e 719). |
 | Zennd | 2026-11-16 12:23 | Dá as faixas do pulso do Signal Lock (pergunta 712). |
 | Zennd | 2026-11-16 11:27 | Explica os limites do Signal Item Sensor e leva a força a ele (perguntas 693, 695 e 701). |

@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
+import io.github.marcelofabianov.redweave.block.part.AlarmPart;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
@@ -123,26 +124,17 @@ final class RedweaveBlockStates extends BlockStateProvider {
     plateModels(RedweaveItems.SIGNAL_TIMER.get(), TimerPart.ID, TimerPart.LOOKS);
   }
 
-  /**
-   * The Signal Randomizer: one model for each pair of the LED and the arrow, in two versions, with
-   * the top turned or not, as the timer (answers 429 and 488).
-   */
+  /** The Signal Randomizer: each LED and arrow, turned or not, as the timer (429 and 488). */
   private void randomizerModels() {
     plateModels(RedweaveItems.SIGNAL_RANDOMIZER.get(), RandomizerPart.ID, RandomizerPart.LOOKS);
   }
 
-  /**
-   * The Signal Inverter: one model for each look, off, on or burnt, in two versions, with the top
-   * turned or not, as the timer (answers 429, 452 and 455).
-   */
+  /** The Signal Inverter: off, on or burnt, turned or not, as the timer (429, 452 and 455). */
   private void inverterModels() {
     plateModels(RedweaveItems.SIGNAL_INVERTER.get(), InverterPart.ID, InverterPart.LOOKS);
   }
 
-  /**
-   * The Weather Detector: one model for each mode, with the arrow lit or not, in two versions, with
-   * the top turned or not, as the other modules (answers 429 and 471).
-   */
+  /** The Weather Detector: each mode, arrow lit or not, turned or not (answers 429 and 471). */
   private void detectorModels() {
     plateModels(RedweaveItems.WEATHER_DETECTOR.get(), DetectorPart.ID, DetectorPart.LOOKS);
   }
@@ -185,6 +177,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
         ItemSensorModels::addPieces);
     piecedModels(
         RedweaveItems.SIGNAL_LOCK.get(), LockPart.ID, LockPart.LOOKS, LockModels::addPieces);
+    piecedModels(
+        RedweaveItems.SIGNAL_ALARM.get(), AlarmPart.ID, AlarmPart.LOOKS, AlarmModels::addPieces);
   }
 
   /**

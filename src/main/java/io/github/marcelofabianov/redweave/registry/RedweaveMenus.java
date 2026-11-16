@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.registry;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.menu.AlarmMenu;
 import io.github.marcelofabianov.redweave.menu.ButtonMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.DetectorMenu;
@@ -34,6 +35,7 @@ public final class RedweaveMenus {
   private static final String PRESSURE_PLATE_ID = "signal_pressure_plate";
   private static final String ITEM_SENSOR_ID = "signal_item_sensor";
   private static final String LOCK_ID = "signal_lock";
+  private static final String ALARM_ID = "signal_alarm";
   private static final String LAMP_ID = "signal_lamp";
   private static final String CONTROLLER_ID = "network_controller";
   private static final String TERMINAL_ID = "network_terminal";
@@ -71,6 +73,8 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<LockMenu>> LOCK =
       MENUS.register(LOCK_ID, () -> IMenuTypeExtension.create(LockMenu::new));
+  public static final Supplier<MenuType<AlarmMenu>> ALARM =
+      MENUS.register(ALARM_ID, () -> IMenuTypeExtension.create(AlarmMenu::new));
 
   public static final Supplier<MenuType<LampMenu>> LAMP =
       MENUS.register(LAMP_ID, () -> IMenuTypeExtension.create(LampMenu::new));
