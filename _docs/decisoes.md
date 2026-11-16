@@ -196,6 +196,14 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Tela do sensor | Com o inventário do dono embaixo | 704 |
 | Catálogo de itens | `_docs/itens.md` e a seção `Items` do `README.md`, atualizados a cada item | 705 |
 | Ordem do Lock, da Lamp e do Alarm | Lock, Lamp e Alarm, nos passos 18 a 20 | 706 |
+| `Toggle` do Lock offline | Abre mesmo com a rede `Offline` | 707 |
+| Explosão no Lock e no Keypad | Poupa o espaço inteiro e o bloco de apoio | 708 |
+| Mão vazia no Lock | A mensagem dos módulos | 709 |
+| NBT do Lock | `key`, `strength`, `pulse`, `remaining`, `input` e `output` | 710 |
+| `Toggle` no pulso do Lock | Não reinicia | 711 |
+| Config do pulso do Lock | De 2 a 200 ticks nas duas chaves | 712 |
+| Textos do Lock | `Locked`/`Unlocked`, `Trancada`/`Aberta`, `Chave`, `Pulso` | 713 |
+| Mira do Lock | A placa e o cadeado | 714 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -682,6 +690,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:17 | Registra as decisões 707 a 714, do Signal Lock. |
 | Zennd | 2026-11-16 11:45 | Registra a decisão 706. |
 | Zennd | 2026-11-16 11:34 | Registra a decisão 705, do catálogo de itens. |
 | Zennd | 2026-11-16 11:25 | Registra as decisões 700 a 704, do Signal Item Sensor. |
