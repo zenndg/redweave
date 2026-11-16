@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
+import io.github.marcelofabianov.redweave.block.part.LockPart;
 import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
@@ -181,6 +182,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
         ItemSensorPart.ID,
         ItemSensorPart.LOOKS,
         ItemSensorModels::addPieces);
+    piecedModels(
+        RedweaveItems.SIGNAL_LOCK.get(), LockPart.ID, LockPart.LOOKS, LockModels::addPieces);
   }
 
   /**

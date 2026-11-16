@@ -11,6 +11,15 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 714 | Qual a caixa de mira do Signal Lock? | A placa mais o cadeado, de 4 × 4 px e 6 px de altura, como a alça da alavanca |
+| 713 | Quais os textos do Signal Lock? | Em inglês, `Locked` e `Unlocked`, `Key`, `Pulse` e `<nome>: Unlocked`; em português, `Fechadura de Sinal`, `Trancada` e `Aberta`, `Chave`, `Pulso` e `<nome>: Aberta`, no feminino |
+| 712 | Quais as faixas do config do pulso do Signal Lock? | De 2 a 200 ticks para as duas chaves: `lock.min_pulse_ticks`, padrão 2, e `lock.max_pulse_ticks`, padrão 200. Completa a pergunta 640 |
+| 711 | O `Toggle` reinicia um pulso do Signal Lock em andamento? | Não: como o botão (pergunta 590), o pulso segue até o fim, e a mensagem `<nome>: Unlocked` aparece de novo |
+| 710 | Quais chaves do NBT o Signal Lock usa? | `key`, `strength`, `pulse`, `remaining`, `input` e `output`, além das chaves comuns dos módulos. Valores inválidos voltam à chave 15, ao pulso de 20 ticks e a `remaining` 0, com aviso no log (regra 14). Ficam fixadas na #26 (regra 15) |
+| 709 | O que o clique com a mão vazia faz no Signal Lock? | Mostra `Use a Configurator to open this module.`, como os outros módulos (pergunta 395); a fechadura não abre à mão |
+| 708 | A explosão poupa o espaço inteiro do Signal Lock e do Signal Keypad? | Sim: o espaço de bloco inteiro, com as outras partes dele, como um cabo ou um nó, e o bloco de apoio, porque o espaço é um bloco só para a explosão. Completa a pergunta 641 |
+| 707 | O `Toggle` do Configurator abre o Signal Lock com a rede `Offline`? | Sim, como os emissores (pergunta 578): o dono testa a fechadura sempre, e o canal só não conta enquanto a rede está `Offline` |
+| 706 | Qual a ordem do Signal Lock, da Signal Lamp e do Signal Alarm? | O Signal Lock (passo 18), depois a Signal Lamp (passo 19) e depois o Signal Alarm (passo 20). O Keypad, o Card, a proteção e o Gate seguem depois, porque dependem do Lock. Muda a ordem da pergunta 642 |
 | 705 | Onde fica o resumo de cada item do mod? | Num catálogo, `_docs/itens.md`, em português, com uma linha por item: o nome em inglês e em português, o ID, a família, o que faz, o estado e o link para o conceito; e numa seção `Items` do `README.md`, em inglês, com a tabela resumida. Todo item novo, mudado ou planejado atualiza os dois no mesmo PR, como regra do `AGENTS.md` (#150) |
 | 704 | Como fica a tela do Signal Item Sensor? | Com o inventário do dono embaixo, para ele pegar o item com o cursor e clicar no slot fantasma, com cerca de 260 px de altura. Completa a pergunta 696 |
 | 703 | O que o rótulo do Signal Item Sensor mostra? | O nome e, embaixo, `On` ou `Off` (`Ligado` ou `Desligado`) e o canal da saída, como os módulos, sem a contagem |
@@ -705,6 +714,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:17 | Registra as respostas 707 a 714, do Signal Lock. |
+| Zennd | 2026-11-16 11:45 | Registra a resposta 706, da ordem do Lock, da Lamp e do Alarm. |
 | Zennd | 2026-11-16 11:34 | Registra a resposta 705, do catálogo de itens. |
 | Zennd | 2026-11-16 11:25 | Registra as respostas 700 a 704, do Signal Item Sensor. |
 | Zennd | 2026-11-16 10:56 | Registra a resposta 699, dos links de leitura nos prompts de arte. |

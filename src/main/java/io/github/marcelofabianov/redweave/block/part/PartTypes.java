@@ -16,17 +16,18 @@ import net.minecraft.world.item.Item;
  */
 public final class PartTypes {
   private static final Map<ResourceLocation, BiFunction<Direction, CompoundTag, Part>> TYPES =
-      Map.of(
-          RedweaveItems.SIGNAL_NODE.getId(), NodePart::load,
-          RedweaveItems.SIGNAL_TIMER.getId(), TimerPart::load,
-          RedweaveItems.SIGNAL_INVERTER.getId(), InverterPart::load,
-          RedweaveItems.WEATHER_DETECTOR.getId(), DetectorPart::load,
-          RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load,
-          RedweaveItems.SIGNAL_LEVER.getId(), LeverPart::load,
-          RedweaveItems.SIGNAL_BUTTON.getId(), ButtonPart::load,
-          RedweaveItems.SIGNAL_PRESSURE_PLATE.getId(), PressurePlatePart::load,
-          RedweaveItems.SIGNAL_ITEM_SENSOR.getId(), ItemSensorPart::load,
-          RedweaveItems.SIGNAL_CABLE.getId(), CablePart::load);
+      Map.ofEntries(
+          Map.entry(RedweaveItems.SIGNAL_NODE.getId(), NodePart::load),
+          Map.entry(RedweaveItems.SIGNAL_TIMER.getId(), TimerPart::load),
+          Map.entry(RedweaveItems.SIGNAL_INVERTER.getId(), InverterPart::load),
+          Map.entry(RedweaveItems.WEATHER_DETECTOR.getId(), DetectorPart::load),
+          Map.entry(RedweaveItems.SIGNAL_RANDOMIZER.getId(), RandomizerPart::load),
+          Map.entry(RedweaveItems.SIGNAL_LEVER.getId(), LeverPart::load),
+          Map.entry(RedweaveItems.SIGNAL_BUTTON.getId(), ButtonPart::load),
+          Map.entry(RedweaveItems.SIGNAL_PRESSURE_PLATE.getId(), PressurePlatePart::load),
+          Map.entry(RedweaveItems.SIGNAL_ITEM_SENSOR.getId(), ItemSensorPart::load),
+          Map.entry(RedweaveItems.SIGNAL_LOCK.getId(), LockPart::load),
+          Map.entry(RedweaveItems.SIGNAL_CABLE.getId(), CablePart::load));
 
   private PartTypes() {}
 

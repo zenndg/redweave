@@ -479,10 +479,36 @@ Entregue com a issue #148 (perguntas 689 a 698 e 700 a 704). Use um baú, um bar
 | 295 | Se tiver um mod com inventário, coloque o sensor nele | O sensor lê o inventário do outro mod pela capability de itens |
 | 296 | Troque o idioma para Português (Brasil) e repita os passos 279, 281 e 286 | `Sensor de Itens de Sinal`, `Isto precisa de um baú ou outro inventário.`, `Quantidade`, `Nenhum`, `Ligado` e `Desligado` |
 
+## Fase 2: o Signal Lock
+
+Entregue com a issue #141 (perguntas 633 a 642 e 707 a 714). Use uma pedra, um bloco de redstone, uma lâmpada, um comparador ou um Signal Cable, um TNT, uma rede com um nó de saída e um segundo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 297 | Abra a aba `Redweave` do criativo e pegue um Signal Lock | O Lock está na aba (pergunta 601), com o nome `Signal Lock` e o ícone do cadeado fechado com a luz vermelha |
+| 298 | Coloque o Lock no topo de uma pedra, de frente para o norte | A placa com o entalhe atrás, a seta cobre, o cadeado fechado e a luz vermelha |
+| 299 | Ponha um bloco de redstone atrás do Lock e uma lâmpada na frente | Com a chave 15, abre: a alça sobe e gira, a luz fica verde, a seta vermelha e a lâmpada acende |
+| 300 | Use o `Open` do Configurator e aperte `−` na `Key` até 14 | A fechadura tranca: luz vermelha e lâmpada apagada; a entrada 15 não bate mais com a chave |
+| 301 | Ponha `Strength` em 6 e a `Key` de volta em 15, com um comparador ou um cabo na frente | A fechadura abre e o comparador ou o cabo lê 6 |
+| 302 | Abra a tela com outro player | A `Key` mostra `?`, os botões ficam desativados e aparece o cadeado no rodapé |
+| 303 | Ajuste o pulso com `+` e Shift + `+`, tire a redstone de trás e use o `Toggle` | Aparece `<nome>: Unlocked`, e a fechadura fica aberta pelo tempo do pulso e tranca de novo |
+| 304 | Use o `Toggle` de novo durante o pulso | A mensagem aparece de novo, e o pulso não recomeça (pergunta 711) |
+| 305 | Desligue a rede no Terminal e use o `Toggle` | A fechadura abre pelo pulso mesmo com a rede `Offline` (pergunta 707) |
+| 306 | Clique no Lock com a mão vazia | Aparece `Use a Configurator to open this module.`, e nada abre (pergunta 709) |
+| 307 | Tente quebrar o Lock à mão no survival, como dono e como outro player | Não quebra, e a action bar mostra `Only the owner can remove this with a Configurator.` |
+| 308 | Use o `Wrench` como dono | O Lock vai para o inventário, ou cai no chão se ele estiver cheio |
+| 309 | Quebre o Lock no criativo | Quebra |
+| 310 | Ponha um Lock e um Signal Cable no mesmo espaço e exploda um TNT ao lado | O Lock, o cabo do mesmo espaço e a pedra de apoio ficam (pergunta 708); os outros blocos explodem |
+| 311 | Ponha a entrada e a saída em canais, com um nó de saída numa lâmpada, e use o `Toggle` | A lâmpada do nó acende pelo pulso, e a lâmpada da frente fica apagada |
+| 312 | Segure o Configurator perto do Lock | O rótulo mostra o nome e, embaixo, `Locked` ou `Unlocked` e o canal, nunca a chave |
+| 313 | Salve, saia e entre de novo no mundo | A chave, a força, o pulso e as duas pontas continuam iguais |
+| 314 | Troque o idioma para Português (Brasil) e repita os passos 297, 300 e 303 | `Fechadura de Sinal`, `Trancada` e `Aberta`, `Chave`, `Pulso` e `<nome>: Aberta` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:24 | Adiciona a seção do Signal Lock, passos 297 a 314 (#141). |
 | Zennd | 2026-11-16 11:27 | Adiciona a seção do Signal Item Sensor, passos 278 a 296, com a luz verde na contagem exata (#148). |
 | Zennd | 2026-11-15 15:09 | Adiciona os passos 257 a 277, do Signal Pressure Plate (perguntas 602 a 611 e 621 a 626). |
 | Zennd | 2026-11-15 14:38 | Os giros passam ao modo `Rotate`, e entra a seção do modo, com os passos 246 a 256 (perguntas 610 e 613 a 620). |

@@ -25,14 +25,14 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
-| Força do Signal Lever, do Signal Button, do Signal Pressure Plate e do Signal Item Sensor | 1 a 15, 15 ao ser colocado (perguntas 552 e 701) | fixo, contrato com a redstone do jogo | 2 |
+| Força do Signal Lever, do Signal Button, do Signal Pressure Plate, do Signal Item Sensor e do Signal Lock, e a chave do Signal Lock | 1 a 15, 15 ao ser colocado (perguntas 552, 636 e 701) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Tempo ligado mínimo do Signal Button | 2 ticks, de 2 a 200, nunca abaixo de 2, um passo da tela (perguntas 592 e 596) | `button.min_interval_ticks` | 2 |
 | Tempo ligado máximo do Signal Button | 6000 ticks (5 min), de 200 a 72000 (1 h); o padrão de um botão novo é 20 ticks, 1 s (perguntas 556 e 592) | `button.max_interval_ticks` | 2 |
 | Conferência do Signal Pressure Plate ligado | 20 ticks (1 s), de 2 a 200: de quanto em quanto tempo uma placa ligada procura de novo o que está sobre ela; desligada, ela não procura (pergunta 607) | `pressure_plate.check_ticks` | 2 |
-| Pulso mínimo do `Toggle` do Signal Lock | 2 ticks; o padrão de uma fechadura nova é 20 ticks, 1 s (pergunta 640) | `lock.min_pulse_ticks` | 2 |
-| Pulso máximo do `Toggle` do Signal Lock | 200 ticks, 10 s (pergunta 640) | `lock.max_pulse_ticks` | 2 |
+| Pulso mínimo do `Toggle` do Signal Lock | 2 ticks, de 2 a 200; o padrão de uma fechadura nova é 20 ticks, 1 s (perguntas 640 e 712) | `lock.min_pulse_ticks` | 2 |
+| Pulso máximo do `Toggle` do Signal Lock | 200 ticks, 10 s, de 2 a 200 (perguntas 640 e 712) | `lock.max_pulse_ticks` | 2 |
 | Quantidade máxima do Signal Item Sensor | 3456, de 1 a 100000: a maior quantidade que o dono pode escolher na tela; não há teto de uma pilha, porque o sensor soma todos os slots (pergunta 693) | `item_sensor.max_count` | 2 |
 | Leitura do Signal Item Sensor | A cada 10 ticks, de 2 a 100: de quanto em quanto tempo o sensor conta o inventário; a rede só é avaliada quando a saída muda (pergunta 695) | `item_sensor.check_ticks` | 2 |
 | Alcance do Signal Alarm | 16 blocos, de 4 a 32 (pergunta 646) | `alarm.range` | 2 |
@@ -63,6 +63,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:23 | Dá as faixas do pulso do Signal Lock (pergunta 712). |
 | Zennd | 2026-11-16 11:27 | Explica os limites do Signal Item Sensor e leva a força a ele (perguntas 693, 695 e 701). |
 | Zennd | 2026-11-16 10:12 | Adiciona os limites do Signal Item Sensor (perguntas 693 e 695). |
 | Zennd | 2026-11-16 09:34 | Adiciona os limites do Signal Lock, do Signal Alarm, do Signal Lamp, do Signal Keypad, do Signal Card, da proteção dos blocos e do Signal Gate (perguntas 640 a 686). |

@@ -13,12 +13,14 @@ public final class ModuleMessages {
   private static final String BUTTON = "message." + RedweaveMod.MOD_ID + ".signal_button.";
   private static final String PLATE = "message." + RedweaveMod.MOD_ID + ".signal_pressure_plate.";
   private static final String SENSOR = "message." + RedweaveMod.MOD_ID + ".signal_item_sensor.";
+  private static final String LOCK = "message." + RedweaveMod.MOD_ID + ".signal_lock.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
   public static final String NOT_OWNER = PREFIX + "not_owner";
   public static final String OUTPUT = PREFIX + "output";
   public static final String NOT_COPIED = PREFIX + "not_copied";
+  public static final String WRENCH_ONLY = PREFIX + "wrench_only";
   public static final String TIMER_RUNNING = TIMER + "running";
   public static final String TIMER_STOPPED = TIMER + "stopped";
   public static final String INVERTER_NOTHING_TO_TOGGLE = INVERTER + "nothing_to_toggle";
@@ -30,6 +32,7 @@ public final class ModuleMessages {
   public static final String BUTTON_PRESSED = BUTTON + "pressed";
   public static final String PRESSURE_PLATE_MODE = PLATE + "mode";
   public static final String ITEM_SENSOR_NOTHING_TO_TOGGLE = SENSOR + "nothing_to_toggle";
+  public static final String LOCK_UNLOCKED = LOCK + "unlocked";
 
   private ModuleMessages() {}
 }

@@ -96,7 +96,7 @@ Phases 1 and 2 as one phase. The order follows dependencies first and then diffi
 
 ### Signal Modules
 
-All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs of the modules below, other than the Signal Timer, the Signal Inverter, the Weather Detector, the Signal Randomizer (questions 457 and 475) and the Signal Lever, the Signal Button and the Signal Pressure Plate (question 550), are still open. The lever, the button and the pressure plate are source modules (question 549).
+All signal logic lives in **Signal Modules**: plates that attach to any face of any block, like the Signal Node, with a shared base. Their inputs and output are the edges of the plate or network channels, and each module implements only its own rule (questions 297, 300, 308, 309, 313 and 314). The Signal Node only reads and emits. The English names and IDs are decided for the Signal Timer, the Signal Inverter, the Weather Detector, the Signal Randomizer (questions 457 and 475), the Signal Lever, the Signal Button, the Signal Pressure Plate (question 550), the Signal Item Sensor (question 691) and the Signal Lock, Signal Lamp, Signal Alarm, Signal Keypad, Signal Card and Signal Gate (questions 633 to 687); the other modules below still have them open. The lever, the button and the pressure plate form the Signal Emitters family, the modules where the signal starts by a trigger (questions 627 and 632). Every item, with its ID and state, is in the [item catalog](_docs/itens.md).
 
 ### Work order
 
@@ -118,8 +118,8 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 16. [x] Signal Emitters: the family of the modules where the signal starts, with one shared contract and one code base for the lever, the button and the pressure plate, with no change in behavior (#139 · questions 627 to 631)
 17. [x] Signal Item Sensor: a plate on a container that emits its strength when the container holds exactly the chosen amount of the chosen item; it only reads, never stores or moves items (#148 · questions 689 to 698)
 18. [ ] Signal Lock: a lock that only opens with the exact strength of its key, owner-only removal (#141 · questions 633 to 642)
-19. [ ] Signal Alarm: a note block sound, a text and a pulsing red light when it gets a signal, for a time its owner chooses (#142 · questions 643 to 649)
-20. [ ] Signal Lamp: a multipart LED bar in the color of its channel, with the light level of the strength it gets (#143 · questions 650 to 658)
+19. [ ] Signal Lamp: a multipart LED bar in the color of its channel, with the light level of the strength it gets, an optional control channel (`Hold` or `Pulse`) and the strength it emits when lit set on its screen (#143 · questions 650 to 658)
+20. [ ] Signal Alarm: a note block sound, a text and a pulsing red light when it gets a signal, for a time its owner chooses (#142 · questions 643 to 649)
 21. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)
 22. [ ] Signal Card: an access card its owner links to locks, keypads and gates (#145 · questions 668 to 671)
 23. [ ] Block protection: the blocks of a door, chosen by the owner, protected by its lock or keypad (#146 · questions 672 to 676)
@@ -150,6 +150,12 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 - The NOT gate: the Signal Inverter covers it (question 310).
 - Phase 2 release v0.2.0 (#35): Phase 2 ships in v0.1.0 (question 303).
 - The 16-channel bundled cable (#46): 16 Signal Cables of different colors and the network channels already cover it (question 519).
+- A teleport portal: moving entities between two places is not signal (rule 2). The idea became the Signal Gate, a selective barrier (#147 · question 677).
+- Storing, filtering and moving items in an item receiver: that is item logistics (rule 2). The idea became the Signal Item Sensor, which only reads a container (#148 · question 689).
+
+### Maybe
+
+- Conveyor belts: kept as a maybe, with no plan (question 688).
 
 ## Phase 3 · Chips
 
