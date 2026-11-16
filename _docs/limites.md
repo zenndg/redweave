@@ -31,6 +31,24 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Tempo ligado mínimo do Signal Button | 2 ticks, de 2 a 200, nunca abaixo de 2, um passo da tela (perguntas 592 e 596) | `button.min_interval_ticks` | 2 |
 | Tempo ligado máximo do Signal Button | 6000 ticks (5 min), de 200 a 72000 (1 h); o padrão de um botão novo é 20 ticks, 1 s (perguntas 556 e 592) | `button.max_interval_ticks` | 2 |
 | Conferência do Signal Pressure Plate ligado | 20 ticks (1 s), de 2 a 200: de quanto em quanto tempo uma placa ligada procura de novo o que está sobre ela; desligada, ela não procura (pergunta 607) | `pressure_plate.check_ticks` | 2 |
+| Pulso mínimo do `Toggle` do Signal Lock | 2 ticks; o padrão de uma fechadura nova é 20 ticks, 1 s (pergunta 640) | `lock.min_pulse_ticks` | 2 |
+| Pulso máximo do `Toggle` do Signal Lock | 200 ticks, 10 s (pergunta 640) | `lock.max_pulse_ticks` | 2 |
+| Alcance do Signal Alarm | 16 blocos, de 4 a 32 (pergunta 646) | `alarm.range` | 2 |
+| Repetições máximas do Signal Alarm | 5, até 10 (pergunta 646) | `alarm.max_repeats` | 2 |
+| Intervalo mínimo do som do Signal Alarm | 20 ticks, 1 s (pergunta 646) | `alarm.min_interval_ticks` | 2 |
+| Intervalo máximo do som do Signal Alarm | 200 ticks, 10 s (pergunta 646) | `alarm.max_interval_ticks` | 2 |
+| Duração máxima do Signal Alarm | 600 ticks, 30 s; o padrão é 5 s (pergunta 648) | `alarm.max_duration_ticks` | 2 |
+| Atualização da luz do Signal Lamp | No máximo a cada 4 ticks, de 1 a 20 (pergunta 655) | `lamp.min_light_update_ticks` | 2 |
+| Tempo aberto mínimo do Signal Keypad | 20 ticks, 1 s; o padrão é 3 s (pergunta 663) | `keypad.min_open_ticks` | 2 |
+| Tempo aberto máximo do Signal Keypad | 600 ticks, 30 s (pergunta 663) | `keypad.max_open_ticks` | 2 |
+| Janela das tentativas livres do Signal Keypad | 1200 ticks, 60 s, com 3 tentativas livres (pergunta 665) | `keypad.free_window_ticks` | 2 |
+| Primeira espera do Signal Keypad | 100 ticks, 5 s, na 4ª tentativa errada, dobrando até a 10ª (pergunta 665) | `keypad.first_wait_ticks` | 2 |
+| Espera máxima do Signal Keypad | 6000 ticks, 5 min; a contagem zera depois de 10 min sem tentar (pergunta 665) | `keypad.max_wait_ticks` | 2 |
+| Cartões aceitos por item | 8 (pergunta 669) | `card.max_links_per_item` | 2 |
+| Blocos protegidos por Signal Lock ou Signal Keypad | 16, de 1 a 64 (pergunta 673) | `lock.max_protected_blocks` | 2 |
+| Raio da proteção dos blocos | 4 blocos, de 1 a 8 (pergunta 673) | `lock.protect_range` | 2 |
+| Tags por Signal Gate | 4 (pergunta 683) | `gate.max_tags` | 2 |
+| Raio do bloqueio de teletransporte do Signal Gate | 4 blocos, de 1 a 8 (pergunta 686) | `gate.teleport_block_range` | 2 |
 | Trocas que queimam um Signal Inverter | 8, de 2 a 64 (pergunta 449) | `inverter.burnout_toggles` | 2 |
 | Janela das trocas do Signal Inverter | 60 ticks, de 20 a 1200 (pergunta 449) | `inverter.burnout_window_ticks` | 2 |
 | Tempo de queima do Signal Inverter | 160 ticks, de 20 a 6000 (pergunta 449) | `inverter.burnout_ticks` | 2 |
@@ -43,6 +61,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 09:34 | Adiciona os limites do Signal Lock, do Signal Alarm, do Signal Lamp, do Signal Keypad, do Signal Card, da proteção dos blocos e do Signal Gate (perguntas 640 a 686). |
 | Zennd | 2026-11-15 15:08 | Leva a força ao Signal Pressure Plate e explica a conferência da placa ligada (pergunta 607). |
 | Zennd | 2026-11-15 14:26 | Adiciona a conferência do Signal Pressure Plate (pergunta 607). |
 | Zennd | 2026-11-15 14:04 | Leva a força ao Signal Button e completa os limites do tempo ligado (perguntas 556 e 596). |

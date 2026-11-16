@@ -64,7 +64,7 @@ flowchart LR
 | Phase | Theme | Delivers |
 | --- | --- | --- |
 | **1 · Wireless** (MVP, v0.1.0) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
-| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131) and the Signal Pressure Plate (#132), each with a wireless or redstone output |
+| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131) and the Signal Pressure Plate (#132), each with a wireless or redstone output; planned: the Signal Lock, Signal Alarm, Signal Lamp, Signal Keypad, Signal Card, block protection and Signal Gate (#141 to #147) |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Integrations | More mod integrations and the port to 26.x |
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |

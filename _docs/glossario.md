@@ -30,6 +30,13 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
 | Parte | `Part` | Uma peça do multipart, numa face de um espaço de bloco: um Signal Cable, um Signal Node ou um Signal Module. Responde por si à mira, ao clique, à quebra e ao Configurator (perguntas 511 e 515) |
 | Signal Emitters | — | `Emissores de Sinal` em português: a família dos Signal Modules sem entrada acionados por um gatilho, como o clique, o aperto ou algo pisando, de onde o sinal nasce, com um contrato comum de força, luz e saída. Hoje, o Signal Lever, o Signal Button e o Signal Pressure Plate (perguntas 627 a 629 e 632, [`emissores.md`](funcionalidades/emissores.md)) |
+| Signal Alarm | `signal_alarm` | `Alarme de Sinal` em português: um Signal Module de saída que toca um som, mostra um texto e pulsa uma luz vermelha ao receber sinal (perguntas 643 a 649, [`alarme.md`](funcionalidades/alarme.md)) |
+| Signal Card | `signal_card` | `Cartão de Sinal` em português: um cartão de acesso com ID único, vinculado pelo dono a fechaduras, teclados e portões (perguntas 668 a 671, [`cartao.md`](funcionalidades/cartao.md)) |
+| Signal Gate | `signal_gate_controller` | `Portão de Sinal` em português: uma moldura com um campo que só deixa passar quem se enquadra nas regras; não teletransporta (perguntas 677 a 687, [`portao.md`](funcionalidades/portao.md)) |
+| Signal Keypad | `signal_keypad` | `Teclado de Sinal` em português: um Signal Module que libera o sinal com uma senha numérica (perguntas 659 a 667, [`teclado.md`](funcionalidades/teclado.md)) |
+| Signal Lamp | `signal_lamp` | `Lâmpada de Sinal` em português: uma barra de LED do multipart, na cor do seu canal, com a intensidade da força recebida (perguntas 650 a 658, [`lampada.md`](funcionalidades/lampada.md)) |
+| Signal Lock | `signal_lock` | `Fechadura de Sinal` em português: um Signal Module que só abre com a força exata da chave (perguntas 633 a 642, [`fechadura.md`](funcionalidades/fechadura.md)) |
+| Proteção dos blocos | — | Os blocos que um Signal Lock ou Signal Keypad protege contra explosão, quebra por outros players e pistão (perguntas 672 a 676, [`protecao.md`](funcionalidades/protecao.md)) |
 | Signal Button | `signal_button` | `Botão de Sinal` em português: um Signal Module de fonte, apertado pelo player, que volta sozinho depois do tempo escolhido na tela, com uma luz vermelha desligado e verde ligado e a saída pela redstone ou por um canal. Só o dono o aperta, pela mão ou pelo `Toggle`, e a força, de 1 a 15, e o tempo ligado ficam na tela. Entrou na #131 (perguntas 548 a 556 e 588 a 600) |
 | Signal Lever | `signal_lever` | `Alavanca de Sinal` em português: um Signal Module de fonte, ligado e desligado pelo player, com uma luz vermelha desligada e verde ligada e a saída pela redstone ou por um canal. Só o dono o usa, pela mão ou pelo `Toggle`, e a força vai de 1 a 15 na tela. Entrou na #130 (perguntas 548 a 555 e 576 a 587) |
 | Signal Pressure Plate | `signal_pressure_plate` | `Placa de Pressão de Sinal` em português: um Signal Module de fonte, só no chão, ligado enquanto algo do modo escolhido (`PlateMode`: `Players`, `Passive`, `Hostile` ou `Items`) está sobre ele, com uma luz vermelha desligado e verde ligado e a saída pela redstone ou por um canal. O `Toggle` troca o modo, e a força, de 1 a 15, e o modo ficam na tela. Entrou na #132 (perguntas 548 a 557, 602 a 611 e 621 a 626) |
@@ -58,6 +65,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 09:34 | Adiciona o Signal Alarm, o Signal Card, o Signal Gate, o Signal Keypad, o Signal Lamp, o Signal Lock e a proteção dos blocos (perguntas 633 a 687). |
 | Zennd | 2026-11-16 08:13 | Limita os Signal Emitters aos módulos acionados por um gatilho (pergunta 632). |
 | Zennd | 2026-11-16 08:01 | Adiciona os Signal Emitters (pergunta 627). |
 | Zennd | 2026-11-15 15:08 | Leva o Signal Pressure Plate à lista de módulos e diz o que entrou na #132, com os 4 modos (perguntas 621 a 626). |
