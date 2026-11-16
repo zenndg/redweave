@@ -21,6 +21,7 @@ The goal is not only power, but **experience**: the first useful circuit should 
 - [Why Redweave](#why-redweave)
 - [Core concepts](#core-concepts)
 - [Features by phase](#features-by-phase)
+- [Items](#items)
 - [UX principles](#ux-principles)
 - [Architecture](#architecture)
 - [Project layout](#project-layout)
@@ -70,6 +71,34 @@ flowchart LR
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |
 
 Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work order is in the [roadmap](ROADMAP.md).
+
+## Items
+
+Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, even before it has a recipe; recipes come with #24.
+
+| Item | What it does | Status |
+| --- | --- | --- |
+| Network Controller | Creates a network when placed, with a name, a color and an owner | Delivered (#14) |
+| Network Terminal | Lists your networks and turns them off, on, clears or deletes them | Delivered (#89) |
+| Signal Node | Attaches to any face of a block and reads or emits redstone there, in 16 color slots | Delivered (#15) |
+| Signal Cable | A physical redstone cable on any face, in 16 colors that keep cables apart | Delivered (#44) |
+| Configurator | The tool that opens, turns, copies, toggles and picks up nodes, modules and cables | Delivered (#17, #86, #136) |
+| Signal Remote | A tablet linked to a node input that turns its channel on, off or pulses it | Delivered (#22) |
+| Signal Lever | A 3D lever its owner turns on and off, with a chosen strength | Delivered (#130) |
+| Signal Button | A button its owner presses, which turns off by itself after an on time | Delivered (#131) |
+| Signal Pressure Plate | On while players, passive or hostile mobs, or items stand on it | Delivered (#132) |
+| Signal Timer | Turns its output on and off at an interval | Delivered (#103) |
+| Signal Inverter | The NOT of the mod | Delivered (#105) |
+| Weather Detector | On with the chosen weather: rain, thunder or clear | Delivered (#108) |
+| Signal Randomizer | Draws its output at each interval | Delivered (#109) |
+| Signal Item Sensor | On when the container it sits on holds exactly the chosen amount of an item | Delivered (#148) |
+| Signal Lock | Opens only with the exact strength of its key | Planned (#141) |
+| Signal Alarm | A sound, a text and a pulsing red light when it gets a signal | Planned (#142) |
+| Signal Lamp | An LED bar in the color of its channel, as bright as the signal | Planned (#143) |
+| Signal Keypad | A numeric password, kept only on the server, that lets the signal through | Planned (#144) |
+| Signal Card | An access card its owner links to locks, keypads and gates | Planned (#145) |
+| Signal Gate | A frame whose field only lets through what its rules allow | Planned (#147) |
+| Logic modules | Memory, latch, gate, schedule, pulse extender, edge detector, threshold, long delay, player detector and counter | Planned (#110 to #117, #31, #30) |
 
 ## UX principles
 

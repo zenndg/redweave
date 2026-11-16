@@ -5,6 +5,7 @@ O mapa da documentação. As respostas em [`perguntas/`](perguntas/README.md) s�
 | Documento | O que tem |
 |---|---|
 | [`decisoes.md`](decisoes.md) | O resumo do que foi decidido |
+| [`itens.md`](itens.md) | O catálogo de todos os itens do mod: nome, ID, família, o que faz, estado e conceito |
 | [`glossario.md`](glossario.md) | A linguagem do domínio: rede, nó, canal, sinal, Signal Modules, chip |
 | [`limites.md`](limites.md) | Todos os números: alcance, slots, canais, intervalos. As outras páginas apontam para cá |
 | [`conceito/visao.md`](conceito/visao.md) | O que o Redweave é, para quem e as fases |
@@ -25,6 +26,7 @@ O mapa da documentação. As respostas em [`perguntas/`](perguntas/README.md) s�
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:34 | Adiciona o catálogo de itens ao mapa (pergunta 705). |
 | Zennd | 2026-11-12 17:20 | Troca a lógica pelos Signal Modules no glossário (pergunta 308). |
 | Marcelo Fabiano | 2026-11-10 11:45 | Adiciona o roteiro de teste manual ao mapa. |
 | Marcelo Fabiano | 2026-11-10 08:09 | Adiciona a CI ao mapa. |
