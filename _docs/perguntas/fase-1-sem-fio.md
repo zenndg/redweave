@@ -11,6 +11,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 704 | Como fica a tela do Signal Item Sensor? | Com o inventário do dono embaixo, para ele pegar o item com o cursor e clicar no slot fantasma, com cerca de 260 px de altura. Completa a pergunta 696 |
+| 703 | O que o rótulo do Signal Item Sensor mostra? | O nome e, embaixo, `On` ou `Off` (`Ligado` ou `Desligado`) e o canal da saída, como os módulos, sem a contagem |
+| 702 | O que o clique no slot fantasma com o cursor vazio faz? | Limpa o item esperado, e o sensor desliga; a dica do slot explica. Completa a pergunta 696 |
+| 701 | Quais os padrões do Signal Item Sensor ao ser colocado? | Sem item e com quantidade 1, força 15 e saída pela borda da frente: um sensor novo nunca dispara até o dono escolher o item |
+| 700 | Quais chaves do NBT o Signal Item Sensor usa? | `item`, com o ID do item, ausente sem item; `count`; `strength`; e `output`, além das chaves comuns dos módulos. Um item desconhecido é descartado com aviso no log (regra 14). Ficam fixadas na #26 (regra 15) |
 | 699 | O que todo `prompt.md` de arte traz no começo? | Os links para a leitura do conceito do item em `_docs/funcionalidades/` e das perguntas que decidem a arte, para quem gera a imagem entender o item. Vira regra no `AGENTS.md`. Completa as perguntas 185 e 186 |
 | 698 | Em que ponto do roadmap entra o Signal Item Sensor (#148)? | Como o primeiro dos itens novos, no passo 17, antes do Signal Lock (#141), porque o desenvolvedor quer testá-lo logo. Muda a ordem da pergunta 642 |
 | 697 | Qual o visual, o `Toggle`, a comparação de itens e os testes do Signal Item Sensor? | A luz vermelha e verde dos emissores e o ícone do item esperado desenhado na placa; o `Toggle` não faz nada; compara só o tipo do item (diamante é diamante, sem olhar nome, encantamento ou dano); testes nas três fronteiras: JUnit da regra, GameTests no mundo e roteiro manual. A arte fica em `tmp/arte/signal_item_sensor/` |
@@ -699,6 +704,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:25 | Registra as respostas 700 a 704, do Signal Item Sensor. |
 | Zennd | 2026-11-16 10:56 | Registra a resposta 699, dos links de leitura nos prompts de arte. |
 | Zennd | 2026-11-16 10:11 | Registra as respostas 689 a 698, do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Registra as respostas 633 a 688: o Signal Lock, o Signal Alarm, o Signal Lamp, o Signal Keypad, o Signal Card, a proteção dos blocos, o Signal Gate e as esteiras. |
