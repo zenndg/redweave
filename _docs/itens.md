@@ -46,7 +46,7 @@ As placas de lógica, com a base comum de [`modulos-de-sinal.md`](funcionalidade
 | Weather Detector (`Detector de Clima`) | `redweave:weather_detector` | Liga a saída conforme o clima escolhido: `Rain`, `Thunder` ou `Clear` | Entregue na #108 | [`weather-detector.md`](funcionalidades/weather-detector.md) |
 | Signal Randomizer (`Sorteador de Sinal`) | `redweave:signal_randomizer` | Sorteia a saída a cada intervalo, de 0 a 15 ou só 0 e 15 | Entregue na #109 | [`signal-randomizer.md`](funcionalidades/signal-randomizer.md) |
 | Signal Item Sensor (`Sensor de Itens de Sinal`) | `redweave:signal_item_sensor` | Placa num inventário que emite a força escolhida quando ele tem exatamente a quantidade escolhida de um item; só lê, não guarda nem move itens | Entregue na #148 | [`sensor-de-itens.md`](funcionalidades/sensor-de-itens.md) |
-| Signal Lock (`Fechadura de Sinal`) | `redweave:signal_lock` | Abre só com a força exata da chave e emite a força escolhida; só o dono a retira | Planejado na #141 | [`fechadura.md`](funcionalidades/fechadura.md) |
+| Signal Lock (`Fechadura de Sinal`) | `redweave:signal_lock` | Abre só com a força exata da chave e emite a força escolhida; só o dono a retira | Entregue na #141 | [`fechadura.md`](funcionalidades/fechadura.md) |
 | Signal Alarm (`Alarme de Sinal`) | `redweave:signal_alarm` | Ao receber sinal, toca um som, mostra um texto e pulsa uma luz vermelha, pelo tempo escolhido | Planejado na #142 | [`alarme.md`](funcionalidades/alarme.md) |
 | Signal Keypad (`Teclado de Sinal`) | `redweave:signal_keypad` | Uma senha numérica, guardada só no servidor, que libera o sinal pelo tempo aberto | Planejado na #144 | [`teclado.md`](funcionalidades/teclado.md) |
 | Módulo de memória (T flip-flop) | A definir | Cada pulso na entrada alterna a saída | Planejado na #110 | — |
@@ -94,4 +94,5 @@ Alguns blocos do mod não são itens e não aparecem na aba criativa:
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:23 | Marca o Signal Lock como entregue na #141. |
 | Zennd | 2026-11-16 11:34 | Cria o catálogo de itens, com os entregues, os planejados e os talvez (pergunta 705, #150). |

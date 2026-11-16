@@ -65,7 +65,7 @@ flowchart LR
 | Phase | Theme | Delivers |
 | --- | --- | --- |
 | **1 · Wireless** (MVP, v0.1.0) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
-| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131) the Signal Pressure Plate (#132) and the Signal Item Sensor (#148), each with a wireless or redstone output; planned: the Signal Lock, Signal Alarm, Signal Lamp, Signal Keypad, Signal Card, block protection and Signal Gate (#141 to #147) |
+| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131), the Signal Pressure Plate (#132), the Signal Item Sensor (#148) and the Signal Lock (#141), each with a wireless or redstone output; planned: the Signal Alarm, Signal Lamp, Signal Keypad, Signal Card, block protection and Signal Gate (#142 to #147) |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Integrations | More mod integrations and the port to 26.x |
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |
@@ -92,7 +92,7 @@ Every item of the mod, delivered or planned. IDs, families and the concept of ea
 | Weather Detector | On with the chosen weather: rain, thunder or clear | Delivered (#108) |
 | Signal Randomizer | Draws its output at each interval | Delivered (#109) |
 | Signal Item Sensor | On when the container it sits on holds exactly the chosen amount of an item | Delivered (#148) |
-| Signal Lock | Opens only with the exact strength of its key | Planned (#141) |
+| Signal Lock | Opens only with the exact strength of its key; only its owner removes it, with the Configurator | Delivered (#141) |
 | Signal Alarm | A sound, a text and a pulsing red light when it gets a signal | Planned (#142) |
 | Signal Lamp | An LED bar in the color of its channel, as bright as the signal | Planned (#143) |
 | Signal Keypad | A numeric password, kept only on the server, that lets the signal through | Planned (#144) |

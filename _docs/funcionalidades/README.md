@@ -31,7 +31,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`botao.md`](botao.md) | 2 | O Signal Button, entregue na #131: fonte apertada pelo dono, que volta sozinha depois do tempo ligado, com a força e o tempo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`placa-de-pressao.md`](placa-de-pressao.md) | 2 | O Signal Pressure Plate, entregue na #132: fonte só no chão, ligada enquanto algo do modo (`Players`, `Passive`, `Hostile` ou `Items`) está sobre ela, com a força e o modo na tela, uma luz vermelha e verde e saída sem fio ou pela redstone |
 | [`sensor-de-itens.md`](sensor-de-itens.md) | 2 | O Signal Item Sensor, entregue na #148: uma placa num inventário que emite sinal com a quantidade exata de um item |
-| [`fechadura.md`](fechadura.md) | 2 | Conceito: O Signal Lock: abre só com a força exata da chave (#141) |
+| [`fechadura.md`](fechadura.md) | 2 | O Signal Lock, entregue na #141: abre só com a força exata da chave e só sai pelo `Wrench` do dono |
 | [`alarme.md`](alarme.md) | 2 | Conceito: O Signal Alarm: som, texto e luz pulsando ao receber sinal (#142) |
 | [`lampada.md`](lampada.md) | 2 | Conceito: O Signal Lamp: barra de LED na cor do canal (#143) |
 | [`teclado.md`](teclado.md) | 2 | Conceito: O Signal Keypad: senha numérica que libera o sinal (#144) |
@@ -44,6 +44,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 12:23 | Marca o Signal Lock como entregue na #141. |
 | Zennd | 2026-11-16 11:34 | Aponta para o catálogo de itens (pergunta 705). |
 | Zennd | 2026-11-16 11:27 | Marca o Signal Item Sensor como entregue na #148. |
 | Zennd | 2026-11-16 10:12 | Adiciona o conceito do Signal Item Sensor. |
