@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "redweave:item/signal_lamp",
+    "layer1": "redweave:item/signal_lamp_glow"
+  }
+}

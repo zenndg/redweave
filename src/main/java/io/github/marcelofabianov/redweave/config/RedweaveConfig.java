@@ -29,6 +29,9 @@ public final class RedweaveConfig {
   private static final String CHECK_TICKS_KEY = "check_ticks";
   private static final String ITEM_SENSOR = "item_sensor";
   private static final String LOCK = "lock";
+  private static final String LAMP = "lamp";
+  private static final String LIGHT_UPDATE_KEY = "min_light_update_ticks";
+  private static final String LIGHT_UPDATE_COMMENT = "Fewest ticks between Signal Lamp lights.";
   private static final String MIN_PULSE_KEY = "min_pulse_ticks";
   private static final String MAX_PULSE_KEY = "max_pulse_ticks";
   private static final String MAX_COUNT_KEY = "max_count";
@@ -100,6 +103,8 @@ public final class RedweaveConfig {
   private static final int HIGHEST_MAX_COUNT = 100_000;
   private static final int DEFAULT_SENSOR_CHECK = 10;
   private static final int MAX_SENSOR_CHECK = 100;
+  private static final int DEFAULT_LIGHT_UPDATE = 4;
+  private static final int MAX_LIGHT_UPDATE = 20;
   private static final int DEFAULT_MODULE_NAME = 16;
   private static final int DEFAULT_TOGGLES = 8;
   private static final int MIN_TOGGLES = 2;
@@ -130,6 +135,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue ITEM_SENSOR_MAX_COUNT;
   static final ModConfigSpec.IntValue ITEM_SENSOR_CHECK_TICKS;
   static final ModConfigSpec.IntValue LOCK_MIN_PULSE_TICKS;
+  static final ModConfigSpec.IntValue LAMP_MIN_LIGHT_UPDATE_TICKS;
   static final ModConfigSpec.IntValue LOCK_MAX_PULSE_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
@@ -246,6 +252,12 @@ public final class RedweaveConfig {
         builder
             .comment(MAX_LOCK_COMMENT)
             .defineInRange(MAX_PULSE_KEY, MAX_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
+    builder.pop();
+    builder.push(LAMP);
+    LAMP_MIN_LIGHT_UPDATE_TICKS =
+        builder
+            .comment(LIGHT_UPDATE_COMMENT)
+            .defineInRange(LIGHT_UPDATE_KEY, DEFAULT_LIGHT_UPDATE, 1, MAX_LIGHT_UPDATE);
     builder.pop();
     builder.push(INVERTER);
     BURNOUT_TOGGLES =

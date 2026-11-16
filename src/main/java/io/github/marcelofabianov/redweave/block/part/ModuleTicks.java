@@ -64,6 +64,18 @@ final class ModuleTicks {
     part.setPowered(output.isOn());
   }
 
+  /**
+   * A signal given only by the part itself, never sighted on a channel, as the Signal Lamp gives to
+   * its block of support (answer 653): the space and its neighbors wake only when it changes.
+   */
+  static void give(PartSpaceBlockEntity space, ModulePart part, Signal output) {
+    if (part.emitted() != output.strength()) {
+      emit(space, part, output);
+      space.getLevel().updateNeighborsAt(space.getBlockPos(), space.getBlockState().getBlock());
+    }
+    part.setPowered(output.isOn());
+  }
+
   private static BlockLocation locationOf(PartSpaceBlockEntity space) {
     return BlockLocations.of(space.getLevel(), space.getBlockPos());
   }

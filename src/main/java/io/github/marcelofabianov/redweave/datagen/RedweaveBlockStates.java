@@ -102,6 +102,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     nodeModel(NODE + OUT_OF_RANGE_SUFFIX, NODE_FRONT + OUT_OF_RANGE_SUFFIX);
     partSpaceModel();
     CableModels.register(models());
+    LampModels.register(models(), itemModels());
     itemModels().basicItem(RedweaveItems.SIGNAL_NODE.get());
     configuratorModels();
     remoteModels();

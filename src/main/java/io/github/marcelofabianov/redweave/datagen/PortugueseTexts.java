@@ -76,6 +76,7 @@ final class PortugueseTexts {
     LeverPortugueseTexts.addTo(add);
     ButtonPortugueseTexts.addTo(add);
     LockPortugueseTexts.addTo(add);
+    LampPortugueseTexts.addTo(add);
     PressurePlatePortugueseTexts.addTo(add);
     ItemSensorPortugueseTexts.addTo(add);
   }

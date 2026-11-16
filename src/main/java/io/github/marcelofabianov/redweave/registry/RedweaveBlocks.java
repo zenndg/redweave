@@ -70,6 +70,7 @@ public final class RedweaveBlocks {
                       .noCollission()
                       .noLootTable()
                       .strength(NODE_HARDNESS)
+                      .lightLevel(PartSpaceBlock::lightOf)
                       .pushReaction(PushReaction.DESTROY)));
 
   private RedweaveBlocks() {}

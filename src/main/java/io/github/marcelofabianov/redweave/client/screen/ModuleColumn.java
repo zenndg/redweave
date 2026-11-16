@@ -49,11 +49,23 @@ final class ModuleColumn {
       Choosing choosing,
       Runnable edge,
       Runnable channel) {
+    connection(buttons, now, row, choosing, TimerScreenTexts.EDGE, edge, channel);
+  }
+
+  /** The same choice, with another name for the edge, as `None` of the Signal Lamp (650). */
+  static void connection(
+      List<TimerButton> buttons,
+      Connection now,
+      Box row,
+      Choosing choosing,
+      String edgeKey,
+      Runnable edge,
+      Runnable channel) {
     boolean onChannel = choosing.picking() || !now.isEdge();
     buttons.add(
         new TimerButton(
             new Box(row.x() + CONTROL_X, row.y(), EDGE_WIDTH, ROW_HEIGHT),
-            Component.translatable(TimerScreenTexts.EDGE),
+            Component.translatable(edgeKey),
             lookOf(!onChannel, choosing.owner()),
             edge));
     buttons.add(
