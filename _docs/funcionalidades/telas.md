@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock e Signal Lamp. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock, Signal Lamp e Signal Alarm. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -297,6 +297,22 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 
 Em português, `Lâmpada de Sinal`, `Ligada`, `Desligada`, `Luz`, `Força`, `Intensidade`, `Controle`, `Modo`, `Manter`, `Pulso` e `Nenhum` (pergunta 720).
 
+## Tela do Signal Alarm
+
+Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas dos módulos, sem botão para tocar: o alarme toca pela entrada, e o `Toggle` o silencia (perguntas 643 e 649). O comportamento está em [`alarme.md`](alarme.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Alarm` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 643 |
+| Esquerda | `Ringing` grande, em vermelho, ou `Quiet` apagado, e embaixo `Duration`, com `−` e `+`; a passagem do mouse mostra os ticks | 648, 740 e 743 |
+| `Heard by` | Um botão largo que passa por `Owner`, `Network` e `Everyone`, curtos para caber no botão | 645, 741 e 743 |
+| `Rings` | Os toques, de 1 a `alarm.max_repeats`, entre `−` e `+` | 646, 737 e 742 |
+| `Interval` | O intervalo entre os toques, entre `−` e `+`, com Shift para 1 s; a passagem do mouse mostra os ticks | 646 e 742 |
+| `Input` | A entrada: `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 643 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura | 400 |
+
+Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o intervalo, e o `−` dela para nesse mínimo (pergunta 740). Em português, `Alarme de Sinal`, `Tocando`, `Quieto`, `Quem ouve`, `Dono`, `Rede`, `Todos`, `Toques`, `Intervalo`, `Duração` e `Entrada` (pergunta 743).
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -307,6 +323,7 @@ Em português, `Lâmpada de Sinal`, `Ligada`, `Desligada`, `Luz`, `Força`, `Int
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:19 | Adiciona a Tela do Signal Alarm (perguntas 643, 645, 646, 648, 737, 740, 742 e 743). |
 | Zennd | 2026-11-16 13:19 | Adiciona a Tela do Signal Lamp (perguntas 650, 651, 656 e 720). |
 | Zennd | 2026-11-16 12:23 | Adiciona a Tela do Signal Lock, sem a prancha (perguntas 636, 637, 640 e 712). |
 | Zennd | 2026-11-16 11:27 | Adiciona a Tela do Signal Item Sensor, sem a prancha (perguntas 696, 702 e 704). |

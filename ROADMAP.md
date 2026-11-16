@@ -120,7 +120,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 18. [x] Signal Lock: a lock that only opens with the exact strength of its key, owner-only removal (#141 · questions 633 to 642)
 19. [x] Signal Lamp: a multipart LED bar in the color of its channel, with the light level of the strength it gets, an optional control channel (`Hold` or `Pulse`) and the strength it emits when lit set on its screen (#143 · questions 650 to 658)
 20. [x] Configurator copy for every item: `Copy` copies the settings of the node and of every Signal Module and pastes them only on an item of the same type and owner, carrying its network and channels; the lock and the keypad are never copied (#154 · questions 722 to 736)
-21. [ ] Signal Alarm: a note block sound, a text and a pulsing red light when it gets a signal, for a time its owner chooses (#142 · questions 643 to 649)
+21. [ ] Signal Alarm: a double note block sound, a text and a pulsing red light when it gets a signal, up to 10 rings, for a time and for whom its owner chooses (#142 · questions 643 to 649 and 737 to 744)
 22. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)
 23. [ ] Signal Card: an access card its owner links to locks, keypads and gates (#145 · questions 668 to 671)
 24. [ ] Block protection: the blocks of a door, chosen by the owner, protected by its lock or keypad (#146 · questions 672 to 676)

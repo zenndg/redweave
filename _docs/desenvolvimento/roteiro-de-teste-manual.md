@@ -545,10 +545,35 @@ Entregue com a issue #154 (perguntas 722 a 736). Use uma rede sua, uma segunda r
 | 340 | Faça Shift + clique no ar; depois copie uma alavanca, salve, saia e volte ao mundo | `Copy cleared`; depois do recarregamento, o tooltip ainda mostra `Copy: Signal Lever` |
 | 341 | Troque o idioma para Português e repita uma cópia, uma colagem e a recusa da fechadura | `Copiado: Alavanca de Sinal`, `Colado`, `Os canais foram limpos: a rede não está disponível.` e `Este item não pode ser copiado.` |
 
+## Fase 2: o Signal Alarm
+
+Entregue com a issue #142 (perguntas 643 a 649 e 737 a 744). Use uma rede sua, duas alavancas, um Signal Remote, um Configurator e um segundo player. Para ver bem a lâmpada, faça à noite: `/time set midnight`.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 342 | Pegue o Signal Alarm na aba criativa e coloque-o num bloco | A base de cobre, a grade do alto-falante, a lâmpada de alerta apagada e nenhuma seta na frente |
+| 343 | Ponha uma alavanca atrás dele e ligue | Toca o `pling` duplo 3 vezes, a cada 1 s; `Alarm <nome>: Ringing...` em vermelho na action bar; a lâmpada pisca em vermelho por 5 s e para, mesmo com a alavanca ligada (perguntas 738 a 740) |
+| 344 | Desligue e ligue a alavanca | Toca de novo (pergunta 648) |
+| 345 | Enquanto toca, use o `Toggle` do Configurator | `<nome>: Silenced`, e o alarme para até a alavanca desligar (pergunta 649) |
+| 346 | No `Open`, aperte o `+` de `Rings` até 10, com o `Interval` em 1 s | A `Duration` sobe junto até 10 s, e o `−` dela não desce abaixo disso (pergunta 740) |
+| 347 | Dispare o alarme | 10 toques, um por segundo (pergunta 737) |
+| 348 | Suba o `Interval` para 2 s; depois ponha a `Duration` acima do mínimo | A `Duration` vai a 20 s; acima do mínimo, a lâmpada continua piscando depois do último toque |
+| 349 | Passe o `Heard by` por `Owner`, `Network` e `Everyone` | O texto cabe no botão nas três opções (pergunta 743) |
+| 350 | Em `Owner`, dispare com um segundo player perto; em `Everyone`, de novo | Em `Owner`, só você ouve e vê o texto; em `Everyone`, o segundo player também (pergunta 645) |
+| 351 | Em `Network`, dê ao segundo player um Signal Remote ligado à rede do alarme e dispare | O segundo player ouve e vê o texto (pergunta 741) |
+| 352 | Afaste-se mais de 16 blocos e dispare | Você não ouve nem vê o texto (`alarm.range`) |
+| 353 | Ponha a entrada no canal Red, com uma alavanca no Red na mesma rede | Ligar essa alavanca faz o alarme tocar |
+| 354 | Desligue a rede no Terminal e use o `Toggle` num alarme tocando | Ele silencia mesmo com a rede `Offline` (pergunta 744) |
+| 355 | Com o segundo player, abra a tela | Só leitura |
+| 356 | Copie um alarme com o Configurator e cole em outro | As configurações ficam iguais, e o segundo não toca (pergunta 727) |
+| 357 | Salve e recarregue com o alarme tocando | Ele continua e para no fim (pergunta 744) |
+| 358 | Troque o idioma para Português | `Alarme de Sinal`, `Alarme <nome>: Disparando...`, `Tocando`/`Quieto`, `Quem ouve`, `Dono`/`Rede`/`Todos`, `Toques`, `Duração` e `Silenciado` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:21 | Adiciona a seção do Signal Alarm, passos 342 a 358. |
 | Zennd | 2026-11-16 14:00 | Adiciona os passos 331 a 341, da cópia de todos os itens da #154. |
 | Zennd | 2026-11-16 13:19 | Adiciona os passos 315 a 330, do Signal Lamp. |
 | Zennd | 2026-11-16 12:24 | Adiciona a seção do Signal Lock, passos 297 a 314 (#141). |
