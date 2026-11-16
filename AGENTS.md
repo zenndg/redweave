@@ -15,6 +15,7 @@ Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com
 - **Números:** ficam em `_docs/limites.md`. As outras páginas apontam para lá.
 - **Perguntas:** ficam em `_docs/perguntas/`, com um arquivo por fase. Recomendação de pergunta pendente não vale como decidida.
 - **Decisões:** o resumo do que foi decidido fica em `_docs/decisoes.md`.
+- **Itens:** o catálogo de itens fica em `_docs/itens.md`, com a seção `Items` do `README.md`; todo item novo, mudado ou planejado atualiza os dois no mesmo PR (pergunta 705).
 - **Histórico:** todo `.md` em `_docs/` termina com uma tabela de histórico de modificações, e quem altera o arquivo adiciona uma linha no topo dela. Fora de `_docs/`, os `.md` não têm essa tabela.
 - **Imagens:** ficam em `_docs/imagens/`.
 - **Arte do mod:** toda tela, ícone, item e bloco tem textura, e o desenvolvedor gera cada imagem numa ferramenta de IA. O agente cria `tmp/arte/{id}/`, com o ID do item, bloco ou tela, como `tmp/arte/configurator/`, e escreve ali o `prompt.md`. O desenvolvedor deixa a imagem pronta no mesmo diretório, e o agente a confere (grade, paleta e silhueta) antes de levá-la ao mod (perguntas 185 e 186). Todo `prompt.md` começa com os links para a leitura do conceito do item em `_docs/funcionalidades/` e das perguntas que decidem a arte, para quem gera a imagem entender o item (pergunta 699).

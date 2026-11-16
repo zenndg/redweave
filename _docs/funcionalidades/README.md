@@ -1,6 +1,6 @@
 # Funcionalidades
 
-Uma página por funcionalidade, escrita antes do código e com as decisões fechadas (regra 9 do `AGENTS.md`). Cada página entra pela issue da funcionalidade.
+Uma página por funcionalidade, escrita antes do código e com as decisões fechadas (regra 9 do `AGENTS.md`). Cada página entra pela issue da funcionalidade. O resumo de cada item, com o ID e o estado, está no catálogo [`itens.md`](../itens.md).
 
 | Fase | Funcionalidades |
 |---|---|
@@ -44,6 +44,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 11:34 | Aponta para o catálogo de itens (pergunta 705). |
 | Zennd | 2026-11-16 11:27 | Marca o Signal Item Sensor como entregue na #148. |
 | Zennd | 2026-11-16 10:12 | Adiciona o conceito do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Adiciona os conceitos de #141 a #147. |
