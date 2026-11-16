@@ -234,6 +234,26 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Config e padrões do alarme | Faixas no config; 3 toques, 1 s, 5 s, `Dono` | 742 |
 | Textos do alarme | Curtos no botão; `Silenciado`; rótulo com o estado | 743 |
 | Resto do alarme | `Toggle` offline, fora do contador, luz em sincronia, NBT | 744 |
+| Materiais das receitas | Só do jogo puro, com pelo menos uma redstone em cada | 745 |
+| Itens com receita agora | Só os 17 já entregues | 746 |
+| Receita do Network Controller | Deepslate polido, cobre, redstone, olho do ender e bloco de redstone; dá 1 | 747 |
+| Receita do Network Terminal | Deepslate polido, cobre, painel de vidro, pérola do ender e redstone; dá 1 | 748 |
+| Receita do Signal Node | Cobre, redstone, deepslate polido e pérola do ender; dá 2 | 749 |
+| Receita do Signal Cable branco | Lã branca, cobre e redstone; dá 8; completa a 520 | 750 |
+| Receita do Configurator | Duas barras de cobre na diagonal e a redstone na ponta; dá 1 | 751 |
+| Receita do Signal Remote | Cobre nos lados, painel de vidro, pérola do ender e redstone; dá 1 | 752 |
+| Forma das receitas dos módulos | O item do jogo de cada módulo em cima, cobre, redstone e cobre, e três deepslates polidos; dá 1 | 753 |
+| Receita do Signal Timer | Relógio na forma da 753 | 754 |
+| Receita do Signal Inverter | Tocha de redstone na forma da 753 | 755 |
+| Receita do Weather Detector | Para-raios na forma da 753 | 756 |
+| Receita do Signal Randomizer | Liberador na forma da 753 | 757 |
+| Receitas do Lever, do Button, do Pressure Plate e da Lamp | Alavanca, botão de pedra, placa de pressão de pedra e lâmpada de redstone na forma da 753 | 758 |
+| Receita do Signal Item Sensor | Comparador na forma da 753 | 759 |
+| Receita do Signal Lock | Gancho de armadilha na forma da 753 | 760 |
+| Receita do Signal Alarm | Bloco musical na forma da 753 | 761 |
+| Cabos na receita de tingir | Só o cabo branco em volta do corante; muda a 506 | 762 |
+| Receita de tingir de branco | Removida; ficam 15 receitas de tingir; muda a 563 | 763 |
+| Redstone nas receitas de tingir | A regra da 745 vale só para fabricar; tingir fica sem redstone solta | 764 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -527,7 +547,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Implementação do multipart | ~~Própria, só para cabos~~; mudada pela 511 | 503 |
 | Arranjo dos 2 cabos | Um em cada face do espaço, de qualquer cor | 504 |
 | Nome do cabo físico | `Signal Cable`, `redweave:signal_cable`, `Cabo de Sinal` | 505 |
-| Tingir o Signal Cable | 8 cabos e 1 corante dão 8 cabos da cor; o branco volta ao branco | 506 |
+| Tingir o Signal Cable | ~~8 cabos e 1 corante dão 8 cabos da cor; o branco volta ao branco~~; mudada pela 762: só 8 cabos brancos em volta do corante | 506, 762 |
 | Cabo e pó do jogo | O cabo se liga ao pó como componente, de qualquer cor | 507 |
 | O que o cabo energiza | Como o pó do jogo: o bloco de apoio e o bloco para onde aponta | 508 |
 | Cálculo do sinal do cabo | Por trecho de uma cor, num passo só, sem cascata (regra 18) | 509 |
@@ -584,7 +604,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `powered` dos módulos | Salvo nos 4, numa regra só na base | 560 |
 | Cor do cabo no item | `redweave:cable_color`, com a chave da cor; o branco fica sem | 561 |
 | Receitas de tingir | Pelo datagen | 562 |
-| ID das receitas de tingir | `redweave:<cor>_signal_cable` | 563 |
+| ID das receitas de tingir | `redweave:<cor>_signal_cable`; mudada pela 763: sem a `white_signal_cable` | 563, 763 |
 | Nome do cabo tingido | Com a cor; o branco é `Signal Cable`; as 16 na aba criativa | 564 |
 | Cabo e pó do jogo | O sinal perde 1 na passagem, como de pó para pó | 565 |
 | Cabo, nó e módulo na curva interna | O nó lê o cabo como o apoio, e o cabo lê o nó; o módulo, só pela borda que aponta para o cabo | 566 |
@@ -720,6 +740,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |
 | Zennd | 2026-11-16 15:18 | Registra as decisões 737 a 744, do Signal Alarm. |
 | Zennd | 2026-11-16 13:35 | Registra as decisões 731 a 736. |
 | Zennd | 2026-11-16 13:30 | Registra as decisões 722 a 730, da cópia de todos os itens. |
