@@ -657,6 +657,16 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Teletransporte perto do portão | Bloqueado para quem não é autorizado | 686 |
 | Família do portão | O controlador é um Signal Module de transformação | 687 |
 | Esteiras | Um talvez, sem planejamento | 688 |
+| Receptor de Itens | Só as funções de sinal; sem guardar nem mover itens (regra 2) | 689 |
+| Origem dos itens do sensor | O inventário vizinho, sem guardar nada | 690 |
+| Nome do sensor | `Signal Item Sensor` (`Sensor de Itens de Sinal`) | 691 |
+| Disparo do sensor | Exatamente N itens, somando todos os slots | 692 |
+| Teto do sensor | `item_sensor.max_count` 3456 | 693 |
+| Onde fica o sensor | Placa grudada no inventário; recusa sem inventário | 694 |
+| Leitura do sensor | A cada `item_sensor.check_ticks` (10) | 695 |
+| Saída e tela do sensor | Borda ou canal, força 1 a 15, slot fantasma, quantidade e `7 / 10` | 696 |
+| Visual e comparação do sensor | Luz e ícone do item; `Toggle` sem efeito; só o tipo do item | 697 |
+| Ordem do sensor | Primeiro dos itens novos, no passo 17, antes do Lock | 698 |
 
 Não há perguntas pendentes da concepção.
 
@@ -664,6 +674,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:11 | Registra as decisões 689 a 698, do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Registra as decisões 633 a 688, dos itens novos de #141 a #147 e das esteiras. |
 | Zennd | 2026-11-16 08:13 | Registra a decisão 632. |
 | Zennd | 2026-11-16 08:01 | Registra as decisões 627 a 631, da família dos emissores. |

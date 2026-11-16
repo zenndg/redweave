@@ -33,6 +33,8 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Conferência do Signal Pressure Plate ligado | 20 ticks (1 s), de 2 a 200: de quanto em quanto tempo uma placa ligada procura de novo o que está sobre ela; desligada, ela não procura (pergunta 607) | `pressure_plate.check_ticks` | 2 |
 | Pulso mínimo do `Toggle` do Signal Lock | 2 ticks; o padrão de uma fechadura nova é 20 ticks, 1 s (pergunta 640) | `lock.min_pulse_ticks` | 2 |
 | Pulso máximo do `Toggle` do Signal Lock | 200 ticks, 10 s (pergunta 640) | `lock.max_pulse_ticks` | 2 |
+| Quantidade máxima do Signal Item Sensor | 3456, de 1 a 100000 (pergunta 693) | `item_sensor.max_count` | 2 |
+| Leitura do Signal Item Sensor | A cada 10 ticks, de 2 a 100 (pergunta 695) | `item_sensor.check_ticks` | 2 |
 | Alcance do Signal Alarm | 16 blocos, de 4 a 32 (pergunta 646) | `alarm.range` | 2 |
 | Repetições máximas do Signal Alarm | 5, até 10 (pergunta 646) | `alarm.max_repeats` | 2 |
 | Intervalo mínimo do som do Signal Alarm | 20 ticks, 1 s (pergunta 646) | `alarm.min_interval_ticks` | 2 |
@@ -61,6 +63,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:12 | Adiciona os limites do Signal Item Sensor (perguntas 693 e 695). |
 | Zennd | 2026-11-16 09:34 | Adiciona os limites do Signal Lock, do Signal Alarm, do Signal Lamp, do Signal Keypad, do Signal Card, da proteção dos blocos e do Signal Gate (perguntas 640 a 686). |
 | Zennd | 2026-11-15 15:08 | Leva a força ao Signal Pressure Plate e explica a conferência da placa ligada (pergunta 607). |
 | Zennd | 2026-11-15 14:26 | Adiciona a conferência do Signal Pressure Plate (pergunta 607). |

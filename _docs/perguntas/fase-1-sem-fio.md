@@ -11,6 +11,16 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 698 | Em que ponto do roadmap entra o Signal Item Sensor (#148)? | Como o primeiro dos itens novos, no passo 17, antes do Signal Lock (#141), porque o desenvolvedor quer testá-lo logo. Muda a ordem da pergunta 642 |
+| 697 | Qual o visual, o `Toggle`, a comparação de itens e os testes do Signal Item Sensor? | A luz vermelha e verde dos emissores e o ícone do item esperado desenhado na placa; o `Toggle` não faz nada; compara só o tipo do item (diamante é diamante, sem olhar nome, encantamento ou dano); testes nas três fronteiras: JUnit da regra, GameTests no mundo e roteiro manual. A arte fica em `tmp/arte/signal_item_sensor/` |
+| 696 | Qual a saída e a tela do Signal Item Sensor? | Saída pela borda da frente ou por um canal, com a força de 1 a 15 (padrão 15). Na tela do dono: um slot fantasma em que ele clica com o item para escolher, sem consumir o item; a quantidade com `−` e `+` (Shift muda 10); a força e a saída; e a contagem atual, como `7 / 10` |
+| 695 | Com que frequência o Signal Item Sensor lê o inventário? | A cada `item_sensor.check_ticks` (padrão 10, de 2 a 100), no config (regras 3 e 18); a rede só é avaliada quando a saída muda; com o chunk descarregado, a contagem vale 0 (regra 6) |
+| 694 | Onde o Signal Item Sensor fica e como lê? | Uma parte de placa do multipart, grudada em qualquer face de um bloco com inventário (baú, barril e os de outros mods, pela capability de itens do NeoForge), que lê só o bloco de apoio, sem mexer em nada. Num bloco sem inventário, a colocação é recusada com `This needs a container.` |
+| 693 | Qual o teto da quantidade esperada do Signal Item Sensor? | `item_sensor.max_count`, com 3456 de padrão (um baú duplo de itens de pilha 64), de 1 a 100000 no config, para inventários grandes de outros mods; o mínimo na tela é 1. Não há teto de uma pilha, porque o baú soma vários slots |
+| 692 | Quando o Signal Item Sensor dispara? | Com exatamente N itens do tipo esperado no inventário, somando todos os slots; com mais ou com menos, a saída desliga |
+| 691 | Qual o nome do Signal Item Sensor? | `Signal Item Sensor`, ID `redweave:signal_item_sensor`, `Sensor de Itens de Sinal` em português: "sensor" deixa claro que ele só lê |
+| 690 | De onde o Signal Item Sensor conta os itens? | Do inventário vizinho, o bloco onde a placa está grudada: um baú, um barril ou qualquer inventário, inclusive de outros mods. O sensor não guarda itens |
+| 689 | Quais funções do Receptor de Itens proposto entram no Redweave? | Só as de sinal: o item esperado, a quantidade esperada, emitir a força definida quando batem e a configuração só pelo dono com o Configurator. Saem o slot próprio, a tela pública de depósito, o filtro de entrada, o depósito parcial, a retirada por quem depositou, a entrada e a saída por automação, o `Auto reject` e as permissões de retirada, porque são armazenamento e logística de itens (regra 2) e trazem riscos de posse e de duplicação. O item vira um sensor que lê um inventário vizinho |
 | 688 | As esteiras entram no Redweave? | Ficam como um talvez, sem planejamento: transportar itens ou entidades esbarra na regra 2 (Só sinal). Os itens novos também ficam na aba criativa (pergunta 601) |
 | 687 | Como ficam a família, a arte e os testes do Signal Gate? | O controlador é um Signal Module de transformação, com a entrada por canal e a saída por canal ou borda. A arte fica em `tmp/arte/signal_gate/`. Testes nas três fronteiras: JUnit das regras, GameTests da colisão e da formação, e roteiro manual |
 | 686 | O que acontece com o teletransporte perto do Signal Gate? | Fica bloqueado: o teletransporte de uma entidade não autorizada, por pérola do ender, enderman ou fruta do coro, é cancelado quando o destino está a até `gate.teleport_block_range` (4, de 1 a 8) blocos do campo de um portão ativo. Uma entidade autorizada se teletransporta normalmente, e paredes longe do portão ficam com os mods de proteção |
@@ -688,6 +698,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:11 | Registra as respostas 689 a 698, do Signal Item Sensor. |
 | Zennd | 2026-11-16 09:34 | Registra as respostas 633 a 688: o Signal Lock, o Signal Alarm, o Signal Lamp, o Signal Keypad, o Signal Card, a proteção dos blocos, o Signal Gate e as esteiras. |
 | Zennd | 2026-11-16 08:13 | Registra a resposta 632, do limite da família dos emissores. |
 | Zennd | 2026-11-16 08:01 | Registra as respostas 627 a 631, da família dos emissores. |

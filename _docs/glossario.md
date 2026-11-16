@@ -35,6 +35,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Signal Gate | `signal_gate_controller` | `Portão de Sinal` em português: uma moldura com um campo que só deixa passar quem se enquadra nas regras; não teletransporta (perguntas 677 a 687, [`portao.md`](funcionalidades/portao.md)) |
 | Signal Keypad | `signal_keypad` | `Teclado de Sinal` em português: um Signal Module que libera o sinal com uma senha numérica (perguntas 659 a 667, [`teclado.md`](funcionalidades/teclado.md)) |
 | Signal Lamp | `signal_lamp` | `Lâmpada de Sinal` em português: uma barra de LED do multipart, na cor do seu canal, com a intensidade da força recebida (perguntas 650 a 658, [`lampada.md`](funcionalidades/lampada.md)) |
+| Signal Item Sensor | `signal_item_sensor` | `Sensor de Itens de Sinal` em português: uma placa grudada num inventário que emite a força escolhida quando ele tem exatamente a quantidade escolhida de um item. Só lê, não guarda nem move itens (perguntas 689 a 698, [`sensor-de-itens.md`](funcionalidades/sensor-de-itens.md)) |
 | Signal Lock | `signal_lock` | `Fechadura de Sinal` em português: um Signal Module que só abre com a força exata da chave (perguntas 633 a 642, [`fechadura.md`](funcionalidades/fechadura.md)) |
 | Proteção dos blocos | — | Os blocos que um Signal Lock ou Signal Keypad protege contra explosão, quebra por outros players e pistão (perguntas 672 a 676, [`protecao.md`](funcionalidades/protecao.md)) |
 | Signal Button | `signal_button` | `Botão de Sinal` em português: um Signal Module de fonte, apertado pelo player, que volta sozinho depois do tempo escolhido na tela, com uma luz vermelha desligado e verde ligado e a saída pela redstone ou por um canal. Só o dono o aperta, pela mão ou pelo `Toggle`, e a força, de 1 a 15, e o tempo ligado ficam na tela. Entrou na #131 (perguntas 548 a 556 e 588 a 600) |
@@ -65,6 +66,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 10:12 | Adiciona o Signal Item Sensor (pergunta 691). |
 | Zennd | 2026-11-16 09:34 | Adiciona o Signal Alarm, o Signal Card, o Signal Gate, o Signal Keypad, o Signal Lamp, o Signal Lock e a proteção dos blocos (perguntas 633 a 687). |
 | Zennd | 2026-11-16 08:13 | Limita os Signal Emitters aos módulos acionados por um gatilho (pergunta 632). |
 | Zennd | 2026-11-16 08:01 | Adiciona os Signal Emitters (pergunta 627). |
