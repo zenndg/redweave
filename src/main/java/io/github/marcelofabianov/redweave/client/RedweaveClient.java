@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.client;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
+import io.github.marcelofabianov.redweave.block.part.AlarmPart;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
@@ -17,6 +18,7 @@ import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PressurePlatePart;
 import io.github.marcelofabianov.redweave.block.part.RandomizerPart;
 import io.github.marcelofabianov.redweave.block.part.TimerPart;
+import io.github.marcelofabianov.redweave.client.screen.AlarmScreen;
 import io.github.marcelofabianov.redweave.client.screen.ButtonScreen;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
@@ -88,6 +90,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.ITEM_SENSOR.get(), ItemSensorScreen::new);
     event.register(RedweaveMenus.LOCK.get(), LockScreen::new);
     event.register(RedweaveMenus.LAMP.get(), LampScreen::new);
+    event.register(RedweaveMenus.ALARM.get(), AlarmScreen::new);
   }
 
   /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
@@ -128,7 +131,8 @@ public final class RedweaveClient {
             ModulePart.models(PressurePlatePart.ID, PressurePlatePart.LOOKS),
             ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS),
             ModulePart.models(LockPart.ID, LockPart.LOOKS),
-            ModulePart.models(LampPart.ID, LampPart.LOOKS))
+            ModulePart.models(LampPart.ID, LampPart.LOOKS),
+            ModulePart.models(AlarmPart.ID, AlarmPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }

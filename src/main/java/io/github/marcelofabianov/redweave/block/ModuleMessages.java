@@ -14,6 +14,7 @@ public final class ModuleMessages {
   private static final String PLATE = "message." + RedweaveMod.MOD_ID + ".signal_pressure_plate.";
   private static final String SENSOR = "message." + RedweaveMod.MOD_ID + ".signal_item_sensor.";
   private static final String LOCK = "message." + RedweaveMod.MOD_ID + ".signal_lock.";
+  private static final String ALARM = "message." + RedweaveMod.MOD_ID + ".signal_alarm.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
@@ -32,6 +33,8 @@ public final class ModuleMessages {
   public static final String PRESSURE_PLATE_MODE = PLATE + "mode";
   public static final String ITEM_SENSOR_NOTHING_TO_TOGGLE = SENSOR + "nothing_to_toggle";
   public static final String LOCK_UNLOCKED = LOCK + "unlocked";
+  public static final String ALARM_RING = ALARM + "ring";
+  public static final String ALARM_SILENCED = ALARM + "silenced";
 
   private ModuleMessages() {}
 }

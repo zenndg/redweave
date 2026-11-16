@@ -1,0 +1,221 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "east": {
+          "texture": "#edge"
+        },
+        "north": {
+          "texture": "#edge"
+        },
+        "south": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#front"
+        },
+        "west": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        2,
+        13
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            6.0,
+            6.0,
+            7.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            6.0,
+            6.0,
+            7.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            6.0,
+            6.0,
+            7.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            6.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            6.0,
+            6.0,
+            7.0
+          ]
+        }
+      },
+      "from": [
+        5,
+        2,
+        5
+      ],
+      "to": [
+        11,
+        3,
+        11
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            7.0,
+            4.0,
+            11.0,
+            5.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            7.0,
+            4.0,
+            11.0,
+            5.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            7.0,
+            4.0,
+            11.0,
+            5.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            7.0,
+            0.0,
+            11.0,
+            4.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            7.0,
+            4.0,
+            11.0,
+            5.0
+          ]
+        }
+      },
+      "from": [
+        6,
+        3,
+        6
+      ],
+      "to": [
+        10,
+        4,
+        10
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            12.0,
+            7.0,
+            14.0,
+            9.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            12.0,
+            7.0,
+            14.0,
+            9.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            12.0,
+            7.0,
+            14.0,
+            9.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            12.0,
+            5.0,
+            14.0,
+            7.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            12.0,
+            7.0,
+            14.0,
+            9.0
+          ]
+        }
+      },
+      "from": [
+        4,
+        2,
+        10
+      ],
+      "to": [
+        6,
+        4,
+        12
+      ]
+    }
+  ],
+  "textures": {
+    "edge": "redweave:block/signal_timer_edge",
+    "front": "redweave:block/signal_alarm_front",
+    "lamp": "redweave:block/signal_alarm_lamp",
+    "particle": "redweave:block/signal_timer_edge",
+    "parts": "redweave:block/signal_alarm_parts"
+  }
+}

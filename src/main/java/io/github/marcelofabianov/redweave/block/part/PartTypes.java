@@ -28,6 +28,7 @@ public final class PartTypes {
           Map.entry(RedweaveItems.SIGNAL_ITEM_SENSOR.getId(), ItemSensorPart::load),
           Map.entry(RedweaveItems.SIGNAL_LOCK.getId(), LockPart::load),
           Map.entry(RedweaveItems.SIGNAL_LAMP.getId(), LampPart::load),
+          Map.entry(RedweaveItems.SIGNAL_ALARM.getId(), AlarmPart::load),
           Map.entry(RedweaveItems.SIGNAL_CABLE.getId(), CablePart::load));
 
   private PartTypes() {}
