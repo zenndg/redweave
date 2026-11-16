@@ -14,7 +14,6 @@ import org.slf4j.Logger;
  * the ticks left to a button turned off.
  */
 final class ButtonSave {
-  static final String OUTPUT = "output";
 
   private static final String ON = "on";
   private static final String INTERVAL = "interval";
