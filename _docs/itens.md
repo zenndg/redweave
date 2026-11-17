@@ -2,7 +2,7 @@
 
 O catálogo de todos os itens do Redweave: os entregues, os planejados e os que ficaram como talvez, com uma linha por item. Cada linha dá o nome em inglês e em português, o ID, a família, o que o item faz e o estado, e aponta para a página de conceito, onde estão as regras completas (pergunta 705). Os termos são os do [`glossario.md`](glossario.md), as páginas de conceito estão em [`funcionalidades/`](funcionalidades/README.md), e as respostas em [`perguntas/`](perguntas/README.md) prevalecem sobre este catálogo.
 
-Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do [`README.md`](../README.md) no mesmo PR (pergunta 705). Todo item entregue fica na aba criativa do Redweave, para os testes, com ou sem receita (pergunta 601). As receitas dos itens entregues estão em [Receitas](#receitas) (#157); as dos itens planejados ainda não foram decididas.
+Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do [`README.md`](../README.md) no mesmo PR (pergunta 705). Todo item entregue fica na aba criativa do Redweave, para os testes, com ou sem receita (pergunta 601). As receitas dos itens entregues estão em [Receitas](#receitas) (#157); as dos itens planejados ainda não foram decididas. Todo Signal Module com saída, menos o Signal Timer e o Signal Lock, tem o delay na saída, de 0 a 15 s, ajustado na tela (#171 e #173, perguntas 830 e 849).
 
 ## Rede
 
@@ -130,6 +130,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 15:20 | O delay na saída chega aos módulos com saída, menos o Timer e o Lock (perguntas 849 e 850, #173). |
 | Zennd | 2026-11-17 13:45 | O Signal Inverter ganha a força e o delay na saída (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (#163). |
 | Zennd | 2026-11-16 23:55 | Revisa as receitas do Signal Node, do Network Controller, do Signal Remote, dos módulos e da Signal Lamp (perguntas 765 a 769, #159). |
