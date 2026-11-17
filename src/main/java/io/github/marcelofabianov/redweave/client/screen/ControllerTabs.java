@@ -11,7 +11,10 @@ import net.minecraft.resources.ResourceLocation;
 final class ControllerTabs {
   private static final int LEFT = 8;
   private static final int Y = 28;
-  private static final int WIDTH = 44;
+
+  /** Wide enough for `Components` and `Componentes` (answer 856). */
+  private static final int WIDTH = 72;
+
   private static final int HEIGHT = 18;
   private static final int GAP = 2;
   private static final int TEXT_Y = 5;
