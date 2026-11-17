@@ -302,6 +302,21 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Lâmpada desligada | Núcleo apagado e ponto vermelho na base | 823 |
 | Vidro e núcleo | Vidro fosco translúcido; barra de LED de 2 × 8 × 2 px | 825, 826 |
 | Ícone e testes da Lamp | Ícone 2D novo; GameTest da hitbox e roteiro manual | 827, 828 |
+| Passo do delay na saída | 1 s por clique, de 0 a 15 s; domínio e save em ticks | 830 |
+| Quando o delay vale | Ligar e desligar; o sinal inteiro é deslocado no tempo | 831 |
+| Pulso mais curto que o delay | Passa atrasado, inteiro e com a mesma duração | 832 |
+| Delay e os ticks fixos do Inverter | Somam; com o delay em 0, o Inverter fica como hoje | 833 |
+| Força do Inverter | De 1 a 15, padrão 15, chave `strength`, como nos emissores | 834 |
+| Burnout com delay | Conta a troca ao entrar na linha; queimar esvazia a linha | 835 |
+| Save da linha de atraso | Salva cada mudança pendente; muda a 450 | 836 |
+| Máximo do delay | `module.max_output_delay_ticks`: 300, de 0 a 1200, em segundos inteiros; 0 desliga | 837 |
+| Linha com o chunk descarregado | Guarda os ticks que faltam; o tempo só corre carregado | 838 |
+| Mudar o delay com pendentes | As pendentes mantêm o tick; a nova nunca vence antes da última | 839 |
+| Onde o delay aparece | Só na tela; o estado segue a saída real | 840 |
+| Cópia do Inverter | Leva o delay e a força, nunca a linha pendente | 841 |
+| Força com a linha | Muda na hora; a linha guarda só ligado ou desligado e os ticks | 843 |
+| Chaves do delay no NBT | `output_delay_ticks`, `delay_line` (`{on, ticks}`) e `strength` | 844 |
+| Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -788,6 +803,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:02 | Resume as respostas 830 a 844, do delay na saída, da força do Signal Inverter, do delay no roadmap e das chaves do NBT. |
 | Zennd | 2026-11-17 12:11 | Resume a resposta 829, da Signal Lamp 1 px mais baixa. |
 | Zennd | 2026-11-17 11:27 | Resume as respostas 820 a 828, do visual novo da Signal Lamp. |
 | Zennd | 2026-11-17 10:52 | Resume as respostas 801 a 819, da contagem de componentes. |

@@ -11,6 +11,21 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 844 | Quais são as chaves novas no NBT do Signal Inverter? | `output_delay_ticks`, o delay em ticks, de 0 a 300; `delay_line`, a lista das mudanças pendentes, cada uma `{on, ticks}` com os ticks que faltam; e `strength`, como nos emissores. Os mesmos nomes valem em todo módulo do item 8 |
+| 843 | Quando o dono muda a força do Signal Inverter, a saída muda quando? | Na hora: a força é ajuste, não sinal, como nos emissores. A linha de atraso guarda só ligado ou desligado e os ticks que faltam, e a força atual vale na saída |
+| 842 | Como o delay entra no `ROADMAP.md`, antes do Signal Keypad, que era o passo 27? | Como os passos 27, o delay no Signal Inverter (#171), e 28, o delay nos outros módulos com saída. O Keypad e os seguintes são renumerados, e o "Próximos" do `AGENTS.md` é atualizado no mesmo PR |
+| 841 | O `Copy` do Configurator (#154) leva o delay e a força do Signal Inverter? | Leva os dois, como as outras configurações do módulo. A linha pendente nunca é copiada |
+| 840 | Onde o delay aparece, além da tela? | Só na tela, com `Delay: 3 s` e os botões `−` e `+`. O estado `On`, `Off` ou `Burnt out` continua sendo o da saída real, e o rótulo do Configurator e o Jade não mudam |
+| 839 | O que acontece com as mudanças pendentes quando o dono muda o delay? | Mantêm o tick em que já iam sair, e só as novas usam o delay novo. Uma mudança nova nunca vence antes da última pendente, para a saída nunca sair fora de ordem |
+| 838 | Com a linha de atraso salva, como o tempo de espera conta com o chunk descarregado? | Só com o chunk carregado: o save guarda os ticks que faltam a cada mudança, e o tempo para com o chunk descarregado e continua ao carregar, como o `burnout_ticks`, sem forçar chunk (regra 6) |
+| 837 | Como fica o máximo do delay no config (regra 3)? | Uma chave comum a todo módulo com delay, `module.max_output_delay_ticks`: 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros. 0 desliga o recurso no pack |
+| 836 | O que acontece com as mudanças que esperam na linha de atraso quando o chunk descarrega ou o servidor reinicia? | A linha é salva: o NBT guarda cada mudança pendente, e ela continua ao carregar. Muda a pergunta 450 para o Signal Inverter, que salvava só o `burnout_ticks` |
+| 835 | Com o delay, o que conta como troca para o burnout do Signal Inverter? | A troca do NOT quando entra na linha de atraso. Um laço queima tão rápido quanto hoje, e a linha fica limitada pelo próprio burnout. Ao queimar, a linha é esvaziada e a saída vai a 0 |
+| 834 | Como fica a força do Signal Inverter, que hoje sempre emite 15? | Como nos emissores: ajustável de 1 a 15 com `−` e `+` na tela, padrão 15, salva na chave `strength`. Os inversores antigos abrem com 15 |
+| 833 | O delay do Signal Inverter convive como com o atraso fixo de 2 ticks, como a tocha, ou 1 tick com a entrada num canal? | Soma: a saída é o NOT da entrada com o atraso fixo e mais o delay. Com o delay em 0, o Inverter fica exatamente como hoje |
+| 832 | Um pulso mais curto que o delay faz o quê? | Passa atrasado, inteiro e com a mesma duração. A linha de atraso guarda cada mudança com o tick em que vence |
+| 831 | O delay na saída vale para quais mudanças? | Para ligar e para desligar: toda mudança da saída chega depois do delay, e o sinal inteiro é deslocado no tempo |
+| 830 | Qual é o passo do delay na saída, ajustado com `−` e `+` de 0 a 15 s? | 1 s por clique, só segundos inteiros, de 0 a 15 s. O domínio e o save guardam ticks |
 | 829 | Dá para tirar 1 px do topo da Signal Lamp? | Sim: a cúpula passa de 4 para 3 px de altura, e a lâmpada, de 6 para 5 px. O núcleo continua com 2 px e fica com 1 px de vidro por cima. A base, a faixa, a hitbox na largura e no comprimento e as texturas não mudam, e a hitbox passa a 5 px de altura. Muda as perguntas 824 e 828 |
 | 828 | Como testar o visual novo da Signal Lamp? | Um GameTest confere a hitbox nova, de 6 × 12 px e 6 px de altura, em cada face e girada. Os modelos gerados passam pelo `check-generated`, e o vidro, o brilho branco, a faixa do canal e o indicador vermelho ficam no roteiro manual **Mudada pela pergunta 829:** a hitbox tem 5 px de altura. |
 | 827 | Como fica o ícone da Signal Lamp no inventário? | Um desenho 2D novo, com a cúpula, a base e a faixa, em duas camadas como hoje: o corpo e o brilho |
@@ -391,7 +406,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 | 453 | Em que fronteiras entram os testes do Signal Inverter? | JUnit: a regra (NOT, atraso de 2 ticks, queima com a janela e a recuperação, limites) e os casos de uso. GameTests: colocar e emitir na hora, a entrada pela borda, a saída num canal lida por um nó, o laço que queima, o `Toggle` sem efeito, o dono e o NBT depois de salvar e carregar. Roteiro manual: tela, arte, textos e chunk descarregado. Na linha da pergunta 406 (#105) |
 | 452 | Como a placa do Signal Inverter mostra o estado no mundo? | Como o timer (perguntas 439 e 440): a seta centrada aponta para a saída e fica vermelha com B ligado, e o entalhe atrás marca A. No meio, o símbolo do NOT, um triângulo com um círculo na ponta. Queimado, a seta fica cinza-escura. São 3 texturas do topo (apagado, ligado e queimado) e o ícone, gerados por IA a partir de `tmp/arte/signal_inverter/` (#105) |
 | 451 | Como fica a Tela do Signal Inverter? | Como a do timer, sem o relógio: a mesma janela de 340 × 168 e as partes comuns (nome, rede no rodapé e cadeado). À esquerda, um diagrama grande A → NOT → B, com o estado de cada lado; à direita, `Input` e `Output`, com `Edge` ou `Channel` e a grade de cores. A prancha é gerada por IA a partir de `tmp/arte/tela_do_signal_inverter/` (#105) |
-| 450 | O que o Signal Inverter guarda no NBT, além das chaves comuns dos módulos? | `input` e `output`, como `edge` ou a chave da cor do canal, e `burnout_ticks`, os ticks que faltam de queima, para um reinício não soltar um laço queimado na hora. A linha de atraso e o histórico de trocas não são salvos: ao carregar, a saída é lida de novo da entrada. Completa a pergunta 411 (#105) |
+| 450 | O que o Signal Inverter guarda no NBT, além das chaves comuns dos módulos? | `input` e `output`, como `edge` ou a chave da cor do canal, e `burnout_ticks`, os ticks que faltam de queima, para um reinício não soltar um laço queimado na hora. A linha de atraso e o histórico de trocas não são salvos: ao carregar, a saída é lida de novo da entrada. Completa a pergunta 411 (#105) **Mudada pela pergunta 836:** a linha de atraso passa a ser salva. |
 | 449 | Que chaves, valores e faixas a queima do Signal Inverter tem no config? | `inverter.burnout_toggles`: 8, de 2 a 64; `inverter.burnout_window_ticks`: 60, de 20 a 1200; `inverter.burnout_ticks`: 160, de 20 a 6000. Os padrões são os da tocha, e entram no `limites.md` (regra 3). Completa a pergunta 445 (#105) |
 | 448 | Que estados a tela e o rótulo do Signal Inverter mostram? | O estado da saída B: `On` (15) ou `Off` (0), e `Burnt out` enquanto queimado. Em português, `Ligado`, `Desligado` e `Queimado`. Completa a pergunta 417 (#105) |
 | 447 | Qual é o nome em português do Signal Inverter, e o aviso do `Toggle`? | `Inversor de Sinal`, na linha de `Temporizador de Sinal` e `Nó de Sinal` (perguntas 368 e 410), com o aviso `O Inversor de Sinal não tem o que alternar.`. O ID continua `signal_inverter`. Completa a pergunta 443 (#105) |
@@ -830,6 +845,11 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:10 | Registra as respostas 843 e 844, da força com a linha e das chaves do NBT. |
+| Zennd | 2026-11-17 13:02 | Registra a resposta 842, do delay no `ROADMAP.md`. |
+| Zennd | 2026-11-17 12:55 | Registra as respostas 838 a 841, do tempo com o chunk descarregado, da mudança do delay, da tela e da cópia. |
+| Zennd | 2026-11-17 12:48 | Registra as respostas 834 a 837, da força, do burnout, do save e do config do delay. |
+| Zennd | 2026-11-17 12:40 | Registra as respostas 830 a 833, do delay na saída dos módulos. |
 | Zennd | 2026-11-17 12:11 | Registra a resposta 829, da Signal Lamp 1 px mais baixa, e marca a 824 e a 828 como mudadas. |
 | Zennd | 2026-11-17 11:27 | Registra as respostas 820 a 828, do visual novo da Signal Lamp, e marca a 650, a 652 e a 721 como mudadas. |
 | Zennd | 2026-11-17 10:52 | Registra as respostas 801 a 819, da contagem de componentes e do cadastro dos módulos na rede. |
