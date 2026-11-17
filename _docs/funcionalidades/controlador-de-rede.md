@@ -23,7 +23,7 @@ O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves
 
 ## Rótulo
 
-Com o Configurator na mão, o Controller mostra um rótulo flutuante de duas linhas, no alcance `configurator.label_range`, como os nós: o estado da rede e o número de nós, como `Online · 3 nodes`, e embaixo `■ nome da rede`, na cor dela. O detalhe fica no [Configurator](configurador.md#rótulo-sobre-os-nós) (pergunta 773).
+Com o Configurator na mão, o Controller mostra um rótulo flutuante de duas linhas, no alcance `configurator.label_range`, como os nós: o estado da rede e o número de componentes, como `Online · 3 components`, e embaixo `■ nome da rede`, na cor dela. O detalhe fica no [Configurator](configurador.md#rótulo-sobre-os-nós) (perguntas 773 e 804).
 
 ## Clicar
 
@@ -106,6 +106,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 11:11 | O rótulo conta os componentes (pergunta 804). |
 | Zennd | 2026-11-17 09:59 | Inclui o rótulo sobre o Controller (pergunta 773). |
 | Zennd | 2026-11-16 23:55 | A receita troca o olho do ender pela pérola do ender na #159 (pergunta 768). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 747). |
