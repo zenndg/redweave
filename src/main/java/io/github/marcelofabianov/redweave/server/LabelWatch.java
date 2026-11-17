@@ -1,9 +1,11 @@
 package io.github.marcelofabianov.redweave.server;
 
+import io.github.marcelofabianov.redweave.application.ControllerLabels;
 import io.github.marcelofabianov.redweave.application.LabelChanges;
 import io.github.marcelofabianov.redweave.application.ModuleLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabel;
 import io.github.marcelofabianov.redweave.application.NodeLabels;
+import io.github.marcelofabianov.redweave.block.NetworkControllerBlockEntity;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
@@ -12,6 +14,7 @@ import io.github.marcelofabianov.redweave.block.part.Part;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.config.NeoForgeLabelRange;
 import io.github.marcelofabianov.redweave.domain.network.ModuleId;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -31,10 +34,10 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 /**
  * Which labels each player with the Configurator in the main hand has, of the nodes, of the Signal
- * Modules and of the Signal Cables, to send only what changed (answers 268, 269, 417 and 525, and
- * rule 18). It reads only loaded chunks, so no chunk loads (rule 6), and keeps nothing in the
- * saves. Each label goes with its place, so the labels of the parts of one space do not sit on each
- * other (answer 547).
+ * Modules, of the Signal Cables and of the Network Controllers, to send only what changed (answers
+ * 268, 269, 417, 525 and 773, and rule 18). It reads only loaded chunks, so no chunk loads (rule
+ * 6), and keeps nothing in the saves. Each label goes with its place, so the labels of the parts of
+ * one space do not sit on each other (answer 547).
  */
 public final class LabelWatch {
   private final RedweaveServer server;
@@ -43,6 +46,8 @@ public final class LabelWatch {
       new HashMap<>();
   private final Map<UUID, LabelChanges<PartSpot, NodeLabelsUpdate.CableLine>> cableHolders =
       new HashMap<>();
+  private final Map<UUID, LabelChanges<NetworkId, NodeLabelsUpdate.ControllerLine>>
+      controllerHolders = new HashMap<>();
 
   LabelWatch(RedweaveServer server) {
     this.server = server;
@@ -52,14 +57,15 @@ public final class LabelWatch {
   private record Placed<L>(L label, NodeLabelsUpdate.Place place) {}
 
   /**
-   * The nodes, the modules and the cables near a player, with their spots and the labeled parts per
-   * space.
+   * The nodes, the modules, the cables and the controllers near a player, with their spots and the
+   * labeled parts per space.
    */
   private record Near(
       Map<NodeId, PartSpot> nodes,
       Map<ModuleId, PartSpot> modules,
       Map<ModuleId, ModuleLabel> moduleLabels,
       Map<PartSpot, CablePart> cables,
+      Map<NetworkId, BlockPos> controllers,
       Map<BlockPos, Integer> labeled) {
     void count(BlockPos space) {
       labeled.merge(space, 1, Integer::sum);
@@ -71,27 +77,46 @@ public final class LabelWatch {
     }
   }
 
+  /** What changed for a player since the last look, of each kind of label. */
+  private record Deltas(
+      LabelChanges.Delta<NodeId, Placed<NodeLabel>> nodes,
+      LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules,
+      LabelChanges.Delta<PartSpot, NodeLabelsUpdate.CableLine> cables,
+      LabelChanges.Delta<NetworkId, NodeLabelsUpdate.ControllerLine> controllers) {
+    boolean isEmpty() {
+      return nodes.isEmpty() && modules.isEmpty() && cables.isEmpty() && controllers.isEmpty();
+    }
+  }
+
   /** What to send to the player now, or nothing when nothing changed. */
   public Optional<NodeLabelsUpdate> update(ServerPlayer player) {
     UUID id = player.getUUID();
     if (!player.getMainHandItem().is(RedweaveItems.CONFIGURATOR.get())) {
-      boolean had =
-          nodeHolders.remove(id) != null
-              | moduleHolders.remove(id) != null
-              | cableHolders.remove(id) != null;
-      return had ? Optional.of(NodeLabelsUpdate.clear()) : Optional.empty();
+      return letGo(id);
     }
     Near near = near(player, new NeoForgeLabelRange().getAsInt());
-    LabelChanges.Delta<NodeId, Placed<NodeLabel>> nodes =
-        nodeHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(nodeLabels(near));
-    LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules =
-        moduleHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(moduleLabels(near));
-    LabelChanges.Delta<PartSpot, NodeLabelsUpdate.CableLine> cables =
-        cableHolders.computeIfAbsent(id, holder -> new LabelChanges<>()).next(cableLabels(near));
-    if (nodes.isEmpty() && modules.isEmpty() && cables.isEmpty()) {
-      return Optional.empty();
-    }
-    return Optional.of(updateOf(nodes, modules, cables));
+    Deltas deltas =
+        new Deltas(
+            changesOf(nodeHolders, id).next(nodeLabels(near)),
+            changesOf(moduleHolders, id).next(moduleLabels(near)),
+            changesOf(cableHolders, id).next(cableLabels(near)),
+            changesOf(controllerHolders, id).next(controllerLabels(near)));
+    return deltas.isEmpty() ? Optional.empty() : Optional.of(updateOf(deltas));
+  }
+
+  /** The player let the Configurator go: a clear of all, once, if they had labels. */
+  private Optional<NodeLabelsUpdate> letGo(UUID id) {
+    boolean had =
+        nodeHolders.remove(id) != null
+            | moduleHolders.remove(id) != null
+            | cableHolders.remove(id) != null
+            | controllerHolders.remove(id) != null;
+    return had ? Optional.of(NodeLabelsUpdate.clear()) : Optional.empty();
+  }
+
+  private static <K, V> LabelChanges<K, V> changesOf(
+      Map<UUID, LabelChanges<K, V>> holders, UUID id) {
+    return holders.computeIfAbsent(id, holder -> new LabelChanges<>());
   }
 
   private Map<NodeId, Placed<NodeLabel>> nodeLabels(Near near) {
@@ -112,7 +137,7 @@ public final class LabelWatch {
     return labels;
   }
 
-  /** The color and the strength of each cable, as `15 Red · 12` (answer 525). */
+  /** The color and the strength of each cable, as `15 · 12` (answers 525 and 770). */
   private static Map<PartSpot, NodeLabelsUpdate.CableLine> cableLabels(Near near) {
     Map<PartSpot, NodeLabelsUpdate.CableLine> labels = new LinkedHashMap<>();
     near.cables()
@@ -124,27 +149,40 @@ public final class LabelWatch {
     return labels;
   }
 
-  private static NodeLabelsUpdate updateOf(
-      LabelChanges.Delta<NodeId, Placed<NodeLabel>> nodes,
-      LabelChanges.Delta<ModuleId, Placed<ModuleLabel>> modules,
-      LabelChanges.Delta<PartSpot, NodeLabelsUpdate.CableLine> cables) {
-    List<UUID> gone = new ArrayList<>(nodes.gone().stream().map(NodeId::value).toList());
-    modules.gone().forEach(module -> gone.add(module.value()));
+  /** The network, its state and its nodes of each controller with a network (answer 773). */
+  private Map<NetworkId, NodeLabelsUpdate.ControllerLine> controllerLabels(Near near) {
+    Map<NetworkId, NodeLabelsUpdate.ControllerLine> labels = new LinkedHashMap<>();
+    near.controllers()
+        .forEach((network, pos) ->
+            server
+                .network(network)
+                .map(ControllerLabels::of)
+                .ifPresent(label ->
+                    labels.put(
+                        network, NodeLabelsUpdate.ControllerLine.of(network.value(), pos, label))));
+    return labels;
+  }
+
+  private static NodeLabelsUpdate updateOf(Deltas deltas) {
+    List<UUID> gone = new ArrayList<>(deltas.nodes().gone().stream().map(NodeId::value).toList());
+    deltas.modules().gone().forEach(module -> gone.add(module.value()));
+    deltas.controllers().gone().forEach(network -> gone.add(network.value()));
     return new NodeLabelsUpdate(
         false,
-        nodes.changed().entrySet().stream()
+        deltas.nodes().changed().entrySet().stream()
             .map(entry ->
                 NodeLabelsUpdate.Label.of(
                     entry.getKey().value(), entry.getValue().place(), entry.getValue().label()))
             .toList(),
-        modules.changed().entrySet().stream()
+        deltas.modules().changed().entrySet().stream()
             .map(entry ->
                 NodeLabelsUpdate.ModuleLine.of(
                     entry.getKey().value(), entry.getValue().place(), entry.getValue().label()))
             .toList(),
-        List.copyOf(cables.changed().values()),
+        List.copyOf(deltas.cables().changed().values()),
+        List.copyOf(deltas.controllers().changed().values()),
         gone,
-        cables.gone());
+        deltas.cables().gone());
   }
 
   /** A player who left takes nothing with them. */
@@ -152,14 +190,19 @@ public final class LabelWatch {
     nodeHolders.remove(player);
     moduleHolders.remove(player);
     cableHolders.remove(player);
+    controllerHolders.remove(player);
   }
 
-  /** The nodes and modules in loaded chunks within the reach of the player, in a sphere. */
+  /**
+   * The nodes, the modules, the cables and the controllers in loaded chunks within the reach of the
+   * player, in a sphere.
+   */
   private static Near near(ServerPlayer player, int range) {
     ServerLevel level = player.serverLevel();
     BlockPos center = player.blockPosition();
     Near near =
         new Near(
+            new LinkedHashMap<>(),
             new LinkedHashMap<>(),
             new LinkedHashMap<>(),
             new LinkedHashMap<>(),
@@ -188,6 +231,9 @@ public final class LabelWatch {
       }
       if (entity instanceof PartSpaceBlockEntity space) {
         addParts(space, near);
+      } else if (entity instanceof NetworkControllerBlockEntity controller
+          && controller.network().isPresent()) {
+        near.controllers().put(controller.network().get(), entity.getBlockPos());
       }
     }
   }

@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -23,8 +24,9 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 /**
- * The labels over the nodes go only to the player who holds the Configurator, only for the nodes
- * within reach, and only what changed (configurador.md, answers 268, 269 and 272).
+ * The labels over the nodes and the Network Controllers go only to the player who holds the
+ * Configurator, only for what is within reach, and only what changed (configurador.md, answers 268,
+ * 269, 272 and 773).
  */
 @GameTestHolder(RedweaveMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -40,6 +42,11 @@ public final class NodeLabelGameTests {
   private static final String SENT_WITHOUT = "Without the Configurator no label should go";
   private static final String NOT_CLEARED = "Letting the Configurator go should clear the labels";
   private static final String SENT_FAR = "A node beyond the reach should have no label";
+  private static final String NO_CONTROLLER = "The holder should get the label of the controller";
+  private static final String CONTROLLER_AGAIN = "An unchanged controller should not go again";
+  private static final String CONTROLLER_FAR = "A controller beyond the reach should have no label";
+  private static final String NO_SLOT = "The label should have the color of the enabled slot";
+  private static final int SLOT = 3;
 
   private NodeLabelGameTests() {}
 
@@ -94,6 +101,54 @@ public final class NodeLabelGameTests {
     helper.succeed();
   }
 
+  @GameTest(template = EMPTY)
+  public static void theHolderGetsTheLabelOfTheControllerOnce(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    ServerPlayer holder = holder(helper);
+    hold(holder, configurator());
+
+    Optional<NodeLabelsUpdate> first = server().labelWatch().update(holder);
+
+    helper.assertTrue(first.map(update -> has(update, network)).orElse(false), NO_CONTROLLER);
+    helper.assertTrue(server().labelWatch().update(holder).isEmpty(), CONTROLLER_AGAIN);
+    helper.succeed();
+  }
+
+  @GameTest(template = EMPTY)
+  public static void aControllerBeyondTheReachHasNoLabel(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NetworkId network = NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    ServerPlayer holder = holder(helper);
+    holder.setPos(holder.position().add(FAR_AWAY, 0, FAR_AWAY));
+    hold(holder, configurator());
+
+    Optional<NodeLabelsUpdate> update = server().labelWatch().update(holder);
+
+    helper.assertFalse(update.map(found -> has(found, network)).orElse(false), CONTROLLER_FAR);
+    helper.succeed();
+  }
+
+  /** The label of a node goes with the color of its first enabled slot (answer 772). */
+  @GameTest(template = EMPTY)
+  public static void theLabelHasTheColorOfTheEnabledSlot(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
+    NodeId node = NodeScene.placeNode(helper, owner, STONE, Direction.UP);
+    NodeScene.enableSlot(owner, node, SLOT);
+    ServerPlayer holder = holder(helper);
+    hold(holder, configurator());
+
+    Optional<NodeLabelsUpdate> update = server().labelWatch().update(holder);
+
+    boolean colored =
+        update.stream()
+            .flatMap(found -> found.labels().stream())
+            .anyMatch(label -> label.node().equals(node.value()) && label.slot() == SLOT);
+    helper.assertTrue(colored, NO_SLOT);
+    helper.succeed();
+  }
+
   private static NodeId nodeOnANetwork(GameTestHelper helper) {
     Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
     NodeScene.placeController(helper, owner, CONTROLLER_FLOOR, CONTROLLER);
@@ -102,6 +157,11 @@ public final class NodeLabelGameTests {
 
   private static boolean has(NodeLabelsUpdate update, NodeId node) {
     return update.labels().stream().anyMatch(label -> label.node().equals(node.value()));
+  }
+
+  private static boolean has(NodeLabelsUpdate update, NetworkId network) {
+    return update.controllers().stream()
+        .anyMatch(controller -> controller.network().equals(network.value()));
   }
 
   private static ServerPlayer holder(GameTestHelper helper) {

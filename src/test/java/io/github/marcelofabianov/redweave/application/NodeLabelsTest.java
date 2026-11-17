@@ -8,13 +8,17 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.O
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.network;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.marcelofabianov.redweave.domain.network.Direction;
+import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
  * The floating label over a node, with the Configurator in hand: the network, with its color, and
- * the node, without the channels (answers 268 and 274 to 276).
+ * the node, without the channels, after a square in the color of its first enabled slot (answers
+ * 268, 274 to 276 and 772).
  */
 class NodeLabelsTest {
   private static final String NODE_NAME = "Lamp";
@@ -32,7 +36,7 @@ class NodeLabelsTest {
   void aNodeWithNoNetworkSaysSo() {
     NodeLabel label = NodeLabels.of(NODE, Optional.empty());
 
-    assertEquals(new NodeLabel(DEFAULT_NAME, Optional.empty()), label);
+    assertEquals(new NodeLabel(DEFAULT_NAME, Optional.empty(), Optional.empty()), label);
   }
 
   @Test
@@ -40,7 +44,8 @@ class NodeLabelsTest {
     NodeLabel label = NodeLabels.of(NODE, Optional.of(withNode()));
 
     NodeLabel expected =
-        new NodeLabel(NODE_NAME, Optional.of(new NodeLabel.NetworkPart(NAME, COLOR)));
+        new NodeLabel(
+            NODE_NAME, Optional.of(new NodeLabel.NetworkPart(NAME, COLOR)), Optional.empty());
     assertEquals(expected, label);
   }
 
@@ -50,5 +55,33 @@ class NodeLabelsTest {
     NodeLabel label = NodeLabels.of(NODE, Optional.of(network()));
 
     assertEquals(Optional.empty(), label.network());
+  }
+
+  /** The square has the color of the first enabled slot, in the order of the colors (772). */
+  @Test
+  void theSquareHasTheColorOfTheFirstEnabledSlot() {
+    Network network = withNode();
+    enable(network, ChannelColor.LIME);
+    enable(network, ChannelColor.ORANGE);
+
+    NodeLabel label = NodeLabels.of(NODE, Optional.of(network));
+
+    assertEquals(Optional.of(ChannelColor.ORANGE), label.slot());
+  }
+
+  /** A slot set up but disabled does not count, even before an enabled one (772). */
+  @Test
+  void aDisabledSlotGivesNoSquare() {
+    Network network = withNode();
+    network.setUpSlot(OWNER, NODE, ChannelColor.WHITE.ordinal(), Direction.INPUT, Face.UP);
+
+    NodeLabel label = NodeLabels.of(NODE, Optional.of(network));
+
+    assertEquals(Optional.empty(), label.slot());
+  }
+
+  private static void enable(Network network, ChannelColor channel) {
+    network.setUpSlot(OWNER, NODE, channel.ordinal(), Direction.INPUT, Face.UP);
+    network.enableSlot(OWNER, NODE, channel.ordinal());
   }
 }

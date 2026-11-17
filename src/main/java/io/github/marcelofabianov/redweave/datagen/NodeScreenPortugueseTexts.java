@@ -14,8 +14,8 @@ final class NodeScreenPortugueseTexts {
   private static final String FACE_TOOLTIP = FACE_CLICK + FACE_DRAG;
   private static final String CHANNELS_ACTIVE = "%s de %s canais ativos";
   private static final String STATUS = "Status";
-  private static final String ENABLED = "Ativo";
-  private static final String DISABLED = "Inativo";
+  private static final String ENABLED = "Ligado";
+  private static final String DISABLED = "Desligado";
   private static final String SIGNAL = "Sinal";
   private static final String READ_ONLY = "Só o dono de %s pode alterar este nó.";
   private static final String NOT_IN_A_NETWORK = "Este nó não está numa rede.";

@@ -12,8 +12,8 @@ final class NodeScreenEnglishTexts {
   private static final String FACE_TOOLTIP = "Click a face to choose it. Drag to turn the block.";
   private static final String CHANNELS_ACTIVE = "%s of %s channels active";
   private static final String STATUS = "Status";
-  private static final String ENABLED = "Enabled";
-  private static final String DISABLED = "Disabled";
+  private static final String ENABLED = "On";
+  private static final String DISABLED = "Off";
   private static final String SIGNAL = "Signal";
   private static final String READ_ONLY = "Only the owner of %s can change this node.";
   private static final String NOT_IN_A_NETWORK = "This node is not in a network.";

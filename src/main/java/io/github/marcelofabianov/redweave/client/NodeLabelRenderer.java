@@ -5,9 +5,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ChannelNames;
+import io.github.marcelofabianov.redweave.menu.NetworkTexts;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.CableLine;
+import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ControllerLine;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.Label;
 import io.github.marcelofabianov.redweave.network.NodeLabelsUpdate.ModuleLine;
 import io.github.marcelofabianov.redweave.network.ReceivedLabels;
@@ -33,8 +35,10 @@ import org.joml.Matrix4f;
 /**
  * Draws the label over each node the server sent, while the player holds the Configurator in the
  * main hand, facing the camera like a name tag, and dimmer behind walls. Two lines: the network,
- * small, after a square in its color, and the node, a little bigger (answers 268 and 274 to 276).
- * The Signal Modules get theirs too (answer 417), and the Signal Cables one line (answer 525).
+ * small, after a square in its color, and the node, a little bigger, after a square in the color of
+ * its first enabled slot, or none (answers 268, 274 to 276 and 772). The Signal Modules get theirs
+ * too (answer 417), the Signal Cables one line (answer 525), and the Network Controllers two lines
+ * over the block (answer 773).
  */
 @EventBusSubscriber(modid = RedweaveMod.MOD_ID, value = Dist.CLIENT)
 public final class NodeLabelRenderer {
@@ -45,6 +49,9 @@ public final class NodeLabelRenderer {
   private static final float NODE_SCALE = NAME_TAG * 0.7F;
   private static final double CENTER = 0.5;
   private static final double ABOVE = 0.75;
+
+  /** Over a whole block, as the Network Controller, the label starts a little above its top. */
+  private static final double ABOVE_BLOCK = 1.25;
 
   /**
    * How far a label moves from the center of a shared space toward the side of its part (answer
@@ -88,6 +95,9 @@ public final class NodeLabelRenderer {
     for (CableLine cable : ReceivedLabels.cables()) {
       drawCable(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, cable);
     }
+    for (ControllerLine controller : ReceivedLabels.controllers()) {
+      drawController(event.getPoseStack(), event.getCamera(), minecraft.font, buffers, controller);
+    }
     buffers.endBatch();
   }
 
@@ -104,15 +114,16 @@ public final class NodeLabelRenderer {
             : Component.translatable(NodeScreenTexts.STATE_NO_NETWORK);
     int square = label.hasNetwork() ? colorOf(label.color()) : NO_NETWORK_SQUARE;
     Line top = new Line(network, NETWORK_SCALE, NETWORK_LINE_UP, square);
-    Line bottom = new Line(Component.literal(label.nodeName()), NODE_SCALE, NODE_LINE_UP, 0);
+    int slot = channelOf(label.slot()).map(color -> OPAQUE | ChannelColors.argb(color)).orElse(0);
+    Line bottom = new Line(Component.literal(label.nodeName()), NODE_SCALE, NODE_LINE_UP, slot);
     Vec3 anchor = anchorOf(label.place());
     drawLine(pose, camera, font, buffers, anchor, top);
     drawLine(pose, camera, font, buffers, anchor, bottom);
   }
 
   /**
-   * Over a Signal Module: its name, and below, smaller, its state and the channel of its output,
-   * after a square in the color of the channel (answer 417).
+   * Over a Signal Module: its name, and below, smaller, its state and the number of the channel of
+   * its output, after a square in the color of the channel (answers 417 and 770).
    */
   private static void drawModule(
       PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, ModuleLine module) {
@@ -131,8 +142,9 @@ public final class NodeLabelRenderer {
   }
 
   /**
-   * Over a Signal Cable, in one line: a square in its color, the color as the channels show it, and
-   * its strength, as `15 Red · 12` (answer 525). A number outside the colors shows no label.
+   * Over a Signal Cable, in one line: a square in its color, the number of the color as the
+   * channels show it, and its strength, as `15 · 12` (answers 525 and 770). A number outside the
+   * colors shows no label.
    */
   private static void drawCable(
       PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, CableLine cable) {
@@ -153,6 +165,26 @@ public final class NodeLabelRenderer {
         buffers,
         anchorOf(cable.place()),
         new Line(text, NODE_SCALE, NODE_LINE_UP, square));
+  }
+
+  /**
+   * Over a Network Controller: the state of its network and how many nodes it has, small, and below
+   * the name of the network, a little bigger, after a square in its color (answer 773).
+   */
+  private static void drawController(
+      PoseStack pose, Camera camera, Font font, MultiBufferSource buffers, ControllerLine line) {
+    Component state =
+        NetworkTexts.state(NetworkTexts.stateOf(line.state()))
+            .copy()
+            .append(SEPARATOR)
+            .append(NetworkTexts.nodes(line.nodes()));
+    Line top = new Line(state, NETWORK_SCALE, NETWORK_LINE_UP, 0);
+    Line bottom =
+        new Line(Component.literal(line.name()), NODE_SCALE, NODE_LINE_UP, colorOf(line.color()));
+    BlockPos pos = line.pos();
+    Vec3 anchor = new Vec3(pos.getX() + CENTER, pos.getY() + ABOVE_BLOCK, pos.getZ() + CENTER);
+    drawLine(pose, camera, font, buffers, anchor, top);
+    drawLine(pose, camera, font, buffers, anchor, bottom);
   }
 
   /**
