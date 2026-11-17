@@ -149,7 +149,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Limite de redes | `network.max_per_player`, 10, conferido ao colocar o controlador | 145 |
 | Nome do estado sem controlador | `Unplaced`, `Não colocada` | 146 |
 | Log do controlador | Só mudanças, em buffer de `log.size` linhas, só em memória | 147 |
-| Hora do log | Data e hora reais do servidor, por uma porta | 148 |
+| Hora do log | Data e hora reais do servidor, por uma porta; mudada pela 771: só o horário | 148, 771 |
 | Posição dos nós | Só o dono vê | 149 |
 | Gráfico de 30 segundos | Substituído pelo log | 150 |
 | Quando entra o Terminal | Fase 1, antes da 0.1, depois da #20 | 151 |
@@ -255,6 +255,13 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Cabos na receita de tingir | Só o cabo branco em volta do corante; muda a 506 | 762 |
 | Receita de tingir de branco | Removida; ficam 15 receitas de tingir; muda a 563 | 763 |
 | Redstone nas receitas de tingir | A regra da 745 vale só para fabricar; tingir fica sem redstone solta | 764 |
+| Canal sem o nome da cor | Em todas as telas, rótulos e no log, `■ 01`; o nome próprio continua, `■ 01 Porta`; muda a 26, a 417 e a 525 | 770 |
+| Hora do log sem a data | Só o horário, `14:32:05`; muda a 148 | 771 |
+| Quadrado do nó no rótulo | Cor do primeiro slot habilitado, de 01 a 16; sem slot habilitado, sem quadrado | 772 |
+| Rótulo do Network Controller | Estado e número de nós em cima; `■ nome da rede` embaixo | 773 |
+| Status do slot do nó | `On`/`Off` e `Ligado`/`Desligado`, com as mesmas chaves | 774 |
+| Canal na action bar do Remote | `■` na cor do canal e o número; muda a 291 | 775 |
+| Testes da #161 | JUnit nos rótulos e no texto puro do canal; GameTest no `LabelWatch` e no `■` da action bar do Remote; o resto no roteiro manual | 776, 777 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -297,7 +304,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Redesenho dos slots | Dentro da #20 | 225 |
 | Nó novo | Todos os canais inativos; o player ativa cada um | 226 |
 | Nome do slot | Revogada pela 277 | 227, 277 |
-| Ativar e desativar | Desativar guarda direção e face; só com `Disabled` se configura (237) | 228, 237 |
+| Ativar e desativar | Desativar guarda direção e face; só com `Off` se configura (237, 774) | 228, 237, 774 |
 | Cantos da placa | Os 4 primeiros canais ativos | 229 |
 | Cópia do Configurator | Os 16 slots inteiros e o ID da rede de origem (238, 277) | 230, 238, 277 |
 | Arte da Tela do Nó com 16 cores | Prancha nova; a tela espera a arte | 231 |
@@ -306,7 +313,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Linha aberta no controlador | Só os canais ativos (277) | 234, 277 |
 | Saves de teste no formato antigo | Sem conversão; a rede é descartada e o teste usa um mundo novo | 235 |
 | Contagens do rodapé do controlador | Sem a palavra "nodes", para caber na linha | 236 |
-| Configurar um canal | Só com `Disabled`; `Enabled` trava a direção e a face | 237 |
+| Configurar um canal | Só com `Off`; `On` trava a direção e a face | 237, 774 |
 | Colar num nó sem rede | Liga o nó à rede da cópia, para quem o colocou e é dono dela | 238 |
 | Colar num nó com rede | Só aplica os slots, sem trocar a rede | 239 |
 | Contagem da cópia | Todos os canais configurados | 240 |
@@ -741,6 +748,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:45 | Resume as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, e marca a 148 como mudada. |
 | Zennd | 2026-11-16 23:40 | Resume as respostas 765 a 769, da revisão das receitas. |
 | Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |
 | Zennd | 2026-11-16 15:18 | Registra as decisões 737 a 744, do Signal Alarm. |
