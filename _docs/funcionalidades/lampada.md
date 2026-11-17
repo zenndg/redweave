@@ -52,6 +52,10 @@ A tela, com o estado e a luz à esquerda e a força, a intensidade, o controle e
 | `Toggle` | `<nome>: On` ou `<nome>: Off` (pergunta 658) |
 | Mão vazia | `Use a Configurator to open this module.`, como os outros módulos |
 
+## Delay na saída
+
+A força emitida no bloco de apoio espera o `Delay` escolhido na tela, de 0 a 15 s. A luz segue a intensidade na hora, como um mostrador, e só a saída espera (perguntas 850 e 852). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 Além das chaves comuns dos módulos, no NBT da parte (pergunta 718). Ficam fixadas na #26 (regra 15):
@@ -113,6 +117,7 @@ A arte segue as perguntas 185 e 186: o prompt em `tmp/arte/signal_lamp/`. A prim
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 12:20 | A cúpula passa a 3 px e a lâmpada, a 5 px de altura, na #169 (pergunta 829). |
 | Zennd | 2026-11-17 11:28 | Descreve o visual novo: base de cobre com a faixa do canal, cúpula de vidro fosco e núcleo branco (perguntas 798 a 800 e 820 a 828). |
 | Zennd | 2026-11-16 23:55 | A receita sai da forma comum dos módulos na #159 (pergunta 767). |

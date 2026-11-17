@@ -72,6 +72,10 @@ O desenho está em [`telas.md`](telas.md#tela-do-signal-randomizer), com a pranc
 | Campos da parte | `facing`, `front`, `powered` e `running`, fixados na #26 (regra 15). Desde a #44, são campos da parte, não estados do bloco: `facing` sai da `face` da parte no contêiner, e os outros ficam no save, dentro de `data` (perguntas 534, 559 e 560) | 488 |
 | Modelo | Como o dos outros módulos: o topo girado 0° ou 90° no UV cobre as 24 orientações | 429 |
 
+## Delay na saída
+
+A saída espera o `Delay` escolhido na tela, de 0 a 15 s. A linha guarda cada força sorteada, de 0 a 15, então no modo `Analog` a saída atrasada repete os mesmos valores, na mesma ordem. O estado segue o sorteio na hora, e só a saída espera (perguntas 850, 851 e 854). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 Além do NBT comum dos [módulos](modulos-de-sinal.md#save), o Signal Randomizer continua do ponto, como o timer (perguntas 381 e 481):
@@ -114,6 +118,7 @@ Em `tmp/arte/signal_randomizer/`: as 4 texturas do topo (a seta apagada ou acesa
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 09:59 | O rótulo mostra o canal sem o nome da cor (pergunta 770). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 757). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |

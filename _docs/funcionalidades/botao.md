@@ -83,6 +83,10 @@ Na action bar, em inglês e em português:
 | Clique de quem não é o dono | `Only the player who placed this module can change it.` | 577 e 588 |
 | Clique à mão do dono | Nenhuma: o som e a luz bastam | 585 e 588 |
 
+## Delay na saída
+
+A saída espera o `Delay` escolhido na tela, de 0 a 15 s. O tempo ligado conta do aperto, e o botão volta como hoje; a saída é o mesmo pulso, inteiro, deslocado pelo delay. A luz e o estado mudam no aperto, e o Signal Remote também passa pelo delay (perguntas 845, 846, 848 e 850). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 Além do NBT comum dos [módulos](modulos-de-sinal.md#save), dentro de `data` no contêiner `redweave:part_space`:
@@ -139,6 +143,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote aperta o botão (perguntas 781 e 789). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 08:10 | A parte e o domínio do botão passam a usar a base dos emissores (#139). |

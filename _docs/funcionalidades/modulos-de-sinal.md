@@ -140,22 +140,25 @@ O item é simples, empilha e não guarda a configuração, o nome nem o estado. 
 
 ## Delay na saída
 
-A base comum do delay, entregue com o [Signal Inverter](signal-inverter.md) na #171 e levada aos outros módulos com saída no passo 28 do `ROADMAP.md` (perguntas 830 a 844):
+A base comum do delay, entregue com o [Signal Inverter](signal-inverter.md) na #171 e levada na #173 ao Signal Lever, ao Signal Button, ao Signal Pressure Plate, ao Weather Detector, ao Signal Randomizer, ao Signal Item Sensor e à Signal Lamp. O Signal Timer e o Signal Lock não têm delay: o timer já controla quando liga, e a fechadura é segurança (perguntas 830 a 854):
 
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Faixa | De 0 a 15 s, em segundos inteiros, com `−` e `+` na tela; o padrão é 0 s, sem atraso. O domínio e o save guardam ticks | 830 e 837 |
 | Quando vale | Ao ligar e ao desligar: toda mudança da saída chega depois do delay, e o sinal inteiro é deslocado no tempo | 831 |
 | Pulso curto | Um pulso mais curto que o delay passa inteiro, atrasado e com a mesma duração | 832 |
-| Linha de atraso | Guarda só as mudanças, ligado ou desligado, com os ticks que faltam, e não o sinal de cada tick (regra 18). A força atual do módulo vale na saída, e mudar a força muda a saída na hora | 832 e 843 |
+| Linha de atraso | Guarda só as mudanças, cada uma com o sinal de 0 a 15 e os ticks que faltam, e não o sinal de cada tick (regra 18). Mudar a força reescreve as mudanças pendentes ligadas, então a saída muda na hora | 832, 843 e 854 |
+| Teto da linha | `module.max_delay_changes` mudanças, comum a todo módulo. Com a linha cheia, a mudança nova espera fora e entra quando abrir vaga, então a saída nunca fica errada para sempre | 847 |
+| Estado na hora | O estado na tela e no rótulo, e a luz dos emissores, mostram o gatilho ou a regra na hora; só a saída espera. Na Signal Lamp, a luz segue a intensidade na hora, e só a força emitida espera | 845, 851 e 852 |
+| Signal Remote | O disparo de longe num emissor passa pelo delay, como o clique | 848 |
 | Mudar o delay | As mudanças pendentes mantêm o tick em que iam sair, e só as novas usam o delay novo. Uma mudança nova nunca vence antes da última pendente, para a saída nunca sair fora de ordem | 839 |
 | Chunk descarregado | A linha é salva com os ticks que faltam, e o tempo só corre com o chunk carregado, como o `burnout_ticks`, sem forçar chunk (regra 6) | 836 e 838 |
 | Limite | `module.max_output_delay_ticks`, comum a todo módulo; um delay salvo acima dele é limitado ao máximo ao carregar, e 0 desliga o recurso no pack | 837 |
-| Onde aparece | Só na tela, como `Delay` com `−` e `+`; o estado, o rótulo e o Jade seguem a saída real | 840 |
+| Onde aparece | Só na tela, como `Delay` com `−` e `+`, na última linha antes das conexões; a moldura das telas de módulo tem 186 px de altura para caber | 840 e 853 |
 | Cópia | O `Copy` do Configurator leva o delay, nunca a linha pendente | 841 |
-| Domínio | `domain/module/OutputDelay`, o value object do delay, e `domain/module/DelayLine`, a linha | 830 a 839 |
+| Domínio | `domain/module/OutputDelay`, o value object do delay, `domain/module/DelayLine`, a linha, e `domain/module/DelayedOutput`, a saída atrasada de um módulo | 830 a 854 |
 
-Cada módulo com delay salva as chaves `output_delay_ticks`, o delay em ticks, e `delay_line`, a lista das mudanças pendentes, cada uma `{on, ticks}`. Um save sem elas abre com o delay em 0 e a linha vazia, sem migração (pergunta 844 e regra 15).
+Cada módulo com delay salva as chaves `output_delay_ticks`, o delay em ticks, e `delay_line`, a lista das mudanças pendentes, cada uma `{signal, ticks}`. Um save sem elas abre com o delay em 0 e a linha vazia, sem migração, e uma mudança `{on, ticks}` salva antes da #173 é lida com a força do módulo (perguntas 844 e 854, regra 15).
 
 ## Save
 
@@ -178,6 +181,7 @@ Cada módulo acrescenta as chaves dele. Desde a #44, os módulos são partes do 
 |---|---|---|
 | `module.name_length` | 16 caracteres, de 1 a 64 | 391 |
 | `module.max_output_delay_ticks` | 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros | 837 |
+| `module.max_delay_changes` | 32 mudanças, de 2 a 256 | 847 |
 
 Os valores ficam em [`limites.md`](../limites.md).
 
@@ -198,6 +202,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Leva o delay aos outros módulos com saída, com o sinal na linha, o teto e o estado na hora (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 13:15 | Inclui a base comum do delay na saída, com a linha de atraso, as chaves do save e o config (perguntas 830 a 844). |
 | Zennd | 2026-11-17 10:54 | Inclui a chave `registered` e aponta o cadastro na rede (perguntas 803 e 811). |
 | Zennd | 2026-11-16 23:55 | A forma comum das receitas passa a levar um Signal Node na #159 (perguntas 766 e 767). |
