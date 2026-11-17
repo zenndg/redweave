@@ -26,7 +26,8 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
-| Força do Signal Lever, do Signal Button, do Signal Pressure Plate, do Signal Item Sensor, do Signal Lock e do Signal Lamp, e a chave do Signal Lock | 1 a 15, 15 ao ser colocado (perguntas 552, 636, 701 e 719) | fixo, contrato com a redstone do jogo | 2 |
+| Delay máximo na saída de um Signal Module | 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros; 0 desliga o delay (perguntas 830 e 837) | `module.max_output_delay_ticks` | 2 |
+| Força do Signal Lever, do Signal Button, do Signal Pressure Plate, do Signal Item Sensor, do Signal Lock, do Signal Lamp e do Signal Inverter, e a chave do Signal Lock | 1 a 15, 15 ao ser colocado (perguntas 552, 636, 701, 719 e 834) | fixo, contrato com a redstone do jogo | 2 |
 | Intervalo mínimo do Signal Randomizer | 4 ticks, de 4 a 200 (pergunta 477) | `randomizer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Randomizer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 477) | `randomizer.max_interval_ticks` | 2 |
 | Tempo ligado mínimo do Signal Button | 2 ticks, de 2 a 200, nunca abaixo de 2, um passo da tela (perguntas 592 e 596) | `button.min_interval_ticks` | 2 |
@@ -64,6 +65,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:15 | Inclui o delay máximo na saída e a força do Signal Inverter (perguntas 830, 834 e 837). |
 | Zennd | 2026-11-17 10:17 | Inclui o `remote.emitter_range` e o pulso da placa acionada pelo tablet (perguntas 783 e 784). |
 | Zennd | 2026-11-16 15:18 | O máximo de toques do Signal Alarm passa a 10 (pergunta 737). |
 | Zennd | 2026-11-16 13:18 | Explica a atualização da luz do Signal Lamp e leva a força dele à linha comum (perguntas 715 e 719). |

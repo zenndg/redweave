@@ -160,11 +160,13 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do timer sem o 
 |---|---|---|
 | Topo | `Signal Inverter` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 451 |
 | Esquerda | O diagrama A → NOT → B, com cada lado aceso em vermelho quando tem sinal, e embaixo o estado de B: `● On`, `● Off` ou `● Burnt out`, em âmbar | 448 e 451 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+`, como nos emissores | 834 |
+| `Delay` | O delay em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique | 830 e 840 |
 | Conexões | `Input` e `Output`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 441 e 456 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 451 |
 | Rede `Offline` | A tela não abre, como a do nó | 402 |
 
-Em português, os rótulos são `Entrada` e `Saída`, e os estados, `Ligado`, `Desligado` e `Queimado` (perguntas 435 e 448).
+Em português, os rótulos são `Força`, `Atraso`, `Entrada` e `Saída`, e os estados, `Ligado`, `Desligado` e `Queimado` (perguntas 435 e 448). A prancha é anterior à #171 e não mostra `Strength` nem `Delay`.
 
 
 ## Tela do Weather Detector
@@ -324,6 +326,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:15 | Inclui `Strength` e `Delay` na Tela do Signal Inverter (perguntas 830, 834 e 840). |
 | Zennd | 2026-11-17 10:54 | A aba `Nodes` vira `Components`, com os Signal Modules (perguntas 808 a 815). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, o log mostra só o horário, e o status do slot é `On` ou `Off` (perguntas 770, 771, 774 e 775). |
 | Zennd | 2026-11-16 15:19 | Adiciona a Tela do Signal Alarm (perguntas 643, 645, 646, 648, 737, 740, 742 e 743). |

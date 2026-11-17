@@ -138,6 +138,25 @@ O [Signal Lock](fechadura.md) é a exceção: no survival, ninguém o quebra à 
 
 O item é simples, empilha e não guarda a configuração, o nome nem o estado. A saída vai a 0 na hora.
 
+## Delay na saída
+
+A base comum do delay, entregue com o [Signal Inverter](signal-inverter.md) na #171 e levada aos outros módulos com saída no passo 28 do `ROADMAP.md` (perguntas 830 a 844):
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Faixa | De 0 a 15 s, em segundos inteiros, com `−` e `+` na tela; o padrão é 0 s, sem atraso. O domínio e o save guardam ticks | 830 e 837 |
+| Quando vale | Ao ligar e ao desligar: toda mudança da saída chega depois do delay, e o sinal inteiro é deslocado no tempo | 831 |
+| Pulso curto | Um pulso mais curto que o delay passa inteiro, atrasado e com a mesma duração | 832 |
+| Linha de atraso | Guarda só as mudanças, ligado ou desligado, com os ticks que faltam, e não o sinal de cada tick (regra 18). A força atual do módulo vale na saída, e mudar a força muda a saída na hora | 832 e 843 |
+| Mudar o delay | As mudanças pendentes mantêm o tick em que iam sair, e só as novas usam o delay novo. Uma mudança nova nunca vence antes da última pendente, para a saída nunca sair fora de ordem | 839 |
+| Chunk descarregado | A linha é salva com os ticks que faltam, e o tempo só corre com o chunk carregado, como o `burnout_ticks`, sem forçar chunk (regra 6) | 836 e 838 |
+| Limite | `module.max_output_delay_ticks`, comum a todo módulo; um delay salvo acima dele é limitado ao máximo ao carregar, e 0 desliga o recurso no pack | 837 |
+| Onde aparece | Só na tela, como `Delay` com `−` e `+`; o estado, o rótulo e o Jade seguem a saída real | 840 |
+| Cópia | O `Copy` do Configurator leva o delay, nunca a linha pendente | 841 |
+| Domínio | `domain/module/OutputDelay`, o value object do delay, e `domain/module/DelayLine`, a linha | 830 a 839 |
+
+Cada módulo com delay salva as chaves `output_delay_ticks`, o delay em ticks, e `delay_line`, a lista das mudanças pendentes, cada uma `{on, ticks}`. Um save sem elas abre com o delay em 0 e a linha vazia, sem migração (pergunta 844 e regra 15).
+
 ## Save
 
 O NBT comum, em `snake_case` (regras 15 e 24). As chaves ficam fixadas na #26 (pergunta 411):
@@ -158,6 +177,7 @@ Cada módulo acrescenta as chaves dele. Desde a #44, os módulos são partes do 
 | Chave | Valor | Pergunta |
 |---|---|---|
 | `module.name_length` | 16 caracteres, de 1 a 64 | 391 |
+| `module.max_output_delay_ticks` | 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros | 837 |
 
 Os valores ficam em [`limites.md`](../limites.md).
 
@@ -178,6 +198,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:15 | Inclui a base comum do delay na saída, com a linha de atraso, as chaves do save e o config (perguntas 830 a 844). |
 | Zennd | 2026-11-17 10:54 | Inclui a chave `registered` e aponta o cadastro na rede (perguntas 803 e 811). |
 | Zennd | 2026-11-16 23:55 | A forma comum das receitas passa a levar um Signal Node na #159 (perguntas 766 e 767). |
 | Zennd | 2026-11-16 16:05 | As receitas dos módulos entregues entram na #157 (pergunta 753). |
