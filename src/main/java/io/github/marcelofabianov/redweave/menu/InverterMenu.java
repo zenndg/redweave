@@ -135,4 +135,14 @@ public final class InverterMenu extends AbstractContainerMenu
   public boolean inputOn() {
     return data.get(InverterScreenLayout.INPUT_ON) == 1;
   }
+
+  /** The strength, from 1 to 15 (answer 834). */
+  public int strength() {
+    return data.get(InverterScreenLayout.STRENGTH);
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(InverterScreenLayout.DELAY_SECONDS);
+  }
 }

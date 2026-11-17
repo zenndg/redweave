@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.domain.module.InverterState;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.InverterAction;
 import io.github.marcelofabianov.redweave.menu.InverterMenu;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -41,10 +42,13 @@ public final class InverterMenuGameTests {
   private static final BlockPos CONTROLLER = CONTROLLER_FLOOR.above();
   private static final float LOOK_NORTH = 180;
   private static final int MENU_ID = 1;
+  private static final int TWO_SECONDS = 2;
+  private static final int NO_DELAY = 0;
   private static final String NO_NETWORK = "A channel needs the network of the module";
   private static final String NOT_JOINED = "The owner should pick a network and a channel";
   private static final String NOT_BACK = "The owner should move the output back to its edge";
   private static final String STRANGER = "Another player should change nothing";
+  private static final String NOT_STEPPED = "The owner should step the strength and the delay";
   private static final String NOT_SHOWN = "The menu should show the state and the input";
 
   private InverterMenuGameTests() {}
@@ -95,6 +99,23 @@ public final class InverterMenuGameTests {
     helper.succeed();
   }
 
+  /** The owner steps the strength and the delay from the screen (answers 830 and 834). */
+  @GameTest(template = EMPTY)
+  public static void theOwnerStepsTheStrengthAndTheDelay(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    place(helper, owner);
+    ServerPlayer viewer = viewerAs(helper, owner);
+    InverterMenu menu = menuOf(helper, viewer);
+
+    click(menu, viewer, InverterAction.strength(false));
+    click(menu, viewer, InverterAction.delay(true));
+    click(menu, viewer, InverterAction.delay(true));
+
+    helper.assertValueEqual(menu.strength(), Signal.MAX.strength() - 1, NOT_STEPPED);
+    helper.assertValueEqual(menu.delaySeconds(), TWO_SECONDS, NOT_STEPPED);
+    helper.succeed();
+  }
+
   /** Another player sees the screen but changes nothing (answer 378). */
   @GameTest(template = EMPTY)
   public static void aStrangerChangesNothing(GameTestHelper helper) {
@@ -107,10 +128,14 @@ public final class InverterMenuGameTests {
     menu.broadcastChanges();
     click(menu, stranger, InverterAction.choose(0));
     click(menu, stranger, new InverterAction(InverterAction.Kind.OUTPUT, 1));
+    click(menu, stranger, InverterAction.strength(false));
+    click(menu, stranger, InverterAction.delay(true));
 
     InverterPart block = ModuleParts.only(helper, INVERTER, InverterPart.class);
     helper.assertFalse(menu.viewerIsOwner(), STRANGER);
     helper.assertValueEqual(menu.output(), Connection.EDGE, STRANGER);
+    helper.assertValueEqual(menu.strength(), Signal.MAX.strength(), STRANGER);
+    helper.assertValueEqual(menu.delaySeconds(), NO_DELAY, STRANGER);
     helper.assertValueEqual(
         block.module().flatMap(SignalModule::network), Optional.empty(), STRANGER);
     helper.succeed();

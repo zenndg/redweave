@@ -11,7 +11,13 @@ final class InverterScreenLayout {
   /** Whether the input had a signal on the last tick, for the diagram (answer 451). */
   static final int INPUT_ON = 5;
 
-  static final int SIZE = 6;
+  /** The strength, from 1 to 15 (answer 834). */
+  static final int STRENGTH = 6;
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 7;
+
+  static final int SIZE = 8;
 
   private InverterScreenLayout() {}
 }

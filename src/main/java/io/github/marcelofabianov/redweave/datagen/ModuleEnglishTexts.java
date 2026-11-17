@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.datagen;
 
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
+import io.github.marcelofabianov.redweave.menu.DelayScreenTexts;
 import io.github.marcelofabianov.redweave.menu.DetectorScreenTexts;
 import io.github.marcelofabianov.redweave.menu.InverterScreenTexts;
 import io.github.marcelofabianov.redweave.menu.RandomizerScreenTexts;
@@ -34,6 +35,7 @@ final class ModuleEnglishTexts {
   private static final String INVERTER_NOTHING = "Signal Inverter has nothing to toggle.";
   private static final String INVERTER_ON = "On";
   private static final String INVERTER_OFF = "Off";
+  private static final String MODULE_DELAY = "Delay";
   private static final String INVERTER_BURNT_OUT = "Burnt out";
   private static final String WEATHER_DETECTOR = "Weather Detector";
   private static final String DETECTOR_MODE_MESSAGE = "%s: %s";
@@ -78,6 +80,7 @@ final class ModuleEnglishTexts {
     add.accept(InverterScreenTexts.ON, INVERTER_ON);
     add.accept(InverterScreenTexts.OFF, INVERTER_OFF);
     add.accept(InverterScreenTexts.BURNT_OUT, INVERTER_BURNT_OUT);
+    add.accept(DelayScreenTexts.DELAY, MODULE_DELAY);
     addDetector(add);
     addRandomizer(add);
   }
