@@ -13,7 +13,10 @@ final class DetectorScreenLayout {
   /** The weather of the last tick, for the icon of the screen (answer 470). */
   static final int WEATHER = 5;
 
-  static final int SIZE = 6;
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 6;
+
+  static final int SIZE = 7;
 
   private DetectorScreenLayout() {}
 }

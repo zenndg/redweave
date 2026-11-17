@@ -68,7 +68,7 @@ public final class TimerScreen extends AbstractContainerScreen<TimerMenu> {
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     TimerDial.draw(graphics, font, leftPos + DIAL_X, topPos + DIAL_Y, menu);
     runButton().draw(graphics, font, mouse);

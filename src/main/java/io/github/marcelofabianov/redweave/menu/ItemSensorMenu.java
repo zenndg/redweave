@@ -100,6 +100,10 @@ public final class ItemSensorMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, ItemSensorAction action) {
+    if (action.kind() == ItemSensorAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != ItemSensorAction.Kind.CHOOSE) {
       ItemSensorScreenActions.apply(player, spot, action, cursorItem());
       return;
@@ -195,5 +199,10 @@ public final class ItemSensorMenu extends AbstractContainerMenu
 
   private int whole(int first) {
     return TimerScreenLayout.whole(data.get(first), data.get(first + 1));
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(ItemSensorScreenLayout.DELAY_SECONDS);
   }
 }

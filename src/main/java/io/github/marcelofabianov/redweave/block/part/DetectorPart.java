@@ -3,9 +3,12 @@ package io.github.marcelofabianov.redweave.block.part;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.module.Weather;
 import io.github.marcelofabianov.redweave.domain.module.WeatherDetector;
 import io.github.marcelofabianov.redweave.domain.module.WeatherMode;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.DetectorMenu;
 import io.github.marcelofabianov.redweave.menu.DetectorScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -27,12 +30,13 @@ import net.minecraft.world.level.Level;
  * state (answer 468). The symbol of its top is its `mode` (answer 471). The rule stays in the
  * domain.
  */
-public final class DetectorPart extends ModulePart {
+public final class DetectorPart extends ModulePart implements DelayedPart {
   public static final String ID = "weather_detector";
 
   /** The looks of the top: the symbol of each mode, with the arrow lit or not (answer 471). */
   public static final List<String> LOOKS = lookNames();
 
+  private final OutputDelaySlot delay = new OutputDelaySlot();
   private WeatherDetector detector = WeatherDetector.placed();
   private Connection output = Connection.EDGE;
 
@@ -56,7 +60,7 @@ public final class DetectorPart extends ModulePart {
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(DetectorSave.MODE, DetectorSave.OUTPUT);
+    return List.of(DetectorSave.MODE, DetectorSave.OUTPUT, OutputDelaySlot.COPIED);
   }
 
   @Override
@@ -69,6 +73,7 @@ public final class DetectorPart extends ModulePart {
   protected void readRule(CompoundTag tag) {
     detector = new WeatherDetector(DetectorSave.readMode(tag));
     output = ModuleSave.readConnection(tag, DetectorSave.OUTPUT);
+    delay.load(tag, ID, Signal.MAX);
   }
 
   private static List<String> lookNames() {
@@ -104,13 +109,17 @@ public final class DetectorPart extends ModulePart {
   protected void placeRule() {
     detector = WeatherDetector.placed();
     output = Connection.EDGE;
+    delay.place();
   }
 
   /** It reads the weather of its dimension and gives 15 while it matches its mode (459). */
   @Override
   protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
     weather = weatherOf(space.getLevel());
-    ModuleTicks.write(modules, space, this, detector.output(weather));
+    if (delay.tick(detector.output(weather))) {
+      markDirty();
+    }
+    ModuleTicks.write(modules, space, this, delay.output());
   }
 
   private static Weather weatherOf(Level level) {
@@ -121,6 +130,18 @@ public final class DetectorPart extends ModulePart {
   protected void saveRule(CompoundTag tag) {
     DetectorSave.writeMode(tag, detector.mode());
     ModuleSave.writeConnection(tag, DetectorSave.OUTPUT, output);
+    delay.save(tag);
+  }
+
+  @Override
+  public DelayedOutput delayed() {
+    return delay.delayed();
+  }
+
+  @Override
+  public void setDelay(OutputDelay next) {
+    delay.set(next);
+    changed();
   }
 
   public WeatherDetector detector() {

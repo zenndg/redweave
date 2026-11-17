@@ -101,14 +101,33 @@ public final class InverterDelayGameTests {
   public static void theLineComesBackFromTheSave(GameTestHelper helper) {
     CompoundTag tag = oldSave();
     tag.putInt(Keys.DELAY, ONE_SECOND.ticks());
-    tag.put(Keys.LINE, line(change(true, WAITING)));
+    tag.put(Keys.LINE, line(change(SEVEN, WAITING)));
 
     InverterPart loaded = InverterPart.load(Direction.DOWN, tag);
 
     helper.assertValueEqual(loaded.inverter().settings().delay(), ONE_SECOND, NOT_KEPT);
     helper.assertValueEqual(
         loaded.inverter().line().pending(),
-        List.of(new DelayLine.Pending(true, WAITING)),
+        List.of(new DelayLine.Pending(new Signal(SEVEN), WAITING)),
+        NOT_KEPT);
+    helper.succeed();
+  }
+
+  /** A change `{on, ticks}` saved by the #171 is read at the strength (answer 854, rule 15). */
+  @GameTest(template = EMPTY)
+  public static void anOlderChangeIsReadAtTheStrength(GameTestHelper helper) {
+    CompoundTag tag = oldSave();
+    tag.putInt(Keys.STRENGTH, SEVEN);
+    CompoundTag older = new CompoundTag();
+    older.putBoolean(Keys.ON, true);
+    older.putInt(Keys.TICKS, WAITING);
+    tag.put(Keys.LINE, line(older));
+
+    InverterPart loaded = InverterPart.load(Direction.DOWN, tag);
+
+    helper.assertValueEqual(
+        loaded.inverter().line().pending(),
+        List.of(new DelayLine.Pending(new Signal(SEVEN), WAITING)),
         NOT_KEPT);
     helper.succeed();
   }
@@ -118,7 +137,7 @@ public final class InverterDelayGameTests {
   public static void anInvalidDelayAndChangeAreFixed(GameTestHelper helper) {
     CompoundTag tag = oldSave();
     tag.putInt(Keys.DELAY, DAMAGED_DELAY);
-    tag.put(Keys.LINE, line(change(true, NEGATIVE)));
+    tag.put(Keys.LINE, line(change(Signal.MAX.strength(), NEGATIVE)));
 
     InverterPart loaded = InverterPart.load(Direction.DOWN, tag);
 
@@ -180,14 +199,14 @@ public final class InverterDelayGameTests {
     return line;
   }
 
-  private static CompoundTag change(boolean on, int ticks) {
+  private static CompoundTag change(int signal, int ticks) {
     CompoundTag change = new CompoundTag();
-    change.putBoolean(Keys.ON, on);
+    change.putInt(Keys.SIGNAL, signal);
     change.putInt(Keys.TICKS, ticks);
     return change;
   }
 
-  /** The keys of answers 450 and 844, written here again, so a renamed key fails (rule 15). */
+  /** The keys of answers 450, 844 and 854, written here again, so a renamed key fails (rule 15). */
   private static final class Keys {
     static final String INPUT = "input";
     static final String OUTPUT = "output";
@@ -196,6 +215,8 @@ public final class InverterDelayGameTests {
     static final String DELAY = "output_delay_ticks";
     static final String LINE = "delay_line";
     static final String ON = "on";
+    static final String SIGNAL = "signal";
+    static final String STRENGTH = "strength";
     static final String TICKS = "ticks";
 
     private Keys() {}

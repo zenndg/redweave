@@ -173,7 +173,7 @@ public final class SignalLeverGameTests {
     tag.putBoolean(Keys.ON, true);
     tag.putInt(Keys.STRENGTH, strength);
     tag.putString(Keys.OUTPUT, RED);
-    return tag;
+    return DelayKeys.addTo(tag);
   }
 
   /** The keys of the save, written here again, so a renamed key fails the test (rule 15). */

@@ -68,6 +68,10 @@ O desenho está em [`telas.md`](telas.md#tela-do-weather-detector), com a pranch
 | Campos da parte | `facing`, `front`, `powered` e `mode` (`rain`, `thunder` ou `clear`), fixados na #26 (regra 15). Desde a #44, são campos da parte, não estados do bloco: `facing` sai da `face` da parte no contêiner, e os outros ficam no save, dentro de `data` (perguntas 534, 559 e 560) | 471 |
 | Modelo | Como o dos outros módulos: o topo girado 0° ou 90° no UV cobre as 24 orientações | 429 |
 
+## Delay na saída
+
+A saída espera o `Delay` escolhido na tela, de 0 a 15 s, ao ligar e ao desligar. O estado na tela e no rótulo segue o clima na hora, e só a saída espera (perguntas 850 e 851). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 Além do NBT comum dos [módulos](modulos-de-sinal.md#save) (pergunta 467):
@@ -101,6 +105,7 @@ Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apag
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 09:59 | O rótulo mostra o canal sem o nome da cor (pergunta 770). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 756). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |

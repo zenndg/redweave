@@ -28,6 +28,9 @@ final class PressurePlateScreenData implements ContainerData {
       return ModuleScreenValues.NONE;
     }
     PressurePlatePart found = part.get();
+    if (index == PressurePlateScreenLayout.DELAY_SECONDS) {
+      return found.delayed().delay().seconds();
+    }
     return switch (index) {
       case PressurePlateScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case PressurePlateScreenLayout.ON ->

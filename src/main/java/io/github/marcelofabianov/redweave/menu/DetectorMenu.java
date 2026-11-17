@@ -70,6 +70,10 @@ public final class DetectorMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, DetectorAction action) {
+    if (action.kind() == DetectorAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != DetectorAction.Kind.CHOOSE) {
       DetectorScreenActions.apply(player, spot, action);
       return;
@@ -136,5 +140,10 @@ public final class DetectorMenu extends AbstractContainerMenu
   /** The weather of the last tick, for the icon (answer 470). */
   public Optional<Weather> weather() {
     return ModuleScreenValues.valueAt(Weather.values(), data.get(DetectorScreenLayout.WEATHER));
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(DetectorScreenLayout.DELAY_SECONDS);
   }
 }

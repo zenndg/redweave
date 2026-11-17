@@ -57,6 +57,10 @@ O servidor nunca confia num item nomeado pelo cliente: ao clicar no slot fantasm
 | Colocar num bloco sem inventário | `This needs a container.` | `Isto precisa de um baú ou outro inventário.` |
 | `Toggle` | `Signal Item Sensor has nothing to toggle.` | `O Sensor de Itens de Sinal não tem o que alternar.` |
 
+## Delay na saída
+
+A saída espera o `Delay` escolhido na tela, de 0 a 15 s, ao ligar e ao desligar. O estado segue a contagem na hora, e só a saída espera (perguntas 850 e 851). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 As chaves ficam no NBT da parte, dentro de `data`, além das chaves comuns dos módulos, e são fixadas na #26 (pergunta 700, regra 15):
@@ -102,6 +106,7 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 759). |
 | Zennd | 2026-11-16 11:27 | Leva o conceito ao implementado na #148: o código, a tela, as mensagens, o save, os padrões, o rótulo e a luz (perguntas 700 a 704). |
 | Zennd | 2026-11-16 10:12 | Cria o conceito do Signal Item Sensor, com as decisões 689 a 698. |

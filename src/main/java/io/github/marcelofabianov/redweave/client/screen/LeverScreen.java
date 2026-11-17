@@ -22,8 +22,9 @@ import net.minecraft.world.entity.player.Inventory;
 public final class LeverScreen extends AbstractContainerScreen<LeverMenu> {
   private static final int SEPARATOR_X = 130;
   private static final int STRENGTH_Y = 42;
-  private static final int OUTPUT_Y = 60;
-  private static final int GRID_Y = 80;
+  private static final int OUTPUT_Y = 78;
+  private static final int GRID_Y = 98;
+  private static final int DELAY_Y = 60;
   private static final int TEXT_Y = 3;
   private static final Box DISPLAY = new Box(29, 50, 68, 40);
   private static final int DISPLAY_FILL = 0xFF16171B;
@@ -68,7 +69,7 @@ public final class LeverScreen extends AbstractContainerScreen<LeverMenu> {
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     graphics.fill(
@@ -81,6 +82,7 @@ public final class LeverScreen extends AbstractContainerScreen<LeverMenu> {
     ModuleColumn.label(graphics, font, leftPos, topPos + OUTPUT_Y, NodeScreenTexts.OUTPUT);
     drawStrength(graphics);
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -202,6 +204,12 @@ public final class LeverScreen extends AbstractContainerScreen<LeverMenu> {
   /** `−` and `+` of `Strength`, and `Edge` and `Channel` of `Output` (answer 582). */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new LeverAction(LeverAction.Kind.DELAY, value)));
     buttons.add(stepButton(ModuleColumn.CONTROL_X, MINUS, false));
     buttons.add(stepButton(TimerControls.PLUS_X, PLUS, true));
     ModuleColumn.connection(

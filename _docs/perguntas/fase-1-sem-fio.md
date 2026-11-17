@@ -11,8 +11,19 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
-| 844 | Quais são as chaves novas no NBT do Signal Inverter? | `output_delay_ticks`, o delay em ticks, de 0 a 300; `delay_line`, a lista das mudanças pendentes, cada uma `{on, ticks}` com os ticks que faltam; e `strength`, como nos emissores. Os mesmos nomes valem em todo módulo do item 8 |
-| 843 | Quando o dono muda a força do Signal Inverter, a saída muda quando? | Na hora: a força é ajuste, não sinal, como nos emissores. A linha de atraso guarda só ligado ou desligado e os ticks que faltam, e a força atual vale na saída |
+| 855 | A tela do Signal Item Sensor, com o inventário do player embaixo, passaria a 278 px com a moldura de 186 px, e em 1080p com a escala 4 só cabem 270 px. Como resolver? | Só o Item Sensor mantém a moldura de 168 px, e as linhas da direita ficam a 15 px em vez de 18, com o `Delay` como última linha antes de `Output`, como nas outras telas. A tela continua com 260 px. Completa a pergunta 853 (regra 38) |
+| 854 | Com o Signal Randomizer no modo `Analog`, que sorteia de 0 a 15, como a linha de atraso guarda a força? | Em todo módulo, cada mudança da linha guarda o sinal de 0 a 15, `{signal, ticks}`, como diz a pergunta 831. Mudar a força reescreve as mudanças pendentes ligadas com a força nova, então a saída ainda muda na hora (pergunta 843). Um `{on, ticks}` salvo antes é lido com a força do módulo. Muda as perguntas 843 e 844 (regra 38) |
+| 853 | Como encaixar a linha `Delay` nas telas que já têm 4 linhas (Signal Pressure Plate, Signal Item Sensor e Signal Lamp)? | A moldura de todas as telas de módulo passa de 168 para 186 px, com uma linha a mais no corpo. `Delay` fica sempre na última linha antes das conexões, em todas as telas, e a grade de canais desce **Completada pela pergunta 855:** o Signal Item Sensor mantém 168 px, com as linhas a 15 px. |
+| 852 | Na Signal Lamp, o que o delay atrasa? | Só a saída: a luz segue a intensidade na hora, como um mostrador, e só a força emitida no bloco de apoio espera o delay |
+| 851 | No Weather Detector, no Signal Randomizer e no Signal Item Sensor com delay, o estado segue o quê? | A regra, na hora, como nos emissores (pergunta 845): o estado na tela e no rótulo mostra o que a regra decidiu agora, e só a saída espera o delay |
+| 850 | Como dividir o delay nos módulos restantes em PRs? | Num PR só: os emissores (Signal Lever, Signal Button e Signal Pressure Plate), o Weather Detector, o Signal Randomizer, o Signal Item Sensor e a Signal Lamp |
+| 849 | O Signal Timer e o Signal Lock ganham delay na saída? | Nenhum dos dois: o Timer já controla quando liga, e um delay seria uma segunda forma de fazer o mesmo; no Lock, um atraso entre a chave e a abertura não tem uso claro e mexe no que é segurança |
+| 848 | O disparo do Signal Remote num emissor com delay passa pelo delay? | Passa: o tablet age como o clique do dono (pergunta 781), o emissor muda na hora, e a saída espera o delay, como em qualquer gatilho |
+| 847 | Como limitar a linha de atraso dos emissores, que não têm burnout? | Com um teto no config, comum a todo módulo com delay, também o Signal Inverter: `module.max_delay_changes`, 32, de 2 a 256. Com a linha cheia, a mudança nova espera fora e entra quando abrir vaga, então a saída nunca fica errada para sempre, e o save fica limitado (regras 3 e 18) |
+| 846 | Com delay, o tempo ligado do Signal Button conta a partir de quando? | Do aperto, como hoje: o botão volta depois do tempo ligado, e a saída é o mesmo pulso, inteiro, deslocado pelo delay (pergunta 832) |
+| 845 | Com delay, o que a luz dos emissores mostra? | O estado, no gatilho, como hoje (perguntas 554 e 581): a luz fica verde no clique, e só a saída espera o delay. O estado e o rótulo seguem o emissor |
+| 844 | Quais são as chaves novas no NBT do Signal Inverter? | `output_delay_ticks`, o delay em ticks, de 0 a 300; `delay_line`, a lista das mudanças pendentes, cada uma `{on, ticks}` com os ticks que faltam; e `strength`, como nos emissores. Os mesmos nomes valem em todo módulo do item 8 **Mudada pela pergunta 854:** cada mudança da `delay_line` é `{signal, ticks}`. |
+| 843 | Quando o dono muda a força do Signal Inverter, a saída muda quando? | Na hora: a força é ajuste, não sinal, como nos emissores. A linha de atraso guarda só ligado ou desligado e os ticks que faltam, e a força atual vale na saída **Mudada pela pergunta 854:** a linha guarda o sinal de 0 a 15, e mudar a força reescreve as pendentes ligadas. |
 | 842 | Como o delay entra no `ROADMAP.md`, antes do Signal Keypad, que era o passo 27? | Como os passos 27, o delay no Signal Inverter (#171), e 28, o delay nos outros módulos com saída. O Keypad e os seguintes são renumerados, e o "Próximos" do `AGENTS.md` é atualizado no mesmo PR |
 | 841 | O `Copy` do Configurator (#154) leva o delay e a força do Signal Inverter? | Leva os dois, como as outras configurações do módulo. A linha pendente nunca é copiada |
 | 840 | Onde o delay aparece, além da tela? | Só na tela, com `Delay: 3 s` e os botões `−` e `+`. O estado `On`, `Off` ou `Burnt out` continua sendo o da saída real, e o rótulo do Configurator e o Jade não mudam |
@@ -845,6 +856,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:10 | Registra as respostas 845 a 855, do delay nos emissores e nos módulos restantes, e marca a 843 e a 844 como mudadas. |
 | Zennd | 2026-11-17 13:10 | Registra as respostas 843 e 844, da força com a linha e das chaves do NBT. |
 | Zennd | 2026-11-17 13:02 | Registra a resposta 842, do delay no `ROADMAP.md`. |
 | Zennd | 2026-11-17 12:55 | Registra as respostas 838 a 841, do tempo com o chunk descarregado, da mudança do delay, da tela e da cópia. |

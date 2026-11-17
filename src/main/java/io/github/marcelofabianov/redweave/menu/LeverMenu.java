@@ -67,6 +67,10 @@ public final class LeverMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, LeverAction action) {
+    if (action.kind() == LeverAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != LeverAction.Kind.CHOOSE) {
       LeverScreenActions.apply(player, spot, action);
       return;
@@ -132,5 +136,10 @@ public final class LeverMenu extends AbstractContainerMenu
   /** The strength the lever gives while on, from 1 to 15 (answer 582). */
   public int strength() {
     return data.get(LeverScreenLayout.STRENGTH);
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(LeverScreenLayout.DELAY_SECONDS);
   }
 }

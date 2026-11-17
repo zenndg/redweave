@@ -15,7 +15,11 @@ final class LampScreenLayout {
   static final int MODE = 5;
   static final int STRENGTH = 6;
   static final int LIGHT = 7;
-  static final int SIZE = 8;
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 8;
+
+  static final int SIZE = 9;
 
   static final int DARK_CODE = 1;
   static final int LIT_CODE = 2;

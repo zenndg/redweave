@@ -20,7 +20,8 @@ public record LampAction(Kind kind, int value) {
     MODE,
     INTENSITY,
     CONTROL,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public LampAction {
@@ -46,6 +47,11 @@ public record LampAction(Kind kind, int value) {
 
   public static LampAction choose(int position) {
     return new LampAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static LampAction delay(boolean longer) {
+    return new LampAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -79,6 +85,7 @@ public record LampAction(Kind kind, int value) {
       case MODE -> value >= 0 && value < LampScreenLayout.MODES;
       case INTENSITY, CONTROL -> value >= NONE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }

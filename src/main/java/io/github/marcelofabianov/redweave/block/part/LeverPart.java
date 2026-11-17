@@ -55,7 +55,7 @@ public final class LeverPart extends EmitterPart {
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(StrengthSave.STRENGTH, EmitterPart.OUTPUT);
+    return List.of(StrengthSave.STRENGTH, EmitterPart.OUTPUT, OutputDelaySlot.COPIED);
   }
 
   /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */

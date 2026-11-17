@@ -19,7 +19,8 @@ public record ButtonAction(Kind kind, int value) {
     STRENGTH,
     TIME,
     OUTPUT,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public ButtonAction {
@@ -44,6 +45,11 @@ public record ButtonAction(Kind kind, int value) {
 
   public static ButtonAction choose(int position) {
     return new ButtonAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static ButtonAction delay(boolean longer) {
+    return new ButtonAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -82,6 +88,7 @@ public record ButtonAction(Kind kind, int value) {
       case TIME -> value >= 0 && value < IntervalSteps.COUNT;
       case OUTPUT -> value >= ModuleScreenValues.EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }

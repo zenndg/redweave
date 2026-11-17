@@ -91,6 +91,10 @@ Na action bar, em inglês e em português:
 
 O rótulo do Configurator mostra o nome e, embaixo, o estado e o modo, como `On · Players` (`Ligada · Players`), e o canal da saída, se ela estiver num canal (pergunta 609).
 
+## Delay na saída
+
+A saída espera o `Delay` escolhido na tela, de 0 a 15 s, ao ligar e ao desligar. A luz e o estado seguem o que está sobre a placa, na hora, e só a saída espera; o pulso do Signal Remote também passa pelo delay. Uma placa que liga e desliga muito rápido enche a linha até `module.max_delay_changes`, e a mudança seguinte espera vaga (perguntas 845, 847, 848 e 850). As regras comuns, o teto da linha e as chaves `output_delay_ticks` e `delay_line` estão em [`modulos-de-sinal.md`](modulos-de-sinal.md#delay-na-saída).
+
 ## Save
 
 Além do NBT comum dos [módulos](modulos-de-sinal.md#save), dentro de `data` no contêiner `redweave:part_space`:
@@ -147,6 +151,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | Inclui o delay na saída (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote liga a placa por um pulso, salvo em `remote_pulse` (perguntas 783, 789 e 793). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 08:10 | A parte e o domínio da placa passam a usar a base dos emissores (#139). |

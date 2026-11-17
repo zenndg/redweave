@@ -668,10 +668,33 @@ Confira a #171 (perguntas 830 a 844), com um Signal Inverter no chão, uma lâmp
 | 414 | Mude `module.max_output_delay_ticks` para `0` no config e abra a tela | O `Delay` fica em `0 s`, e o `+` não passa dele |
 | 415 | Troque o idioma para Português | `Força`, `Atraso` e `3 s` |
 
+## Fase 2: o delay nos outros módulos
+
+Confira a #173 (perguntas 845 a 855), com cada módulo no chão e uma lâmpada de redstone na frente da saída.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 416 | Abra a tela de uma alavanca, de um botão, de uma placa, de um detector de clima, de um sorteador e de uma lâmpada | A moldura mais alta, com `Delay` em `0 s` na última linha antes das conexões, e a grade de canais abaixo sem cobrir o rodapé |
+| 417 | Abra a tela de um Signal Item Sensor | A tela do mesmo tamanho de antes, com o inventário inteiro, e `Delay` entre `Strength` e `Output` |
+| 418 | Ponha a alavanca com `Delay` em `3 s` e clique nela | A luz fica verde na hora, e a lâmpada acende 3 s depois; ao desligar, apaga 3 s depois |
+| 419 | Botão com `Delay` em `3 s` e tempo ligado de `1 s`: aperte | O botão volta depois de 1 s, e a lâmpada acende 3 s depois do aperto por 1 s |
+| 420 | Placa com `Delay` em `2 s`: pise e saia rápido várias vezes | A luz segue o pé na hora, e a lâmpada repete os mesmos pulsos 2 s depois |
+| 421 | Com o Signal Remote ligado à alavanca com delay, acione de longe | A alavanca liga na hora, e a saída espera o delay |
+| 422 | Detector de clima `Rain` com `Delay` em `5 s`: `/weather rain` | O estado vira `On` na hora, e a lâmpada acende 5 s depois |
+| 423 | Sorteador `Analog` numa saída num canal, com `Delay` em `2 s`, e um nó lendo o canal | O nó lê as mesmas forças sorteadas, na mesma ordem, 2 s depois |
+| 424 | Sensor de itens com `Delay` em `2 s`: complete a quantidade | O estado vira `On` na hora, e a saída liga 2 s depois |
+| 425 | Lâmpada com `Delay` em `3 s` e um pó de redstone ao lado do bloco de apoio | A luz acende na hora com o canal, e o pó só acende 3 s depois |
+| 426 | Copie uma alavanca com `Delay` `4 s` e cole noutra | A outra fica com `4 s` |
+| 427 | Abra um mundo salvo antes da #173, com esses módulos | Todos abrem com `0 s` e funcionam como antes |
+| 428 | Mude `module.max_delay_changes` para `2` e pise e saia muitas vezes da placa com `Delay` em `5 s` | A saída repete só os primeiros pulsos e depois segue o último estado, sem travar |
+| 429 | Abra a tela de um timer e de uma fechadura | A moldura mais alta, sem `Delay` |
+| 430 | Troque o idioma para Português | `Atraso` em todas as telas |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 15:25 | Inclui os passos 416 a 430, do delay nos outros módulos (perguntas 845 a 855, #173). |
 | Zennd | 2026-11-17 13:50 | Inclui os passos 402 a 415, do delay e da força do Signal Inverter (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 12:20 | Os passos 394 e 399 passam a 5 px de altura (pergunta 829, #169). |
 | Zennd | 2026-11-17 11:47 | Inclui os passos 394 a 401, do visual novo da Signal Lamp (perguntas 820 a 828, #167). |

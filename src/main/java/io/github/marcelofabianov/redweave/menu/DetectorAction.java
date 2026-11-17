@@ -16,7 +16,8 @@ public record DetectorAction(Kind kind, int value) {
   public enum Kind {
     MODE,
     OUTPUT,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public DetectorAction {
@@ -31,6 +32,11 @@ public record DetectorAction(Kind kind, int value) {
 
   public static DetectorAction choose(int position) {
     return new DetectorAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static DetectorAction delay(boolean longer) {
+    return new DetectorAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -63,6 +69,7 @@ public record DetectorAction(Kind kind, int value) {
       case MODE -> value >= 0 && value < WeatherMode.values().length;
       case OUTPUT -> value >= ModuleScreenValues.EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }

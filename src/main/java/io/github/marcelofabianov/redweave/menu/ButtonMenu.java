@@ -67,6 +67,10 @@ public final class ButtonMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, ButtonAction action) {
+    if (action.kind() == ButtonAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != ButtonAction.Kind.CHOOSE) {
       ButtonScreenActions.apply(player, spot, action);
       return;
@@ -138,5 +142,10 @@ public final class ButtonMenu extends AbstractContainerMenu
   public int timeTicks() {
     return TimerScreenLayout.whole(
         data.get(ButtonScreenLayout.TIME), data.get(ButtonScreenLayout.TIME + 1));
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(ButtonScreenLayout.DELAY_SECONDS);
   }
 }

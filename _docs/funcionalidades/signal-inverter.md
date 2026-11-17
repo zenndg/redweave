@@ -69,7 +69,7 @@ Além do NBT comum dos [módulos](modulos-de-sinal.md#save) (pergunta 450):
 | `burnout_ticks` | Os ticks que faltam de queima, para um reinício não soltar um laço queimado |
 | `strength` | A força, de 1 a 15; ausente nos saves antigos, que abrem com 15 (pergunta 834) |
 | `output_delay_ticks` | O delay em ticks; ausente nos saves antigos, que abrem com 0 (pergunta 844) |
-| `delay_line` | As mudanças que esperam o delay, cada uma `{on, ticks}`, com os ticks que faltam (perguntas 836 e 844) |
+| `delay_line` | As mudanças que esperam o delay, cada uma `{signal, ticks}`, com os ticks que faltam; uma `{on, ticks}` da #171 é lida com a força (perguntas 836, 844 e 854) |
 
 O histórico de trocas do burnout não é salvo. Os 2 ticks da tocha também não: ao carregar, a entrada é lida de novo, e a linha de atraso continua de onde parou (muda a pergunta 450 pela 836).
 
@@ -102,6 +102,7 @@ Em `tmp/arte/signal_inverter/`: as 3 texturas do topo (apagado, ligado e queimad
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:30 | A linha guarda o sinal, com o teto `module.max_delay_changes` (perguntas 847 e 854, #173). |
 | Zennd | 2026-11-17 13:15 | Inclui o delay na saída e a força ajustável, com a linha de atraso salva (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 755). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |

@@ -74,7 +74,7 @@ Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work 
 
 ## Items
 
-Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159).
+Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159). Every Signal Module with an output, except the Signal Timer and the Signal Lock, has an output delay of 0 to 15 s set on its screen (#171, #173).
 
 | Item | What it does | Status |
 | --- | --- | --- |

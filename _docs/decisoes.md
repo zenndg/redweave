@@ -314,8 +314,19 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Mudar o delay com pendentes | As pendentes mantêm o tick; a nova nunca vence antes da última | 839 |
 | Onde o delay aparece | Só na tela; o estado segue a saída real | 840 |
 | Cópia do Inverter | Leva o delay e a força, nunca a linha pendente | 841 |
-| Força com a linha | Muda na hora; a linha guarda só ligado ou desligado e os ticks | 843 |
-| Chaves do delay no NBT | `output_delay_ticks`, `delay_line` (`{on, ticks}`) e `strength` | 844 |
+| Força com a linha | Muda na hora; mudar a força reescreve as pendentes ligadas | 843, 854 |
+| Chaves do delay no NBT | `output_delay_ticks`, `delay_line` (`{signal, ticks}`) e `strength` | 844, 854 |
+| Luz dos emissores com delay | Mostra o estado no gatilho; só a saída espera | 845 |
+| Tempo ligado do botão com delay | Conta do aperto; a saída é o pulso deslocado | 846 |
+| Teto da linha de atraso | `module.max_delay_changes`: 32, de 2 a 256; a mudança espera fora até abrir vaga | 847 |
+| Remote com delay | O disparo passa pelo delay, como o clique | 848 |
+| Timer e Lock | Sem delay na saída | 849 |
+| PRs do passo 28 | Um só, com os emissores, o Weather Detector, o Randomizer, o Item Sensor e a Lamp | 850 |
+| Estado com delay | Segue a regra, na hora; só a saída espera | 851 |
+| Lamp com delay | Só a saída espera; a luz segue a intensidade na hora | 852 |
+| Linha `Delay` nas telas | Moldura dos módulos de 168 para 186 px; `Delay` na última linha antes das conexões | 853 |
+| Sinal na linha de atraso | Cada mudança guarda o sinal de 0 a 15; um `{on}` antigo vale a força | 854 |
+| Tela do Item Sensor com o delay | Mantém 168 px, com as linhas da direita a 15 px | 855 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
@@ -803,6 +814,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 14:15 | Resume as respostas 845 a 855, do delay nos módulos restantes. |
 | Zennd | 2026-11-17 13:02 | Resume as respostas 830 a 844, do delay na saída, da força do Signal Inverter, do delay no roadmap e das chaves do NBT. |
 | Zennd | 2026-11-17 12:11 | Resume a resposta 829, da Signal Lamp 1 px mais baixa. |
 | Zennd | 2026-11-17 11:27 | Resume as respostas 820 a 828, do visual novo da Signal Lamp. |

@@ -26,8 +26,9 @@ public final class PressurePlateScreen extends AbstractContainerScreen<PressureP
   private static final int MODE_Y = 42;
   private static final int SECOND_MODE_Y = 60;
   private static final int STRENGTH_Y = 78;
-  private static final int OUTPUT_Y = 96;
-  private static final int GRID_Y = 114;
+  private static final int OUTPUT_Y = 114;
+  private static final int GRID_Y = 132;
+  private static final int DELAY_Y = 96;
   private static final int MODE_WIDTH = 52;
   private static final int MODE_GAP = 4;
   private static final int MODES_PER_ROW = 2;
@@ -75,7 +76,7 @@ public final class PressurePlateScreen extends AbstractContainerScreen<PressureP
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     graphics.fill(
@@ -89,6 +90,7 @@ public final class PressurePlateScreen extends AbstractContainerScreen<PressureP
     ModuleColumn.label(graphics, font, leftPos, topPos + OUTPUT_Y, NodeScreenTexts.OUTPUT);
     drawStrength(graphics);
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -210,6 +212,12 @@ public final class PressurePlateScreen extends AbstractContainerScreen<PressureP
   /** The four modes, `−` and `+` of `Strength`, and `Edge` and `Channel` of `Output` (621). */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new PressurePlateAction(PressurePlateAction.Kind.DELAY, value)));
     for (PlateMode mode : PlateMode.values()) {
       buttons.add(modeButton(mode));
     }

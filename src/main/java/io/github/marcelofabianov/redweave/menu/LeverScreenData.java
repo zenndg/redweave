@@ -28,6 +28,9 @@ final class LeverScreenData implements ContainerData {
       return ModuleScreenValues.NONE;
     }
     LeverPart found = part.get();
+    if (index == LeverScreenLayout.DELAY_SECONDS) {
+      return found.delayed().delay().seconds();
+    }
     return switch (index) {
       case LeverScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case LeverScreenLayout.ON ->

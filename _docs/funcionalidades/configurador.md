@@ -41,16 +41,16 @@ As chaves que cada módulo copia:
 
 | Módulo | Chaves copiadas |
 |---|---|
-| Signal Lever | `strength`, `output` |
-| Signal Button | `strength`, `interval`, `output` |
-| Signal Pressure Plate | `strength`, `mode`, `output` |
-| Signal Item Sensor | `item`, `count`, `strength`, `output` |
-| Signal Lamp | `strength`, `mode`, `intensity`, `control` |
+| Signal Lever | `strength`, `output`, `output_delay_ticks` |
+| Signal Button | `strength`, `interval`, `output`, `output_delay_ticks` |
+| Signal Pressure Plate | `strength`, `mode`, `output`, `output_delay_ticks` |
+| Signal Item Sensor | `item`, `count`, `strength`, `output`, `output_delay_ticks` |
+| Signal Lamp | `strength`, `mode`, `intensity`, `control`, `output_delay_ticks` |
 | Signal Alarm | `listeners`, `repeats`, `interval`, `duration`, `input` |
 | Signal Timer | `interval_ticks`, `pulse_ticks`, `output`, `pause` |
 | Signal Inverter | `input`, `output`, `strength`, `output_delay_ticks`; nunca a `delay_line` (pergunta 841) |
-| Weather Detector | `mode`, `output` |
-| Signal Randomizer | `mode`, `interval_ticks`, `output` |
+| Weather Detector | `mode`, `output`, `output_delay_ticks` |
+| Signal Randomizer | `mode`, `interval_ticks`, `output`, `output_delay_ticks` |
 | Signal Lock | Nenhuma: não é copiável (pergunta 731) |
 
 Um módulo novo declara as suas chaves copiáveis ao nascer; uma chave esquecida não é copiada.
@@ -190,6 +190,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 15:15 | O `Copy` dos emissores, do Weather Detector, do Signal Randomizer, do Signal Item Sensor e da Signal Lamp leva o delay, nunca a `delay_line` (perguntas 841 e 850, #173). |
 | Zennd | 2026-11-17 13:45 | O `Copy` do Signal Inverter leva a força e o delay (pergunta 841, #171). |
 | Zennd | 2026-11-17 11:11 | O rótulo do Controller conta os componentes (pergunta 804). |
 | Zennd | 2026-11-17 09:59 | O rótulo do nó ganha o quadrado do primeiro slot habilitado, o Network Controller ganha rótulo, e o canal aparece sem o nome da cor (perguntas 770, 772 e 773). |

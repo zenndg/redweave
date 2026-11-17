@@ -3,7 +3,9 @@ package io.github.marcelofabianov.redweave.block.part;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
 import io.github.marcelofabianov.redweave.domain.module.Emitter;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
 import io.github.marcelofabianov.redweave.server.ModuleServices;
 import java.util.List;
 import java.util.Optional;
@@ -19,16 +21,18 @@ import net.minecraft.world.entity.player.Player;
  * shares, written once (answers 627 to 630): one output, on its edges or a channel, strong on its
  * block of support and the block in front (553); written each tick, so it follows its trigger on
  * the next tick (587); a `Toggle` that works with the network `Offline` (578); and a light that
- * shows whether it is on, never what reaches its channel (554 and 581). Each emitter only brings
- * its trigger, its `Toggle`, its sound, its 3D piece and its own save.
+ * shows whether it is on, never what reaches its channel (554 and 581). The output waits for the
+ * delay its owner chose, while the light follows the trigger at once (845 and 850). Each emitter
+ * only brings its trigger, its `Toggle`, its sound, its 3D piece and its own save.
  */
-public abstract class EmitterPart extends ModulePart {
+public abstract class EmitterPart extends ModulePart implements DelayedPart {
   /** The looks of the top: off, with the red light, and on, with the green one (554). */
   public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
 
   static final String OUTPUT = "output";
 
   private Connection output = Connection.EDGE;
+  private final OutputDelaySlot delay = new OutputDelaySlot();
 
   protected EmitterPart(Direction face) {
     super(face);
@@ -61,13 +65,16 @@ public abstract class EmitterPart extends ModulePart {
     output = drop.of(output);
   }
 
+  /** Reads its output and its delay, after its own rule, as it loads and as it is pasted. */
   protected final void loadOutput(CompoundTag tag) {
     output = ModuleSave.readConnection(tag, OUTPUT);
+    delay.load(tag, id(), emitter().strength());
   }
 
-  /** A new emitter gives its output on its edges (answer 553). */
+  /** A new emitter gives its output on its edges, with no delay (answers 553 and 844). */
   protected final void placeOutput() {
     output = Connection.EDGE;
+    delay.place();
   }
 
   /** The light and the piece follow the emitter, never what reaches its channel (581). */
@@ -76,10 +83,13 @@ public abstract class EmitterPart extends ModulePart {
     return emitter().on() ? ModuleLooks.ON : ModuleLooks.NONE;
   }
 
-  /** It gives what it holds, each tick, on its edges or its channel (553 and 587). */
+  /** It gives what it holds, after its delay, on its edges or its channel (553, 587, 845). */
   @Override
   protected final void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
-    ModuleTicks.write(modules, space, this, emitter().output());
+    if (delay.tick(emitter().output(), emitter().strength())) {
+      markDirty();
+    }
+    ModuleTicks.write(modules, space, this, delay.output());
     afterOutput(space);
   }
 
@@ -97,6 +107,18 @@ public abstract class EmitterPart extends ModulePart {
   protected final void saveRule(CompoundTag tag) {
     writeEmitter(tag);
     ModuleSave.writeConnection(tag, OUTPUT, output);
+    delay.save(tag);
+  }
+
+  @Override
+  public final DelayedOutput delayed() {
+    return delay.delayed();
+  }
+
+  @Override
+  public final void setDelay(OutputDelay next) {
+    delay.set(next);
+    changed();
   }
 
   @Override

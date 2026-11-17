@@ -133,6 +133,10 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 | Rodapé | `Back`, a partir do passo 2, que volta um passo. Ao vincular, a tela fecha, e a action bar confirma | 291 e 365 |
 | No servidor | O cliente aponta cada escolha pela posição na lista que o servidor guardou, e o servidor confere o dono a cada passo | 357 e regras 16 e 17 |
 
+### Moldura das telas de módulo
+
+Desde a #173, a moldura de toda tela de módulo tem 186 px de altura, uma linha a mais que a da Tela do Nó, para caber a linha `Delay`, sempre a última antes das conexões. A Tela do Signal Item Sensor é a exceção: com o inventário embaixo, mantém 168 px e aproxima as linhas (perguntas 853 e 855). As pranchas das telas são de antes da #173 e não mostram o `Delay`.
+
 ## Tela do Signal Timer
 
 ![Tela do Signal Timer](../imagens/telas/tela-do-signal-timer.png)
@@ -180,6 +184,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inver
 | Topo | `Weather Detector` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 470 |
 | Esquerda | Um ícone grande do clima atual, um sprite de 32 × 32: sol, nuvem com chuva, nuvem com raio ou nuvem apagada sem clima. Embaixo, o estado: `● On`, `● Off` ou `● No weather` | 465, 470 e 474 |
 | `Mode` | Os botões `Rain`, `Thunder` e `Clear`, com o modo atual marcado | 459 e 470 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 461 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 470 |
 | Rede `Offline` | A tela não abre, como a do nó | 402 |
@@ -199,6 +204,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Timer
 | Esquerda | O valor atual grande, de 0 a 15, com a fonte ampliada como o tempo do relógio do timer. Embaixo, o botão `● Running`, com o ponto verde, ou `Stopped` | 434, 484 e 487 |
 | `Mode` | Os botões `Analog` e `Binary`, com o modo atual marcado | 476 e 487 |
 | `Interval` | O intervalo em segundos com décimos, com `−` e `+`, e os ticks no tooltip | 398, 477 e 487 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 479 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 e 487 |
 | Rede `Offline` | A tela não abre, como a do nó | 402 |
@@ -214,6 +220,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 | Topo | `Signal Lever` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 550 |
 | Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz da alavanca | 554 e 582 |
 | `Strength` | A força, de 1 a 15, entre `−` e `+` | 552 e 582 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 549 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 |
 | Rede `Offline` | A tela não abre, como a do nó; o `Toggle` e a mão ainda ligam e desligam a alavanca | 402 e 578 |
@@ -230,6 +237,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma da Tela do 
 | Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz do botão | 554 e 595 |
 | `Strength` | A força, de 1 a 15, entre `−` e `+` | 552 |
 | `On time` | O tempo ligado, entre `−` e `+`, de 0,1 s em 0,1 s, e de 1 s em 1 s com Shift (pergunta 398), dentro de `button.min_interval_ticks` e `button.max_interval_ticks`. Com o mouse em cima, uma dica mostra os ticks | 556, 592 e 597 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 549 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 |
 | Rede `Offline` | A tela não abre, como a do nó; o `Toggle` e a mão ainda apertam o botão | 402 e 588 |
@@ -246,6 +254,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma da Tela do 
 | Esquerda | `On` grande, em verde, ou `Off` apagado, como a luz da placa | 554 e 609 |
 | `Mode` | Os 4 modos em botões, em duas linhas de dois, porque os quatro não cabem numa linha: `Players` e `Passive` em cima, `Hostile` e `Items` embaixo, com o escolhido aceso | 602 e 621 |
 | `Strength` | A força, de 1 a 15, entre `−` e `+` | 552 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 549 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado | 400 |
 | Rede `Offline` | A tela não abre, como a do nó; o `Toggle` ainda troca o modo | 402 e 606 |
@@ -263,8 +272,9 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 | `Item` | O slot fantasma: o dono clica com um item no cursor para escolher, sem consumir o item; com o cursor vazio, limpa o item. Sem item, `None`. A dica do slot: `Click with an item on the cursor; empty, it clears.` | 696 e 702 |
 | `Count` | A quantidade, entre `−` e `+`; com Shift, de 10 em 10, até `item_sensor.max_count` | 693 e 696 |
 | `Strength` | A força, de 1 a 15, entre `−` e `+` | 696 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | Conexão | `Output`, com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 696 |
-| Inventário | O inventário do dono embaixo, para pegar o item com o cursor; a tela fica com cerca de 260 px de altura | 704 |
+| Inventário | O inventário do dono embaixo, para pegar o item com o cursor; a tela fica com cerca de 260 px de altura. Por isso esta tela mantém a moldura de 168 px, e as linhas da direita ficam a 15 px em vez de 18, para caber o `Delay` | 704 e 855 |
 | Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura, e o slot fantasma não responde | 400 e 689 |
 
 Em português, `Sensor de Itens de Sinal`, `Ligado`, `Desligado`, `Item`, `Quantidade`, `Nenhum`, `Força` e `Saída`.
@@ -293,6 +303,7 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 | Topo | `Signal Lamp` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 650 |
 | Esquerda | `On` grande, em verde, ou `Off` apagado, e embaixo `Light: <n>`, o nível de luz que a lâmpada dá ao mundo agora | 650 e 720 |
 | `Strength` | A força emitida acesa, de 1 a 15, entre `−` e `+` | 651 |
+| `Delay` | O delay da saída em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique, só para o dono | 830, 850 e 853 |
 | `Intensity` | O canal de intensidade, que dá a cor e a luz: `None` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 650 |
 | `Control` | O canal de controle opcional, de qualquer cor: `None` ou `Channel`, com a mesma grade | 656 |
 | `Mode` | `Hold` ou `Pulse`, o modo do controle | 656 |
@@ -326,6 +337,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 15:10 | Inclui a linha `Delay` nas telas dos emissores, do Weather Detector, do Signal Randomizer, do Signal Item Sensor e da Signal Lamp, e a moldura de 186 px (perguntas 850, 853 e 855, #173). |
 | Zennd | 2026-11-17 13:15 | Inclui `Strength` e `Delay` na Tela do Signal Inverter (perguntas 830, 834 e 840). |
 | Zennd | 2026-11-17 10:54 | A aba `Nodes` vira `Components`, com os Signal Modules (perguntas 808 a 815). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, o log mostra só o horário, e o status do slot é `On` ou `Off` (perguntas 770, 771, 774 e 775). |

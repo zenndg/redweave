@@ -69,6 +69,10 @@ public final class RandomizerMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, RandomizerAction action) {
+    if (action.kind() == RandomizerAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != RandomizerAction.Kind.CHOOSE) {
       RandomizerScreenActions.apply(player, spot, action);
       return;
@@ -142,5 +146,10 @@ public final class RandomizerMenu extends AbstractContainerMenu
   public int intervalTicks() {
     return TimerScreenLayout.whole(
         data.get(RandomizerScreenLayout.INTERVAL), data.get(RandomizerScreenLayout.INTERVAL + 1));
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(RandomizerScreenLayout.DELAY_SECONDS);
   }
 }

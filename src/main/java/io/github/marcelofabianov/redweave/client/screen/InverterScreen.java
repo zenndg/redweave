@@ -72,7 +72,7 @@ public final class InverterScreen extends AbstractContainerScreen<InverterMenu> 
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     InverterDiagram.draw(graphics, font, leftPos, topPos, menu.inputOn(), menu.state());
     menu.state().ifPresent(state -> drawPill(graphics, state));

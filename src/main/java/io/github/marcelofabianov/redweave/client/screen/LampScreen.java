@@ -25,10 +25,11 @@ import net.minecraft.world.entity.player.Inventory;
 public final class LampScreen extends AbstractContainerScreen<LampMenu> {
   private static final int SEPARATOR_X = 130;
   private static final int STRENGTH_Y = 42;
-  private static final int INTENSITY_Y = 60;
-  private static final int CONTROL_Y = 78;
-  private static final int MODE_Y = 96;
-  private static final int GRID_Y = 114;
+  private static final int INTENSITY_Y = 78;
+  private static final int CONTROL_Y = 96;
+  private static final int MODE_Y = 114;
+  private static final int GRID_Y = 132;
+  private static final int DELAY_Y = 60;
   private static final int LIGHT_X = 22;
   private static final int LIGHT_Y = 82;
   private static final int MODE_WIDTH = 40;
@@ -78,7 +79,7 @@ public final class LampScreen extends AbstractContainerScreen<LampMenu> {
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     graphics.drawString(
@@ -96,6 +97,7 @@ public final class LampScreen extends AbstractContainerScreen<LampMenu> {
         body.bottom() - ModuleFrame.TITLE_X,
         ScreenColors.SEPARATOR);
     drawLabels(graphics);
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     picking.ifPresent(kind -> drawPicker(graphics, kind, mouse));
   }
@@ -227,6 +229,12 @@ public final class LampScreen extends AbstractContainerScreen<LampMenu> {
   /** `−` and `+` of `Strength`, `None` and `Channel` of both channels, and the two modes. */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new LampAction(LampAction.Kind.DELAY, value)));
     buttons.add(step(ModuleColumn.CONTROL_X, MINUS, () -> LampAction.strength(false)));
     buttons.add(step(TimerControls.PLUS_X, PLUS, () -> LampAction.strength(true)));
     connection(buttons, LampAction.Kind.INTENSITY, menu.intensity(), INTENSITY_Y);

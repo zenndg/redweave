@@ -63,7 +63,8 @@ public final class PressurePlatePart extends EmitterPart implements SteppedPart 
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(StrengthSave.STRENGTH, PressurePlateSave.MODE, EmitterPart.OUTPUT);
+    return List.of(
+        StrengthSave.STRENGTH, PressurePlateSave.MODE, EmitterPart.OUTPUT, OutputDelaySlot.COPIED);
   }
 
   /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */

@@ -80,6 +80,11 @@ public final class RedweaveConfig {
   private static final String MAX_DELAY_KEY = "max_output_delay_ticks";
   private static final int DEFAULT_MAX_DELAY = 300;
   private static final int HIGHEST_MAX_DELAY = 1200;
+  private static final String MAX_CHANGES_COMMENT = "Most changes a module output delay holds.";
+  private static final String MAX_CHANGES_KEY = "max_delay_changes";
+  private static final int DEFAULT_MAX_CHANGES = 32;
+  private static final int LOWEST_MAX_CHANGES = 2;
+  private static final int HIGHEST_MAX_CHANGES = 256;
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
   private static final String BURNOUT_COMMENT = "Ticks a burnt out Signal Inverter stays off.";
@@ -172,6 +177,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue ALARM_MAX_DURATION_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
   static final ModConfigSpec.IntValue MAX_OUTPUT_DELAY_TICKS;
+  static final ModConfigSpec.IntValue MAX_DELAY_CHANGES;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
   static final ModConfigSpec.IntValue BURNOUT_TICKS;
@@ -244,6 +250,11 @@ public final class RedweaveConfig {
         builder
             .comment(MAX_DELAY_COMMENT)
             .defineInRange(MAX_DELAY_KEY, DEFAULT_MAX_DELAY, 0, HIGHEST_MAX_DELAY);
+    MAX_DELAY_CHANGES =
+        builder
+            .comment(MAX_CHANGES_COMMENT)
+            .defineInRange(
+                MAX_CHANGES_KEY, DEFAULT_MAX_CHANGES, LOWEST_MAX_CHANGES, HIGHEST_MAX_CHANGES);
     builder.pop();
     builder.push(RANDOMIZER);
     RANDOMIZER_MIN_INTERVAL_TICKS =
