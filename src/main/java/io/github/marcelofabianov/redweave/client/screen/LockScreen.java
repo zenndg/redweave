@@ -92,7 +92,7 @@ public final class LockScreen extends AbstractContainerScreen<LockMenu> {
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     drawPulse(graphics);

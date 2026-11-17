@@ -20,7 +20,11 @@ final class ItemSensorScreenLayout {
 
   static final int COUNT = 7;
   static final int COUNTED = 9;
-  static final int SIZE = 11;
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 11;
+
+  static final int SIZE = 12;
 
   /** The value of `ON` for a sensor off. */
   static final int OFF_CODE = 1;

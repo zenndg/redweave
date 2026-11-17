@@ -68,6 +68,10 @@ public final class PressurePlateMenu extends AbstractContainerMenu
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, PressurePlateAction action) {
+    if (action.kind() == PressurePlateAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != PressurePlateAction.Kind.CHOOSE) {
       PressurePlateScreenActions.apply(player, spot, action);
       return;
@@ -138,5 +142,10 @@ public final class PressurePlateMenu extends AbstractContainerMenu
   /** The mode the plate senses, or none before the first sync (answer 621). */
   public Optional<PlateMode> mode() {
     return ModuleScreenValues.valueAt(PlateMode.values(), data.get(PressurePlateScreenLayout.MODE));
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(PressurePlateScreenLayout.DELAY_SECONDS);
   }
 }

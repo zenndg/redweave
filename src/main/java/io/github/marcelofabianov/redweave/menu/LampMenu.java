@@ -67,6 +67,10 @@ public final class LampMenu extends AbstractContainerMenu implements NetworkChoi
 
   /** A choice names a row of the list kept here, so a client never sends a network ID. */
   private void apply(Player player, LampAction action) {
+    if (action.kind() == LampAction.Kind.DELAY) {
+      DelayScreenActions.step(player, spot, action.value());
+      return;
+    }
     if (action.kind() != LampAction.Kind.CHOOSE) {
       LampScreenActions.apply(player, spot, action);
       return;
@@ -147,5 +151,10 @@ public final class LampMenu extends AbstractContainerMenu implements NetworkChoi
   /** The light of the lamp now, from 0 to 15 (answer 650). */
   public int light() {
     return data.get(LampScreenLayout.LIGHT);
+  }
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  public int delaySeconds() {
+    return data.get(LampScreenLayout.DELAY_SECONDS);
   }
 }

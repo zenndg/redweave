@@ -27,8 +27,9 @@ import net.minecraft.world.entity.player.Inventory;
 public final class DetectorScreen extends AbstractContainerScreen<DetectorMenu> {
   private static final int SEPARATOR_X = 130;
   private static final int MODE_Y = 42;
-  private static final int OUTPUT_Y = 60;
-  private static final int GRID_Y = 82;
+  private static final int OUTPUT_Y = 78;
+  private static final int GRID_Y = 100;
+  private static final int DELAY_Y = 60;
   private static final Box ICON_BACK = new Box(43, 42, 40, 40);
   private static final int ICON_SIZE = 32;
   private static final int ICON_INSET = 4;
@@ -87,7 +88,7 @@ public final class DetectorScreen extends AbstractContainerScreen<DetectorMenu> 
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawIcon(graphics);
     menu.state().ifPresent(state -> drawPill(graphics, state));
@@ -100,6 +101,7 @@ public final class DetectorScreen extends AbstractContainerScreen<DetectorMenu> 
     ModuleColumn.label(graphics, font, leftPos, topPos + MODE_Y, DetectorScreenTexts.MODE);
     ModuleColumn.label(graphics, font, leftPos, topPos + OUTPUT_Y, NodeScreenTexts.OUTPUT);
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -224,6 +226,12 @@ public final class DetectorScreen extends AbstractContainerScreen<DetectorMenu> 
   /** `Rain`, `Thunder` and `Clear`, and `Edge` and `Channel` for `Output` (459 and 470). */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new DetectorAction(DetectorAction.Kind.DELAY, value)));
     for (WeatherMode mode : WeatherMode.values()) {
       buttons.add(modeButton(mode));
     }

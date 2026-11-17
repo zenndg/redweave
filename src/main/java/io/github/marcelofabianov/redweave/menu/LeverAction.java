@@ -18,7 +18,8 @@ public record LeverAction(Kind kind, int value) {
   public enum Kind {
     STRENGTH,
     OUTPUT,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public LeverAction {
@@ -38,6 +39,11 @@ public record LeverAction(Kind kind, int value) {
 
   public static LeverAction choose(int position) {
     return new LeverAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static LeverAction delay(boolean longer) {
+    return new LeverAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -70,6 +76,7 @@ public record LeverAction(Kind kind, int value) {
       case STRENGTH -> value == WEAKER || value == STRONGER;
       case OUTPUT -> value >= ModuleScreenValues.EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }

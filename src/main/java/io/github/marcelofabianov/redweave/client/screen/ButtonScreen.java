@@ -27,8 +27,9 @@ public final class ButtonScreen extends AbstractContainerScreen<ButtonMenu> {
   private static final int SEPARATOR_X = 130;
   private static final int STRENGTH_Y = 42;
   private static final int TIME_Y = 60;
-  private static final int OUTPUT_Y = 78;
-  private static final int GRID_Y = 98;
+  private static final int OUTPUT_Y = 96;
+  private static final int GRID_Y = 116;
+  private static final int DELAY_Y = 78;
   private static final int TEXT_Y = 3;
   private static final Box DISPLAY = new Box(29, 50, 68, 40);
   private static final int DISPLAY_FILL = 0xFF16171B;
@@ -80,7 +81,7 @@ public final class ButtonScreen extends AbstractContainerScreen<ButtonMenu> {
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     graphics.fill(
@@ -95,6 +96,7 @@ public final class ButtonScreen extends AbstractContainerScreen<ButtonMenu> {
     drawStrength(graphics);
     TimerScreenParts.value(graphics, font, leftPos, topPos + TIME_Y, menu.timeTicks());
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -216,6 +218,12 @@ public final class ButtonScreen extends AbstractContainerScreen<ButtonMenu> {
   /** `−` and `+` of `Strength` and of the on time, and `Edge` and `Channel` of `Output`. */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new ButtonAction(ButtonAction.Kind.DELAY, value)));
     buttons.add(
         step(ModuleColumn.CONTROL_X, STRENGTH_Y, MINUS, () -> ButtonAction.strength(false)));
     buttons.add(step(TimerControls.PLUS_X, STRENGTH_Y, PLUS, () -> ButtonAction.strength(true)));

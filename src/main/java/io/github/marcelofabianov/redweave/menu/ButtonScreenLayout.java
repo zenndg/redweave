@@ -14,7 +14,11 @@ final class ButtonScreenLayout {
   static final int OUTPUT = 3;
   static final int STRENGTH = 4;
   static final int TIME = 5;
-  static final int SIZE = 7;
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 7;
+
+  static final int SIZE = 8;
 
   /** The value of `ON` for a button released. */
   static final int OFF_CODE = 1;

@@ -27,8 +27,9 @@ public final class RandomizerScreen extends AbstractContainerScreen<RandomizerMe
   private static final int SEPARATOR_X = 130;
   private static final int MODE_Y = 42;
   private static final int INTERVAL_Y = 60;
-  private static final int OUTPUT_Y = 78;
-  private static final int GRID_Y = 98;
+  private static final int OUTPUT_Y = 96;
+  private static final int GRID_Y = 116;
+  private static final int DELAY_Y = 78;
   private static final Box DISPLAY = new Box(43, 42, 40, 40);
   private static final Box RUN = new Box(20, 120, 98, 16);
   private static final int DISPLAY_FILL = 0xFF16171B;
@@ -82,7 +83,7 @@ public final class RandomizerScreen extends AbstractContainerScreen<RandomizerMe
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawValue(graphics);
     graphics.fill(
@@ -96,6 +97,7 @@ public final class RandomizerScreen extends AbstractContainerScreen<RandomizerMe
     ModuleColumn.label(graphics, font, leftPos, topPos + OUTPUT_Y, NodeScreenTexts.OUTPUT);
     TimerScreenParts.value(graphics, font, leftPos, topPos + INTERVAL_Y, menu.intervalTicks());
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -208,6 +210,12 @@ public final class RandomizerScreen extends AbstractContainerScreen<RandomizerMe
   /** `Running`, the modes, `−` and `+`, and `Edge` and `Channel` (answers 398 and 487). */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new RandomizerAction(RandomizerAction.Kind.DELAY, value)));
     boolean running = menu.state().equals(Optional.of(RandomizerState.RUNNING));
     buttons.add(
         TimerButton.run(frame.at(RUN), running, owner(), () -> send(RandomizerAction.toggle())));

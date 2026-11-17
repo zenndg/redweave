@@ -10,7 +10,11 @@ final class LeverScreenLayout {
   static final int NETWORK_STATE = 2;
   static final int OUTPUT = 3;
   static final int STRENGTH = 4;
-  static final int SIZE = 5;
+
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 5;
+
+  static final int SIZE = 6;
 
   /** The value of `ON` for a lever turned off. */
   static final int OFF_CODE = 1;

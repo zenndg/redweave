@@ -19,7 +19,8 @@ public record RandomizerAction(Kind kind, int value) {
     MODE,
     INTERVAL,
     OUTPUT,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public RandomizerAction {
@@ -43,6 +44,11 @@ public record RandomizerAction(Kind kind, int value) {
 
   public static RandomizerAction choose(int position) {
     return new RandomizerAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static RandomizerAction delay(boolean longer) {
+    return new RandomizerAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -81,6 +87,7 @@ public record RandomizerAction(Kind kind, int value) {
       case INTERVAL -> value >= 0 && value < IntervalSteps.COUNT;
       case OUTPUT -> value >= ModuleScreenValues.EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }

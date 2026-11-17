@@ -27,6 +27,9 @@ final class DetectorScreenData implements ContainerData {
       return ModuleScreenValues.NONE;
     }
     DetectorPart found = block.get();
+    if (index == DetectorScreenLayout.DELAY_SECONDS) {
+      return found.delayed().delay().seconds();
+    }
     return switch (index) {
       case DetectorScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case DetectorScreenLayout.STATE -> found.detector().state(found.weather()).ordinal() + 1;

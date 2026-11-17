@@ -29,6 +29,9 @@ final class ItemSensorScreenData implements ContainerData {
       return ModuleScreenValues.NONE;
     }
     ItemSensorPart found = part.get();
+    if (index == ItemSensorScreenLayout.DELAY_SECONDS) {
+      return found.delayed().delay().seconds();
+    }
     return switch (index) {
       case ItemSensorScreenLayout.VIEWER_IS_OWNER -> found.isOwner(viewer) ? 1 : 0;
       case ItemSensorScreenLayout.ON ->

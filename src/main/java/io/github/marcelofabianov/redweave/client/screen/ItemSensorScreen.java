@@ -27,11 +27,12 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class ItemSensorScreen extends AbstractContainerScreen<ItemSensorMenu> {
   private static final int SEPARATOR_X = 130;
-  private static final int ITEM_Y = 40;
-  private static final int COUNT_Y = 60;
-  private static final int STRENGTH_Y = 78;
-  private static final int OUTPUT_Y = 96;
-  private static final int GRID_Y = 114;
+  private static final int ITEM_Y = 38;
+  private static final int COUNT_Y = 57;
+  private static final int STRENGTH_Y = 72;
+  private static final int OUTPUT_Y = 102;
+  private static final int GRID_Y = 116;
+  private static final int DELAY_Y = 87;
   private static final int GHOST_SIZE = 18;
   private static final int NAME_GAP = 4;
   private static final int TEXT_Y = 3;
@@ -54,8 +55,8 @@ public final class ItemSensorScreen extends AbstractContainerScreen<ItemSensorMe
   public ItemSensorScreen(ItemSensorMenu menu, Inventory inventory, Component title) {
     super(menu, inventory, title);
     imageWidth = ModuleFrame.WIDTH;
-    imageHeight = ModuleFrame.HEIGHT + INVENTORY_HEIGHT;
-    frame = new ModuleFrame(menu, menu::viewerIsOwner);
+    imageHeight = ModuleFrame.COMPACT_HEIGHT + INVENTORY_HEIGHT;
+    frame = ModuleFrame.compact(menu, menu::viewerIsOwner);
   }
 
   @Override
@@ -89,7 +90,7 @@ public final class ItemSensorScreen extends AbstractContainerScreen<ItemSensorMe
   }
 
   private void drawBody(GuiGraphics graphics, Mouse mouse) {
-    Box body = frame.at(ModuleFrame.BODY);
+    Box body = frame.body();
     graphics.blitSprite(NodeSprites.PANEL, body.x(), body.y(), body.width(), body.height());
     drawState(graphics);
     graphics.fill(
@@ -103,6 +104,7 @@ public final class ItemSensorScreen extends AbstractContainerScreen<ItemSensorMe
     drawValue(graphics, COUNT_Y, menu.count());
     drawValue(graphics, STRENGTH_Y, menu.strength());
     ModuleColumn.channel(graphics, font, leftPos, topPos + OUTPUT_Y, menu.sync(), menu.output());
+    DelayRow.draw(graphics, font, leftPos, topPos + DELAY_Y, menu.delaySeconds());
     buttons().forEach(button -> button.draw(graphics, font, mouse));
     if (picking) {
       ChannelPicker.draw(
@@ -285,6 +287,12 @@ public final class ItemSensorScreen extends AbstractContainerScreen<ItemSensorMe
   /** `−` and `+` of the count and of `Strength`, and `Edge` and `Channel` of `Output` (696). */
   private List<TimerButton> buttons() {
     List<TimerButton> buttons = new ArrayList<>();
+    DelayRow.buttons(
+        buttons,
+        leftPos,
+        topPos + DELAY_Y,
+        owner(),
+        value -> send(new ItemSensorAction(ItemSensorAction.Kind.DELAY, value)));
     buttons.add(step(ModuleColumn.CONTROL_X, COUNT_Y, MINUS, () -> countStep(false)));
     buttons.add(step(TimerControls.PLUS_X, COUNT_Y, PLUS, () -> countStep(true)));
     buttons.add(

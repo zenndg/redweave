@@ -17,7 +17,10 @@ final class PressurePlateScreenLayout {
   /** The mode, as its position plus one, and 0 before the first sync. */
   static final int MODE = 5;
 
-  static final int SIZE = 6;
+  /** The delay of the output, in whole seconds (answer 830). */
+  static final int DELAY_SECONDS = 6;
+
+  static final int SIZE = 7;
 
   /** The value of `ON` for a plate turned off. */
   static final int OFF_CODE = 1;

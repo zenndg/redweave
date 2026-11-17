@@ -26,7 +26,8 @@ public record ItemSensorAction(Kind kind, int value) {
     COUNT,
     STRENGTH,
     OUTPUT,
-    CHOOSE
+    CHOOSE,
+    DELAY
   }
 
   public ItemSensorAction {
@@ -57,6 +58,11 @@ public record ItemSensorAction(Kind kind, int value) {
 
   public static ItemSensorAction choose(int position) {
     return new ItemSensorAction(Kind.CHOOSE, position);
+  }
+
+  /** A step of `Delay`, one second shorter or longer (answer 830). */
+  public static ItemSensorAction delay(boolean longer) {
+    return new ItemSensorAction(Kind.DELAY, DelaySteps.of(longer));
   }
 
   /** The code the game sends with the click. */
@@ -92,6 +98,7 @@ public record ItemSensorAction(Kind kind, int value) {
       case STRENGTH -> value == LESS || value == MORE;
       case OUTPUT -> value >= ModuleScreenValues.EDGE && value < ModuleScreenValues.CONNECTIONS;
       case CHOOSE -> value >= 0;
+      case DELAY -> DelaySteps.fits(value);
     };
   }
 }
