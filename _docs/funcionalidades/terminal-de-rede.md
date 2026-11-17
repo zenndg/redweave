@@ -37,9 +37,9 @@ O desenho tem quatro variantes, e os sprites novos estão em [`tela-do-terminal-
 
 Uma lista das redes do dono, em ordem alfabética pelo nome, com o estado de cada uma ao lado e a quantidade de nós (perguntas 131 e 138).
 
-Um clique seleciona uma rede, e a barra de botões embaixo da lista mostra só as ações que valem para o estado dela. Limpar nós e `Delete` confirmam no segundo clique, no próprio botão, e o duplo clique no nome renomeia, como na Tela do Controlador (perguntas 222 e 252).
+Um clique seleciona uma rede, e a barra de botões embaixo da lista mostra só as ações que valem para o estado dela. `Clear components` e `Delete` confirmam no segundo clique, no próprio botão, e o duplo clique no nome renomeia, como na Tela do Controlador (perguntas 222 e 252).
 
-O topo mostra a contagem, como `1 network` ou `4 networks` (pergunta 261), e a dica `Double-click a name to rename it.` fica no rodapé. Os botões são `Open`, `Turn off`, `Turn on`, `Clear nodes` e `Delete`, e a confirmação mostra `Click again to clear` ou `Click again to delete` (pergunta 255). Sem nenhuma rede, a lista mostra `No network yet. Place a Network Controller to create one.` (pergunta 256).
+O topo mostra a contagem, como `1 network` ou `4 networks` (pergunta 261), e a dica `Double-click a name to rename it.` fica no rodapé. Os botões são `Open`, `Turn off`, `Turn on`, `Clear components` e `Delete`, e a confirmação mostra `Click again to clear` ou `Click again to delete` (pergunta 255). Sem nenhuma rede, a lista mostra `No network yet. Place a Network Controller to create one.` (pergunta 256).
 
 | Ação | Em quais redes | O que faz | Pergunta |
 |---|---|---|---|
@@ -47,7 +47,7 @@ O topo mostra a contagem, como `1 network` ou `4 networks` (pergunta 261), e a d
 | Renomear | Todas | Troca o nome, com o limite de `network.name_length` | 156, 158 e 176 |
 | `Offline` | `Online` | Desliga a rede | 132 |
 | `Online` | `Offline` | Religa a rede | 132 e 135 |
-| Limpar nós | Todas | Tira todos os nós da rede, que perdem os slots e ficam `No network` no mundo. Pede confirmação no segundo clique, como o `Clear log` da Tela do Controlador | 133 |
+| Limpar componentes | Todas | `Clear components` (`Limpar componentes`): tira todos os nós e Signal Modules da rede. Os nós perdem os slots e ficam `No network` no mundo; cada módulo fica sem rede no próximo tick em que o chunk dele estiver carregado (perguntas 807, 811 e 812). Pede confirmação no segundo clique, como o `Clear log` da Tela do Controlador | 133 |
 | `Delete` | `Unplaced` | Apaga a rede de vez, com confirmação. Os nós dela ficam `No network` | 166 |
 
 Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela não abre, nem pelo Terminal (pergunta 158). Uma rede `Unplaced` não pode ser religada até o controlador voltar ao mundo (pergunta 135).
@@ -73,6 +73,7 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:54 | O `Clear nodes` vira `Clear components` e tira também os módulos (perguntas 807 e 812). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 748), e a seção de pendências sai. |
 | Zennd | 2026-11-12 19:23 | O modo `Open` do Configurator abre o Terminal, como a mão vazia (pergunta 343). |
 | Zennd | 2026-11-12 17:18 | Aponta a confirmação para o `Clear log` e inclui o `Toggle` na rede `Offline` (pergunta 241). |

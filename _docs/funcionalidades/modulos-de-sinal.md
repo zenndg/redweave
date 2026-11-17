@@ -148,6 +148,7 @@ O NBT comum, em `snake_case` (regras 15 e 24). As chaves ficam fixadas na #26 (p
 | `owner` | O dono |
 | `name` | O nome próprio, ausente sem nome |
 | `network` | A rede, ausente sem rede |
+| `registered` | A rede em que o módulo está cadastrado, ausente antes do primeiro cadastro; separa o módulo antigo ou que trocou de rede, que se cadastra, do tirado pelo `Clear components`, que perde a rede (perguntas 811 e 817) |
 | Uma chave por conexão | `edge` ou a chave da cor do canal, como `red` |
 
 Cada módulo acrescenta as chaves dele. Desde a #44, os módulos são partes do [multipart](multipart.md): o NBT acima fica em `data`, dentro do contêiner `redweave:part_space`, e o visual fica em campos da parte, não mais em estados do bloco (perguntas 534 e 543). O `facing`, a face onde a placa está grudada, não vai para o save: sai da `face` da parte no contêiner (pergunta 559). Os campos comuns são `front`, a direção real da borda da frente no mundo, com 6 valores e sempre perpendicular a `facing` (pergunta 428), e `powered`, em todos os módulos, numa regra só (pergunta 560). Os itens mantêm os IDs (pergunta 523).
@@ -177,6 +178,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:54 | Inclui a chave `registered` e aponta o cadastro na rede (perguntas 803 e 811). |
 | Zennd | 2026-11-16 23:55 | A forma comum das receitas passa a levar um Signal Node na #159 (perguntas 766 e 767). |
 | Zennd | 2026-11-16 16:05 | As receitas dos módulos entregues entram na #157 (pergunta 753). |
 | Zennd | 2026-11-16 15:19 | Leva o Signal Alarm à base: a lista de módulos, o `Toggle`, a rede `Offline`, as mensagens e o rótulo (perguntas 643, 649, 743 e 744). |

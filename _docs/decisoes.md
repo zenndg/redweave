@@ -281,6 +281,21 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `Link lost` e mensagem da placa | Conferido no clique; `<nome>: On` | 797 |
 | Visual da Signal Lamp | Issue própria; cúpula de vidro com núcleo que brilha, ~6 px | 798, 799 |
 | Luz da Signal Lamp | Branca, com um indicativo pequeno da cor do canal; muda a 650 | 800 |
+| Ordem das melhorias | Contagem, visual da Lamp, delay, depois o roadmap | 801 |
+| Contagem de componentes | Nós e módulos com rede; sem Remotes nem cabos | 802 |
+| Cadastro dos módulos | Salvo no agregado `Network`; migração no primeiro tick carregado | 803, 805 |
+| Total nas telas | `<n> components` onde havia `<n> nodes` | 804 |
+| Saída do cadastro | Quebrado, Wrench, outra rede, rede apagada ou `Clear components` | 806, 807 |
+| Aba `Components` | Nós e módulos numa lista, com tipo e estado | 808, 809 |
+| O que o cadastro guarda | ID, tipo, nome, posição, face e canais | 810 |
+| Marca `registered` | No NBT do módulo, com a rede do cadastro; separa o antigo do tirado | 811, 817 |
+| `Clear components` | Tira nós e módulos; muda a 133 | 807, 812 |
+| Renomear módulo | Só pela tela dele | 813 |
+| Colunas da aba `Components` | `Name`; no módulo, `Signal` é a saída num canal, ou `—` | 814 |
+| Aba vazia | `No component in this network yet.` | 815 |
+| Testes da #165 | JUnit no domínio e na aplicação; GameTests do cadastro e do save | 816 |
+| Chaves de tradução da #165 | As antigas ficam com os textos novos; `node_count.*` vira `component_count.*` | 818 |
+| Conferência do cadastro | No tick carregado do módulo, gravando só o que muda | 819 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -767,6 +782,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:52 | Resume as respostas 801 a 819, da contagem de componentes. |
 | Zennd | 2026-11-17 10:17 | Resume as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |
 | Zennd | 2026-11-17 09:45 | Resume as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, e marca a 148 como mudada. |
 | Zennd | 2026-11-16 23:40 | Resume as respostas 765 a 769, da revisão das receitas. |
