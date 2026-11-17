@@ -15,10 +15,10 @@ import net.neoforged.neoforge.client.model.generators.ModelFile;
 /**
  * The models of the Signal Lamp (tmp/arte/signal_lamp/prompt.md): a copper base of 6 × 12 px, a
  * band of 1 px on it that the client tints in the color of the channel, a frosted glass dome of 4 ×
- * 10 px and 4 px high, and a white LED core of 2 × 8 × 2 px inside it, which glows; switched off by
- * its control, a red light of the lever at one end of the base (answers 650, 657, 800 and 820 to
- * 827). The glass goes to the translucent layer by its texture. Each look has a version turned a
- * quarter, as every module.
+ * 10 px and 3 px high, and a white LED core of 2 × 8 × 2 px inside it, which glows; switched off by
+ * its control, a red light of the lever at one end of the base (answers 650, 657, 800, 820 to 827
+ * and 829). The glass goes to the translucent layer by its texture. Each look has a version turned
+ * a quarter, as every module.
  */
 final class LampModels {
   private static final String BLOCK_PARENT = "block/block";
@@ -56,7 +56,7 @@ final class LampModels {
   private static final int SHINE = 15;
   private static final Cube BASE = new Cube(5, 0, 2, 11, 1, 14);
   private static final Cube BAND_STRIP = new Cube(5, 1, 2, 11, 2, 14);
-  private static final Cube DOME = new Cube(6, 2, 3, 10, 6, 13);
+  private static final Cube DOME = new Cube(6, 2, 3, 10, 5, 13);
   private static final Cube CORE = new Cube(7, 2, 4, 9, 4, 12);
   private static final Cube INDICATOR = new Cube(7.5F, 2, 13, 8.5F, 3, 14);
   private static final Uv BASE_TOP = new Uv(2, 5, 14, 11);
@@ -66,8 +66,8 @@ final class LampModels {
   private static final Uv BAND_SIDE = new Uv(2, 7, 14, 8);
   private static final Uv BAND_END = new Uv(5, 7, 11, 8);
   private static final Uv DOME_TOP = new Uv(3, 6, 13, 10);
-  private static final Uv DOME_SIDE = new Uv(3, 6, 13, 10);
-  private static final Uv DOME_END = new Uv(6, 6, 10, 10);
+  private static final Uv DOME_SIDE = new Uv(3, 6, 13, 9);
+  private static final Uv DOME_END = new Uv(6, 6, 10, 9);
   private static final Uv CORE_TOP = new Uv(4, 7, 12, 9);
   private static final Uv CORE_SIDE = new Uv(4, 7, 12, 9);
   private static final Uv CORE_END = new Uv(7, 7, 9, 9);
