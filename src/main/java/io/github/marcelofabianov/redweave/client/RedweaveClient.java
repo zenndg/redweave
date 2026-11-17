@@ -169,7 +169,7 @@ public final class RedweaveClient {
       return cableColor(cable, PartQuads.slotOf(tintIndex));
     }
     if (part.isPresent() && part.get() instanceof LampPart lamp) {
-      return LampColors.of(lamp);
+      return LampColors.of(lamp, PartQuads.slotOf(tintIndex));
     }
     int channel =
         part.filter(NodePart.class::isInstance)

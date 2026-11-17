@@ -632,10 +632,26 @@ Confira o cadastro dos Signal Modules e a contagem de componentes da #165 (pergu
 | 392 | Abra um mundo salvo antes, com módulos numa rede | Cada módulo entra na lista no primeiro tick em que o chunk dele carrega |
 | 393 | Troque o idioma para Português | `Componentes`, `Nome`, `Limpar componentes`, `4 componentes` e `Nenhum componente nesta rede ainda.` numa rede vazia |
 
+## Fase 2: o visual novo da Signal Lamp
+
+Confira o visual da #167 (perguntas 798 a 800 e 820 a 828), com uma lâmpada num canal vermelho de uma rede e uma alavanca de força ajustável no mesmo canal.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 394 | Coloque a lâmpada no chão, olhando para o norte | Base de cobre comprida ao longo do olhar, faixa vermelha em volta e cúpula de vidro fosco por cima, com 6 px de altura; a hitbox segue o desenho |
+| 395 | Ligue a alavanca na força 15 e depois na 1 | O núcleo acende em branco, forte na 15 e mais fraco na 1, visto através do vidro leitoso; a luz no mundo segue a força |
+| 396 | Desligue a alavanca | O núcleo fica a 25% e a faixa escurece |
+| 397 | Desligue a lâmpada pelo controle ou pelo `Toggle` | O núcleo apaga e um ponto vermelho aparece numa ponta da base |
+| 398 | Tire a lâmpada do canal | A faixa fica cinza |
+| 399 | Coloque lâmpadas na parede e no teto e gire uma com o `Rotate` | A lâmpada sai 6 px da face e gira 90° |
+| 400 | Ponha um nó no mesmo espaço e olhe a lâmpada de vários ângulos, também atrás de água ou vidro | O vidro fica translúcido, sem sumir nem cobrir as outras partes |
+| 401 | Abra o inventário | O ícone 2D novo, com a cúpula, a faixa e o núcleo |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 11:47 | Inclui os passos 394 a 401, do visual novo da Signal Lamp (perguntas 820 a 828, #167). |
 | Zennd | 2026-11-17 11:12 | Inclui os passos 384 a 393, dos componentes da rede, e troca os nós por componentes nos outros passos (perguntas 801 a 817, #165). |
 | Zennd | 2026-11-17 10:31 | Inclui os passos 373 a 383, do Signal Remote com os emissores (perguntas 778 a 793, #163). |
 | Zennd | 2026-11-17 10:00 | Inclui os passos 364 a 372, dos rótulos, do log e do status do slot, e tira o nome da cor dos canais e o `Enabled`/`Disabled` dos outros passos (perguntas 770 a 775, #161). |
