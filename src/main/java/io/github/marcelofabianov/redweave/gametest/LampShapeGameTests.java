@@ -17,8 +17,8 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 /**
  * The hitbox of the Signal Lamp follows its model: a copper base of 6 × 12 px and a glass dome on
- * it, 6 px high, long along its front, on any face and turned (lampada.md, answers 820, 824 and
- * 828).
+ * it, 5 px high, long along its front, on any face and turned (lampada.md, answers 820, 824, 828
+ * and 829).
  */
 @GameTestHolder(RedweaveMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -26,13 +26,13 @@ public final class LampShapeGameTests {
   private static final String EMPTY = "empty";
   private static final BlockPos STONE = new BlockPos(1, 1, 1);
   private static final double PIXEL = 1.0 / 16;
-  private static final double HIGH = 6 * PIXEL;
+  private static final double HIGH = 5 * PIXEL;
   private static final double LONG = 12 * PIXEL;
   private static final double WIDE = 6 * PIXEL;
   private static final double FULL = 1;
   private static final double EPSILON = 1e-6;
   private static final float LOOK_NORTH = 180;
-  private static final String WRONG_HEIGHT = "The lamp should be 6 px high";
+  private static final String WRONG_HEIGHT = "The lamp should be 5 px high";
   private static final String WRONG_LENGTH = "The lamp should be 12 px long along its front";
   private static final String WRONG_WIDTH = "The lamp should be 6 px wide";
   private static final String NOT_ON_FACE = "The lamp should rest on its face";
@@ -40,7 +40,7 @@ public final class LampShapeGameTests {
   private LampShapeGameTests() {}
 
   @GameTest(template = EMPTY)
-  public static void aLampOnTheFloorIsSixHighAndLongAlongItsFront(GameTestHelper helper) {
+  public static void aLampOnTheFloorIsFiveHighAndLongAlongItsFront(GameTestHelper helper) {
     AABB box = LampScene.place(helper, owner(helper), STONE).shape().bounds();
 
     assertSize(helper, box.getYsize(), HIGH, WRONG_HEIGHT);
@@ -64,7 +64,7 @@ public final class LampShapeGameTests {
   }
 
   @GameTest(template = EMPTY)
-  public static void aLampOnAWallStandsSixOutOfIt(GameTestHelper helper) {
+  public static void aLampOnAWallStandsFiveOutOfIt(GameTestHelper helper) {
     Player owner = owner(helper);
     helper.setBlock(STONE, Blocks.STONE);
     owner.setYRot(LOOK_NORTH);

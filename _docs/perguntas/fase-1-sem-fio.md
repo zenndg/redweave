@@ -11,11 +11,12 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
-| 828 | Como testar o visual novo da Signal Lamp? | Um GameTest confere a hitbox nova, de 6 × 12 px e 6 px de altura, em cada face e girada. Os modelos gerados passam pelo `check-generated`, e o vidro, o brilho branco, a faixa do canal e o indicador vermelho ficam no roteiro manual |
+| 829 | Dá para tirar 1 px do topo da Signal Lamp? | Sim: a cúpula passa de 4 para 3 px de altura, e a lâmpada, de 6 para 5 px. O núcleo continua com 2 px e fica com 1 px de vidro por cima. A base, a faixa, a hitbox na largura e no comprimento e as texturas não mudam, e a hitbox passa a 5 px de altura. Muda as perguntas 824 e 828 |
+| 828 | Como testar o visual novo da Signal Lamp? | Um GameTest confere a hitbox nova, de 6 × 12 px e 6 px de altura, em cada face e girada. Os modelos gerados passam pelo `check-generated`, e o vidro, o brilho branco, a faixa do canal e o indicador vermelho ficam no roteiro manual **Mudada pela pergunta 829:** a hitbox tem 5 px de altura. |
 | 827 | Como fica o ícone da Signal Lamp no inventário? | Um desenho 2D novo, com a cúpula, a base e a faixa, em duas camadas como hoje: o corpo e o brilho |
 | 826 | Que forma tem o núcleo que brilha dentro da cúpula? | Uma barra de LED de 2 × 8 px e 2 px de altura dentro do vidro, emissiva, que acende em branco |
 | 825 | Como é o vidro da cúpula da Signal Lamp? | Fosco translúcido: um vidro leitoso, que deixa ver o brilho do núcleo sem mostrar com nitidez o que está atrás, e esconde melhor as falhas de ordem do render translúcido |
-| 824 | Como ficam as alturas e a hitbox da Signal Lamp? | A base de cobre tem 2 px, com a faixa da cor do canal em volta, e a cúpula, 4 px, somando 6 px. A hitbox segue o modelo: 6 × 12 px e 6 px de altura. Muda a pergunta 652 |
+| 824 | Como ficam as alturas e a hitbox da Signal Lamp? | A base de cobre tem 2 px, com a faixa da cor do canal em volta, e a cúpula, 4 px, somando 6 px. A hitbox segue o modelo: 6 × 12 px e 6 px de altura. Muda a pergunta 652 **Mudada pela pergunta 829:** a cúpula tem 3 px, e a lâmpada e a hitbox, 5 px de altura. |
 | 823 | Desligada pelo controle ou pelo `Toggle`, a lâmpada mostra o indicador vermelho? | Sim: o núcleo apaga, e um ponto vermelho de 1 × 1 px, a luz do Signal Lever, aparece numa ponta da base, como na pergunta 657 |
 | 822 | Como o núcleo branco brilha conforme a força recebida? | Como na pergunta 721, só que branco: de 40% a 100% do brilho conforme a luz e 25% apagado; a luz no mundo continua a força, de 0 a 15. Muda a pergunta 721 na cor |
 | 821 | Onde fica o indicativo pequeno da cor do canal na Signal Lamp? | Numa faixa de 1 px na cor do canal ao redor da base de cobre, visível de qualquer lado; cinza sem canal e escura com a lâmpada apagada. Completa a pergunta 800 |
@@ -829,6 +830,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 12:11 | Registra a resposta 829, da Signal Lamp 1 px mais baixa, e marca a 824 e a 828 como mudadas. |
 | Zennd | 2026-11-17 11:27 | Registra as respostas 820 a 828, do visual novo da Signal Lamp, e marca a 650, a 652 e a 721 como mudadas. |
 | Zennd | 2026-11-17 10:52 | Registra as respostas 801 a 819, da contagem de componentes e do cadastro dos módulos na rede. |
 | Zennd | 2026-11-17 10:17 | Registra as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |

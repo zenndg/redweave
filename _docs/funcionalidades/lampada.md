@@ -16,7 +16,7 @@ A lâmpada escuta um único canal, mostra a cor dele numa faixa da base, acende 
 | Canal e cor | Um único canal de intensidade. A luz da lâmpada é branca, e a cor do canal aparece numa faixa fina da base | 650, 800 e 821 |
 | Luz | A força recebida é o nível de luz, de 0 a 15. A luz no mundo é branca, porque o jogo não tem luz colorida; a cor fica só na lâmpada, numa textura emissiva tingida. É estática: só muda quando o sinal muda. Fica na propriedade `light` do estado do `part_space` (veja [Luz no mundo](#luz-no-mundo)) | 650 e 715 |
 | Força emitida | Acesa, emite a força escolhida na tela, de 1 a 15 | 651 |
-| Forma | Uma parte do multipart, como o Signal Node: uma lâmpada alongada, com base de cobre de 6 × 12 px e cúpula de vidro de 4 × 10 px, com 6 px de altura, centrada na face, no sentido de onde o player olha; o `Rotate` a gira 90° | 652, 820 e 824 |
+| Forma | Uma parte do multipart, como o Signal Node: uma lâmpada alongada, com base de cobre de 6 × 12 px e cúpula de vidro de 4 × 10 px, com 5 px de altura, centrada na face, no sentido de onde o player olha; o `Rotate` a gira 90° | 652, 820, 824 e 829 |
 | Saída | Como o Signal Node: com força, só no bloco de apoio, e com o cabo e o pó da mesma face ao lado | 262, 574 e 653 |
 | Rede | Fora do alcance, com a rede `Offline` ou sem rede, apaga e não emite, com a cor escura; o rótulo mostra `Offline` ou `Out of range` | 654 |
 | Contador da rede | Não entra no `modules on` do rodapé da Tela do Controlador: a lâmpada só lê canais, como a entrada de um nó | 717 |
@@ -71,11 +71,11 @@ Além das chaves comuns dos módulos, no NBT da parte (pergunta 718). Ficam fixa
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Base | De cobre, com 6 × 12 px e 2 px de altura, comprida ao longo da frente, com uma faixa de 1 px na cor do canal em volta; cinza sem canal e escura com a lâmpada apagada | 820, 821 e 824 |
-| Cúpula | De vidro fosco translúcido, leitoso, com 4 × 10 px e 4 px de altura sobre a base, num render translúcido | 820, 824 e 825 |
-| Núcleo | Uma barra de LED de 2 × 8 px e 2 px de altura dentro da cúpula, emissiva, que acende em branco | 826 |
+| Cúpula | De vidro fosco translúcido, leitoso, com 4 × 10 px e 3 px de altura sobre a base, num render translúcido | 820, 824, 825 e 829 |
+| Núcleo | Uma barra de LED de 2 × 8 px e 2 px de altura dentro da cúpula, com 1 px de vidro por cima, emissiva, que acende em branco | 826 e 829 |
 | Brilho | O núcleo é branco: de 40% a 100% do brilho conforme a luz, e 25% apagado. A faixa da base tem a cor do canal. Tudo vem só do que o cliente recebe, o canal e a `light` | 721, 821 e 822 |
 | Indicador | Desligada pelo controle ou pelo `Toggle`, o modelo `_off` mostra um ponto vermelho de 1 × 1 × 1 numa ponta da base, a luz do Signal Lever | 657 e 823 |
-| Hitbox | Segue o modelo: 6 × 12 px e 6 px de altura | 824 |
+| Hitbox | Segue o modelo: 6 × 12 px e 5 px de altura | 824 e 829 |
 | Ícone | Um desenho 2D, com a cúpula, a base e a faixa, em duas camadas: o corpo e o brilho | 827 |
 | Mira | A lâmpada, comprida ao longo da frente; o `Rotate` a gira 90° | 652 e 820 |
 
@@ -102,7 +102,7 @@ A arte segue as perguntas 185 e 186: o prompt em `tmp/arte/signal_lamp/`. A prim
 
 - **JUnit:** `SignalLampTest` e `ChangeLampTest`, com a intensidade, o controle `Hold` e `Pulse`, o `Toggle`, a saída e o dono.
 - **GameTests:** `LampGameTests`, com a luz no mundo e a saída no bloco de apoio, a rede `Offline`, o controle `Hold` e `Pulse`, o `Toggle` também com a rede `Offline` (pergunta 716), outro player e o save, com a cópia do cliente desenhando a lâmpada igual ao servidor.
-- **GameTest da hitbox:** a hitbox de 6 × 12 px e 6 px de altura, em cada face e girada (pergunta 828).
+- **GameTest da hitbox:** a hitbox de 6 × 12 px e 5 px de altura, em cada face e girada (perguntas 828 e 829).
 - **Roteiro manual:** os passos 315 a 330, com a cor, a luz à noite e o desempenho (pergunta 658), e os do visual novo: o vidro, o brilho branco, a faixa do canal e o indicador vermelho (pergunta 828).
 
 ## Fora desta página
@@ -113,6 +113,7 @@ A arte segue as perguntas 185 e 186: o prompt em `tmp/arte/signal_lamp/`. A prim
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 12:20 | A cúpula passa a 3 px e a lâmpada, a 5 px de altura, na #169 (pergunta 829). |
 | Zennd | 2026-11-17 11:28 | Descreve o visual novo: base de cobre com a faixa do canal, cúpula de vidro fosco e núcleo branco (perguntas 798 a 800 e 820 a 828). |
 | Zennd | 2026-11-16 23:55 | A receita sai da forma comum dos módulos na #159 (pergunta 767). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |

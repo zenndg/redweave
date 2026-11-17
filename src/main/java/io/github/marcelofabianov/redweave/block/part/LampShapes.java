@@ -5,13 +5,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * The shape of the Signal Lamp, as its model: a copper base of 6 × 12 px with a glass dome on it, 6
+ * The shape of the Signal Lamp, as its model: a copper base of 6 × 12 px with a glass dome on it, 5
  * px high in all, 12 px long along its front and 6 px wide, centered on the side of the space it
- * rests on (answers 652, 820 and 824).
+ * rests on (answers 652, 820, 824 and 829).
  */
 final class LampShapes {
   private static final double FULL = 16;
-  private static final double THICKNESS = 6;
+  private static final double THICKNESS = 5;
   private static final double LONG_EDGE = 2;
   private static final double LONG_FAR_EDGE = 14;
   private static final double WIDE_EDGE = 5;
