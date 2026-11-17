@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,6 +25,8 @@ import org.junit.jupiter.api.Test;
  * The limits of the config only hold for new changes (answers 90, 92 and 93).
  */
 class NetworkRestoreTest {
+  private static final String MODULE_UUID = "8a9b0c1d-2e3f-4a4b-9c5d-6e7f8a9b0c1d";
+  private static final String MODULE_KIND = "signal_timer";
   private static final int LONG_NAME_LENGTH = 40;
   private static final String LETTER = "x";
   private static final String BLANK = "  ";
@@ -55,11 +58,46 @@ class NetworkRestoreTest {
   private static NetworkSnapshot snapshot(
       String name, List<Channel> channels, List<Node> nodes, List<SlotReading> readings) {
     return new NetworkSnapshot(
-        ID, OWNER, name, COLOR, Optional.of(CONTROLLER), false, channels, nodes, readings);
+        ID,
+        OWNER,
+        name,
+        COLOR,
+        Optional.of(CONTROLLER),
+        false,
+        channels,
+        nodes,
+        readings,
+        List.of());
   }
 
   private static NetworkSnapshot withNodes(List<Node> nodes, List<SlotReading> readings) {
     return snapshot(NAME, List.of(), nodes, readings);
+  }
+
+  /** A module saved twice breaks the rules of the snapshot (answer 803). */
+  @Test
+  void aRepeatedModuleIsRejected() {
+    ModuleEntry module =
+        new ModuleEntry(
+            new ModuleId(UUID.fromString(MODULE_UUID)),
+            MODULE_KIND,
+            Optional.empty(),
+            NODE_POSITION,
+            List.of());
+    NetworkSnapshot twice =
+        new NetworkSnapshot(
+            ID,
+            OWNER,
+            NAME,
+            COLOR,
+            Optional.of(CONTROLLER),
+            false,
+            List.of(),
+            List.of(),
+            List.of(),
+            List.of(module, module));
+
+    assertRejected(twice);
   }
 
   private static void assertRejected(NetworkSnapshot snapshot) {

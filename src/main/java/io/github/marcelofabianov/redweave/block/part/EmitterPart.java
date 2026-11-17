@@ -57,7 +57,7 @@ public abstract class EmitterPart extends ModulePart {
   /** The output saved with the plate, on its edges or a channel. */
   /** Its one output off its channel, for a paste out of its network (answer 732). */
   @Override
-  protected final void dropChannels(ChannelDrop drop) {
+  protected final void dropChannels(ConnectionMapper drop) {
     output = drop.of(output);
   }
 

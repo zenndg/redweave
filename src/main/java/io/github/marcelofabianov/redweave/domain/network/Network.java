@@ -19,6 +19,7 @@ public final class Network {
   private final NetworkLimits limits;
   private final Channels channels = new Channels();
   private final Nodes nodes = new Nodes();
+  private final ModuleEntries moduleEntries = new ModuleEntries();
   private final Readings readings = new Readings();
   private final RemoteInputs remoteInputs = new RemoteInputs();
   private final ModuleInputs moduleInputs = new ModuleInputs();
@@ -31,6 +32,7 @@ public final class Network {
   private final NetworkRemotes remotes;
   private final TerminalActions terminal;
   private final NetworkModules modules;
+  private final ModuleRegister register;
 
   private Network(
       NetworkId id,
@@ -50,6 +52,7 @@ public final class Network {
     this.remotes = new NetworkRemotes(remoteInputs, signals, nodes, emissions);
     this.terminal = new TerminalActions(this, status, emissions);
     this.modules = new NetworkModules(moduleInputs, signals, emissions);
+    this.register = new ModuleRegister(this, moduleEntries, signals);
     this.limits = limits;
   }
 
@@ -88,6 +91,7 @@ public final class Network {
     snapshot.channels().forEach(network.channels::restore);
     snapshot.nodes().forEach(network.nodes::restore);
     snapshot.readings().forEach(network.readings::restore);
+    snapshot.modules().forEach(network.moduleEntries::put);
     return network;
   }
 
@@ -102,7 +106,8 @@ public final class Network {
         status.isOff(),
         channels.named(),
         nodes(),
-        readings.all());
+        readings.all(),
+        moduleEntries.all());
   }
 
   /** Renames the network, for its owner only. */
@@ -285,6 +290,16 @@ public final class Network {
 
   public Channel channel(ChannelColor channelColor) {
     return channels.of(channelColor);
+  }
+
+  /** The register of the Signal Modules of the network (answers 803 and 810). */
+  public ModuleRegister register() {
+    return register;
+  }
+
+  /** The nodes and the registered modules, as the screens count them (answers 802 and 804). */
+  public int components() {
+    return nodes.all().size() + moduleEntries.size();
   }
 
   /** The nodes, in the order they were attached. */

@@ -30,7 +30,7 @@ class ManageNetworksTest {
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final TerminalNetworks list = new TerminalNetworks(fixture.networks);
   private final TurnNetwork turn = new TurnNetwork(fixture.networks, fixture.networks);
-  private final ClearNodes clear = new ClearNodes(fixture.networks, fixture.networks);
+  private final ClearComponents clear = new ClearComponents(fixture.networks, fixture.networks);
   private final DeleteNetwork delete =
       new DeleteNetwork(fixture.networks, fixture.networks, fixture.logs);
 
@@ -58,7 +58,7 @@ class ManageNetworksTest {
     TerminalRow row = list.of(OWNER).get(0);
 
     assertEquals(NetworkState.ONLINE, row.state());
-    assertEquals(ONE_NODE, row.nodes());
+    assertEquals(ONE_NODE, row.components());
   }
 
   @Test

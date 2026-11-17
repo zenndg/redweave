@@ -2,8 +2,10 @@ package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.NetworkView;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.netty.buffer.ByteBuf;
 import java.util.List;
+import java.util.stream.Stream;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -13,7 +15,9 @@ import net.minecraft.world.entity.player.Player;
 
 /**
  * The live values of the Controller Screen, in the order of the rows: the signal and the state of
- * each node and the value of each channel. Sent only when one of them changes (answer 82).
+ * each node and then of each registered module, and the value of each channel. A module that writes
+ * nothing this tick has {@link #NO_SIGNAL} (answer 814). Sent only when one of them changes (answer
+ * 82).
  */
 public record ControllerScreenSignals(
     int menu,
@@ -24,6 +28,9 @@ public record ControllerScreenSignals(
     int modulesOn)
     implements CustomPacketPayload {
   private static final String ID = "controller_screen_signals";
+
+  /** The signal of a module that writes nothing on a channel this tick, shown as `—` (814). */
+  public static final int NO_SIGNAL = -1;
 
   public static final Type<ControllerScreenSignals> TYPE =
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
@@ -60,8 +67,15 @@ public record ControllerScreenSignals(
   static ControllerScreenSignals of(int menu, NetworkView view) {
     return new ControllerScreenSignals(
         menu,
-        view.nodes().stream().map(row -> row.signal().strength()).toList(),
-        view.nodes().stream().map(row -> row.state().ordinal()).toList(),
+        Stream.concat(
+                view.nodes().stream().map(row -> row.signal().strength()),
+                view.modules().stream()
+                    .map(row -> row.signal().map(Signal::strength).orElse(NO_SIGNAL)))
+            .toList(),
+        Stream.concat(
+                view.nodes().stream().map(row -> row.state().ordinal()),
+                view.modules().stream().map(row -> row.state().ordinal()))
+            .toList(),
         view.channels().stream().map(row -> row.value().strength()).toList(),
         view.remotesOn(),
         view.modulesOn());

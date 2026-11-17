@@ -16,11 +16,15 @@ import io.github.marcelofabianov.redweave.config.RedweaveConfig;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
+import io.github.marcelofabianov.redweave.domain.network.ModuleChannel;
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
+import io.github.marcelofabianov.redweave.domain.network.ModuleId;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
+import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
@@ -28,6 +32,7 @@ import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import io.github.marcelofabianov.redweave.server.SavedDataNetworks;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
@@ -55,6 +60,11 @@ public final class NetworkSaveGameTests {
   private static final UUID OWNER = UUID.fromString(OWNER_UUID);
   private static final UUID NODE = UUID.fromString(NODE_UUID);
   private static final UUID IDLE_NODE = UUID.fromString(IDLE_NODE_UUID);
+  private static final UUID MODULE = UUID.fromString("8a9b0c1d-2e3f-4a4b-9c5d-6e7f8a9b0c1d");
+  private static final io.github.marcelofabianov.redweave.domain.network.Direction
+      OUTPUT_DIRECTION = io.github.marcelofabianov.redweave.domain.network.Direction.OUTPUT;
+  private static final String MODULE_KIND = "signal_timer";
+  private static final String MODULE_NAME = "Door clock";
   private static final String NAME = "Base door";
   private static final String CHANNEL_NAME = "Door";
   private static final String NODE_NAME = "Lever";
@@ -110,6 +120,45 @@ public final class NetworkSaveGameTests {
         load(fullSave()).save(new CompoundTag(), helper.getLevel().registryAccess());
 
     helper.assertTrue(fullSave().equals(written), NOT_SAME);
+    helper.succeed();
+  }
+
+  /** The registered Signal Modules go to the saves with their network (answer 803). */
+  @GameTest(template = EMPTY)
+  public static void theModulesOfANetworkComeBack(GameTestHelper helper) {
+    SavedDataNetworks data = load(fullSave());
+    Network network = data.find(new NetworkId(NETWORK)).orElseThrow();
+    ModuleEntry timer =
+        new ModuleEntry(
+            new ModuleId(MODULE),
+            MODULE_KIND,
+            Optional.of(MODULE_NAME),
+            new NodePosition(
+                BlockLocations.of(helper.getLevel(), helper.absolutePos(FLOOR)), Face.UP),
+            List.of(new ModuleChannel(ChannelColor.RED, OUTPUT_DIRECTION)));
+    network.register().register(new PlayerId(OWNER), timer);
+    data.save(network);
+
+    SavedDataNetworks again =
+        load(data.save(new CompoundTag(), helper.getLevel().registryAccess()));
+
+    helper.assertTrue(
+        again
+            .find(new NetworkId(NETWORK))
+            .orElseThrow()
+            .register()
+            .entries()
+            .equals(List.of(timer)),
+        NOT_SAME);
+    helper.succeed();
+  }
+
+  /** A network saved before the register opens with no module (answer 803). */
+  @GameTest(template = EMPTY)
+  public static void aNetworkSavedBeforeHasNoModule(GameTestHelper helper) {
+    Network network = load(fullSave()).find(new NetworkId(NETWORK)).orElseThrow();
+
+    helper.assertTrue(network.register().entries().isEmpty(), NOT_SAME);
     helper.succeed();
   }
 

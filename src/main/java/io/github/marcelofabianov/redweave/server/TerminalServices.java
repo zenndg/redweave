@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.server;
 
 import io.github.marcelofabianov.redweave.application.BreakTerminal;
-import io.github.marcelofabianov.redweave.application.ClearNodes;
+import io.github.marcelofabianov.redweave.application.ClearComponents;
 import io.github.marcelofabianov.redweave.application.DeleteNetwork;
 import io.github.marcelofabianov.redweave.application.PlaceTerminal;
 import io.github.marcelofabianov.redweave.application.SignalLogs;
@@ -21,7 +21,7 @@ public final class TerminalServices {
   private final BreakTerminal breakTerminal;
   private final TerminalNetworks terminalNetworks;
   private final TurnNetwork turnNetwork;
-  private final ClearNodes clearNodes;
+  private final ClearComponents clearComponents;
   private final DeleteNetwork deleteNetwork;
 
   TerminalServices(SavedDataNetworks networks, SignalLogs logs) {
@@ -30,7 +30,7 @@ public final class TerminalServices {
     breakTerminal = new BreakTerminal(networks, networks);
     terminalNetworks = new TerminalNetworks(networks);
     turnNetwork = new TurnNetwork(networks, networks);
-    clearNodes = new ClearNodes(networks, networks);
+    clearComponents = new ClearComponents(networks, networks);
     deleteNetwork = new DeleteNetwork(networks, networks, logs);
   }
 
@@ -50,8 +50,8 @@ public final class TerminalServices {
     return turnNetwork;
   }
 
-  public ClearNodes clearNodes() {
-    return clearNodes;
+  public ClearComponents clearComponents() {
+    return clearComponents;
   }
 
   public DeleteNetwork deleteNetwork() {

@@ -99,7 +99,7 @@ public final class TerminalMenu extends AbstractContainerMenu {
       case OPEN -> open(server, player, id);
       case TURN_OFF -> terminal.turnNetwork().off(owner, id);
       case TURN_ON -> terminal.turnNetwork().on(owner, id);
-      case CLEAR_NODES -> terminal.clearNodes().clear(owner, id);
+      case CLEAR_COMPONENTS -> terminal.clearComponents().clear(owner, id);
       case DELETE -> terminal.deleteNetwork().delete(owner, id);
     }
   }

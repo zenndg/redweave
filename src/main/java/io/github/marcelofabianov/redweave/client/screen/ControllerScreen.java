@@ -165,7 +165,8 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
 
   /**
    * A click opens or closes the row; a double click on the name renames the node, for the owner,
-   * and its second click undoes the first, so the row stays as it was (answers 217 and 222).
+   * and its second click undoes the first, so the row stays as it was (answers 217 and 222). A
+   * module is renamed only on its own screen (answer 813).
    */
   private boolean clickNodes(double mouseX, double mouseY) {
     Optional<NodeTable.Placed> row = table.rowAt(content(), menu, mouseX, mouseY);
@@ -175,7 +176,7 @@ public final class ControllerScreen extends AbstractContainerScreen<ControllerMe
     int index = row.get().item().row();
     Box nameBox = NodeTable.nameBox(row.get().box());
     table.toggle(index);
-    if (!owner() || !nameBox.contains(mouseX, mouseY)) {
+    if (!owner() || index >= menu.nodes().size() || !nameBox.contains(mouseX, mouseY)) {
       clicks.reset();
       return true;
     }

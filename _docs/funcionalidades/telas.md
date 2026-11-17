@@ -29,7 +29,7 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Quem escolhe | Só quem colocou o nó. Para os outros, a tela abre só para leitura, com `No network` | 172 |
 | Lista | As redes `Online` de quem colocou o nó, com a última em que ele colocou um nó destacada | 157 |
 | Escolher | Um clique numa rede liga o nó a ela, com os 16 canais inativos, e a tela segue para a configuração | 171 e 226 |
-| Linha | O quadrado na cor da rede, o nome e a quantidade de nós, como `1 node` e `12 nodes`. A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
+| Linha | O quadrado na cor da rede, o nome e a quantidade de componentes, como `1 component` e `12 components` (pergunta 804). A última usada fica no topo, em cobre, e as outras seguem em ordem alfabética, sem diferenciar maiúsculas | 202 e 203 |
 | Rolagem | A lista mostra 3 redes por vez e rola com a roda do mouse quando há mais | 333 e 348 |
 | Sem redes | A lista vazia, com o ícone do controlador e `No network online. Place a Network Controller to create one.` | 199 |
 | Trocar depois | Na configuração, o clique no nome da rede volta a esta lista, para trocar de rede ou voltar mantendo a atual. É preciso ser dono das duas redes | 141 |
@@ -86,8 +86,8 @@ O mostrador do relógio é um sprite, e o anel de progresso e o arco do pulso s�
 | Parte | O que mostra |
 |---|---|
 | Cabeçalho | O quadrado na cor da rede e o nome dela. Para o dono, o clique no quadrado abre a paleta, e o botão `Rename` troca o nome por um campo de texto (perguntas 156 e 212) |
-| Estado | `Online · <n> nodes` |
-| Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
+| Estado | `Online · <n> components`, com os nós e os módulos (pergunta 804) |
+| Abas | `Components`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214, 215 e 809) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). O Signal Remote não entra na lista: ele aparece só na contagem do rodapé, e a lista do vínculo mostra só redes `Online` (perguntas 359 e 364) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída, e de cada valor que um Signal Module escreve num canal, com o nome do módulo e a direção `Output` (perguntas 392 e 396), a mais nova no topo, com o horário real do servidor em cinza, o nome do nó, o quadrado da cor e o número do canal, ou o nome que o dono deu, a direção e o valor à direita, como `14:32:05  Iron Door  ■ 15  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148, 214, 770 e 771) |
 | Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, e quantos Signal Modules escrevem num canal agora, como `● 0 out of range · ● 2 modules on`. As contagens aparecem mesmo com zero. A prancha ainda não mostra `modules on` (perguntas 219, 236, 361, 364, 388 e 413) |
@@ -107,7 +107,8 @@ O que a tela faz, decidido na issue #20.
 | Renomear a rede | O botão `Rename` troca o nome por um campo de texto. Um nome vazio é recusado, e o nome continua o mesmo | 156 |
 | Renomear um canal | Na aba `Signals`, o duplo clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26, 34 e 222 |
 | Trocar a cor | A paleta abre sob o quadrado da cor, com as 16 cores em duas fileiras de 8 e a atual destacada. O clique numa cor a escolhe e fecha a paleta | 212 |
-| Lista vazia | A aba `Nodes` de uma rede sem nós mostra `No node in this network yet.` no meio da tabela | 220 |
+| Lista vazia | A aba `Components` de uma rede sem nós nem módulos mostra `No component in this network yet.` no meio da tabela | 220 e 815 |
+| Módulos na lista | Depois dos nós, os Signal Modules da rede: a primeira coluna, `Name`, mostra o nome; `Type`, o tipo do módulo, como `Timer` ou `Lever`; `Signal`, a força da saída num canal com o chunk carregado, ou `—`; e `State`, `Online`, `Unloaded` ou `Out of range`, como no nó. A linha aberta mostra a posição, só ao dono, e os canais da entrada e da saída. O duplo clique no nome de um módulo não renomeia: o módulo se renomeia na tela dele | 809, 810, 813 e 814 |
 | Log vazio | A aba `Log` sem nenhuma mudança mostra `No signal change yet.` no meio da tabela | 248 |
 | Limpar o log | Para o dono, um botão vermelho `Clear log` no canto da aba `Log` vira `Click again to clear` no primeiro clique e, no segundo, apaga o log da rede no servidor, para todos; as telas abertas recebem o log vazio. Para os outros players o botão não aparece | 264 e 265 |
 | Rolagem | A roda do mouse rola a lista de nós e o log quando não cabem | — |
@@ -323,6 +324,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:54 | A aba `Nodes` vira `Components`, com os Signal Modules (perguntas 808 a 815). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, o log mostra só o horário, e o status do slot é `On` ou `Off` (perguntas 770, 771, 774 e 775). |
 | Zennd | 2026-11-16 15:19 | Adiciona a Tela do Signal Alarm (perguntas 643, 645, 646, 648, 737, 740, 742 e 743). |
 | Zennd | 2026-11-16 13:19 | Adiciona a Tela do Signal Lamp (perguntas 650, 651, 656 e 720). |

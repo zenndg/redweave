@@ -35,7 +35,7 @@ public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacke
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
 
   /** One row: the color, the name and the node count, and whether it was used last (202). */
-  public record Row(String name, int color, int nodes, boolean lastUsed) {
+  public record Row(String name, int color, int components, boolean lastUsed) {
     static final StreamCodec<RegistryFriendlyByteBuf, Row> STREAM_CODEC =
         StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
@@ -43,13 +43,14 @@ public record NodeScreenChoices(int menu, List<Row> rows) implements CustomPacke
             ByteBufCodecs.VAR_INT,
             Row::color,
             ByteBufCodecs.VAR_INT,
-            Row::nodes,
+            Row::components,
             ByteBufCodecs.BOOL,
             Row::lastUsed,
             Row::new);
 
     static Row of(NetworkChoice choice) {
-      return new Row(choice.name(), choice.color().ordinal(), choice.nodes(), choice.lastUsed());
+      return new Row(
+          choice.name(), choice.color().ordinal(), choice.components(), choice.lastUsed());
     }
   }
 

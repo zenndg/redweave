@@ -17,6 +17,7 @@ final class SnapshotRules {
   private static final String REPEATED_CHANNEL = "A saved channel appears only once";
   private static final String REPEATED_NODE = "A saved node appears only once";
   private static final String STRAY_READING = "A saved reading belongs to an enabled input";
+  private static final String REPEATED_MODULE = "A saved module appears only once";
 
   private SnapshotRules() {}
 
@@ -25,6 +26,16 @@ final class SnapshotRules {
     checkChannels(snapshot.channels());
     Map<NodeId, Node> nodes = nodesById(snapshot.nodes());
     snapshot.readings().forEach(reading -> requireInput(nodes.get(reading.node()), reading));
+    checkModules(snapshot.modules());
+  }
+
+  private static void checkModules(List<ModuleEntry> modules) {
+    Set<ModuleId> seen = new HashSet<>();
+    for (ModuleEntry module : modules) {
+      if (!seen.add(module.id())) {
+        throw new IllegalArgumentException(REPEATED_MODULE);
+      }
+    }
   }
 
   private static void requireName(String name) {

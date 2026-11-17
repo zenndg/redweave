@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 /** The Portuguese texts of the Controller Screen, with the same keys as the English ones. */
 final class ControllerScreenPortugueseTexts {
-  private static final String TAB_NODES = "Nós";
+  private static final String TAB_NODES = "Componentes";
   private static final String TAB_SIGNALS = "Sinais";
   private static final String TAB_ACCESS = "Acesso";
   private static final String TAB_LOG = "Registro";
@@ -14,7 +14,7 @@ final class ControllerScreenPortugueseTexts {
   private static final String DOUBLE_CLICK = "Clique duas vezes para renomear.";
   private static final String ENTER_OR_ESC = " Enter salva, Esc cancela.";
   private static final String RENAME_TOOLTIP = DOUBLE_CLICK + ENTER_OR_ESC;
-  private static final String COLUMN_NODE = "Nó";
+  private static final String COLUMN_NODE = "Nome";
   private static final String COLUMN_SIGNAL = "Sinal";
   private static final String COLUMN_TYPE = "Tipo";
   private static final String COLUMN_STATE = "Estado";
@@ -34,7 +34,7 @@ final class ControllerScreenPortugueseTexts {
   private static final String OWNER_LINE = "Dono: %s";
   private static final String OWNER = "Dono";
   private static final String READ_ONLY = "Só o dono pode alterar esta rede.";
-  private static final String NO_NODES = "Nenhum nó nesta rede ainda.";
+  private static final String NO_NODES = "Nenhum componente nesta rede ainda.";
   private static final String NO_LOG = "Nenhuma mudança de sinal ainda.";
   private static final String CLEAR_LOG = "Limpar log";
   private static final String CONFIRM_CLEAR_LOG = "Clique de novo para limpar";

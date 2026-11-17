@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.Header;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenTexts;
+import io.github.marcelofabianov.redweave.menu.NetworkTexts;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,7 +13,8 @@ import net.minecraft.network.chat.Component;
 
 /**
  * The header of the Controller Screen: the color square and the name of the network, the Rename
- * button for the owner and the state pill, `Online · 6 nodes` (telas.md, answers 156 and 212).
+ * button for the owner and the state pill, `Online · 6 components` (telas.md, answers 156, 212 and
+ * 804).
  */
 final class ControllerHeader {
   private static final int LEFT = 8;
@@ -31,7 +33,6 @@ final class ControllerHeader {
   private static final int FIELD_WIDTH = 150;
   private static final int PILL_RIGHT = 8;
   private static final int PILL_Y = 3;
-  private static final int ONE = 1;
   private static final String SEPARATOR = " · ";
 
   private ControllerHeader() {}
@@ -120,11 +121,9 @@ final class ControllerHeader {
   }
 
   private static Component pillText(ControllerMenu menu) {
-    int nodes = menu.nodes().size();
-    String count = nodes == ONE ? NodeScreenTexts.NODE_COUNT_ONE : NodeScreenTexts.NODE_COUNT_MANY;
     return Component.translatable(NodeScreenTexts.STATE_ONLINE)
         .append(SEPARATOR)
-        .append(Component.translatable(count, nodes));
+        .append(NetworkTexts.components(menu.components()));
   }
 
   private static Component renameText() {

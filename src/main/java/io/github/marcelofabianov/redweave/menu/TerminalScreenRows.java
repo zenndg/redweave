@@ -23,7 +23,7 @@ public record TerminalScreenRows(int menu, List<NetworkLine> networks)
       new Type<>(ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, ID));
 
   /** A row: the name, and the color, the state and the nodes as numbers. */
-  public record NetworkLine(String name, int color, int state, int nodes) {
+  public record NetworkLine(String name, int color, int state, int components) {
     static final StreamCodec<RegistryFriendlyByteBuf, NetworkLine> STREAM_CODEC =
         StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
@@ -33,11 +33,12 @@ public record TerminalScreenRows(int menu, List<NetworkLine> networks)
             ByteBufCodecs.VAR_INT,
             NetworkLine::state,
             ByteBufCodecs.VAR_INT,
-            NetworkLine::nodes,
+            NetworkLine::components,
             NetworkLine::new);
 
     static NetworkLine of(TerminalRow row) {
-      return new NetworkLine(row.name(), row.color().ordinal(), row.state().ordinal(), row.nodes());
+      return new NetworkLine(
+          row.name(), row.color().ordinal(), row.state().ordinal(), row.components());
     }
   }
 

@@ -4,9 +4,11 @@ import io.github.marcelofabianov.redweave.domain.network.NodeKind;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.menu.ControllerKinds;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
-import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.NodeLine;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.ModuleLine;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenRows.SlotLine;
+import io.github.marcelofabianov.redweave.menu.ControllerScreenSignals;
 import io.github.marcelofabianov.redweave.menu.ControllerScreenTexts;
+import io.github.marcelofabianov.redweave.menu.ModuleKinds;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +55,7 @@ final class NodeTable {
   private static final int SLOT_SWATCH = 6;
   private static final int SLOT_TEXT_X = 25;
   private static final String POSITION = "%d, %d, %d";
+  private static final String NO_SIGNAL = "—";
 
   private int scroll;
   private int expanded = NONE;
@@ -81,7 +84,7 @@ final class NodeTable {
 
   void draw(GuiGraphics graphics, Font font, Box area, ControllerMenu menu, Mouse mouse) {
     drawHeader(graphics, font, area);
-    if (menu.nodes().isEmpty()) {
+    if (menu.components() == 0) {
       Component empty = Component.translatable(ControllerScreenTexts.NO_NODES);
       int x = area.x() + (area.width() - font.width(empty)) / 2;
       int y = area.y() + area.height() / 2;
@@ -115,7 +118,6 @@ final class NodeTable {
       GuiGraphics graphics, Font font, Placed placed, ControllerMenu menu, Mouse mouse) {
     Box box = placed.box();
     int row = placed.item().row();
-    NodeLine node = menu.nodes().get(row);
     boolean open = row == expanded;
     graphics.blitSprite(
         spriteOf(open, mouse.hovers(box)), box.x(), box.y(), box.width(), box.height());
@@ -125,16 +127,37 @@ final class NodeTable {
         box.y() + ICON_Y,
         ICON_SIZE,
         ICON_SIZE);
-    cell(graphics, font, Component.literal(node.name()), box, NAME_X, TYPE_X);
-    cell(graphics, font, kindOf(node.nodeKind()), box, TYPE_X, SIGNAL_X);
-    cell(
-        graphics,
-        font,
-        Component.literal(String.valueOf(menu.nodeSignal(row))),
-        box,
-        SIGNAL_X,
-        STATE_X);
+    cell(graphics, font, Component.literal(nameOf(menu, row)), box, NAME_X, TYPE_X);
+    cell(graphics, font, typeOf(menu, row), box, TYPE_X, SIGNAL_X);
+    cell(graphics, font, signalOf(menu, row), box, SIGNAL_X, STATE_X);
     drawState(graphics, font, box, menu.nodeState(row));
+  }
+
+  /** The rows are the nodes and then the registered modules (answer 809). */
+  private static boolean isModule(ControllerMenu menu, int row) {
+    return row >= menu.nodes().size();
+  }
+
+  private static ModuleLine moduleOf(ControllerMenu menu, int row) {
+    return menu.modules().get(row - menu.nodes().size());
+  }
+
+  private static String nameOf(ControllerMenu menu, int row) {
+    return isModule(menu, row) ? moduleOf(menu, row).name() : menu.nodes().get(row).name();
+  }
+
+  /** `Input`, `Output` or `Both` for a node, and the name of the item for a module (809). */
+  private static Component typeOf(ControllerMenu menu, int row) {
+    return isModule(menu, row)
+        ? ModuleKinds.nameOf(moduleOf(menu, row).kind())
+        : kindOf(menu.nodes().get(row).nodeKind());
+  }
+
+  /** The signal, or `—` for a module that writes nothing on a channel now (answer 814). */
+  private static Component signalOf(ControllerMenu menu, int row) {
+    int signal = menu.nodeSignal(row);
+    return Component.literal(
+        signal == ControllerScreenSignals.NO_SIGNAL ? NO_SIGNAL : String.valueOf(signal));
   }
 
   /** A text from one column, cut to fit before the next, in the normal color (answer 336). */
@@ -169,7 +192,7 @@ final class NodeTable {
     Box box = placed.box();
     graphics.blitSprite(ControllerSprites.SLOT_LINE, box.x(), box.y(), box.width(), box.height());
     switch (placed.item().line()) {
-      case POSITION -> drawPosition(graphics, font, box, menu.nodes().get(placed.item().row()));
+      case POSITION -> drawPosition(graphics, font, box, positionOf(menu, placed.item().row()));
       case SLOT ->
           placed.item().slot().ifPresent(slot -> drawSlot(graphics, font, box, slot, menu));
       default -> {
@@ -179,15 +202,19 @@ final class NodeTable {
     }
   }
 
-  /** The block of the node, only in the rows the owner receives (answers 149 and 340). */
-  private static void drawPosition(GuiGraphics graphics, Font font, Box box, NodeLine node) {
-    node.position()
-        .ifPresent(pos ->
-            dim(
-                graphics,
-                font,
-                Component.translatable(ControllerScreenTexts.POSITION_LINE, positionOf(pos)),
-                box));
+  private static Optional<BlockPos> positionOf(ControllerMenu menu, int row) {
+    return isModule(menu, row) ? moduleOf(menu, row).position() : menu.nodes().get(row).position();
+  }
+
+  /** The block of the row, only in the rows the owner receives (answers 149, 340 and 810). */
+  private static void drawPosition(
+      GuiGraphics graphics, Font font, Box box, Optional<BlockPos> position) {
+    position.ifPresent(pos ->
+        dim(
+            graphics,
+            font,
+            Component.translatable(ControllerScreenTexts.POSITION_LINE, positionOf(pos)),
+            box));
   }
 
   private static String positionOf(BlockPos pos) {
@@ -240,27 +267,37 @@ final class NodeTable {
   }
 
   private List<Item> items(ControllerMenu menu) {
-    if (expanded >= menu.nodes().size()) {
+    if (expanded >= menu.components()) {
       expanded = NONE;
     }
     List<Item> items = new ArrayList<>();
-    for (int row = 0; row < menu.nodes().size(); row++) {
+    for (int row = 0; row < menu.components(); row++) {
       items.add(new Item(row, Line.NODE, Optional.empty()));
       if (row == expanded) {
-        items.addAll(openLines(row, menu.nodes().get(row)));
+        items.addAll(openLines(row, positionOf(menu, row), slotsOf(menu, row)));
       }
     }
     return items;
   }
 
-  /** Under the open row: the position for the owner, then each enabled slot (234 and 340). */
-  private static List<Item> openLines(int row, NodeLine node) {
+  /** The enabled slots of a node, or the channels of a module, as slot lines (answer 810). */
+  private static List<SlotLine> slotsOf(ControllerMenu menu, int row) {
+    if (!isModule(menu, row)) {
+      return menu.nodes().get(row).slots();
+    }
+    return moduleOf(menu, row).channels().stream()
+        .map(channel -> new SlotLine(channel.channel(), channel.channel(), channel.direction()))
+        .toList();
+  }
+
+  /** Under the open row: the position for the owner, then each slot (234, 340 and 810). */
+  private static List<Item> openLines(int row, Optional<BlockPos> position, List<SlotLine> slots) {
     List<Item> lines = new ArrayList<>();
-    if (node.position().isPresent()) {
+    if (position.isPresent()) {
       lines.add(new Item(row, Line.POSITION, Optional.empty()));
     }
-    node.slots().forEach(slot -> lines.add(new Item(row, Line.SLOT, Optional.of(slot))));
-    if (node.slots().isEmpty()) {
+    slots.forEach(slot -> lines.add(new Item(row, Line.SLOT, Optional.of(slot))));
+    if (slots.isEmpty()) {
       lines.add(new Item(row, Line.NO_CHANNEL, Optional.empty()));
     }
     return lines;

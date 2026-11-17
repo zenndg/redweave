@@ -96,7 +96,7 @@ O custo cresce com os players online, não com os nós (regra 18).
 
 ## Na Tela do Controlador
 
-O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao lado de `unloaded` e `out of range`. A aba `Nodes` continua só com nós (perguntas 361 e 364).
+O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao lado de `unloaded` e `out of range`. A aba `Components` lista os nós e os módulos, mas não os tablets (perguntas 361, 364 e 809).
 
 ## Testes
 
@@ -109,6 +109,7 @@ O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao la
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 11:12 | A aba `Nodes` vira `Components` (pergunta 809). |
 | Zennd | 2026-11-17 10:17 | Inclui o vínculo com os emissores (perguntas 778 a 791). |
 | Zennd | 2026-11-17 09:59 | O canal aparece na action bar com o `■` na cor dele e o número (perguntas 770 e 775). |
 | Zennd | 2026-11-16 23:55 | A receita muda a linha de baixo na #159 (pergunta 769). |

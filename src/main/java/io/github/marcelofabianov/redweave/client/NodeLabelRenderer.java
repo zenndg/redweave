@@ -177,7 +177,7 @@ public final class NodeLabelRenderer {
         NetworkTexts.state(NetworkTexts.stateOf(line.state()))
             .copy()
             .append(SEPARATOR)
-            .append(NetworkTexts.nodes(line.nodes()));
+            .append(NetworkTexts.components(line.components()));
     Line top = new Line(state, NETWORK_SCALE, NETWORK_LINE_UP, 0);
     Line bottom =
         new Line(Component.literal(line.name()), NODE_SCALE, NODE_LINE_UP, colorOf(line.color()));

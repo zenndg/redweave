@@ -63,7 +63,7 @@ public final class InverterPart extends ModulePart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {
+  protected void dropChannels(ConnectionMapper drop) {
     input = drop.of(input);
     output = drop.of(output);
   }

@@ -11,7 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.domain.network.DefaultNames;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
+import io.github.marcelofabianov.redweave.domain.network.ModuleChannel;
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
+import io.github.marcelofabianov.redweave.domain.network.ModuleId;
+import io.github.marcelofabianov.redweave.domain.network.ModuleInput;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeKind;
@@ -20,6 +25,8 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,6 +47,20 @@ class ShowNetworkTest {
   private static final String LEVER = "Lever";
   private static final int DISABLED_SLOT = ChannelColor.ORANGE.ordinal();
   private static final Signal READ = new Signal(12);
+
+  private static final String TIMER_UUID = "8a9b0c1d-2e3f-4a4b-9c5d-6e7f8a9b0c1d";
+  private static final ModuleId TIMER = new ModuleId(UUID.fromString(TIMER_UUID));
+  private static final String TIMER_KIND = "signal_timer";
+  private static final String TIMER_NAME = "Door clock";
+  private static final ModuleEntry TIMER_ENTRY =
+      new ModuleEntry(
+          TIMER,
+          TIMER_KIND,
+          Optional.of(TIMER_NAME),
+          NODE_POSITION,
+          List.of(new ModuleChannel(DOOR, Direction.OUTPUT)));
+  private static final ModuleEntry UNNAMED =
+      new ModuleEntry(TIMER, TIMER_KIND, Optional.empty(), NODE_POSITION, List.of());
 
   private final ApplicationFixture fixture = new ApplicationFixture();
   private final ShowNetwork show = new ShowNetwork(fixture.networks);
@@ -148,5 +169,37 @@ class ShowNetworkTest {
     assertEquals(ONE, view.channelsInUse());
     assertEquals(ONE, view.nodesIn(NodeState.UNLOADED));
     assertEquals(NONE, view.nodesIn(NodeState.OUT_OF_RANGE));
+  }
+
+  /** The modules come after the nodes, with their kind, state and signal (answers 809 and 814). */
+  @Test
+  void theModulesAreListedWithTheirKindStateAndSignal() {
+    NetworkId id = fixture.ownersNetwork();
+    Network network = network(id);
+    network.register().register(OWNER, TIMER_ENTRY);
+    network.modules().apply(Set.of(new ModuleInput(TIMER, NODE_POSITION.block(), DOOR, READ)));
+
+    ModuleRow row = show.of(OWNER, id, ALL_LOADED).orElseThrow().modules().get(0);
+
+    assertEquals(TIMER, row.id());
+    assertEquals(TIMER_NAME, row.name());
+    assertEquals(TIMER_KIND, row.kind());
+    assertEquals(Optional.of(READ), row.signal());
+    assertEquals(NodeState.ONLINE, row.state());
+    assertEquals(Optional.of(NODE_POSITION), row.position());
+    assertEquals(TIMER_ENTRY.channels(), row.channels());
+  }
+
+  /** Without its own name, a module shows the default one, and others never see where it is. */
+  @Test
+  void aStrangerSeesNoPlaceOfAModule() {
+    NetworkId id = fixture.ownersNetwork();
+    network(id).register().register(OWNER, UNNAMED);
+
+    ModuleRow row = show.of(STRANGER, id, ALL_LOADED).orElseThrow().modules().get(0);
+
+    assertEquals(Optional.empty(), row.position());
+    assertEquals(DefaultNames.of(TIMER.value()), row.name());
+    assertEquals(Optional.empty(), row.signal());
   }
 }

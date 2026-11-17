@@ -2,7 +2,9 @@ package io.github.marcelofabianov.redweave.application;
 
 import io.github.marcelofabianov.redweave.domain.network.Channel;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
+import io.github.marcelofabianov.redweave.domain.network.DefaultNames;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.Node;
@@ -13,8 +15,9 @@ import java.util.Optional;
 
 /**
  * The Controller Screen of a network, as one viewer sees it. Anyone may look (answer 22), but the
- * position of the nodes stays on the server for anyone but the owner (answer 149). The nodes come
- * in the order they joined the network (answer 216).
+ * position of the nodes and the modules stays on the server for anyone but the owner (answer 149).
+ * The nodes come in the order they joined the network (answer 216), and the registered Signal
+ * Modules after them (answer 809).
  */
 public final class ShowNetwork {
   private final NetworkFinder finder;
@@ -31,6 +34,10 @@ public final class ShowNetwork {
     boolean owner = network.isOwner(viewer);
     List<NodeRow> nodes =
         network.nodes().stream().map(node -> rowOf(network, node, owner, loaded)).toList();
+    List<ModuleRow> modules =
+        network.register().entries().stream()
+            .map(entry -> rowOf(network, entry, owner, loaded))
+            .toList();
     List<ChannelRow> channels = channelsOf(network);
     return new NetworkView(
         network.name(),
@@ -39,6 +46,7 @@ public final class ShowNetwork {
         network.state(),
         owner,
         nodes,
+        modules,
         channels,
         network.remotes().on(),
         network.modules().on());
@@ -53,6 +61,21 @@ public final class ShowNetwork {
         node.kind(),
         owner ? Optional.of(node.position()) : Optional.empty(),
         slotsOf(node));
+  }
+
+  /**
+   * A registered module, with the rules of a node for its state and place (answers 809 and 810).
+   */
+  private static ModuleRow rowOf(
+      Network network, ModuleEntry entry, boolean owner, LoadedNodes loaded) {
+    return new ModuleRow(
+        entry.id(),
+        entry.name().orElse(DefaultNames.of(entry.id().value())),
+        entry.kind(),
+        network.register().signal(entry.id()),
+        network.register().state(entry.id(), loaded.isLoaded(entry.position())),
+        owner ? Optional.of(entry.position()) : Optional.empty(),
+        entry.channels());
   }
 
   private static List<SlotRow> slotsOf(Node node) {

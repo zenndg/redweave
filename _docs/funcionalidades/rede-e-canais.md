@@ -163,6 +163,21 @@ O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio:
 
 Um Signal Module escreve direto num canal da rede dele, sem nó: na rede, ele é uma parte nova do agregado, entregue a cada tick com os módulos carregados que escrevem num canal, fora do save, como o `RemoteInputs`. Entra na regra do mais forte, conta no alcance do controlador medido da placa e vale 0 fora do alcance, numa rede que não está `Online` ou num chunk descarregado. A rede só fica pendente se um canal mudar (perguntas 375, 385, 386 e 387). A base está em [`modulos-de-sinal.md`](modulos-de-sinal.md).
 
+## Componentes
+
+Os componentes de uma rede são os Signal Nodes e os Signal Modules que escolheram a rede. Os Signal Remotes e os Signal Cables ficam de fora: o Remote não tem cadastro, e o cabo não pertence a uma rede; os Remotes ligados continuam no rodapé `remotes on` da Tela do Controlador (perguntas 802 e 803).
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Cadastro | Os nós já fazem parte do agregado. Os módulos ganham um cadastro no agregado `Network`, salvo com a rede, e o número é real com os chunks descarregados | 803 |
+| O que guarda | De cada módulo: o ID, o tipo, o nome, a posição, a face e os canais da entrada e da saída, atualizados no servidor quando o dono renomeia ou muda o módulo | 810 |
+| Entrada | O módulo entra ao escolher a rede | 803 |
+| Saída | Quebrado, retirado pela Wrench, outra rede escolhida, rede apagada ou `Clear components`. Com o chunk descarregado, fora do alcance ou com a saída de volta na borda, continua cadastrado | 806 e 807 |
+| Marca `registered` | Gravada no NBT do módulo ao entrar no cadastro, com a rede dele. Sem a marca, ou com outra rede, o módulo se cadastra no primeiro tick em que o chunk dele estiver carregado, sem carregar chunk à força, e sai do cadastro da rede antiga; com a mesma rede na marca e fora do cadastro, foi tirado e perde a rede no próximo tick carregado | 805, 811 e 817 |
+| Contagem | Só o total, como `12 components` (`12 componentes`), no Network Terminal, na escolha de rede, no vínculo do Signal Remote, no cabeçalho da Tela do Controlador e no rótulo do Controller | 804 |
+| Lista | A aba `Components` da [Tela do Controlador](telas.md#tela-do-controlador) lista os nós e os módulos | 808 e 809 |
+| Save antigo | Uma rede salva antes abre sem o cadastro, e os módulos entram pela marca `registered` | 803 e 805 |
+
 ## Permissões
 
 Só o dono altera a rede, sem exceção para operadores do servidor (perguntas 22 e 28).
@@ -245,6 +260,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:54 | Inclui os componentes da rede e o cadastro dos Signal Modules (perguntas 801 a 815). |
 | Zennd | 2026-11-17 10:31 | O tablet vinculado a um emissor fica fora do `RemoteInputs` (pergunta 791). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, e o status do slot é `On` ou `Off` (perguntas 770 e 774). |
 | Zennd | 2026-11-15 09:37 | Quem colocou o nó fica gravado na parte do multipart (pergunta 543). |

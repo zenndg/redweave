@@ -65,7 +65,7 @@ public final class TimerPart extends ModulePart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {
+  protected void dropChannels(ConnectionMapper drop) {
     output = drop.of(output);
     pause = drop.of(pause);
   }

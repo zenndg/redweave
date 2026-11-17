@@ -5,6 +5,6 @@ public enum TerminalAction {
   OPEN,
   TURN_OFF,
   TURN_ON,
-  CLEAR_NODES,
+  CLEAR_COMPONENTS,
   DELETE
 }

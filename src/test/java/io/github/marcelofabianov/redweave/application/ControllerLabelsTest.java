@@ -10,18 +10,26 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.O
 import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.network;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
+import io.github.marcelofabianov.redweave.domain.network.ModuleId;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 /**
  * The floating label over a Network Controller, with the Configurator in hand: the state of the
- * network and how many nodes it has, and below its name, after a square in its color (answer 773).
+ * network and how many components it has, and below its name, after a square in its color (answer
+ * 773).
  */
 class ControllerLabelsTest {
   private static final int NO_NODES = 0;
-  private static final int TWO_NODES = 2;
+  private static final int THREE_COMPONENTS = 3;
+  private static final String KIND = "signal_timer";
+  private static final String MODULE_UUID = "8a9b0c1d-2e3f-4a4b-9c5d-6e7f8a9b0c1d";
+  private static final ModuleId MODULE = new ModuleId(UUID.fromString(MODULE_UUID));
 
   @Test
   void aNewNetworkIsOnlineWithNoNodes() {
@@ -31,12 +39,16 @@ class ControllerLabelsTest {
   }
 
   @Test
-  void theLabelCountsTheNodesOfTheNetwork() {
+  void theLabelCountsTheNodesAndTheModules() {
     Network network = network();
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
 
-    assertEquals(TWO_NODES, ControllerLabels.of(network).nodes());
+    network
+        .register()
+        .register(OWNER, new ModuleEntry(MODULE, KIND, Optional.empty(), NODE_POSITION, List.of()));
+
+    assertEquals(THREE_COMPONENTS, ControllerLabels.of(network).components());
   }
 
   /** A network its owner turned off at a Network Terminal says so (answer 132). */

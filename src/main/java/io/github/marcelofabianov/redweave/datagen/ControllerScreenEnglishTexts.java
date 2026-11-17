@@ -5,14 +5,14 @@ import java.util.function.BiConsumer;
 
 /** The English texts of the Controller Screen, the base of every language. */
 final class ControllerScreenEnglishTexts {
-  private static final String TAB_NODES = "Nodes";
+  private static final String TAB_NODES = "Components";
   private static final String TAB_SIGNALS = "Signals";
   private static final String TAB_ACCESS = "Access";
   private static final String TAB_LOG = "Log";
   private static final String RENAME = "Rename";
   private static final String RECOLOR_TOOLTIP = "Click to change the color.";
   private static final String RENAME_TOOLTIP = "Double-click to rename. Enter saves, Esc cancels.";
-  private static final String COLUMN_NODE = "Node";
+  private static final String COLUMN_NODE = "Name";
   private static final String COLUMN_SIGNAL = "Signal";
   private static final String COLUMN_TYPE = "Type";
   private static final String COLUMN_STATE = "State";
@@ -32,7 +32,7 @@ final class ControllerScreenEnglishTexts {
   private static final String OWNER_LINE = "Owner: %s";
   private static final String OWNER = "Owner";
   private static final String READ_ONLY = "Only the owner can change this network.";
-  private static final String NO_NODES = "No node in this network yet.";
+  private static final String NO_NODES = "No component in this network yet.";
   private static final String NO_LOG = "No signal change yet.";
   private static final String CLEAR_LOG = "Clear log";
   private static final String CONFIRM_CLEAR_LOG = "Click again to clear";

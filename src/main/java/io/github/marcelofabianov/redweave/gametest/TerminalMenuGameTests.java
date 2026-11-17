@@ -95,7 +95,7 @@ public final class TerminalMenuGameTests {
     NodeId node = NodeScene.placeNode(helper, owner, STONE, Direction.UP);
     TerminalMenu menu = menuOf(helper, owner.getUUID(), OWNER_NAME);
 
-    click(menu, owner, TerminalAction.CLEAR_NODES);
+    click(menu, owner, TerminalAction.CLEAR_COMPONENTS);
 
     helper.assertTrue(server().networkOfNode(node).isEmpty(), NOT_CLEARED);
     helper.succeed();

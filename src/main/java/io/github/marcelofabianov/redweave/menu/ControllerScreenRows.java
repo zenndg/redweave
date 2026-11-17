@@ -2,10 +2,12 @@ package io.github.marcelofabianov.redweave.menu;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.application.ChannelRow;
+import io.github.marcelofabianov.redweave.application.ModuleRow;
 import io.github.marcelofabianov.redweave.application.NetworkView;
 import io.github.marcelofabianov.redweave.application.NodeRow;
 import io.github.marcelofabianov.redweave.application.SlotRow;
 import io.github.marcelofabianov.redweave.block.NodeBlocks;
+import io.github.marcelofabianov.redweave.domain.network.ModuleChannel;
 import io.github.marcelofabianov.redweave.domain.network.NodeKind;
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +20,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * What the Controller Screen draws and changes only now and then: the header, the node list and the
- * channel names and counts. The live values go apart, in ControllerScreenSignals, so a busy circuit
- * does not resend the whole list (rule 18). The position only comes for the owner (answer 149).
+ * What the Controller Screen draws and changes only now and then: the header, the nodes and the
+ * registered Signal Modules of the `Components` tab (answer 809), and the channel names and counts.
+ * The live values go apart, in ControllerScreenSignals, so a busy circuit does not resend the whole
+ * list (rule 18). The position only comes for the owner (answer 149).
  */
 public record ControllerScreenRows(
-    int menu, Header header, List<NodeLine> nodes, List<ChannelLine> channels)
+    int menu,
+    Header header,
+    List<NodeLine> nodes,
+    List<ModuleLine> modules,
+    List<ChannelLine> channels)
     implements CustomPacketPayload {
   private static final String ID = "controller_screen_rows";
   private static final String DEFAULT_NAME = "";
@@ -99,6 +106,54 @@ public record ControllerScreenRows(
     }
   }
 
+  /**
+   * A channel a module reads or writes: the channel and the direction, as ordinals (answer 810).
+   */
+  public record ModuleChannelLine(int channel, int direction) {
+    static final StreamCodec<RegistryFriendlyByteBuf, ModuleChannelLine> STREAM_CODEC =
+        StreamCodec.composite(
+            ByteBufCodecs.VAR_INT,
+            ModuleChannelLine::channel,
+            ByteBufCodecs.VAR_INT,
+            ModuleChannelLine::direction,
+            ModuleChannelLine::new);
+
+    static ModuleChannelLine of(ModuleChannel channel) {
+      return new ModuleChannelLine(channel.channel().ordinal(), channel.direction().ordinal());
+    }
+  }
+
+  /**
+   * A registered Signal Module in the `Components` tab: its name, its kind as the ID of its item,
+   * its block for the owner, and its channels (answers 809, 810 and 814).
+   */
+  public record ModuleLine(
+      String name, String kind, Optional<BlockPos> position, List<ModuleChannelLine> channels) {
+    static final StreamCodec<RegistryFriendlyByteBuf, ModuleLine> STREAM_CODEC =
+        StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8,
+            ModuleLine::name,
+            ByteBufCodecs.STRING_UTF8,
+            ModuleLine::kind,
+            ByteBufCodecs.optional(BlockPos.STREAM_CODEC),
+            ModuleLine::position,
+            ModuleChannelLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
+            ModuleLine::channels,
+            ModuleLine::new);
+
+    public ModuleLine {
+      channels = List.copyOf(channels);
+    }
+
+    static ModuleLine of(ModuleRow row) {
+      return new ModuleLine(
+          row.name(),
+          row.kind(),
+          row.position().map(NodeBlocks::posOf),
+          row.channels().stream().map(ModuleChannelLine::of).toList());
+    }
+  }
+
   /** A channel of the Signals tab: its own name, or empty for the name of the color (answer 26). */
   public record ChannelLine(String name, int inputs, int outputs) {
     static final StreamCodec<RegistryFriendlyByteBuf, ChannelLine> STREAM_CODEC =
@@ -129,12 +184,15 @@ public record ControllerScreenRows(
           ControllerScreenRows::header,
           NodeLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
           ControllerScreenRows::nodes,
+          ModuleLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
+          ControllerScreenRows::modules,
           ChannelLine.STREAM_CODEC.apply(ByteBufCodecs.list()),
           ControllerScreenRows::channels,
           ControllerScreenRows::new);
 
   public ControllerScreenRows {
     nodes = List.copyOf(nodes);
+    modules = List.copyOf(modules);
     channels = List.copyOf(channels);
   }
 
@@ -145,18 +203,19 @@ public record ControllerScreenRows(
         menu,
         header,
         view.nodes().stream().map(NodeLine::of).toList(),
+        view.modules().stream().map(ModuleLine::of).toList(),
         view.channels().stream().map(ChannelLine::of).toList());
   }
 
   /** No network to show: an empty header and no rows. */
   static ControllerScreenRows empty(int menu) {
     return new ControllerScreenRows(
-        menu, new Header(DEFAULT_NAME, 0, DEFAULT_NAME, false), List.of(), List.of());
+        menu, new Header(DEFAULT_NAME, 0, DEFAULT_NAME, false), List.of(), List.of(), List.of());
   }
 
   /** The same rows for another menu, as when the client puts its own ID. */
   ControllerScreenRows forMenu(int other) {
-    return new ControllerScreenRows(other, header, nodes, channels);
+    return new ControllerScreenRows(other, header, nodes, modules, channels);
   }
 
   /** On the client: only the open Controller Screen of the same menu takes the rows. */

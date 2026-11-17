@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.domain.network;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -126,6 +127,25 @@ final class NetworkSignals {
    * The state of a node for the screens. The caller tells whether its chunk is loaded, because the
    * domain does not know the world. Out of range wins, because it is what stops the node counting.
    */
+  /** A registered module, with the rules of a node, by the place of its plate (answer 809). */
+  NodeState placeState(Optional<BlockLocation> place, boolean loaded) {
+    if (place.isEmpty() || status.state() == NetworkState.UNPLACED) {
+      return NodeState.NO_NETWORK;
+    }
+    if (status.state() == NetworkState.OFFLINE) {
+      return NodeState.OFFLINE;
+    }
+    if (!reaches(place.get())) {
+      return NodeState.OUT_OF_RANGE;
+    }
+    return loaded ? NodeState.ONLINE : NodeState.UNLOADED;
+  }
+
+  /** What a module writes this tick, or none (answer 814). */
+  Optional<Signal> moduleSignal(ModuleId module) {
+    return modules.of(module);
+  }
+
   NodeState nodeState(NodeId nodeId, boolean loaded) {
     Node node = nodes.at(nodeId);
     if (node == null || status.state() == NetworkState.UNPLACED) {

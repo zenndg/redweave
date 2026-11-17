@@ -15,7 +15,7 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | # | Faça | Espere ver |
 |---|---|---|
 | 1 | Coloque um Network Controller | A frente voltada para você e o núcleo do topo aceso (`linked`) |
-| 2 | Clique no controlador com a mão vazia | A Tela do Controlador abre, com o nome `xxxxxxxx`, os 8 primeiros caracteres do ID, `Online · 0 nodes` e `No node in this network yet.` |
+| 2 | Clique no controlador com a mão vazia | A Tela do Controlador abre, com o nome `xxxxxxxx`, os 8 primeiros caracteres do ID, `Online · 0 components` e `No node in this network yet.` |
 | 3 | Ponha uma alavanca em cima de uma pedra e grude um Signal Node num lado da pedra | Uma placa fina de cobre, sem cor nos cantos, porque o nó nasce sem rede |
 | 4 | Clique no nó com o Configurator no modo `Open` e clique na rede da lista | A escolha de rede, fiel a `tela-do-no-escolha-de-rede.png`, com a rede e `0 nodes`; depois do clique, a configuração, com `● Online` em verde, a rede à direita do nome do nó, a fileira dos 16 canais toda inativa e os cantos apagados. Ative o canal `01` em `Status`: ele vira `Enabled`, `Input`, e o primeiro canto fica branco |
 | 5 | Puxe a alavanca, com a tela aberta | O medidor sobe na hora até 15, e as barras brilham a partir de 12 |
@@ -77,7 +77,7 @@ Entregue com a issue #87 (perguntas 139 a 208). Comece com o circuito dos passos
 | 40 | Clique no nome da rede e escolha outra rede | O nó vai para a outra rede, com os 16 canais inativos, e mantém o nome `Lever` |
 | 41 | Com o segundo player, abra a tela de um nó do dono | O nome do nó e o da rede sem lápis nem realce, e nada muda ao clicar |
 | 42 | Saia para o menu, abra o mundo de novo e abra a tela do nó | O nome `Lever` continua |
-| 43 | Troque o idioma para Português (Brasil) | `Escolha uma rede`, `1 nó`, `12 nós`, `Voltar` e o aviso da lista vazia em português |
+| 43 | Troque o idioma para Português (Brasil) | `Escolha uma rede`, `1 componente`, `12 componentes`, `Voltar` e o aviso da lista vazia em português |
 
 ## Fase 1: os estados da rede e o limite de redes
 
@@ -100,9 +100,9 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals`, `Access` e `Log`, e o rodapé em duas linhas |
+| 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 components`, as abas `Nodes`, `Signals`, `Access` e `Log`, e o rodapé em duas linhas |
 | 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy`, `Toggle` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
-| 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o tipo, o sinal de 0 a 15 ao vivo e o estado `Online` |
+| 53 | Na aba `Components`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o tipo, o sinal de 0 a 15 ao vivo e o estado `Online` |
 | 54 | Clique numa linha, depois em outra | A primeira abre a posição do bloco e os slots, como `■ 01 · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
 | 55 | Clique uma vez no nome de um nó; depois clique duas vezes nele, digite `Lever` e aperte Enter; repita, apague o texto e aperte Enter | Um clique só abre ou fecha os slots; o duplo clique abre o campo e deixa a linha como estava; o nome muda na lista e na Tela do Nó, e vazio volta aos 8 primeiros caracteres do ID |
 | 56 | Clique em `Rename`, digite `Factory` e aperte Enter; depois repita e aperte Esc | O nome da rede muda no cabeçalho e na escolha de rede; o Esc não muda nada |
@@ -158,14 +158,14 @@ Entregue com a issue #89 (perguntas 130 a 166 e 250 a 261). Use dois players, co
 | 83 | Com o segundo player, clique no Terminal com a mão vazia e tente quebrá-lo | Nada abre, a action bar mostra `Only the owner can use this terminal.`, e o bloco não quebra |
 | 83a | Como dono, clique no Terminal com o Configurator no modo `Open`; depois, nos modos `Copy`, `Toggle` e `Wrench` | O modo `Open` abre a tela do Terminal, como a mão vazia; os outros não fazem nada |
 | 84 | Abra o Terminal com três redes, uma `Online`, uma `Offline` e uma `Unplaced` | A tela fiel a `tela-do-terminal.png`: as redes em ordem alfabética, com a cor, o nome, a pílula do estado e os nós; `3 networks` no topo |
-| 85 | Selecione cada rede | Só os botões do estado: `Open`, `Turn off` e `Clear nodes`; `Turn on` e `Clear nodes`; `Clear nodes` e `Delete` |
+| 85 | Selecione cada rede | Só os botões do estado: `Open`, `Turn off` e `Clear components`; `Turn on` e `Clear components`; `Clear components` e `Delete` |
 | 86 | Dê duplo clique no nome de uma rede, digite um nome e aperte Enter | O nome muda na lista e na Tela do Controlador; Esc cancela |
 | 87 | Desligue e religue uma rede | A pílula vira `Offline` e volta a `Online`; os nós e o controlador apagam e acendem |
 | 88 | `Open` numa rede com o controlador longe ou em outra dimensão | A Tela do Controlador abre; afastando-se do Terminal, ela fecha; Esc volta ao mundo |
-| 89 | `Clear nodes` uma vez e depois de novo | O primeiro clique troca o botão por `Click again to clear`; o segundo tira os nós, que ficam `No network` no mundo |
+| 89 | `Clear components` uma vez e depois de novo | O primeiro clique troca o botão por `Click again to clear`; o segundo tira os nós, que ficam `No network` no mundo |
 | 90 | `Delete` numa rede `Unplaced`, com os dois cliques | A rede some da lista, e os nós dela ficam `No network` |
 | 91 | Quebre o Terminal e coloque outro em outro lugar; reinicie o servidor e tente colocar mais um | O primeiro libera o player; depois de reiniciar, o limite continua valendo |
-| 92 | Troque o idioma para Português (Brasil) | `Terminal de Rede`, `Abrir`, `Desligar`, `Ligar`, `Limpar nós`, `Apagar`, `Não colocada` e `1 rede` ou `3 redes`, sem nada passando da borda |
+| 92 | Troque o idioma para Português (Brasil) | `Terminal de Rede`, `Abrir`, `Desligar`, `Ligar`, `Limpar componentes`, `Apagar`, `Não colocada` e `1 rede` ou `3 redes`, sem nada passando da borda |
 
 ## Fase 1: o visor e o rótulo do Configurator, a emissão do nó e o `Clear log`
 
@@ -202,7 +202,7 @@ Entregue com a issue #107 (perguntas 283, 284 e 335 a 341). Use o circuito dos p
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 107 | Abra a aba `Nodes` da Tela do Controlador | As colunas `Node`, `Type`, `Signal` e `State`, sem a coluna `Position`; o nó da alavanca com `In`, o da lâmpada com `Out` |
+| 107 | Abra a aba `Components` da Tela do Controlador | As colunas `Name`, `Type`, `Signal` e `State`, sem a coluna `Position`; o nó da alavanca com `In`, o da lâmpada com `Out` |
 | 108 | Ative no nó da alavanca um slot de saída, e desative todos os slots de outro nó | O nó da alavanca passa a `In/Out`, e o nó sem slot ativo mostra `—` |
 | 109 | Olhe o nó distante do passo 61 e afaste-se até um nó passar do raio do controlador | `Unloaded` em âmbar e `Out of range` em vermelho só na coluna de estado; nome, tipo e sinal na cor normal |
 | 110 | Como dono, clique numa linha; depois abra a tela com o segundo player e clique na mesma linha | Para o dono, `Position: x, y, z` em cinza acima dos canais; para o segundo player, só os canais |
@@ -587,15 +587,15 @@ Confira as melhorias de UX da #161 (perguntas 770 a 775).
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 364 | Segure o Configurator perto de um Network Controller com 2 nós | Sobre o bloco, o rótulo em duas linhas: em cima, pequena, `Online · 2 nodes`; embaixo, `■ <rede>`, com o quadradinho na cor da rede; atrás de parede, mais apagado |
-| 365 | Desligue a rede no Terminal, com o Configurator na mão | O rótulo do Controller passa a `Offline · 2 nodes` |
+| 364 | Segure o Configurator perto de um Network Controller com 2 nós | Sobre o bloco, o rótulo em duas linhas: em cima, pequena, `Online · 2 components`; embaixo, `■ <rede>`, com o quadradinho na cor da rede; atrás de parede, mais apagado |
+| 365 | Desligue a rede no Terminal, com o Configurator na mão | O rótulo do Controller passa a `Offline · 2 components` |
 | 366 | Afaste-se mais que `configurator.label_range` do Controller | O rótulo some, e volta ao chegar perto |
 | 367 | Num nó com os slots `05` e `12` habilitados, segure o Configurator | A linha do nó começa com o quadradinho na cor do `05`, mesmo com sinal 0; com todos desativados, sem quadradinho |
 | 368 | Com o Configurator, olhe um módulo com saída num canal e um cabo | `On · ■ 15` no módulo e `■ 15 · 12` no cabo, sem o nome da cor |
 | 369 | Mude um sinal e abra a aba `Log` da Tela do Controlador | A linha começa só com o horário, como `14:32:05`, e o canal aparece como `■ 15`, ou com o nome que o dono deu, sem nada passando da borda |
 | 370 | Abra a Tela do Nó e clique em `Status` num canal | A pílula troca entre `On` e `Off` |
 | 371 | Vincule e dispare um Signal Remote | A action bar mostra o canal como `■ 15`, com o `■` na cor do canal e o resto na cor do texto |
-| 372 | Troque o idioma para Português e repita os passos 364, 369 e 370 | `Online · 2 nós`, o horário no log e `Ligado`/`Desligado` na pílula |
+| 372 | Troque o idioma para Português e repita os passos 364, 369 e 370 | `Online · 2 componentes`, o horário no log e `Ligado`/`Desligado` na pílula |
 
 ## Fase 2: o Signal Remote com os emissores
 
@@ -615,10 +615,28 @@ Confira o tablet vinculado aos emissores da #163 (perguntas 778 a 793), com um S
 | 382 | Shift + clique no ar com o tablet de emissor | A tela do vínculo dos nós abre; vincular um nó substitui o emissor |
 | 383 | Troque o idioma para Português e repita os passos 373 a 376 | `Vinculado: <nome>`, `Liga e desliga`, `Aperta` e `<nome>: Ligada` |
 
+## Fase 2: os componentes da rede
+
+Confira o cadastro dos Signal Modules e a contagem de componentes da #165 (perguntas 801 a 817), com uma rede de 2 nós, um Signal Timer e um Signal Lever ligados a canais dela.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 384 | Abra a Tela do Controlador | O cabeçalho mostra `Online · 4 components`, e a aba `Components` lista os 2 nós e, depois, o timer e a alavanca, com o tipo `Signal Timer` e `Signal Lever` |
+| 385 | Ligue a alavanca, com a saída num canal | A coluna `Signal` da alavanca mostra a força; um módulo na borda, ou descarregado, mostra `—` |
+| 386 | Abra a linha do timer | A posição, só para o dono, e o canal da saída, como `■ 15 · Output` |
+| 387 | Dê duplo clique no nome do timer | Não abre o campo de texto; o timer se renomeia só na tela dele, e o nome novo aparece na lista |
+| 388 | Afaste-se até o chunk do timer descarregar e abra a tela | O timer continua na lista, com `Unloaded`, e o total continua `4 components` |
+| 389 | Confira o Network Terminal, a escolha de rede da Tela do Nó, o vínculo do Signal Remote e o rótulo do Controller | Todos mostram `4 components` |
+| 390 | Quebre a alavanca e abra a tela | Ela sai da lista, e o total passa a `3 components` |
+| 391 | No Terminal, `Clear components` duas vezes | Os nós ficam `No network`, o timer sai da lista e, carregado, fica sem rede no tick seguinte |
+| 392 | Abra um mundo salvo antes, com módulos numa rede | Cada módulo entra na lista no primeiro tick em que o chunk dele carrega |
+| 393 | Troque o idioma para Português | `Componentes`, `Nome`, `Limpar componentes`, `4 componentes` e `Nenhum componente nesta rede ainda.` numa rede vazia |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 11:12 | Inclui os passos 384 a 393, dos componentes da rede, e troca os nós por componentes nos outros passos (perguntas 801 a 817, #165). |
 | Zennd | 2026-11-17 10:31 | Inclui os passos 373 a 383, do Signal Remote com os emissores (perguntas 778 a 793, #163). |
 | Zennd | 2026-11-17 10:00 | Inclui os passos 364 a 372, dos rótulos, do log e do status do slot, e tira o nome da cor dos canais e o `Enabled`/`Disabled` dos outros passos (perguntas 770 a 775, #161). |
 | Zennd | 2026-11-16 23:55 | Muda os passos 361 e 362, da revisão das receitas (perguntas 765 a 769, #159). |

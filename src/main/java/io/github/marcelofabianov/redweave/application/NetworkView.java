@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * What the Controller Screen shows of a network, for one viewer: the header, the node list and the
- * 16 channels, from which the footer counts, and the Signal Remotes that count now (telas.md and
- * answer 364).
+ * What the Controller Screen shows of a network, for one viewer: the header, the nodes and the
+ * registered Signal Modules of the `Components` tab (answer 809), the 16 channels, from which the
+ * footer counts, and the Signal Remotes that count now (telas.md and answer 364).
  */
 public record NetworkView(
     String name,
@@ -19,6 +19,7 @@ public record NetworkView(
     NetworkState state,
     boolean viewerIsOwner,
     List<NodeRow> nodes,
+    List<ModuleRow> modules,
     List<ChannelRow> channels,
     int remotesOn,
     int modulesOn) {
@@ -30,6 +31,7 @@ public record NetworkView(
     Objects.requireNonNull(owner, MISSING);
     Objects.requireNonNull(state, MISSING);
     nodes = List.copyOf(nodes);
+    modules = List.copyOf(modules);
     channels = List.copyOf(channels);
   }
 

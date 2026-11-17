@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.domain.network;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -29,6 +30,14 @@ final class ModuleInputs {
         channels.merge(input.channel(), input.signal(), Signal::strongest);
       }
     }
+  }
+
+  /** What a module writes this tick, the strongest of its channels, or none (answer 814). */
+  Optional<Signal> of(ModuleId module) {
+    return active.stream()
+        .filter(input -> input.module().equals(module))
+        .map(ModuleInput::signal)
+        .reduce(Signal::strongest);
   }
 
   /** How many modules count, on or off (answer 424). */

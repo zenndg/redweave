@@ -74,7 +74,7 @@ public final class LockPart extends ModulePart implements SecuredPart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {}
+  protected void dropChannels(ConnectionMapper drop) {}
 
   /** Reads its rule from its save, as it loads and as the Configurator pastes (answer 725). */
   @Override
