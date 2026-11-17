@@ -3,13 +3,11 @@ package io.github.marcelofabianov.redweave.block.part;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeInverterLimits;
-import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.DelayLine;
 import io.github.marcelofabianov.redweave.domain.module.InverterLimits;
 import io.github.marcelofabianov.redweave.domain.module.InverterSettings;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalInverter;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.InverterMenu;
@@ -38,7 +36,6 @@ public final class InverterPart extends ModulePart {
       List.of(ModuleLooks.NONE, ModuleLooks.ON, ModuleLooks.BURNT);
 
   private static final InverterLimits LIMITS = new NeoForgeInverterLimits();
-  private static final OutputDelayLimits DELAY_LIMITS = new NeoForgeOutputDelayLimits();
 
   private SignalInverter inverter = SignalInverter.placed();
   private Connection input = Connection.EDGE;
@@ -79,9 +76,11 @@ public final class InverterPart extends ModulePart {
     input = ModuleSave.readConnection(tag, InverterSave.INPUT);
     output = ModuleSave.readConnection(tag, InverterSave.OUTPUT);
     InverterSettings settings =
-        new InverterSettings(
-            StrengthSave.read(tag, ID), DelaySave.readDelay(tag, ID, DELAY_LIMITS));
-    DelayLine line = tag.contains(DelaySave.LINE) ? DelaySave.readLine(tag, ID) : inverter.line();
+        new InverterSettings(StrengthSave.read(tag, ID), DelaySave.readDelay(tag, ID));
+    DelayLine line =
+        tag.contains(DelaySave.LINE)
+            ? DelaySave.readLine(tag, ID, settings.strength())
+            : inverter.line();
     inverter = SignalInverter.restore(InverterSave.readBurnout(tag), settings, line);
   }
 
@@ -116,7 +115,7 @@ public final class InverterPart extends ModulePart {
   protected void tickRule(ModuleServices modules, PartSpaceBlockEntity space) {
     Signal read = ModuleTicks.read(modules, space, this, input);
     int delay = input.isEdge() ? SignalInverter.EDGE_DELAY : SignalInverter.CHANNEL_DELAY;
-    SignalInverter next = inverter.tick(read, delay, LIMITS);
+    SignalInverter next = inverter.tick(read, delay, LIMITS, ModuleDelays.LINE_LIMITS);
     setInverter(next, read);
     ModuleTicks.write(modules, space, this, next.output());
   }
@@ -177,12 +176,13 @@ public final class InverterPart extends ModulePart {
         extra -> InverterMenu.writeOpening(extra, viewer, spot));
   }
 
-  /** Keeps the rule and the input after a tick; saves only when the burnout changed. */
+  /** Keeps the rule and the input after a tick; saves only when the burnout or the line changed. */
   void setInverter(SignalInverter next, Signal read) {
     inputOn = read.isOn();
-    boolean burnoutChanged = next.burnoutTicks() != inverter.burnoutTicks();
+    boolean saved =
+        next.burnoutTicks() != inverter.burnoutTicks() || !next.line().equals(inverter.line());
     inverter = next;
-    if (burnoutChanged) {
+    if (saved) {
       markDirty();
     }
   }

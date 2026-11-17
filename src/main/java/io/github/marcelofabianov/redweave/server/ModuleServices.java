@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.application.ChangeItemSensor;
 import io.github.marcelofabianov.redweave.application.ChangeLamp;
 import io.github.marcelofabianov.redweave.application.ChangeLever;
 import io.github.marcelofabianov.redweave.application.ChangeLock;
+import io.github.marcelofabianov.redweave.application.ChangeOutputDelay;
 import io.github.marcelofabianov.redweave.application.ChangePressurePlate;
 import io.github.marcelofabianov.redweave.application.ChangeRandomizer;
 import io.github.marcelofabianov.redweave.application.ChangeTimer;
@@ -36,6 +37,7 @@ public final class ModuleServices {
   private final ChangeRandomizer changeRandomizer = new ChangeRandomizer();
   private final ChangeLever changeLever = new ChangeLever();
   private final ChangeInverter changeInverter = new ChangeInverter();
+  private final ChangeOutputDelay changeOutputDelay = new ChangeOutputDelay();
   private final ChangeButton changeButton = new ChangeButton();
   private final ChangePressurePlate changePressurePlate = new ChangePressurePlate();
   private final ChangeItemSensor changeItemSensor = new ChangeItemSensor();
@@ -93,6 +95,10 @@ public final class ModuleServices {
 
   public ChangeInverter changeInverter() {
     return changeInverter;
+  }
+
+  public ChangeOutputDelay changeOutputDelay() {
+    return changeOutputDelay;
   }
 
   public ChangeButton changeButton() {

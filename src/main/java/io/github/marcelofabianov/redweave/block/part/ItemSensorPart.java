@@ -4,7 +4,9 @@ import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeItemSensorLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
 import io.github.marcelofabianov.redweave.domain.module.ItemSensor;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
 import io.github.marcelofabianov.redweave.menu.ButtonScreenTexts;
 import io.github.marcelofabianov.redweave.menu.ItemSensorMenu;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -30,12 +32,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * feeds only its front edge, not its block of support, which is the container (answers 632 and
  * 696). It shares their light, red off and green on (answer 697).
  */
-public final class ItemSensorPart extends ModulePart {
+public final class ItemSensorPart extends ModulePart implements DelayedPart {
   public static final String ID = "signal_item_sensor";
 
   /** The looks of the top: off, with the red light, and on, with the green one (697). */
   public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.ON);
 
+  private final OutputDelaySlot delay = new OutputDelaySlot();
   private static final double RING_EDGE = 6;
   private static final double RING_FAR_EDGE = 12;
   private static final double RING_HEIGHT = 3;
@@ -68,7 +71,11 @@ public final class ItemSensorPart extends ModulePart {
   @Override
   protected List<String> copiedKeys() {
     return List.of(
-        ItemSensorSave.ITEM, ItemSensorSave.COUNT, StrengthSave.STRENGTH, ItemSensorSave.OUTPUT);
+        ItemSensorSave.ITEM,
+        ItemSensorSave.COUNT,
+        StrengthSave.STRENGTH,
+        ItemSensorSave.OUTPUT,
+        OutputDelaySlot.COPIED);
   }
 
   @Override
@@ -81,6 +88,7 @@ public final class ItemSensorPart extends ModulePart {
   protected void readRule(CompoundTag tag) {
     sensor = ItemSensorSave.read(tag);
     output = ModuleSave.readConnection(tag, ItemSensorSave.OUTPUT);
+    delay.load(tag, ID, sensor.strength());
   }
 
   @Override
@@ -113,6 +121,7 @@ public final class ItemSensorPart extends ModulePart {
   protected void placeRule() {
     sensor = ItemSensor.placed();
     output = Connection.EDGE;
+    delay.place();
   }
 
   /**
@@ -130,13 +139,28 @@ public final class ItemSensorPart extends ModulePart {
                   ItemSensorReading.count(space.getLevel(), space.getBlockPos(), face(), found))
               .orElse(0);
     }
-    ModuleTicks.write(modules, space, this, sensor.output(counted));
+    if (delay.tick(sensor.output(counted), sensor.strength())) {
+      markDirty();
+    }
+    ModuleTicks.write(modules, space, this, delay.output());
   }
 
   @Override
   protected void saveRule(CompoundTag tag) {
     ItemSensorSave.write(tag, sensor);
     ModuleSave.writeConnection(tag, ItemSensorSave.OUTPUT, output);
+    delay.save(tag);
+  }
+
+  @Override
+  public DelayedOutput delayed() {
+    return delay.delayed();
+  }
+
+  @Override
+  public void setDelay(OutputDelay next) {
+    delay.set(next);
+    changed();
   }
 
   public ItemSensor sensor() {

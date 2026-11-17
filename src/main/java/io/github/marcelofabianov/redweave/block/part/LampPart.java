@@ -5,6 +5,8 @@ import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeLampLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.module.SignalLamp;
 import io.github.marcelofabianov.redweave.domain.network.NodeState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -33,12 +35,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * the game wire beside it (answers 262, 574 and 650 to 653). An optional control channel turns it
  * off, and its light changes at most every `lamp.min_light_update_ticks` (answers 655 to 657).
  */
-public final class LampPart extends ModulePart {
+public final class LampPart extends ModulePart implements DelayedPart {
   public static final String ID = "signal_lamp";
 
   /** The looks: lit by its channel, and switched off by its control, with the red light (657). */
   public static final List<String> LOOKS = List.of(ModuleLooks.NONE, ModuleLooks.OFF);
 
+  private final OutputDelaySlot delay = new OutputDelaySlot();
   private SignalLamp lamp = SignalLamp.placed();
   private Connection intensity = Connection.EDGE;
   private Connection control = Connection.EDGE;
@@ -67,7 +70,12 @@ public final class LampPart extends ModulePart {
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(StrengthSave.STRENGTH, LampSave.MODE, LampSave.INTENSITY, LampSave.CONTROL);
+    return List.of(
+        StrengthSave.STRENGTH,
+        LampSave.MODE,
+        LampSave.INTENSITY,
+        LampSave.CONTROL,
+        OutputDelaySlot.COPIED);
   }
 
   @Override
@@ -83,6 +91,7 @@ public final class LampPart extends ModulePart {
     light = LampSave.readLight(tag);
     intensity = LampSave.readChannel(tag, LampSave.INTENSITY);
     control = LampSave.readChannel(tag, LampSave.CONTROL);
+    delay.load(tag, ID, lamp.strength());
   }
 
   @Override
@@ -119,6 +128,7 @@ public final class LampPart extends ModulePart {
     lamp = SignalLamp.placed();
     intensity = Connection.EDGE;
     control = Connection.EDGE;
+    delay.place();
   }
 
   /** Its channels of this tick, then what it gives and its light (answers 650 to 657). */
@@ -133,7 +143,10 @@ public final class LampPart extends ModulePart {
       lamp = next;
       markDirty();
     }
-    ModuleTicks.give(space, this, lamp.output(strength, held));
+    if (delay.tick(lamp.output(strength, held), lamp.strength())) {
+      markDirty();
+    }
+    ModuleTicks.give(space, this, delay.output());
     shine(space, lamp.light(strength, held).strength());
   }
 
@@ -172,6 +185,18 @@ public final class LampPart extends ModulePart {
     LampSave.write(tag, lamp, light);
     LampSave.writeChannel(tag, LampSave.INTENSITY, intensity);
     LampSave.writeChannel(tag, LampSave.CONTROL, control);
+    delay.save(tag);
+  }
+
+  @Override
+  public DelayedOutput delayed() {
+    return delay.delayed();
+  }
+
+  @Override
+  public void setDelay(OutputDelay next) {
+    delay.set(next);
+    changed();
   }
 
   @Override

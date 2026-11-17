@@ -178,7 +178,7 @@ public final class SignalRandomizerGameTests {
     tag.putString(Keys.OUTPUT, RED);
     tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
     tag.putBoolean(Keys.POWERED, true);
-    return tag;
+    return DelayKeys.addTo(tag);
   }
 
   /** The keys of answer 481, written here again, so a renamed key fails the test (rule 15). */

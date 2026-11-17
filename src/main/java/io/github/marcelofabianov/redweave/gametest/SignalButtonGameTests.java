@@ -211,7 +211,7 @@ public final class SignalButtonGameTests {
     tag.putInt(Keys.INTERVAL, interval);
     tag.putInt(Keys.REMAINING, remaining);
     tag.putString(Keys.OUTPUT, RED);
-    return tag;
+    return DelayKeys.addTo(tag);
   }
 
   /** The keys of the save, written here again, so a renamed key fails the test (rule 15). */

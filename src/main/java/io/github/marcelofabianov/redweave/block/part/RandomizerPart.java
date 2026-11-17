@@ -5,9 +5,12 @@ import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeRandomizerLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
 import io.github.marcelofabianov.redweave.domain.module.Draws;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.module.RandomizerLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalRandomizer;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.RandomizerMenu;
 import io.github.marcelofabianov.redweave.menu.RandomizerScreenTexts;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
@@ -29,12 +32,13 @@ import org.slf4j.Logger;
  * its output are all in its NBT (answer 481), and its running LED is the `running` of its
  * randomizer (answer 488). The rules stay in the domain; the draws come from the world (483).
  */
-public final class RandomizerPart extends ModulePart {
+public final class RandomizerPart extends ModulePart implements DelayedPart {
   public static final String ID = "signal_randomizer";
 
   /** The looks of the top: the running LED and the lit arrow, as the timer (answer 488). */
   public static final List<String> LOOKS = ModuleLooks.leds();
 
+  private final OutputDelaySlot delay = new OutputDelaySlot();
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String FITTED = "Fitted the Signal Randomizer at {} to the config: {}";
   private static final String RESTARTED = "A Signal Randomizer at {} had no valid interval";
@@ -59,7 +63,11 @@ public final class RandomizerPart extends ModulePart {
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(RandomizerSave.MODE, RandomizerSave.INTERVAL, RandomizerSave.OUTPUT);
+    return List.of(
+        RandomizerSave.MODE,
+        RandomizerSave.INTERVAL,
+        RandomizerSave.OUTPUT,
+        OutputDelaySlot.COPIED);
   }
 
   @Override
@@ -72,6 +80,7 @@ public final class RandomizerPart extends ModulePart {
   protected void readRule(CompoundTag tag) {
     randomizer = RandomizerSave.readRandomizer(tag);
     output = ModuleSave.readConnection(tag, RandomizerSave.OUTPUT);
+    delay.load(tag, ID, Signal.MAX);
   }
 
   @Override
@@ -94,6 +103,7 @@ public final class RandomizerPart extends ModulePart {
   protected void placeRule() {
     randomizer = Optional.of(SignalRandomizer.placed(new NeoForgeRandomizerLimits()));
     output = Connection.EDGE;
+    delay.place();
   }
 
   /** It draws at each interval and holds the value until the next draw (answers 478 and 480). */
@@ -104,13 +114,28 @@ public final class RandomizerPart extends ModulePart {
     }
     SignalRandomizer next = randomizer.get().tick(draws());
     setRandomizer(next);
-    ModuleTicks.write(modules, space, this, next.output());
+    if (delay.tick(next.output())) {
+      markDirty();
+    }
+    ModuleTicks.write(modules, space, this, delay.output());
   }
 
   @Override
   protected void saveRule(CompoundTag tag) {
     randomizer.ifPresent(found -> RandomizerSave.writeRandomizer(tag, found));
     ModuleSave.writeConnection(tag, RandomizerSave.OUTPUT, output);
+    delay.save(tag);
+  }
+
+  @Override
+  public DelayedOutput delayed() {
+    return delay.delayed();
+  }
+
+  @Override
+  public void setDelay(OutputDelay next) {
+    delay.set(next);
+    changed();
   }
 
   public Optional<SignalRandomizer> randomizer() {

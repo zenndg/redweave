@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.UUID;
@@ -157,7 +158,7 @@ public final class SignalInverterGameTests {
     tag.putInt(Keys.DELAY, TWO_SECONDS);
     ListTag line = new ListTag();
     CompoundTag change = new CompoundTag();
-    change.putBoolean(Keys.ON, false);
+    change.putInt(Keys.SIGNAL, Signal.OFF.strength());
     change.putInt(Keys.TICKS, WAITING);
     line.add(change);
     tag.put(Keys.LINE, line);
@@ -180,7 +181,7 @@ public final class SignalInverterGameTests {
     static final String STRENGTH = "strength";
     static final String DELAY = "output_delay_ticks";
     static final String LINE = "delay_line";
-    static final String ON = "on";
+    static final String SIGNAL = "signal";
     static final String TICKS = "ticks";
 
     private Keys() {}
