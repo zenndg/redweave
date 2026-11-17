@@ -4,9 +4,10 @@ import io.github.marcelofabianov.redweave.block.part.LampPart;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 
 /**
- * The color of the diffuser of a Signal Lamp: the color of its intensity channel, bright by its
- * light and dim while dark, and gray without a channel (answers 650, 654 and 657). It reads only
- * what the client receives of the lamp, its channel and its light.
+ * The colors of a Signal Lamp: its core is white, bright by its light, from 40% to 100%, and 25%
+ * while dark; its band has the color of its intensity channel, dark while the lamp is, and gray
+ * without a channel (answers 654, 657, 800, 821 and 822). It reads only what the client receives of
+ * the lamp, its channel and its light.
  */
 final class LampColors {
   private static final float DARK = 0.25F;
@@ -19,12 +20,21 @@ final class LampColors {
 
   private LampColors() {}
 
-  static int of(LampPart lamp) {
+  private static final int WHITE = 0xFFFFFFFF;
+  private static final int BAND_SLOT = 1;
+  private static final float FULL = 1;
+
+  /** The core, slot 0, or the band, slot 1, as the model tints them. */
+  static int of(LampPart lamp, int slot) {
+    return slot == BAND_SLOT ? band(lamp) : scaled(WHITE, brightness(lamp.light()));
+  }
+
+  private static int band(LampPart lamp) {
     if (lamp.color().isEmpty()) {
       return ChannelColors.FREE;
     }
     int color = ChannelColors.argb(lamp.color().get());
-    return scaled(color, brightness(lamp.light()));
+    return scaled(color, lamp.light() > 0 ? FULL : DARK);
   }
 
   private static float brightness(int light) {

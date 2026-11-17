@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.client;
 
+import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.block.part.CableLook;
 import io.github.marcelofabianov.redweave.block.part.PartLook;
@@ -17,6 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.ChunkRenderTypeSet;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.data.ModelData;
 
@@ -25,6 +27,12 @@ import net.neoforged.neoforge.client.model.data.ModelData;
  * space costs nothing per frame and is only built again when a part changes (answer 536).
  */
 final class PartSpaceModel implements IDynamicBakedModel {
+  /** The texture of the glass of the Signal Lamp, drawn translucent (answer 825). */
+  private static final String GLASS_PATH = "block/signal_lamp_glass";
+
+  private static final ResourceLocation GLASS =
+      ResourceLocation.fromNamespaceAndPath(RedweaveMod.MOD_ID, GLASS_PATH);
+
   private final BakedModel base;
   private final Function<ResourceLocation, BakedModel> models;
   private final Map<PartLook, List<BakedQuad>> turned = new ConcurrentHashMap<>();
@@ -52,7 +60,30 @@ final class PartSpaceModel implements IDynamicBakedModel {
         quads.addAll(cables.computeIfAbsent(piece, this::bakeCable));
       }
     }
-    return quads;
+    return layerOf(quads, renderType);
+  }
+
+  /**
+   * The glass of the Signal Lamp goes to the translucent layer and the rest to the layers of the
+   * space, so a frosted dome shows the core behind it (answer 825). Without a layer, all go.
+   */
+  private static List<BakedQuad> layerOf(List<BakedQuad> quads, RenderType renderType) {
+    if (renderType == null) {
+      return quads;
+    }
+    boolean translucent = renderType == RenderType.translucent();
+    return quads.stream().filter(quad -> isGlass(quad) == translucent).toList();
+  }
+
+  private static boolean isGlass(BakedQuad quad) {
+    return GLASS.equals(quad.getSprite().contents().name());
+  }
+
+  /** The layers of the space, and the translucent one for the glass (answer 825). */
+  @Override
+  public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
+    return ChunkRenderTypeSet.union(
+        base.getRenderTypes(state, rand, data), ChunkRenderTypeSet.of(RenderType.translucent()));
   }
 
   private List<BakedQuad> bake(PartLook look) {
