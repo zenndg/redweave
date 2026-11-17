@@ -37,7 +37,7 @@ A tela e o rótulo mostram o estado da saída (perguntas 417 e 465):
 | `Off` | A saída está em 0 | `Desligado` |
 | `No weather` | Numa dimensão sem clima | `Sem clima` |
 
-O rótulo fica como `On · 15 Red`, e o modo aparece na tela.
+O rótulo fica como `On · ■ 15`, e o modo aparece na tela.
 
 ## Modos
 
@@ -101,6 +101,7 @@ Em `tmp/arte/weather_detector/`: as 6 texturas do topo (3 modos, com a seta apag
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O rótulo mostra o canal sem o nome da cor (pergunta 770). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 756). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |

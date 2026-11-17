@@ -92,7 +92,7 @@ O sinal vai de 0 a 15 (regra 5 do `AGENTS.md`) e aparece como um medidor de 15 b
 | Elemento | Como é |
 |---|---|
 | Estado | Etiqueta com ponto colorido: `Online` em verde, `Unloaded` em âmbar, `Out of range` em vermelho, `No network` em cinza, `Offline` em cinza e `Unplaced` em âmbar, no Terminal (perguntas 29, 146 e 177) |
-| Canal | Quadrado na cor do canal, com o número e o nome em inglês, como `15 Red` |
+| Canal | Quadrado na cor do canal, com o número, como `15`, ou o número e o nome que o dono deu, como `15 Main door`, sem o nome da cor (pergunta 770) |
 | Sinal | O medidor de 15 barras e o número |
 | Direção | Seletor de duas opções, `Input` e `Output`, com a escolhida em cobre |
 | Botões | Principal em cobre, secundário em metal escuro, os dois com sombra interna embaixo |
@@ -189,6 +189,7 @@ Item, `redweave:signal_remote`, com aparência de tablet (pergunta 279). Shift +
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O canal aparece só com o número e o nome que o dono deu, sem o nome da cor (pergunta 770). |
 | Zennd | 2026-11-15 14:37 | Adiciona o modo `Rotate`, em roxo `#9B6BF0` (perguntas 613 a 616). |
 | Zennd | 2026-11-14 19:21 | Leva os Signal Modules ao Configurator. |
 | Zennd | 2026-11-12 21:38 | Leva ao mod as texturas e a prancha novas do Signal Remote (pergunta 374). |

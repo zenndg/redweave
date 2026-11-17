@@ -49,7 +49,7 @@ Como os outros módulos: fora do alcance, numa rede que não está `Online` ou n
 
 ## Estados
 
-A tela e o rótulo mostram `Running` ou `Stopped`, e o rótulo fica como `Running · 15 Red`. O valor atual aparece na tela (pergunta 484).
+A tela e o rótulo mostram `Running` ou `Stopped`, e o rótulo fica como `Running · ■ 15`. O valor atual aparece na tela (pergunta 484).
 
 ## Tela
 
@@ -114,6 +114,7 @@ Em `tmp/arte/signal_randomizer/`: as 4 texturas do topo (a seta apagada ou acesa
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O rótulo mostra o canal sem o nome da cor (pergunta 770). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 757). |
 | Zennd | 2026-11-15 09:35 | Leva o visual para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 559 e 560). |
 | Zennd | 2026-11-14 19:34 | Leva os estados do bloco para a parte (pergunta 534). |

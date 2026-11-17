@@ -45,9 +45,9 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Rede | Na linha do nome, à direita, o quadrado na cor da rede e o nome dela, em qualquer estado com rede. Para o dono, o clique abre a escolha de rede (perguntas 141 e 208) |
 | Estado | No canto superior direito: `Online`, `Unloaded`, `Out of range`, `No network` ou `Offline`, em cinza ([estados do nó](rede-e-canais.md#estados-do-nó)) (perguntas 177 e 208) |
 | Canais | Abaixo do nome, uma fileira com os 16 canais, cada um com a cor e o número, de `01` a `16`. Os ativos têm uma barra verde embaixo, e o escolhido tem o contorno de cobre (perguntas 224 e 231) |
-| Canal escolhido | Abaixo da fileira, o painel do canal, em duas colunas: à esquerda, o título, o `Status`, a direção e o sinal; à direita, a face do bloco (pergunta 346). O título é como `15 Red`, ou `15 Main door` com o canal renomeado na Tela do Controlador (pergunta 221) |
-| Status | A pílula `Enabled`, verde, ou `Disabled`, cinza. O clique troca o status (perguntas 226 e 228) |
-| Direção | Seletor `Input` e `Output`. Só muda com o canal `Disabled`; com `Enabled`, fica travado (pergunta 237) |
+| Canal escolhido | Abaixo da fileira, o painel do canal, em duas colunas: à esquerda, o título, o `Status`, a direção e o sinal; à direita, a face do bloco (pergunta 346). O título é como `15`, ao lado do quadrado na cor do canal, ou `15 Main door` com o canal renomeado na Tela do Controlador (perguntas 221 e 770) |
+| Status | A pílula `On`, verde, ou `Off`, cinza, e `Ligado` ou `Desligado` em português. O clique troca o status (perguntas 226, 228 e 774) |
+| Direção | Seletor `Input` e `Output`. Só muda com o canal `Off`; com `On`, fica travado (perguntas 237 e 774) |
 | Sinal | Na coluna da esquerda, o medidor de 15 barras com o sinal do canal escolhido e o número; um canal inativo mostra 0 (pergunta 346) |
 | Face do bloco | Na coluna da direita, separada por uma linha, um cubo de 40 px com a face escolhida em cobre e, ao lado, só o nome da face, como `East`, na altura do meio do cubo (pergunta 372), e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
 | Rodapé | Uma linha: à esquerda, quantos canais estão ativos, como `3 of 16 channels active`; à direita, só para quem não é o dono, o cadeado (pergunta 347) |
@@ -63,8 +63,8 @@ O que a tela faz, decidido na issue #19.
 |---|---|---|
 | Desenho | Sprites em pixel art, em 9-slice como os do jogo, das folhas [`tela-do-no-sprites-a.png`](../imagens/telas/tela-do-no-sprites-a.png), [`tela-do-no-sprites-b.png`](../imagens/telas/tela-do-no-sprites-b.png) e [`tela-do-no-sprites-d.png`](../imagens/telas/tela-do-no-sprites-d.png). Os textos usam a fonte do jogo | 78 e 231 |
 | Escolher um canal | Um clique num canal da fileira o mostra no painel. A tela abre no primeiro canal ativo, ou no `01` sem nenhum ativo. A escolha é só do cliente | — |
-| Ativar e desativar | O clique na pílula `Status` troca entre `Enabled` e `Disabled`. Na primeira ativação, o canal vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face | 226 e 228 |
-| Configurar | Direção e face mudam só com o canal `Disabled`, que não lê nem emite, para não disparar redstone sem querer. Com `Enabled`, os controles ficam travados, e o servidor recusa a mudança. Para mudar um canal ativo, o dono desativa, configura e ativa | 237 |
+| Ativar e desativar | O clique na pílula `Status` troca entre `On` e `Off` (pergunta 774). Na primeira ativação, o canal vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face | 226 e 228 |
+| Configurar | Direção e face mudam só com o canal `Off`, que não lê nem emite, para não disparar redstone sem querer. Com `On`, os controles ficam travados, e o servidor recusa a mudança. Para mudar um canal ativo, o dono desativa, configura e ativa | 237 |
 | Direção | Um clique em `Input` ou `Output` troca a direção do slot | — |
 | Face do bloco | Um cubo 3D com o próprio bloco de apoio, girável arrastando o mouse. A face sob o cursor e a escolhida ficam realçadas em cobre, e o clique escolhe a face | 79 |
 | Medidor | O sinal do canal escolhido: na entrada, a última leitura; na saída, o que ela emite; inativo, 0 | — |
@@ -89,7 +89,7 @@ O mostrador do relógio é um sprite, e o anel de progresso e o arco do pulso s�
 | Estado | `Online · <n> nodes` |
 | Abas | `Nodes`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214 e 215) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). O Signal Remote não entra na lista: ele aparece só na contagem do rodapé, e a lista do vínculo mostra só redes `Online` (perguntas 359 e 364) |
-| Log | Uma linha por mudança de valor de uma entrada ou de uma saída, e de cada valor que um Signal Module escreve num canal, com o nome do módulo e a direção `Output` (perguntas 392 e 396), a mais nova no topo, com a data e a hora reais do servidor em cinza, o nome do nó, o quadrado da cor e o canal, a direção e o valor à direita, como `2026-11-11 14:32:05  Iron Door  15 Red  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148 e 214) |
+| Log | Uma linha por mudança de valor de uma entrada ou de uma saída, e de cada valor que um Signal Module escreve num canal, com o nome do módulo e a direção `Output` (perguntas 392 e 396), a mais nova no topo, com o horário real do servidor em cinza, o nome do nó, o quadrado da cor e o número do canal, ou o nome que o dono deu, a direção e o valor à direita, como `14:32:05  Iron Door  ■ 15  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148, 214, 770 e 771) |
 | Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, e quantos Signal Modules escrevem num canal agora, como `● 0 out of range · ● 2 modules on`. As contagens aparecem mesmo com zero. A prancha ainda não mostra `modules on` (perguntas 219, 236, 361, 364, 388 e 413) |
 
 O log substitui o gráfico dos últimos 30 segundos (pergunta 150). O conteúdo das abas `Signals` e `Access` está em [`rede-e-canais.md`](rede-e-canais.md#abas-da-tela-do-controlador). Um nó `Unloaded` continua contando para o canal com o último valor lido, e um `Out of range` não conta (perguntas 13, 23 e 29).
@@ -102,7 +102,7 @@ O que a tela faz, decidido na issue #20.
 |---|---|---|
 | Quem abre | Qualquer player, com a mão vazia. Para quem não é o dono, a tela é só leitura: sem `Rename`, sem paleta e sem renomear nós e canais | 22 |
 | Rede `Offline` | Nada abre, e a action bar mostra o aviso. Uma tela aberta fecha se a rede for desligada | 158 e 160 |
-| Linha aberta | O clique numa linha mostra, abaixo dela, a posição do nó em cinza, como `Position: 12, 64, -30`, só para o dono, e os canais ativos do nó, com o ícone de entrada ou de saída, a cor, o canal e a direção, como `15 Red · Input`, sem nome do slot (pergunta 277). Um nó sem canal ativo mostra `No active channel`. Abrir uma linha fecha a anterior | 179, 218, 234, 277 e 340 |
+| Linha aberta | O clique numa linha mostra, abaixo dela, a posição do nó em cinza, como `Position: 12, 64, -30`, só para o dono, e os canais ativos do nó, com o ícone de entrada ou de saída, a cor, o canal e a direção, como `15 · Input`, sem nome do slot nem da cor (perguntas 277 e 770). Um nó sem canal ativo mostra `No active channel`. Abrir uma linha fecha a anterior | 179, 218, 234, 277 e 340 |
 | Renomear um nó | Para o dono, o duplo clique no nome vira um campo de texto: Enter salva, Esc cancela, e vazio volta ao padrão. Um clique, no nome ou no resto da linha, abre e fecha os slots, e o duplo clique deixa a linha como estava | 144, 217 e 222 |
 | Renomear a rede | O botão `Rename` troca o nome por um campo de texto. Um nome vazio é recusado, e o nome continua o mesmo | 156 |
 | Renomear um canal | Na aba `Signals`, o duplo clique no nome vira um campo de texto, e vazio volta ao nome da cor | 26, 34 e 222 |
@@ -125,7 +125,7 @@ Abre com Shift + clique direito com o [Signal Remote](signal-remote.md) na mão,
 
 | Parte | O que mostra | Pergunta |
 |---|---|---|
-| Topo | O vínculo atual, como `■ Base Norte · Alavanca do portão · 15 Red`, ou `No link`, e o seletor `Lever` e `Button` | 365 |
+| Topo | O vínculo atual, como `■ Base Norte · Alavanca do portão · ■ 15`, ou `No link`, e o seletor `Lever` e `Button` | 365 |
 | Passo 1, redes | `Networks`: as redes `Online` do player, com o quadrado da cor e a contagem de nós; sem nenhuma, `No network online. Place a Network Controller to create one.` | 279 e 359 |
 | Passo 2, nós | `Nodes with an input`: só os nós com slot de input ativo, com o nome e, à direita, o tipo, o sinal e o estado na cor dele, como `In · 12  Online`; `Unloaded` e `Out of range` aparecem. Sem nenhum, `No node with an active input in this network.` | 282, 284, 285 e 335 |
 | Passo 3, slots | `Input channels`: os slots de input ativos do nó, pela cor e pelo nome do canal; pulado quando há um só | 286 |
@@ -323,6 +323,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, o log mostra só o horário, e o status do slot é `On` ou `Off` (perguntas 770, 771, 774 e 775). |
 | Zennd | 2026-11-16 15:19 | Adiciona a Tela do Signal Alarm (perguntas 643, 645, 646, 648, 737, 740, 742 e 743). |
 | Zennd | 2026-11-16 13:19 | Adiciona a Tela do Signal Lamp (perguntas 650, 651, 656 e 720). |
 | Zennd | 2026-11-16 12:23 | Adiciona a Tela do Signal Lock, sem a prancha (perguntas 636, 637, 640 e 712). |

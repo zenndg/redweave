@@ -76,7 +76,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 | `Wrench` | Retira o cabo e manda o item, com a cor, para o inventário do player, ou para o chão se não houver espaço | 525 |
 | `Open`, `Copy` e `Toggle` | Não fazem nada: o cabo não tem tela nem estado | 525 |
 | `Rotate` | Não faz nada e mostra `Only modules can be turned.`, porque só os Signal Modules giram | 617 |
-| Rótulo | Com o Configurator na mão, o rótulo sobre o cabo mostra a cor e a força, como `15 Red · 12` | 525 |
+| Rótulo | Com o Configurator na mão, o rótulo sobre o cabo mostra a cor e a força, como `■ 15 · 12` | 525 e 770 |
 
 ## Visual
 
@@ -111,6 +111,7 @@ O pó do jogo atualiza bloco por bloco, em cascata, e a regra 18 proíbe isso. O
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O rótulo mostra o número da cor, sem o nome (pergunta 770). |
 | Zennd | 2026-11-16 16:05 | A receita do cabo branco entra na #157, e tingir passa a aceitar só o cabo branco, em 15 receitas (perguntas 750, 762 e 763). |
 | Zennd | 2026-11-15 14:38 | O modo `Rotate` no cabo mostra `Only modules can be turned.` (pergunta 617). |
 | Zennd | 2026-11-15 09:34 | Marca o cabo como implementado na #44, com o código, os testes e a busca até 30. |

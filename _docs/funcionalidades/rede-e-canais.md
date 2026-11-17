@@ -121,8 +121,8 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 
 | Parte | Valores |
 |---|---|
-| Canal | A cor do slot: o slot 15 é sempre o canal `15 Red`. Um nó não lê e emite na mesma cor ao mesmo tempo (pergunta 224) |
-| Status | `Enabled` ou `Disabled`. Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face (pergunta 228). A direção e a face só mudam com o slot `Disabled`, e um slot `Enabled` fica travado (pergunta 237) |
+| Canal | A cor do slot: o slot 15 é sempre o canal 15, o vermelho, que as telas mostram como `■ 15`, sem o nome da cor (pergunta 770). Um nó não lê e emite na mesma cor ao mesmo tempo (pergunta 224) |
+| Status | `On` ou `Off`, e `Ligado` ou `Desligado` em português (pergunta 774). Só um slot ativo lê ou emite. Na primeira ativação, o slot vira `Input` na face onde o nó está grudado; desativar guarda a direção e a face (pergunta 228). A direção e a face só mudam com o slot `Off`, e um slot `On` fica travado (pergunta 237) |
 | Direção | `Input`, quando o nó lê o bloco, ou `Output`, quando emite no bloco |
 | Face do bloco | Uma das 6 faces do bloco onde o nó está. Na entrada, escolhe de qual vizinho o nó lê; na saída, o nó sempre alimenta o bloco onde está grudado, como uma alavanca (pergunta 71) |
 
@@ -245,6 +245,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, e o status do slot é `On` ou `Off` (perguntas 770 e 774). |
 | Zennd | 2026-11-15 09:37 | Quem colocou o nó fica gravado na parte do multipart (pergunta 543). |
 | Zennd | 2026-11-14 09:46 | Adiciona os Signal Modules como fonte do canal, da #103 (perguntas 375 a 387). |
 | Zennd | 2026-11-12 20:48 | Liga o Signal Remote à página dele, com o valor 15 e o `RemoteInputs` (perguntas 352, 357 e 360). |
