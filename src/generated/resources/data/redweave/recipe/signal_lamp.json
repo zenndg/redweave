@@ -8,17 +8,20 @@
     "D": {
       "item": "minecraft:polished_deepslate"
     },
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
     "R": {
       "item": "minecraft:redstone"
     },
-    "X": {
-      "item": "minecraft:redstone_lamp"
+    "S": {
+      "item": "minecraft:glass"
     }
   },
   "pattern": [
-    " X ",
+    " S ",
     "CRC",
-    "DDD"
+    "DLD"
   ],
   "result": {
     "count": 1,

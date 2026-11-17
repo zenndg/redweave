@@ -571,20 +571,21 @@ Entregue com a issue #142 (perguntas 643 a 649 e 737 a 744). Use uma rede sua, d
 
 ## Fase 1 e 2: as receitas
 
-Num mundo em sobrevivência, ou em criativo com a mesa de trabalho, confira cada receita de [`itens.md`](../itens.md#receitas) (perguntas 745 a 764).
+Num mundo em sobrevivência, ou em criativo com a mesa de trabalho, confira cada receita de [`itens.md`](../itens.md#receitas) (perguntas 745 a 769).
 
 | # | Faça | Espere ver |
 |---|---|---|
 | 359 | Pegue uma redstone e abra o livro de receitas | As receitas do Redweave aparecem desbloqueadas na aba de redstone |
 | 360 | Monte, na mesa, a receita do Network Controller, do Network Terminal, do Configurator e do Signal Remote | 1 item de cada |
-| 361 | Monte a receita do Signal Node e a do Signal Cable | 2 `Signal Node` e 8 `Signal Cable` brancos, que empilham com os brancos do criativo |
-| 362 | Monte a receita de cada um dos 11 Signal Modules, trocando só o item de cima | 1 módulo de cada, conforme o item de cima |
+| 361 | Monte a receita do Signal Node e a do Signal Cable | 8 `Signal Node` e 8 `Signal Cable` brancos, que empilham com os brancos do criativo |
+| 362 | Monte a receita de cada um dos 10 Signal Modules da forma comum, com um Signal Node embaixo, trocando só o item de cima, e a da Signal Lamp, com vidro em cima e a lâmpada de redstone embaixo | 1 módulo de cada, conforme o item de cima |
 | 363 | Troque o idioma para Português e repita um dos passos | Os mesmos resultados, com os nomes em português |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:55 | Muda os passos 361 e 362, da revisão das receitas (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona os passos 359 a 363, das receitas, e muda o passo 190, do tingir só do cabo branco (perguntas 745 a 764). |
 | Zennd | 2026-11-16 15:21 | Adiciona a seção do Signal Alarm, passos 342 a 358. |
 | Zennd | 2026-11-16 14:00 | Adiciona os passos 331 a 341, da cópia de todos os itens da #154. |

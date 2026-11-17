@@ -22,28 +22,30 @@ import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 /**
  * The recipes of the mod, as datapack JSON a pack can override with KubeJS (rule 4). Every item is
- * made of vanilla materials with at least one redstone, and each recipe is named after its item
- * (answers 745 to 761). The 15 dyes of the Signal Cable take only white cables (762 to 764).
+ * made of vanilla materials or items of the mod, with at least one redstone, and each recipe is
+ * named after its item (answers 745 to 761, changed by 765 to 769). The 15 dyes of the Signal Cable
+ * take only white cables (762 to 764).
  */
 public final class RedweaveRecipes extends RecipeProvider {
   private static final int ONE = 1;
-  private static final int NODES = 2;
+  private static final int NODES = 8;
   private static final int CABLES = 8;
 
   private static final char DEEPSLATE = 'D';
   private static final char COPPER = 'C';
   private static final char REDSTONE = 'R';
-  private static final char CORE = 'E';
   private static final char BASE = 'B';
   private static final char PANE = 'G';
   private static final char PEARL = 'P';
   private static final char WOOL = 'W';
   private static final char VANILLA = 'X';
+  private static final char NODE = 'N';
+  private static final char LAMP = 'L';
+  private static final char GLASS = 'S';
   private static final char CABLE = '#';
   private static final char DYE = 'D';
 
   private static final String CONTROLLER_TOP = "DRD";
-  private static final String CORE_ROW = "CEC";
   private static final String CONTROLLER_BOTTOM = "DBD";
   private static final String TERMINAL_TOP = "DGD";
   private static final String PEARL_ROW = "CPC";
@@ -56,7 +58,9 @@ public final class RedweaveRecipes extends RecipeProvider {
   private static final String PROBE_HANDLE = "C  ";
   private static final String REMOTE_TOP = "CGC";
   private static final String MODULE_TOP = " X ";
-  private static final String MODULE_BOTTOM = "DDD";
+  private static final String MODULE_BOTTOM = "DND";
+  private static final String LAMP_TOP = " S ";
+  private static final String LAMP_BOTTOM = "DLD";
   private static final String RING = "###";
   private static final String AROUND = "#D#";
 
@@ -78,16 +82,16 @@ public final class RedweaveRecipes extends RecipeProvider {
     dyeRecipes(output);
   }
 
-  /** Answers 747 and 748. */
+  /** Answers 747 and 748, with the pearl of answer 768. */
   private void networkRecipes(RecipeOutput output) {
     shaped(RedweaveItems.NETWORK_CONTROLLER.get(), ONE)
         .pattern(CONTROLLER_TOP)
-        .pattern(CORE_ROW)
+        .pattern(PEARL_ROW)
         .pattern(CONTROLLER_BOTTOM)
         .define(DEEPSLATE, Items.POLISHED_DEEPSLATE)
         .define(REDSTONE, Items.REDSTONE)
         .define(COPPER, Items.COPPER_INGOT)
-        .define(CORE, Items.ENDER_EYE)
+        .define(PEARL, Items.ENDER_PEARL)
         .define(BASE, Items.REDSTONE_BLOCK)
         .save(output);
     shaped(RedweaveItems.NETWORK_TERMINAL.get(), ONE)
@@ -102,7 +106,10 @@ public final class RedweaveRecipes extends RecipeProvider {
         .save(output);
   }
 
-  /** Answers 749 and 750: the base recipe gives white cables, with no color component. */
+  /**
+   * Answers 749 and 750, with the count of answer 765: the base recipe gives white cables, with no
+   * color component.
+   */
   private void nodeAndCableRecipes(RecipeOutput output) {
     shaped(RedweaveItems.SIGNAL_NODE.get(), NODES)
         .pattern(COPPER_REDSTONE)
@@ -122,7 +129,7 @@ public final class RedweaveRecipes extends RecipeProvider {
         .save(output);
   }
 
-  /** Answers 751 and 752. */
+  /** Answers 751 and 752, with the bottom row of answer 769. */
   private void toolRecipes(RecipeOutput output) {
     shaped(RedweaveItems.CONFIGURATOR.get(), ONE)
         .pattern(PROBE_TIP)
@@ -134,15 +141,19 @@ public final class RedweaveRecipes extends RecipeProvider {
     shaped(RedweaveItems.SIGNAL_REMOTE.get(), ONE)
         .pattern(REMOTE_TOP)
         .pattern(PEARL_ROW)
-        .pattern(COPPER_REDSTONE)
+        .pattern(REDSTONE_BOTTOM)
         .define(COPPER, Items.COPPER_INGOT)
         .define(PANE, Items.GLASS_PANE)
         .define(PEARL, Items.ENDER_PEARL)
         .define(REDSTONE, Items.REDSTONE)
+        .define(DEEPSLATE, Items.POLISHED_DEEPSLATE)
         .save(output);
   }
 
-  /** The shared shape of answer 753, with the vanilla item of each module (754 to 761). */
+  /**
+   * The shared shape of answers 753 and 766, with the vanilla item of each module (754 to 761), and
+   * the lamp of answer 767, which takes the redstone lamp in place of the node.
+   */
   private void moduleRecipes(RecipeOutput output) {
     Map.<ItemLike, ItemLike>ofEntries(
             Map.entry(RedweaveItems.SIGNAL_TIMER.get(), Items.CLOCK),
@@ -154,9 +165,9 @@ public final class RedweaveRecipes extends RecipeProvider {
             Map.entry(RedweaveItems.SIGNAL_PRESSURE_PLATE.get(), Items.STONE_PRESSURE_PLATE),
             Map.entry(RedweaveItems.SIGNAL_ITEM_SENSOR.get(), Items.COMPARATOR),
             Map.entry(RedweaveItems.SIGNAL_LOCK.get(), Items.TRIPWIRE_HOOK),
-            Map.entry(RedweaveItems.SIGNAL_ALARM.get(), Items.NOTE_BLOCK),
-            Map.entry(RedweaveItems.SIGNAL_LAMP.get(), Items.REDSTONE_LAMP))
+            Map.entry(RedweaveItems.SIGNAL_ALARM.get(), Items.NOTE_BLOCK))
         .forEach((module, vanilla) -> module(output, module, vanilla));
+    lamp(output);
   }
 
   private void module(RecipeOutput output, ItemLike module, ItemLike vanilla) {
@@ -168,6 +179,20 @@ public final class RedweaveRecipes extends RecipeProvider {
         .define(COPPER, Items.COPPER_INGOT)
         .define(REDSTONE, Items.REDSTONE)
         .define(DEEPSLATE, Items.POLISHED_DEEPSLATE)
+        .define(NODE, RedweaveItems.SIGNAL_NODE.get())
+        .save(output);
+  }
+
+  private void lamp(RecipeOutput output) {
+    shaped(RedweaveItems.SIGNAL_LAMP.get(), ONE)
+        .pattern(LAMP_TOP)
+        .pattern(COPPER_REDSTONE)
+        .pattern(LAMP_BOTTOM)
+        .define(GLASS, Items.GLASS)
+        .define(COPPER, Items.COPPER_INGOT)
+        .define(REDSTONE, Items.REDSTONE)
+        .define(DEEPSLATE, Items.POLISHED_DEEPSLATE)
+        .define(LAMP, Items.REDSTONE_LAMP)
         .save(output);
   }
 

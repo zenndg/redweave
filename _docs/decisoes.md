@@ -234,20 +234,21 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Config e padrões do alarme | Faixas no config; 3 toques, 1 s, 5 s, `Dono` | 742 |
 | Textos do alarme | Curtos no botão; `Silenciado`; rótulo com o estado | 743 |
 | Resto do alarme | `Toggle` offline, fora do contador, luz em sincronia, NBT | 744 |
-| Materiais das receitas | Só do jogo puro, com pelo menos uma redstone em cada | 745 |
+| Materiais das receitas | Do jogo puro ou do próprio mod, com pelo menos uma redstone em cada; mudada pela 766 | 745, 766 |
 | Itens com receita agora | Só os 17 já entregues | 746 |
-| Receita do Network Controller | Deepslate polido, cobre, redstone, olho do ender e bloco de redstone; dá 1 | 747 |
+| Receita do Network Controller | Deepslate polido, cobre, redstone, pérola do ender e bloco de redstone; dá 1; mudada pela 768 | 747, 768 |
 | Receita do Network Terminal | Deepslate polido, cobre, painel de vidro, pérola do ender e redstone; dá 1 | 748 |
-| Receita do Signal Node | Cobre, redstone, deepslate polido e pérola do ender; dá 2 | 749 |
+| Receita do Signal Node | Cobre, redstone, deepslate polido e pérola do ender; dá 8; mudada pela 765 | 749, 765 |
 | Receita do Signal Cable branco | Lã branca, cobre e redstone; dá 8; completa a 520 | 750 |
 | Receita do Configurator | Duas barras de cobre na diagonal e a redstone na ponta; dá 1 | 751 |
-| Receita do Signal Remote | Cobre nos lados, painel de vidro, pérola do ender e redstone; dá 1 | 752 |
-| Forma das receitas dos módulos | O item do jogo de cada módulo em cima, cobre, redstone e cobre, e três deepslates polidos; dá 1 | 753 |
+| Receita do Signal Remote | Cobre nos lados, painel de vidro e pérola do ender, e deepslate polido, redstone e deepslate polido embaixo; dá 1; mudada pela 769 | 752, 769 |
+| Forma das receitas dos módulos | O item do jogo de cada módulo em cima, cobre, redstone e cobre, e deepslate polido, Signal Node e deepslate polido; dá 1; mudada pela 766, sem a Lamp | 753, 766 |
 | Receita do Signal Timer | Relógio na forma da 753 | 754 |
 | Receita do Signal Inverter | Tocha de redstone na forma da 753 | 755 |
 | Receita do Weather Detector | Para-raios na forma da 753 | 756 |
 | Receita do Signal Randomizer | Liberador na forma da 753 | 757 |
-| Receitas do Lever, do Button, do Pressure Plate e da Lamp | Alavanca, botão de pedra, placa de pressão de pedra e lâmpada de redstone na forma da 753 | 758 |
+| Receitas do Lever, do Button, do Pressure Plate e da Lamp | Alavanca, botão de pedra e placa de pressão de pedra na forma da 753; a Lamp mudada pela 767 | 758, 767 |
+| Receita da Signal Lamp | Vidro em cima, cobre, redstone e cobre, e deepslate polido, lâmpada de redstone e deepslate polido; sem nó; dá 1 | 767 |
 | Receita do Signal Item Sensor | Comparador na forma da 753 | 759 |
 | Receita do Signal Lock | Gancho de armadilha na forma da 753 | 760 |
 | Receita do Signal Alarm | Bloco musical na forma da 753 | 761 |
@@ -740,6 +741,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:40 | Resume as respostas 765 a 769, da revisão das receitas. |
 | Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |
 | Zennd | 2026-11-16 15:18 | Registra as decisões 737 a 744, do Signal Alarm. |
 | Zennd | 2026-11-16 13:35 | Registra as decisões 731 a 736. |

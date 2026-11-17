@@ -22,7 +22,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
  * The crafting recipes of the items in the mod: every item has one, named after it, that takes at
- * least one redstone, and each grid decided in answers 745 to 761 crafts its item.
+ * least one redstone, and each grid decided in answers 745 to 761, as changed by answers 765 to
+ * 769, crafts its item.
  */
 @GameTestHolder(RedweaveMod.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -30,7 +31,7 @@ public final class ItemRecipeGameTests {
   private static final String EMPTY = "empty";
   private static final int GRID = 3;
   private static final int ONE = 1;
-  private static final int NODES = 2;
+  private static final int NODES = 8;
   private static final int CABLES = 8;
   private static final Item NONE = Items.AIR;
   private static final Item DEEPSLATE = Items.POLISHED_DEEPSLATE;
@@ -90,7 +91,7 @@ public final class ItemRecipeGameTests {
     return Stream.of(networkCrafts(), toolCrafts(), moduleCrafts()).flatMap(List::stream).toList();
   }
 
-  /** Answers 747 to 750. */
+  /** Answers 747 to 750, with the controller of answer 768 and the count of answer 765. */
   private static List<Craft> networkCrafts() {
     return List.of(
         new Craft(
@@ -101,7 +102,7 @@ public final class ItemRecipeGameTests {
                 REDSTONE,
                 DEEPSLATE,
                 COPPER,
-                Items.ENDER_EYE,
+                PEARL,
                 COPPER,
                 DEEPSLATE,
                 Items.REDSTONE_BLOCK,
@@ -121,7 +122,7 @@ public final class ItemRecipeGameTests {
             List.of(WOOL, WOOL, WOOL, COPPER, REDSTONE, COPPER, WOOL, WOOL, WOOL)));
   }
 
-  /** Answers 751 and 752. */
+  /** Answers 751 and 752, with the remote of answer 769. */
   private static List<Craft> toolCrafts() {
     return List.of(
         new Craft(
@@ -131,10 +132,13 @@ public final class ItemRecipeGameTests {
         new Craft(
             RedweaveItems.SIGNAL_REMOTE,
             ONE,
-            List.of(COPPER, PANE, COPPER, COPPER, PEARL, COPPER, COPPER, REDSTONE, COPPER)));
+            List.of(COPPER, PANE, COPPER, COPPER, PEARL, COPPER, DEEPSLATE, REDSTONE, DEEPSLATE)));
   }
 
-  /** The shared shape of answer 753, with the item of each module from answers 754 to 761. */
+  /**
+   * The shared shape of answers 753 and 766, with the item of each module from answers 754 to 761,
+   * and the lamp of answer 767.
+   */
   private static List<Craft> moduleCrafts() {
     return List.of(
         module(RedweaveItems.SIGNAL_TIMER, Items.CLOCK),
@@ -147,14 +151,35 @@ public final class ItemRecipeGameTests {
         module(RedweaveItems.SIGNAL_ITEM_SENSOR, Items.COMPARATOR),
         module(RedweaveItems.SIGNAL_LOCK, Items.TRIPWIRE_HOOK),
         module(RedweaveItems.SIGNAL_ALARM, Items.NOTE_BLOCK),
-        module(RedweaveItems.SIGNAL_LAMP, Items.REDSTONE_LAMP));
+        lamp());
+  }
+
+  private static Craft lamp() {
+    return new Craft(
+        RedweaveItems.SIGNAL_LAMP,
+        ONE,
+        List.of(
+            NONE,
+            Items.GLASS,
+            NONE,
+            COPPER,
+            REDSTONE,
+            COPPER,
+            DEEPSLATE,
+            Items.REDSTONE_LAMP,
+            DEEPSLATE));
   }
 
   private static Craft module(Supplier<? extends Item> module, Item vanilla) {
     return new Craft(
         module,
         ONE,
-        List.of(NONE, vanilla, NONE, COPPER, REDSTONE, COPPER, DEEPSLATE, DEEPSLATE, DEEPSLATE));
+        List.of(NONE, vanilla, NONE, COPPER, REDSTONE, COPPER, DEEPSLATE, node(), DEEPSLATE));
+  }
+
+  /** Read when the test runs, after the items are registered. */
+  private static Item node() {
+    return RedweaveItems.SIGNAL_NODE.get();
   }
 
   private static List<ItemStack> stacks(List<Item> grid) {

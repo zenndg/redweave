@@ -8,6 +8,9 @@
     "D": {
       "item": "minecraft:polished_deepslate"
     },
+    "N": {
+      "item": "redweave:signal_node"
+    },
     "R": {
       "item": "minecraft:redstone"
     },
@@ -18,7 +21,7 @@
   "pattern": [
     " X ",
     "CRC",
-    "DDD"
+    "DND"
   ],
   "result": {
     "count": 1,

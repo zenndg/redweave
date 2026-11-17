@@ -22,7 +22,7 @@ O dono vincula o tablet a um slot de input com Shift + clique direito, e quem o 
 | Ponto | Como é | Pergunta |
 |---|---|---|
 | Pilha | Um por slot, como as ferramentas do jogo | 371 |
-| Receita | Na mesa de trabalho, em [`itens.md`](../itens.md#receitas) | 752 |
+| Receita | Na mesa de trabalho, em [`itens.md`](../itens.md#receitas) | 752 e 769 |
 | ID | Ganho no primeiro vínculo. Cópias com o mesmo ID, como no criativo, contam como uma fonte só | 358 |
 | Vínculo | A rede, o nó e o slot, num data component (regra 7) | 287 |
 | Modo | `Lever` ou `Button`, num data component, escolhido na tela do vínculo | 288 e 365 |
@@ -84,6 +84,7 @@ O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao la
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:55 | A receita muda a linha de baixo na #159 (pergunta 769). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 752). |
 | Zennd | 2026-11-14 13:34 | Destaca o estado em negrito e cor (perguntas 436 e 437). |
 | Zennd | 2026-11-12 21:39 | Aponta as texturas dos 4 estados do tablet (pergunta 374). |
