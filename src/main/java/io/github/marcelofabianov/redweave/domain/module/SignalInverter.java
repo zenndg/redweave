@@ -27,7 +27,7 @@ public final class SignalInverter {
   /** The inputs waiting for the torch, oldest first; empty until the input is read. */
   private final List<Signal> waiting;
 
-  private final boolean on;
+  private final Signal output;
   private final InverterSettings settings;
   private final DelayLine line;
   private final int burnoutTicks;
@@ -41,7 +41,7 @@ public final class SignalInverter {
       throw new IllegalArgumentException(String.format(INVALID_BURNOUT, burnoutTicks));
     }
     this.waiting = List.copyOf(torch.waiting());
-    this.on = torch.on();
+    this.output = torch.output();
     this.settings = Objects.requireNonNull(settings);
     this.line = Objects.requireNonNull(line);
     this.burnoutTicks = burnoutTicks;
@@ -56,16 +56,18 @@ public final class SignalInverter {
 
   /**
    * An inverter from the saves, with what is left of its burnout, its settings and its delay line,
-   * whose output until the first change comes out is the opposite of it (answers 450 and 836).
+   * whose output until the first change comes out is off before one that turns on and its strength
+   * before one that turns off (answers 450, 836 and 854).
    */
   public static SignalInverter restore(
       int burnoutTicks, InverterSettings settings, DelayLine line) {
-    Torch fresh = new Torch(List.of(), line.outputBefore(false), 0, List.of());
+    Torch fresh = new Torch(List.of(), line.outputBefore(settings.strength()), 0, List.of());
     return new SignalInverter(fresh, settings, line, burnoutTicks);
   }
 
   /** One tick, with the input and the delay of the torch: 2 on the edge, 1 on a channel. */
-  public SignalInverter tick(Signal input, int delay, InverterLimits limits) {
+  public SignalInverter tick(
+      Signal input, int delay, InverterLimits limits, DelayLineLimits lineLimits) {
     Objects.requireNonNull(input);
     if (delay != EDGE_DELAY && delay != CHANNEL_DELAY) {
       throw new IllegalArgumentException(String.format(INVALID_DELAY, delay));
@@ -82,10 +84,11 @@ public final class SignalInverter {
       next.add(input);
       torchOutput = Not.output(waiting.get(0));
     }
+    Signal value = torchOutput.isOn() ? settings.strength() : Signal.OFF;
     if (fresh && line.isEmpty()) {
-      return changeTo(new Torch(next, torchOutput.isOn(), now, List.of()), line, false, limits);
+      return changeTo(new Torch(next, value, now, List.of()), line, false, limits);
     }
-    DelayLine.Passage passage = line.pass(torchOutput.isOn(), settings.delay(), on);
+    DelayLine.Passage passage = line.pass(value, settings.delay(), output, lineLimits);
     Torch moved = new Torch(next, passage.output(), now, List.of());
     return changeTo(moved, passage.line(), passage.entered() && !fresh, limits);
   }
@@ -102,20 +105,22 @@ public final class SignalInverter {
     if (recent.size() > limits.burnoutToggles()) {
       return burnt(limits.burnoutTicks(), now);
     }
-    Torch kept = new Torch(torch.waiting(), torch.on(), now, recent);
+    Torch kept = new Torch(torch.waiting(), torch.output(), now, recent);
     return new SignalInverter(kept, settings, next, 0);
   }
 
   /** Off, with nothing waiting, for the ticks of the burnout (answers 445 and 835). */
   private SignalInverter burnt(int ticks, long now) {
     return new SignalInverter(
-        new Torch(List.of(), false, now, List.of()), settings, DelayLine.EMPTY, ticks);
+        new Torch(List.of(), Signal.OFF, now, List.of()), settings, DelayLine.EMPTY, ticks);
   }
 
-  /** The same inverter with a new strength, which the output gives at once (843). */
+  /** The same inverter with a new strength, which the output and the line take at once (843). */
   public SignalInverter withStrength(int next) {
-    InverterSettings changed = new InverterSettings(Emitter.stepped(next), settings.delay());
-    return new SignalInverter(torch(), changed, line, burnoutTicks);
+    Signal strength = Emitter.stepped(next);
+    InverterSettings changed = new InverterSettings(strength, settings.delay());
+    Torch now = new Torch(waiting, output.isOn() ? strength : Signal.OFF, clock, changes);
+    return new SignalInverter(now, changed, line.withStrength(strength), burnoutTicks);
   }
 
   /** The same inverter with a new delay; what waits keeps its tick (answer 839). */
@@ -125,7 +130,7 @@ public final class SignalInverter {
   }
 
   private Torch torch() {
-    return new Torch(waiting, on, clock, changes);
+    return new Torch(waiting, output, clock, changes);
   }
 
   private static List<Signal> filled(Signal input, int delay) {
@@ -138,14 +143,14 @@ public final class SignalInverter {
 
   /** The chosen strength while on, nothing while off (answer 834). */
   public Signal output() {
-    return on ? settings.strength() : Signal.OFF;
+    return output;
   }
 
   public InverterState state() {
     if (burnoutTicks > 0) {
       return InverterState.BURNT_OUT;
     }
-    return on ? InverterState.ON : InverterState.OFF;
+    return output.isOn() ? InverterState.ON : InverterState.OFF;
   }
 
   public InverterSettings settings() {
@@ -163,5 +168,5 @@ public final class SignalInverter {
   }
 
   /** The torch of the inverter: the inputs it waits for, its output, its clock and changes. */
-  private record Torch(List<Signal> waiting, boolean on, long clock, List<Long> changes) {}
+  private record Torch(List<Signal> waiting, Signal output, long clock, List<Long> changes) {}
 }
