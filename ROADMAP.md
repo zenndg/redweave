@@ -92,7 +92,7 @@ Decided on 2026-11-11: each Network Controller is one network, a Network Termina
 
 ## Toward v0.1.0
 
-Phases 1 and 2 as one phase. The order follows dependencies first and then difficulty, easiest first (questions 303 and 304). Each line is one issue and one pull request.
+Phases 1 and 2 as one phase. The order follows dependencies first and then difficulty, easiest first (questions 303 and 304). The memory module comes before the Signal Keypad (question 858). Each line is one issue and one pull request.
 
 ### Signal Modules
 
@@ -124,15 +124,15 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 22. [x] Recipes of the delivered items: vanilla materials with at least one redstone each, one shared shape for the Signal Modules, and the Signal Cable dyes taking only white cables (#157 · questions 745 to 764), reviewed for the Signal Node, the modules, the Controller and the Remote (#159 · questions 765 to 769)
 23. [x] Labels, log and slot status: a floating label over the Network Controller, the square of the first enabled slot on the node label, channels shown as their number beside their color square with no color name, the log with the time only, and `On`/`Off` for the slot status (#161 · questions 770 to 777)
 24. [x] Signal Remote with the emitters: Shift + right-click links the tablet to a Signal Lever, Button or Pressure Plate of its owner, and whoever holds it fires the emitter from afar, within `remote.emitter_range` and only in loaded chunks (#163 · questions 778 to 793)
-25. [x] Network components: the Signal Modules registered in their network, saved with it, so the screens count and list nodes and modules with the chunks unloaded; the `Components` tab and `Clear components` (#165 · questions 801 to 817)
+25. [x] Network components: the Signal Modules registered in their network, saved with it, so the screens count and list nodes and modules with the chunks unloaded; the `Components` tab and `Clear components` (#165 · questions 801 to 817), with the Controller tabs and the Network Terminal widened to fit them (#175 · questions 856 and 857)
 26. [x] Signal Lamp new look: a copper base with a band in the color of the channel, a frosted glass dome and a white LED core, 5 px high, with the glass in the translucent layer (#167 · questions 798 to 800 and 820 to 828), one pixel lower on top of the dome (#169 · question 829)
 27. [x] Output delay on the Signal Inverter: 0 to 15 s in whole seconds, when it turns on and off, saved with its pending changes, and a strength from 1 to 15; the shared delay base of the modules (#171 · questions 830 to 841)
-28. [ ] Output delay on the other Signal Modules with an output: the Signal Lever, Button and Pressure Plate, the Weather Detector, the Signal Randomizer, the Signal Item Sensor and the Signal Lamp, with the strength kept in the line, a cap on the waiting changes and module screens one row taller; not on the Signal Timer nor the Signal Lock (#173 · questions 842 and 845 to 855)
-29. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)
-30. [ ] Signal Card: an access card its owner links to locks, keypads and gates (#145 · questions 668 to 671)
-31. [ ] Block protection: the blocks of a door, chosen by the owner, protected by its lock or keypad (#146 · questions 672 to 676)
-32. [ ] Signal Gate: a gate whose field only lets through what its rules allow, with no teleport (#147 · questions 677 to 687)
-33. [ ] Memory module, a T flip-flop (#110)
+28. [x] Output delay on the other Signal Modules with an output: the Signal Lever, Button and Pressure Plate, the Weather Detector, the Signal Randomizer, the Signal Item Sensor and the Signal Lamp, with the strength kept in the line, a cap on the waiting changes and module screens one row taller; not on the Signal Timer nor the Signal Lock (#173 · questions 842 and 845 to 855)
+29. [ ] Memory module, a T flip-flop (#110 · question 858)
+30. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)
+31. [ ] Signal Card: an access card its owner links to locks, keypads and gates (#145 · questions 668 to 671)
+32. [ ] Block protection: the blocks of a door, chosen by the owner, protected by its lock or keypad (#146 · questions 672 to 676)
+33. [ ] Signal Gate: a gate whose field only lets through what its rules allow, with no teleport (#147 · questions 677 to 687)
 34. [ ] Latch module, an SR latch (#111)
 35. [ ] Gate module: AND, OR, XOR and NAND (#31 · question 309)
 36. [ ] Shift + scroll changes a gate's mode (#32)
