@@ -11,6 +11,9 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 858 | Qual é o próximo passo do `ROADMAP.md` depois do delay nos módulos? | O módulo de memória, um T flip-flop (#110), que passa a ser o passo 29, antes do Signal Keypad; o Keypad e os seguintes descem uma posição |
+| 857 | Na tela inicial do Network Terminal, a contagem `12 componentes`, de uns 80 px, invade o estado da rede. Como resolver? | O Network Terminal passa de 300 para 340 px de largura, a mesma do Controlador e dos módulos; o nome e o estado ficam onde estão, e a contagem ganha 40 px à direita. Corrige a pergunta 804 na tela |
+| 856 | Na Tela do Controlador, o texto `Components` (`Componentes`) passa da aba de 44 px. Como aumentar? | As 4 abas ficam com 72 px, a mesma largura, que cabe `Componentes` com folga; a fileira ocupa 304 dos 340 px, igual nos dois idiomas. Corrige a pergunta 809 na tela |
 | 855 | A tela do Signal Item Sensor, com o inventário do player embaixo, passaria a 278 px com a moldura de 186 px, e em 1080p com a escala 4 só cabem 270 px. Como resolver? | Só o Item Sensor mantém a moldura de 168 px, e as linhas da direita ficam a 15 px em vez de 18, com o `Delay` como última linha antes de `Output`, como nas outras telas. A tela continua com 260 px. Completa a pergunta 853 (regra 38) |
 | 854 | Com o Signal Randomizer no modo `Analog`, que sorteia de 0 a 15, como a linha de atraso guarda a força? | Em todo módulo, cada mudança da linha guarda o sinal de 0 a 15, `{signal, ticks}`, como diz a pergunta 831. Mudar a força reescreve as mudanças pendentes ligadas com a força nova, então a saída ainda muda na hora (pergunta 843). Um `{on, ticks}` salvo antes é lido com a força do módulo. Muda as perguntas 843 e 844 (regra 38) |
 | 853 | Como encaixar a linha `Delay` nas telas que já têm 4 linhas (Signal Pressure Plate, Signal Item Sensor e Signal Lamp)? | A moldura de todas as telas de módulo passa de 168 para 186 px, com uma linha a mais no corpo. `Delay` fica sempre na última linha antes das conexões, em todas as telas, e a grade de canais desce **Completada pela pergunta 855:** o Signal Item Sensor mantém 168 px, com as linhas a 15 px. |
@@ -856,6 +859,8 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 16:40 | Registra a resposta 858, do módulo de memória antes do Signal Keypad. |
+| Zennd | 2026-11-17 16:05 | Registra as respostas 856 e 857, do layout de `Components` no Controlador e no Terminal. |
 | Zennd | 2026-11-17 14:10 | Registra as respostas 845 a 855, do delay nos emissores e nos módulos restantes, e marca a 843 e a 844 como mudadas. |
 | Zennd | 2026-11-17 13:10 | Registra as respostas 843 e 844, da força com a linha e das chaves do NBT. |
 | Zennd | 2026-11-17 13:02 | Registra a resposta 842, do delay no `ROADMAP.md`. |

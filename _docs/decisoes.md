@@ -327,6 +327,9 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Linha `Delay` nas telas | Moldura dos módulos de 168 para 186 px; `Delay` na última linha antes das conexões | 853 |
 | Sinal na linha de atraso | Cada mudança guarda o sinal de 0 a 15; um `{on}` antigo vale a força | 854 |
 | Tela do Item Sensor com o delay | Mantém 168 px, com as linhas da direita a 15 px | 855 |
+| Abas da Tela do Controlador | Todas com 72 px, para caber `Componentes` | 856 |
+| Largura do Network Terminal | 340 px, para a contagem de componentes não invadir o estado | 857 |
+| Próximo passo do roadmap | O módulo de memória (#110), antes do Signal Keypad | 858 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
@@ -814,6 +817,8 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 16:40 | Resume a resposta 858, da ordem do roadmap. |
+| Zennd | 2026-11-17 16:05 | Resume as respostas 856 e 857, do layout de `Components`. |
 | Zennd | 2026-11-17 14:15 | Resume as respostas 845 a 855, do delay nos módulos restantes. |
 | Zennd | 2026-11-17 13:02 | Resume as respostas 830 a 844, do delay na saída, da força do Signal Inverter, do delay no roadmap e das chaves do NBT. |
 | Zennd | 2026-11-17 12:11 | Resume a resposta 829, da Signal Lamp 1 px mais baixa. |
