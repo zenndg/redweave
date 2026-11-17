@@ -33,6 +33,10 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder(RedweaveMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class PressurePlatePartGameTests {
+  private static final String REMOTE_PULSE = "remote_pulse";
+  private static final int PULSE_LEFT = 12;
+  private static final int NEGATIVE_PULSE = -3;
+  private static final int NO_PULSE = 0;
   private static final String EMPTY = "empty";
   private static final BlockPos STONE = new BlockPos(1, 1, 1);
   private static final BlockPos PLATE = STONE.above();
@@ -129,6 +133,29 @@ public final class PressurePlatePartGameTests {
         loaded.plate(),
         new SignalPressurePlate(true, new Signal(SEVEN), PlateMode.HOSTILE),
         NOT_KEPT);
+    helper.succeed();
+  }
+
+  /** A plate saved during the pulse of a Signal Remote comes back on and ends it (793). */
+  @GameTest(template = EMPTY)
+  public static void aPlateKeepsThePulseOfTheRemote(GameTestHelper helper) {
+    CompoundTag saved = fullSave(SEVEN, HOSTILE);
+    saved.putInt(REMOTE_PULSE, PULSE_LEFT);
+    PressurePlatePart loaded = PressurePlatePart.load(Direction.DOWN, saved);
+
+    helper.assertValueEqual(loaded.plate().pulse(), PULSE_LEFT, NOT_KEPT);
+    helper.assertValueEqual(loaded.save(), saved, NOT_KEPT);
+    helper.succeed();
+  }
+
+  /** A negative pulse goes back to none, with a warning (rule 14). */
+  @GameTest(template = EMPTY)
+  public static void aNegativePulseGoesBackToNone(GameTestHelper helper) {
+    CompoundTag saved = fullSave(SEVEN, HOSTILE);
+    saved.putInt(REMOTE_PULSE, NEGATIVE_PULSE);
+
+    helper.assertValueEqual(
+        PressurePlatePart.load(Direction.DOWN, saved).plate().pulse(), NO_PULSE, NOT_SAFE);
     helper.succeed();
   }
 

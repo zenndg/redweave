@@ -19,6 +19,7 @@ public final class RedweaveConfig {
   private static final String LABEL_RANGE_KEY = "label_range";
   private static final String REMOTE = "remote";
   private static final String PULSE_TICKS_KEY = "pulse_ticks";
+  private static final String EMITTER_RANGE_KEY = "emitter_range";
   private static final String TIMER = "timer";
   private static final String MIN_INTERVAL_KEY = "min_interval_ticks";
   private static final String MAX_INTERVAL_KEY = "max_interval_ticks";
@@ -56,6 +57,8 @@ public final class RedweaveConfig {
   private static final String LOG_SIZE_COMMENT = "Lines the log of each network keeps in memory.";
   private static final String LABEL_RANGE_COMMENT = "Blocks within which the node labels show.";
   private static final String PULSE_TICKS_COMMENT = "Ticks a Signal Remote button pulse lasts.";
+  private static final String EMITTER_REACH = "Blocks a Signal Remote reaches a Signal Emitter.";
+  private static final String EMITTER_RANGE_COMMENT = EMITTER_REACH + RANGE_ZERO;
   private static final String MIN_INTERVAL_COMMENT = "Shortest Signal Timer interval, in ticks.";
   private static final String MAX_INTERVAL_COMMENT = "Longest Signal Timer interval, in ticks.";
   private static final String MIN_DRAW_COMMENT = "Shortest Signal Randomizer interval, in ticks.";
@@ -145,6 +148,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue LOG_SIZE;
   static final ModConfigSpec.IntValue LABEL_RANGE;
   static final ModConfigSpec.IntValue PULSE_TICKS;
+  static final ModConfigSpec.IntValue EMITTER_RANGE;
   static final ModConfigSpec.IntValue MIN_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue RANDOMIZER_MIN_INTERVAL_TICKS;
@@ -209,6 +213,10 @@ public final class RedweaveConfig {
         builder
             .comment(PULSE_TICKS_COMMENT)
             .defineInRange(PULSE_TICKS_KEY, DEFAULT_PULSE_TICKS, MIN_PULSE_TICKS, MAX_PULSE_TICKS);
+    EMITTER_RANGE =
+        builder
+            .comment(EMITTER_RANGE_COMMENT)
+            .defineInRange(EMITTER_RANGE_KEY, DEFAULT_RANGE, 0, MAX_RANGE);
     builder.pop();
     builder.push(TIMER);
     MIN_INTERVAL_TICKS =

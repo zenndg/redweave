@@ -136,6 +136,12 @@ public final class ButtonPart extends EmitterPart {
         .map(found -> Component.translatable(ModuleMessages.BUTTON_PRESSED, found.displayName()));
   }
 
+  /** A Signal Remote presses it, as the `Toggle`, with its own on time (answer 781). */
+  @Override
+  public Optional<Component> fireRemotely(int pulseTicks) {
+    return toggle();
+  }
+
   /** The hand of the owner presses it; anyone else is told whose it is (576, 577 and 588). */
   @Override
   public void emptyHand(Player player) {

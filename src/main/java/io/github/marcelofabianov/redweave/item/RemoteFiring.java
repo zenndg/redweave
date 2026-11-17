@@ -17,7 +17,8 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * The click of a Signal Remote, on the server: whoever holds it fires, the lever switches and the
- * button pulses, and the action bar says what happened (answers 287, 288, 357, 359, 369 and 370).
+ * button pulses, and the action bar says what happened (answers 287, 288, 357, 359, 369 and 370). A
+ * tablet linked to a Signal Emitter fires the emitter instead (answer 781).
  */
 final class RemoteFiring {
   private static final String NO_NAME = "";
@@ -27,6 +28,10 @@ final class RemoteFiring {
 
   static void fire(ServerPlayer player, ItemStack stack) {
     RemoteState state = stateOf(stack);
+    if (state.emitter().isPresent()) {
+      EmitterRemotes.fire(player, stack, state.emitter().get());
+      return;
+    }
     Optional<RemoteInput> tablet = inputOf(state);
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (tablet.isEmpty() || server.isEmpty()) {

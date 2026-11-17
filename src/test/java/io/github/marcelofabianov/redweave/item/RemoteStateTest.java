@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
+import io.github.marcelofabianov.redweave.domain.network.Face;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -19,8 +21,12 @@ class RemoteStateTest {
   private static final UUID NODE = UUID.fromString("1b2c3d4e-5f6a-4b7c-8d9e-0f1a2b3c4d5e");
   private static final int SLOT = 14;
   private static final RemoteLink LINK = new RemoteLink(NETWORK, NODE, SLOT);
+  private static final UUID LEVER = UUID.fromString("5f6a7b8c-9d0e-4f1a-8b2c-3d4e5f6a7b8c");
+  private static final BlockLocation PLACE = new BlockLocation("minecraft:overworld", 4, 64, -8);
+  private static final EmitterLink EMITTER = new EmitterLink(PLACE, Face.UP, LEVER);
   private static final long NOW = 1000;
   private static final int PULSE = 20;
+  private static final long NO_PULSE = 0;
   private static final long LATER = NOW + 5;
   private static final long AFTER_THE_PULSE = NOW + PULSE;
 
@@ -97,5 +103,57 @@ class RemoteStateTest {
     assertEquals(RemoteLook.OFF, linked().look(NOW));
     assertEquals(RemoteLook.ON, linked().fired(NOW, PULSE).look(NOW));
     assertEquals(RemoteLook.LOST, linked().lost(true).look(NOW));
+  }
+
+  /** A tablet linked to an emitter fires the emitter, never a channel (answers 778 and 791). */
+  @Test
+  void aLinkToAnEmitterReplacesTheNodeAndStartsOff() {
+    RemoteState emitter = linked().fired(NOW, PULSE).linkedTo(EMITTER);
+
+    assertEquals(Optional.of(EMITTER), emitter.emitter());
+    assertTrue(emitter.link().isEmpty());
+    assertFalse(emitter.on());
+    assertEquals(Optional.of(ID), emitter.id());
+  }
+
+  @Test
+  void aLinkToANodeReplacesTheEmitter() {
+    RemoteState node = RemoteState.NEW.linkedTo(EMITTER).linkedTo(LINK, ID);
+
+    assertTrue(node.emitter().isEmpty());
+    assertEquals(Optional.of(LINK), node.link());
+  }
+
+  @Test
+  void aTabletOfAnEmitterNeverCountsOnAChannel() {
+    RemoteState emitter = RemoteState.NEW.linkedTo(EMITTER);
+
+    assertFalse(emitter.fired(NOW, PULSE).counts(LATER));
+  }
+
+  /** The emitter may change by the hand of its owner, so the tablet always looks off (788). */
+  @Test
+  void aTabletOfAnEmitterLooksOffOrLost() {
+    RemoteState emitter = RemoteState.NEW.linkedTo(EMITTER);
+
+    assertEquals(RemoteLook.OFF, emitter.fired(NOW, PULSE).look(LATER));
+    assertEquals(RemoteLook.LOST, emitter.lost(true).look(NOW));
+  }
+
+  /** A damaged item with both links keeps only the one of the node (rule 14). */
+  @Test
+  void aStateReadWithBothLinksKeepsTheNode() {
+    RemoteState read =
+        RemoteState.read(
+            Optional.of(ID),
+            Optional.of(LINK),
+            Optional.of(EMITTER),
+            RemoteMode.LEVER,
+            false,
+            NO_PULSE,
+            false);
+
+    assertEquals(Optional.of(LINK), read.link());
+    assertTrue(read.emitter().isEmpty());
   }
 }

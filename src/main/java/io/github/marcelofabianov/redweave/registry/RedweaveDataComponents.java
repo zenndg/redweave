@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.item.CableColorCodec;
 import io.github.marcelofabianov.redweave.item.ConfiguratorCopy;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMode;
+import io.github.marcelofabianov.redweave.item.EmitterLabel;
 import io.github.marcelofabianov.redweave.item.ModuleCopy;
 import io.github.marcelofabianov.redweave.item.ModuleCopyCodec;
 import io.github.marcelofabianov.redweave.item.NodeSlotsCodec;
@@ -32,6 +33,7 @@ public final class RedweaveDataComponents {
   private static final String CONFIGURATOR_MODE_ID = "configurator_mode";
   private static final String SIGNAL_REMOTE_ID = "signal_remote";
   private static final String SIGNAL_REMOTE_LABEL_ID = "signal_remote_label";
+  private static final String SIGNAL_REMOTE_EMITTER_ID = "signal_remote_emitter";
   private static final String CABLE_COLOR_ID = "cable_color";
   private static final String UNKNOWN_MODE = "Unknown Configurator mode: ";
 
@@ -114,6 +116,19 @@ public final class RedweaveDataComponents {
                       ByteBufCodecs.STRING_UTF8,
                       RemoteLabel::channelName,
                       RemoteLabel::new)));
+
+  /** The emitter of a Signal Remote, only synchronized, never saved (answer 789). */
+  public static final Supplier<DataComponentType<EmitterLabel>> SIGNAL_REMOTE_EMITTER =
+      COMPONENTS.registerComponentType(
+          SIGNAL_REMOTE_EMITTER_ID,
+          builder ->
+              builder.networkSynchronized(
+                  StreamCodec.composite(
+                      ByteBufCodecs.STRING_UTF8,
+                      EmitterLabel::name,
+                      ByteBufCodecs.BOOL,
+                      EmitterLabel::presses,
+                      EmitterLabel::new)));
 
   /** The color of a Signal Cable; a white cable has none (answer 561). */
   public static final Supplier<DataComponentType<ChannelColor>> CABLE_COLOR =

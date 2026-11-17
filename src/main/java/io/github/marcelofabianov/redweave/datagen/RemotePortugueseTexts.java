@@ -18,6 +18,11 @@ final class RemotePortugueseTexts {
   private static final String LINKED = "Vinculado: %s · %s · %s";
   private static final String HOW_TO_LINK = "Shift + clique direito para vincular.";
   private static final String LINK = "Vínculo: %s · %s · %s";
+  private static final String LINKED_EMITTER = "Vinculado: %s";
+  private static final String OUT_OF_REACH = "%s está fora de alcance.";
+  private static final String LINK_EMITTER = "Vínculo: %s · %s";
+  private static final String TURNS = "Liga e desliga";
+  private static final String PRESSES = "Aperta";
   private static final String NO_LINK = "Sem vínculo";
   private static final String MODE = "Modo: %s";
   private static final String LEVER = "Alavanca";
@@ -46,6 +51,11 @@ final class RemotePortugueseTexts {
     add.accept(RemoteMessages.HOW_TO_LINK, HOW_TO_LINK);
     add.accept(RemoteMessages.LINK, LINK);
     add.accept(RemoteMessages.NO_LINK, NO_LINK);
+    add.accept(RemoteMessages.LINKED_EMITTER, LINKED_EMITTER);
+    add.accept(RemoteMessages.OUT_OF_REACH, OUT_OF_REACH);
+    add.accept(RemoteMessages.LINK_EMITTER, LINK_EMITTER);
+    add.accept(RemoteMessages.TURNS, TURNS);
+    add.accept(RemoteMessages.PRESSES, PRESSES);
     add.accept(RemoteMessages.MODE, MODE);
     add.accept(RemoteMessages.LEVER, LEVER);
     add.accept(RemoteMessages.BUTTON, BUTTON);

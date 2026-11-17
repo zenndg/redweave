@@ -18,6 +18,11 @@ final class RemoteEnglishTexts {
   private static final String LINKED = "Linked: %s · %s · %s";
   private static final String HOW_TO_LINK = "Shift + right-click to link.";
   private static final String LINK = "Link: %s · %s · %s";
+  private static final String LINKED_EMITTER = "Linked: %s";
+  private static final String OUT_OF_REACH = "%s is out of reach.";
+  private static final String LINK_EMITTER = "Link: %s · %s";
+  private static final String TURNS = "Turns it on and off";
+  private static final String PRESSES = "Presses it";
   private static final String NO_LINK = "No link";
   private static final String MODE = "Mode: %s";
   private static final String LEVER = "Lever";
@@ -46,6 +51,11 @@ final class RemoteEnglishTexts {
     add.accept(RemoteMessages.HOW_TO_LINK, HOW_TO_LINK);
     add.accept(RemoteMessages.LINK, LINK);
     add.accept(RemoteMessages.NO_LINK, NO_LINK);
+    add.accept(RemoteMessages.LINKED_EMITTER, LINKED_EMITTER);
+    add.accept(RemoteMessages.OUT_OF_REACH, OUT_OF_REACH);
+    add.accept(RemoteMessages.LINK_EMITTER, LINK_EMITTER);
+    add.accept(RemoteMessages.TURNS, TURNS);
+    add.accept(RemoteMessages.PRESSES, PRESSES);
     add.accept(RemoteMessages.MODE, MODE);
     add.accept(RemoteMessages.LEVER, LEVER);
     add.accept(RemoteMessages.BUTTON, BUTTON);

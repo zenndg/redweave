@@ -3,7 +3,10 @@ package io.github.marcelofabianov.redweave.item;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import net.minecraft.network.chat.Component;
 
-/** The keys of the texts of the Signal Remote, in the action bar and the tooltip (366, 370). */
+/**
+ * The keys of the texts of the Signal Remote, in the action bar and the tooltip (366, 370, 785 and
+ * 789).
+ */
 public final class RemoteMessages {
   private static final String PREFIX = "message." + RedweaveMod.MOD_ID + ".signal_remote.";
   private static final String TOOLTIP = "tooltip." + RedweaveMod.MOD_ID + ".signal_remote.";
@@ -16,9 +19,14 @@ public final class RemoteMessages {
   public static final String LINK_LOST = PREFIX + "link_lost";
   public static final String OFFLINE = PREFIX + "offline";
   public static final String LINKED = PREFIX + "linked";
+  public static final String LINKED_EMITTER = PREFIX + "linked_emitter";
+  public static final String OUT_OF_REACH = PREFIX + "out_of_reach";
   public static final String HOW_TO_LINK = TOOLTIP + "how_to_link";
   public static final String LINK = TOOLTIP + "link";
   public static final String NO_LINK = TOOLTIP + "no_link";
+  public static final String LINK_EMITTER = TOOLTIP + "link_emitter";
+  public static final String TURNS = TOOLTIP + "turns";
+  public static final String PRESSES = TOOLTIP + "presses";
   public static final String MODE = TOOLTIP + "mode";
   public static final String LEVER = TOOLTIP + "mode.lever";
   public static final String BUTTON = TOOLTIP + "mode.button";

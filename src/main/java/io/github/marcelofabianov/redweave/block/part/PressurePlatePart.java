@@ -102,30 +102,55 @@ public final class PressurePlatePart extends EmitterPart implements SteppedPart 
   }
 
   /**
-   * After its output, an on plate counts down to its next look and turns off when nothing of its
-   * mode is left on it (answer 607).
+   * After its output, the pulse of a Signal Remote counts down (answer 783), and a plate with
+   * something on it counts down to its next look and lets go when nothing of its mode is left on it
+   * (answer 607).
    */
   @Override
   protected void afterOutput(PartSpaceBlockEntity space) {
-    if (!plate.on() || --countdown > 0) {
+    countPulse();
+    if (!plate.stood() || --countdown > 0) {
       return;
     }
     SignalPressurePlate next =
         plate.sensed(PlateSensing.presentAt(space.getLevel(), space.getBlockPos()));
-    if (next.on()) {
+    if (next.stood()) {
       countdown = NeoForgePressurePlateCheck.ticks();
       return;
     }
     setPlate(next);
   }
 
+  /** One tick of the pulse, shown only when it turns the plate off, as the Signal Button. */
+  private void countPulse() {
+    if (plate.pulse() == 0) {
+      return;
+    }
+    SignalPressurePlate next = plate.tick();
+    if (next.on() != plate.on()) {
+      setPlate(next);
+      return;
+    }
+    plate = next;
+    markDirty();
+  }
+
+  /** The click of a Signal Remote: on for its pulse, again if on (answers 781 and 783). */
+  @Override
+  public Optional<Component> fireRemotely(int pulseTicks) {
+    setPlate(plate.pulsed(pulseTicks));
+    return module()
+        .map(found ->
+            Component.translatable(ModuleMessages.PRESSURE_PLATE_PULSED, found.displayName()));
+  }
+
   /**
-   * An entity walked into the space: an off plate turns on at once if it touches the plate and is
-   * of its mode, without searching the area (answers 607 and 621, rule 18).
+   * An entity walked into the space: a plate with nothing on it senses it at once if it touches the
+   * plate and is of its mode, without searching the area (answers 607 and 621, rule 18).
    */
   @Override
   public void steppedOn(PartSpaceBlockEntity space, Entity entity) {
-    if (plate.on() || module().isEmpty() || !PlateSensing.touches(space.getBlockPos(), entity)) {
+    if (plate.stood() || module().isEmpty() || !PlateSensing.touches(space.getBlockPos(), entity)) {
       return;
     }
     Optional<PlateMode> kind = PlateSensing.kindOf(entity);

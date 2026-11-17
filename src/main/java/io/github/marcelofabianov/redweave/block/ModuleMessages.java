@@ -31,6 +31,7 @@ public final class ModuleMessages {
   public static final String LEVER_OFF = LEVER + "off";
   public static final String BUTTON_PRESSED = BUTTON + "pressed";
   public static final String PRESSURE_PLATE_MODE = PLATE + "mode";
+  public static final String PRESSURE_PLATE_PULSED = PLATE + "pulsed";
   public static final String ITEM_SENSOR_NOTHING_TO_TOGGLE = SENSOR + "nothing_to_toggle";
   public static final String LOCK_UNLOCKED = LOCK + "unlocked";
   public static final String ALARM_RING = ALARM + "ring";
