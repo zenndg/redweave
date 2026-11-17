@@ -262,6 +262,25 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Status do slot do nó | `On`/`Off` e `Ligado`/`Desligado`, com as mesmas chaves | 774 |
 | Canal na action bar do Remote | `■` na cor do canal e o número; muda a 291 | 775 |
 | Testes da #161 | JUnit nos rótulos e no texto puro do canal; GameTest no `LabelWatch` e no `■` da action bar do Remote; o resto no roteiro manual | 776, 777 |
+| Remote e emissores | O tablet aciona o emissor, como o clique do dono | 778 |
+| Vínculo com o emissor | Shift + clique no emissor, sem tela; no ar, a tela dos nós | 779, 790 |
+| Emissores do Remote | Lever, Button e Pressure Plate | 780 |
+| Clique no emissor | Segue o emissor; a placa liga por `remote.pulse_ticks` | 781, 783 |
+| Quem usa o Remote no emissor | O dono vincula; qualquer um dispara | 782 |
+| Alcance no emissor | Chunk carregado, mesma dimensão e `remote.emitter_range` 128 (0 ilimitado) | 784 |
+| Falhas no emissor | Longe: `out of reach`, vínculo fica; sumido: `Link lost` | 785 |
+| Save do vínculo com o emissor | O mesmo `signal_remote`, com um alvo; os antigos leem como nó | 786 |
+| Emissor com a rede `Offline` | Recusa; sem rede, dispara | 787 |
+| Visual e textos no emissor | Ícone sempre desligado; textos do `Toggle` | 788, 789 |
+| Troca de vínculo | Substitui, nos dois sentidos; não conta em `remotes on` | 791 |
+| Testes da #163 | JUnit na placa e no `RemoteState`; GameTests do vínculo, do disparo, das falhas e do save | 792 |
+| Pulso da placa no save | `remote_pulse`, com os ticks que faltam; padrão 0 | 793 |
+| Emissor do tablet no cliente | `signal_remote_emitter`, só sincronizado | 794 |
+| Tooltip do tablet de emissor | O vínculo e o que o clique faz, sem `On`/`Off` | 795 |
+| `remote_pulse` no NBT | Só enquanto o pulso dura | 796 |
+| `Link lost` e mensagem da placa | Conferido no clique; `<nome>: On` | 797 |
+| Visual da Signal Lamp | Issue própria; cúpula de vidro com núcleo que brilha, ~6 px | 798, 799 |
+| Luz da Signal Lamp | Branca, com um indicativo pequeno da cor do canal; muda a 650 | 800 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -748,6 +767,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:17 | Resume as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |
 | Zennd | 2026-11-17 09:45 | Resume as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, e marca a 148 como mudada. |
 | Zennd | 2026-11-16 23:40 | Resume as respostas 765 a 769, da revisão das receitas. |
 | Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |

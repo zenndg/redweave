@@ -6,6 +6,7 @@ import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.Emitter;
 import io.github.marcelofabianov.redweave.server.ModuleServices;
 import java.util.List;
+import java.util.Optional;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -38,6 +39,17 @@ public abstract class EmitterPart extends ModulePart {
 
   /** Writes the keys of its own rule, as `on` and `strength` (answers 579 and 584). */
   protected abstract void writeEmitter(CompoundTag tag);
+
+  /**
+   * The click of a Signal Remote linked to it, as the click of its owner, with the message of the
+   * action bar (answers 781, 783 and 789).
+   */
+  public abstract Optional<Component> fireRemotely(int pulseTicks);
+
+  /** Whether the click of a Signal Remote presses it, as the button, or turns it on and off. */
+  public boolean remotePresses() {
+    return true;
+  }
 
   /** What it does after giving its output each tick, as counting down; nothing by default. */
   protected void afterOutput(PartSpaceBlockEntity space) {}

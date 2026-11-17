@@ -1,6 +1,6 @@
 # Signal Remote
 
-O Signal Remote (`redweave:signal_remote`, `Controle de Sinal` em português) é um item de mão com aparência de tablet, vinculado a um slot de input de um nó, que liga e desliga o canal desse slot de longe (perguntas 15, 279, 282 e 368). Esta página descreve o item na Fase 1, entregue na #22. A rede está em [`rede-e-canais.md`](rede-e-canais.md#signal-remote), e as telas, em [`telas.md`](telas.md). Os termos são os do [`glossario.md`](../glossario.md).
+O Signal Remote (`redweave:signal_remote`, `Controle de Sinal` em português) é um item de mão com aparência de tablet, vinculado a um slot de input de um nó, que liga e desliga o canal desse slot de longe (perguntas 15, 279, 282 e 368), ou a um emissor, que ele aciona de longe (pergunta 778). Esta página descreve o item na Fase 1, entregue na #22. A rede está em [`rede-e-canais.md`](rede-e-canais.md#signal-remote), e as telas, em [`telas.md`](telas.md). Os termos são os do [`glossario.md`](../glossario.md).
 
 ## Em uma frase
 
@@ -24,7 +24,7 @@ O dono vincula o tablet a um slot de input com Shift + clique direito, e quem o 
 | Pilha | Um por slot, como as ferramentas do jogo | 371 |
 | Receita | Na mesa de trabalho, em [`itens.md`](../itens.md#receitas) | 752 e 769 |
 | ID | Ganho no primeiro vínculo. Cópias com o mesmo ID, como no criativo, contam como uma fonte só | 358 |
-| Vínculo | A rede, o nó e o slot, num data component (regra 7) | 287 |
+| Vínculo | A rede, o nó e o slot, ou o emissor, num data component (regra 7) | 287 e 786 |
 | Modo | `Lever` ou `Button`, num data component, escolhido na tela do vínculo | 288 e 365 |
 | Estado | Ligado ou desligado no modo alavanca, e o tick do jogo em que o pulso acaba no modo botão, num data component | 356 e 369 |
 | Visual | 4 estados, trocados pelo data component: sem vínculo, desligado, ligado e `Link lost`. As texturas são `signal_remote`, `signal_remote_off`, `signal_remote_on` e `signal_remote_lost`, escolhidas pela propriedade de item `look` (pergunta 374) | 362 |
@@ -53,6 +53,30 @@ No topo da tela ficam o vínculo atual, ou `No link`, e o seletor `Lever` e `But
 | Sem vínculo válido | O tablet mostra `Link lost` e não dispara, quando o nó saiu da rede, o slot foi desativado ou virou output | 287 |
 | Rede `Offline` | Não dispara, e a action bar diz `<rede> is offline.` | 359 |
 
+## Com os emissores
+
+O tablet também se vincula a um emissor, o [Signal Lever](alavanca.md), o [Signal Button](botao.md) ou o [Signal Pressure Plate](placa-de-pressao.md), e o aciona de longe, como o clique do dono. O emissor emite pela saída que já tem, na borda ou num canal (perguntas 778 e 780).
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Vincular | Com o tablet na mão, Shift + clique direito no emissor vincula na hora, sem tela, e a action bar confirma `Linked: <emissor>`. Não liga a Lever nem aperta o Button. Shift + clique no ar ou noutro bloco abre a tela dos nós, como antes | 779, 789 e 790 |
+| Quem vincula | Só o dono do emissor; com outro player, a action bar recusa com o aviso do dono | 782 e 790 |
+| Quem dispara | Qualquer player que segure o tablet, como nos nós | 782 |
+| Lever | Cada clique liga ou desliga | 781 |
+| Button | Cada clique aperta, e ele desliga sozinho depois do tempo dele; já apertado, nada muda | 781 |
+| Pressure Plate | Cada clique a liga por `remote.pulse_ticks`, somado ao que pisa nela, e um clique durante o pulso o recomeça. Os ticks que faltam vão para o save da placa, na chave `remote_pulse` | 783 e 793 |
+| Modo do tablet | O seletor `Lever`/`Button` não vale para emissores: o clique segue o emissor | 781 |
+| Alcance | Só com o chunk do emissor carregado, na mesma dimensão do player e até `remote.emitter_range` blocos dele, também para emissores na borda, sem rede | 784 |
+| Fora do alcance | Não dispara, a action bar diz `<emissor> is out of reach.`, e o vínculo fica | 785 |
+| Emissor sumido | Quebrado, retirado pela Wrench ou trocado no lugar: `Link lost`, conferido no clique | 785 e 797 |
+| Rede `Offline` | Com a rede do emissor `Offline`, não dispara e diz `<rede> is offline.`; um emissor sem rede dispara sempre | 787 |
+| Visual | Sempre o desligado, porque o emissor pode mudar pela mão do dono; `Link lost` continua | 788 |
+| Action bar | Os textos do `Toggle` do Configurator: `<emissor>: On`, `<emissor>: Off` e `<emissor>: Pressed` | 789 |
+| Tooltip | `Link: <emissor> · <x, y, z>` e, no lugar de `Mode:` e do estado, o que o clique faz: `Turns it on and off` ou `Presses it`. O nome do emissor chega ao cliente pelo data component `signal_remote_emitter`, só sincronizado | 789, 794 e 795 |
+| Troca | O vínculo novo substitui o antigo, de nó para emissor e de emissor para nó, como na pergunta 291 | 791 |
+| Rodapé `remotes on` | O tablet de emissor não conta, porque não escreve no canal: quem escreve é o emissor | 791 |
+| Save | O mesmo data component `signal_remote`, com um alvo: nó ou emissor, com a dimensão, a posição, a face e o ID do módulo. Um tablet salvo antes lê como vínculo de nó | 786 |
+
 ## Quando conta
 
 A cada tick, o servidor soma só os tablets ligados ou em pulso que estão no inventário de um player online, na mesma dimensão do controlador e dentro do `network.range` dele, medido da posição do player (perguntas 27, 354, 355 e 356).
@@ -78,12 +102,14 @@ O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao la
 
 - **JUnit:** o `RemoteInputs`, com o mais forte junto com as leituras, o slot que deixa de ser input, a rede `Offline`, fora do alcance e cópias com o mesmo ID, e os casos de uso.
 - **GameTests:** o vínculo só pelo dono, o disparo em alavanca e em botão com o pulso, a saída do inventário, o `Link lost` e os menus com `FakePlayerFactory`.
+- **Com os emissores:** JUnit no pulso do `SignalPressurePlate` e no `RemoteState`; GameTests do vínculo pelo Shift + clique, do disparo nos 3 emissores, de `out of reach`, `Link lost` e `Offline`, e do save antigo e novo do tablet (pergunta 792).
 - **Roteiro manual:** as telas, a arte e os textos (pergunta 367).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:17 | Inclui o vínculo com os emissores (perguntas 778 a 791). |
 | Zennd | 2026-11-17 09:59 | O canal aparece na action bar com o `■` na cor dele e o número (perguntas 770 e 775). |
 | Zennd | 2026-11-16 23:55 | A receita muda a linha de baixo na #159 (pergunta 769). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 752). |

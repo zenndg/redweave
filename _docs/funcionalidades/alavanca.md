@@ -76,6 +76,7 @@ Na action bar, em inglês e em português:
 | `Toggle` | `<nome>: On` ou `<nome>: Off` (`<nome>: Ligada` ou `<nome>: Desligada`) | 585 |
 | Clique de quem não é o dono | `Only the player who placed this module can change it.` | 577 |
 | Clique à mão do dono | Nenhuma: o som e a luz bastam | 585 |
+| Signal Remote | As do `Toggle`: o tablet vinculado liga e desliga a alavanca de longe ([Signal Remote](signal-remote.md#com-os-emissores)) | 781 e 789 |
 
 ## Save
 
@@ -129,6 +130,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:31 | O Signal Remote liga e desliga a alavanca (perguntas 781 e 789). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 08:10 | A parte e o domínio da alavanca passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |

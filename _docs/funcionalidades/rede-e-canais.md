@@ -157,7 +157,7 @@ Para trocar de rede, o dono clica no nome da rede na Tela do Nó (pergunta 141).
 
 ## Signal Remote
 
-O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. Na rede, ele é a parte `RemoteInputs` do agregado, entregue a cada tick com os tablets que contam, fora do save (perguntas 356 e 360). O item, o vínculo, o disparo e quando ele conta estão em [`signal-remote.md`](signal-remote.md).
+O Signal Remote é uma fonte de entrada sem posição no mundo, com ID próprio: um tablet vinculado a um slot de input de um nó, que injeta sinal no canal desse slot e acompanha a troca de canal (perguntas 27, 279, 282 e 287). Sem o vínculo, mostra `Link lost` e não dispara. Ele entra no cálculo do sinal mais forte como qualquer entrada. Quando sai do inventário do player ou o player fica fora do alcance da rede, a contribuição dele volta a 0. O alcance do Remote é medido da posição do player. Na rede, ele é a parte `RemoteInputs` do agregado, entregue a cada tick com os tablets que contam, fora do save (perguntas 356 e 360). Um tablet vinculado a um emissor não entra no `RemoteInputs`: quem escreve no canal é o emissor (pergunta 791). O item, o vínculo, o disparo e quando ele conta estão em [`signal-remote.md`](signal-remote.md).
 
 ## Signal Modules
 
@@ -245,6 +245,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:31 | O tablet vinculado a um emissor fica fora do `RemoteInputs` (pergunta 791). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, e o status do slot é `On` ou `Off` (perguntas 770 e 774). |
 | Zennd | 2026-11-15 09:37 | Quem colocou o nó fica gravado na parte do multipart (pergunta 543). |
 | Zennd | 2026-11-14 09:46 | Adiciona os Signal Modules como fonte do canal, da #103 (perguntas 375 a 387). |

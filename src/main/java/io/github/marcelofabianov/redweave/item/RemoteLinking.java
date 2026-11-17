@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.item;
 
 import io.github.marcelofabianov.redweave.application.NodeRow;
 import io.github.marcelofabianov.redweave.application.SlotRow;
+import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * 291, 357, 365 and 366).
  */
 public final class RemoteLinking {
+  private static final String PLACE = "%d, %d, %d";
 
   private RemoteLinking() {}
 
@@ -73,9 +75,15 @@ public final class RemoteLinking {
         Component.translatable(RemoteMessages.LINKED, partsOf(label)), true);
   }
 
-  /** `■ <network> · <node> · <channel>`, `No link` or `Link lost` (answer 366). */
+  /**
+   * `■ <network> · <node> · <channel>`, `<emitter> · x, y, z`, `No link` or `Link lost` (answers
+   * 366 and 789).
+   */
   public static Component describe(ItemStack stack) {
     RemoteState state = stateOf(stack);
+    if (state.emitter().isPresent()) {
+      return describeEmitter(stack, state);
+    }
     RemoteLabel label = stack.get(RedweaveDataComponents.SIGNAL_REMOTE_LABEL.get());
     if (state.link().isEmpty() || label == null) {
       return Component.translatable(RemoteMessages.NO_LINK);
@@ -84,6 +92,16 @@ public final class RemoteLinking {
       return Component.translatable(RemoteMessages.LINK_LOST);
     }
     return Component.translatable(RemoteMessages.LINK, partsOf(label));
+  }
+
+  private static Component describeEmitter(ItemStack stack, RemoteState state) {
+    EmitterLabel label = stack.get(RedweaveDataComponents.SIGNAL_REMOTE_EMITTER.get());
+    if (state.isLost() || label == null) {
+      return Component.translatable(RemoteMessages.LINK_LOST);
+    }
+    BlockLocation place = state.emitter().get().place();
+    String where = String.format(PLACE, place.x(), place.y(), place.z());
+    return Component.translatable(RemoteMessages.LINK_EMITTER, label.name(), where);
   }
 
   private static Object[] partsOf(RemoteLabel label) {

@@ -22,6 +22,7 @@ final class PressurePlatePortugueseTexts {
   private static final String OFF = "Desligada";
   private static final String SEPARATOR = " · ";
   private static final String NEW_MODE = "%s: %s";
+  private static final String PULSED = "%s: Ligada";
   private static final String FLOOR_ONLY = "A Placa de Pressão de Sinal só vai no chão.";
 
   private PressurePlatePortugueseTexts() {}
@@ -30,6 +31,7 @@ final class PressurePlatePortugueseTexts {
     add.accept(RedweaveItems.SIGNAL_PRESSURE_PLATE.get().getDescriptionId(), SIGNAL_PRESSURE_PLATE);
     add.accept(PressurePlateScreenTexts.MODE, MODE);
     add.accept(ModuleMessages.PRESSURE_PLATE_MODE, NEW_MODE);
+    add.accept(ModuleMessages.PRESSURE_PLATE_PULSED, PULSED);
     add.accept(PartMessages.FLOOR_ONLY, FLOOR_ONLY);
     for (PlateMode mode : PlateMode.values()) {
       String name = nameOf(mode);

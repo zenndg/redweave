@@ -19,7 +19,8 @@ Todo emissor segue estas regras, além da base dos [Signal Modules](modulos-de-s
 | Saída | Uma só: pela borda, forte no bloco de apoio e no bloco da frente, ou por um canal da rede | 553 |
 | Tempo | A saída muda no tick seguinte ao gatilho, pelo tick comum dos módulos | 587 |
 | Rede `Offline` | O emissor funciona; o canal só não conta enquanto a rede está `Offline` | 578 |
-| Mensagem | Só no `Toggle` do Configurator; o gatilho em si não mostra mensagem | 585 |
+| Mensagem | Só no `Toggle` do Configurator e no [Signal Remote](signal-remote.md#com-os-emissores); o gatilho em si não mostra mensagem | 585 e 789 |
+| Signal Remote | O tablet vinculado ao emissor o aciona de longe, como o clique do dono: liga e desliga a Lever, aperta o Button e liga a Pressure Plate por `remote.pulse_ticks` | 778 a 791 |
 | Dono, rede e Configurator | Os da base dos Signal Modules: dono, rede escolhida, `Open` abre a tela, `Rotate` gira, `Wrench` retira | 555, 610 e 619 |
 
 ## O que cada emissor define
@@ -57,5 +58,6 @@ Um emissor novo herda o contrato e a base. A rodada de perguntas dele só trata 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:17 | O Signal Remote aciona os emissores (perguntas 778 a 791). |
 | Zennd | 2026-11-16 08:10 | Marca a família como implementada na #139 e descreve o código: `Emitter`, `EmitterPart` e `EmitterScreenActions`. |
 | Zennd | 2026-11-16 08:01 | Cria o conceito da família, com as decisões 627 a 631. |

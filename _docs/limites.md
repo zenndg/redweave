@@ -21,7 +21,8 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Redes por player | 10, de 1 a 100; todas contam, inclusive as `Offline` e as `Unplaced` (pergunta 145) | `network.max_per_player` | 1 |
 | Linhas do log por rede | 100, de 10 a 1000, só em memória (pergunta 147) | `log.size` | 1 |
 | Raio do rótulo sobre os nós, os módulos e os cabos | 16 blocos, de 4 a 64 (perguntas 268, 417 e 525) | `configurator.label_range` | 1 |
-| Pulso do Signal Remote no modo botão | 20 ticks, de 2 a 200 (perguntas 353 e 318) | `remote.pulse_ticks` | 1 |
+| Pulso do Signal Remote no modo botão | 20 ticks, de 2 a 200 (perguntas 353 e 318); também o tempo da Signal Pressure Plate acionada pelo tablet (pergunta 783) | `remote.pulse_ticks` | 1 |
+| Alcance do Signal Remote num emissor | 128 blocos do player ao emissor, na mesma dimensão, com o chunk carregado; 0 é ilimitado, até 30.000.000 (pergunta 784) | `remote.emitter_range` | 2 |
 | Intervalo mínimo do Signal Timer | 4 ticks, de 4 a 200 (pergunta 384) | `timer.min_interval_ticks` | 2 |
 | Intervalo máximo do Signal Timer | 6000 ticks (5 min), de 200 a 72000 (1 h) (pergunta 384) | `timer.max_interval_ticks` | 2 |
 | Tamanho do nome de um Signal Module | 16 caracteres, de 1 a 64 (pergunta 391) | `module.name_length` | 2 |
@@ -63,6 +64,7 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:17 | Inclui o `remote.emitter_range` e o pulso da placa acionada pelo tablet (perguntas 783 e 784). |
 | Zennd | 2026-11-16 15:18 | O máximo de toques do Signal Alarm passa a 10 (pergunta 737). |
 | Zennd | 2026-11-16 13:18 | Explica a atualização da luz do Signal Lamp e leva a força dele à linha comum (perguntas 715 e 719). |
 | Zennd | 2026-11-16 12:23 | Dá as faixas do pulso do Signal Lock (pergunta 712). |

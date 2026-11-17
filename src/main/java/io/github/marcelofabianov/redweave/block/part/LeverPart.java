@@ -110,6 +110,17 @@ public final class LeverPart extends EmitterPart {
     return module().map(found -> Component.translatable(key, found.displayName()));
   }
 
+  /** A Signal Remote turns it on or off, as the `Toggle` (answer 781). */
+  @Override
+  public Optional<Component> fireRemotely(int pulseTicks) {
+    return toggle();
+  }
+
+  @Override
+  public boolean remotePresses() {
+    return false;
+  }
+
   /** The hand of the owner turns it on or off; anyone else is told whose it is (576 and 577). */
   @Override
   public void emptyHand(Player player) {
