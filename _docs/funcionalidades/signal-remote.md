@@ -35,7 +35,7 @@ O dono vincula o tablet a um slot de input com Shift + clique direito, e quem o 
 2. **Redes:** a lista das redes `Online` do player, no componente do Network Terminal (perguntas 279 e 359).
 3. **Nós:** a tabela de nós da rede escolhida, só com os nós que têm slot de input ativo, com as colunas de tipo e estado. Nós `Unloaded` e `Out of range` aparecem, com o estado (perguntas 282, 283, 284 e 285).
 4. **Slots:** se o nó tiver mais de um slot de input ativo, a lista deles, pela cor e pelo nome do canal; com um só, o passo é pulado (pergunta 286).
-5. O vínculo novo substitui o antigo. A contribuição no canal antigo volta a 0 na hora, o tablet começa desligado, e a action bar confirma, como `Linked: ■ Base Norte · Alavanca do portão · Red` (pergunta 291).
+5. O vínculo novo substitui o antigo. A contribuição no canal antigo volta a 0 na hora, o tablet começa desligado, e a action bar confirma, como `Linked: ■ Base Norte · Alavanca do portão · ■ 15` (perguntas 291 e 775).
 
 No topo da tela ficam o vínculo atual, ou `No link`, e o seletor `Lever` e `Button`. O rodapé tem `Back`, que volta um passo (pergunta 365).
 
@@ -49,7 +49,7 @@ No topo da tela ficam o vínculo atual, ou `No link`, e o seletor `Lever` e `But
 | Como | O clique direito, no ar ou num bloco sem interação própria | 279 |
 | Modo alavanca | Cada clique liga ou desliga | 288 |
 | Modo botão | Cada clique manda um pulso de `remote.pulse_ticks` ticks, 20 por padrão, como o botão de pedra. Um clique durante o pulso o recomeça | 353 e 369 |
-| Action bar | `15 Red: On`, `15 Red: Off` ou `15 Red: Pulse`, com o nome do canal da rede. `On` fica em negrito e verde (`#6BD48F`), e `Off`, em negrito e vermelho (`#E2392F`); `Pulse` fica sem cor. Com o canal já ligado por outra fonte, `15 Red is held on by another source.` | 289, 370, 436 e 437 |
+| Action bar | `■ 15: On`, `■ 15: Off` ou `■ 15: Pulse`, com o `■` na cor do canal e o nome que o dono deu, se houver (perguntas 770 e 775). `On` fica em negrito e verde (`#6BD48F`), e `Off`, em negrito e vermelho (`#E2392F`); `Pulse` fica sem cor. Com o canal já ligado por outra fonte, `15 Red is held on by another source.` | 289, 370, 436 e 437 |
 | Sem vínculo válido | O tablet mostra `Link lost` e não dispara, quando o nó saiu da rede, o slot foi desativado ou virou output | 287 |
 | Rede `Offline` | Não dispara, e a action bar diz `<rede> is offline.` | 359 |
 
@@ -84,6 +84,7 @@ O rodapé ganha `<n> remotes on`, com os tablets que contam agora na rede, ao la
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O canal aparece na action bar com o `■` na cor dele e o número (perguntas 770 e 775). |
 | Zennd | 2026-11-16 23:55 | A receita muda a linha de baixo na #159 (pergunta 769). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 752). |
 | Zennd | 2026-11-14 13:34 | Destaca o estado em negrito e cor (perguntas 436 e 437). |

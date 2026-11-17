@@ -14,6 +14,8 @@ public final class ReceivedLabels {
   private static final Map<UUID, NodeLabelsUpdate.Label> LABELS = new LinkedHashMap<>();
   private static final Map<UUID, NodeLabelsUpdate.ModuleLine> MODULES = new LinkedHashMap<>();
   private static final Map<PartSpot, NodeLabelsUpdate.CableLine> CABLES = new LinkedHashMap<>();
+  private static final Map<UUID, NodeLabelsUpdate.ControllerLine> CONTROLLERS =
+      new LinkedHashMap<>();
 
   private ReceivedLabels() {}
 
@@ -25,12 +27,14 @@ public final class ReceivedLabels {
     update.labels().forEach(label -> LABELS.put(label.node(), label));
     update.modules().forEach(module -> MODULES.put(module.module(), module));
     update.cables().forEach(cable -> CABLES.put(cable.place().spot(), cable));
+    update.controllers().forEach(controller -> CONTROLLERS.put(controller.network(), controller));
     update.goneCables().forEach(CABLES::remove);
     update
         .gone()
         .forEach(id -> {
           LABELS.remove(id);
           MODULES.remove(id);
+          CONTROLLERS.remove(id);
         });
   }
 
@@ -46,10 +50,15 @@ public final class ReceivedLabels {
     return List.copyOf(CABLES.values());
   }
 
+  public static synchronized List<NodeLabelsUpdate.ControllerLine> controllers() {
+    return List.copyOf(CONTROLLERS.values());
+  }
+
   /** Leaving the world takes every label away. */
   public static synchronized void clear() {
     LABELS.clear();
     MODULES.clear();
     CABLES.clear();
+    CONTROLLERS.clear();
   }
 }

@@ -7,16 +7,13 @@ import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.network.RemoteId;
 import io.github.marcelofabianov.redweave.domain.network.RemoteInput;
-import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.ChannelNames;
 import io.github.marcelofabianov.redweave.registry.RedweaveDataComponents;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import java.util.UUID;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -25,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
  * 291, 357, 365 and 366).
  */
 public final class RemoteLinking {
-  private static final String SQUARE = "■ ";
 
   private RemoteLinking() {}
 
@@ -92,15 +88,9 @@ public final class RemoteLinking {
 
   private static Object[] partsOf(RemoteLabel label) {
     return new Object[] {
-      squareOf(label.color()).append(label.network()),
+      ChannelNames.square(label.color()).copy().append(label.network()),
       label.node(),
-      ChannelNames.of(label.channel(), label.channelName())
+      ChannelNames.marked(label.channel(), label.channelName())
     };
-  }
-
-  /** The square in the color of the network; the colors follow the order of the wool (224). */
-  private static MutableComponent squareOf(ChannelColor color) {
-    int rgb = DyeColor.byId(color.ordinal()).getTextColor();
-    return Component.literal(SQUARE).withStyle(style -> style.withColor(rgb));
   }
 }

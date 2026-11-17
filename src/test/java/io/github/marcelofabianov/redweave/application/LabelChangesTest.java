@@ -17,7 +17,7 @@ class LabelChangesTest {
   private static final String DOOR = "Door";
 
   private static NodeLabel label(String name) {
-    return new NodeLabel(name, Optional.empty());
+    return new NodeLabel(name, Optional.empty(), Optional.empty());
   }
 
   @Test

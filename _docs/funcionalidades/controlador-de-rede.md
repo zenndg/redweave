@@ -21,6 +21,10 @@ Só um player real coloca o controlador. Sem um player real, como pelo FakePlaye
 
 O bloco guarda na BlockEntity o `NetworkId` da rede e o UUID do dono, nas chaves de NBT `network` e `owner`. O dono vai também ao cliente, para a quebra não aparecer a quem não é dono. As chaves são contrato de save e ficam fixadas na issue #26 (pergunta 67).
 
+## Rótulo
+
+Com o Configurator na mão, o Controller mostra um rótulo flutuante de duas linhas, no alcance `configurator.label_range`, como os nós: o estado da rede e o número de nós, como `Online · 3 nodes`, e embaixo `■ nome da rede`, na cor dela. O detalhe fica no [Configurator](configurador.md#rótulo-sobre-os-nós) (pergunta 773).
+
 ## Clicar
 
 Um clique com a mão vazia, ou com o Configurator no modo `Open`, abre a [Tela do Controlador](telas.md#tela-do-controlador) para qualquer player, só para leitura para quem não é o dono (perguntas 22 e 113). O controlador continua abrindo com a mão vazia, ao contrário do Signal Node (pergunta 154). A tela substituiu a mensagem `<nome> · owner: <dono>` da action bar (perguntas 52 e 201). Os modos `Copy`, `Toggle` e `Wrench` não agem no controlador (perguntas 164, 232 e 241).
@@ -70,7 +74,7 @@ As chaves que a rede e a Tela do Controlador leem ficam no config do servidor, `
 | `channel.name_length` | 16 | Tamanho máximo do nome do canal |
 | `node.name_length` | 16 | Tamanho máximo do nome do nó (pergunta 144) |
 | `log.size` | 100 | Linhas do log de cada rede, só em memória (pergunta 147) |
-| `configurator.label_range` | 16 | Raio em blocos do rótulo sobre os nós, de 4 a 64 (pergunta 268) |
+| `configurator.label_range` | 16 | Raio em blocos do rótulo sobre os nós e os Controllers, de 4 a 64 (perguntas 268 e 773) |
 
 As faixas são as da pergunta 66, com as que vieram depois: o alcance vai de 0 a 30.000.000, os nomes de 1 a 64 caracteres, as redes por player de 1 a 100 e o log de 10 a 1000 linhas. A chave `node.slots` saiu com os 16 slots fixos do Signal Node (pergunta 224). Um valor fora da faixa volta ao padrão, com um aviso no log.
 
@@ -102,6 +106,7 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | Inclui o rótulo sobre o Controller (pergunta 773). |
 | Zennd | 2026-11-16 23:55 | A receita troca o olho do ender pela pérola do ender na #159 (pergunta 768). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 747). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle`, o topo aceso só com a rede `Online` e as chaves `node.name_length` e `configurator.label_range` (perguntas 144, 177, 241 e 268). |

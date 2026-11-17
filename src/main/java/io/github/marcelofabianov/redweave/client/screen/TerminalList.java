@@ -3,7 +3,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.network.NetworkState;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
-import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
+import io.github.marcelofabianov.redweave.menu.NetworkTexts;
 import io.github.marcelofabianov.redweave.menu.TerminalScreenRows.NetworkLine;
 import io.github.marcelofabianov.redweave.menu.TerminalScreenTexts;
 import java.util.List;
@@ -36,7 +36,6 @@ final class TerminalList {
   private static final int TEXT_Y = 7;
   private static final int COUNT_RIGHT = 8;
   private static final int LINE_HEIGHT = 11;
-  private static final int SINGLE = 1;
 
   private int first;
 
@@ -99,8 +98,13 @@ final class TerminalList {
     graphics.drawString(font, name, row.x() + NAME_X, row.y() + TEXT_Y, ScreenColors.TEXT, false);
     NetworkState state = stateOf(line.state());
     StatePill.draw(
-        graphics, font, row.x() + PILL_RIGHT, row.y() + PILL_Y, textOf(state), colorOf(state));
-    Component count = nodesOf(line.nodes());
+        graphics,
+        font,
+        row.x() + PILL_RIGHT,
+        row.y() + PILL_Y,
+        NetworkTexts.state(state),
+        colorOf(state));
+    Component count = NetworkTexts.nodes(line.nodes());
     int countX = row.right() - COUNT_RIGHT - font.width(count);
     graphics.drawString(font, count, countX, row.y() + TEXT_Y, ScreenColors.LABEL, false);
   }
@@ -116,19 +120,8 @@ final class TerminalList {
     }
   }
 
-  /** The numbers come from the server, so one outside the states shows the safest one. */
   static NetworkState stateOf(int state) {
-    NetworkState[] states = NetworkState.values();
-    return state >= 0 && state < states.length ? states[state] : NetworkState.OFFLINE;
-  }
-
-  private static Component textOf(NetworkState state) {
-    return Component.translatable(
-        switch (state) {
-          case ONLINE -> NodeScreenTexts.STATE_ONLINE;
-          case OFFLINE -> NodeScreenTexts.STATE_OFFLINE;
-          case UNPLACED -> TerminalScreenTexts.STATE_UNPLACED;
-        });
+    return NetworkTexts.stateOf(state);
   }
 
   /** Online in green, offline in grey and unplaced in amber, as on the mockup (answer 252). */
@@ -145,11 +138,6 @@ final class TerminalList {
     return color >= 0 && color < colors.length
         ? ChannelColors.argb(colors[color])
         : ScreenColors.NO_NETWORK;
-  }
-
-  private static Component nodesOf(int nodes) {
-    String key = nodes == SINGLE ? NodeScreenTexts.NODE_COUNT_ONE : NodeScreenTexts.NODE_COUNT_MANY;
-    return Component.translatable(key, nodes);
   }
 
   /** The selected row, which only the client keeps. */

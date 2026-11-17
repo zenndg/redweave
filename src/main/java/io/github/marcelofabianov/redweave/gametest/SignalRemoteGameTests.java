@@ -9,6 +9,7 @@ import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.item.RemoteLink;
+import io.github.marcelofabianov.redweave.item.RemoteLinking;
 import io.github.marcelofabianov.redweave.item.RemoteMode;
 import io.github.marcelofabianov.redweave.item.RemoteState;
 import io.github.marcelofabianov.redweave.menu.RemoteLinkCodes;
@@ -21,8 +22,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
@@ -57,6 +62,11 @@ public final class SignalRemoteGameTests {
   private static final int MENU_ID = 1;
   private static final int FIRST_LINE = 0;
   private static final int SECOND_SLOT = 1;
+  private static final int CHANNEL_PART = 2;
+  private static final int SQUARE_PART = 0;
+  private static final String MARKED_CHANNEL = "■ 01";
+  private static final String NOT_MARKED = "The channel should show as a square and its number";
+  private static final String NOT_COLORED = "The square should have the color of the channel";
 
   private SignalRemoteGameTests() {}
 
@@ -160,6 +170,31 @@ public final class SignalRemoteGameTests {
     owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
     RemoteLinkMenu owners = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
     helper.assertTrue(owners.rows().lines().isEmpty(), OFFLINE_LISTED);
+    helper.succeed();
+  }
+
+  /**
+   * The link shows the channel as a `■` in its color and its number, with no name of the color, as
+   * in the screens (answers 770 and 775).
+   */
+  @GameTest(template = EMPTY)
+  public static void theLinkShowsTheChannelAsASquareAndItsNumber(GameTestHelper helper) {
+    ServerPlayer owner = playerNearTheController(helper);
+    ItemStack tablet = linkedTablet(helper, owner);
+    tablet.remove(RedweaveDataComponents.SIGNAL_REMOTE.get());
+    owner.setItemInHand(InteractionHand.MAIN_HAND, tablet);
+    RemoteLinkMenu menu = new RemoteLinkMenu(MENU_ID, owner, InteractionHand.MAIN_HAND);
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+    menu.clickMenuButton(owner, RemoteLinkCodes.line(FIRST_LINE));
+
+    Component link = RemoteLinking.describe(tablet);
+    Component channel =
+        (Component) ((TranslatableContents) link.getContents()).getArgs()[CHANNEL_PART];
+
+    helper.assertTrue(MARKED_CHANNEL.equals(channel.getString()), NOT_MARKED);
+    TextColor square = channel.getSiblings().get(SQUARE_PART).getStyle().getColor();
+    TextColor wanted = TextColor.fromRgb(DyeColor.byId(CHANNEL.ordinal()).getTextColor());
+    helper.assertTrue(wanted.equals(square), NOT_COLORED);
     helper.succeed();
   }
 

@@ -64,7 +64,7 @@ final class RemoteFiring {
   }
 
   private static Component messageOf(RemoteState fired, RemoteView view) {
-    Component channel = ChannelNames.of(view.channel(), view.channelName().orElse(NO_NAME));
+    Component channel = ChannelNames.marked(view.channel(), view.channelName().orElse(NO_NAME));
     if (view.othersHold()) {
       return Component.translatable(RemoteMessages.HELD, channel);
     }

@@ -20,10 +20,10 @@ Entregue com as issues #14, #15, #18 e #19 (pergunta 48).
 | 4 | Clique no nó com o Configurator no modo `Open` e clique na rede da lista | A escolha de rede, fiel a `tela-do-no-escolha-de-rede.png`, com a rede e `0 nodes`; depois do clique, a configuração, com `● Online` em verde, a rede à direita do nome do nó, a fileira dos 16 canais toda inativa e os cantos apagados. Ative o canal `01` em `Status`: ele vira `Enabled`, `Input`, e o primeiro canto fica branco |
 | 5 | Puxe a alavanca, com a tela aberta | O medidor sobe na hora até 15, e as barras brilham a partir de 12 |
 | 6 | Grude um segundo nó numa lâmpada de redstone, abra a tela dele e escolha a rede | A rede no topo da lista, em cobre, como a última usada, e depois os 16 canais inativos |
-| 7 | Abra o canal `01`, troque para `Output` com ele `Disabled` e depois ative-o | O botão de cobre muda para `Output`; ativado, a aba `01` ganha a barra verde, e a direção e o cubo ficam travados |
+| 7 | Abra o canal `01`, troque para `Output` com ele `Off` e depois ative-o | O botão de cobre muda para `Output`; ativado, a aba `01` ganha a barra verde, e a direção e o cubo ficam travados |
 | 8 | Puxe a alavanca algumas vezes | A lâmpada acende e apaga junto, e a lente do nó acende |
 | 9 | No cubo da face, arraste o mouse e clique numa face | O bloco gira, a face sob o cursor fica em cobre, e o nome da face muda |
-| 10 | Clique em `Status` para desativar o canal `01` e depois para ativá-lo | `Disabled` apaga a lâmpada e a barra verde; `Enabled` volta como estava, em `Output` |
+| 10 | Clique em `Status` para desativar o canal `01` e depois para ativá-lo | `Off` apaga a lâmpada e a barra verde; `On` volta como estava, em `Output` |
 | 11 | Abra a tela com o segundo player | Tudo visível e ao vivo, mas os controles apagados e o cadeado com `Only the owner of ...` à direita do rodapé |
 | 12 | Com o segundo player, tente quebrar o controlador e um nó no survival | Nenhum dos dois quebra, e nada racha |
 | 13 | Quebre o controlador com o dono, no survival | O item cai, a lâmpada apaga, e o nó, aberto com o Configurator, mostra `No network` em cinza |
@@ -103,7 +103,7 @@ Entregue com a issue #20 (perguntas 22, 29, 98, 144, 149, 156, 158, 179 e 212 a 
 | 52 | Clique no controlador com a mão vazia | A tela fiel a `tela-do-controlador.png`: o quadrado da cor, o nome, `Rename`, `Online · 2 nodes`, as abas `Nodes`, `Signals`, `Access` e `Log`, e o rodapé em duas linhas |
 | 52a | Feche a tela e clique no controlador com o Configurator nos modos `Open`, `Copy`, `Toggle` e `Wrench` | Só o `Open` abre a tela; os outros não fazem nada |
 | 53 | Na aba `Nodes`, puxe a alavanca | Os dois nós na ordem em que entraram, com o nome, o tipo, o sinal de 0 a 15 ao vivo e o estado `Online` |
-| 54 | Clique numa linha, depois em outra | A primeira abre a posição do bloco e os slots, como `01 White · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
+| 54 | Clique numa linha, depois em outra | A primeira abre a posição do bloco e os slots, como `■ 01 · Input`, com o triângulo em cobre e a barra de cobre; abrir a segunda fecha a primeira |
 | 55 | Clique uma vez no nome de um nó; depois clique duas vezes nele, digite `Lever` e aperte Enter; repita, apague o texto e aperte Enter | Um clique só abre ou fecha os slots; o duplo clique abre o campo e deixa a linha como estava; o nome muda na lista e na Tela do Nó, e vazio volta aos 8 primeiros caracteres do ID |
 | 56 | Clique em `Rename`, digite `Factory` e aperte Enter; depois repita e aperte Esc | O nome da rede muda no cabeçalho e na escolha de rede; o Esc não muda nada |
 | 57 | Clique no quadrado da cor e escolha o verde-limão | A paleta abre sob o quadrado, com a cor atual em cobre; o clique troca a cor e fecha a paleta |
@@ -126,13 +126,13 @@ Entregue com a issue #20 (perguntas 224 a 235). Use um mundo novo, porque os sav
 | 67 | Ative os canais `15`, `02` e `09`, nessa ordem | Cada um ganha a barra verde, o rodapé mostra `3 of 16 channels active`, e os cantos da placa mostram laranja, cinza-claro e vermelho, na ordem das cores |
 | 68 | Ative mais dois canais | Os cantos continuam com os 4 primeiros ativos, na ordem das cores |
 | 69 | No canal `15`, olhe o painel do canal | Sem campo de nome: o título mostra a cor e o nome do canal da rede, e logo abaixo vem o `Status` |
-| 70 | Desative o canal `15`, troque a direção e a face, e ative de novo | Com `Enabled`, a direção e o cubo não mudam; desativado, mudam; ativo de novo, vale a configuração nova |
-| 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `15 Red · Input`, sem nome do slot; um nó sem canal ativo mostra `No active channel` |
+| 70 | Desative o canal `15`, troque a direção e a face, e ative de novo | Com `On`, a direção e o cubo não mudam; desativado, mudam; ativo de novo, vale a configuração nova |
+| 71 | Abra a Tela do Controlador e abra a linha do nó | Só os canais ativos, como `■ 15 · Input`, sem nome do slot nem da cor; um nó sem canal ativo mostra `No active channel` |
 | 72a | Coloque um nó novo, sem escolher rede, e cole nele a cópia | O nó entra na rede da cópia com os mesmos canais, sem passar pela escolha de rede; colado por outro player, a action bar recusa |
 | 72b | Com o Configurator no modo `Toggle`, em âmbar, dê um clique e depois um Shift + clique num nó com canais configurados | `Enabled <n> channels` ativa todos; `Disabled <n> channels` desativa todos, sem abrir a tela; com outro player, a action bar recusa |
 | 72 | Copie o nó com o Configurator e cole noutro | `Copied <n> slots` e `Pasted <n> slots`, contando todos os canais configurados, ativos ou não; o outro nó fica com os mesmos canais ativos e direções |
 | 73 | Abra o nó com o segundo player | Tudo visível, sem lápis, com a pílula `Status` e os botões apagados |
-| 74 | Troque o idioma para Português (Brasil) | `Ativo`, `Inativo` e `3 de 16 canais ativos`, sem nada passando da borda |
+| 74 | Troque o idioma para Português (Brasil) | `Ligado`, `Desligado` e `3 de 16 canais ativos`, sem nada passando da borda |
 
 ## Fase 1: o log da Tela do Controlador
 
@@ -177,7 +177,7 @@ Entregue com a issue #80 (perguntas 262 a 272).
 | 94 | Troque o modo do Configurator com Shift + scroll | O visor do item muda de cor: azul no `Open`, verde no `Copy`, âmbar no `Toggle` e vermelho no `Wrench`; o nome continua na action bar e no tooltip |
 | 94a | No macOS, com uma roda de mouse, troque o modo do Configurator com Shift + scroll, para baixo e para cima | O modo avança para baixo e volta para cima, e o slot da hotbar não muda |
 | 95 | Copie um nó com o modo `Copy` e depois apague a cópia com Shift + clique no ar | O pixel de cima da direita do visor acende com a cópia e apaga sem ela |
-| 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo em duas linhas: em cima, pequena, `■ <rede>` com o quadradinho na cor da rede; embaixo, um pouco maior, o nome do nó; atrás de parede, mais apagado; legível sem cobrir a vista |
+| 96 | Segure o Configurator na mão principal perto de alguns nós | Cada nó até 16 blocos mostra o rótulo em duas linhas: em cima, pequena, `■ <rede>` com o quadradinho na cor da rede; embaixo, um pouco maior, o nome do nó, depois do quadradinho na cor do primeiro slot habilitado, se houver; atrás de parede, mais apagado; legível sem cobrir a vista |
 | 97 | Renomeie um nó e a rede pelas telas, com o rótulo à vista | Os nomes no rótulo mudam na hora |
 | 98 | Olhe um nó sem rede | Em cima, o quadradinho cinza e `No network`; embaixo, o nome do nó |
 | 99 | Troque para outro item na mão | Todos os rótulos somem |
@@ -229,7 +229,7 @@ Entregue com a issue #22 (perguntas 352 a 374). Use o circuito dos passos 1 a 8,
 | 117 | Pegue um Signal Remote no criativo e passe o mouse sobre ele | O ícone sem vínculo, com o ponto cinza; o tooltip com `No link`, `Mode: Lever`, `Off` e, em cinza, `The strongest signal on a channel wins.` e `Shift + right-click to link.` |
 | 118 | Dê Shift + clique direito com o tablet | A tela do vínculo, com `No link` no topo, `Lever` escolhido e `Networks` com só as suas redes `Online` |
 | 119 | Escolha a rede; depois clique em `Back` | `Nodes with an input`, só com o nó da alavanca, com o tipo, o sinal e o estado; `Back` volta às redes |
-| 120 | Escolha a rede e o nó da alavanca, que tem um slot de input só | A tela fecha sem pedir o canal, a action bar mostra `Linked: ■ <rede> · <nó> · <canal>`, e o ícone fica desligado |
+| 120 | Escolha a rede e o nó da alavanca, que tem um slot de input só | A tela fecha sem pedir o canal, a action bar mostra `Linked: ■ <rede> · <nó> · ■ <número do canal>`, e o ícone fica desligado |
 | 121 | Desligue a alavanca física e clique com o tablet duas vezes | `<canal>: On` e a lâmpada acende, com o ícone aceso; depois `<canal>: Off` e a lâmpada apaga |
 | 122 | Abra a tela, escolha `Button` e clique com o tablet; depois clique várias vezes seguidas | `<canal>: Pulse` e a lâmpada acende por 1 segundo; cliques seguidos a mantêm acesa |
 | 123 | Ligue a alavanca física e clique com o tablet em `Lever` | `<canal> is held on by another source.`, e a lâmpada continua acesa |
@@ -256,10 +256,10 @@ Entregue com a issue #103 (perguntas 375 a 440). Use o circuito dos passos 1 a 8
 | 137 | Clique na placa com o Configurator no `Open` | A Tela do Signal Timer, como a prancha: o relógio com o anel de cobre enchendo e o arco vermelho do pulso, o tempo até o próximo pulso no centro e `● Running` embaixo |
 | 138 | Na tela, clique em `+` do `Interval`; depois Shift + clique; passe o mouse sobre o valor | O intervalo sobe 0,1 s e depois 1 s; o tooltip mostra os ticks |
 | 139 | Na tela, clique no lápis e renomeie para `Door clock` | O nome muda na tela e, com o Configurator na mão, no rótulo sobre a placa |
-| 140 | Clique em `Channel` do `Output` num timer sem rede; escolha a rede; escolha o canal `15` | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a borda da frente apagada |
+| 140 | Clique em `Channel` do `Output` num timer sem rede; escolha a rede; escolha o canal `15` | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15` ao lado de `Channel`, a rede no rodapé, e a borda da frente apagada |
 | 141 | Ponha um nó com o slot `15` como saída sobre uma lâmpada | A lâmpada do nó pisca com o timer |
 | 142 | Abra a Tela do Controlador | Na linha 2 do rodapé, `● 0 out of range · ● 1 modules on`, e o log com as linhas do módulo |
-| 143 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running · 15 Red`, com o quadrado vermelho |
+| 143 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running · ■ 15`, com o quadrado vermelho |
 | 144 | Peça ao segundo player para abrir a tela, girar, alternar, retirar com o `Wrench` e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
 | 145 | Desligue a rede no Network Terminal e tente o `Open` e o `Toggle`; depois gire a placa | `<rede> is offline. Turn it on at a Network Terminal.` nos dois; o giro funciona |
 | 146 | Afaste-se até o chunk do timer descarregar e volte | A lâmpada do nó apaga enquanto o chunk está descarregado, e o timer volta a piscar do ponto onde parou |
@@ -280,7 +280,7 @@ Entregue com a issue #105 (perguntas 441 a 455). Use o circuito dos passos 1 a 8
 | 154 | Com o Configurator no `Rotate`, clique na placa | A seta gira 90° no sentido horário, com o clique do comparador |
 | 155 | Clique na placa com o Configurator no `Open` | A Tela do Signal Inverter, como a prancha: o diagrama A → NOT → B, com B aceso em vermelho, `● On` embaixo e, à direita, `Input` e `Output` em `Edge` |
 | 156 | Com a tela aberta, ligue a alavanca de trás | No diagrama, A acende em vermelho, B apaga, e o estado vira `● Off` |
-| 157 | Clique em `Channel` do `Output` num inversor sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, a rede no rodapé, e a lâmpada do nó segue a saída do inversor |
+| 157 | Clique em `Channel` do `Output` num inversor sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15` ao lado de `Channel`, a rede no rodapé, e a lâmpada do nó segue a saída do inversor |
 | 158 | Ponha também o `Input` no canal `15`, para o inversor ler a própria saída | O inversor pisca e queima: a seta fica cinza-escura, a tela mostra `● Burnt out` em âmbar, e depois de 8 segundos ele volta a piscar e queima de novo |
 | 159 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, o estado (`On`, `Off` ou `Burnt out`) e a saída |
 | 160 | Peça ao segundo player para abrir a tela, girar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
@@ -299,8 +299,8 @@ Entregue com a issue #108 (perguntas 457 a 474). Use o circuito dos passos 1 a 8
 | 166 | Com o Configurator no `Toggle`, clique no detector três vezes | `<nome>: Thunder`, `<nome>: Clear` e `<nome>: Rain` na action bar, com o símbolo da placa trocando para o raio, o sol e a nuvem |
 | 167 | Clique na placa com o Configurator no `Open` | A Tela do Weather Detector, como a prancha: o ícone do clima atual, o estado embaixo e, à direita, `Mode` e `Output` |
 | 168 | Na tela, troque o modo entre `Rain`, `Thunder` e `Clear` com `/weather clear` e `/weather thunder` | O estado e a lâmpada seguem o modo e o clima, e o ícone segue o clima |
-| 169 | Clique em `Channel` do `Output` num detector sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, e a lâmpada do nó segue o detector |
-| 170 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `On` ou `Off` e `15 Red` |
+| 169 | Clique em `Channel` do `Output` num detector sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15` ao lado de `Channel`, e a lâmpada do nó segue o detector |
+| 170 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `On` ou `Off` e `■ 15` |
 | 171 | Peça ao segundo player para abrir a tela, alternar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
 | 172 | Leve um detector ao Nether, coloque-o e abra a tela, em cada modo | A saída fica em 0 nos 3 modos, com `No weather` na tela e no rótulo e a nuvem apagada no ícone |
 | 173 | Saia do mundo e entre de novo | O detector mantém o modo e a saída, e lê o clima de novo no primeiro tick |
@@ -318,8 +318,8 @@ Entregue com a issue #109 (perguntas 475 a 493). Use o circuito dos passos 1 a 8
 | 178 | Clique de novo com o `Toggle` | `<nome>: Stopped`, o LED apaga, e a lâmpada apaga |
 | 179 | Clique na placa com o Configurator no `Open` | A Tela do Signal Randomizer, como a prancha: o valor grande, `● Running` ou `Stopped` embaixo e, à direita, `Mode`, `Interval` e `Output` |
 | 180 | Na tela, ligue o módulo, escolha `Analog` e suba o intervalo com `+` e Shift + clique; passe o mouse sobre o valor | O valor grande passa a variar de 0 a 15, com um sorteio na hora da troca; o intervalo sobe 0,1 s e depois 1 s; o tooltip mostra os ticks |
-| 181 | Clique em `Channel` do `Output` num módulo sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15 Red` ao lado de `Channel`, e a lâmpada do nó segue o sorteio |
-| 182 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running` ou `Stopped` e `15 Red` |
+| 181 | Clique em `Channel` do `Output` num módulo sem rede; escolha a rede; escolha o canal `15`; ponha um nó com o slot `15` como saída sobre uma lâmpada | Primeiro a escolha de rede, depois a grade de 16 cores, com o `Channel` já marcado; `■ 15` ao lado de `Channel`, e a lâmpada do nó segue o sorteio |
+| 182 | Segure o Configurator perto da placa | O rótulo em duas linhas: o nome e, embaixo, `Running` ou `Stopped` e `■ 15` |
 | 183 | Peça ao segundo player para abrir a tela, alternar e quebrar a placa | A tela só para leitura, com o cadeado e `Only the player who placed this module can change it.`; as outras ações mostram o mesmo aviso, e a placa não quebra no survival |
 | 184 | Com o módulo ligado, saia do mundo e entre de novo; depois afaste-se até o chunk descarregar e volte | O módulo volta ligado, com o mesmo valor, e continua de onde parou |
 | 185 | Troque o idioma para Português (Brasil) e repita os passos 177, 179 e 182 | `Sorteador de Sinal`, `<nome>: rodando`, `Modo`, `Intervalo`, `Saída`, `Analógico`, `Binário`, `● Rodando` e `● Parado`, sem nada passando da borda |
@@ -347,7 +347,7 @@ Entregue com a issue #44 (perguntas 494 a 575). Confere a forma, a arte, a mira 
 | 200 | Ponha pó ao lado de um nó no chão; depois, ao lado de um nó na parede | O pó se vira para o nó do chão e troca sinal com ele nos dois sentidos; para o nó da parede, não se vira |
 | 201 | Ponha um cabo ao lado de um módulo: na borda da frente, na de trás e numa lateral | Na frente e atrás, o braço encosta na placa e troca sinal; na lateral, o braço para na borda, e o contorno de mira acompanha o braço |
 | 202 | Mire num cabo com braços e num espaço com cabo e nó | O contorno segue o desenho do cabo, e a mira pega a parte certa |
-| 203 | Segure o Configurator perto de um cabo energizado | Um rótulo de uma linha, como `■ 15 Red · 12`, com a força ao vivo |
+| 203 | Segure o Configurator perto de um cabo energizado | Um rótulo de uma linha, como `■ 15 · 12`, com a força ao vivo |
 | 204 | Use o Configurator nos modos `Open`, `Copy` e `Toggle` num cabo | Nada acontece |
 | 205 | Use o `Wrench` num cabo, como dono no survival, com o inventário livre e depois cheio | `Cable picked up`; o item vai para o inventário com a cor e, com o inventário cheio, cai no chão |
 | 206 | Peça ao segundo player para usar o `Wrench` e quebrar um cabo seu no survival; depois tente no criativo | `Only the player who placed this cable can pick it up.`, e o cabo não quebra; no criativo, qualquer um o tira |
@@ -581,10 +581,27 @@ Num mundo em sobrevivência, ou em criativo com a mesa de trabalho, confira cada
 | 362 | Monte a receita de cada um dos 10 Signal Modules da forma comum, com um Signal Node embaixo, trocando só o item de cima, e a da Signal Lamp, com vidro em cima e a lâmpada de redstone embaixo | 1 módulo de cada, conforme o item de cima |
 | 363 | Troque o idioma para Português e repita um dos passos | Os mesmos resultados, com os nomes em português |
 
+## Fase 2: os rótulos, o log e o status do slot
+
+Confira as melhorias de UX da #161 (perguntas 770 a 775).
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 364 | Segure o Configurator perto de um Network Controller com 2 nós | Sobre o bloco, o rótulo em duas linhas: em cima, pequena, `Online · 2 nodes`; embaixo, `■ <rede>`, com o quadradinho na cor da rede; atrás de parede, mais apagado |
+| 365 | Desligue a rede no Terminal, com o Configurator na mão | O rótulo do Controller passa a `Offline · 2 nodes` |
+| 366 | Afaste-se mais que `configurator.label_range` do Controller | O rótulo some, e volta ao chegar perto |
+| 367 | Num nó com os slots `05` e `12` habilitados, segure o Configurator | A linha do nó começa com o quadradinho na cor do `05`, mesmo com sinal 0; com todos desativados, sem quadradinho |
+| 368 | Com o Configurator, olhe um módulo com saída num canal e um cabo | `On · ■ 15` no módulo e `■ 15 · 12` no cabo, sem o nome da cor |
+| 369 | Mude um sinal e abra a aba `Log` da Tela do Controlador | A linha começa só com o horário, como `14:32:05`, e o canal aparece como `■ 15`, ou com o nome que o dono deu, sem nada passando da borda |
+| 370 | Abra a Tela do Nó e clique em `Status` num canal | A pílula troca entre `On` e `Off` |
+| 371 | Vincule e dispare um Signal Remote | A action bar mostra o canal como `■ 15`, com o `■` na cor do canal e o resto na cor do texto |
+| 372 | Troque o idioma para Português e repita os passos 364, 369 e 370 | `Online · 2 nós`, o horário no log e `Ligado`/`Desligado` na pílula |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:00 | Inclui os passos 364 a 372, dos rótulos, do log e do status do slot, e tira o nome da cor dos canais e o `Enabled`/`Disabled` dos outros passos (perguntas 770 a 775, #161). |
 | Zennd | 2026-11-16 23:55 | Muda os passos 361 e 362, da revisão das receitas (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona os passos 359 a 363, das receitas, e muda o passo 190, do tingir só do cabo branco (perguntas 745 a 764). |
 | Zennd | 2026-11-16 15:21 | Adiciona a seção do Signal Alarm, passos 342 a 358. |

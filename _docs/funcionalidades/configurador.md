@@ -83,13 +83,17 @@ Com o Configurator na mão principal, em qualquer modo, cada Signal Node até `c
 | Linha | O que mostra |
 |---|---|
 | De cima, com metade do tamanho da etiqueta de nome do jogo | Um quadradinho na cor da rede e o nome dela, como `■ Rede Base`; sem rede, o quadradinho cinza e `No network` |
-| De baixo, com 70% desse tamanho | O nome do nó, como `Lampada 2` |
+| De baixo, com 70% desse tamanho | Um quadradinho na cor do primeiro slot habilitado, de 01 a 16, mesmo com sinal 0, e o nome do nó, como `■ Lampada 2`; sem slot habilitado, só o nome (pergunta 772) |
 
-Os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276).
+Fora a cor do primeiro slot habilitado, os canais não aparecem no rótulo: ficam nos pontos da placa, nas telas e no Jade e no The One Probe (perguntas 274 a 276 e 772).
+
+Cada Network Controller dentro do mesmo raio mostra um rótulo de duas linhas sobre o bloco: em cima, pequena, o estado da rede e o número de nós, como `Online · 3 nodes`; embaixo, maior, um quadradinho na cor da rede e o nome dela, como `■ Rede Base` (pergunta 773).
+
+Nos rótulos, o canal aparece só com o número, depois do quadradinho na cor dele, como `■ 15`, ou com o nome que o dono deu, como `■ 15 Porta`, sem o nome da cor (pergunta 770).
 
 Cada Signal Module dentro do mesmo raio também mostra um rótulo de duas linhas: o nome do módulo e, embaixo, o estado e o canal da saída, se ela estiver num canal, como `On` ou `Off` no Signal Lever e no Signal Button, o estado com o modo, como `On · Players`, no Signal Pressure Plate, `On` ou `Off`, sem a contagem, no Signal Item Sensor, `Locked` ou `Unlocked`, sem a chave, no Signal Lock, no Signal Lamp, `Offline` ou `Out of range` como o nó, ou `On` ou `Off`, com o canal de intensidade, e, no Signal Alarm, `Ringing` ou `Quiet`, com o canal de entrada (perguntas 417, 582, 595, 609, 637, 703, 721 e 743).
 
-Cada Signal Cable dentro do mesmo raio mostra um rótulo de uma linha: um quadradinho na cor do cabo, o número e o nome da cor e a força, como `15 Red · 12` (pergunta 525). Num espaço com mais de uma parte com rótulo, cada rótulo se desloca para o lado da sua parte (pergunta 547).
+Cada Signal Cable dentro do mesmo raio mostra um rótulo de uma linha: um quadradinho na cor do cabo, o número da cor e a força, como `■ 15 · 12` (perguntas 525 e 770). Num espaço com mais de uma parte com rótulo, cada rótulo se desloca para o lado da sua parte (pergunta 547).
 
 O servidor manda os dados só ao player com o Configurator na mão, com os nós carregados dentro do raio e, depois, só o que mudou, no máximo uma vez por tick. Sem o Configurator, nada vai, e nem os blocos nem o save mudam (pergunta 269 e regra 18).
 
@@ -186,6 +190,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 09:59 | O rótulo do nó ganha o quadrado do primeiro slot habilitado, o Network Controller ganha rótulo, e o canal aparece sem o nome da cor (perguntas 770, 772 e 773). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 751). |
 | Zennd | 2026-11-16 15:19 | Leva o `Toggle`, a rede `Offline`, o rótulo e a cópia ao Signal Alarm (perguntas 649, 727, 743 e 744). |
 | Zennd | 2026-11-16 13:59 | A cópia de todos os itens da #154 passa a implementada, com as chaves por módulo, o `redweave:module_copy`, a rede levada na cópia e a recusa do Signal Lock (perguntas 722 a 736). |

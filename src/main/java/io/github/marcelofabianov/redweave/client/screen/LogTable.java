@@ -18,18 +18,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
 /**
- * The Log tab: one thin row per change, newest on top, as `2026-11-11 14:32:05 Iron Door 15 Red
- * Output 12`, with the date and time of the server in grey and the value on the right (answers 147,
- * 148 and 214). The mouse wheel scrolls when the rows do not fit.
+ * The Log tab: one thin row per change, newest on top, as `14:32:05 Iron Door ■ 15 Output 12`, with
+ * the time of the server in grey and the value on the right (answers 147, 148, 214, 770 and 771).
+ * The channel shows its number beside the square, with no name of the color. The mouse wheel
+ * scrolls when the rows do not fit.
  */
 final class LogTable {
-  private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("HH:mm:ss");
   private static final int NANOS = 0;
   private static final int ROW_HEIGHT = 12;
   private static final int GAP = 1;
   private static final int TEXT_Y = 2;
   private static final int TIME_X = 4;
-  private static final int NODE_X = 116;
+  private static final int NODE_X = 56;
   private static final int SWATCH_X = 184;
   private static final int SWATCH_Y = 3;
   private static final int SWATCH = 6;
@@ -81,7 +82,7 @@ final class LogTable {
     graphics.drawString(font, value, valueX, y, ScreenColors.TEXT, false);
   }
 
-  /** The time the server wrote as seconds of its own clock, shown as it was there (148). */
+  /** The time the server wrote as seconds of its own clock, shown as it was there (148, 771). */
   private static String timeOf(LogLine line) {
     return LocalDateTime.ofEpochSecond(line.time(), NANOS, ZoneOffset.UTC).format(TIME);
   }
