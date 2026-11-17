@@ -88,7 +88,7 @@ Every item of the mod, delivered or planned. IDs, families and the concept of ea
 | Signal Button | A button its owner presses, which turns off by itself after an on time | Delivered (#131) |
 | Signal Pressure Plate | On while players, passive or hostile mobs, or items stand on it | Delivered (#132) |
 | Signal Timer | Turns its output on and off at an interval | Delivered (#103) |
-| Signal Inverter | The NOT of the mod | Delivered (#105) |
+| Signal Inverter | The NOT of the mod, with a chosen strength and an output delay of up to 15 s | Delivered (#105, #171) |
 | Weather Detector | On with the chosen weather: rain, thunder or clear | Delivered (#108) |
 | Signal Randomizer | Draws its output at each interval | Delivered (#109) |
 | Signal Item Sensor | On when the container it sits on holds exactly the chosen amount of an item | Delivered (#148) |

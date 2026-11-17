@@ -42,7 +42,7 @@ As placas de lógica, com a base comum de [`modulos-de-sinal.md`](funcionalidade
 | Item | ID | O que faz | Estado | Conceito |
 |---|---|---|---|---|
 | Signal Timer (`Temporizador de Sinal`) | `redweave:signal_timer` | Liga e desliga a saída num intervalo escolhido | Entregue na #103 | [`signal-timer.md`](funcionalidades/signal-timer.md) |
-| Signal Inverter (`Inversor de Sinal`) | `redweave:signal_inverter` | O NOT do mod: a saída é o oposto da entrada | Entregue na #105 | [`signal-inverter.md`](funcionalidades/signal-inverter.md) |
+| Signal Inverter (`Inversor de Sinal`) | `redweave:signal_inverter` | O NOT do mod: a saída é o oposto da entrada, com a força e o delay na saída escolhidos | Entregue na #105; força e delay na #171 | [`signal-inverter.md`](funcionalidades/signal-inverter.md) |
 | Weather Detector (`Detector de Clima`) | `redweave:weather_detector` | Liga a saída conforme o clima escolhido: `Rain`, `Thunder` ou `Clear` | Entregue na #108 | [`weather-detector.md`](funcionalidades/weather-detector.md) |
 | Signal Randomizer (`Sorteador de Sinal`) | `redweave:signal_randomizer` | Sorteia a saída a cada intervalo, de 0 a 15 ou só 0 e 15 | Entregue na #109 | [`signal-randomizer.md`](funcionalidades/signal-randomizer.md) |
 | Signal Item Sensor (`Sensor de Itens de Sinal`) | `redweave:signal_item_sensor` | Placa num inventário que emite a força escolhida quando ele tem exatamente a quantidade escolhida de um item; só lê, não guarda nem move itens | Entregue na #148 | [`sensor-de-itens.md`](funcionalidades/sensor-de-itens.md) |
@@ -130,6 +130,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:45 | O Signal Inverter ganha a força e o delay na saída (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (#163). |
 | Zennd | 2026-11-16 23:55 | Revisa as receitas do Signal Node, do Network Controller, do Signal Remote, dos módulos e da Signal Lamp (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona as receitas dos itens entregues e o tingir só do cabo branco (perguntas 745 a 764, #157). |

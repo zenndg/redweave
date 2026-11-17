@@ -48,7 +48,7 @@ As chaves que cada módulo copia:
 | Signal Lamp | `strength`, `mode`, `intensity`, `control` |
 | Signal Alarm | `listeners`, `repeats`, `interval`, `duration`, `input` |
 | Signal Timer | `interval_ticks`, `pulse_ticks`, `output`, `pause` |
-| Signal Inverter | `input`, `output` |
+| Signal Inverter | `input`, `output`, `strength`, `output_delay_ticks`; nunca a `delay_line` (pergunta 841) |
 | Weather Detector | `mode`, `output` |
 | Signal Randomizer | `mode`, `interval_ticks`, `output` |
 | Signal Lock | Nenhuma: não é copiável (pergunta 731) |
@@ -190,6 +190,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:45 | O `Copy` do Signal Inverter leva a força e o delay (pergunta 841, #171). |
 | Zennd | 2026-11-17 11:11 | O rótulo do Controller conta os componentes (pergunta 804). |
 | Zennd | 2026-11-17 09:59 | O rótulo do nó ganha o quadrado do primeiro slot habilitado, o Network Controller ganha rótulo, e o canal aparece sem o nome da cor (perguntas 770, 772 e 773). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 751). |
