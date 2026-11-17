@@ -280,6 +280,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | `remote_pulse` no NBT | Só enquanto o pulso dura | 796 |
 | `Link lost` e mensagem da placa | Conferido no clique; `<nome>: On` | 797 |
 | Visual da Signal Lamp | Issue própria; cúpula de vidro com núcleo que brilha, ~6 px | 798, 799 |
+| Luz da Signal Lamp | Branca, com um indicativo pequeno da cor do canal; muda a 650 | 800 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -766,7 +767,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
-| Zennd | 2026-11-17 10:17 | Resume as respostas 778 a 799, do Signal Remote com os emissores e da forma da Signal Lamp. |
+| Zennd | 2026-11-17 10:17 | Resume as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |
 | Zennd | 2026-11-17 09:45 | Resume as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, e marca a 148 como mudada. |
 | Zennd | 2026-11-16 23:40 | Resume as respostas 765 a 769, da revisão das receitas. |
 | Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |

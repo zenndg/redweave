@@ -23,7 +23,7 @@ Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do
 | Item | ID | O que faz | Estado | Conceito |
 |---|---|---|---|---|
 | Configurator (`Configurador`) | `redweave:configurator` | A ferramenta que abre, gira, copia, alterna e retira os nós, os módulos e os cabos, nos modos `Open`, `Rotate`, `Copy`, `Toggle` e `Wrench` | Entregue na #17, com os modos da #86 e o `Rotate` da #136 | [`configurador.md`](funcionalidades/configurador.md) |
-| Signal Remote (`Controle de Sinal`) | `redweave:signal_remote` | Um tablet ligado a um slot de entrada de um nó, que liga, desliga ou pulsa o canal à distância | Entregue na #22 | [`signal-remote.md`](funcionalidades/signal-remote.md) |
+| Signal Remote (`Controle de Sinal`) | `redweave:signal_remote` | Um tablet ligado a um slot de entrada de um nó, que liga, desliga ou pulsa o canal à distância, ou a um emissor, que ele aciona de longe | Entregue na #22; os emissores na #163 | [`signal-remote.md`](funcionalidades/signal-remote.md) |
 
 ## Emissores de Sinal
 
@@ -130,6 +130,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (#163). |
 | Zennd | 2026-11-16 23:55 | Revisa as receitas do Signal Node, do Network Controller, do Signal Remote, dos módulos e da Signal Lamp (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona as receitas dos itens entregues e o tingir só do cabo branco (perguntas 745 a 764, #157). |
 | Zennd | 2026-11-16 15:20 | O Signal Alarm passa a entregue na #142. |

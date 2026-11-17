@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 800 | Que cor tem a luz da Signal Lamp na melhoria visual? | Branca, para parecer uma lâmpada de verdade, com um indicativo pequeno, mas visível, da cor do canal na própria lâmpada; a forma desse indicativo fica para o refinamento da issue própria. Muda a pergunta 650, em que a cor da lâmpada era a do canal |
 | 799 | Que forma a Signal Lamp ganha na melhoria visual? | Uma lâmpada com cúpula de vidro: base de cobre, cúpula de vidro translúcido por cima e um núcleo que brilha dentro, com cerca de 6 px de altura, no lugar da barra rasa de 2 px. Pede um render translúcido, a hitbox nova e a arte nova, que passam pelo refinamento da issue própria. Muda a pergunta 652 |
 | 798 | Onde entra a melhoria visual da Signal Lamp? | Numa issue e num PR próprios, logo depois da #163, com o refinamento, o prompt de arte e a hitbox |
 | 797 | Quando o tablet vinculado a um emissor descobre que ele sumiu, e o que a Signal Pressure Plate diz ao ser acionada? | O `Link lost` de um emissor é conferido no clique, não a cada tick; os tablets de nó continuam conferidos a cada tick. A placa acionada diz `<nome>: On` (`<nome>: Ligada`), numa chave nova. Completa as perguntas 785 e 789 |
@@ -800,7 +801,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
-| Zennd | 2026-11-17 10:17 | Registra as respostas 778 a 799, do Signal Remote com os emissores e da forma da Signal Lamp. |
+| Zennd | 2026-11-17 10:17 | Registra as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |
 | Zennd | 2026-11-17 09:45 | Registra as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, marca a 26, a 148, a 226, a 237, a 291, a 417 e a 525 como mudadas e a 274 como completada, e restaura a linha separadora da tabela de respondidas. |
 | Zennd | 2026-11-16 23:40 | Registra as respostas 765 a 769, da revisão das receitas, e marca a 745, a 747, a 749, a 752, a 753 e a 758 como mudadas. |
 | Zennd | 2026-11-16 15:50 | Registra as respostas 745 a 764, das receitas, e marca a 506 e a 563 como mudadas. |

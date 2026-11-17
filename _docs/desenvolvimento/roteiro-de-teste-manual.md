@@ -597,10 +597,29 @@ Confira as melhorias de UX da #161 (perguntas 770 a 775).
 | 371 | Vincule e dispare um Signal Remote | A action bar mostra o canal como `■ 15`, com o `■` na cor do canal e o resto na cor do texto |
 | 372 | Troque o idioma para Português e repita os passos 364, 369 e 370 | `Online · 2 nós`, o horário no log e `Ligado`/`Desligado` na pílula |
 
+## Fase 2: o Signal Remote com os emissores
+
+Confira o tablet vinculado aos emissores da #163 (perguntas 778 a 793), com um Signal Lever, um Signal Button e um Signal Pressure Plate do mesmo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 373 | Com o tablet na mão, Shift + clique direito na Lever | A action bar mostra `Linked: <nome da Lever>`, a Lever não liga, e o tooltip mostra `Link: <nome> · x, y, z` e `Turns it on and off` |
+| 374 | Clique direito no ar, duas vezes | A Lever liga e desliga, com o som e a luz dela, e a action bar mostra `<nome>: On` e `<nome>: Off`; o ícone do tablet fica no visual desligado |
+| 375 | Vincule ao Button e clique | O Button afunda e volta depois do tempo dele, com `<nome>: Pressed`; o tooltip mostra `Presses it` |
+| 376 | Vincule à Pressure Plate e clique, sem nada sobre ela | A placa liga por 1 s e desliga, com `<nome>: On` |
+| 377 | Com outro player, Shift + clique no emissor | A action bar recusa com o aviso do dono, e o tablet não se vincula |
+| 378 | Entregue o tablet vinculado ao outro player e ele clique | O emissor é acionado |
+| 379 | Afaste-se mais de 128 blocos e clique | `<nome> is out of reach.`, e o vínculo continua |
+| 380 | Quebre o emissor e clique | `Link lost`, e o ícone muda para o de vínculo perdido |
+| 381 | Ponha a Lever num canal, desligue a rede no Terminal e clique | `<rede> is offline.`, e a Lever não muda |
+| 382 | Shift + clique no ar com o tablet de emissor | A tela do vínculo dos nós abre; vincular um nó substitui o emissor |
+| 383 | Troque o idioma para Português e repita os passos 373 a 376 | `Vinculado: <nome>`, `Liga e desliga`, `Aperta` e `<nome>: Ligada` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:31 | Inclui os passos 373 a 383, do Signal Remote com os emissores (perguntas 778 a 793, #163). |
 | Zennd | 2026-11-17 10:00 | Inclui os passos 364 a 372, dos rótulos, do log e do status do slot, e tira o nome da cor dos canais e o `Enabled`/`Disabled` dos outros passos (perguntas 770 a 775, #161). |
 | Zennd | 2026-11-16 23:55 | Muda os passos 361 e 362, da revisão das receitas (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona os passos 359 a 363, das receitas, e muda o passo 190, do tingir só do cabo branco (perguntas 745 a 764). |

@@ -83,7 +83,7 @@ Every item of the mod, delivered or planned. IDs, families and the concept of ea
 | Signal Node | Attaches to any face of a block and reads or emits redstone there, in 16 color slots | Delivered (#15) |
 | Signal Cable | A physical redstone cable on any face, in 16 colors that keep cables apart | Delivered (#44) |
 | Configurator | The tool that opens, turns, copies, toggles and picks up nodes, modules and cables | Delivered (#17, #86, #136) |
-| Signal Remote | A tablet linked to a node input that turns its channel on, off or pulses it | Delivered (#22) |
+| Signal Remote | A tablet linked to a node input that turns its channel on, off or pulses it, or to a Signal Lever, Button or Pressure Plate it fires from afar | Delivered (#22, #163) |
 | Signal Lever | A 3D lever its owner turns on and off, with a chosen strength | Delivered (#130) |
 | Signal Button | A button its owner presses, which turns off by itself after an on time | Delivered (#131) |
 | Signal Pressure Plate | On while players, passive or hostile mobs, or items stand on it | Delivered (#132) |

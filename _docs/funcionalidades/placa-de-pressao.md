@@ -87,6 +87,7 @@ Na action bar, em inglês e em português:
 | `Toggle` | `<nome>: <modo>`, como `<nome>: Passive` (`<nome>: Passivos`), também com a rede `Offline` | 603 e 621 |
 | Colocar fora do chão | `The Signal Pressure Plate only goes on the floor.` (`A Placa de Pressão de Sinal só vai no chão.`) | 611 e 626 |
 | Clique à mão | Nenhuma | 606 |
+| Signal Remote | `<nome>: On` (`<nome>: Ligada`): o tablet vinculado a liga por `remote.pulse_ticks`, somado ao que pisa nela, e um clique durante o pulso o recomeça ([Signal Remote](signal-remote.md#com-os-emissores)) | 783 e 789 |
 
 O rótulo do Configurator mostra o nome e, embaixo, o estado e o modo, como `On · Players` (`Ligada · Players`), e o canal da saída, se ela estiver num canal (pergunta 609).
 
@@ -96,10 +97,11 @@ Além do NBT comum dos [módulos](modulos-de-sinal.md#save), dentro de `data` no
 
 | Chave | O que guarda | Pergunta |
 |---|---|---|
-| `on` | Se a placa está ligada, um booleano | 608 |
+| `on` | Se algo do modo dela está sobre ela, um booleano | 608 |
 | `strength` | A força, de 1 a 15. Um valor fora da faixa vai para o log e volta a 15 (regra 14) | 584 e 608 |
 | `mode` | O modo: `players`, `passive`, `hostile` ou `items`. Um valor inválido vai para o log e volta a `players` (regra 14) | 608 e 623 |
 | `output` | A conexão da saída: `edge` ou a chave da cor do canal | 549 |
+| `remote_pulse` | Os ticks que faltam do pulso de um Signal Remote, só enquanto ele dura; sem a chave, nenhum pulso. Um valor negativo vai para o log e volta a 0 (regra 14) | 793 |
 
 Os campos comuns `front` e `powered` seguem a base (pergunta 560). As chaves ficam fixadas na #26 (regra 15).
 
@@ -145,6 +147,7 @@ A arte segue as perguntas 185 e 186: o agente escreveu o prompt em `tmp/arte/sig
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 10:31 | O Signal Remote liga a placa por um pulso, salvo em `remote_pulse` (perguntas 783, 789 e 793). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 758). |
 | Zennd | 2026-11-16 08:10 | A parte e o domínio da placa passam a usar a base dos emissores (#139). |
 | Zennd | 2026-11-16 08:01 | Aponta para a família dos emissores (pergunta 627). |
