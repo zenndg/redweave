@@ -296,6 +296,12 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Testes da #165 | JUnit no domínio e na aplicação; GameTests do cadastro e do save | 816 |
 | Chaves de tradução da #165 | As antigas ficam com os textos novos; `node_count.*` vira `component_count.*` | 818 |
 | Conferência do cadastro | No tick carregado do módulo, gravando só o que muda | 819 |
+| Formato da Signal Lamp | Alongada: base 6 × 12 px, cúpula 4 × 10 px, 6 px de altura | 820, 824 |
+| Indicativo do canal | Faixa de 1 px na base; cinza sem canal, escura apagada | 821 |
+| Brilho do núcleo | Branco, de 40% a 100%, 25% apagado | 822 |
+| Lâmpada desligada | Núcleo apagado e ponto vermelho na base | 823 |
+| Vidro e núcleo | Vidro fosco translúcido; barra de LED de 2 × 8 × 2 px | 825, 826 |
+| Ícone e testes da Lamp | Ícone 2D novo; GameTest da hitbox e roteiro manual | 827, 828 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
 | Dono do nó | O `owner` entra na #86, com a Chave | 189 |
@@ -782,6 +788,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 11:27 | Resume as respostas 820 a 828, do visual novo da Signal Lamp. |
 | Zennd | 2026-11-17 10:52 | Resume as respostas 801 a 819, da contagem de componentes. |
 | Zennd | 2026-11-17 10:17 | Resume as respostas 778 a 800, do Signal Remote com os emissores e da forma da Signal Lamp. |
 | Zennd | 2026-11-17 09:45 | Resume as respostas 770 a 777, do PR de UX dos rótulos, do log e do status do slot, e marca a 148 como mudada. |
