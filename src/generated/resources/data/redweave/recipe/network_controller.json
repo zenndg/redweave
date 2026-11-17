@@ -11,8 +11,8 @@
     "D": {
       "item": "minecraft:polished_deepslate"
     },
-    "E": {
-      "item": "minecraft:ender_eye"
+    "P": {
+      "item": "minecraft:ender_pearl"
     },
     "R": {
       "item": "minecraft:redstone"
@@ -20,7 +20,7 @@
   },
   "pattern": [
     "DRD",
-    "CEC",
+    "CPC",
     "DBD"
   ],
   "result": {

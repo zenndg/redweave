@@ -5,6 +5,9 @@
     "C": {
       "item": "minecraft:copper_ingot"
     },
+    "D": {
+      "item": "minecraft:polished_deepslate"
+    },
     "G": {
       "item": "minecraft:glass_pane"
     },
@@ -18,7 +21,7 @@
   "pattern": [
     "CGC",
     "CPC",
-    "CRC"
+    "DRD"
   ],
   "result": {
     "count": 1,
