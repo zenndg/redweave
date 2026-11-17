@@ -35,7 +35,7 @@ O Terminal alcança todas as redes do dono, em qualquer dimensão e a qualquer d
 
 O desenho tem quatro variantes, e os sprites novos estão em [`tela-do-terminal-sprites.png`](../imagens/telas/tela-do-terminal-sprites.png): a linha selecionada e os botões de perigo, de hover e de confirmação. O resto reaproveita os sprites da Tela do Nó.
 
-Uma lista das redes do dono, em ordem alfabética pelo nome, com o estado de cada uma ao lado e a quantidade de nós (perguntas 131 e 138).
+Uma lista das redes do dono, em ordem alfabética pelo nome, com o estado de cada uma ao lado e a quantidade de componentes, como `12 components` (perguntas 131, 138 e 804). A tela tem 340 px de largura, a mesma do Controlador e dos módulos, para a contagem não encostar no estado (pergunta 857).
 
 Um clique seleciona uma rede, e a barra de botões embaixo da lista mostra só as ações que valem para o estado dela. `Clear components` e `Delete` confirmam no segundo clique, no próprio botão, e o duplo clique no nome renomeia, como na Tela do Controlador (perguntas 222 e 252).
 
@@ -73,6 +73,7 @@ Uma rede `Offline` aparece só como a linha da lista: a tela do controlador dela
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 16:20 | A tela passa a 340 px, para a contagem de componentes caber (pergunta 857, #175). |
 | Zennd | 2026-11-17 10:54 | O `Clear nodes` vira `Clear components` e tira também os módulos (perguntas 807 e 812). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 748), e a seção de pendências sai. |
 | Zennd | 2026-11-12 19:23 | O modo `Open` do Configurator abre o Terminal, como a mão vazia (pergunta 343). |

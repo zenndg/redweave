@@ -690,10 +690,21 @@ Confira a #173 (perguntas 845 a 855), com cada módulo no chão e uma lâmpada d
 | 429 | Abra a tela de um timer e de uma fechadura | A moldura mais alta, sem `Delay` |
 | 430 | Troque o idioma para Português | `Atraso` em todas as telas |
 
+## Fase 2: o layout de `Components`
+
+Confira a #175 (perguntas 856 e 857), com uma rede de muitos componentes, como 12 nós e módulos.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 431 | Abra a Tela do Controlador, em inglês e em português | `Components` e `Componentes` dentro da aba, sem encostar em `Signals` |
+| 432 | Abra o Network Terminal com redes `Online`, `Offline` e `Unplaced`, em inglês e em português | A tela mais larga, e `12 components` e `12 componentes` à direita, sem encostar no estado |
+| 433 | No Terminal, selecione cada rede | A barra de botões e a dica cabem, como antes |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 16:20 | Inclui os passos 431 a 433, do layout de `Components` (perguntas 856 e 857, #175). |
 | Zennd | 2026-11-17 15:25 | Inclui os passos 416 a 430, do delay nos outros módulos (perguntas 845 a 855, #173). |
 | Zennd | 2026-11-17 13:50 | Inclui os passos 402 a 415, do delay e da força do Signal Inverter (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 12:20 | Os passos 394 e 399 passam a 5 px de altura (pergunta 829, #169). |

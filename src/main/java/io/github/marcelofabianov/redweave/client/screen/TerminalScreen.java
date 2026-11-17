@@ -24,11 +24,15 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * double click on a name renames it (answers 252 and 255).
  */
 public final class TerminalScreen extends AbstractContainerScreen<TerminalMenu> {
-  private static final int WIDTH = 300;
+  /** The width of the Controller and the modules, so the count of components fits (857). */
+  private static final int WIDTH = 340;
+
   private static final int HEIGHT = 176;
   private static final int SIDE = 8;
   private static final int TITLE_Y = 8;
-  private static final Box LIST = new Box(SIDE, 22, 284, 106);
+  private static final int LIST_Y = 22;
+  private static final int LIST_HEIGHT = 106;
+  private static final Box LIST = new Box(SIDE, LIST_Y, WIDTH - 2 * SIDE, LIST_HEIGHT);
   private static final int BUTTONS_Y = 134;
   private static final int HINT_Y = 158;
   private static final int SINGLE = 1;
