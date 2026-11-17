@@ -37,7 +37,7 @@ class TerminalActionsTest {
   void clearingTakesEveryNodeOut() {
     Network network = twoNodesWithASignal();
 
-    assertEquals(Outcome.ACCEPTED, network.terminal().clearNodes(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().clearComponents(OWNER));
 
     assertEquals(List.of(), network.nodes());
     assertEquals(Signal.OFF, network.channelValue(LEVER));
@@ -48,7 +48,7 @@ class TerminalActionsTest {
   void onlyTheOwnerClearsTheNodes() {
     Network network = twoNodesWithASignal();
 
-    assertEquals(Outcome.NOT_OWNER, network.terminal().clearNodes(STRANGER));
+    assertEquals(Outcome.NOT_OWNER, network.terminal().clearComponents(STRANGER));
     assertEquals(List.of(NODE, OTHER_NODE), network.nodes().stream().map(Node::id).toList());
   }
 
@@ -58,7 +58,7 @@ class TerminalActionsTest {
     Network network = twoNodesWithASignal();
     network.removeController(OWNER);
 
-    assertEquals(Outcome.ACCEPTED, network.terminal().clearNodes(OWNER));
+    assertEquals(Outcome.ACCEPTED, network.terminal().clearComponents(OWNER));
   }
 
   /** Only an unplaced network may go, so a network in the world is never deleted (166). */

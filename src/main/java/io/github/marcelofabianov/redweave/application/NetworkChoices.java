@@ -33,6 +33,6 @@ public final class NetworkChoices {
   private static NetworkChoice choiceOf(Network network, Optional<NetworkId> last) {
     boolean isLast = last.filter(network.id()::equals).isPresent();
     return new NetworkChoice(
-        network.id(), network.name(), network.color(), network.nodes().size(), isLast);
+        network.id(), network.name(), network.color(), network.components(), isLast);
   }
 }

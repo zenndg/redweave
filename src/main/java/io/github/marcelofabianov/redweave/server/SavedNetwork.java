@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.Channel;
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
+import io.github.marcelofabianov.redweave.domain.network.ModuleId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NetworkSnapshot;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
@@ -31,7 +33,8 @@ record SavedNetwork(
     Optional<BlockLocation> controller,
     Optional<Boolean> offline,
     List<Channel> channels,
-    List<SavedNode> nodes) {
+    List<SavedNode> nodes,
+    List<ModuleEntry> modules) {
   private static final String ID = "id";
   private static final String OWNER = "owner";
   private static final String CONTROLLER = "controller";
@@ -40,6 +43,8 @@ record SavedNetwork(
   private static final String NODES = "nodes";
   private static final String CHANNEL_PART = "channel";
   private static final String NODE_PART = "node";
+  private static final String MODULES = "modules";
+  private static final String MODULE_PART = "module";
   private static final String REPEATED = "repeated in the network";
   private static final String TAKEN = "already in another network";
 
@@ -60,12 +65,16 @@ record SavedNetwork(
                       .forGetter(SavedNetwork::channels),
                   Lenient.list(SavedNode.CODEC, NODE_PART)
                       .fieldOf(NODES)
-                      .forGetter(SavedNetwork::nodes))
+                      .forGetter(SavedNetwork::nodes),
+                  Lenient.list(SavedModule.CODEC, MODULE_PART)
+                      .optionalFieldOf(MODULES, List.of())
+                      .forGetter(SavedNetwork::modules))
               .apply(instance, SavedNetwork::new));
 
   SavedNetwork {
     channels = List.copyOf(channels);
     nodes = List.copyOf(nodes);
+    modules = List.copyOf(modules);
   }
 
   static SavedNetwork of(NetworkSnapshot snapshot) {
@@ -87,7 +96,8 @@ record SavedNetwork(
         snapshot.controller(),
         snapshot.offline() ? Optional.of(true) : Optional.empty(),
         snapshot.channels(),
-        nodes);
+        nodes,
+        snapshot.modules());
   }
 
   private static Signal readingOf(
@@ -96,8 +106,9 @@ record SavedNetwork(
   }
 
   /**
-   * The snapshot of the domain. A channel or a node that appears twice, or a node already taken by
-   * another network, is dropped with a warning, and the first one stays (answer 92).
+   * The snapshot of the domain. A channel, a node or a module that appears twice, or a node already
+   * taken by another network, is dropped with a warning, and the first one stays (answer 92). A
+   * network saved before the modules were registered has none (answer 803).
    */
   NetworkSnapshot snapshot(Predicate<NodeId> takenElsewhere) {
     Set<ChannelColor> colors = new HashSet<>();
@@ -117,7 +128,13 @@ record SavedNetwork(
         offline.orElse(false),
         kept,
         keptNodes.stream().map(SavedNode::node).toList(),
-        keptNodes.stream().flatMap(node -> node.readings().stream()).toList());
+        keptNodes.stream().flatMap(node -> node.readings().stream()).toList(),
+        keptModules());
+  }
+
+  private List<ModuleEntry> keptModules() {
+    Set<ModuleId> ids = new HashSet<>();
+    return modules.stream().filter(module -> first(ids, module.id(), MODULE_PART)).toList();
   }
 
   private static boolean free(Predicate<NodeId> takenElsewhere, NodeId node) {

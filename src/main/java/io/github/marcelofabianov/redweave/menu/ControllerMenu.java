@@ -300,6 +300,16 @@ public final class ControllerMenu extends AbstractContainerMenu {
     return rows.nodes();
   }
 
+  /** The registered Signal Modules, after the nodes in the `Components` tab (answer 809). */
+  public List<ControllerScreenRows.ModuleLine> modules() {
+    return rows.modules();
+  }
+
+  /** The nodes and the registered modules, as the header counts them (answer 804). */
+  public int components() {
+    return rows.nodes().size() + rows.modules().size();
+  }
+
   public List<ControllerScreenRows.ChannelLine> channels() {
     return rows.channels();
   }
@@ -314,12 +324,15 @@ public final class ControllerMenu extends AbstractContainerMenu {
     return signals.modulesOn();
   }
 
-  /** The signal of a node row, 0 before the values arrive. */
+  /**
+   * The signal of a row, a node or then a module, 0 before the values arrive; a module that writes
+   * nothing this tick has {@link ControllerScreenSignals#NO_SIGNAL} (answer 814).
+   */
   public int nodeSignal(int row) {
     return valueAt(signals.nodeSignals(), row, 0);
   }
 
-  /** The state of a node row, Online before the values arrive. */
+  /** The state of a row, a node or then a module, Online before the values arrive. */
   public NodeState nodeState(int row) {
     int ordinal = valueAt(signals.nodeStates(), row, NodeState.ONLINE.ordinal());
     NodeState[] states = NodeState.values();

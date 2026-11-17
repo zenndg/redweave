@@ -27,9 +27,9 @@ final class TerminalButtons {
   static List<TerminalAction> actionsOf(NetworkState state) {
     return switch (state) {
       case ONLINE ->
-          List.of(TerminalAction.OPEN, TerminalAction.TURN_OFF, TerminalAction.CLEAR_NODES);
-      case OFFLINE -> List.of(TerminalAction.TURN_ON, TerminalAction.CLEAR_NODES);
-      case UNPLACED -> List.of(TerminalAction.CLEAR_NODES, TerminalAction.DELETE);
+          List.of(TerminalAction.OPEN, TerminalAction.TURN_OFF, TerminalAction.CLEAR_COMPONENTS);
+      case OFFLINE -> List.of(TerminalAction.TURN_ON, TerminalAction.CLEAR_COMPONENTS);
+      case UNPLACED -> List.of(TerminalAction.CLEAR_COMPONENTS, TerminalAction.DELETE);
     };
   }
 
@@ -84,8 +84,8 @@ final class TerminalButtons {
           case OPEN -> TerminalScreenTexts.OPEN;
           case TURN_OFF -> TerminalScreenTexts.TURN_OFF;
           case TURN_ON -> TerminalScreenTexts.TURN_ON;
-          case CLEAR_NODES ->
-              waiting ? TerminalScreenTexts.CONFIRM_CLEAR : TerminalScreenTexts.CLEAR_NODES;
+          case CLEAR_COMPONENTS ->
+              waiting ? TerminalScreenTexts.CONFIRM_CLEAR : TerminalScreenTexts.CLEAR_COMPONENTS;
           case DELETE -> waiting ? TerminalScreenTexts.CONFIRM_DELETE : TerminalScreenTexts.DELETE;
         });
   }
@@ -101,6 +101,6 @@ final class TerminalButtons {
   }
 
   private static boolean isDanger(TerminalAction action) {
-    return action == TerminalAction.CLEAR_NODES || action == TerminalAction.DELETE;
+    return action == TerminalAction.CLEAR_COMPONENTS || action == TerminalAction.DELETE;
   }
 }

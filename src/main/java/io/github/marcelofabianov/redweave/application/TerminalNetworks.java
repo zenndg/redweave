@@ -29,6 +29,6 @@ public final class TerminalNetworks {
 
   private static TerminalRow rowOf(Network network) {
     return new TerminalRow(
-        network.id(), network.name(), network.color(), network.state(), network.nodes().size());
+        network.id(), network.name(), network.color(), network.state(), network.components());
   }
 }

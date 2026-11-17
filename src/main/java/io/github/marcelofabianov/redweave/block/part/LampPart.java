@@ -71,7 +71,7 @@ public final class LampPart extends ModulePart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {
+  protected void dropChannels(ConnectionMapper drop) {
     intensity = drop.of(intensity);
     control = drop.of(control);
   }

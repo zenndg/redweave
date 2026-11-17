@@ -13,7 +13,7 @@ final class TerminalPortugueseTexts {
   private static final String OPEN = "Abrir";
   private static final String TURN_OFF = "Desligar";
   private static final String TURN_ON = "Ligar";
-  private static final String CLEAR_NODES = "Limpar nós";
+  private static final String CLEAR_COMPONENTS = "Limpar componentes";
   private static final String DELETE = "Apagar";
   private static final String CONFIRM_CLEAR = "Clique de novo para limpar";
   private static final String CONFIRM_DELETE = "Clique de novo para apagar";
@@ -31,7 +31,7 @@ final class TerminalPortugueseTexts {
     add.accept(TerminalScreenTexts.OPEN, OPEN);
     add.accept(TerminalScreenTexts.TURN_OFF, TURN_OFF);
     add.accept(TerminalScreenTexts.TURN_ON, TURN_ON);
-    add.accept(TerminalScreenTexts.CLEAR_NODES, CLEAR_NODES);
+    add.accept(TerminalScreenTexts.CLEAR_COMPONENTS, CLEAR_COMPONENTS);
     add.accept(TerminalScreenTexts.DELETE, DELETE);
     add.accept(TerminalScreenTexts.CONFIRM_CLEAR, CONFIRM_CLEAR);
     add.accept(TerminalScreenTexts.CONFIRM_DELETE, CONFIRM_DELETE);

@@ -4,12 +4,15 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 
-/** The owner takes every node out of a network at a Network Terminal (answers 133 and 176). */
-public final class ClearNodes {
+/**
+ * The owner takes every component out of a network at a Network Terminal: the nodes and the
+ * registered Signal Modules (answers 133, 176 and 807).
+ */
+public final class ClearComponents {
   private final NetworkFinder finder;
   private final NetworkSaver saver;
 
-  public ClearNodes(NetworkFinder finder, NetworkSaver saver) {
+  public ClearComponents(NetworkFinder finder, NetworkSaver saver) {
     this.finder = finder;
     this.saver = saver;
   }
@@ -18,7 +21,7 @@ public final class ClearNodes {
     return SavedChange.apply(
         finder.find(id),
         Outcome.UNKNOWN_NETWORK,
-        network -> network.terminal().clearNodes(player),
+        network -> network.terminal().clearComponents(player),
         saver);
   }
 }

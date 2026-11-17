@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.client.screen;
 
 import io.github.marcelofabianov.redweave.client.ChannelColors;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.menu.NetworkTexts;
 import io.github.marcelofabianov.redweave.menu.NodeScreenChoices;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.List;
@@ -34,7 +35,6 @@ final class NetworkChoiceList {
   private static final int ICON_Y = 26;
   private static final int EMPTY_TEXT_Y = 50;
   private static final int LINE_HEIGHT = 11;
-  private static final int SINGLE = 1;
 
   private int first;
 
@@ -95,7 +95,7 @@ final class NetworkChoiceList {
         row.x() + SWATCH_X + SWATCH_SIZE,
         swatchY + SWATCH_SIZE,
         colorOf(choice.color()));
-    Component count = countOf(choice.nodes());
+    Component count = countOf(choice.components());
     int countX = row.right() - COUNT_RIGHT - font.width(count);
     graphics.drawString(font, count, countX, row.y() + TEXT_Y, ScreenColors.LABEL, false);
     int nameWidth = countX - NAME_GAP - (row.x() + NAME_X);
@@ -126,9 +126,8 @@ final class NetworkChoiceList {
     }
   }
 
-  private static Component countOf(int nodes) {
-    String key = nodes == SINGLE ? NodeScreenTexts.NODE_COUNT_ONE : NodeScreenTexts.NODE_COUNT_MANY;
-    return Component.translatable(key, nodes);
+  private static Component countOf(int components) {
+    return NetworkTexts.components(components);
   }
 
   private static int colorOf(int color) {

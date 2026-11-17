@@ -81,7 +81,7 @@ public final class AlarmPart extends ModulePart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {
+  protected void dropChannels(ConnectionMapper drop) {
     input = drop.of(input);
   }
 

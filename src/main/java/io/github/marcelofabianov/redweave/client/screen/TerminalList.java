@@ -104,7 +104,7 @@ final class TerminalList {
         row.y() + PILL_Y,
         NetworkTexts.state(state),
         colorOf(state));
-    Component count = NetworkTexts.nodes(line.nodes());
+    Component count = NetworkTexts.components(line.components());
     int countX = row.right() - COUNT_RIGHT - font.width(count);
     graphics.drawString(font, count, countX, row.y() + TEXT_Y, ScreenColors.LABEL, false);
   }

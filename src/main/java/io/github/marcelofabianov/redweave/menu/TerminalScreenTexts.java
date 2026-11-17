@@ -15,7 +15,10 @@ public final class TerminalScreenTexts {
   public static final String OPEN = PREFIX + "open";
   public static final String TURN_OFF = PREFIX + "turn_off";
   public static final String TURN_ON = PREFIX + "turn_on";
-  public static final String CLEAR_NODES = PREFIX + "clear_nodes";
+
+  /** The key keeps its old name, as the packs translate it (rule 15). */
+  public static final String CLEAR_COMPONENTS = PREFIX + "clear_nodes";
+
   public static final String DELETE = PREFIX + "delete";
   public static final String CONFIRM_CLEAR = PREFIX + "confirm_clear";
   public static final String CONFIRM_DELETE = PREFIX + "confirm_delete";

@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.block.Plates;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
+import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.part.PartKind;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
@@ -52,6 +53,10 @@ public abstract class ModulePart
   private Direction front;
   private boolean powered;
   private Optional<SignalModule> module = Optional.empty();
+
+  /** The network the module is registered in, its `registered` mark (answers 811 and 817). */
+  private Optional<NetworkId> registeredIn = Optional.empty();
+
   private int emitted;
   private Optional<PartSpaceBlockEntity> host = Optional.empty();
 
@@ -88,6 +93,7 @@ public abstract class ModulePart
       return;
     }
     module = ModuleSave.readModule(tag);
+    registeredIn = ModuleSave.readRegistered(tag);
     powered = tag.getBoolean(POWERED_TAG);
     Optional<Direction> saved =
         Optional.ofNullable(Direction.byName(tag.getString(FRONT_TAG)))
@@ -122,7 +128,7 @@ public abstract class ModulePart
   protected abstract List<String> copiedKeys();
 
   /** Takes each of its connections off its channel, for a paste out of its network (732). */
-  protected abstract void dropChannels(ChannelDrop drop);
+  protected abstract void dropChannels(ConnectionMapper drop);
 
   /** The `Toggle` of the Configurator, with the message of the action bar, if any (395). */
   public abstract Optional<Component> toggle();
@@ -197,6 +203,7 @@ public abstract class ModulePart
   public CompoundTag save() {
     CompoundTag tag = new CompoundTag();
     module.ifPresent(found -> ModuleSave.writeModule(tag, found));
+    ModuleSave.writeRegistered(tag, registeredIn);
     tag.putString(FRONT_TAG, front.getSerializedName());
     tag.putBoolean(POWERED_TAG, powered);
     saveRule(tag);
@@ -234,6 +241,17 @@ public abstract class ModulePart
 
   protected Optional<Level> level() {
     return host.map(PartSpaceBlockEntity::getLevel);
+  }
+
+  /** The network the module is registered in, its `registered` mark (answers 811 and 817). */
+  Optional<NetworkId> registeredIn() {
+    return registeredIn;
+  }
+
+  /** A new mark, saved without sending the space, as it shows nowhere. */
+  void registeredIn(Optional<NetworkId> network) {
+    registeredIn = network;
+    markDirty();
   }
 
   /** The network of the module was deleted: it has none until its owner picks another (385). */
@@ -303,9 +321,20 @@ public abstract class ModulePart
   /** Gone by any means, the front edge goes to 0 at once (answer 394). */
   @Override
   public void removed(PartSpaceBlockEntity space) {
+    leaveNetwork();
     emitted = 0;
     wakeOutputs(space.getLevel(), space.getBlockPos());
     space.wakeOthers(this);
+  }
+
+  /** Broken, picked up or replaced, the module leaves the network it is registered in (806). */
+  private void leaveNetwork() {
+    Optional<RedweaveServer> server = RedweaveServer.running();
+    if (server.isEmpty() || module.isEmpty()) {
+      return;
+    }
+    server.get().modules().sync().leave(registeredIn, module.get().id());
+    registeredIn = Optional.empty();
   }
 
   @Override

@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 
 /**
  * The texts of a network that the Network Terminal and the label over a Network Controller share:
- * its state and how many nodes it has (answers 252 and 773).
+ * its state and how many components it has (answers 252, 773 and 804).
  */
 public final class NetworkTexts {
   private static final int SINGLE = 1;
@@ -21,10 +21,13 @@ public final class NetworkTexts {
         });
   }
 
-  /** As `1 node` or `3 nodes`. */
-  public static Component nodes(int nodes) {
-    String key = nodes == SINGLE ? NodeScreenTexts.NODE_COUNT_ONE : NodeScreenTexts.NODE_COUNT_MANY;
-    return Component.translatable(key, nodes);
+  /** As `1 component` or `12 components`: the nodes and the modules (answers 802 and 804). */
+  public static Component components(int components) {
+    String key =
+        components == SINGLE
+            ? NodeScreenTexts.COMPONENT_COUNT_ONE
+            : NodeScreenTexts.COMPONENT_COUNT_MANY;
+    return Component.translatable(key, components);
   }
 
   /** The numbers come from the server, so one outside the states shows the safest one. */

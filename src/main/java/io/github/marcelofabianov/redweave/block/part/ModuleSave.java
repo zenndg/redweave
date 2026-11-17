@@ -16,14 +16,16 @@ import org.slf4j.Logger;
 
 /**
  * The NBT every Signal Module block shares, under the keys of answer 411, part of the save (rule
- * 15): the module and its connections. Each part is read on its own: an invalid one is dropped with
- * a warning, and the rest is kept (rule 14).
+ * 15): the module, the network it is registered in (answers 811 and 817) and its connections. Each
+ * part is read on its own: an invalid one is dropped with a warning, and the rest is kept (rule
+ * 14).
  */
 final class ModuleSave {
   private static final String MODULE_ID = "module_id";
   private static final String OWNER = "owner";
   private static final String NAME = "name";
   private static final String NETWORK = "network";
+  private static final String REGISTERED = "registered";
 
   private static final Logger LOGGER = LogUtils.getLogger();
   private static final String DROPPED = "Dropped an invalid {} from a Signal Module: {}";
@@ -36,6 +38,15 @@ final class ModuleSave {
     tag.putUUID(OWNER, module.owner().value());
     module.name().ifPresent(name -> tag.putString(NAME, name));
     module.network().ifPresent(network -> tag.putUUID(NETWORK, network.value()));
+  }
+
+  /** The network the module is registered in, absent before its first register (811, 817). */
+  static void writeRegistered(CompoundTag tag, Optional<NetworkId> registeredIn) {
+    registeredIn.ifPresent(network -> tag.putUUID(REGISTERED, network.value()));
+  }
+
+  static Optional<NetworkId> readRegistered(CompoundTag tag) {
+    return uuid(tag, REGISTERED).map(NetworkId::new);
   }
 
   static void writeConnection(CompoundTag tag, String key, Connection connection) {

@@ -29,8 +29,8 @@ public final class NodeScreenTexts {
   public static final String STATE_OFFLINE = PREFIX + "state.offline";
   public static final String CHOOSE_NETWORK = PREFIX + "choose_network";
   public static final String NO_NETWORK_ONLINE = PREFIX + "no_network_online";
-  public static final String NODE_COUNT_ONE = PREFIX + "node_count.one";
-  public static final String NODE_COUNT_MANY = PREFIX + "node_count.many";
+  public static final String COMPONENT_COUNT_ONE = PREFIX + "component_count.one";
+  public static final String COMPONENT_COUNT_MANY = PREFIX + "component_count.many";
   public static final String BACK = PREFIX + "back";
   public static final String RENAME_TOOLTIP = PREFIX + "rename_tooltip";
   public static final String SWITCH_NETWORK_TOOLTIP = PREFIX + "switch_network_tooltip";

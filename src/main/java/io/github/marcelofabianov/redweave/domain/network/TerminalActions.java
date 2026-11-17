@@ -38,14 +38,16 @@ public final class TerminalActions {
   }
 
   /**
-   * Takes every node out, in any state: the nodes stay in the world with no network, and their
-   * slots and readings go (answers 133 and 176).
+   * Takes every component out, in any state: the nodes stay in the world with no network, and their
+   * slots and readings go (answers 133 and 176); the registered modules go too, and each one lets
+   * go of the network on its next loaded tick (answers 807 and 811).
    */
-  public Outcome clearNodes(PlayerId requester) {
+  public Outcome clearComponents(PlayerId requester) {
     if (!network.isOwner(requester)) {
       return Outcome.NOT_OWNER;
     }
     network.nodes().stream().map(Node::id).forEach(network::loseNode);
+    network.register().clear();
     return Outcome.ACCEPTED;
   }
 

@@ -11,6 +11,6 @@ public final class ControllerLabels {
 
   public static ControllerLabel of(Network network) {
     return new ControllerLabel(
-        network.name(), network.color(), network.state(), network.nodes().size());
+        network.name(), network.color(), network.state(), network.components());
   }
 }

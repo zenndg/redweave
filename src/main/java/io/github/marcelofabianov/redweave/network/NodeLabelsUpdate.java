@@ -137,10 +137,11 @@ public record NodeLabelsUpdate(
 
   /**
    * The label of a Network Controller: the ID of its network, its block, the name and color of the
-   * network, its state as the number of a `NetworkState`, and how many nodes it has (answer 773).
+   * network, its state as the number of a `NetworkState`, and how many components it has (answers
+   * 773 and 804).
    */
   public record ControllerLine(
-      UUID network, BlockPos pos, String name, int color, int state, int nodes) {
+      UUID network, BlockPos pos, String name, int color, int state, int components) {
     static final StreamCodec<ByteBuf, ControllerLine> STREAM_CODEC =
         StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
@@ -154,7 +155,7 @@ public record NodeLabelsUpdate(
             ByteBufCodecs.VAR_INT,
             ControllerLine::state,
             ByteBufCodecs.VAR_INT,
-            ControllerLine::nodes,
+            ControllerLine::components,
             ControllerLine::new);
 
     public static ControllerLine of(UUID network, BlockPos pos, ControllerLabel label) {
@@ -164,7 +165,7 @@ public record NodeLabelsUpdate(
           label.network(),
           label.color().ordinal(),
           label.state().ordinal(),
-          label.nodes());
+          label.components());
     }
   }
 

@@ -14,18 +14,15 @@ import net.minecraft.network.chat.Component;
  * input and the input slots of a node (answers 282 to 286 and 359).
  */
 final class RemoteLinkLines {
-  private static final int SINGLE = 1;
   private static final String NO_NAME = "";
 
   private RemoteLinkLines() {}
 
   static RemoteLinkLine ofNetwork(NetworkChoice choice) {
-    String key =
-        choice.nodes() == SINGLE ? NodeScreenTexts.NODE_COUNT_ONE : NodeScreenTexts.NODE_COUNT_MANY;
     return new RemoteLinkLine(
         Component.literal(choice.name()),
         choice.color().ordinal(),
-        Component.translatable(key, choice.nodes()),
+        NetworkTexts.components(choice.components()),
         RemoteLinkLine.NONE);
   }
 

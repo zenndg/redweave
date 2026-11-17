@@ -18,6 +18,7 @@ import io.github.marcelofabianov.redweave.application.ReadModuleChannel;
 import io.github.marcelofabianov.redweave.application.ServerClock;
 import io.github.marcelofabianov.redweave.application.ShowModule;
 import io.github.marcelofabianov.redweave.application.SignalLogs;
+import io.github.marcelofabianov.redweave.application.SyncModule;
 
 /**
  * The use cases of the Signal Modules, wired to the saves of the server (modulos-de-sinal.md). Kept
@@ -40,6 +41,7 @@ public final class ModuleServices {
   private final ChangeLamp changeLamp = new ChangeLamp();
   private final ChangeAlarm changeAlarm = new ChangeAlarm();
   private final ChooseModuleNetwork chooseNetwork;
+  private final SyncModule syncModule;
 
   ModuleServices(IdGenerator ids, SavedDataNetworks networks, SignalLogs logs, ServerClock clock) {
     placeModule = new PlaceModule(ids);
@@ -47,6 +49,12 @@ public final class ModuleServices {
     showModule = new ShowModule(networks);
     readChannel = new ReadModuleChannel(networks);
     chooseNetwork = new ChooseModuleNetwork(networks);
+    syncModule = new SyncModule(networks, networks);
+  }
+
+  /** The register of the modules in their networks (answers 803 and 811). */
+  public SyncModule sync() {
+    return syncModule;
   }
 
   public PlaceModule place() {

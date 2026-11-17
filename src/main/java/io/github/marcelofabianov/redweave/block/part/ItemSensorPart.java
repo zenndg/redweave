@@ -72,7 +72,7 @@ public final class ItemSensorPart extends ModulePart {
   }
 
   @Override
-  protected void dropChannels(ChannelDrop drop) {
+  protected void dropChannels(ConnectionMapper drop) {
     output = drop.of(output);
   }
 

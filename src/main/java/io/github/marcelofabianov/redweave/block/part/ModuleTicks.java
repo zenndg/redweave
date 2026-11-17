@@ -1,12 +1,16 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.application.ModuleSighting;
+import io.github.marcelofabianov.redweave.application.ModuleSync;
 import io.github.marcelofabianov.redweave.block.BlockLocations;
+import io.github.marcelofabianov.redweave.block.Faces;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
+import io.github.marcelofabianov.redweave.domain.network.ModuleEntry;
 import io.github.marcelofabianov.redweave.domain.network.ModuleInput;
+import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.server.ModuleServices;
@@ -27,7 +31,10 @@ import net.minecraft.world.level.block.state.BlockState;
 final class ModuleTicks {
   private ModuleTicks() {}
 
-  /** The services of the modules, after a deleted network is let go, or none to skip the tick. */
+  /**
+   * The services of the modules, after a deleted network is let go and the entry of the module in
+   * its network is up to date (answer 803), or none to skip the tick.
+   */
   static Optional<ModuleServices> start(PartSpaceBlockEntity space, ModulePart part) {
     Optional<RedweaveServer> server = RedweaveServer.running();
     if (server.isEmpty() || part.module().isEmpty()) {
@@ -37,7 +44,35 @@ final class ModuleTicks {
     if (modules.show().show(part.module().get(), locationOf(space)).gone()) {
       part.loseNetwork();
     }
+    sync(modules, space, part);
     return Optional.of(modules);
+  }
+
+  /**
+   * Brings the entry of the module in its network up to date and keeps the network it is registered
+   * in; taken out by `Clear components`, it lets go of the network (answers 803, 805, 810, 811 and
+   * 817).
+   */
+  private static void sync(ModuleServices modules, PartSpaceBlockEntity space, ModulePart part) {
+    SignalModule module = part.module().orElseThrow();
+    ModuleSync result = modules.sync().sync(module, part.registeredIn(), entryOf(space, part));
+    if (result.cleared()) {
+      part.loseNetwork();
+    }
+    if (!result.registeredIn().equals(part.registeredIn())) {
+      part.registeredIn(result.registeredIn());
+    }
+  }
+
+  /** What the network keeps of the module: its kind, name, place and channels (answer 810). */
+  private static ModuleEntry entryOf(PartSpaceBlockEntity space, ModulePart part) {
+    SignalModule module = part.module().orElseThrow();
+    return new ModuleEntry(
+        module.id(),
+        part.id(),
+        module.name(),
+        new NodePosition(locationOf(space), Faces.of(part.face())),
+        ModuleChannels.of(part));
   }
 
   /** An input from the back edge, or from a channel of the last tick (answers 387 and 412). */
