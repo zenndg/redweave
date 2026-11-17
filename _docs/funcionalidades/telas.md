@@ -87,7 +87,7 @@ O mostrador do relógio é um sprite, e o anel de progresso e o arco do pulso s�
 |---|---|
 | Cabeçalho | O quadrado na cor da rede e o nome dela. Para o dono, o clique no quadrado abre a paleta, e o botão `Rename` troca o nome por um campo de texto (perguntas 156 e 212) |
 | Estado | `Online · <n> components`, com os nós e os módulos (pergunta 804) |
-| Abas | `Components`, `Signals`, `Access` e `Log`, esta com a #90 (perguntas 214, 215 e 809) |
+| Abas | `Components`, `Signals`, `Access` e `Log`, esta com a #90, todas com 72 px de largura, para caber `Componentes` (perguntas 214, 215, 809 e 856) |
 | Nodes | Uma linha por nó, na ordem em que entraram na rede, com as colunas `Node`, `Type`, `Signal` e `State` (perguntas 216 e 335). O tipo é `In`, `Out`, `In/Out` ou `—`, pelos slots ativos (perguntas 283, 337 e 339). O sinal é o da lente, o mais forte entre as leituras e a emissão, e 0 num nó que não conta (pergunta 98). O estado é `Online`, `Unloaded`, em âmbar, ou `Out of range`, em vermelho, sempre em texto, e só ele leva a cor (perguntas 29, 284 e 336). A posição do nó fica na linha aberta, só para o dono (perguntas 149, 335 e 340). O Signal Remote não entra na lista: ele aparece só na contagem do rodapé, e a lista do vínculo mostra só redes `Online` (perguntas 359 e 364) |
 | Log | Uma linha por mudança de valor de uma entrada ou de uma saída, e de cada valor que um Signal Module escreve num canal, com o nome do módulo e a direção `Output` (perguntas 392 e 396), a mais nova no topo, com o horário real do servidor em cinza, o nome do nó, o quadrado da cor e o número do canal, ou o nome que o dono deu, a direção e o valor à direita, como `14:32:05  Iron Door  ■ 15  Output  12`. Guarda as últimas `log.size` linhas da rede, só em memória, e chega só a quem está com a tela aberta (perguntas 147, 148, 214, 770 e 771) |
 | Rodapé | Duas linhas, como a prancha (pergunta 373). À esquerda, os canais em uso, como `3 of 16 channels in use`, e, embaixo, `Owner: <dono>` ou, para os outros, o cadeado e `Only the owner can change this network.` À direita, na primeira linha, quantos nós estão `Unloaded`, em âmbar, e quantos Signal Remotes contam agora, como `● 0 unloaded · ● 1 remotes on`; na segunda, os `Out of range`, em vermelho, e quantos Signal Modules escrevem num canal agora, como `● 0 out of range · ● 2 modules on`. As contagens aparecem mesmo com zero. A prancha ainda não mostra `modules on` (perguntas 219, 236, 361, 364, 388 e 413) |
@@ -337,6 +337,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 16:20 | As abas da Tela do Controlador passam a 72 px (pergunta 856, #175). |
 | Zennd | 2026-11-17 15:10 | Inclui a linha `Delay` nas telas dos emissores, do Weather Detector, do Signal Randomizer, do Signal Item Sensor e da Signal Lamp, e a moldura de 186 px (perguntas 850, 853 e 855, #173). |
 | Zennd | 2026-11-17 13:15 | Inclui `Strength` e `Delay` na Tela do Signal Inverter (perguntas 830, 834 e 840). |
 | Zennd | 2026-11-17 10:54 | A aba `Nodes` vira `Components`, com os Signal Modules (perguntas 808 a 815). |
