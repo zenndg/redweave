@@ -24,7 +24,9 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Signal Modules | — | `Módulos de Sinal` em português: a família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. Cada uma tem um dono, quem a colocou, e escreve direto num canal, sem nó. Cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313, 314, 375, 378, 410 e 415) |
 | Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`), o `Signal Inverter` (`signal_inverter`), o `Weather Detector` (`weather_detector`), o `Signal Randomizer` (`signal_randomizer`), o `Signal Lever` (`signal_lever`), o `Signal Button` (`signal_button`) o `Signal Pressure Plate` (`signal_pressure_plate`), o `Signal Item Sensor` (`signal_item_sensor`), o `Signal Lock` (`signal_lock`), o `Signal Lamp` (`signal_lamp`) e o `Signal Alarm` (`signal_alarm`) (perguntas 300, 457, 475, 550, 633, 643, 650 e 691) |
 | Conexão | `Connection` | Uma entrada ou uma saída de um módulo, ligada a uma borda da placa (`Edge`) ou a um canal da rede do módulo (`Channel`), nunca aos dois. Não é uma porta (perguntas 376 e 420) |
-| Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha, e queima num laço (perguntas 296, 310, 444, 445 e 447) |
+| Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B com a força escolhida quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha e o delay escolhido, e queima num laço (perguntas 296, 310, 444, 445, 447, 830 e 834) |
+| Delay na saída | `OutputDelay` | O tempo, de 0 a 15 s em segundos inteiros, que a saída de um módulo espera para seguir uma mudança, ao ligar e ao desligar. `Atraso` em português, na tela (perguntas 830, 831 e 837) |
+| Linha de atraso | `DelayLine` | As mudanças que a saída ainda espera, cada uma com os ticks que faltam, salvas com o módulo (perguntas 832, 836 e 838) |
 | Signal Randomizer | `signal_randomizer` | `Sorteador de Sinal` em português: o módulo de fonte que, ligado, sorteia a cada intervalo um valor de 0 a 15 (`Analog`) ou 0 ou 15 (`Binary`) e o mantém na saída até o próximo sorteio (perguntas 475, 476, 478 e 486) |
 | Signal Timer | `signal_timer` | `Temporizador de Sinal` em português: o módulo que, a cada intervalo, liga a saída por um pulso, e para enquanto a entrada `Pause` recebe sinal (perguntas 379, 380 e 410) |
 | Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
@@ -66,6 +68,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:45 | Adiciona o delay na saída e a linha de atraso, e a força do Signal Inverter (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (pergunta 778). |
 | Zennd | 2026-11-16 15:20 | Leva o Signal Alarm à lista de módulos e diz o que entrou na #142. |
 | Zennd | 2026-11-16 14:00 | O `Copy` do Configurador também copia os Signal Modules (perguntas 722 a 736). |

@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.menu;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ModulePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.domain.module.InverterSettings;
 import java.util.Optional;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.ContainerData;
@@ -35,6 +36,15 @@ final class InverterScreenData implements ContainerData {
       case InverterScreenLayout.INPUT -> ModuleScreenValues.code(found.input());
       case InverterScreenLayout.OUTPUT -> ModuleScreenValues.code(found.output());
       case InverterScreenLayout.INPUT_ON -> found.inputOn() ? 1 : 0;
+      default -> settingAt(index, found.inverter().settings());
+    };
+  }
+
+  /** The strength and the delay, in whole seconds (answers 830 and 834). */
+  private static int settingAt(int index, InverterSettings settings) {
+    return switch (index) {
+      case InverterScreenLayout.STRENGTH -> settings.strength().strength();
+      case InverterScreenLayout.DELAY_SECONDS -> settings.delay().seconds();
       default -> ModuleScreenValues.NONE;
     };
   }

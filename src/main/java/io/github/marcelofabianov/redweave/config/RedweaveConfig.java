@@ -76,6 +76,10 @@ public final class RedweaveConfig {
   private static final String MAX_RING_COMMENT = "Longest gap of Signal Alarm rings, in ticks.";
   private static final String MAX_DURATION_COMMENT = "Longest a Signal Alarm rings, in ticks.";
   private static final String MODULE_NAME_COMMENT = "Maximum length of a Signal Module name.";
+  private static final String MAX_DELAY_COMMENT = "Longest module output delay, ticks; 0 is off.";
+  private static final String MAX_DELAY_KEY = "max_output_delay_ticks";
+  private static final int DEFAULT_MAX_DELAY = 300;
+  private static final int HIGHEST_MAX_DELAY = 1200;
   private static final String TOGGLES_COMMENT = "Output changes that burn out a Signal Inverter.";
   private static final String WINDOW_COMMENT = "Ticks within which those changes are counted.";
   private static final String BURNOUT_COMMENT = "Ticks a burnt out Signal Inverter stays off.";
@@ -167,6 +171,7 @@ public final class RedweaveConfig {
   static final ModConfigSpec.IntValue ALARM_MAX_INTERVAL_TICKS;
   static final ModConfigSpec.IntValue ALARM_MAX_DURATION_TICKS;
   static final ModConfigSpec.IntValue MODULE_NAME_LENGTH;
+  static final ModConfigSpec.IntValue MAX_OUTPUT_DELAY_TICKS;
   static final ModConfigSpec.IntValue BURNOUT_TOGGLES;
   static final ModConfigSpec.IntValue BURNOUT_WINDOW_TICKS;
   static final ModConfigSpec.IntValue BURNOUT_TICKS;
@@ -235,6 +240,10 @@ public final class RedweaveConfig {
         builder
             .comment(MODULE_NAME_COMMENT)
             .defineInRange(NAME_LENGTH, DEFAULT_MODULE_NAME, 1, MAX_NAME);
+    MAX_OUTPUT_DELAY_TICKS =
+        builder
+            .comment(MAX_DELAY_COMMENT)
+            .defineInRange(MAX_DELAY_KEY, DEFAULT_MAX_DELAY, 0, HIGHEST_MAX_DELAY);
     builder.pop();
     builder.push(RANDOMIZER);
     RANDOMIZER_MIN_INTERVAL_TICKS =

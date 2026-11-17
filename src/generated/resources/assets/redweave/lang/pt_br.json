@@ -114,6 +114,7 @@
   "screen.redweave.controller.tab.nodes": "Componentes",
   "screen.redweave.controller.tab.signals": "Sinais",
   "screen.redweave.controller.unloaded": "%s descarregados",
+  "screen.redweave.module.delay": "Atraso",
   "screen.redweave.node.back": "Voltar",
   "screen.redweave.node.channels_active": "%s de %s canais ativos",
   "screen.redweave.node.choose_network": "Escolha uma rede",

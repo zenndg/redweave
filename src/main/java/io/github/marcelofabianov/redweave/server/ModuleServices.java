@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.server;
 import io.github.marcelofabianov.redweave.application.ApplyModules;
 import io.github.marcelofabianov.redweave.application.ChangeAlarm;
 import io.github.marcelofabianov.redweave.application.ChangeButton;
+import io.github.marcelofabianov.redweave.application.ChangeInverter;
 import io.github.marcelofabianov.redweave.application.ChangeItemSensor;
 import io.github.marcelofabianov.redweave.application.ChangeLamp;
 import io.github.marcelofabianov.redweave.application.ChangeLever;
@@ -34,6 +35,7 @@ public final class ModuleServices {
   private final ChangeWeatherDetector changeDetector = new ChangeWeatherDetector();
   private final ChangeRandomizer changeRandomizer = new ChangeRandomizer();
   private final ChangeLever changeLever = new ChangeLever();
+  private final ChangeInverter changeInverter = new ChangeInverter();
   private final ChangeButton changeButton = new ChangeButton();
   private final ChangePressurePlate changePressurePlate = new ChangePressurePlate();
   private final ChangeItemSensor changeItemSensor = new ChangeItemSensor();
@@ -87,6 +89,10 @@ public final class ModuleServices {
 
   public ChangeLever changeLever() {
     return changeLever;
+  }
+
+  public ChangeInverter changeInverter() {
+    return changeInverter;
   }
 
   public ChangeButton changeButton() {

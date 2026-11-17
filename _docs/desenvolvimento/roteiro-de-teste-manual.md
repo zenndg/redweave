@@ -647,10 +647,32 @@ Confira o visual da #167 e da #169 (perguntas 798 a 800 e 820 a 829), com uma l�
 | 400 | Ponha um nó no mesmo espaço e olhe a lâmpada de vários ângulos, também atrás de água ou vidro | O vidro fica translúcido, sem sumir nem cobrir as outras partes |
 | 401 | Abra o inventário | O ícone 2D novo, com a cúpula, a faixa e o núcleo |
 
+## Fase 2: o delay e a força do Signal Inverter
+
+Confira a #171 (perguntas 830 a 844), com um Signal Inverter no chão, uma lâmpada de redstone na frente e uma alavanca atrás.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 402 | Abra a tela de um inversor novo | `Strength` com `15` e `Delay` com `0 s`, cada um entre `−` e `+`, acima de `Input` e `Output` |
+| 403 | Ligue e desligue a alavanca com `Delay` em `0 s` | A lâmpada segue como antes da #171, com o atraso curto da tocha |
+| 404 | Ponha `Delay` em `3 s` com o `+` e ligue a alavanca | A lâmpada apaga 3 s depois; desligando a alavanca, acende 3 s depois |
+| 405 | Com `3 s`, ligue e desligue a alavanca em menos de 1 s | O pulso aparece inteiro na lâmpada, 3 s depois, com a mesma duração |
+| 406 | Passe do `15 s` com o `+` e de `0 s` com o `−` | O valor para em `15 s` e em `0 s` |
+| 407 | Com uma saída num canal e um nó lendo o canal, baixe `Strength` para `7` | O nó lê 7 na hora, também com uma mudança esperando o delay |
+| 408 | Com `5 s`, ligue a alavanca, saia do mundo antes de a lâmpada apagar e volte | A lâmpada apaga no tempo que faltava, depois de o chunk carregar |
+| 409 | Com `5 s` e uma mudança esperando, mude o `Delay` para `1 s` | A mudança que esperava sai no tempo de antes, e as novas usam `1 s` |
+| 410 | Copie um inversor com `Strength` `9` e `Delay` `4 s` e cole noutro | O outro fica com `9` e `4 s`, sem a mudança que o primeiro esperava |
+| 411 | Monte um laço de inversores com `Delay` em `2 s` | O laço queima tão rápido quanto sem delay, e a lâmpada apaga de vez até ele voltar |
+| 412 | Abra a tela como outro player | `−` e `+` desligados, sem mudar nada |
+| 413 | Abra um mundo salvo antes da #171, com um inversor | Ele abre com `15` e `0 s` e funciona como antes |
+| 414 | Mude `module.max_output_delay_ticks` para `0` no config e abra a tela | O `Delay` fica em `0 s`, e o `+` não passa dele |
+| 415 | Troque o idioma para Português | `Força`, `Atraso` e `3 s` |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-17 13:50 | Inclui os passos 402 a 415, do delay e da força do Signal Inverter (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 12:20 | Os passos 394 e 399 passam a 5 px de altura (pergunta 829, #169). |
 | Zennd | 2026-11-17 11:47 | Inclui os passos 394 a 401, do visual novo da Signal Lamp (perguntas 820 a 828, #167). |
 | Zennd | 2026-11-17 11:12 | Inclui os passos 384 a 393, dos componentes da rede, e troca os nós por componentes nos outros passos (perguntas 801 a 817, #165). |

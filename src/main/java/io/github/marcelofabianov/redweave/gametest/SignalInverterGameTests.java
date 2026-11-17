@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -35,6 +36,9 @@ public final class SignalInverterGameTests {
   private static final float LOOK_NORTH = 180;
   private static final int BURNOUT = 120;
   private static final int DAMAGED_BURNOUT = -5;
+  private static final int SEVEN = 7;
+  private static final int TWO_SECONDS = 40;
+  private static final int WAITING = 12;
   private static final String NAME = "Lamp switch";
   private static final String RED = "red";
   private static final String YELLOW = "yellow";
@@ -103,7 +107,7 @@ public final class SignalInverterGameTests {
         .thenSucceed();
   }
 
-  /** Its connections and what is left of its burnout come back whole (answer 450, rule 15). */
+  /** Its connections, burnout, strength, delay and line come back whole (450, 836, rule 15). */
   @GameTest(template = EMPTY)
   public static void anInverterKeepsItsSaveWhole(GameTestHelper helper) {
     CompoundTag saved = fullSave(BURNOUT);
@@ -136,7 +140,10 @@ public final class SignalInverterGameTests {
     return InverterPart.load(Direction.DOWN, tag);
   }
 
-  /** The save of a burnt inverter with a name, a network and both connections on channels. */
+  /**
+   * The save of a burnt inverter with a name, a network, both connections on channels, a strength,
+   * a delay and a change waiting in its line (answers 450, 834, 836 and 844).
+   */
   private static CompoundTag fullSave(int burnout) {
     CompoundTag tag = new CompoundTag();
     tag.putUUID(Keys.MODULE_ID, MODULE);
@@ -146,6 +153,14 @@ public final class SignalInverterGameTests {
     tag.putString(Keys.INPUT, YELLOW);
     tag.putString(Keys.OUTPUT, RED);
     tag.putInt(Keys.BURNOUT, burnout);
+    tag.putInt(Keys.STRENGTH, SEVEN);
+    tag.putInt(Keys.DELAY, TWO_SECONDS);
+    ListTag line = new ListTag();
+    CompoundTag change = new CompoundTag();
+    change.putBoolean(Keys.ON, false);
+    change.putInt(Keys.TICKS, WAITING);
+    line.add(change);
+    tag.put(Keys.LINE, line);
     tag.putString(Keys.FRONT, Direction.NORTH.getSerializedName());
     tag.putBoolean(Keys.POWERED, true);
     return tag;
@@ -162,6 +177,11 @@ public final class SignalInverterGameTests {
     static final String INPUT = "input";
     static final String OUTPUT = "output";
     static final String BURNOUT = "burnout_ticks";
+    static final String STRENGTH = "strength";
+    static final String DELAY = "output_delay_ticks";
+    static final String LINE = "delay_line";
+    static final String ON = "on";
+    static final String TICKS = "ticks";
 
     private Keys() {}
   }

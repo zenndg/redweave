@@ -3,9 +3,13 @@ package io.github.marcelofabianov.redweave.block.part;
 import io.github.marcelofabianov.redweave.block.ModuleMessages;
 import io.github.marcelofabianov.redweave.block.PartSpaceBlockEntity;
 import io.github.marcelofabianov.redweave.config.NeoForgeInverterLimits;
+import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.Connection;
+import io.github.marcelofabianov.redweave.domain.module.DelayLine;
 import io.github.marcelofabianov.redweave.domain.module.InverterLimits;
+import io.github.marcelofabianov.redweave.domain.module.InverterSettings;
 import io.github.marcelofabianov.redweave.domain.module.InverterState;
+import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalInverter;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.InverterMenu;
@@ -34,6 +38,7 @@ public final class InverterPart extends ModulePart {
       List.of(ModuleLooks.NONE, ModuleLooks.ON, ModuleLooks.BURNT);
 
   private static final InverterLimits LIMITS = new NeoForgeInverterLimits();
+  private static final OutputDelayLimits DELAY_LIMITS = new NeoForgeOutputDelayLimits();
 
   private SignalInverter inverter = SignalInverter.placed();
   private Connection input = Connection.EDGE;
@@ -59,7 +64,7 @@ public final class InverterPart extends ModulePart {
   /** What the Configurator copies: its settings, never what it is doing now (answer 725). */
   @Override
   protected List<String> copiedKeys() {
-    return List.of(InverterSave.INPUT, InverterSave.OUTPUT);
+    return List.of(InverterSave.INPUT, InverterSave.OUTPUT, StrengthSave.STRENGTH, DelaySave.DELAY);
   }
 
   @Override
@@ -73,7 +78,11 @@ public final class InverterPart extends ModulePart {
   protected void readRule(CompoundTag tag) {
     input = ModuleSave.readConnection(tag, InverterSave.INPUT);
     output = ModuleSave.readConnection(tag, InverterSave.OUTPUT);
-    inverter = SignalInverter.restore(InverterSave.readBurnout(tag));
+    InverterSettings settings =
+        new InverterSettings(
+            StrengthSave.read(tag, ID), DelaySave.readDelay(tag, ID, DELAY_LIMITS));
+    DelayLine line = tag.contains(DelaySave.LINE) ? DelaySave.readLine(tag, ID) : inverter.line();
+    inverter = SignalInverter.restore(InverterSave.readBurnout(tag), settings, line);
   }
 
   @Override
@@ -117,6 +126,9 @@ public final class InverterPart extends ModulePart {
     ModuleSave.writeConnection(tag, InverterSave.INPUT, input);
     ModuleSave.writeConnection(tag, InverterSave.OUTPUT, output);
     InverterSave.writeBurnout(tag, inverter.burnoutTicks());
+    StrengthSave.write(tag, inverter.settings().strength());
+    DelaySave.writeDelay(tag, inverter.settings().delay());
+    DelaySave.writeLine(tag, inverter.line());
   }
 
   public SignalInverter inverter() {
@@ -173,6 +185,12 @@ public final class InverterPart extends ModulePart {
     if (burnoutChanged) {
       markDirty();
     }
+  }
+
+  /** The owner changed the strength or the delay; what waits in the line stays (839 and 843). */
+  public void setSettings(SignalInverter next) {
+    inverter = next;
+    changed();
   }
 
   /** The owner moved the input to its edge or to a channel (answers 441 and 451). */
