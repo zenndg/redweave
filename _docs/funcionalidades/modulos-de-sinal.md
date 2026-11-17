@@ -171,12 +171,13 @@ Os valores ficam em [`limites.md`](../limites.md).
 - O que cada módulo faz, na página dele.
 - Copiar e colar a configuração de um módulo com o `Copy`, em [`configurador.md`](configurador.md#copiar-e-colar-todos-os-itens).
 - A prévia de posicionamento (#33) e o Jade e o The One Probe (#23).
-- As receitas dos módulos entregues, na forma comum da pergunta 753, em [`itens.md`](../itens.md#receitas).
+- As receitas dos módulos entregues, na forma comum das perguntas 753 e 766, com um Signal Node, e a da Signal Lamp à parte (pergunta 767), em [`itens.md`](../itens.md#receitas).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:55 | A forma comum das receitas passa a levar um Signal Node na #159 (perguntas 766 e 767). |
 | Zennd | 2026-11-16 16:05 | As receitas dos módulos entregues entram na #157 (pergunta 753). |
 | Zennd | 2026-11-16 15:19 | Leva o Signal Alarm à base: a lista de módulos, o `Toggle`, a rede `Offline`, as mensagens e o rótulo (perguntas 643, 649, 743 e 744). |
 | Zennd | 2026-11-16 13:59 | O `Copy` copia e cola a configuração dos módulos, menos o Signal Lock (perguntas 722 a 736). |

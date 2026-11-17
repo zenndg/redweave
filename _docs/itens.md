@@ -92,22 +92,22 @@ Alguns blocos do mod não são itens e não aparecem na aba criativa:
 
 ## Receitas
 
-As receitas dos itens entregues, na mesa de trabalho, com materiais só do jogo puro e pelo menos uma redstone em cada receita de fabricar (perguntas 745, 746 e 764). Cada uma tem o ID do item, como `redweave:signal_node`, e fica em JSON de datapack gerado pelo datagen, que o pack pode sobrescrever com KubeJS (regra 4). Todas se desbloqueiam ao pegar uma redstone. Um GameTest (`ItemRecipeGameTests`) confere que todo item registrado tem receita, com redstone, e cada grade abaixo.
+As receitas dos itens entregues, na mesa de trabalho, com materiais do jogo puro, mais o Signal Node nos módulos, e pelo menos uma redstone em cada receita de fabricar (perguntas 745, 746, 764 e 766). Cada uma tem o ID do item, como `redweave:signal_node`, e fica em JSON de datapack gerado pelo datagen, que o pack pode sobrescrever com KubeJS (regra 4). Todas se desbloqueiam ao pegar uma redstone. Um GameTest (`ItemRecipeGameTests`) confere que todo item registrado tem receita, com redstone, e cada grade abaixo.
 
 Na grade, cada linha da mesa vai separada por `/`, e `·` é um slot vazio.
 
 | Item | Grade | Dá | Pergunta |
 |---|---|---|---|
-| Network Controller | Deepslate polido, redstone, deepslate polido / barra de cobre, olho do ender, barra de cobre / deepslate polido, bloco de redstone, deepslate polido | 1 | 747 |
+| Network Controller | Deepslate polido, redstone, deepslate polido / barra de cobre, pérola do ender, barra de cobre / deepslate polido, bloco de redstone, deepslate polido | 1 | 747 e 768 |
 | Network Terminal | Deepslate polido, painel de vidro, deepslate polido / barra de cobre, pérola do ender, barra de cobre / deepslate polido, redstone, deepslate polido | 1 | 748 |
-| Signal Node | Barra de cobre, redstone, barra de cobre / deepslate polido, pérola do ender, deepslate polido | 2 | 749 |
+| Signal Node | Barra de cobre, redstone, barra de cobre / deepslate polido, pérola do ender, deepslate polido | 8 | 749 e 765 |
 | Signal Cable (branco) | Lã branca × 3 / barra de cobre, redstone, barra de cobre / lã branca × 3 | 8 | 750 |
 | Configurator | ·, ·, redstone / ·, barra de cobre, · / barra de cobre, ·, · | 1 | 751 |
-| Signal Remote | Barra de cobre, painel de vidro, barra de cobre / barra de cobre, pérola do ender, barra de cobre / barra de cobre, redstone, barra de cobre | 1 | 752 |
+| Signal Remote | Barra de cobre, painel de vidro, barra de cobre / barra de cobre, pérola do ender, barra de cobre / deepslate polido, redstone, deepslate polido | 1 | 752 e 769 |
 
 ### Signal Modules
 
-Os 11 módulos entregues têm a mesma forma, para o player aprender uma vez: o item do jogo de cada módulo no topo, `·, X, · / barra de cobre, redstone, barra de cobre / deepslate polido × 3`, que dá 1 módulo (pergunta 753).
+Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item do jogo de cada módulo no topo, `·, X, · / barra de cobre, redstone, barra de cobre / deepslate polido, Signal Node, deepslate polido`, que dá 1 módulo (perguntas 753 e 766). A Signal Lamp é a exceção: `·, vidro, · / barra de cobre, redstone, barra de cobre / deepslate polido, lâmpada de redstone, deepslate polido`, sem nó, que dá 1 lâmpada (pergunta 767).
 
 | Módulo | X | Pergunta |
 |---|---|---|
@@ -118,7 +118,6 @@ Os 11 módulos entregues têm a mesma forma, para o player aprender uma vez: o i
 | Signal Lever | Alavanca | 758 |
 | Signal Button | Botão de pedra | 758 |
 | Signal Pressure Plate | Placa de pressão de pedra | 758 |
-| Signal Lamp | Lâmpada de redstone | 758 |
 | Signal Item Sensor | Comparador | 759 |
 | Signal Lock | Gancho de armadilha | 760 |
 | Signal Alarm | Bloco musical | 761 |
@@ -131,6 +130,7 @@ Os 11 módulos entregues têm a mesma forma, para o player aprender uma vez: o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:55 | Revisa as receitas do Signal Node, do Network Controller, do Signal Remote, dos módulos e da Signal Lamp (perguntas 765 a 769, #159). |
 | Zennd | 2026-11-16 16:05 | Adiciona as receitas dos itens entregues e o tingir só do cabo branco (perguntas 745 a 764, #157). |
 | Zennd | 2026-11-16 15:20 | O Signal Alarm passa a entregue na #142. |
 | Zennd | 2026-11-16 13:18 | Marca o Signal Lamp como entregue na #143. |

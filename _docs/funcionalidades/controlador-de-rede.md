@@ -96,12 +96,13 @@ O blockstate tem `facing`, nas 4 direções horizontais, e `linked`, verdadeiro 
 
 - O Network Terminal, que administra as redes do player ([`terminal-de-rede.md`](terminal-de-rede.md)).
 - A textura final e os LEDs ao vivo (issue #24).
-- A receita, em [`itens.md`](../itens.md#receitas) (pergunta 747).
+- A receita, em [`itens.md`](../itens.md#receitas) (perguntas 747 e 768).
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-16 23:55 | A receita troca o olho do ender pela pérola do ender na #159 (pergunta 768). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 747). |
 | Zennd | 2026-11-12 17:18 | Inclui o `Toggle`, o topo aceso só com a rede `Online` e as chaves `node.name_length` e `configurator.label_range` (perguntas 144, 177, 241 e 268). |
 | Zennd | 2026-11-12 09:39 | Atualiza as chaves do config: sai `node.slots` e entram `network.max_per_player` e `log.size` (perguntas 145, 147 e 224). |
