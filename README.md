@@ -44,7 +44,7 @@ Redweave brings those ideas together, focused on **signal only** (items, fluids 
 | Concept | What it is |
 | --- | --- |
 | **Network** | Created by placing a Network Controller: each controller is one network. Has a name, a color and an owner, who is the only one allowed to change it. Every network shares **16 channels**, colored like wool. A Network Terminal lists all of a player's networks. |
-| **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and has 16 channel slots, one per channel color, each enabled or disabled. |
+| **Node** | Attaches to any face of any block. Reads or emits redstone there. Joins a network chosen by the player, has a name, and has 16 channel slots, one per channel color, each enabled or disabled. Its output can wait a delay of 0 to 15 s. |
 | **Channel** | One of the 16 signal lines of a network, each with a wool color and an optional name. Each node slot is tied to one channel and sets its direction (input or output) and block face. Several inputs on one channel → the strongest signal wins. |
 | **Signal Module** | A plate that attaches to any face of any block, like a node, and holds signal logic: timer, inverter, gate, counter, memory, latch and more. Source modules, like the Signal Lever, the Signal Button and the Signal Pressure Plate, give a signal of their own, and the Signal Item Sensor reads a container. Its inputs and output are the edges of the plate or network channels. |
 | **Signal Cable** | In v0.1.0 (#44): a physical redstone cable that attaches to any face of any block and works like vanilla redstone dust. One item, white at first, dyed in 16 colors; a cable only connects to cables of its own color and owner, so cables of different colors run side by side, and it loses 1 of strength per block, as dust does. |
@@ -74,13 +74,13 @@ Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work 
 
 ## Items
 
-Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159). Every Signal Module with an output, except the Signal Timer and the Signal Lock, has an output delay of 0 to 15 s set on its screen (#171, #173).
+Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159). Every Signal Module with an output, except the Signal Timer and the Signal Lock, has an output delay of 0 to 15 s set on its screen (#171, #173), and so does the Signal Node (#177).
 
 | Item | What it does | Status |
 | --- | --- | --- |
 | Network Controller | Creates a network when placed, with a name, a color and an owner | Delivered (#14) |
 | Network Terminal | Lists your networks and turns them off, on, clears or deletes them | Delivered (#89) |
-| Signal Node | Attaches to any face of a block and reads or emits redstone there, in 16 color slots | Delivered (#15) |
+| Signal Node | Attaches to any face of a block and reads or emits redstone there, in 16 color slots, with an output delay of up to 15 s | Delivered (#15, #177) |
 | Signal Cable | A physical redstone cable on any face, in 16 colors that keep cables apart | Delivered (#44) |
 | Configurator | The tool that opens, turns, copies, toggles and picks up nodes, modules and cables | Delivered (#17, #86, #136) |
 | Signal Remote | A tablet linked to a node input that turns its channel on, off or pulses it, or to a Signal Lever, Button or Pressure Plate it fires from afar | Delivered (#22, #163) |
@@ -152,7 +152,7 @@ flowchart TB
 src/main/java/io/github/marcelofabianov/redweave/
 ├── RedweaveMod              # entry point: only wires the registries
 ├── domain/                  # pure Java, no Minecraft imports
-│   ├── signal/              # Signal (0–15), ChannelColor
+│   ├── signal/              # Signal (0–15), ChannelColor and the output delay shared by nodes and modules
 │   ├── network/             # Network aggregate, Node, Channel, permissions
 │   ├── circuit/             # AND, OR, XOR and NAND gates and the NOT rule; chips in phase 3
 │   ├── module/              # Signal Module rules: connections, the shared interval and the rules of each module

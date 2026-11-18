@@ -116,6 +116,7 @@ O nó (`Node`) é a peça grudada numa face de um bloco. Ele pertence a no máxi
 | Quem colocou | O player que colocou o nó, gravado na parte, dentro do contêiner `part_space` desde a #44 (pergunta 543). Num nó sem rede, é o dono para a escolha da rede e para a Chave do Configurator (perguntas 165 e 172) |
 | Posição | A dimensão, o bloco e a face onde o nó está grudado |
 | Slots | 16, um por cor de canal, fixos, cada um um `ChannelSlot`. Todos nascem inativos, e o nó pode ter de 0 a 16 ativos (perguntas 224 e 226) |
+| Delay na saída | Um `OutputDelay` do nó inteiro, de 0 a 15 s, que nasce em 0 s. Só o dono da rede o muda, e o nó o mantém ao trocar de rede. Atrasa só a emissão no mundo: o valor do canal, o estado e o log seguem na hora ([delay na saída do nó](no-de-sinal.md#delay-na-saída), perguntas 859 a 863 e 870) |
 
 ### Slot de canal
 
@@ -232,6 +233,7 @@ As chaves entram com o código que as lê (issue do config) e, depois de publica
 | Tamanho do nome da rede | 32 caracteres |
 | Tamanho do nome do canal | 16 caracteres |
 | Tamanho do nome do nó | 16 caracteres (pergunta 144) |
+| Delay máximo na saída do nó | O dos módulos, 300 ticks, 15 s (pergunta 864) |
 | Redes por player | 10 (pergunta 145) |
 | Linhas do log por rede | 100 (pergunta 147) |
 
@@ -260,6 +262,7 @@ São as invariantes que os testes do domínio cobrem (issues #9 a #13).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | O nó ganha o delay na saída, com o limite dos módulos (perguntas 859 a 864 e 870, #177). |
 | Zennd | 2026-11-17 10:54 | Inclui os componentes da rede e o cadastro dos Signal Modules (perguntas 801 a 815). |
 | Zennd | 2026-11-17 10:31 | O tablet vinculado a um emissor fica fora do `RemoteInputs` (pergunta 791). |
 | Zennd | 2026-11-17 09:59 | O canal aparece sem o nome da cor, e o status do slot é `On` ou `Off` (perguntas 770 e 774). |

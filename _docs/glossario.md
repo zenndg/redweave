@@ -19,15 +19,15 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 | Nó | `Node` | Peça grudada numa face de um bloco. Lê ou emite redstone ali, por slots de canal. Tem um nome, que nasce com os 8 primeiros caracteres do ID (perguntas 142 e 144); sem nome próprio, mostra esse padrão (`displayName`, pergunta 206) |
 | Tipo do nó | `NodeKind` | O que um nó faz pelos slots ativos: `In`, `Out`, `In/Out` ou `—`, na coluna `Type` das listas de nós (perguntas 283, 337 e 339) |
 | Escolha de rede | `NetworkChoices` | A lista das redes `Online` de um player na Tela do Nó, com a última usada no topo, para quem colocou um nó novo e para o dono que troca o nó de rede (perguntas 139, 141 e 203) |
-| Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: status, direção, face do bloco e canal da rede. Não tem lógica: o nó só lê e emite (pergunta 308) |
+| Slot de canal | `ChannelSlot` | A configuração de um nó para um canal: status, direção, face do bloco e canal da rede. Não tem lógica: o nó só lê e emite, com o delay na saída do nó inteiro (perguntas 308 e 859) |
 | Direção | `Direction` | Entrada, quando o nó lê o bloco, ou saída, quando o nó emite no bloco |
 | Signal Modules | — | `Módulos de Sinal` em português: a família de placas grudadas na face de um bloco, como o Signal Node, com base comum, que guarda toda a lógica de sinal. Cada uma tem um dono, quem a colocou, e escreve direto num canal, sem nó. Cada módulo só implementa a sua regra (perguntas 297, 300, 308, 313, 314, 375, 378, 410 e 415) |
 | Módulo | `SignalModule` | Um membro dos Signal Modules, como o `Signal Timer` (`signal_timer`), o `Signal Inverter` (`signal_inverter`), o `Weather Detector` (`weather_detector`), o `Signal Randomizer` (`signal_randomizer`), o `Signal Lever` (`signal_lever`), o `Signal Button` (`signal_button`) o `Signal Pressure Plate` (`signal_pressure_plate`), o `Signal Item Sensor` (`signal_item_sensor`), o `Signal Lock` (`signal_lock`), o `Signal Lamp` (`signal_lamp`) e o `Signal Alarm` (`signal_alarm`) (perguntas 300, 457, 475, 550, 633, 643, 650 e 691) |
 | Conexão | `Connection` | Uma entrada ou uma saída de um módulo, ligada a uma borda da placa (`Edge`) ou a um canal da rede do módulo (`Channel`), nunca aos dois. Não é uma porta (perguntas 376 e 420) |
 | Signal Inverter | `signal_inverter` | `Inversor de Sinal` em português: o NOT do mod, o módulo que liga a saída B com a força escolhida quando a entrada A não tem sinal e a desliga quando tem, com o atraso da tocha e o delay escolhido, e queima num laço (perguntas 296, 310, 444, 445, 447, 830 e 834) |
-| Delay na saída | `OutputDelay` | O tempo, de 0 a 15 s em segundos inteiros, que a saída de um módulo espera para seguir uma mudança, ao ligar e ao desligar. `Atraso` em português, na tela. Todo módulo com saída o tem, menos o Signal Timer e o Signal Lock (perguntas 830, 831, 837 e 849) |
+| Delay na saída | `OutputDelay` | O tempo, de 0 a 15 s em segundos inteiros, que a saída de um módulo espera para seguir uma mudança, ao ligar e ao desligar. `Atraso` em português, na tela. Todo módulo com saída o tem, menos o Signal Timer e o Signal Lock, e o Signal Node também, um por nó (perguntas 830, 831, 837, 849, 859 e 861) |
 | Linha de atraso | `DelayLine` | As mudanças que a saída ainda espera, cada uma com o sinal de 0 a 15 e os ticks que faltam, salvas com o módulo, até `module.max_delay_changes` (perguntas 832, 836, 838, 847 e 854) |
-| Saída atrasada | `DelayedOutput` | A saída de um módulo depois do delay: o que a regra decide agora entra na linha, e o que sai dela é a saída. O estado e a luz seguem a regra na hora (perguntas 845, 851 e 852) |
+| Saída atrasada | `DelayedOutput` | A saída de um módulo ou de um nó depois do delay: o que a regra decide agora entra na linha, e o que sai dela é a saída. O estado e a luz seguem a regra na hora. Um nó que deixa de contar tem a saída cortada: 0 na hora, sem nada esperando (perguntas 845, 851, 852, 862 e 863) |
 | Signal Randomizer | `signal_randomizer` | `Sorteador de Sinal` em português: o módulo de fonte que, ligado, sorteia a cada intervalo um valor de 0 a 15 (`Analog`) ou 0 ou 15 (`Binary`) e o mantém na saída até o próximo sorteio (perguntas 475, 476, 478 e 486) |
 | Signal Timer | `signal_timer` | `Temporizador de Sinal` em português: o módulo que, a cada intervalo, liga a saída por um pulso, e para enquanto a entrada `Pause` recebe sinal (perguntas 379, 380 e 410) |
 | Multipart | `part_space` (bloco) | O sistema próprio que deixa várias partes dividirem um espaço de bloco: um bloco contêiner, `redweave:part_space`, guarda até 6 partes, uma por face, com no máximo 2 cabos (perguntas 502, 511 a 513 e 523) |
@@ -69,6 +69,7 @@ A linguagem do domínio. Os nomes são os mesmos no código, nos documentos e no
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | O delay na saída e a saída atrasada passam a valer também para o Signal Node (perguntas 859 a 863, #177). |
 | Zennd | 2026-11-17 15:15 | A linha de atraso guarda o sinal, com o teto, e entra a saída atrasada (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 13:45 | Adiciona o delay na saída e a linha de atraso, e a força do Signal Inverter (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (pergunta 778). |

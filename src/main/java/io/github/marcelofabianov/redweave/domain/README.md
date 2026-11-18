@@ -8,11 +8,11 @@ O comportamento completo está em [`rede-e-canais.md`](../../../../../../../../_
 
 | Pacote | O que guarda |
 |---|---|
-| `signal/` | O sinal e as cores |
+| `signal/` | O sinal, as cores e o delay na saída, com o `OutputDelay`, a `DelayLine` e a `DelayedOutput`, comuns aos módulos e ao nó desde a #177 (pergunta 865) |
 | `network/` | O agregado `Network`, os nós, os canais e as permissões |
 | `simulation/` | A avaliação por tick |
 | `circuit/` | As portas e a regra NOT, da #28, e os chips, na Fase 3 |
-| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139, o Signal Item Sensor, da #148, o Signal Lock, da #141, o Signal Lamp, da #143, o Signal Alarm, da #142, e o delay na saída, com o `OutputDelay` e a `DelayLine`, da #171, levado aos outros módulos com saída pela `DelayedOutput`, da #173 |
+| `module/` | As regras dos Signal Modules: as conexões e o ciclo do Signal Timer, da #103 (pergunta 323), o Signal Inverter, da #105, o Weather Detector, da #108, o Signal Randomizer, da #109, o Signal Lever, da #130, o Signal Button, da #131, o Signal Pressure Plate, da #132, com a interface `Emitter` dos três, da #139, o Signal Item Sensor, da #148, o Signal Lock, da #141, o Signal Lamp, da #143, o Signal Alarm, da #142, e o delay na saída, da #171, levado aos outros módulos com saída na #173, com as classes em `signal/` desde a #177 |
 | `part/` | A ocupação de um espaço de bloco do multipart: uma parte por face e até 2 cabos, da #44 (perguntas 513 e 537) |
 | `cable/` | O trecho do Signal Cable: quais cabos se ligam e a força de cada um, da #44 (perguntas 509, 537 e 540) |
 
@@ -28,12 +28,13 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `NodeId` | O ID de um nó, um UUID | #9 |
 | `PlayerId` | Um player, pelo UUID que o jogo dá a ele. Identifica o dono | #10 |
 | `Network` | O agregado: nome, cor, dono, controlador, os 16 canais e os nós. Cada operação recebe quem pede e devolve um `Outcome` | #10 |
+| `NodeSettings` | O que o dono ajusta no nó inteiro, por `nodeSettings()`: `rename`, o nome, que saiu do `renameNode` da `Network`, `stepDelay`, um segundo a mais ou a menos dentro do config, e `delay`, o delay de uma colagem ou de um nó que troca de rede. Não muda sinal, então a rede não fica pendente. Saiu da `Network` para o agregado ficar abaixo de 400 linhas (perguntas 144, 426, 859, 860 e 875) | #177 |
 | `Outcome` | O que uma operação fez: `ACCEPTED`, ou o motivo da recusa, como `NOT_OWNER`, `INVALID_NAME`, `ALREADY_ATTACHED`, `UNKNOWN_NODE`, `INVALID_SLOT`, `SLOT_ENABLED`, `ALREADY_PLACED`, `UNKNOWN_NETWORK`, `NETWORK_NOT_ONLINE`, `NETWORK_NOT_OFFLINE`, `NETWORK_LIMIT`, `NETWORK_NOT_UNPLACED` e `TERMINAL_LIMIT`. `UNKNOWN_NETWORK` serve aos casos de uso de `application/` (pergunta 41) | #10, #13, #14, #87, #89 e #20 |
 | `Channel` | Um dos 16 canais da rede: a cor e um nome opcional. Sem nome, as telas mostram o nome da cor traduzido | #10 |
 | `BlockLocation` | Um bloco numa dimensão, como o do controlador. A dimensão é o ID do jogo | #10 |
 | `Face` | As 6 faces de um bloco, na ordem do jogo | #10 |
 | `NodePosition` | Onde o nó está: o bloco e a face | #10 |
-| `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229) | #10, #87 e #20 |
+| `Node` | Um nó, com o nome opcional, a posição e os 16 slots, um por cor: o slot da posição `i` é sempre o canal `i` (pergunta 224). Slot vazio é um canal nunca ativado, e nome vazio é o padrão, que `displayName` calcula (pergunta 206). `enabledChannels` dá os canais ativos na ordem das cores, para os cantos da placa (pergunta 229). `delay` é o `OutputDelay` do nó inteiro, 0 s num nó novo, e `emits` diz se algum slot é uma saída ativa (perguntas 859, 861 e 862) | #10, #87, #20 e #177 |
 | `NodeKind` | O tipo de um nó pelos slots ativos: `INPUT`, `OUTPUT`, `BOTH` ou `NONE`, que `Node.kind` calcula para a coluna `Type` das listas (perguntas 283 e 337) | #107 |
 | `DefaultNames` | O nome padrão de um nó e de uma rede: os 8 primeiros caracteres do ID (pergunta 142) | #87 |
 | `Nodes` | Dentro da rede: os nós, na ordem em que entraram, e as regras de cada um, como o nome inteiro e o slot dentro do nó. Saiu do `Network` como `Channels` | #87 |
@@ -59,7 +60,7 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `Channels` | Dentro da rede: os 16 canais e o nome de cada um. Saiu do `Network` como `Readings` | #16 |
 | `NetworkSnapshot` | Tudo da rede que vai para o save: nome, cor, dono, controlador, os canais com nome, os nós e as leituras. `snapshot()` o tira da rede, e `Network.restore` refaz a rede a partir dele (pergunta 90) | #16 |
 | `SlotReading` | A última leitura de um slot de entrada, como vai para o save | #16 |
-| `NodeCopy` | Os slots já ativados de um nó, com o status (perguntas 230 e 277), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105) | #17 |
+| `NodeCopy` | Os slots já ativados de um nó, com o status (perguntas 230 e 277), copiados pelo Configurator, e a face onde ele estava grudado. `onto` diz como ficam os slots de outro nó depois de colar (pergunta 105). Leva também o delay do nó, nunca as mudanças pendentes (pergunta 868) | #17 e #177 |
 | `CopiedSlot` | Um slot da cópia: a posição no nó e a configuração | #17 |
 | `Pasted` | Os 16 slots de um nó depois de colar e quantos ficaram ativos (perguntas 106 e 230) | #17 e #20 |
 | `SlotEdits` | Dentro da rede: como um slot muda (configurar, ativar, desativar, preparar e liberar), depois de o `Network` conferir o dono. Saiu do `Network` como `SlotChanges` | #89 |
@@ -90,11 +91,11 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 | `InverterState` | Em `module/`: `ON`, `OFF` ou `BURNT_OUT`, a saída do Signal Inverter (pergunta 448) | #105 |
 | `SignalInverter` | Em `module/`: a regra do Signal Inverter, um tick por vez. A saída é o NOT da entrada de 2 ticks antes pela borda, ou de 1 tick pelo canal, que já chega com um de atraso, e passa depois pela `DelayLine` com o delay escolhido. Ligado, dá a força escolhida. O primeiro tick sem nada esperando lê a entrada na hora, e trocas demais na janela, contadas ao entrar na linha, o queimam e esvaziam a linha (perguntas 442, 444, 445, 446 e 830 a 843) | #105 e #171 |
 | `InverterSettings` | Em `module/`: o que o dono escolhe num Signal Inverter, a força de 1 a 15 e o `OutputDelay`; `DEFAULT` é 15 sem delay (perguntas 834 e 844) | #171 |
-| `OutputDelay` | Em `module/`: o delay na saída de um módulo, em segundos inteiros guardados em ticks, de 0 ao máximo do config. `stepped` anda 1 s com `−` e `+`, e `within` e `fittedTo` trazem um valor ao intervalo, em vez de recusar (perguntas 830 e 837) | #171 |
-| `OutputDelayLimits` | Em `module/`: o delay máximo comum a todo módulo, no config. O domínio define a interface, e o config a implementa (pergunta 837) | #171 |
-| `DelayLine` | Em `module/`: as mudanças que a saída ainda espera, cada uma um `Pending`, com o sinal de 0 a 15 e os ticks que faltam. `pass` anda um tick, guarda só o que muda, até o teto do `DelayLineLimits`, e solta o que venceu; uma mudança nunca sai antes da que está à frente, `restore` lê uma linha salva em ordem, e `withStrength` reescreve as pendentes ligadas com a força nova (perguntas 831, 832, 836, 838, 839, 843, 847 e 854) | #171 e #173 |
-| `DelayLineLimits` | Em `module/`: quantas mudanças uma linha de atraso guarda, no config. O domínio define a interface, e o config a implementa (pergunta 847) | #173 |
-| `DelayedOutput` | Em `module/`: a saída de um módulo depois do delay, com o `OutputDelay` e a `DelayLine`. `tick` recebe o que a regra decide agora; o primeiro tick sem nada esperando sai na hora, e `withStrength` muda a saída e o que espera na hora. Os emissores, o Weather Detector, o Signal Randomizer, o Signal Item Sensor e a Signal Lamp a usam (perguntas 845 a 854) | #173 |
+| `OutputDelay` | Em `signal/`: o delay na saída de um módulo, em segundos inteiros guardados em ticks, de 0 ao máximo do config. `stepped` anda 1 s com `−` e `+`, e `within` e `fittedTo` trazem um valor ao intervalo, em vez de recusar (perguntas 830 e 837) | #171 |
+| `OutputDelayLimits` | Em `signal/`: o delay máximo comum a todo módulo, no config. O domínio define a interface, e o config a implementa (pergunta 837) | #171 |
+| `DelayLine` | Em `signal/`: as mudanças que a saída ainda espera, cada uma um `Pending`, com o sinal de 0 a 15 e os ticks que faltam. `pass` anda um tick, guarda só o que muda, até o teto do `DelayLineLimits`, e solta o que venceu; uma mudança nunca sai antes da que está à frente, `restore` lê uma linha salva em ordem, e `withStrength` reescreve as pendentes ligadas com a força nova (perguntas 831, 832, 836, 838, 839, 843, 847 e 854) | #171 e #173 |
+| `DelayLineLimits` | Em `signal/`: quantas mudanças uma linha de atraso guarda, no config. O domínio define a interface, e o config a implementa (pergunta 847) | #173 |
+| `DelayedOutput` | Em `signal/`: a saída de um módulo depois do delay, com o `OutputDelay` e a `DelayLine`. `tick` recebe o que a regra decide agora; o primeiro tick sem nada esperando sai na hora, e `withStrength` muda a saída e o que espera na hora. Os emissores, o Weather Detector, o Signal Randomizer, o Signal Item Sensor e a Signal Lamp a usam (perguntas 845 a 854). Para o nó: `cut` desliga na hora e esvazia a linha, e o que vem depois espera o delay; `resumed` volta do save com o que o nó emitia; e `follows` diz que não há nada a fazer no tick (perguntas 862, 873 e 874) | #173 e #177 |
 | `Weather` | Em `module/`: `CLEAR`, `RAIN`, `THUNDER` ou `NONE`, o clima da dimensão de um Weather Detector, que quem chama fornece. `of` monta o clima do que o jogo diz, e trovão sem chuva conta como céu limpo (perguntas 458 e 464) | #108 |
 | `WeatherMode` | Em `module/`: `RAIN`, que conta também a tempestade, `THUNDER` ou `CLEAR`, com a chave do save e o próximo modo do `Toggle` (perguntas 459, 462 e 467) | #108 |
 | `DetectorState` | Em `module/`: `ON`, `OFF` ou `NO_WEATHER`, a saída do Weather Detector (pergunta 465) | #108 |
@@ -193,6 +194,8 @@ Os nomes são os do [`glossario.md`](../../../../../../../../_docs/glossario.md)
 - **Delay só com as mudanças:** a `DelayLine` guarda a mudança e os ticks que faltam, não o sinal de cada tick, então um delay de 15 s custa o mesmo que um de 1 s e cabe no save. Os ticks só correm com o módulo rodando, então o chunk descarregado congela a linha sem forçar chunk (perguntas 836 e 838, regras 6 e 18).
 - **Ordem antes do delay novo:** uma mudança nova nunca vence antes da última pendente, então mudar o delay nunca faz a saída sair fora de ordem (pergunta 839).
 - **A linha guarda o sinal:** cada mudança guarda o sinal de 0 a 15, para o Signal Randomizer no modo `Analog` repetir a força sorteada. A força continua sendo ajuste: mudar a força reescreve as pendentes ligadas, e a saída muda na hora (perguntas 843 e 854).
+- **Delay do nó fora do simulador:** o delay configurado fica no `Node`, mas a linha pendente fica na parte do nó, no adapter, e não no agregado. Assim a rede continua avaliada só quando um canal muda, o tempo só corre com o chunk carregado, e um nó sem nada esperando não custa nada por tick (perguntas 838 e 860, regras 6 e 18).
+- **Corte na hora:** um nó que deixa de contar, ou sem saída ativa, emite 0 sem esperar o delay, e a linha é esvaziada: o estado mais restritivo vale na hora. Voltar a contar é uma mudança comum, que espera o delay (perguntas 862 e 874).
 - **Teto em vez de burnout:** só o inversor queima, então os outros módulos limitam a linha pelo `DelayLineLimits`. Com a linha cheia, a mudança espera fora e entra quando abre vaga, porque o módulo oferece o valor de novo a cada tick e a saída nunca fica errada para sempre (pergunta 847).
 - **Estado na hora, saída atrasada:** o que a regra decide aparece na hora no estado e na luz, e só a saída espera, para o player ver que o gatilho funcionou (perguntas 845, 851 e 852).
 - **Delay limita em vez de recusar:** como o intervalo, o `OutputDelay` traz o passo da tela e o valor salvo ao intervalo do config, e um máximo de 0 desliga o recurso (perguntas 425 e 837).
