@@ -1,4 +1,4 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
 /**
  * The longest output delay a pack sets in the config, in ticks, shared by every module with a delay

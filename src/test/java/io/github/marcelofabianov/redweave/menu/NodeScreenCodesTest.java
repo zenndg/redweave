@@ -87,4 +87,24 @@ class NodeScreenCodesTest {
   void aSlotWithAFaceThatDoesNotExistIsRefused() {
     assertEquals(Optional.empty(), NodeScreenCodes.slotOf(SEVENTH_FACE));
   }
+
+  /** The `Delay` row sends only one second shorter or longer (answers 830 and 866). */
+  @Test
+  void aDelayStepSurvivesTheButtonAndAnyOtherStepIsRefused() {
+    NodeAction shorter = NodeAction.delay(DelaySteps.SHORTER);
+    NodeAction longer = NodeAction.delay(DelaySteps.LONGER);
+    int unknownStep = NodeScreenCodes.button(NodeAction.delay(DelaySteps.LONGER + 1));
+
+    assertEquals(Optional.of(shorter), NodeScreenCodes.actionOf(NodeScreenCodes.button(shorter)));
+    assertEquals(Optional.of(longer), NodeScreenCodes.actionOf(NodeScreenCodes.button(longer)));
+    assertEquals(Optional.empty(), NodeScreenCodes.actionOf(unknownStep));
+  }
+
+  /** A kind the screen never sends is refused, as a client can send any number (rule 16). */
+  @Test
+  void aKindThatDoesNotExistIsRefused() {
+    int pastTheLastKind = NodeAction.Kind.values().length;
+
+    assertEquals(Optional.empty(), NodeScreenCodes.actionOf(pastTheLastKind));
+  }
 }

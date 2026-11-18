@@ -155,12 +155,9 @@ public final class Network {
     return pendingIfAccepted(nodes.attach(nodeId, position, nodeName));
   }
 
-  /** Names a node, for the owner only; blank gives back the default (144). It changes no signal. */
-  public Outcome renameNode(PlayerId requester, NodeId nodeId, String newName) {
-    if (!isOwner(requester)) {
-      return Outcome.NOT_OWNER;
-    }
-    return nodes.rename(nodeId, newName, limits.nodeNameLength());
+  /** The name and the output delay of a node, for the owner only (answers 144 and 859). */
+  public NodeSettings nodeSettings() {
+    return new NodeSettings(this, nodes, limits);
   }
 
   /** Detaches a node, for the owner only. */

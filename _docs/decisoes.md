@@ -330,6 +330,23 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Abas da Tela do Controlador | Todas com 72 px, para caber `Componentes` | 856 |
 | Largura do Network Terminal | 340 px, para a contagem de componentes não invadir o estado | 857 |
 | Próximo passo do roadmap | O módulo de memória (#110), antes do Signal Keypad | 858 |
+| Delay na saída do Signal Node | O nó ganha o delay, de 0 a 15 s; a lógica continua só nos Signal Modules | 859, 308 |
+| Onde mora o delay do nó | O delay no `Node`, no agregado; a linha pendente no NBT do `NodePart` | 860 |
+| Granularidade do delay do nó | Um por nó, sobre a emissão mais forte | 861 |
+| Nó que deixa de contar | Emite 0 na hora e esvazia a linha de atraso | 862 |
+| Estado do nó com delay | Lente, medidor e log seguem o canal na hora; só a emissão espera | 863 |
+| Limites do delay do nó | Os dos módulos, `module.max_output_delay_ticks` e `module.max_delay_changes` | 864 |
+| Pacote do delay | `OutputDelay`, `DelayLine`, `DelayedOutput` e os limites vão para `domain/signal` | 865 |
+| `Delay` na Tela do Nó | Linha nova entre o painel e o rodapé; a tela passa a 186 px | 866 |
+| Delay do nó no roadmap | Passo 29; o módulo de memória passa a 30 | 867, 858 |
+| Cópia do nó com delay | Leva o delay, nunca a linha pendente | 868 |
+| Chaves do delay do nó | `output_delay_ticks` no nó salvo com a rede; `delay_line` no NBT do `NodePart` | 869 |
+| Bordas do delay do nó | Linha `Delay` sempre visível; a troca de rede mantém o delay e esvazia a linha | 870 |
+| PRs do delay do nó | Uma issue e um PR; o refactor do pacote num commit próprio | 871 |
+| Escolha de rede do nó com 186 px | A lista cresce de 92 para 110 px, com 3 redes por vez | 872 |
+| Saída do nó com pendências no save | Chave `delayed_output` no NBT do `NodePart`, só com mudança pendente | 873 |
+| Nó que volta a contar | O sinal espera o delay; só o corte para 0 é imediato | 874 |
+| Espaço na `Network` | Fachada `NodeSettings`, com o nome e o delay do nó | 875, 426 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
@@ -469,7 +486,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Slots do Signal Node | Continuam 16; o layout da Tela do Nó melhora numa issue própria | 345 |
 | Layout da Tela do Nó | Painel em duas colunas: controles e medidor à esquerda, cubo de 40 px à direita | 346 |
 | Rodapé da Tela do Nó | Canais ativos à esquerda; cadeado só para os outros, à direita | 347 |
-| Tamanho da Tela do Nó | Painel de 76 px, rodapé de 20 px, tela de 168 px; escolha de rede com 3 redes | 348 |
+| Tamanho da Tela do Nó | Painel de 76 px, rodapé de 20 px, tela de 168 px, e de 186 px desde a #177; escolha de rede com 3 redes | 348, 866, 872 |
 | Ordem da reorganização da Tela do Nó | Issue nova, logo depois da #107 e antes da #22 | 349 |
 | Prancha da Tela do Nó | Uma só, já com o layout novo | 350 |
 | Shift + scroll no macOS | Sem rolagem vertical, vale a horizontal invertida, como a hotbar; corrigido no PR #121 | 351 |
@@ -817,6 +834,11 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 08:50 | Resume as respostas 873 a 875, do delay na saída do Signal Node. |
+| Zennd | 2026-11-18 08:10 | Resume as respostas 871 e 872, do delay na saída do Signal Node. |
+| Zennd | 2026-11-18 07:55 | Resume as respostas 867 a 870, do delay na saída do Signal Node. |
+| Zennd | 2026-11-18 07:40 | Resume as respostas 863 a 866, do delay na saída do Signal Node. |
+| Zennd | 2026-11-18 07:25 | Resume as respostas 859 a 862, do delay na saída do Signal Node. |
 | Zennd | 2026-11-17 16:40 | Resume a resposta 858, da ordem do roadmap. |
 | Zennd | 2026-11-17 16:05 | Resume as respostas 856 e 857, do layout de `Components`. |
 | Zennd | 2026-11-17 14:15 | Resume as respostas 845 a 855, do delay nos módulos restantes. |

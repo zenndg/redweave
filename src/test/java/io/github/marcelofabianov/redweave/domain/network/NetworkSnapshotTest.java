@@ -35,7 +35,7 @@ class NetworkSnapshotTest {
     network.renameChannel(OWNER, CHANNEL, CHANNEL_NAME);
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     network.attachNode(OWNER, OTHER_NODE, OTHER_NODE_POSITION, Optional.empty());
-    network.renameNode(OWNER, NODE, NODE_NAME);
+    network.nodeSettings().rename(OWNER, NODE, NODE_NAME);
     network.configureSlot(
         OWNER, NODE, INPUT_SLOT, new ChannelSlot(Direction.INPUT, Face.EAST, CHANNEL));
     network.configureSlot(

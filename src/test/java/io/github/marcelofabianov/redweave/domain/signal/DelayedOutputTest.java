@@ -1,11 +1,11 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
-import static io.github.marcelofabianov.redweave.domain.module.TestDelayLimits.STARTING;
+import static io.github.marcelofabianov.redweave.domain.signal.TestDelayLimits.STARTING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -104,5 +104,67 @@ class DelayedOutputTest {
 
     assertEquals(Signal.OFF, weaker.output());
     assertEquals(SEVEN, weaker.line().latest(Signal.OFF));
+  }
+
+  /** A node that stops counting emits off at once and drops what waits (answer 862). */
+  @Test
+  void aCutOutputIsOffAtOnceWithNothingWaiting() {
+    DelayedOutput steady = DelayedOutput.NONE.withDelay(ONE_SECOND).tick(SEVEN, STARTING);
+    DelayedOutput waiting = steady.tick(Signal.MAX, STARTING);
+
+    DelayedOutput cut = waiting.cut();
+
+    assertEquals(Signal.OFF, cut.output());
+    assertTrue(cut.line().isEmpty());
+    assertEquals(ONE_SECOND, cut.delay());
+    assertSame(cut, cut.cut());
+  }
+
+  /** Counting again is a change like any other, so it waits for the delay (answer 874). */
+  @Test
+  void theFirstValueAfterACutWaitsForTheDelay() {
+    DelayedOutput cut = DelayedOutput.NONE.withDelay(ONE_SECOND).tick(SEVEN, STARTING).cut();
+
+    DelayedOutput almost = run(cut, SEVEN, SECOND);
+
+    assertEquals(Signal.OFF, almost.output());
+    assertEquals(SEVEN, almost.tick(SEVEN, STARTING).output());
+  }
+
+  /** A node loads with the output it had while its changes waited (answer 873). */
+  @Test
+  void aResumedOutputKeepsWhatItGaveUntilTheFirstChangeComesOut() {
+    DelayLine saved = DelayLine.restore(List.of(new DelayLine.Pending(Signal.OFF, WAITING)));
+
+    DelayedOutput resumed = DelayedOutput.resumed(ONE_SECOND, saved, SEVEN);
+
+    assertEquals(SEVEN, resumed.output());
+    assertEquals(SEVEN, run(resumed, Signal.OFF, WAITING - 1).output());
+    assertEquals(Signal.OFF, run(resumed, Signal.OFF, WAITING).output());
+  }
+
+  @Test
+  void aResumedOutputWithNothingWaitingFollowsAtOnce() {
+    DelayedOutput resumed = DelayedOutput.resumed(ONE_SECOND, DelayLine.EMPTY, Signal.OFF);
+
+    assertEquals(SEVEN, resumed.tick(SEVEN, STARTING).output());
+  }
+
+  /** Nothing to do on a tick: the value is out and nothing waits, so a node skips it (18). */
+  @Test
+  void anOutputFollowsAValueOnlyWhenItIsOutAndNothingWaits() {
+    DelayedOutput steady = DelayedOutput.NONE.withDelay(ONE_SECOND).tick(SEVEN, STARTING);
+
+    assertTrue(steady.follows(SEVEN));
+    assertFalse(steady.follows(Signal.MAX));
+    assertFalse(steady.tick(Signal.MAX, STARTING).follows(Signal.MAX));
+    assertFalse(DelayedOutput.NONE.follows(Signal.OFF));
+  }
+
+  @Test
+  void theSameDelayChangesNothing() {
+    DelayedOutput delayed = DelayedOutput.NONE.withDelay(ONE_SECOND);
+
+    assertSame(delayed, delayed.withDelay(ONE_SECOND));
   }
 }

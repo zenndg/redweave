@@ -61,12 +61,15 @@ public final class NetworkTicks {
     network
         .flatMap(found -> found.node(id))
         .flatMap(node -> NodeBlocks.locate(minecraft, node.position()))
-        .ifPresent(
-            found -> NodeSignals.emit(found.level(), found.spot(), network.get().emission(id)));
+        .ifPresent(found ->
+            NodeSignals.emit(found.level(), found.spot(), server.nodeOutputs().emit().of(id)));
   }
 
   private static void look(MinecraftServer minecraft, RedweaveServer server, Node node) {
     NodeBlocks.locate(minecraft, node.position())
-        .ifPresent(found -> NodeLook.refresh(server, found.level(), found.spot()));
+        .ifPresent(found -> {
+          NodeSignals.silence(server, found.level(), found.spot());
+          NodeLook.refresh(server, found.level(), found.spot());
+        });
   }
 }

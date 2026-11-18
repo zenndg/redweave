@@ -111,7 +111,7 @@ class StructureChangeTest {
     network.rename(OWNER, NEW_NAME);
     network.recolor(OWNER, ChannelColor.LIME);
     network.renameChannel(OWNER, LAMP, NEW_NAME);
-    network.renameNode(OWNER, NODE, NEW_NAME);
+    network.nodeSettings().rename(OWNER, NODE, NEW_NAME);
 
     assertFalse(network.isPending());
   }

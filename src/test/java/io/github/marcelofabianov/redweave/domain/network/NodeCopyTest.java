@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -125,5 +126,23 @@ class NodeCopyTest {
             new CopiedSlot(OWN_BLOCK_SLOT, OWN_BLOCK.enabled(false)));
 
     assertThrows(IllegalArgumentException.class, () -> new NodeCopy(Face.EAST, repeated));
+  }
+
+  /** The delay of the node goes with the copy and onto the target (answer 868). */
+  @Test
+  void aCopyTakesTheDelayOfTheNodeOntoTheTarget() {
+    OutputDelay oneSecond = new OutputDelay(OutputDelay.STEP_TICKS);
+    NodeCopy copy = NodeCopy.of(source().withDelay(oneSecond));
+
+    assertEquals(oneSecond, copy.delay());
+    assertEquals(oneSecond, copy.onto(node(OTHER_NODE, Face.WEST)).delay());
+  }
+
+  /** A copy made before the node had a delay pastes none (answer 868). */
+  @Test
+  void aCopyWithoutADelayPastesNone() {
+    NodeCopy copy = new NodeCopy(Face.EAST, List.of());
+
+    assertEquals(OutputDelay.NONE, copy.delay());
   }
 }

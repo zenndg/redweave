@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.block.part;
 
-import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import net.minecraft.nbt.CompoundTag;
 

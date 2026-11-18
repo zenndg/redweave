@@ -101,7 +101,7 @@ class SlotOutputsTest {
   void aLineTakesTheNamesOfTheMoment() {
     Network network = leverAndLamp();
     outputs.observe(network, NOON);
-    network.renameNode(OWNER, OTHER_NODE, NEW_LAMP_NODE);
+    network.nodeSettings().rename(OWNER, OTHER_NODE, NEW_LAMP_NODE);
     network.renameChannel(OWNER, LAMP, MAIN_LIGHT);
 
     network.readInput(NODE, SLOT, DIMMER);

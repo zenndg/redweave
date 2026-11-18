@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.menu.DelaySteps;
 import io.github.marcelofabianov.redweave.menu.LeverAction;

@@ -12,7 +12,11 @@ final class NodeScreenLayout {
   static final int STATE = 1;
   static final int VIEWER_IS_OWNER = 2;
   static final int VIEWER_PLACED = 3;
-  static final int FIRST_SLOT = 4;
+
+  /** The output delay of the node, in seconds (answers 830 and 866). */
+  static final int DELAY = 4;
+
+  static final int FIRST_SLOT = 5;
   static final int FIRST_SIGNAL = FIRST_SLOT + MAX_SLOTS;
   static final int SIZE = FIRST_SIGNAL + MAX_SLOTS;
 

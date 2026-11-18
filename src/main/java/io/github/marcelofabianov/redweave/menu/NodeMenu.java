@@ -205,6 +205,11 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
     return Optional.of(NodeState.values()[value - 1]);
   }
 
+  /** The output delay of the node, in seconds (answer 866). */
+  public int delaySeconds() {
+    return data.get(NodeScreenLayout.DELAY);
+  }
+
   public boolean viewerIsOwner() {
     return data.get(NodeScreenLayout.VIEWER_IS_OWNER) == 1;
   }

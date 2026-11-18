@@ -1,7 +1,7 @@
 package io.github.marcelofabianov.redweave.block.part;
 
-import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 
 /**
  * A module part whose output waits for a delay its owner sets on its screen (answers 830 and 850),

@@ -1,4 +1,4 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
 /**
  * How long the output of a module waits before it follows a change, in whole seconds kept as ticks

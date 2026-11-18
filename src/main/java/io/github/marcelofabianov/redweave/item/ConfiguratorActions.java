@@ -154,6 +154,7 @@ final class ConfiguratorActions {
   /** The new inputs are read at once, as when the node is placed, and the clients see the node. */
   private static void refresh(RedweaveServer server, Level level, PartSpot spot) {
     NodeSignals.read(server, level, spot);
+    NodeSignals.refreshEmission(server, level, spot);
     NodeLook.refresh(server, level, spot);
     PartSpaceBlockEntity.at(level, spot.pos()).ifPresent(PartSpaceBlockEntity::changed);
   }

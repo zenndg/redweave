@@ -105,7 +105,7 @@ Toda ação roda no servidor, que confere o dono (regras 16 e 17). A distância 
 
 ### Copiar
 
-A cópia leva os 16 slots, cada um com o canal, o status, a direção e a face, e a face onde o nó de origem está grudado, no lugar da cópia anterior. As leituras não vão, e o slot não tem nome (perguntas 105, 230 e 277). Copiar um nó sem rede é recusado, porque ele não tem slots.
+A cópia leva os 16 slots, cada um com o canal, o status, a direção e a face, a face onde o nó de origem está grudado e, desde a #177, o delay na saída do nó, na chave opcional `output_delay_ticks`, no lugar da cópia anterior. As leituras e as mudanças pendentes do delay não vão, e o slot não tem nome; uma cópia gravada antes da #177 cola com 0 s, e um delay acima do config de hoje é limitado ao colar (perguntas 105, 230, 277 e 868). Copiar um nó sem rede é recusado, porque ele não tem slots.
 
 ### Colar
 
@@ -190,6 +190,7 @@ O componente `redweave:node_slots` tem `network`, o ID da rede do nó copiado (p
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | O `Copy` do Signal Node leva o delay na saída, nunca as mudanças pendentes (pergunta 868, #177). |
 | Zennd | 2026-11-17 15:15 | O `Copy` dos emissores, do Weather Detector, do Signal Randomizer, do Signal Item Sensor e da Signal Lamp leva o delay, nunca a `delay_line` (perguntas 841 e 850, #173). |
 | Zennd | 2026-11-17 13:45 | O `Copy` do Signal Inverter leva a força e o delay (pergunta 841, #171). |
 | Zennd | 2026-11-17 11:11 | O rótulo do Controller conta os componentes (pergunta 804). |

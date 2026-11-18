@@ -4,11 +4,14 @@ import io.github.marcelofabianov.redweave.application.PasteResult;
 import io.github.marcelofabianov.redweave.block.ControllerMessages;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
+import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
@@ -22,6 +25,9 @@ import net.minecraft.world.level.Level;
  * copy first, as picking it on the Node Screen would (answers 172 and 238).
  */
 final class ConfiguratorPaste {
+  /** A copy made under a longer config pastes the longest delay of today (837 and 868). */
+  private static final OutputDelayLimits DELAY_LIMITS = new NeoForgeOutputDelayLimits();
+
   private static final String NO_NAME = "";
 
   private ConfiguratorPaste() {}
@@ -73,8 +79,10 @@ final class ConfiguratorPaste {
 
   private static Component pasted(
       RedweaveServer server, Player player, NodeId node, ConfiguratorCopy copy) {
-    PasteResult result =
-        server.pasteNode().paste(new PlayerId(player.getUUID()), node, copy.slots());
+    NodeCopy slots = copy.slots();
+    NodeCopy fitted =
+        new NodeCopy(slots.attached(), slots.slots(), slots.delay().fittedTo(DELAY_LIMITS));
+    PasteResult result = server.pasteNode().paste(new PlayerId(player.getUUID()), node, fitted);
     return switch (result.outcome()) {
       case ACCEPTED -> Component.translatable(ConfiguratorMessages.PASTED, result.pasted());
       case NOT_OWNER ->

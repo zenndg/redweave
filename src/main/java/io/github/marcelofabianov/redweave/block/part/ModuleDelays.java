@@ -1,8 +1,8 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.config.NeoForgeDelayLineLimits;
-import io.github.marcelofabianov.redweave.domain.module.DelayLineLimits;
-import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.signal.DelayLineLimits;
+import io.github.marcelofabianov.redweave.domain.signal.DelayedOutput;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 
 /**

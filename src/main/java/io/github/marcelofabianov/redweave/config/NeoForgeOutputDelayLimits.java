@@ -1,6 +1,6 @@
 package io.github.marcelofabianov.redweave.config;
 
-import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 
 /** The longest output delay of the modules, read from the server config every time (837). */
 public final class NeoForgeOutputDelayLimits implements OutputDelayLimits {

@@ -4,9 +4,11 @@ import io.github.marcelofabianov.redweave.block.NodeLook;
 import io.github.marcelofabianov.redweave.block.NodeSignals;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
+import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.Optional;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +19,8 @@ import net.minecraft.world.level.Level;
  * so a refused action changes nothing (answers 22 and 81, and rule 17).
  */
 final class NodeScreenActions {
+  private static final OutputDelayLimits DELAY_LIMITS = new NeoForgeOutputDelayLimits();
+
   private NodeScreenActions() {}
 
   static PlayerId playerOf(Player player) {
@@ -32,6 +36,9 @@ final class NodeScreenActions {
     }
     run(server.get(), playerOf(player), node.get(), action);
     NodeSignals.read(server.get(), level, spot);
+    if (action.kind() == NodeAction.Kind.DELAY) {
+      NodeSignals.refreshEmission(server.get(), level, spot);
+    }
   }
 
   /**
@@ -53,6 +60,7 @@ final class NodeScreenActions {
         .linkNode()
         .link(playerOf(player), node.get(), NodePart.positionOf(level, spot), network);
     NodeSignals.read(server.get(), level, spot);
+    NodeSignals.refreshEmission(server.get(), level, spot);
     NodeLook.refresh(server.get(), level, spot);
   }
 
@@ -64,6 +72,14 @@ final class NodeScreenActions {
               .configureSlot()
               .configure(player, node, action.index(), action.slot().orElseThrow());
       case DISABLE -> server.disableSlot().disable(player, node, action.index());
+      case DELAY ->
+          server
+              .nodeOutputs()
+              .changeDelay()
+              .step(player, node, DelaySteps.seconds(action.index()), DELAY_LIMITS);
+      default -> {
+        // A choice of network goes through choose, which checks who may pick (172).
+      }
     }
   }
 }

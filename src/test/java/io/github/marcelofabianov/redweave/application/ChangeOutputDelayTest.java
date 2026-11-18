@@ -6,10 +6,10 @@ import static io.github.marcelofabianov.redweave.domain.network.NetworkFixture.S
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.ModuleId;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import org.junit.jupiter.api.Test;
 
 /** Only the owner steps the delay of a module, within the config (answers 830, 837 and 850). */

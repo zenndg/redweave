@@ -15,7 +15,7 @@ Todo item novo, mudado ou planejado atualiza esta página e a seção `Items` do
 
 | Item | ID | O que faz | Estado | Conceito |
 |---|---|---|---|---|
-| Signal Node (`Nó de Sinal`) | `redweave:signal_node` | Gruda em qualquer face de um bloco e lê ou emite redstone ali, nos 16 slots por cor, ligado a uma rede | Entregue na #15 | [`no-de-sinal.md`](funcionalidades/no-de-sinal.md) |
+| Signal Node (`Nó de Sinal`) | `redweave:signal_node` | Gruda em qualquer face de um bloco e lê ou emite redstone ali, nos 16 slots por cor, ligado a uma rede, com um delay na saída de 0 a 15 s | Entregue na #15, com o delay na #177 | [`no-de-sinal.md`](funcionalidades/no-de-sinal.md) |
 | Signal Cable (`Cabo de Sinal`) | `redweave:signal_cable` | Cabo físico de redstone em qualquer face, em 16 cores que isolam um cabo do outro, como o fio do jogo. Um item só, com a cor no data component `cable_color` | Entregue na #44 | [`signal-cable.md`](funcionalidades/signal-cable.md) |
 
 ## Ferramentas
@@ -130,6 +130,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | O Signal Node ganha o delay na saída (pergunta 859, #177). |
 | Zennd | 2026-11-17 15:20 | O delay na saída chega aos módulos com saída, menos o Timer e o Lock (perguntas 849 e 850, #173). |
 | Zennd | 2026-11-17 13:45 | O Signal Inverter ganha a força e o delay na saída (perguntas 830 a 844, #171). |
 | Zennd | 2026-11-17 10:31 | O Signal Remote também aciona os emissores (#163). |

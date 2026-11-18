@@ -1,12 +1,12 @@
 package io.github.marcelofabianov.redweave.block;
 
+import io.github.marcelofabianov.redweave.application.Emission;
 import io.github.marcelofabianov.redweave.block.part.NodePart;
 import io.github.marcelofabianov.redweave.block.part.PartSpot;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
-import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.registry.RedweaveBlocks;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
 import java.util.List;
@@ -36,34 +36,49 @@ public final class NodeSignals {
     }
   }
 
-  /** Emits what the network says the node emits now, or nothing without a network (71). */
+  /** Tells the node what its network says to emit now, or nothing without a network (71). */
   public static void refreshEmission(RedweaveServer server, Level level, PartSpot spot) {
-    Optional<NodeId> id = nodeAt(level, spot);
-    Signal emission =
-        id.flatMap(server::networkOfNode)
-            .map(network -> network.emission(id.get()))
-            .orElse(Signal.OFF);
+    Emission emission =
+        nodeAt(level, spot).map(server.nodeOutputs().emit()::of).orElse(Emission.NONE);
     emit(level, spot, emission);
+  }
+
+  /** Cuts the output of a node that stopped counting, though no face of it changed (862). */
+  public static void silence(RedweaveServer server, Level level, PartSpot spot) {
+    nodeAt(level, spot)
+        .filter(server.nodeOutputs().emit()::isSilent)
+        .ifPresent(id -> emit(level, spot, server.nodeOutputs().emit().of(id)));
+  }
+
+  /**
+   * Hands the node what to emit; its output follows after the delay of the node, and its lens at
+   * once, so only a change of the lens reaches the clients (answers 860 and 863).
+   */
+  public static void emit(Level level, PartSpot spot, Emission emission) {
+    Optional<PartSpaceBlockEntity> space = PartSpaceBlockEntity.at(level, spot.pos());
+    Optional<NodePart> node = NodePart.at(level, spot);
+    if (space.isEmpty() || node.isEmpty()) {
+      return;
+    }
+    if (node.get().take(emission)) {
+      space.get().changed();
+    }
+    apply(space.get(), node.get());
   }
 
   /**
    * Feeds the block the node sticks to, like a lever, and wakes the neighbors only when the value
    * changes, so there are no cascading block updates (rule 18).
    */
-  public static void emit(Level level, PartSpot spot, Signal signal) {
-    Optional<PartSpaceBlockEntity> space = PartSpaceBlockEntity.at(level, spot.pos());
-    Optional<NodePart> node = NodePart.at(level, spot);
-    if (node.isEmpty() || node.get().emitted() == signal.strength()) {
+  public static void apply(PartSpaceBlockEntity space, NodePart node) {
+    if (!node.applyOutput()) {
       return;
     }
-    node.get().setEmitted(signal.strength());
-    if (node.get().setPowered(signal.isOn())) {
-      space.orElseThrow().changed();
-    }
-    space.ifPresent(found -> found.wakeOthers(node.get()));
+    PartSpot spot = space.spotOf(node);
+    space.wakeOthers(node);
     Block block = RedweaveBlocks.PART_SPACE.get();
-    level.updateNeighborsAt(spot.pos(), block);
-    level.updateNeighborsAt(spot.support(), block);
+    space.getLevel().updateNeighborsAt(spot.pos(), block);
+    space.getLevel().updateNeighborsAt(spot.support(), block);
   }
 
   /** The node at the spot, when the space has a node there with its ID. */

@@ -10,6 +10,7 @@ import io.github.marcelofabianov.redweave.menu.NodeMenu;
 import io.github.marcelofabianov.redweave.menu.NodeScreenCodes;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import io.github.marcelofabianov.redweave.network.NodeRenamed;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,11 +32,15 @@ import net.neoforged.neoforge.network.PacketDistributor;
  */
 public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int WIDTH = 340;
-  private static final int HEIGHT = 168;
+  private static final int HEIGHT = 186;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 20;
   private static final Box PANEL = new Box(10, 62, 320, 76);
-  private static final Box CHOICE = new Box(10, 38, 320, 92);
+  private static final Box CHOICE = new Box(10, 38, 320, 110);
+
+  /** The `Delay` row, of the whole node, between the channel panel and the footer (866). */
+  private static final Box DELAY = new Box(10, 144, 320, 14);
+
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
   private static final int BACK_Y = 2;
@@ -110,15 +115,17 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         supportBlock(),
         Optional.of(Faces.toDirection(slot.face())),
         settableView(view, slot));
-    footer.draw(
-        graphics,
-        font,
-        view,
-        new Box(
-            leftPos + PADDING,
-            topPos + HEIGHT - FOOTER_HEIGHT,
-            WIDTH - 2 * PADDING,
-            FOOTER_HEIGHT));
+    NodeDelayRow.draw(graphics, font, view, delayRow());
+    footer.draw(graphics, font, view, footerBox());
+  }
+
+  private Box footerBox() {
+    return new Box(
+        leftPos + PADDING, topPos + HEIGHT - FOOTER_HEIGHT, WIDTH - 2 * PADDING, FOOTER_HEIGHT);
+  }
+
+  private Box delayRow() {
+    return new Box(leftPos + DELAY.x(), topPos + DELAY.y(), DELAY.width(), DELAY.height());
   }
 
   /** The screen opens on the first enabled channel, or on the first one with none (telas.md). */
@@ -313,7 +320,11 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   }
 
   private List<Control> controls(NodeView view) {
-    return SlotEditor.controls(font, view, panel(), Math.max(0, selected), stuckFace());
+    List<Control> all =
+        new ArrayList<>(
+            SlotEditor.controls(font, view, panel(), Math.max(0, selected), stuckFace()));
+    all.addAll(NodeDelayRow.controls(view, delayRow()));
+    return all;
   }
 
   private void send(NodeAction action) {

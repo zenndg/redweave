@@ -1,6 +1,6 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
-import static io.github.marcelofabianov.redweave.domain.module.TestDelayLimits.STARTING;
+import static io.github.marcelofabianov.redweave.domain.signal.TestDelayLimits.STARTING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;

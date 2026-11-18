@@ -700,10 +700,33 @@ Confira a #175 (perguntas 856 e 857), com uma rede de muitos componentes, como 1
 | 432 | Abra o Network Terminal com redes `Online`, `Offline` e `Unplaced`, em inglês e em português | A tela mais larga, e `12 components` e `12 componentes` à direita, sem encostar no estado |
 | 433 | No Terminal, selecione cada rede | A barra de botões e a dica cabem, como antes |
 
+## Fase 2: o delay na saída do Signal Node
+
+Confira a #177 (perguntas 859 a 875), com uma alavanca lida por um nó `Input` num canal e outro nó `Output` do mesmo canal grudado numa lâmpada de redstone.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 434 | Abra a Tela do Nó, em inglês e em português | A tela mais alta, com `Delay` em `0 s` e os botões `−` e `+` entre o painel do canal e o rodapé; `Atraso` em português |
+| 435 | Clique em `+` até passar de `15 s` e em `−` até passar de `0 s` | O valor para em `15 s` e em `0 s` |
+| 436 | Abra a Tela do Nó de outro player | Os botões `−` e `+` apagados, sem mudar o valor |
+| 437 | Com `Delay` em `0 s`, ligue e desligue a alavanca | A lâmpada segue na hora, como antes |
+| 438 | Ponha o nó de saída com `Delay` em `3 s` e ligue a alavanca | A lente do nó acende na hora, e a lâmpada acende 3 s depois; ao desligar, a lente apaga na hora e a lâmpada 3 s depois |
+| 439 | Ligue e desligue a alavanca em menos de 1 s | A lâmpada repete o mesmo pulso curto 3 s depois |
+| 440 | Com a lâmpada acesa e o `Delay` em `5 s`, desligue a rede no Network Terminal | A lâmpada apaga na hora, sem esperar |
+| 441 | Ligue a rede de novo, com a alavanca ligada | A lâmpada acende 5 s depois |
+| 442 | Com a lâmpada acesa, desative o slot `Output` na Tela do Nó | A lâmpada apaga na hora |
+| 443 | Com `Delay` em `10 s`, ligue a alavanca, saia do mundo em seguida e entre de novo | A lâmpada acende depois do tempo que faltava, sem piscar ao carregar |
+| 444 | Copie o nó com `Delay` em `4 s` e cole noutro nó | O outro fica com `4 s` e os mesmos slots |
+| 445 | Troque o nó com `Delay` em `4 s` para outra rede | O nó continua com `4 s`, com os canais inativos |
+| 446 | Abra um mundo salvo antes da #177 | Todo nó abre com `0 s` e funciona como antes |
+| 447 | Abra a escolha de rede de um nó | A lista mais alta, com 3 redes inteiras por vez e a rolagem |
+| 448 | Veja a Tela do Controlador com o nó de saída com `Delay` em `5 s` e ligue a alavanca | O sinal do nó e a linha do log aparecem na hora, e só a lâmpada espera |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | Inclui o roteiro do delay na saída do Signal Node, passos 434 a 448 (#177). |
 | Zennd | 2026-11-17 16:20 | Inclui os passos 431 a 433, do layout de `Components` (perguntas 856 e 857, #175). |
 | Zennd | 2026-11-17 15:25 | Inclui os passos 416 a 430, do delay nos outros módulos (perguntas 845 a 855, #173). |
 | Zennd | 2026-11-17 13:50 | Inclui os passos 402 a 415, do delay e da força do Signal Inverter (perguntas 830 a 844, #171). |

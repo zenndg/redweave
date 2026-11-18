@@ -1,4 +1,4 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
 /**
  * The most changes a delay line holds, set in the config and shared by every module with a delay

@@ -156,7 +156,7 @@ A base comum do delay, entregue com o [Signal Inverter](signal-inverter.md) na #
 | Limite | `module.max_output_delay_ticks`, comum a todo módulo; um delay salvo acima dele é limitado ao máximo ao carregar, e 0 desliga o recurso no pack | 837 |
 | Onde aparece | Só na tela, como `Delay` com `−` e `+`, na última linha antes das conexões; a moldura das telas de módulo tem 186 px de altura para caber | 840 e 853 |
 | Cópia | O `Copy` do Configurator leva o delay, nunca a linha pendente | 841 |
-| Domínio | `domain/module/OutputDelay`, o value object do delay, `domain/module/DelayLine`, a linha, e `domain/module/DelayedOutput`, a saída atrasada de um módulo | 830 a 854 |
+| Domínio | `domain/signal/OutputDelay`, o value object do delay, `domain/signal/DelayLine`, a linha, e `domain/signal/DelayedOutput`, a saída atrasada, em `signal/` desde a #177, porque o [Signal Node](no-de-sinal.md#delay-na-saída) também os usa | 830 a 854 e 865 |
 
 Cada módulo com delay salva as chaves `output_delay_ticks`, o delay em ticks, e `delay_line`, a lista das mudanças pendentes, cada uma `{signal, ticks}`. Um save sem elas abre com o delay em 0 e a linha vazia, sem migração, e uma mudança `{on, ticks}` salva antes da #173 é lida com a força do módulo (perguntas 844 e 854, regra 15).
 
@@ -180,8 +180,8 @@ Cada módulo acrescenta as chaves dele. Desde a #44, os módulos são partes do 
 | Chave | Valor | Pergunta |
 |---|---|---|
 | `module.name_length` | 16 caracteres, de 1 a 64 | 391 |
-| `module.max_output_delay_ticks` | 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros | 837 |
-| `module.max_delay_changes` | 32 mudanças, de 2 a 256 | 847 |
+| `module.max_output_delay_ticks` | 300 ticks (15 s), de 0 a 1200 (60 s), em segundos inteiros; vale também para o Signal Node | 837 e 864 |
+| `module.max_delay_changes` | 32 mudanças, de 2 a 256; vale também para o Signal Node | 847 e 864 |
 
 Os valores ficam em [`limites.md`](../limites.md).
 
@@ -202,6 +202,7 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 09:40 | As classes do delay vão para `domain/signal`, e os limites valem também para o Signal Node (perguntas 864 e 865, #177). |
 | Zennd | 2026-11-17 14:30 | Leva o delay aos outros módulos com saída, com o sinal na linha, o teto e o estado na hora (perguntas 845 a 854, #173). |
 | Zennd | 2026-11-17 13:15 | Inclui a base comum do delay na saída, com a linha de atraso, as chaves do save e o config (perguntas 830 a 844). |
 | Zennd | 2026-11-17 10:54 | Inclui a chave `registered` e aponta o cadastro na rede (perguntas 803 e 811). |

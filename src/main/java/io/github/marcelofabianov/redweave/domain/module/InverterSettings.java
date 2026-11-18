@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.domain.module;
 
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Objects;
 

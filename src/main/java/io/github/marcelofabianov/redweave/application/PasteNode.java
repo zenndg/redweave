@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * The Configurator pastes a copy on a node: every slot of the node is replaced, through the slot
  * operations of the network, so the owner is checked and the readings are dropped (answer 106). The
- * node stays in its own network.
+ * node takes the output delay of the copy (answer 868) and stays in its own network.
  */
 public final class PasteNode {
   private final NodeNetworkFinder finder;
@@ -42,6 +42,7 @@ public final class PasteNode {
               slot -> network.get().configureSlot(player, nodeId, at, slot),
               () -> network.get().clearSlot(player, nodeId, at));
     }
+    network.get().nodeSettings().delay(player, nodeId, pasted.delay());
     saver.save(network.get());
     return new PasteResult(Outcome.ACCEPTED, pasted.inUse());
   }
