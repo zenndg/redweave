@@ -2,9 +2,9 @@ package io.github.marcelofabianov.redweave.gametest;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
-import io.github.marcelofabianov.redweave.domain.module.DelayLine;
 import io.github.marcelofabianov.redweave.domain.module.InverterSettings;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.DelayLine;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import java.util.ArrayList;

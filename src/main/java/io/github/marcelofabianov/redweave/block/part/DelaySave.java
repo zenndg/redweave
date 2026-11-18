@@ -2,10 +2,10 @@ package io.github.marcelofabianov.redweave.block.part;
 
 import com.mojang.logging.LogUtils;
 import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
-import io.github.marcelofabianov.redweave.domain.module.DelayLine;
-import io.github.marcelofabianov.redweave.domain.module.DelayedOutput;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
+import io.github.marcelofabianov.redweave.domain.signal.DelayLine;
+import io.github.marcelofabianov.redweave.domain.signal.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package io.github.marcelofabianov.redweave.application;
 
-import io.github.marcelofabianov.redweave.domain.module.OutputDelay;
-import io.github.marcelofabianov.redweave.domain.module.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.module.SignalModule;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import java.util.Optional;
 
 /**

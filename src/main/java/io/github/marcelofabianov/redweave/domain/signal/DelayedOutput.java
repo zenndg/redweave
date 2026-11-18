@@ -1,6 +1,5 @@
-package io.github.marcelofabianov.redweave.domain.module;
+package io.github.marcelofabianov.redweave.domain.signal;
 
-import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Objects;
 
 /**

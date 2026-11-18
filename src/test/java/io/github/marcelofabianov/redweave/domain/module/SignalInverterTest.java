@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.github.marcelofabianov.redweave.domain.signal.DelayLine;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
+import io.github.marcelofabianov.redweave.domain.signal.TestDelayLimits;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
