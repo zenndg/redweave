@@ -156,8 +156,8 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       return true;
     }
     NodeView view = view(mouseX, mouseY);
-    ChannelSlot open = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
-    if (SlotEditor.isSettable(view, open) && view.hovers(SlotEditor.cubeBox(panel()))) {
+    boolean settable = openSlot().filter(open -> SlotEditor.isSettable(view, open)).isPresent();
+    if (settable && view.hovers(SlotEditor.cubeBox(panel()))) {
       cube.press();
       return true;
     }
@@ -187,14 +187,20 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   @Override
   public boolean mouseReleased(double mouseX, double mouseY, int button) {
     NodeView view = view(mouseX, mouseY);
-    ChannelSlot slot = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
     Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view);
-    if (SlotEditor.isSettable(view, slot) && face.isPresent()) {
+    Optional<ChannelSlot> slot = openSlot().filter(open -> SlotEditor.isSettable(view, open));
+    if (slot.isPresent() && face.isPresent()) {
+      ChannelSlot open = slot.get();
       ChannelSlot changed =
-          new ChannelSlot(slot.direction(), Faces.of(face.get()), slot.channel(), false);
+          new ChannelSlot(open.direction(), Faces.of(face.get()), open.channel(), false);
       send(NodeAction.configure(selected, changed));
     }
     return super.mouseReleased(mouseX, mouseY, button);
+  }
+
+  /** The slot of the open channel, or none on the network choice, with no channel open (#179). */
+  private Optional<ChannelSlot> openSlot() {
+    return OpenChannel.slot(menu.slot(selected), selected, stuckFace());
   }
 
   /** Enter saves the name, Esc cancels it, and no key closes the screen while typing (204). */

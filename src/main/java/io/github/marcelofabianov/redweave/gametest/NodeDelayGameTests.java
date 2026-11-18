@@ -8,6 +8,7 @@ import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
 import io.github.marcelofabianov.redweave.domain.network.Network;
+import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
@@ -67,6 +68,8 @@ public final class NodeDelayGameTests {
   private static final String NOT_SAVED = "What waits should come back from the save of the node";
   private static final String NOT_EMPTY = "A node saved before the delay has nothing waiting";
   private static final String NOT_STEPPED = "Only the owner should step the delay of the node";
+  private static final int NO_CHANNEL = -1;
+  private static final String NOT_A_SLOT = "Only an index of the node should give a slot";
   private static final String NOT_PASTED = "The paste should give the delay, never what waits";
 
   private NodeDelayGameTests() {}
@@ -160,6 +163,25 @@ public final class NodeDelayGameTests {
     ownerMenu.clickMenuButton(viewer, longer);
     helper.assertValueEqual(delayOf(node), ONE_SECOND, NOT_STEPPED);
     helper.assertValueEqual(ownerMenu.delaySeconds(), ONE_SECOND.seconds(), NOT_STEPPED);
+    helper.succeed();
+  }
+
+  /**
+   * The menu gives no slot for an index outside the 16 of the node, as the screen asks with no
+   * channel open: it once read the delay there, and the game crashed (#179).
+   */
+  @GameTest(template = EMPTY)
+  public static void anIndexOutsideTheSlotsIsNoSlot(GameTestHelper helper) {
+    Player owner = helper.makeMockPlayer(GameType.SURVIVAL);
+    NodeId node = leverAndOutput(helper, owner);
+    setDelay(helper, owner, node, ONE_SECOND);
+    NodeMenu menu =
+        new NodeMenu(MENU_ID, viewerAs(helper, owner), NodeParts.spotOf(helper, OUTPUT_NODE));
+
+    helper.assertTrue(menu.slot(NO_CHANNEL).isEmpty(), NOT_A_SLOT);
+    helper.assertTrue(menu.slot(Node.SLOT_COUNT).isEmpty(), NOT_A_SLOT);
+    helper.assertValueEqual(menu.signal(NO_CHANNEL), 0, NOT_A_SLOT);
+    helper.assertTrue(menu.slot(SLOT).isPresent(), NOT_A_SLOT);
     helper.succeed();
   }
 
