@@ -50,10 +50,10 @@ Um nó `No network` abre na escolha de rede, e não na configuração (pergunta 
 | Direção | Seletor `Input` e `Output`. Só muda com o canal `Off`; com `On`, fica travado (perguntas 237 e 774) |
 | Sinal | Na coluna da esquerda, o medidor de 15 barras com o sinal do canal escolhido e o número; um canal inativo mostra 0 (pergunta 346) |
 | Face do bloco | Na coluna da direita, separada por uma linha, um cubo de 40 px com a face escolhida em cobre e, ao lado, só o nome da face, como `East`, na altura do meio do cubo (pergunta 372), e, no hover do cubo, o tooltip `Click a face to choose it. Drag to turn the block.`. Só muda com o canal `Disabled`; um canal nunca ativado parte da face grudada (pergunta 237) |
-| Delay | Entre o painel do canal e o rodapé, fora do painel, porque é do nó inteiro e não do canal aberto: `Delay`, o valor, como `3 s`, e os botões `−` e `+`, de 1 s por clique, de 0 a 15 s. Aparece sempre, mesmo sem slot `Output`; só o dono da rede clica, e para os outros os botões ficam apagados. `Atraso` em português, com a mesma chave das telas de módulo ([delay na saída do nó](no-de-sinal.md#delay-na-saída), perguntas 861, 866 e 870) |
+| Delay | A última linha do painel do canal, abaixo de `Signal` e alinhada com as outras, embora seja do nó inteiro e não do canal aberto, então não muda ao trocar de canal: `Delay`, o valor, como `3 s`, e os botões `−` e `+`, de 1 s por clique, de 0 a 15 s. Aparece sempre, mesmo sem slot `Output`; só o dono da rede clica, e para os outros os botões ficam apagados. `Atraso` em português, com a mesma chave das telas de módulo ([delay na saída do nó](no-de-sinal.md#delay-na-saída), perguntas 861, 866, 870 e 876) |
 | Rodapé | Uma linha: à esquerda, quantos canais estão ativos, como `3 of 16 channels active`; à direita, só para quem não é o dono, o cadeado (pergunta 347) |
 
-A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308); o delay na saída é tempo, não lógica (pergunta 859). O painel tem 76 px de altura, a linha `Delay` 14 px, o rodapé 20 px e a tela 186 px desde a #177, a mesma altura das telas de módulo, sem arte nova, porque a moldura é desenhada com os sprites que já existem; a escolha de rede usa a mesma altura, com a lista de 110 px (perguntas 329, 330, 333, 348, 866 e 872).
+A tela não tem abas laterais. A aba `Info` volta quando tiver conteúdo (pergunta 233). O painel do canal também não tem lógica: o nó só lê e emite, e toda lógica de sinal fica nos Signal Modules (pergunta 308); o delay na saída é tempo, não lógica (pergunta 859). O painel tem 94 px de altura desde a #179, com a linha `Delay` dentro dele (pergunta 876), o rodapé 20 px e a tela 186 px desde a #177, a mesma altura das telas de módulo, sem arte nova, porque a moldura é desenhada com os sprites que já existem; a escolha de rede usa a mesma altura, com a lista de 110 px (perguntas 329, 330, 333, 348, 866 e 872).
 
 
 ### Comportamento
@@ -338,6 +338,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 08:17 | A linha `Delay` da Tela do Nó passa para dentro do painel do canal, que fica com 94 px (pergunta 876, #179). |
 | Zennd | 2026-11-18 09:40 | A Tela do Nó ganha a linha `Delay` e passa a 186 px, com a lista da escolha de rede em 110 px (perguntas 866, 870 e 872, #177). |
 | Zennd | 2026-11-17 16:20 | As abas da Tela do Controlador passam a 72 px (pergunta 856, #175). |
 | Zennd | 2026-11-17 15:10 | Inclui a linha `Delay` nas telas dos emissores, do Weather Detector, do Signal Randomizer, do Signal Item Sensor e da Signal Lamp, e a moldura de 186 px (perguntas 850, 853 e 855, #173). |

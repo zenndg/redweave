@@ -25,6 +25,9 @@ final class SlotEditor {
   static final int DIRECTION_Y = 40;
   static final int SIGNAL_Y = 58;
 
+  /** The `Delay` row, the last of the panel, of the whole node (answers 861 and 876). */
+  static final int DELAY_Y = 76;
+
   static final int RIGHT_COLUMN_X = 196;
   static final int CUBE_Y = 18;
   static final int CUBE_SIZE = 40;

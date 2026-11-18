@@ -337,7 +337,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Estado do nó com delay | Lente, medidor e log seguem o canal na hora; só a emissão espera | 863 |
 | Limites do delay do nó | Os dos módulos, `module.max_output_delay_ticks` e `module.max_delay_changes` | 864 |
 | Pacote do delay | `OutputDelay`, `DelayLine`, `DelayedOutput` e os limites vão para `domain/signal` | 865 |
-| `Delay` na Tela do Nó | Linha nova entre o painel e o rodapé; a tela passa a 186 px | 866 |
+| `Delay` na Tela do Nó | Última linha do quadro do canal, que passa a 94 px; a tela passa a 186 px | 866, 876 |
 | Delay do nó no roadmap | Passo 29; o módulo de memória passa a 30 | 867, 858 |
 | Cópia do nó com delay | Leva o delay, nunca a linha pendente | 868 |
 | Chaves do delay do nó | `output_delay_ticks` no nó salvo com a rede; `delay_line` no NBT do `NodePart` | 869 |
@@ -834,6 +834,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 08:17 | Resume a resposta 876, da linha `Delay` dentro do quadro da Tela do Nó. |
 | Zennd | 2026-11-18 08:50 | Resume as respostas 873 a 875, do delay na saída do Signal Node. |
 | Zennd | 2026-11-18 08:10 | Resume as respostas 871 e 872, do delay na saída do Signal Node. |
 | Zennd | 2026-11-18 07:55 | Resume as respostas 867 a 870, do delay na saída do Signal Node. |

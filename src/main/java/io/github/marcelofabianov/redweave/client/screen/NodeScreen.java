@@ -35,11 +35,8 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int HEIGHT = 186;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 20;
-  private static final Box PANEL = new Box(10, 62, 320, 76);
+  private static final Box PANEL = new Box(10, 62, 320, 94);
   private static final Box CHOICE = new Box(10, 38, 320, 110);
-
-  /** The `Delay` row, of the whole node, between the channel panel and the footer (866). */
-  private static final Box DELAY = new Box(10, 144, 320, 14);
 
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
@@ -124,8 +121,10 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         leftPos + PADDING, topPos + HEIGHT - FOOTER_HEIGHT, WIDTH - 2 * PADDING, FOOTER_HEIGHT);
   }
 
+  /** The `Delay` row, the last of the panel, under the rows of the open channel (876). */
   private Box delayRow() {
-    return new Box(leftPos + DELAY.x(), topPos + DELAY.y(), DELAY.width(), DELAY.height());
+    Box panel = panel();
+    return new Box(panel.x(), panel.y() + SlotEditor.DELAY_Y, panel.width(), SlotEditor.ROW_HEIGHT);
   }
 
   /** The screen opens on the first enabled channel, or on the first one with none (telas.md). */
