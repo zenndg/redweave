@@ -1,6 +1,7 @@
 package io.github.marcelofabianov.redweave.block.part;
 
 import io.github.marcelofabianov.redweave.RedweaveMod;
+import io.github.marcelofabianov.redweave.application.Emission;
 import io.github.marcelofabianov.redweave.block.BlockLocations;
 import io.github.marcelofabianov.redweave.block.Faces;
 import io.github.marcelofabianov.redweave.block.NodeLook;
@@ -12,6 +13,8 @@ import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.part.PartKind;
+import io.github.marcelofabianov.redweave.domain.signal.DelayedOutput;
+import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import io.github.marcelofabianov.redweave.item.ConfiguratorMessages;
 import io.github.marcelofabianov.redweave.registry.RedweaveItems;
 import io.github.marcelofabianov.redweave.server.RedweaveServer;
@@ -34,9 +37,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * The Signal Node as a part: _docs/funcionalidades/no-de-sinal.md. A thin plate on a side of its
  * space that reads and emits on the block it rests on. It adapts the world to the use cases, and
  * the rules stay in the domain (rule 10). Its looks of the old block states, `powered` and
- * `out_of_range`, are fields kept in its NBT (answer 534).
+ * `out_of_range`, are fields kept in its NBT (answer 534). Its output waits for the delay of the
+ * node: the delay is of the network, and only the changes still waiting are kept here (860).
  */
-public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, HandPart {
+public final class NodePart
+    implements Part, LivePart, TickingPart, OwnedPart, ClientPart, HandPart {
   private static final String NODE_TAG = "node";
 
   /** Who placed the node, saved: the owner of a node without a network (answers 165 and 189). */
@@ -60,6 +65,11 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
   private Optional<NodeId> node = Optional.empty();
   private Optional<UUID> placer = Optional.empty();
   private Optional<UUID> ownerOnClient = Optional.empty();
+  private DelayedOutput delayed = DelayedOutput.NONE;
+
+  /** What the network last said to emit; none until the first one, after loading (860). */
+  private Optional<Signal> wanted = Optional.empty();
+
   private int emitted;
   private boolean powered;
   private boolean outOfRange;
@@ -76,6 +86,7 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
     part.placer = tag.hasUUID(PLACER_TAG) ? Optional.of(tag.getUUID(PLACER_TAG)) : part.placer;
     part.powered = tag.getBoolean(POWERED_TAG);
     part.outOfRange = tag.getBoolean(OUT_OF_RANGE_TAG);
+    part.delayed = NodeDelaySave.read(tag);
     return part;
   }
 
@@ -169,6 +180,7 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
     placer.ifPresent(id -> tag.putUUID(PLACER_TAG, id));
     tag.putBoolean(POWERED_TAG, powered);
     tag.putBoolean(OUT_OF_RANGE_TAG, outOfRange);
+    NodeDelaySave.write(tag, delayed);
     return tag;
   }
 
@@ -186,8 +198,45 @@ public final class NodePart implements Part, LivePart, OwnedPart, ClientPart, Ha
     return emitted;
   }
 
-  public void setEmitted(int strength) {
-    emitted = strength;
+  /** The output after the delay and the changes still waiting (answers 860 and 873). */
+  public DelayedOutput delayed() {
+    return delayed;
+  }
+
+  /**
+   * Takes what the network says to emit now, with the delay of the node: nothing cuts the output at
+   * once (862), and with nothing waiting the value enters the delay now, so no delay emits in this
+   * same tick. The lens follows the network at once (863); true when it changed.
+   */
+  public boolean take(Emission emission) {
+    delayed = emission.onto(delayed);
+    wanted = Optional.of(emission.wanted());
+    if (delayed.line().isEmpty()) {
+      delayed = delayed.tick(emission.wanted(), ModuleDelays.LINE_LIMITS);
+    }
+    return setPowered(emission.wanted().isOn());
+  }
+
+  /** Brings what it emits to the delayed output and tells whether the neighbors must know. */
+  public boolean applyOutput() {
+    int now = delayed.output().strength();
+    boolean changed = emitted != now;
+    emitted = now;
+    return changed;
+  }
+
+  /**
+   * One tick of the delay, only while a change waits, so a node with nothing to do costs one
+   * comparison (rule 18). An unloaded node gets no tick, so what waits freezes (838, rule 6).
+   */
+  @Override
+  public void serverTick(PartSpaceBlockEntity space) {
+    if (wanted.isEmpty() || delayed.follows(wanted.get())) {
+      return;
+    }
+    delayed = delayed.tick(wanted.get(), ModuleDelays.LINE_LIMITS);
+    space.setChanged();
+    NodeSignals.apply(space, this);
   }
 
   public boolean powered() {

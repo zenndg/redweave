@@ -58,6 +58,7 @@ public final class RedweaveServer {
   private final LinkNode linkNode;
   private final NetworkChoices networkChoices;
   private final RenameNode renameNode;
+  private final NodeOutputServices nodeOutputs;
   private final CopyNode copyNode;
   private final PasteNode pasteNode;
   private final ToggleSlots toggleSlots;
@@ -71,6 +72,7 @@ public final class RedweaveServer {
   private final ModuleServices modules;
   private final LabelWatch labelWatch = new LabelWatch(this);
   private final RandomIds ids = new RandomIds();
+  private final ServerClock clock = new SystemServerClock();
 
   private RedweaveServer(NetworkLimits limits, SavedDataNetworks networks) {
     this.networks = networks;
@@ -80,7 +82,6 @@ public final class RedweaveServer {
     loseController = new LoseController(networks, networks);
     placeNode = new PlaceNode(ids);
     signalLogs = new SignalLogs(new NeoForgeLogLimits());
-    ServerClock clock = new SystemServerClock();
     readInput = new ReadInput(networks, networks, signalLogs, clock);
     terminal = new TerminalServices(networks, signalLogs);
     remotes = new RemoteServices(networks);
@@ -94,6 +95,7 @@ public final class RedweaveServer {
     linkNode = new LinkNode(networks, networks, networks, networks);
     networkChoices = new NetworkChoices(networks, networks);
     renameNode = new RenameNode(networks, networks);
+    nodeOutputs = new NodeOutputServices(networks);
     copyNode = new CopyNode(networks);
     pasteNode = new PasteNode(networks, networks);
     toggleSlots = new ToggleSlots(networks, networks);
@@ -170,6 +172,11 @@ public final class RedweaveServer {
 
   public RenameNode renameNode() {
     return renameNode;
+  }
+
+  /** What a node should emit and its output delay (answers 859 to 862). */
+  public NodeOutputServices nodeOutputs() {
+    return nodeOutputs;
   }
 
   public CopyNode copyNode() {

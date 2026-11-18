@@ -2,6 +2,7 @@ package io.github.marcelofabianov.redweave.server;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.marcelofabianov.redweave.config.NeoForgeOutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.network.BlockLocation;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Face;
@@ -9,6 +10,8 @@ import io.github.marcelofabianov.redweave.domain.network.Node;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.NodePosition;
 import io.github.marcelofabianov.redweave.domain.network.SlotReading;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,10 +22,18 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 /**
- * A node as it is in the saves: the name only when its owner gave one (answer 206) and the slots
- * ever enabled, each in the place of its channel (answer 224).
+ * A node as it is in the saves: the name only when its owner gave one (answer 206), the slots ever
+ * enabled, each in the place of its channel (answer 224), and its output delay, left out when it
+ * has none, so a save without it loads with no delay and no migration (answer 869, rule 15).
  */
-record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<SavedSlot> slots) {
+record SavedNode(
+    NodeId id,
+    Optional<String> name,
+    NodePosition position,
+    List<SavedSlot> slots,
+    OutputDelay delay) {
+  private static final String DELAY_PART = "output delay";
+  private static final OutputDelayLimits DELAY_LIMITS = new NeoForgeOutputDelayLimits();
   private static final String ID = "id";
   private static final String BLOCK = "block";
   private static final String FACE = "face";
@@ -44,7 +55,10 @@ record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<S
                   SaveCodecs.FACE.fieldOf(FACE).forGetter(node -> node.position().face()),
                   Lenient.list(SavedSlot.CODEC, SLOT_PART)
                       .fieldOf(SLOTS)
-                      .forGetter(SavedNode::slots))
+                      .forGetter(SavedNode::slots),
+                  Lenient.optionalField(
+                          SaveCodecs.OUTPUT_DELAY_KEY, SaveCodecs.OUTPUT_DELAY, DELAY_PART)
+                      .forGetter(node -> Optional.of(node.delay()).filter(SavedNode::waits)))
               .apply(instance, SavedNode::checked));
 
   SavedNode {
@@ -58,12 +72,21 @@ record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<S
       int at = index;
       node.slots().get(index).ifPresent(slot -> used.add(new SavedSlot(slot, readingOf.apply(at))));
     }
-    return new SavedNode(node.id(), node.name(), node.position(), used);
+    return new SavedNode(node.id(), node.name(), node.position(), used, node.delay());
+  }
+
+  private static boolean waits(OutputDelay delay) {
+    return !delay.equals(OutputDelay.NONE);
   }
 
   /** Drops a repeated channel and the readings out of an enabled input (answer 92). */
   private static SavedNode checked(
-      NodeId id, Optional<String> name, BlockLocation block, Face face, List<SavedSlot> slots) {
+      NodeId id,
+      Optional<String> name,
+      BlockLocation block,
+      Face face,
+      List<SavedSlot> slots,
+      Optional<OutputDelay> delay) {
     Set<Integer> taken = new HashSet<>();
     List<SavedSlot> kept = new ArrayList<>();
     for (SavedSlot slot : slots) {
@@ -73,7 +96,8 @@ record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<S
       }
       kept.add(withoutStrayReading(slot));
     }
-    return new SavedNode(id, name, new NodePosition(block, face), kept);
+    return new SavedNode(
+        id, name, new NodePosition(block, face), kept, delay.orElse(OutputDelay.NONE));
   }
 
   private static SavedSlot withoutStrayReading(SavedSlot slot) {
@@ -84,11 +108,13 @@ record SavedNode(NodeId id, Optional<String> name, NodePosition position, List<S
     return new SavedSlot(slot.slot(), Signal.OFF);
   }
 
+  /** The node of the domain, with a delay over the config of today fitted to it (837). */
   Node node() {
     List<Optional<ChannelSlot>> all =
         new ArrayList<>(Collections.nCopies(Node.SLOT_COUNT, Optional.empty()));
     slots.forEach(saved -> all.set(saved.index(), Optional.of(saved.slot())));
-    return new Node(id, name, position, all);
+    OutputDelay fitted = waits(delay) ? delay.fittedTo(DELAY_LIMITS) : delay;
+    return new Node(id, name, position, all, fitted);
   }
 
   /** The readings that are on, the only ones that go back to the network (answer 89). */

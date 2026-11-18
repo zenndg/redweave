@@ -12,6 +12,8 @@ import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.PlayerId;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelayLimits;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.Optional;
 import net.minecraft.core.UUIDUtil;
@@ -28,6 +30,11 @@ public final class SaveCodecs {
   static final String Z = "z";
   static final String COLOR = "color";
   static final String NAME = "name";
+
+  /** The key of the output delay of a node, the same as in the NBT of a module (answer 869). */
+  public static final String OUTPUT_DELAY_KEY = "output_delay_ticks";
+
+  private static final OutputDelayLimits ANY_LENGTH = () -> Integer.MAX_VALUE;
   private static final String UNKNOWN_KEY = "Unknown key: ";
   private static final String INVALID_NAME = "Blank, padded or too long name: ";
 
@@ -40,6 +47,14 @@ public final class SaveCodecs {
   static final Codec<Signal> SIGNAL =
       Codec.intRange(Signal.OFF.strength(), Signal.MAX.strength())
           .xmap(Signal::new, Signal::strength);
+
+  /**
+   * An output delay in ticks, brought to whole seconds from 0 instead of refused (rule 14). Who
+   * reads it fits it to the config, which a codec cannot read before the server starts (837).
+   */
+  public static final Codec<OutputDelay> OUTPUT_DELAY =
+      Codec.INT.xmap(ticks -> OutputDelay.within(ticks, ANY_LENGTH), OutputDelay::ticks);
+
   public static final Codec<NetworkId> NETWORK_ID =
       UUIDUtil.CODEC.xmap(NetworkId::new, NetworkId::value);
   static final Codec<NodeId> NODE_ID = UUIDUtil.CODEC.xmap(NodeId::new, NodeId::value);

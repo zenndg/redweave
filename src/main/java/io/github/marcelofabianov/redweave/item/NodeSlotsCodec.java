@@ -6,13 +6,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.CopiedSlot;
 import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.server.SaveCodecs;
 import java.util.List;
 
 /**
  * The copy of the Configurator as it is in the item: the network of the node (answer 238), the face
- * it stuck to, and the channel, status, direction and face of each slot ever enabled, with the keys
- * of the save of the networks (answers 105, 230 and 277).
+ * it stuck to, the channel, status, direction and face of each slot ever enabled, and the output
+ * delay of the node, with the keys of the save of the networks (answers 105, 230, 277 and 868). A
+ * copy made before the delay has none, with no migration.
  */
 public final class NodeSlotsCodec {
   private static final String NETWORK = "network";
@@ -52,11 +54,14 @@ public final class NodeSlotsCodec {
               .group(
                   SaveCodecs.NETWORK_ID.fieldOf(NETWORK).forGetter(ConfiguratorCopy::network),
                   SaveCodecs.FACE.fieldOf(ATTACHED).forGetter(copy -> copy.slots().attached()),
-                  SLOTS_CODEC.fieldOf(SLOTS).forGetter(copy -> copy.slots().slots()))
+                  SLOTS_CODEC.fieldOf(SLOTS).forGetter(copy -> copy.slots().slots()),
+                  SaveCodecs.OUTPUT_DELAY
+                      .optionalFieldOf(SaveCodecs.OUTPUT_DELAY_KEY, OutputDelay.NONE)
+                      .forGetter(copy -> copy.slots().delay()))
               .apply(
                   instance,
-                  (network, attached, slots) ->
-                      new ConfiguratorCopy(network, new NodeCopy(attached, slots))));
+                  (network, attached, slots, delay) ->
+                      new ConfiguratorCopy(network, new NodeCopy(attached, slots, delay))));
 
   private NodeSlotsCodec() {}
 
