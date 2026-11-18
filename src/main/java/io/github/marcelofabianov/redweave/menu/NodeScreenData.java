@@ -54,6 +54,9 @@ final class NodeScreenData implements ContainerData {
     if (index == NodeScreenLayout.VIEWER_IS_OWNER) {
       return network.isOwner(viewer) ? 1 : 0;
     }
+    if (index == NodeScreenLayout.DELAY) {
+      return node.delay().seconds();
+    }
     int slot = index - NodeScreenLayout.FIRST_SLOT;
     if (slot < NodeScreenLayout.MAX_SLOTS) {
       return slot < node.slots().size() ? NodeScreenCodes.slot(node.slots().get(slot)) : 0;

@@ -22,10 +22,10 @@ public final class NodeScreenCodes {
   private static final int ACTIVE_SHIFT = 9;
   private static final int SLOT_BITS = 10;
 
-  private static final int KIND_MASK = 0b11;
-  private static final int INDEX_SHIFT = 2;
+  private static final int KIND_MASK = 0b111;
+  private static final int INDEX_SHIFT = 3;
   private static final int INDEX_MASK = 0b1111;
-  private static final int SLOT_SHIFT = 6;
+  private static final int SLOT_SHIFT = 7;
 
   private NodeScreenCodes() {}
 
@@ -68,18 +68,30 @@ public final class NodeScreenCodes {
     if (kind == NodeAction.Kind.CHOOSE.ordinal()) {
       return Optional.of(NodeAction.choose(button >> INDEX_SHIFT));
     }
+    if (kind == NodeAction.Kind.DELAY.ordinal()) {
+      return delayOf(button >> INDEX_SHIFT);
+    }
     int index = button >> INDEX_SHIFT & INDEX_MASK;
     int slotCode = button >> SLOT_SHIFT;
-    Optional<ChannelSlot> slot = slotOf(slotCode);
     if (kind != NodeAction.Kind.CONFIGURE.ordinal()) {
-      return slotCode == 0 ? Optional.of(simple(kind, index)) : Optional.empty();
+      return slotCode == 0 ? simple(kind, index) : Optional.empty();
     }
-    return slot.map(configured -> NodeAction.configure(index, configured));
+    return slotOf(slotCode).map(configured -> NodeAction.configure(index, configured));
   }
 
-  private static NodeAction simple(int kind, int index) {
-    return kind == NodeAction.Kind.ENABLE.ordinal()
-        ? NodeAction.enable(index)
-        : NodeAction.disable(index);
+  /** A step of the `Delay` row is only shorter or longer (answer 866). */
+  private static Optional<NodeAction> delayOf(int step) {
+    return DelaySteps.fits(step) ? Optional.of(NodeAction.delay(step)) : Optional.empty();
+  }
+
+  /** A kind the screen never sends is refused, as any number may come (rule 16). */
+  private static Optional<NodeAction> simple(int kind, int index) {
+    if (kind == NodeAction.Kind.ENABLE.ordinal()) {
+      return Optional.of(NodeAction.enable(index));
+    }
+    if (kind == NodeAction.Kind.DISABLE.ordinal()) {
+      return Optional.of(NodeAction.disable(index));
+    }
+    return Optional.empty();
   }
 }
