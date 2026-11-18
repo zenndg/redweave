@@ -1,11 +1,17 @@
 package io.github.marcelofabianov.redweave.domain.network;
 
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-/** The 16 slots of a node after a paste (answers 106 and 230). An empty slot was never enabled. */
-public record Pasted(List<Optional<ChannelSlot>> slots) {
+/**
+ * The 16 slots of a node after a paste (answers 106 and 230), and its output delay (answer 868). An
+ * empty slot was never enabled.
+ */
+public record Pasted(List<Optional<ChannelSlot>> slots, OutputDelay delay) {
   public Pasted {
+    Objects.requireNonNull(delay);
     slots = List.copyOf(slots);
   }
 

@@ -12,6 +12,7 @@ import io.github.marcelofabianov.redweave.domain.network.Network;
 import io.github.marcelofabianov.redweave.domain.network.NetworkId;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -93,7 +94,7 @@ class LinkNodeTest {
   @Test
   void aNodeKeepsItsNameInTheNewNetwork() {
     NetworkId old = fixture.ownersNetworkWithANode();
-    fixture.networks.find(old).orElseThrow().renameNode(OWNER, NODE, NODE_NAME);
+    fixture.networks.find(old).orElseThrow().nodeSettings().rename(OWNER, NODE, NODE_NAME);
     NetworkId target = fixture.ownersOtherNetwork();
 
     linkNode.link(OWNER, NODE, NODE_POSITION, target);
@@ -119,5 +120,19 @@ class LinkNodeTest {
     linkNode.link(OWNER, NODE, NODE_POSITION, strangers);
 
     assertEquals(Optional.empty(), fixture.lastUsed.lastUsedOf(OWNER));
+  }
+
+  /** A node that moves keeps its output delay, as it keeps its name (answer 870). */
+  @Test
+  void aNodeThatMovesKeepsItsDelay() {
+    NetworkId old = fixture.ownersNetworkWithANode();
+    NetworkId target = fixture.ownersOtherNetwork();
+    OutputDelay oneSecond = new OutputDelay(OutputDelay.STEP_TICKS);
+    fixture.networks.find(old).orElseThrow().nodeSettings().delay(OWNER, NODE, oneSecond);
+
+    linkNode.link(OWNER, NODE, NODE_POSITION, target);
+
+    Network moved = fixture.networks.find(target).orElseThrow();
+    assertEquals(oneSecond, moved.node(NODE).orElseThrow().delay());
   }
 }

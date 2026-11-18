@@ -17,6 +17,7 @@ import io.github.marcelofabianov.redweave.domain.network.NodeCopy;
 import io.github.marcelofabianov.redweave.domain.network.NodeId;
 import io.github.marcelofabianov.redweave.domain.network.Outcome;
 import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import io.github.marcelofabianov.redweave.domain.signal.Signal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,5 +120,17 @@ class CopyAndPasteNodeTest {
     pasteNode.paste(OWNER, NODE, COPY);
 
     assertTrue(fixture.networks.saves() > 0);
+  }
+
+  /** The paste takes the delay of the copy, with its slots (answer 868). */
+  @Test
+  void pastingTakesTheDelayOfTheCopy() {
+    fixture.ownersNetworkWithANode();
+    OutputDelay oneSecond = new OutputDelay(OutputDelay.STEP_TICKS);
+    NodeCopy delayed = new NodeCopy(COPY.attached(), COPY.slots(), oneSecond);
+
+    pasteNode.paste(OWNER, NODE, delayed);
+
+    assertEquals(oneSecond, network().node(NODE).orElseThrow().delay());
   }
 }

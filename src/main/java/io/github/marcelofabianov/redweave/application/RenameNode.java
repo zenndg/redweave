@@ -21,7 +21,7 @@ public final class RenameNode {
     return SavedChange.apply(
         finder.findByNode(node),
         Outcome.UNKNOWN_NODE,
-        network -> network.renameNode(player, node, newName),
+        network -> network.nodeSettings().rename(player, node, newName),
         saver);
   }
 }

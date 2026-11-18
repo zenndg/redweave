@@ -34,6 +34,14 @@ public final class DelayedOutput {
     return new DelayedOutput(delay, line, line.outputBefore(strength), true);
   }
 
+  /**
+   * An output from the saves with what it gave while its changes waited, as a node has no strength
+   * of its own to tell it (answer 873).
+   */
+  public static DelayedOutput resumed(OutputDelay delay, DelayLine line, Signal output) {
+    return new DelayedOutput(delay, line, output, true);
+  }
+
   /** One tick, with what the rule of the module decides now. */
   public DelayedOutput tick(Signal value, DelayLineLimits limits) {
     Objects.requireNonNull(value);
@@ -46,7 +54,23 @@ public final class DelayedOutput {
 
   /** The same output with a new delay; what waits keeps its tick (answer 839). */
   public DelayedOutput withDelay(OutputDelay next) {
-    return new DelayedOutput(next, line, output, fresh);
+    return next.equals(delay) ? this : new DelayedOutput(next, line, output, fresh);
+  }
+
+  /**
+   * Off at once, with nothing waiting, as a node that stops counting (answer 862). What comes next
+   * is a change like any other and waits for the delay (answer 874).
+   */
+  public DelayedOutput cut() {
+    if (!fresh && line.isEmpty() && !output.isOn()) {
+      return this;
+    }
+    return new DelayedOutput(delay, DelayLine.EMPTY, Signal.OFF, false);
+  }
+
+  /** Whether the value is already out with nothing waiting, so a tick would change nothing. */
+  public boolean follows(Signal value) {
+    return !fresh && line.isEmpty() && output.equals(value);
   }
 
   /** The output and what waits on, at a new strength at once (answers 843 and 854). */

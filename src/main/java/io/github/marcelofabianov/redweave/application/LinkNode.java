@@ -11,9 +11,10 @@ import java.util.Optional;
 
 /**
  * Picks or switches the network of a node, from the Node Screen (answers 139, 141 and 194). The
- * node leaves the old one, so it has one network at most, keeps its name (200) and joins only an
- * online network (157). The player must own both, so nobody takes a node of another (42). Who may
- * pick for a node with no network is checked by the block, which knows who placed it (172).
+ * node leaves the old one, so it has one network at most, keeps its name (200) and its output delay
+ * (870) and joins only an online network (157). The player must own both, so nobody takes a node of
+ * another (42). Who may pick for a node with no network is checked by the block, which knows who
+ * placed it (172).
  */
 public final class LinkNode {
   private final NetworkFinder finder;
@@ -42,12 +43,13 @@ public final class LinkNode {
     if (allowed != Outcome.ACCEPTED) {
       return allowed;
     }
-    Optional<String> name = old.flatMap(network -> network.node(node)).flatMap(Node::name);
+    Optional<Node> moving = old.flatMap(network -> network.node(node));
     old.ifPresent(network -> {
       network.detachNode(player, node);
       saver.save(network);
     });
-    Outcome joined = target.get().attachNode(player, node, position, name);
+    Outcome joined = target.get().attachNode(player, node, position, moving.flatMap(Node::name));
+    moving.ifPresent(was -> target.get().nodeSettings().delay(player, node, was.delay()));
     saver.save(target.get());
     lastUsed.record(player, targetId);
     return joined;

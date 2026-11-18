@@ -84,7 +84,7 @@ class ShowNetworkTest {
     network.readInput(NODE, FIRST_SLOT, READ);
     network.enableSlot(OWNER, NODE, DISABLED_SLOT);
     network.disableSlot(OWNER, NODE, DISABLED_SLOT);
-    network.renameNode(OWNER, NODE, LEVER);
+    network.nodeSettings().rename(OWNER, NODE, LEVER);
     network.renameChannel(OWNER, DOOR, DOOR_NAME);
     return id;
   }

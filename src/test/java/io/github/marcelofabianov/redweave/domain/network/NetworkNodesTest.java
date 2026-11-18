@@ -120,7 +120,7 @@ class NetworkNodesTest {
     Network network = network();
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
 
-    assertEquals(Outcome.ACCEPTED, network.renameNode(OWNER, NODE, PADDED_NODE_NAME));
+    assertEquals(Outcome.ACCEPTED, network.nodeSettings().rename(OWNER, NODE, PADDED_NODE_NAME));
     Node node = network.node(NODE).orElseThrow();
     assertEquals(Optional.of(NODE_NAME), node.name());
     assertEquals(NODE_NAME, node.displayName());
@@ -131,9 +131,9 @@ class NetworkNodesTest {
   void aBlankNodeNameGoesBackToTheDefault() {
     Network network = network();
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
-    network.renameNode(OWNER, NODE, NODE_NAME);
+    network.nodeSettings().rename(OWNER, NODE, NODE_NAME);
 
-    assertEquals(Outcome.ACCEPTED, network.renameNode(OWNER, NODE, BLANK));
+    assertEquals(Outcome.ACCEPTED, network.nodeSettings().rename(OWNER, NODE, BLANK));
     assertEquals(DEFAULT_NODE_NAME, network.node(NODE).orElseThrow().displayName());
   }
 
@@ -141,9 +141,9 @@ class NetworkNodesTest {
   void aNodeNameLongerThanTheLimitIsRefusedAndTheNameStays() {
     Network network = network();
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
-    network.renameNode(OWNER, NODE, NODE_NAME);
+    network.nodeSettings().rename(OWNER, NODE, NODE_NAME);
 
-    assertEquals(Outcome.INVALID_NAME, network.renameNode(OWNER, NODE, TOO_LONG));
+    assertEquals(Outcome.INVALID_NAME, network.nodeSettings().rename(OWNER, NODE, TOO_LONG));
     assertEquals(NODE_NAME, network.node(NODE).orElseThrow().displayName());
   }
 
@@ -152,13 +152,13 @@ class NetworkNodesTest {
     Network network = network();
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
 
-    assertEquals(Outcome.NOT_OWNER, network.renameNode(STRANGER, NODE, NODE_NAME));
+    assertEquals(Outcome.NOT_OWNER, network.nodeSettings().rename(STRANGER, NODE, NODE_NAME));
     assertEquals(DEFAULT_NODE_NAME, network.node(NODE).orElseThrow().displayName());
   }
 
   @Test
   void renamingANodeThatIsNotThereSaysSo() {
-    assertEquals(Outcome.UNKNOWN_NODE, network().renameNode(OWNER, NODE, NODE_NAME));
+    assertEquals(Outcome.UNKNOWN_NODE, network().nodeSettings().rename(OWNER, NODE, NODE_NAME));
   }
 
   /** Renaming keeps the slots, because a node is replaced as a whole (answer 33). */
@@ -168,7 +168,7 @@ class NetworkNodesTest {
     network.attachNode(OWNER, NODE, NODE_POSITION, Optional.empty());
     List<Optional<ChannelSlot>> slots = network.node(NODE).orElseThrow().slots();
 
-    network.renameNode(OWNER, NODE, NODE_NAME);
+    network.nodeSettings().rename(OWNER, NODE, NODE_NAME);
 
     assertEquals(slots, network.node(NODE).orElseThrow().slots());
   }

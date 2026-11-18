@@ -1,5 +1,6 @@
 package io.github.marcelofabianov.redweave.domain.network;
 
+import io.github.marcelofabianov.redweave.domain.signal.OutputDelay;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,6 +40,16 @@ final class Nodes {
       return Outcome.INVALID_NAME;
     }
     byId.put(id, node.withName(valid));
+    return Outcome.ACCEPTED;
+  }
+
+  /** The output delay of the node, which the caller already fitted to the config (837). */
+  Outcome delay(NodeId id, OutputDelay delay) {
+    Node node = byId.get(id);
+    if (node == null) {
+      return Outcome.UNKNOWN_NODE;
+    }
+    byId.put(id, node.withDelay(delay));
     return Outcome.ACCEPTED;
   }
 
