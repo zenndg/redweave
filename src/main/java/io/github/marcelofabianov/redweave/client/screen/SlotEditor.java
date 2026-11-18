@@ -3,7 +3,6 @@ package io.github.marcelofabianov.redweave.client.screen;
 import io.github.marcelofabianov.redweave.domain.network.ChannelSlot;
 import io.github.marcelofabianov.redweave.domain.network.Direction;
 import io.github.marcelofabianov.redweave.domain.network.Face;
-import io.github.marcelofabianov.redweave.domain.signal.ChannelColor;
 import io.github.marcelofabianov.redweave.menu.NodeAction;
 import io.github.marcelofabianov.redweave.menu.NodeScreenTexts;
 import java.util.ArrayList;
@@ -25,6 +24,10 @@ final class SlotEditor {
   static final int STATUS_Y = 22;
   static final int DIRECTION_Y = 40;
   static final int SIGNAL_Y = 58;
+
+  /** The `Delay` row, the last of the panel, of the whole node (answers 861 and 876). */
+  static final int DELAY_Y = 76;
+
   static final int RIGHT_COLUMN_X = 196;
   static final int CUBE_Y = 18;
   static final int CUBE_SIZE = 40;
@@ -70,8 +73,7 @@ final class SlotEditor {
    * sticks to, as enabling it would make (answer 228).
    */
   static ChannelSlot setUpOf(Optional<ChannelSlot> slot, int index, Face stuck) {
-    return slot.orElseGet(
-        () -> new ChannelSlot(Direction.INPUT, stuck, ChannelColor.values()[index], false));
+    return OpenChannel.setUpOf(slot, index, stuck);
   }
 
   /** An enabled slot is locked; the owner sets up a disabled one (answer 237). */

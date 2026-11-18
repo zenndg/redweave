@@ -11,8 +11,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 /**
- * The `Delay` row of the Node Screen, between the channel panel and the footer, because the delay
- * is of the whole node and not of the open channel (answers 861 and 866): the label, the seconds
+ * The `Delay` row of the Node Screen, the last row of the panel, under the rows of the open
+ * channel, though the delay is of the whole node (answers 861, 866 and 876): the label, the seconds
  * and `−` and `+`, which only the owner of the network clicks.
  */
 final class NodeDelayRow {

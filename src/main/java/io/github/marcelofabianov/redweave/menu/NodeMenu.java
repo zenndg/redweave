@@ -188,12 +188,17 @@ public final class NodeMenu extends AbstractContainerMenu implements NetworkChoi
     return data.get(NodeScreenLayout.SLOT_COUNT);
   }
 
+  /** A slot of the node; an index outside its slots is none, never another value (#179). */
   public Optional<ChannelSlot> slot(int index) {
+    if (index < 0 || index >= NodeScreenLayout.MAX_SLOTS) {
+      return Optional.empty();
+    }
     return NodeScreenCodes.slotOf(data.get(NodeScreenLayout.FIRST_SLOT + index));
   }
 
   public int signal(int index) {
-    return data.get(NodeScreenLayout.FIRST_SIGNAL + index);
+    boolean ofTheNode = index >= 0 && index < NodeScreenLayout.MAX_SLOTS;
+    return ofTheNode ? data.get(NodeScreenLayout.FIRST_SIGNAL + index) : 0;
   }
 
   /** The state of the node, or none without a network. */

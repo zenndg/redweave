@@ -706,7 +706,7 @@ Confira a #177 (perguntas 859 a 875), com uma alavanca lida por um nó `Input` n
 
 | # | Faça | Espere ver |
 |---|---|---|
-| 434 | Abra a Tela do Nó, em inglês e em português | A tela mais alta, com `Delay` em `0 s` e os botões `−` e `+` entre o painel do canal e o rodapé; `Atraso` em português |
+| 434 | Abra a Tela do Nó, em inglês e em português | A tela mais alta, com `Delay` em `0 s` e os botões `−` e `+` na última linha do quadro escuro, abaixo de `Signal`, sem nada solto fora do quadro; `Atraso` em português |
 | 435 | Clique em `+` até passar de `15 s` e em `−` até passar de `0 s` | O valor para em `15 s` e em `0 s` |
 | 436 | Abra a Tela do Nó de outro player | Os botões `−` e `+` apagados, sem mudar o valor |
 | 437 | Com `Delay` em `0 s`, ligue e desligue a alavanca | A lâmpada segue na hora, como antes |
@@ -721,11 +721,14 @@ Confira a #177 (perguntas 859 a 875), com uma alavanca lida por um nó `Input` n
 | 446 | Abra um mundo salvo antes da #177 | Todo nó abre com `0 s` e funciona como antes |
 | 447 | Abra a escolha de rede de um nó | A lista mais alta, com 3 redes inteiras por vez e a rolagem |
 | 448 | Veja a Tela do Controlador com o nó de saída com `Delay` em `5 s` e ligue a alavanca | O sinal do nó e a linha do log aparecem na hora, e só a lâmpada espera |
+| 449 | Coloque um nó novo, abra a tela dele, clique numa rede da lista e solte o botão (#179) | A tela segue para a configuração, sem o jogo fechar |
+| 450 | Na configuração, troque de canal na fileira e clique e arraste no cubo da face | A linha `Delay` mantém o valor ao trocar de canal, e o cubo gira e escolhe a face como antes |
 
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 08:17 | Inclui os passos 449 e 450, do crash ao escolher a rede e da linha `Delay` dentro do quadro (#179). |
 | Zennd | 2026-11-18 09:40 | Inclui o roteiro do delay na saída do Signal Node, passos 434 a 448 (#177). |
 | Zennd | 2026-11-17 16:20 | Inclui os passos 431 a 433, do layout de `Components` (perguntas 856 e 857, #175). |
 | Zennd | 2026-11-17 15:25 | Inclui os passos 416 a 430, do delay nos outros módulos (perguntas 845 a 855, #173). |

@@ -72,13 +72,14 @@ final class NodeScreenPanel {
   }
 
   /** The line between the columns, so the cube reads as its own part (answer 346). */
+  /** Beside the rows of the open channel only: the `Delay` row under them is of the node (876). */
   private static void drawDivider(GuiGraphics graphics, Box panel) {
     int x = panel.x() + DIVIDER_X;
     graphics.fill(
         x,
         panel.y() + DIVIDER_MARGIN,
         x + 1,
-        panel.bottom() - DIVIDER_MARGIN,
+        panel.y() + SlotEditor.DELAY_Y - DIVIDER_MARGIN,
         ScreenColors.SEPARATOR);
   }
 

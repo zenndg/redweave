@@ -35,11 +35,8 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   private static final int HEIGHT = 186;
   private static final int PADDING = 10;
   private static final int FOOTER_HEIGHT = 20;
-  private static final Box PANEL = new Box(10, 62, 320, 76);
+  private static final Box PANEL = new Box(10, 62, 320, 94);
   private static final Box CHOICE = new Box(10, 38, 320, 110);
-
-  /** The `Delay` row, of the whole node, between the channel panel and the footer (866). */
-  private static final Box DELAY = new Box(10, 144, 320, 14);
 
   private static final int BACK_WIDTH = 48;
   private static final int BACK_HEIGHT = 16;
@@ -124,8 +121,10 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
         leftPos + PADDING, topPos + HEIGHT - FOOTER_HEIGHT, WIDTH - 2 * PADDING, FOOTER_HEIGHT);
   }
 
+  /** The `Delay` row, the last of the panel, under the rows of the open channel (876). */
   private Box delayRow() {
-    return new Box(leftPos + DELAY.x(), topPos + DELAY.y(), DELAY.width(), DELAY.height());
+    Box panel = panel();
+    return new Box(panel.x(), panel.y() + SlotEditor.DELAY_Y, panel.width(), SlotEditor.ROW_HEIGHT);
   }
 
   /** The screen opens on the first enabled channel, or on the first one with none (telas.md). */
@@ -156,8 +155,8 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
       return true;
     }
     NodeView view = view(mouseX, mouseY);
-    ChannelSlot open = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
-    if (SlotEditor.isSettable(view, open) && view.hovers(SlotEditor.cubeBox(panel()))) {
+    boolean settable = openSlot().filter(open -> SlotEditor.isSettable(view, open)).isPresent();
+    if (settable && view.hovers(SlotEditor.cubeBox(panel()))) {
       cube.press();
       return true;
     }
@@ -187,14 +186,20 @@ public final class NodeScreen extends AbstractContainerScreen<NodeMenu> {
   @Override
   public boolean mouseReleased(double mouseX, double mouseY, int button) {
     NodeView view = view(mouseX, mouseY);
-    ChannelSlot slot = SlotEditor.setUpOf(menu.slot(selected), selected, stuckFace());
     Optional<Direction> face = cube.release(SlotEditor.cubeBox(panel()), view);
-    if (SlotEditor.isSettable(view, slot) && face.isPresent()) {
+    Optional<ChannelSlot> slot = openSlot().filter(open -> SlotEditor.isSettable(view, open));
+    if (slot.isPresent() && face.isPresent()) {
+      ChannelSlot open = slot.get();
       ChannelSlot changed =
-          new ChannelSlot(slot.direction(), Faces.of(face.get()), slot.channel(), false);
+          new ChannelSlot(open.direction(), Faces.of(face.get()), open.channel(), false);
       send(NodeAction.configure(selected, changed));
     }
     return super.mouseReleased(mouseX, mouseY, button);
+  }
+
+  /** The slot of the open channel, or none on the network choice, with no channel open (#179). */
+  private Optional<ChannelSlot> openSlot() {
+    return OpenChannel.slot(menu.slot(selected), selected, stuckFace());
   }
 
   /** Enter saves the name, Esc cancels it, and no key closes the screen while typing (204). */
