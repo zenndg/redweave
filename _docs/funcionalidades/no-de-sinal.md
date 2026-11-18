@@ -35,6 +35,25 @@ Um slot `Output` energiza com força só o bloco de apoio, qualquer que seja a f
 - Um nó `Out of range`, `No network` ou numa rede `Offline` ou `Unplaced` emite 0.
 - O nó só avisa os vizinhos quando o valor emitido muda.
 
+## Delay na saída
+
+Desde a #177, o nó tem um delay na saída, com a mesma base dos [Signal Modules](modulos-de-sinal.md#delay-na-saída). Delay é tempo de saída, não lógica: a lógica de sinal continua só nos Signal Modules (pergunta 859, que muda a 308).
+
+| Ponto | Como é | Pergunta |
+|---|---|---|
+| Faixa | De 0 a 15 s, em segundos inteiros, com `−` e `+` na [Tela do Nó](telas.md#tela-do-nó); o padrão é 0 s, sem atraso. O domínio e o save guardam ticks | 830 e 859 |
+| O que atrasa | A emissão do nó, o valor mais forte entre os slots `Output`: um delay por nó, não por slot. Vale ao ligar e ao desligar, e um pulso mais curto que o delay passa inteiro, atrasado | 831, 832 e 861 |
+| Onde mora | O delay configurado fica no nó, na rede, e só o dono da rede o muda, com o servidor conferindo o dono e o alcance (regra 17). As mudanças pendentes ficam na parte do nó, e o tempo só corre com o chunk carregado, sem forçar chunk (regra 6). A rede continua avaliada só quando um canal muda (regra 18) | 838 e 860 |
+| Nó que deixa de contar | `Out of range`, `No network`, numa rede `Offline` ou `Unplaced`, ou sem slot `Output` ativo, o nó emite 0 na hora, sem esperar o delay, e as mudanças pendentes são descartadas  Quando volta a contar, o sinal espera o delay, como qualquer mudança. Ao carregar o chunk sem nada pendente, o valor sai na hora | 862 e 874 |
+| Estado na hora | A lente, o medidor da Tela do Nó e o log de saída da Tela do Controlador seguem o canal na hora; só a redstone no bloco de apoio espera | 863 |
+| Mudar o delay | As mudanças pendentes mantêm o tick em que iam sair, e uma mudança nova nunca vence antes da última pendente | 839 |
+| Limites | Os dos módulos: `module.max_output_delay_ticks` e `module.max_delay_changes`, em [`limites.md`](../limites.md). Um delay salvo acima do máximo é limitado ao carregar | 837, 847 e 864 |
+| Sem saída | A linha `Delay` aparece sempre, e o dono a ajusta mesmo sem slot `Output`; sem saída, não tem efeito. Um nó novo nasce com 0 s | 870 |
+| Troca de rede | O nó mantém o delay, e as mudanças pendentes são descartadas | 870 |
+| Cópia | O `Copy` do [Configurator](configurador.md) leva o delay com os slots, nunca as mudanças pendentes. Uma cópia gravada antes da #177 cola com 0 s | 868 |
+| Save | `output_delay_ticks`, opcional, no nó salvo com a rede, e `delay_line`, a lista das mudanças pendentes, cada uma `{signal, ticks}`, no NBT da parte, com `delayed_output`, de 0 a 15, o que o nó emitia antes delas, gravada só com mudança pendente. Um save sem elas abre com 0 s e a linha vazia, sem migração (regra 15) | 869 e 873 |
+| Domínio | `domain/signal/OutputDelay`, `DelayLine` e `DelayedOutput`, comuns ao nó e aos módulos | 865 |
+
 ## Avaliação
 
 No fim de cada tick, o servidor avalia só as redes pendentes, com o simulador, e aplica as saídas que mudaram aos nós em chunks carregados. Nenhum chunk é carregado à força (regra 6). Um nó cujo chunk carrega de novo pede à rede o valor atual das saídas dele.
@@ -87,6 +106,7 @@ Desde a #44, o nó é uma parte do [multipart](multipart.md), e o visual fica em
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-18 08:25 | Inclui o delay na saída do nó, da #177 (perguntas 859 a 872). |
 | Zennd | 2026-11-16 23:55 | A receita passa a dar 8 nós na #159 (pergunta 765). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 749). |
 | Zennd | 2026-11-15 09:35 | Leva o visual do nó para os campos da parte no contêiner, sem estados do bloco (perguntas 534, 543 e 546). |
