@@ -184,7 +184,7 @@ O projeto segue o Gitflow, com Semantic Versioning e Conventional Commits.
 Proposta. Vale a partir do projeto NeoForge, na Fase 1.
 
 ```text
-io.github.marcelofabianov.redweave
+io.github.zenndg.redweave
 ├── RedweaveMod             // ponto de entrada: só conecta os registros
 ├── domain/                 // Java puro, testado com JUnit
 │   ├── signal/             // Signal (0 a 15), ChannelColor e o delay na saída: OutputDelay, DelayLine e DelayedOutput, comuns ao nó e aos módulos

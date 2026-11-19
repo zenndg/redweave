@@ -11,6 +11,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | # | Pergunta | Resposta |
 |---|---|---|
+| 894 | O pacote Java continua `io.github.marcelofabianov.redweave`, se o Redweave fica na conta `zenndg` do GitHub (pergunta 170)? | Não: passa a `io.github.zenndg.redweave`, no mesmo dia da decisão, numa issue e num PR próprios (#182), depois do merge da #110. Mudam as pastas de `src/`, os `package` e `import`, o `mod_group_id`, o `ROOT_PACKAGE` do `DomainBoundaryTest`, a árvore do `README.md` e a estrutura do `AGENTS.md`. Saves, IDs e chaves não mudam, porque usam o mod ID `redweave`. Os links para `marcelofabianov/iron-meridian` e `marcelofabianov/cubit` e as perguntas 12 e 170 ficam como estão |
 | 893 | Sem a chave `input_on` no save do Signal Flip-Flop, a entrada vale desligada (pergunta 886)? Com a entrada ligada, o primeiro tick veria uma borda e alternaria, contra a pergunta 881 | Não: sem `input_on`, a entrada conta como ainda não lida, como num módulo recém-colocado, e o primeiro tick só a lê, sem alternar. A chave só vai ao save depois da primeira leitura. Muda a pergunta 886 nesse ponto (regra 38, #110) |
 | 892 | Quanto tempo a saída do Signal Flip-Flop leva para alternar depois da borda de subida, antes do `Delay` da tela? | Nada além do tick do módulo, como o controle `Pulse` da Signal Lamp: a borda lida no tick do módulo alterna a saída nesse mesmo tick, e pelo canal a entrada já lê o valor do tick anterior (pergunta 387). Só o `Delay` da tela soma; sem o atraso de 2 ticks do inversor (pergunta 444) (#110) |
 | 891 | Como dividir a entrega do Signal Flip-Flop em PRs? | Uma issue e um PR, como na #177 (pergunta 871), com commits atômicos, na branch `feature/110-signal-flip-flop` (#110) |
@@ -894,6 +895,7 @@ Perguntas desta fase. A mais nova fica no topo de cada tabela.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:47 | Registra a resposta 894, da troca do pacote para `io.github.zenndg` (#182). |
 | Zennd | 2026-11-19 20:30 | Registra a resposta 893, da chave `input_on` ausente, que muda a 886 (#110). |
 | Zennd | 2026-11-19 20:10 | Registra a resposta 892, do atraso próprio do Signal Flip-Flop (#110). |
 | Zennd | 2026-11-19 20:03 | Registra as respostas 889 a 891, da rede indisponível, dos estados e do PR do Signal Flip-Flop (#110). |

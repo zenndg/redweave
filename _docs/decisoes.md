@@ -363,6 +363,7 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Estados do Signal Flip-Flop | `On` e `Off` | 890 |
 | PRs do Signal Flip-Flop | Uma issue e um PR | 891 |
 | Atraso do Signal Flip-Flop | Alterna no tick do módulo; só o `Delay` da tela soma | 892 |
+| Pacote Java | `io.github.zenndg.redweave`, a conta dona do repositório; saves e IDs não mudam | 894, 170 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
@@ -850,6 +851,7 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:47 | Resume a resposta 894, da troca do pacote (#182). |
 | Zennd | 2026-11-19 20:30 | Resume a resposta 893, da chave `input_on` ausente no Signal Flip-Flop. |
 | Zennd | 2026-11-19 20:10 | Resume a resposta 892, do atraso do Signal Flip-Flop (#110). |
 | Zennd | 2026-11-19 20:03 | Resume as respostas 889 a 891, do Signal Flip-Flop (#110). |
