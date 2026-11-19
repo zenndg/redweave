@@ -347,6 +347,22 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | Saída do nó com pendências no save | Chave `delayed_output` no NBT do `NodePart`, só com mudança pendente | 873 |
 | Nó que volta a contar | O sinal espera o delay; só o corte para 0 é imediato | 874 |
 | Espaço na `Network` | Fachada `NodeSettings`, com o nome e o delay do nó | 875, 426 |
+| Nome do T flip-flop | `Signal Flip-Flop`, `redweave:signal_flip_flop`, `Flip-Flop de Sinal` | 877 |
+| Conexões do Signal Flip-Flop | `Input` atrás e `Output` na frente, laterais livres | 878 |
+| Gatilho do Signal Flip-Flop | Borda de subida: de 0 para acima de 0 | 879 |
+| Força do Signal Flip-Flop | De 1 a 15, 15 por padrão | 880 |
+| Início do Signal Flip-Flop | Nasce `Off`; a saída e a última entrada vão para o save, e carregar não alterna | 881 |
+| `Toggle` no Signal Flip-Flop | Alterna a saída, também numa rede `Offline` | 882 |
+| Queima no Signal Flip-Flop | Nenhuma: o laço direto estabiliza em `Off` | 883 |
+| Tela do Signal Flip-Flop | Como a do inversor: A → T → B, `Strength`, `Delay` e as conexões | 884 |
+| Receita do Signal Flip-Flop | Forma comum dos módulos, com o pistão grudento no topo | 885 |
+| Chaves do Signal Flip-Flop | `on` e `input_on`, booleanos; sem `input_on`, a entrada ainda não foi lida | 886, 893 |
+| Cópia do Signal Flip-Flop | Rede, conexões, força e delay; nunca o estado | 887 |
+| Textura do Signal Flip-Flop | Seta com um `T` no meio, apagada e acesa | 888 |
+| Entrada do Signal Flip-Flop sem canal | Congela no último valor lido; a volta da rede não alterna | 889, 385 |
+| Estados do Signal Flip-Flop | `On` e `Off` | 890 |
+| PRs do Signal Flip-Flop | Uma issue e um PR | 891 |
+| Atraso do Signal Flip-Flop | Alterna no tick do módulo; só o `Delay` da tela soma | 892 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
 | Abrir o nó na #86 | Só o Configurator no modo `Open`; a mão vazia vale só no controlador e no Terminal | 188 |
@@ -834,6 +850,12 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:30 | Resume a resposta 893, da chave `input_on` ausente no Signal Flip-Flop. |
+| Zennd | 2026-11-19 20:10 | Resume a resposta 892, do atraso do Signal Flip-Flop (#110). |
+| Zennd | 2026-11-19 20:03 | Resume as respostas 889 a 891, do Signal Flip-Flop (#110). |
+| Zennd | 2026-11-19 19:58 | Resume as respostas 885 a 888, do Signal Flip-Flop (#110). |
+| Zennd | 2026-11-19 19:52 | Resume as respostas 881 a 884, do Signal Flip-Flop (#110). |
+| Zennd | 2026-11-19 19:47 | Resume as respostas 877 a 880, do Signal Flip-Flop (#110). |
 | Zennd | 2026-11-18 08:17 | Resume a resposta 876, da linha `Delay` dentro do quadro da Tela do Nó. |
 | Zennd | 2026-11-18 08:50 | Resume as respostas 873 a 875, do delay na saída do Signal Node. |
 | Zennd | 2026-11-18 08:10 | Resume as respostas 871 e 872, do delay na saída do Signal Node. |

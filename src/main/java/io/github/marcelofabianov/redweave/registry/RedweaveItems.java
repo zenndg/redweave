@@ -34,6 +34,7 @@ public final class RedweaveItems {
   private static final String SIGNAL_LOCK_ID = "signal_lock";
   private static final String SIGNAL_ALARM_ID = "signal_alarm";
   private static final String SIGNAL_LAMP_ID = "signal_lamp";
+  private static final String SIGNAL_FLIP_FLOP_ID = "signal_flip_flop";
   private static final String SIGNAL_CABLE_ID = "signal_cable";
 
   private static final DeferredRegister.Items ITEMS =
@@ -111,6 +112,10 @@ public final class RedweaveItems {
   /** A part of the part space that stacks and keeps no setting, as the Signal Node (652). */
   public static final DeferredItem<PartItem> SIGNAL_LAMP =
       ITEMS.register(SIGNAL_LAMP_ID, () -> new PartItem(new Item.Properties()));
+
+  /** A part of the part space that stacks and keeps no setting, as the other modules (877). */
+  public static final DeferredItem<PartItem> SIGNAL_FLIP_FLOP =
+      ITEMS.register(SIGNAL_FLIP_FLOP_ID, () -> new PartItem(new Item.Properties()));
 
   /** The Signal Cable, white until dyed; cables of one color stack (answers 494 and 505). */
   public static final DeferredItem<SignalCableItem> SIGNAL_CABLE =

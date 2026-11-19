@@ -89,6 +89,20 @@ final class ModuleTicks {
   }
 
   /**
+   * An input as {@link #read}, or none while its channel is not available to the module, which the
+   * Signal Flip-Flop keeps apart from 0 (answer 889). The back edge is always available.
+   */
+  static Optional<Signal> reading(
+      ModuleServices modules, PartSpaceBlockEntity space, ModulePart part, Connection input) {
+    if (input.isEdge()) {
+      return Optional.of(read(modules, space, part, input));
+    }
+    return modules
+        .read()
+        .reading(part.module().get(), locationOf(space), input.channel().orElseThrow());
+  }
+
+  /**
    * The output on the front edge, or sighted on its channel with the edge off, and the lit arrow of
    * the output (answers 376, 387 and 401).
    */

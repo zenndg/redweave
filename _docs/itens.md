@@ -49,7 +49,7 @@ As placas de lógica, com a base comum de [`modulos-de-sinal.md`](funcionalidade
 | Signal Lock (`Fechadura de Sinal`) | `redweave:signal_lock` | Abre só com a força exata da chave e emite a força escolhida; só o dono a retira | Entregue na #141 | [`fechadura.md`](funcionalidades/fechadura.md) |
 | Signal Alarm (`Alarme de Sinal`) | `redweave:signal_alarm` | Ao receber sinal, toca um som, mostra um texto e pulsa uma luz vermelha, pelo tempo escolhido e para quem o dono escolhe | Entregue na #142 | [`alarme.md`](funcionalidades/alarme.md) |
 | Signal Keypad (`Teclado de Sinal`) | `redweave:signal_keypad` | Uma senha numérica, guardada só no servidor, que libera o sinal pelo tempo aberto | Planejado na #144 | [`teclado.md`](funcionalidades/teclado.md) |
-| Módulo de memória (T flip-flop) | A definir | Cada pulso na entrada alterna a saída | Planejado na #110 | — |
+| Signal Flip-Flop (`Flip-Flop de Sinal`) | `redweave:signal_flip_flop` | A memória do mod, um T flip-flop: cada pulso na entrada alterna a saída, que emite a força escolhida, com o delay na saída, e o estado sobrevive ao reinício | Entregue na #110 | [`signal-flip-flop.md`](funcionalidades/signal-flip-flop.md) |
 | Módulo de trava (SR latch) | A definir | Uma entrada liga e a outra desliga a saída, que fica guardada | Planejado na #111 | — |
 | Módulo de porta (AND, OR, XOR e NAND) | A definir | A placa das portas lógicas, com a regra já no domínio | Planejado na #31 | [`portas-logicas.md`](funcionalidades/portas-logicas.md) (a regra) |
 | Módulo de horário | A definir | Liga a saída por horário do dia no jogo | Planejado na #112 | — |
@@ -121,6 +121,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 | Signal Item Sensor | Comparador | 759 |
 | Signal Lock | Gancho de armadilha | 760 |
 | Signal Alarm | Bloco musical | 761 |
+| Signal Flip-Flop | Pistão grudento | 885 |
 
 ### Tingir o Signal Cable
 
@@ -130,6 +131,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:40 | O módulo de memória vira o Signal Flip-Flop, entregue na #110, com a receita do pistão grudento (perguntas 877 e 885). |
 | Zennd | 2026-11-18 09:40 | O Signal Node ganha o delay na saída (pergunta 859, #177). |
 | Zennd | 2026-11-17 15:20 | O delay na saída chega aos módulos com saída, menos o Timer e o Lock (perguntas 849 e 850, #173). |
 | Zennd | 2026-11-17 13:45 | O Signal Inverter ganha a força e o delay na saída (perguntas 830 a 844, #171). |

@@ -724,10 +724,36 @@ Confira a #177 (perguntas 859 a 875), com uma alavanca lida por um nó `Input` n
 | 449 | Coloque um nó novo, abra a tela dele, clique numa rede da lista e solte o botão (#179) | A tela segue para a configuração, sem o jogo fechar |
 | 450 | Na configuração, troque de canal na fileira e clique e arraste no cubo da face | A linha `Delay` mantém o valor ao trocar de canal, e o cubo gira e escolhe a face como antes |
 
+## Fase 2: o Signal Flip-Flop
+
+Confira a #110 (perguntas 877 a 893), com um Signal Flip-Flop no chão, um botão de pedra atrás dele, uma lâmpada de redstone na frente, um Network Controller e uma Signal Lever da mesma rede.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 451 | Pegue o Signal Flip-Flop na aba criativa e veja a receita no livro de receitas, em inglês e em português | O ícone de frente, com a seta e o `T`, os nomes `Signal Flip-Flop` e `Flip-Flop de Sinal`, e a receita da forma comum com o pistão grudento no topo |
+| 452 | Coloque o flip-flop no chão, na parede e no teto | A placa com a seta e o `T`, apagada, com a seta para onde você olhava |
+| 453 | Aperte o botão atrás dele | A lâmpada acende e a seta fica vermelha; ao soltar o botão, continua acesa |
+| 454 | Aperte o botão de novo | A lâmpada apaga e a seta volta ao cobre |
+| 455 | Ponha um bloco de redstone atrás e quebre o flip-flop; coloque outro no mesmo lugar | O novo nasce desligado, sem alternar com o bloco já atrás |
+| 456 | Abra a tela com o Configurator no `Open`, em inglês e em português | O diagrama A → T → B, o estado `● On` ou `● Off`, `Strength`, `Delay`, `Input` e `Output`; `Força`, `Atraso`, `Entrada`, `Saída`, `Ligado` e `Desligado` em português |
+| 457 | Com o flip-flop ligado, mude a força para 7 | A saída cai para 7 na hora, e a lâmpada continua acesa |
+| 458 | Ponha o `Delay` em `3 s` e aperte o botão | O estado e o diagrama mudam na hora, e a lâmpada só 3 s depois |
+| 459 | Com o Configurator no `Toggle`, clique no flip-flop | A saída alterna, com `<nome>: On` ou `<nome>: Off` na action bar; em português, `Ligado` ou `Desligado` |
+| 460 | Passe a `Input` para um canal escrito pela alavanca e ligue a alavanca | O flip-flop alterna uma vez; com a alavanca ligada, não alterna de novo |
+| 461 | Com a alavanca ligada, desligue a rede no Network Terminal e ligue de novo | O estado não muda |
+| 462 | Com a rede `Offline`, use o `Toggle` | A saída alterna; a tela não abre, com a mensagem de rede offline |
+| 463 | Ponha `Input` e `Output` no mesmo canal e use o `Toggle` | O flip-flop liga e volta a desligar sozinho, e fica desligado, sem queimar |
+| 464 | Com o flip-flop ligado e o botão solto, saia do mundo e entre de novo; repita com o bloco de redstone atrás | Volta ligado, sem alternar ao carregar |
+| 465 | Copie um flip-flop ligado, com força 7 e `Delay` em `2 s`, e cole noutro desligado | O outro fica com força 7, `2 s` e as conexões, e continua desligado |
+| 466 | Com o Configurator na mão, olhe para o flip-flop | O rótulo com o nome e `On` ou `Off`, e o canal da saída se ela estiver num canal |
+| 467 | Abra a tela com outro player e tente mudar a força, o delay e as conexões, e quebrar a placa no survival | Nada muda, os botões ficam apagados, e a placa não quebra |
+| 468 | Com o flip-flop ligado e a saída num canal, afaste-se até o chunk descarregar e volte | O canal vai a 0 enquanto o chunk está descarregado, e o flip-flop volta ligado |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:40 | Inclui o roteiro do Signal Flip-Flop, passos 451 a 468 (#110). |
 | Zennd | 2026-11-18 08:17 | Inclui os passos 449 e 450, do crash ao escolher a rede e da linha `Delay` dentro do quadro (#179). |
 | Zennd | 2026-11-18 09:40 | Inclui o roteiro do delay na saída do Signal Node, passos 434 a 448 (#177). |
 | Zennd | 2026-11-17 16:20 | Inclui os passos 431 a 433, do layout de `Components` (perguntas 856 e 857, #175). |

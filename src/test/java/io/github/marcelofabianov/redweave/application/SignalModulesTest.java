@@ -191,4 +191,18 @@ class SignalModulesTest {
     network(id).terminal().turnOff(OWNER);
     assertEquals(Signal.OFF, read.read(module, PLATE, DOOR));
   }
+
+  @Test
+  void aChannelThatIsNotAvailableHasNoReadingForAFlipFlop() {
+    NetworkId id = fixture.ownersNetwork();
+    applyModules.apply(List.of(writing(id, Signal.MAX)));
+    SignalModule module = moduleOn(id);
+
+    assertEquals(Optional.of(Signal.MAX), read.reading(module, PLATE, DOOR));
+    assertEquals(Optional.empty(), read.reading(module, FAR_PLATE, DOOR));
+    assertEquals(Optional.empty(), read.reading(SignalModule.placed(ID, OWNER), PLATE, DOOR));
+
+    network(id).terminal().turnOff(OWNER);
+    assertEquals(Optional.empty(), read.reading(module, PLATE, DOOR));
+  }
 }

@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock, Signal Lamp e Signal Alarm. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock, Signal Lamp, Signal Alarm e Signal Flip-Flop. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -328,6 +328,22 @@ Abre com o Configurator no modo `Open` (pergunta 393). Segue a forma das telas d
 
 Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o intervalo, e o `−` dela para nesse mínimo (pergunta 740). Em português, `Alarme de Sinal`, `Tocando`, `Quieto`, `Quem ouve`, `Dono`, `Rede`, `Todos`, `Toques`, `Intervalo`, `Duração` e `Entrada` (pergunta 743).
 
+## Tela do Signal Flip-Flop
+
+Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inverter, com o diagrama A → T → B e sem o estado de queima (perguntas 883 e 884). Não tem botão para alternar: a saída alterna pela entrada ou pelo `Toggle` (pergunta 882). O comportamento está em [`signal-flip-flop.md`](signal-flip-flop.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | `Signal Flip-Flop` e, abaixo, o nome do módulo, ou os 8 primeiros caracteres do ID sem nome próprio. Para o dono, renomeável, com o limite de `module.name_length` | 391, 427 e 877 |
+| Esquerda | O diagrama A → T → B, com cada lado aceso em vermelho quando tem sinal, e embaixo o estado guardado de B: `● On` ou `● Off` | 884 e 890 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+`, como no Signal Inverter | 880 |
+| `Delay` | O delay em segundos inteiros, como `3 s`, de 0 a 15 s, entre `−` e `+`; 1 s por clique | 830 e 840 |
+| Conexões | `Input` e `Output`, cada uma com o seletor `Edge` ou `Channel`. Com `Channel`, a grade dos 16 botões de cor, com o `Channel` já marcado; sem rede, o `Channel` abre a escolha de rede antes | 400, 414, 456 e 878 |
+| Rodapé | A rede, que abre a escolha de rede, e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura | 400 |
+| Rede `Offline` | A tela não abre, como a do nó | 402 |
+
+Em português, `Flip-Flop de Sinal`, `Força`, `Atraso`, `Entrada` e `Saída`, e os estados, `Ligado` e `Desligado` (perguntas 877 e 890).
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -338,6 +354,7 @@ Ao aumentar `Rings` ou `Interval`, a `Duration` sobe junto até os toques × o i
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 20:15 | Adiciona a Tela do Signal Flip-Flop (perguntas 877 a 892, #110). |
 | Zennd | 2026-11-18 08:17 | A linha `Delay` da Tela do Nó passa para dentro do painel do canal, que fica com 94 px (pergunta 876, #179). |
 | Zennd | 2026-11-18 09:40 | A Tela do Nó ganha a linha `Delay` e passa a 186 px, com a lista da escolha de rede em 110 px (perguntas 866, 870 e 872, #177). |
 | Zennd | 2026-11-17 16:20 | As abas da Tela do Controlador passam a 72 px (pergunta 856, #175). |

@@ -7,6 +7,7 @@ import io.github.marcelofabianov.redweave.block.part.AlarmPart;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.CablePart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.FlipFlopPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LampPart;
@@ -22,6 +23,7 @@ import io.github.marcelofabianov.redweave.client.screen.AlarmScreen;
 import io.github.marcelofabianov.redweave.client.screen.ButtonScreen;
 import io.github.marcelofabianov.redweave.client.screen.ControllerScreen;
 import io.github.marcelofabianov.redweave.client.screen.DetectorScreen;
+import io.github.marcelofabianov.redweave.client.screen.FlipFlopScreen;
 import io.github.marcelofabianov.redweave.client.screen.InverterScreen;
 import io.github.marcelofabianov.redweave.client.screen.ItemSensorScreen;
 import io.github.marcelofabianov.redweave.client.screen.LampScreen;
@@ -91,6 +93,7 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.LOCK.get(), LockScreen::new);
     event.register(RedweaveMenus.LAMP.get(), LampScreen::new);
     event.register(RedweaveMenus.ALARM.get(), AlarmScreen::new);
+    event.register(RedweaveMenus.FLIP_FLOP.get(), FlipFlopScreen::new);
   }
 
   /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
@@ -132,7 +135,8 @@ public final class RedweaveClient {
             ModulePart.models(ItemSensorPart.ID, ItemSensorPart.LOOKS),
             ModulePart.models(LockPart.ID, LockPart.LOOKS),
             ModulePart.models(LampPart.ID, LampPart.LOOKS),
-            ModulePart.models(AlarmPart.ID, AlarmPart.LOOKS))
+            ModulePart.models(AlarmPart.ID, AlarmPart.LOOKS),
+            ModulePart.models(FlipFlopPart.ID, FlipFlopPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }
