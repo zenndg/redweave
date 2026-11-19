@@ -1,0 +1,129 @@
+package io.github.zenndg.redweave.item;
+
+import io.github.zenndg.redweave.application.ModuleNetworkView;
+import io.github.zenndg.redweave.block.BlockLocations;
+import io.github.zenndg.redweave.block.ControllerMessages;
+import io.github.zenndg.redweave.block.Faces;
+import io.github.zenndg.redweave.block.ModuleMessages;
+import io.github.zenndg.redweave.block.PartSpaceBlockEntity;
+import io.github.zenndg.redweave.block.PartSpaces;
+import io.github.zenndg.redweave.block.part.ModulePart;
+import io.github.zenndg.redweave.block.part.PartSettings;
+import io.github.zenndg.redweave.domain.module.SignalModule;
+import io.github.zenndg.redweave.domain.network.NodeState;
+import io.github.zenndg.redweave.menu.NodeScreenTexts;
+import io.github.zenndg.redweave.server.RedweaveServer;
+import java.util.Optional;
+import java.util.function.Supplier;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+
+/**
+ * What the Configurator does on a Signal Module on the server, each action giving its message, if
+ * any (modulos-de-sinal.md). Only the owner turns, toggles and picks it up (answers 378, 421 and
+ * 619); the Open only opens the screen, and the Rotate turns the plate (answers 616 and 618).
+ */
+final class ModuleClicks {
+  private static final boolean NOT_THROWN = false;
+  private static final String NO_NAME = "";
+
+  private ModuleClicks() {}
+
+  static Optional<Component> onModule(
+      RedweaveServer server,
+      Player player,
+      PartSpaceBlockEntity space,
+      ModulePart part,
+      ConfiguratorMode mode,
+      ItemStack stack) {
+    return switch (mode) {
+      case OPEN ->
+          player.isSecondaryUseActive()
+              ? Optional.empty()
+              : unlessOffline(server, space, part, () -> open(player, part));
+      case ROTATE -> owned(player, part, () -> turn(part, player.isSecondaryUseActive()));
+      case COPY ->
+          PartSettings.copiable(part)
+              ? owned(player, part, () -> ModuleCopying.copyOrPaste(server, player, stack, part))
+              : message(ConfiguratorMessages.NOT_COPIABLE);
+      case TOGGLE ->
+          part.togglesOffline()
+              ? owned(player, part, part::toggle)
+              : unlessOffline(server, space, part, () -> owned(player, part, part::toggle));
+      case WRENCH -> owned(player, part, () -> pickUp(player, space, part));
+    };
+  }
+
+  /** Only the owner changes the module; anyone else is told so (answers 378 and 421). */
+  private static Optional<Component> owned(
+      Player player, ModulePart part, Supplier<Optional<Component>> action) {
+    return part.isOwner(player) ? action.get() : message(ModuleMessages.NOT_OWNER);
+  }
+
+  /** The action, unless the network of the module is turned off (answers 402 and 431). */
+  private static Optional<Component> unlessOffline(
+      RedweaveServer server,
+      PartSpaceBlockEntity space,
+      ModulePart part,
+      Supplier<Optional<Component>> action) {
+    Optional<Component> offline = offline(server, space, part);
+    return offline.isPresent() ? offline : action.get();
+  }
+
+  /**
+   * A network turned off takes no Open and no Toggle; the Rotate and the Wrench still work, as they
+   * do not touch it (answers 402, 431 and 619).
+   */
+  private static Optional<Component> offline(
+      RedweaveServer server, PartSpaceBlockEntity space, ModulePart part) {
+    Optional<SignalModule> module = part.module();
+    if (module.isEmpty()) {
+      return Optional.empty();
+    }
+    ModuleNetworkView view =
+        server
+            .modules()
+            .show()
+            .show(module.get(), BlockLocations.of(space.getLevel(), space.getBlockPos()));
+    if (view.state() != NodeState.OFFLINE) {
+      return Optional.empty();
+    }
+    return Optional.of(ControllerMessages.offline(view.name().orElse(NO_NAME)));
+  }
+
+  /** Anyone opens the screen; who is not the owner sees it read only (answers 378 and 393). */
+  private static Optional<Component> open(Player player, ModulePart part) {
+    if (player instanceof ServerPlayer viewer) {
+      part.openScreen(viewer);
+    }
+    return Optional.empty();
+  }
+
+  /** Clockwise, or counterclockwise with Shift, seen from the front (answers 616 and 618). */
+  private static Optional<Component> turn(ModulePart part, boolean back) {
+    Direction front = part.turn(back);
+    Component edge = Component.translatable(NodeScreenTexts.face(Faces.of(front)));
+    return Optional.of(Component.translatable(ModuleMessages.OUTPUT, edge));
+  }
+
+  /**
+   * As a plain item of its own, to the inventory or to the ground when it is full; the other parts
+   * of the space stay (answers 161, 394 and 515).
+   */
+  private static Optional<Component> pickUp(
+      Player player, PartSpaceBlockEntity space, ModulePart part) {
+    ItemStack item = new ItemStack(part.item());
+    PartSpaces.pickUp(space, part);
+    if (!player.getInventory().add(item)) {
+      player.drop(item, NOT_THROWN);
+    }
+    return message(ModuleMessages.PICKED_UP);
+  }
+
+  private static Optional<Component> message(String key) {
+    return Optional.of(Component.translatable(key));
+  }
+}
