@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.block.NetworkControllerBlock;
 import io.github.marcelofabianov.redweave.block.part.AlarmPart;
 import io.github.marcelofabianov.redweave.block.part.ButtonPart;
 import io.github.marcelofabianov.redweave.block.part.DetectorPart;
+import io.github.marcelofabianov.redweave.block.part.FlipFlopPart;
 import io.github.marcelofabianov.redweave.block.part.InverterPart;
 import io.github.marcelofabianov.redweave.block.part.ItemSensorPart;
 import io.github.marcelofabianov.redweave.block.part.LeverPart;
@@ -110,6 +111,7 @@ final class RedweaveBlockStates extends BlockStateProvider {
     cableItemModel();
     timerModels();
     inverterModels();
+    flipFlopModels();
     detectorModels();
     randomizerModels();
     leverModels();
@@ -132,6 +134,11 @@ final class RedweaveBlockStates extends BlockStateProvider {
   /** The Signal Inverter: off, on or burnt, turned or not, as the timer (429, 452 and 455). */
   private void inverterModels() {
     plateModels(RedweaveItems.SIGNAL_INVERTER.get(), InverterPart.ID, InverterPart.LOOKS);
+  }
+
+  /** The Signal Flip-Flop: off or on, turned or not, as the inverter (answers 429 and 888). */
+  private void flipFlopModels() {
+    plateModels(RedweaveItems.SIGNAL_FLIP_FLOP.get(), FlipFlopPart.ID, FlipFlopPart.LOOKS);
   }
 
   /** The Weather Detector: each mode, arrow lit or not, turned or not (answers 429 and 471). */

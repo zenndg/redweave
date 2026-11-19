@@ -151,6 +151,7 @@ public final class ItemRecipeGameTests {
         module(RedweaveItems.SIGNAL_ITEM_SENSOR, Items.COMPARATOR),
         module(RedweaveItems.SIGNAL_LOCK, Items.TRIPWIRE_HOOK),
         module(RedweaveItems.SIGNAL_ALARM, Items.NOTE_BLOCK),
+        module(RedweaveItems.SIGNAL_FLIP_FLOP, Items.STICKY_PISTON),
         lamp());
   }
 

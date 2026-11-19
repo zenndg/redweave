@@ -5,6 +5,7 @@ import io.github.marcelofabianov.redweave.menu.AlarmMenu;
 import io.github.marcelofabianov.redweave.menu.ButtonMenu;
 import io.github.marcelofabianov.redweave.menu.ControllerMenu;
 import io.github.marcelofabianov.redweave.menu.DetectorMenu;
+import io.github.marcelofabianov.redweave.menu.FlipFlopMenu;
 import io.github.marcelofabianov.redweave.menu.InverterMenu;
 import io.github.marcelofabianov.redweave.menu.ItemSensorMenu;
 import io.github.marcelofabianov.redweave.menu.LampMenu;
@@ -37,6 +38,7 @@ public final class RedweaveMenus {
   private static final String LOCK_ID = "signal_lock";
   private static final String ALARM_ID = "signal_alarm";
   private static final String LAMP_ID = "signal_lamp";
+  private static final String FLIP_FLOP_ID = "signal_flip_flop";
   private static final String CONTROLLER_ID = "network_controller";
   private static final String TERMINAL_ID = "network_terminal";
   private static final String REMOTE_LINK_ID = "remote_link";
@@ -78,6 +80,9 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<LampMenu>> LAMP =
       MENUS.register(LAMP_ID, () -> IMenuTypeExtension.create(LampMenu::new));
+
+  public static final Supplier<MenuType<FlipFlopMenu>> FLIP_FLOP =
+      MENUS.register(FLIP_FLOP_ID, () -> IMenuTypeExtension.create(FlipFlopMenu::new));
 
   public static final Supplier<MenuType<ControllerMenu>> CONTROLLER =
       MENUS.register(CONTROLLER_ID, () -> IMenuTypeExtension.create(ControllerMenu::new));

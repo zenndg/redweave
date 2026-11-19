@@ -3,6 +3,7 @@ package io.github.marcelofabianov.redweave.server;
 import io.github.marcelofabianov.redweave.application.ApplyModules;
 import io.github.marcelofabianov.redweave.application.ChangeAlarm;
 import io.github.marcelofabianov.redweave.application.ChangeButton;
+import io.github.marcelofabianov.redweave.application.ChangeFlipFlop;
 import io.github.marcelofabianov.redweave.application.ChangeInverter;
 import io.github.marcelofabianov.redweave.application.ChangeItemSensor;
 import io.github.marcelofabianov.redweave.application.ChangeLamp;
@@ -44,6 +45,7 @@ public final class ModuleServices {
   private final ChangeLock changeLock = new ChangeLock();
   private final ChangeLamp changeLamp = new ChangeLamp();
   private final ChangeAlarm changeAlarm = new ChangeAlarm();
+  private final ChangeFlipFlop changeFlipFlop = new ChangeFlipFlop();
   private final ChooseModuleNetwork chooseNetwork;
   private final SyncModule syncModule;
 
@@ -123,6 +125,10 @@ public final class ModuleServices {
 
   public ChangeAlarm changeAlarm() {
     return changeAlarm;
+  }
+
+  public ChangeFlipFlop changeFlipFlop() {
+    return changeFlipFlop;
   }
 
   public ChooseModuleNetwork chooseNetwork() {
