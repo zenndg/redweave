@@ -44,6 +44,24 @@ public final class PartSave {
     tag.put(PARTS, list);
   }
 
+  /**
+   * Writes the parts as a client gets them: the save of each part without its secret keys, which
+   * only the server keeps (answers 637, 896 and 899); `extra` adds what only the client gets.
+   */
+  public static void writeForClient(
+      CompoundTag tag, Collection<Part> parts, BiConsumer<Part, CompoundTag> extra) {
+    write(
+        tag,
+        parts,
+        (part, entry) -> {
+          if (part instanceof SecretPart secret) {
+            CompoundTag data = entry.getCompound(DATA);
+            secret.secretKeys().forEach(data::remove);
+          }
+          extra.accept(part, entry);
+        });
+  }
+
   /** The valid parts by side; a later part on a taken side is dropped too. */
   public static Map<Direction, Part> read(CompoundTag tag, BiConsumer<Part, CompoundTag> extra) {
     Map<Direction, Part> parts = new EnumMap<>(Direction.class);

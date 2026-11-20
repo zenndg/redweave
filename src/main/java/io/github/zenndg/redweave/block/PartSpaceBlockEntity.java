@@ -205,7 +205,7 @@ public final class PartSpaceBlockEntity extends BlockEntity {
   @Override
   public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
     CompoundTag tag = new CompoundTag();
-    PartSave.write(tag, parts.values(), PartSpaceBlockEntity::writeClient);
+    PartSave.writeForClient(tag, parts.values(), PartSpaceBlockEntity::writeClient);
     return tag;
   }
 

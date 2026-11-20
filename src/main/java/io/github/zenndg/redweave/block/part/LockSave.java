@@ -18,7 +18,7 @@ final class LockSave {
   static final String INPUT = InverterSave.INPUT;
   static final String OUTPUT = InverterSave.OUTPUT;
 
-  private static final String KEY = "key";
+  static final String KEY = "key";
   private static final String PULSE = "pulse";
   private static final String REMAINING = "remaining";
   private static final String MODULE = "Signal Lock";
