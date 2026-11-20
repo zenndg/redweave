@@ -28,7 +28,7 @@ Só sinal de redstone (pergunta 1). Itens, fluidos e energia ficam com os mods d
 | 4 · Expansão | Integrações | Integrações e port para 26.x. O fio físico e o multipart foram para a `v0.1.0` (pergunta 516), e o cabo agrupado saiu (pergunta 519) |
 | 5 · Ponte | Além do jogo | Ponte MQTT para dashboards e hardware real |
 
-Toda versão é jogável e testada no Iron Meridian. As Fases 1 e 2 saem juntas na v0.1.0, como uma fase só (pergunta 303), e a ordem do trabalho fica no [`ROADMAP.md`](../../ROADMAP.md).
+Toda versão é jogável e testada numa instância só com o mod e as dependências dele (pergunta 895). As Fases 1 e 2 saem juntas na v0.1.0, como uma fase só (pergunta 303), e a ordem do trabalho fica no [`ROADMAP.md`](../../ROADMAP.md).
 
 ## Ponte com o mundo real
 
@@ -40,6 +40,7 @@ A ponte é só mais um adapter, com as portas `EventPublisher` e `CommandReceive
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 21:04 | Toda versão é testada só numa instância com o mod (pergunta 895). |
 | Zennd | 2026-11-14 19:14 | Leva o multipart e o Signal Cable para a `v0.1.0` e tira o cabo agrupado (perguntas 516 e 519). |
 | Zennd | 2026-11-12 16:50 | Junta as Fases 1 e 2 na v0.1.0 e troca a lógica por canal e as portas em placa pelos Signal Modules (perguntas 303 e 308 a 310). |
 | Zennd | 2026-11-11 09:51 | Adiciona o Network Terminal à Fase 1 (pergunta 130). |

@@ -150,7 +150,7 @@ flowchart TB
 ## Project layout
 
 ```text
-src/main/java/io/github/marcelofabianov/redweave/
+src/main/java/io/github/zenndg/redweave/
 ├── RedweaveMod              # entry point: only wires the registries
 ├── domain/                  # pure Java, no Minecraft imports
 │   ├── signal/              # Signal (0–15), ChannelColor and the output delay shared by nodes and modules

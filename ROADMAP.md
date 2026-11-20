@@ -4,7 +4,7 @@ Everything planned for Redweave, phase by phase. A checked box is merged into `d
 
 ## Versions
 
-Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every release is playable, tested in an instance with only the mod and in the [Iron Meridian](https://github.com/marcelofabianov/iron-meridian) modpack.
+Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every release is playable, tested in an instance with only the mod and its dependencies (question 895).
 
 Decided on 2026-11-12: Phases 1 and 2 ship together in v0.1.0, as a single phase with one work order (question 303). The Phase 2 release (#35) is closed, and the later versions move down by one, with Phase 3 as v0.2.0.
 
@@ -24,7 +24,7 @@ v0.1.0 is the first public version. It is cut only when all of these are true:
 - [ ] Each new module is fully refined, with every question answered, before its work starts (question 307).
 - [ ] Block, item, data component, NBT and config IDs are frozen, with every module inside (#26). From here on, they only change with a migration.
 - [ ] The 1,000-node load test, with modules and gates, shows no visible MSPT impact (#25).
-- [ ] The manual test script passes in an instance with only the mod and in Iron Meridian.
+- [ ] The manual test script passes in an instance with only the mod and its dependencies (question 895).
 - [ ] The release goes through `develop` → `homolog` → `release/0.1.0` → `main`, with the annotated tag `v0.1.0` (#27).
 
 ## Phase 1 · Wireless (MVP)
@@ -129,7 +129,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 27. [x] Output delay on the Signal Inverter: 0 to 15 s in whole seconds, when it turns on and off, saved with its pending changes, and a strength from 1 to 15; the shared delay base of the modules (#171 · questions 830 to 841)
 28. [x] Output delay on the other Signal Modules with an output: the Signal Lever, Button and Pressure Plate, the Weather Detector, the Signal Randomizer, the Signal Item Sensor and the Signal Lamp, with the strength kept in the line, a cap on the waiting changes and module screens one row taller; not on the Signal Timer nor the Signal Lock (#173 · questions 842 and 845 to 855)
 29. [x] Output delay on the Signal Node: 0 to 15 s in whole seconds for the whole node, set on the Node Screen by the owner of its network; the lens and the log follow at once and only the redstone waits, a node that stops counting emits 0 at once, and the pending changes are saved with the part (#177 · questions 859 to 875)
-30. [ ] Signal Flip-Flop, the memory module, a T flip-flop: each rising edge of its input flips its output, which gives a strength from 1 to 15 and waits for the output delay; the state survives a restart, an input already on or on a channel that comes back is no edge, the `Toggle` flips it also with the network `Offline`, and it never burns out (#110 · questions 858, 867 and 877 to 893)
+30. [x] Signal Flip-Flop, the memory module, a T flip-flop: each rising edge of its input flips its output, which gives a strength from 1 to 15 and waits for the output delay; the state survives a restart, an input already on or on a channel that comes back is no edge, the `Toggle` flips it also with the network `Offline`, and it never burns out (#110 · questions 858, 867 and 877 to 893)
 31. [ ] Signal Keypad: a numeric password, kept only on the server, that lets the signal through (#144 · questions 659 to 667)
 32. [ ] Signal Card: an access card its owner links to locks, keypads and gates (#145 · questions 668 to 671)
 33. [ ] Block protection: the blocks of a door, chosen by the owner, protected by its lock or keypad (#146 · questions 672 to 676)
@@ -150,7 +150,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 48. [ ] Emissive textures, the Signal Node lens and the recipes of the items still to come (#24)
 49. [ ] Load test with spark: a 1,000-node network with modules and gates (#25)
 50. [ ] Freeze block, item, data component and config IDs (#26)
-51. [ ] Release v0.1.0 and test in Iron Meridian (#27)
+51. [ ] Release v0.1.0 (#27)
 
 ### Dropped from Phase 2
 
