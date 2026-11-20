@@ -364,6 +364,26 @@ O resumo do que foi decidido. O detalhe e o porquê ficam em [`perguntas/`](perg
 | PRs do Signal Flip-Flop | Uma issue e um PR | 891 |
 | Atraso do Signal Flip-Flop | Alterna no tick do módulo; só o `Delay` da tela soma | 892 |
 | Pacote Java | `io.github.zenndg.redweave`, a conta dona do repositório; saves e IDs não mudam | 894, 170 |
+| Senha do Signal Keypad | No NBT da parte, fora do pacote ao cliente | 896 |
+| Forma da senha | Hash SHA-256 com sal por teclado | 897 |
+| Tentativas do Signal Keypad | No NBT da parte, por player, fora do pacote ao cliente; apagadas após 10 min | 898 |
+| Chave do Signal Lock no cliente | O filtro das chaves secretas, na #144, também tira a `key` do pacote | 899, 637 |
+| Delay no Signal Keypad | Nenhum, como o Signal Lock | 900 |
+| Receita do Signal Keypad | Forma comum dos módulos, com o botão de pedra-negra polida | 901 |
+| Slot do Signal Card no Keypad | Entra na #144, com a lista de IDs aceitos; o item fica na #145 | 902 |
+| Aviso offline do Keypad | No save do servidor, por dono, com teto no config; entregue e apagado ao entrar | 903 |
+| Cartão na #144 | A lista `cards`, o teto no config, a regra e a revogação; o slot vem com o item na #145 | 904, 902 |
+| Troca da senha do Keypad | No teclado 3 × 4, digitada 2 vezes; zera as tentativas | 905 |
+| Keypad sem rede | Canal indisponível é sem sinal; o `Toggle` do dono funciona `Offline` | 906 |
+| Relógio do Keypad | Espera e reset pelo tempo do mundo; tempo aberto em ticks carregados | 907 |
+| Estados do Keypad | `Locked` e `Unlocked`, com o canal de entrada no rótulo | 908 |
+| Forma do Keypad | Teclado baixo de 6 × 6 × 1 px, com a luz e o ponto do canal | 909 |
+| Chaves do Keypad | Públicas `strength`, `open_ticks`, `remaining`, `input` e `output`; secretas `code_hash`, `code_salt`, `attempts` e `cards` | 910 |
+| Teclas do Keypad | 3 × 2 teclas soltas, fileira escura na frente, luz de 2 × 1 e ponto atrás | 912, 909 |
+| Tentativas livres do Keypad | Voltam a 0 com 60 s sem errar, só enquanto o player está nas 3 livres | 913, 665 |
+| Espera e dono no Keypad | Tentativa na espera não conta; erros do dono não contam | 914, 664 |
+| Config do Keypad e do cartão | Faixas de todas as chaves; `keypad.free_tries` e `keypad.reset_ticks` novas; com o mínimo acima do máximo, vale o mínimo | 915, 916 |
+| Teto do aviso offline | `keypad.max_offline_reports`, 16 por dono, de 1 a 64 | 911 |
 | Teste manual | Só numa instância com o mod e as dependências dele, sem o Iron Meridian; as versões continuam as do Iron Meridian | 895, 181 |
 | Delay no roadmap | Passos 27 (Inverter, #171) e 28 (outros módulos); o Keypad passa a 29 | 842 |
 | Prompt de continuidade | Só com o contexto da sessão em 80% ou mais | 187 |
@@ -852,6 +872,14 @@ Não há perguntas pendentes da concepção.
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:16 | Resume a resposta 916. |
+| Zennd | 2026-11-19 22:14 | Resume a resposta 915, do config do Signal Keypad. |
+| Zennd | 2026-11-19 22:13 | Resume as respostas 913 e 914, do Signal Keypad. |
+| Zennd | 2026-11-19 22:01 | Resume a resposta 912, das teclas do Signal Keypad. |
+| Zennd | 2026-11-19 21:55 | Resume as respostas 908 a 911, do Signal Keypad. |
+| Zennd | 2026-11-19 21:53 | Resume as respostas 904 a 907, do Signal Keypad. |
+| Zennd | 2026-11-19 21:51 | Resume as respostas 900 a 903, do Signal Keypad. |
+| Zennd | 2026-11-19 21:50 | Resume as respostas 896 a 899, do Signal Keypad e da chave do Signal Lock. |
 | Zennd | 2026-11-19 21:04 | Resume a resposta 895, do teste só numa instância com o mod. |
 | Zennd | 2026-11-19 20:47 | Resume a resposta 894, da troca do pacote (#182). |
 | Zennd | 2026-11-19 20:30 | Resume a resposta 893, da chave `input_on` ausente no Signal Flip-Flop. |
