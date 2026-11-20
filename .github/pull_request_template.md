@@ -21,7 +21,7 @@ Closes #
 - `make check-generated`:
 - Cobertura (JaCoCo, mínimo de 85% e meta de 95%): `domain/` e `application/`, em instruções e ramos:
 
-**Teste numa instância só com o mod e no Iron Meridian:**
+**Teste numa instância só com o mod:**
 
 <!-- Obrigatório antes de ir para a main (regra 31 do AGENTS.md). Para a develop, informe se foi feito ou por que ainda não se aplica. -->
 

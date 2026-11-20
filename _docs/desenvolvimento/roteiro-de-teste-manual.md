@@ -1,6 +1,6 @@
 # Roteiro de teste manual
 
-O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. O roteiro roda numa instância só com o mod e, antes da `main`, também numa do Iron Meridian (regras 30 e 31 do `AGENTS.md`). Cada passo diz o que fazer e o que se espera ver.
+O que os testes automáticos não cobrem e um player precisa conferir no jogo: o visual, a tela e a sensação de uso. Os passos conferem o que o código entrega hoje. O roteiro roda numa instância só com o mod e as dependências dele (regras 30 e 31 do `AGENTS.md` e pergunta 895). Cada passo diz o que fazer e o que se espera ver.
 
 ## Como preparar
 
@@ -753,6 +753,7 @@ Confira a #110 (perguntas 877 a 893), com um Signal Flip-Flop no chão, um botã
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 21:04 | O roteiro roda só numa instância com o mod, sem o Iron Meridian (pergunta 895). |
 | Zennd | 2026-11-19 20:40 | Inclui o roteiro do Signal Flip-Flop, passos 451 a 468 (#110). |
 | Zennd | 2026-11-18 08:17 | Inclui os passos 449 e 450, do crash ao escolher a rede e da linha `Delay` dentro do quadro (#179). |
 | Zennd | 2026-11-18 09:40 | Inclui o roteiro do delay na saída do Signal Node, passos 434 a 448 (#177). |

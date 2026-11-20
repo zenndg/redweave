@@ -90,7 +90,7 @@ develop → homolog → release/X.Y.Z → main (tag vX.Y.Z)
 ```
 
 1. **Homologação:** PR da `develop` para a `homolog`.
-2. **Teste:** numa instância só com o mod e suas dependências e, depois, numa do Iron Meridian.
+2. **Teste:** numa instância só com o mod e suas dependências (pergunta 895).
 3. **Release fechada:** `release/X.Y.Z` a partir da `homolog`, com a versão no `gradle.properties` e o `CHANGELOG.md`, em inglês.
 4. **Publicação:** PR da `release/X.Y.Z` para a `main` e, depois do merge, a tag anotada `vX.Y.Z`, com autorização.
 5. **Volta:** PR da `release/X.Y.Z` para a `develop`.
@@ -103,6 +103,7 @@ Só para um problema no que já foi publicado: issue, `hotfix/{issue}-{slug}` a 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 21:04 | O teste antes da `main` roda só numa instância com o mod (pergunta 895). |
 | Zennd | 2026-11-12 16:25 | Exige o refinamento máximo de todo módulo novo no alinhamento (pergunta 307). |
 | Zennd | 2026-11-11 10:40 | Marca o roadmap no encerramento de cada PR. |
 | Marcelo Fabiano | 2026-11-09 13:30 | Aponta os hooks no passo dos commits. |

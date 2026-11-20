@@ -1,6 +1,6 @@
 # Redweave
 
-Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com nome e cor, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar. O modpack [Iron Meridian](https://github.com/marcelofabianov/iron-meridian) é um dos lugares onde ele é testado.
+Mod de Minecraft de redstone sem fio: nós grudados em qualquer bloco, redes com nome e cor, canais programáveis e chips de lógica, com telas fáceis de aprender e bonitas de usar. O Redweave é testado de forma independente, numa instância só com ele e as dependências dele; as versões seguem as do modpack [Iron Meridian](https://github.com/marcelofabianov/iron-meridian), como referência de compatibilidade (pergunta 895).
 
 **Comece por:** [`README.md`](README.md), a visão geral com as fases, e [`_docs/README.md`](_docs/README.md), o mapa da documentação. As respostas em `_docs/perguntas/` são a fonte da verdade e prevalecem sobre os outros documentos.
 
@@ -111,7 +111,7 @@ O significado de cada pilar, os checklists e a matriz de decisão estão em [`_d
 28. **TDD:** o teste vem antes ou junto do código. Use JUnit 5 no domínio e GameTests no que depende do mundo.
 29. **Sem mock do jogo:** nunca faça mock de `Level` ou `BlockEntity`. Comportamento de mundo se testa no mundo.
 30. **Cobertura:** mínimo de 85% de instruções e de ramos em `domain/` e `application/`, medido com JaCoCo e garantido pelo hook de `pre-push`, com a meta de 95%. Todo PR informa a cobertura de cada um. O restante se cobre com GameTests e um roteiro manual, porque o JaCoCo não mede os GameTests e a regra 29 proíbe mock do jogo (perguntas 196 e 197).
-31. **Teste antes da `main`:** teste numa instância só com o mod e suas dependências e, depois, numa do Iron Meridian.
+31. **Teste antes da `main`:** teste numa instância só com o mod e suas dependências (pergunta 895).
 
 ### Gates
 

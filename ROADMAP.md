@@ -4,7 +4,7 @@ Everything planned for Redweave, phase by phase. A checked box is merged into `d
 
 ## Versions
 
-Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every release is playable, tested in an instance with only the mod and in the [Iron Meridian](https://github.com/marcelofabianov/iron-meridian) modpack.
+Redweave follows [Semantic Versioning](https://semver.org/). While in `0.x`, a breaking change bumps the minor version. Every release is playable, tested in an instance with only the mod and its dependencies (question 895).
 
 Decided on 2026-11-12: Phases 1 and 2 ship together in v0.1.0, as a single phase with one work order (question 303). The Phase 2 release (#35) is closed, and the later versions move down by one, with Phase 3 as v0.2.0.
 
@@ -24,7 +24,7 @@ v0.1.0 is the first public version. It is cut only when all of these are true:
 - [ ] Each new module is fully refined, with every question answered, before its work starts (question 307).
 - [ ] Block, item, data component, NBT and config IDs are frozen, with every module inside (#26). From here on, they only change with a migration.
 - [ ] The 1,000-node load test, with modules and gates, shows no visible MSPT impact (#25).
-- [ ] The manual test script passes in an instance with only the mod and in Iron Meridian.
+- [ ] The manual test script passes in an instance with only the mod and its dependencies (question 895).
 - [ ] The release goes through `develop` → `homolog` → `release/0.1.0` → `main`, with the annotated tag `v0.1.0` (#27).
 
 ## Phase 1 · Wireless (MVP)
@@ -150,7 +150,7 @@ All signal logic lives in **Signal Modules**: plates that attach to any face of 
 48. [ ] Emissive textures, the Signal Node lens and the recipes of the items still to come (#24)
 49. [ ] Load test with spark: a 1,000-node network with modules and gates (#25)
 50. [ ] Freeze block, item, data component and config IDs (#26)
-51. [ ] Release v0.1.0 and test in Iron Meridian (#27)
+51. [ ] Release v0.1.0 (#27)
 
 ### Dropped from Phase 2
 
