@@ -10,6 +10,7 @@ import io.github.zenndg.redweave.block.part.DetectorPart;
 import io.github.zenndg.redweave.block.part.FlipFlopPart;
 import io.github.zenndg.redweave.block.part.InverterPart;
 import io.github.zenndg.redweave.block.part.ItemSensorPart;
+import io.github.zenndg.redweave.block.part.KeypadPart;
 import io.github.zenndg.redweave.block.part.LampPart;
 import io.github.zenndg.redweave.block.part.LeverPart;
 import io.github.zenndg.redweave.block.part.LockPart;
@@ -26,6 +27,8 @@ import io.github.zenndg.redweave.client.screen.DetectorScreen;
 import io.github.zenndg.redweave.client.screen.FlipFlopScreen;
 import io.github.zenndg.redweave.client.screen.InverterScreen;
 import io.github.zenndg.redweave.client.screen.ItemSensorScreen;
+import io.github.zenndg.redweave.client.screen.KeypadEntryScreen;
+import io.github.zenndg.redweave.client.screen.KeypadScreen;
 import io.github.zenndg.redweave.client.screen.LampScreen;
 import io.github.zenndg.redweave.client.screen.LeverScreen;
 import io.github.zenndg.redweave.client.screen.LockScreen;
@@ -94,6 +97,8 @@ public final class RedweaveClient {
     event.register(RedweaveMenus.LAMP.get(), LampScreen::new);
     event.register(RedweaveMenus.ALARM.get(), AlarmScreen::new);
     event.register(RedweaveMenus.FLIP_FLOP.get(), FlipFlopScreen::new);
+    event.register(RedweaveMenus.KEYPAD.get(), KeypadScreen::new);
+    event.register(RedweaveMenus.KEYPAD_ENTRY.get(), KeypadEntryScreen::new);
   }
 
   /** The item a Signal Item Sensor expects, drawn in its window (answer 697). */
@@ -136,7 +141,8 @@ public final class RedweaveClient {
             ModulePart.models(LockPart.ID, LockPart.LOOKS),
             ModulePart.models(LampPart.ID, LampPart.LOOKS),
             ModulePart.models(AlarmPart.ID, AlarmPart.LOOKS),
-            ModulePart.models(FlipFlopPart.ID, FlipFlopPart.LOOKS))
+            ModulePart.models(FlipFlopPart.ID, FlipFlopPart.LOOKS),
+            ModulePart.models(KeypadPart.ID, KeypadPart.LOOKS))
         .flatMap(List::stream)
         .forEach(model -> event.register(ModelResourceLocation.standalone(model)));
   }
@@ -172,8 +178,9 @@ public final class RedweaveClient {
     if (part.isPresent() && part.get() instanceof CablePart cable) {
       return cableColor(cable, PartQuads.slotOf(tintIndex));
     }
-    if (part.isPresent() && part.get() instanceof LampPart lamp) {
-      return LampColors.of(lamp, PartQuads.slotOf(tintIndex));
+    Optional<Integer> module = part.flatMap(found -> moduleColor(found, tintIndex));
+    if (module.isPresent()) {
+      return module.get();
     }
     int channel =
         part.filter(NodePart.class::isInstance)
@@ -182,6 +189,18 @@ public final class RedweaveClient {
     return channel == NodeLook.FREE
         ? ChannelColors.FREE
         : ChannelColors.argb(ChannelColor.values()[channel]);
+  }
+
+  /** A Signal Lamp tints its core and band, and a Signal Keypad its channel dot (653 and 909). */
+  private static Optional<Integer> moduleColor(Part part, int tintIndex) {
+    if (part instanceof LampPart lamp) {
+      return Optional.of(LampColors.of(lamp, PartQuads.slotOf(tintIndex)));
+    }
+    if (part instanceof KeypadPart keypad) {
+      return Optional.of(
+          keypad.input().channel().map(ChannelColors::argb).orElse(ChannelColors.FREE));
+    }
+    return Optional.empty();
   }
 
   /** The insulation in the color of the cable, and the stripe in the red of the game wire (522). */

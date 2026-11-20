@@ -32,7 +32,7 @@ import org.slf4j.Logger;
  * pulse (answers 633 to 636 and 640). Only its owner sees the key (answer 637). Nobody breaks it by
  * hand in survival, and no explosion takes it nor its block of support (answer 641).
  */
-public final class LockPart extends ModulePart implements SecuredPart {
+public final class LockPart extends ModulePart implements SecuredPart, SecretPart {
   public static final String ID = "signal_lock";
 
   /** The looks of the top: locked, with the red light, and unlocked, with the green one (638). */
@@ -139,6 +139,12 @@ public final class LockPart extends ModulePart implements SecuredPart {
     LockSave.write(tag, lock);
     ModuleSave.writeConnection(tag, LockSave.INPUT, input);
     ModuleSave.writeConnection(tag, LockSave.OUTPUT, output);
+  }
+
+  /** The key never reaches a client; only its owner sees it, on the screen (637 and 899). */
+  @Override
+  public List<String> secretKeys() {
+    return List.of(LockSave.KEY);
   }
 
   public SignalLock lock() {

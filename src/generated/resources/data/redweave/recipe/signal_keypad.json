@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "D": {
+      "item": "minecraft:polished_deepslate"
+    },
+    "N": {
+      "item": "redweave:signal_node"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "minecraft:polished_blackstone_button"
+    }
+  },
+  "pattern": [
+    " X ",
+    "CRC",
+    "DND"
+  ],
+  "result": {
+    "count": 1,
+    "id": "redweave:signal_keypad"
+  }
+}

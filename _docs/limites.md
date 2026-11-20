@@ -44,12 +44,15 @@ Todos os números do Redweave ficam aqui e no config, nunca fixos na lógica (re
 | Intervalo máximo do som do Signal Alarm | 200 ticks, 10 s (pergunta 646) | `alarm.max_interval_ticks` | 2 |
 | Duração máxima do Signal Alarm | 600 ticks, 30 s; o padrão é 5 s (pergunta 648) | `alarm.max_duration_ticks` | 2 |
 | Atualização da luz do Signal Lamp | No máximo a cada 4 ticks, de 1 a 20: a luz no mundo espera esse tempo entre uma mudança e outra; o sinal emitido segue sem atraso (perguntas 655 e 715) | `lamp.min_light_update_ticks` | 2 |
-| Tempo aberto mínimo do Signal Keypad | 20 ticks, 1 s; o padrão é 3 s (pergunta 663) | `keypad.min_open_ticks` | 2 |
-| Tempo aberto máximo do Signal Keypad | 600 ticks, 30 s (pergunta 663) | `keypad.max_open_ticks` | 2 |
-| Janela das tentativas livres do Signal Keypad | 1200 ticks, 60 s, com 3 tentativas livres (pergunta 665) | `keypad.free_window_ticks` | 2 |
-| Primeira espera do Signal Keypad | 100 ticks, 5 s, na 4ª tentativa errada, dobrando até a 10ª (pergunta 665) | `keypad.first_wait_ticks` | 2 |
-| Espera máxima do Signal Keypad | 6000 ticks, 5 min; a contagem zera depois de 10 min sem tentar (pergunta 665) | `keypad.max_wait_ticks` | 2 |
-| Cartões aceitos por item | 8 (pergunta 669) | `card.max_links_per_item` | 2 |
+| Tempo aberto mínimo do Signal Keypad | 20 ticks, 1 s, de 20 a 600; o padrão é 3 s (perguntas 663 e 915) | `keypad.min_open_ticks` | 2 |
+| Tempo aberto máximo do Signal Keypad | 600 ticks, 30 s, de 20 a 6000; abaixo do mínimo, vale o mínimo, como nos intervalos dos módulos (perguntas 663, 915 e 916) | `keypad.max_open_ticks` | 2 |
+| Janela das tentativas livres do Signal Keypad | 1200 ticks, 60 s, de 200 a 12000: enquanto o player está nas livres, esse tempo sem errar zera a contagem (perguntas 665, 913 e 915) | `keypad.free_window_ticks` | 2 |
+| Tentativas livres do Signal Keypad | 3, de 1 a 10 (perguntas 665 e 915) | `keypad.free_tries` | 2 |
+| Primeira espera do Signal Keypad | 100 ticks, 5 s, de 20 a 1200, na primeira tentativa errada depois das livres, dobrando a cada erro até o teto (perguntas 665 e 915) | `keypad.first_wait_ticks` | 2 |
+| Espera máxima do Signal Keypad | 6000 ticks, 5 min, de 100 a 72000 (perguntas 665 e 915) | `keypad.max_wait_ticks` | 2 |
+| Reset das tentativas do Signal Keypad | 12000 ticks, 10 min sem tentar, de 1200 a 72000, pelo tempo do mundo (perguntas 665, 907 e 915) | `keypad.reset_ticks` | 2 |
+| Teclados no resumo do dono offline | 16 por dono, de 1 a 64; acima, sai o mais antigo (perguntas 911 e 915) | `keypad.max_offline_reports` | 2 |
+| Cartões aceitos por item | 8, de 1 a 64 (perguntas 669 e 915) | `card.max_links_per_item` | 2 |
 | Blocos protegidos por Signal Lock ou Signal Keypad | 16, de 1 a 64 (pergunta 673) | `lock.max_protected_blocks` | 2 |
 | Raio da proteção dos blocos | 4 blocos, de 1 a 8 (pergunta 673) | `lock.protect_range` | 2 |
 | Tags por Signal Gate | 4 (pergunta 683) | `gate.max_tags` | 2 |
@@ -66,6 +69,8 @@ As chaves de config entram junto com o código que as lê e, depois de publicada
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:16 | Com o mínimo do tempo aberto do Signal Keypad acima do máximo, vale o mínimo (pergunta 916). |
+| Zennd | 2026-11-19 22:14 | Faixas do config do Signal Keypad e do cartão, com `keypad.free_tries`, `keypad.reset_ticks` e `keypad.max_offline_reports` (perguntas 911 e 915, #144). |
 | Zennd | 2026-11-19 20:40 | Inclui a força do Signal Flip-Flop (pergunta 880, #110). |
 | Zennd | 2026-11-18 09:40 | Os limites do delay passam a valer também para o Signal Node, sem chave nova (pergunta 864, #177). |
 | Zennd | 2026-11-17 14:30 | Inclui o teto da linha de atraso (pergunta 847, #173). |

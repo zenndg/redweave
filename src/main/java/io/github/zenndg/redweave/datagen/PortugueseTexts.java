@@ -78,6 +78,7 @@ final class PortugueseTexts {
     LockPortugueseTexts.addTo(add);
     AlarmPortugueseTexts.addTo(add);
     FlipFlopPortugueseTexts.addTo(add);
+    KeypadPortugueseTexts.addTo(add);
     LampPortugueseTexts.addTo(add);
     PressurePlatePortugueseTexts.addTo(add);
     ItemSensorPortugueseTexts.addTo(add);

@@ -8,6 +8,8 @@ import io.github.zenndg.redweave.menu.DetectorMenu;
 import io.github.zenndg.redweave.menu.FlipFlopMenu;
 import io.github.zenndg.redweave.menu.InverterMenu;
 import io.github.zenndg.redweave.menu.ItemSensorMenu;
+import io.github.zenndg.redweave.menu.KeypadEntryMenu;
+import io.github.zenndg.redweave.menu.KeypadMenu;
 import io.github.zenndg.redweave.menu.LampMenu;
 import io.github.zenndg.redweave.menu.LeverMenu;
 import io.github.zenndg.redweave.menu.LockMenu;
@@ -39,6 +41,8 @@ public final class RedweaveMenus {
   private static final String ALARM_ID = "signal_alarm";
   private static final String LAMP_ID = "signal_lamp";
   private static final String FLIP_FLOP_ID = "signal_flip_flop";
+  private static final String KEYPAD_ID = "signal_keypad";
+  private static final String KEYPAD_ENTRY_ID = "signal_keypad_entry";
   private static final String CONTROLLER_ID = "network_controller";
   private static final String TERMINAL_ID = "network_terminal";
   private static final String REMOTE_LINK_ID = "remote_link";
@@ -83,6 +87,12 @@ public final class RedweaveMenus {
 
   public static final Supplier<MenuType<FlipFlopMenu>> FLIP_FLOP =
       MENUS.register(FLIP_FLOP_ID, () -> IMenuTypeExtension.create(FlipFlopMenu::new));
+
+  public static final Supplier<MenuType<KeypadMenu>> KEYPAD =
+      MENUS.register(KEYPAD_ID, () -> IMenuTypeExtension.create(KeypadMenu::new));
+
+  public static final Supplier<MenuType<KeypadEntryMenu>> KEYPAD_ENTRY =
+      MENUS.register(KEYPAD_ENTRY_ID, () -> IMenuTypeExtension.create(KeypadEntryMenu::new));
 
   public static final Supplier<MenuType<ControllerMenu>> CONTROLLER =
       MENUS.register(CONTROLLER_ID, () -> IMenuTypeExtension.create(ControllerMenu::new));

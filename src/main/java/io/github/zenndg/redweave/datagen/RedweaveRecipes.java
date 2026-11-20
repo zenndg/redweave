@@ -151,8 +151,8 @@ public final class RedweaveRecipes extends RecipeProvider {
   }
 
   /**
-   * The shared shape of answers 753 and 766, with the vanilla item of each module (754 to 761 and
-   * 885), and the lamp of answer 767, which takes the redstone lamp in place of the node.
+   * The shared shape of answers 753 and 766, with the vanilla item of each module (754 to 761, 885,
+   * 901 and 885), and the lamp of answer 767, which takes the redstone lamp in place of the node.
    */
   private void moduleRecipes(RecipeOutput output) {
     Map.<ItemLike, ItemLike>ofEntries(
@@ -166,7 +166,8 @@ public final class RedweaveRecipes extends RecipeProvider {
             Map.entry(RedweaveItems.SIGNAL_ITEM_SENSOR.get(), Items.COMPARATOR),
             Map.entry(RedweaveItems.SIGNAL_LOCK.get(), Items.TRIPWIRE_HOOK),
             Map.entry(RedweaveItems.SIGNAL_ALARM.get(), Items.NOTE_BLOCK),
-            Map.entry(RedweaveItems.SIGNAL_FLIP_FLOP.get(), Items.STICKY_PISTON))
+            Map.entry(RedweaveItems.SIGNAL_FLIP_FLOP.get(), Items.STICKY_PISTON),
+            Map.entry(RedweaveItems.SIGNAL_KEYPAD.get(), Items.POLISHED_BLACKSTONE_BUTTON))
         .forEach((module, vanilla) -> module(output, module, vanilla));
     lamp(output);
   }

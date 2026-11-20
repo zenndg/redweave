@@ -749,10 +749,36 @@ Confira a #110 (perguntas 877 a 893), com um Signal Flip-Flop no chão, um botã
 | 467 | Abra a tela com outro player e tente mudar a força, o delay e as conexões, e quebrar a placa no survival | Nada muda, os botões ficam apagados, e a placa não quebra |
 | 468 | Com o flip-flop ligado e a saída num canal, afaste-se até o chunk descarregar e volte | O canal vai a 0 enquanto o chunk está descarregado, e o flip-flop volta ligado |
 
+## Fase 2: o Signal Keypad
+
+Confira a #144 (perguntas 659 a 667 e 896 a 916), com um Network Controller, uma Signal Lever da rede escrevendo um canal, um Signal Keypad com a entrada nesse canal e uma lâmpada de redstone na frente dele, e um segundo player.
+
+| # | Faça | Espere ver |
+|---|---|---|
+| 469 | Pegue o Signal Keypad na aba criativa e veja a receita, em inglês e em português | O ícone com o teclado, os nomes `Signal Keypad` e `Teclado de Sinal`, e a forma comum com o botão de pedra-negra polida |
+| 470 | Coloque o teclado no chão, na parede e no teto | A placa com o teclado baixo, a luz vermelha e o ponto cinza, sem canal |
+| 471 | Abra a tela do dono com o `Open`, em inglês e em português | `● Locked`, `No cards`, `Code` com `No code` e `Change`, `Strength`, `Open time`, `Input` só com `Channel` e `Output` |
+| 472 | Ponha a `Input` no canal da alavanca | O ponto do teclado na cor do canal, e o rótulo do Configurator com `Locked` e o canal de entrada |
+| 473 | Clique em `Change`, digite `0042` e repita `0042` | `New code`, depois `Repeat the code`; a linha `Code` passa a `••••` |
+| 474 | Clique em `Change` e digite duas senhas diferentes | `The codes differ` em vermelho, e a senha antiga continua |
+| 475 | Com a alavanca desligada, clique no teclado com a mão vazia | `No power.` na action bar, sem abrir |
+| 476 | Ligue a alavanca e clique com a mão vazia | O teclado 3 × 4, com `Clear`, `Enter` e o visor com `•` |
+| 477 | Digite `0042` e `Enter` | `Access granted` em verde, a luz verde, a seta acesa e a lâmpada acesa pelo tempo aberto, e depois tudo volta a trancar |
+| 478 | Com o segundo player, erre a senha 3 vezes e depois mais uma | `Wrong code` em vermelho, e depois da 4ª, `Wait 5 s.`; o dono online recebe `⚠ <player> missed the code of <nome> (4 tries)` no chat |
+| 479 | Durante a espera, digite a senha certa | `Wait <n> s.`, sem abrir |
+| 480 | Saia com o dono, erre 4 vezes com o segundo player e entre de novo com o dono | O resumo no chat ao entrar, uma vez só |
+| 481 | Erre com o dono | `Wrong code`, sem espera e sem aviso |
+| 482 | Desligue a rede no Network Terminal e use o `Toggle` | `<nome>: Unlocked`, e o teclado abre pelo tempo aberto; a mão vazia mostra `No power.` |
+| 483 | Tente quebrar o teclado à mão no survival, com o dono e com o outro player, e use o `Copy` nele | Não quebra; o `Copy` mostra `This item cannot be copied.`; só o `Wrench` do dono o retira |
+| 484 | Com o segundo player, abra a tela do dono | A tela só para leitura, sem a lista dos cartões e sem a senha |
+| 485 | Saia do mundo com o teclado aberto e entre de novo | O tempo aberto continua de onde parou, e as tentativas e a espera continuam contando |
+| 486 | Feche a fechadura (Signal Lock) com uma chave e confira que ela ainda abre só com a força certa | A fechadura funciona como antes da #144 |
+
 ## Histórico de modificações
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:48 | Inclui o roteiro do Signal Keypad, passos 469 a 486 (#144). |
 | Zennd | 2026-11-19 21:04 | O roteiro roda só numa instância com o mod, sem o Iron Meridian (pergunta 895). |
 | Zennd | 2026-11-19 20:40 | Inclui o roteiro do Signal Flip-Flop, passos 451 a 468 (#110). |
 | Zennd | 2026-11-18 08:17 | Inclui os passos 449 e 450, do crash ao escolher a rede e da linha `Delay` dentro do quadro (#179). |

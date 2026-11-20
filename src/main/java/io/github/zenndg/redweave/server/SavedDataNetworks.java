@@ -1,6 +1,7 @@
 package io.github.zenndg.redweave.server;
 
 import io.github.zenndg.redweave.application.AllNetworksFinder;
+import io.github.zenndg.redweave.application.KeypadReportBook;
 import io.github.zenndg.redweave.application.LastUsedNetworkFinder;
 import io.github.zenndg.redweave.application.LastUsedNetworkRecorder;
 import io.github.zenndg.redweave.application.NetworkFinder;
@@ -11,6 +12,7 @@ import io.github.zenndg.redweave.application.OwnerNetworkFinder;
 import io.github.zenndg.redweave.application.TerminalFinder;
 import io.github.zenndg.redweave.application.TerminalForgetter;
 import io.github.zenndg.redweave.application.TerminalRecorder;
+import io.github.zenndg.redweave.domain.module.KeypadReports;
 import io.github.zenndg.redweave.domain.network.BlockLocation;
 import io.github.zenndg.redweave.domain.network.Network;
 import io.github.zenndg.redweave.domain.network.NetworkId;
@@ -43,17 +45,20 @@ public final class SavedDataNetworks extends SavedData
         NetworkRemover,
         TerminalFinder,
         TerminalRecorder,
-        TerminalForgetter {
+        TerminalForgetter,
+        KeypadReportBook {
   public static final String NAME = "redweave_networks";
 
   private final Map<NetworkId, Network> networks;
   private final Map<PlayerId, NetworkId> lastUsed;
   private final Map<PlayerId, BlockLocation> terminals;
+  private final Map<PlayerId, KeypadReports> keypadReports;
 
   private SavedDataNetworks(NetworkSave.Contents contents) {
     networks = contents.networks();
     lastUsed = contents.lastUsed();
     terminals = contents.terminals();
+    keypadReports = contents.keypadReports();
   }
 
   /** The data of the save of this server, read from its file once and kept by the game. */
@@ -92,7 +97,7 @@ public final class SavedDataNetworks extends SavedData
 
   @Override
   public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-    return new NetworkSave.Contents(networks, lastUsed, terminals).writeInto(tag);
+    return new NetworkSave.Contents(networks, lastUsed, terminals, keypadReports).writeInto(tag);
   }
 
   @Override
@@ -154,6 +159,22 @@ public final class SavedDataNetworks extends SavedData
   @Override
   public void forget(PlayerId player) {
     terminals.remove(player);
+    setDirty();
+  }
+
+  @Override
+  public KeypadReports reportsOf(PlayerId owner) {
+    return keypadReports.getOrDefault(owner, KeypadReports.NONE);
+  }
+
+  /** Keeps the summary of the owner; an empty one leaves the save (answer 903). */
+  @Override
+  public void keep(PlayerId owner, KeypadReports reports) {
+    if (reports.reports().isEmpty()) {
+      keypadReports.remove(owner);
+    } else {
+      keypadReports.put(owner, reports);
+    }
     setDirty();
   }
 }

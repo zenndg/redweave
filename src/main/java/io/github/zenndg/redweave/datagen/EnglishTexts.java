@@ -81,6 +81,7 @@ final class EnglishTexts {
     LockEnglishTexts.addTo(add);
     AlarmEnglishTexts.addTo(add);
     FlipFlopEnglishTexts.addTo(add);
+    KeypadEnglishTexts.addTo(add);
     LampEnglishTexts.addTo(add);
     PressurePlateEnglishTexts.addTo(add);
     ItemSensorEnglishTexts.addTo(add);

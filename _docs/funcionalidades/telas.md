@@ -1,6 +1,6 @@
 # Telas
 
-As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock, Signal Lamp, Signal Alarm e Signal Flip-Flop. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
+As telas próprias do Redweave: a do Signal Node, a do Network Controller, a do vínculo do Signal Remote e as dos Signal Modules: Signal Timer, Signal Inverter, Weather Detector, Signal Randomizer, Signal Lever, Signal Button, Signal Pressure Plate, Signal Item Sensor, Signal Lock, Signal Lamp, Signal Alarm, Signal Flip-Flop e Signal Keypad. A do Network Terminal está em [`terminal-de-rede.md`](terminal-de-rede.md). Elas seguem os pilares de [`ux.md`](../conceito/ux.md) e os elementos de interface de [`visual.md`](../conceito/visual.md#elementos-de-interface). Este documento é o conceito das telas; o comportamento da rede fica na página da rede e dos canais (issue #7).
 
 ## Princípios
 
@@ -344,6 +344,33 @@ Abre com o Configurator no modo `Open` (pergunta 393). É a tela do Signal Inver
 
 Em português, `Flip-Flop de Sinal`, `Força`, `Atraso`, `Entrada` e `Saída`, e os estados, `Ligado` e `Desligado` (perguntas 877 e 890).
 
+## Tela do Signal Keypad
+
+O Signal Keypad tem duas telas. O comportamento está em [`teclado.md`](teclado.md), e as partes comuns a todo módulo, em [`modulos-de-sinal.md`](modulos-de-sinal.md#tela-comum). Ainda não há prancha.
+
+**Teclado**, aberto por qualquer player com a mão vazia, só com sinal no canal de entrada e com uma senha definida; senão, `No power.` ou `This keypad has no code.` na action bar (perguntas 661 e 662):
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Topo | O nome do item, `Signal Keypad` | 662 |
+| Visor | Os dígitos digitados como `•`, até 6 | 659 e 662 |
+| Teclas | 3 × 4: de `1` a `9`, `Clear`, `0` e `Enter`. Os dígitos ficam no cliente até o `Enter` | 662 |
+| Resultado | `Access granted` em verde; `Wrong code` ou `Wait <n> s.` em vermelho, só para quem digitou | 663 a 665 e 914 |
+
+**Tela do dono**, aberta com o Configurator no modo `Open` (perguntas 393 e 905):
+
+| Parte | O que mostra | Pergunta |
+|---|---|---|
+| Esquerda | `● Locked` ou `● Unlocked` e os cartões aceitos, até 3 na lista, cada um com `×` para revogar; `No cards` sem nenhum. Durante a troca da senha, o teclado, com `New code`, `Repeat the code` ou `The codes differ` | 669, 904, 905 e 908 |
+| `Code` | `••••` com uma senha definida, ou `No code`, e `Change`, que abre o teclado; a senha é digitada 2 vezes e nunca aparece | 660 e 905 |
+| `Strength` | A força, de 1 a 15, entre `−` e `+` | 663 |
+| `Open time` | O tempo aberto, em segundos inteiros, entre `−` e `+`, nos limites do config | 663 e 915 |
+| `Input` | Só `Channel`, com a grade dos 16 botões de cor | 661 |
+| `Output` | `Edge` ou `Channel` | 663 |
+| Rodapé | A rede e, para quem não é o dono, o cadeado; os outros players veem a tela só para leitura, sem a lista dos cartões | 378 e 660 |
+
+Em português, `Teclado de Sinal`, `Trancado`, `Destrancado`, `Senha`, `Trocar`, `Tempo aberto`, `Cartões: <n>`, `Sem cartões`, `Limpar`, `Entrar`, `Acesso liberado`, `Senha errada`, `Espere <n> s.`, `Nova senha`, `Repita a senha`, `As senhas não batem` e `Sem senha`.
+
 ## Pendências
 
 | Ponto | Depende de |
@@ -354,6 +381,7 @@ Em português, `Flip-Flop de Sinal`, `Força`, `Atraso`, `Entrada` e `Saída`, e
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:48 | Adiciona as duas telas do Signal Keypad, a do teclado e a do dono (perguntas 659 a 669 e 904 a 915, #144). |
 | Zennd | 2026-11-19 20:15 | Adiciona a Tela do Signal Flip-Flop (perguntas 877 a 892, #110). |
 | Zennd | 2026-11-18 08:17 | A linha `Delay` da Tela do Nó passa para dentro do painel do canal, que fica com 94 px (pergunta 876, #179). |
 | Zennd | 2026-11-18 09:40 | A Tela do Nó ganha a linha `Delay` e passa a 186 px, com a lista da escolha de rede em 110 px (perguntas 866, 870 e 872, #177). |

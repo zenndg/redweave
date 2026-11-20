@@ -43,7 +43,7 @@ Abre com o Configurator no modo `Open`. O detalhe está em [`telas.md`](telas.md
 | `Strength` | A força emitida, de 1 a 15, entre `−` e `+` | 636 |
 | `Input` e `Output` | O seletor `Edge` ou `Channel` de cada ponta, como o Signal Inverter | 635 |
 
-O servidor só manda a chave ao cliente do dono: os outros recebem a chave vazia, e o rótulo nunca a mostra (pergunta 637, regras 16 e 17).
+O servidor só manda a chave ao cliente do dono: os outros recebem a chave vazia, e o rótulo nunca a mostra (pergunta 637, regras 16 e 17). Desde a #144, a `key` também não vai no pacote do bloco a nenhum cliente: o `LockPart` a declara secreta, e o espaço a tira do que manda (pergunta 899).
 
 ## Mensagens
 
@@ -112,6 +112,7 @@ A arte seguiu as perguntas 185, 186 e 699: o agente escreveu o prompt em `tmp/ar
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:13 | A `key` sai do pacote do bloco a todo cliente (pergunta 899, #144). |
 | Zennd | 2026-11-16 16:05 | A receita entra na #157 (pergunta 760). |
 | Zennd | 2026-11-16 13:59 | O Signal Lock nunca é copiado nem colado (pergunta 731). |
 | Zennd | 2026-11-16 12:22 | Marca como implementado na #141, com a tela, as mensagens, o save, o desenho, a proteção, o código e os testes (perguntas 707 a 714). |
