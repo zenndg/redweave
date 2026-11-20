@@ -1,0 +1,230 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "east": {
+          "texture": "#edge"
+        },
+        "north": {
+          "texture": "#edge"
+        },
+        "south": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#front"
+        },
+        "west": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        2,
+        13
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            7.0,
+            6.0,
+            8.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            7.0,
+            6.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            7.0,
+            6.0,
+            8.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            6.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "uv": [
+            0.0,
+            7.0,
+            6.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        5,
+        2,
+        6
+      ],
+      "to": [
+        11,
+        3,
+        12
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#parts",
+          "tintindex": 0,
+          "uv": [
+            4.0,
+            5.0,
+            5.0,
+            6.0
+          ]
+        },
+        "north": {
+          "texture": "#parts",
+          "tintindex": 0,
+          "uv": [
+            4.0,
+            5.0,
+            5.0,
+            6.0
+          ]
+        },
+        "south": {
+          "texture": "#parts",
+          "tintindex": 0,
+          "uv": [
+            4.0,
+            5.0,
+            5.0,
+            6.0
+          ]
+        },
+        "up": {
+          "texture": "#parts",
+          "tintindex": 0,
+          "uv": [
+            4.0,
+            5.0,
+            5.0,
+            6.0
+          ]
+        },
+        "west": {
+          "texture": "#parts",
+          "tintindex": 0,
+          "uv": [
+            4.0,
+            5.0,
+            5.0,
+            6.0
+          ]
+        }
+      },
+      "from": [
+        9,
+        3,
+        11
+      ],
+      "to": [
+        10,
+        3.01,
+        12
+      ]
+    },
+    {
+      "faces": {
+        "east": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            2.0,
+            14.0,
+            3.0
+          ]
+        },
+        "north": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            2.0,
+            14.0,
+            3.0
+          ]
+        },
+        "south": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            2.0,
+            14.0,
+            3.0
+          ]
+        },
+        "up": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            0.0,
+            14.0,
+            1.0
+          ]
+        },
+        "west": {
+          "texture": "#light",
+          "uv": [
+            12.0,
+            2.0,
+            14.0,
+            3.0
+          ]
+        }
+      },
+      "from": [
+        5,
+        3,
+        11
+      ],
+      "neoforge_data": {
+        "block_light": 15,
+        "sky_light": 15
+      },
+      "to": [
+        7,
+        3.5,
+        12
+      ]
+    }
+  ],
+  "textures": {
+    "edge": "redweave:block/signal_timer_edge",
+    "front": "redweave:block/signal_keypad_front",
+    "light": "redweave:block/signal_lever_parts",
+    "particle": "redweave:block/signal_timer_edge",
+    "parts": "redweave:block/signal_keypad_parts"
+  }
+}

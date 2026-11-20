@@ -8,6 +8,7 @@ import io.github.zenndg.redweave.block.part.DetectorPart;
 import io.github.zenndg.redweave.block.part.FlipFlopPart;
 import io.github.zenndg.redweave.block.part.InverterPart;
 import io.github.zenndg.redweave.block.part.ItemSensorPart;
+import io.github.zenndg.redweave.block.part.KeypadPart;
 import io.github.zenndg.redweave.block.part.LeverPart;
 import io.github.zenndg.redweave.block.part.LockPart;
 import io.github.zenndg.redweave.block.part.PressurePlatePart;
@@ -110,8 +111,8 @@ final class RedweaveBlockStates extends BlockStateProvider {
     remoteModels();
     cableItemModel();
     timerModels();
-    inverterModels();
-    flipFlopModels();
+    plateModels(RedweaveItems.SIGNAL_INVERTER.get(), InverterPart.ID, InverterPart.LOOKS);
+    plateModels(RedweaveItems.SIGNAL_FLIP_FLOP.get(), FlipFlopPart.ID, FlipFlopPart.LOOKS);
     detectorModels();
     randomizerModels();
     leverModels();
@@ -129,16 +130,6 @@ final class RedweaveBlockStates extends BlockStateProvider {
   /** The Signal Randomizer: each LED and arrow, turned or not, as the timer (429 and 488). */
   private void randomizerModels() {
     plateModels(RedweaveItems.SIGNAL_RANDOMIZER.get(), RandomizerPart.ID, RandomizerPart.LOOKS);
-  }
-
-  /** The Signal Inverter: off, on or burnt, turned or not, as the timer (429, 452 and 455). */
-  private void inverterModels() {
-    plateModels(RedweaveItems.SIGNAL_INVERTER.get(), InverterPart.ID, InverterPart.LOOKS);
-  }
-
-  /** The Signal Flip-Flop: off or on, turned or not, as the inverter (answers 429 and 888). */
-  private void flipFlopModels() {
-    plateModels(RedweaveItems.SIGNAL_FLIP_FLOP.get(), FlipFlopPart.ID, FlipFlopPart.LOOKS);
   }
 
   /** The Weather Detector: each mode, arrow lit or not, turned or not (answers 429 and 471). */
@@ -186,6 +177,11 @@ final class RedweaveBlockStates extends BlockStateProvider {
         RedweaveItems.SIGNAL_LOCK.get(), LockPart.ID, LockPart.LOOKS, LockModels::addPieces);
     piecedModels(
         RedweaveItems.SIGNAL_ALARM.get(), AlarmPart.ID, AlarmPart.LOOKS, AlarmModels::addPieces);
+    piecedModels(
+        RedweaveItems.SIGNAL_KEYPAD.get(),
+        KeypadPart.ID,
+        KeypadPart.LOOKS,
+        KeypadModels::addPieces);
   }
 
   /**

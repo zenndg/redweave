@@ -16,6 +16,7 @@ public final class ModuleMessages {
   private static final String LOCK = "message." + RedweaveMod.MOD_ID + ".signal_lock.";
   private static final String ALARM = "message." + RedweaveMod.MOD_ID + ".signal_alarm.";
   private static final String FLIP_FLOP = "message." + RedweaveMod.MOD_ID + ".signal_flip_flop.";
+  private static final String KEYPAD = "message." + RedweaveMod.MOD_ID + ".signal_keypad.";
 
   public static final String USE_TO_OPEN = PREFIX + "use_to_open";
   public static final String PICKED_UP = PREFIX + "picked_up";
@@ -39,6 +40,10 @@ public final class ModuleMessages {
   public static final String ALARM_SILENCED = ALARM + "silenced";
   public static final String FLIP_FLOP_ON = FLIP_FLOP + "on";
   public static final String FLIP_FLOP_OFF = FLIP_FLOP + "off";
+  public static final String KEYPAD_UNLOCKED = KEYPAD + "unlocked";
+  public static final String KEYPAD_NO_POWER = KEYPAD + "no_power";
+  public static final String KEYPAD_NO_CODE = KEYPAD + "no_code";
+  public static final String KEYPAD_MISSED = KEYPAD + "missed";
 
   private ModuleMessages() {}
 }

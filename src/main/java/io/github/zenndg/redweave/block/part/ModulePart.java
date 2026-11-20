@@ -136,6 +136,11 @@ public abstract class ModulePart
   /** The output, whose channel the label shows and the network counts (answers 417 and 424). */
   public abstract Connection output();
 
+  /** The connection whose channel the label shows: the output, unless the module says (417). */
+  public Connection labelConnection() {
+    return output();
+  }
+
   /** The key of the text of the state, which the client writes in its language (417). */
   public abstract Optional<String> stateKey();
 

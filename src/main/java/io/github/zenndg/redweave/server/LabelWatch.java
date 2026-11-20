@@ -254,7 +254,7 @@ public final class LabelWatch {
     }
   }
 
-  /** The name, the state and the channel of the output of a module (answer 417). */
+  /** The name, the state and the channel of the label of a module (answers 417 and 908). */
   private static void addModule(ModulePart module, PartSpot spot, Near near) {
     if (module.module().isEmpty() || module.stateKey().isEmpty()) {
       return;
@@ -268,6 +268,6 @@ public final class LabelWatch {
             new ModuleLabel(
                 module.module().get().displayName(),
                 module.stateKey().get(),
-                module.output().channel()));
+                module.labelConnection().channel()));
   }
 }

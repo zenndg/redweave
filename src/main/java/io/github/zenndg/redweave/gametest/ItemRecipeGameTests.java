@@ -152,6 +152,7 @@ public final class ItemRecipeGameTests {
         module(RedweaveItems.SIGNAL_LOCK, Items.TRIPWIRE_HOOK),
         module(RedweaveItems.SIGNAL_ALARM, Items.NOTE_BLOCK),
         module(RedweaveItems.SIGNAL_FLIP_FLOP, Items.STICKY_PISTON),
+        module(RedweaveItems.SIGNAL_KEYPAD, Items.POLISHED_BLACKSTONE_BUTTON),
         lamp());
   }
 
