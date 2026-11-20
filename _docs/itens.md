@@ -48,7 +48,7 @@ As placas de lógica, com a base comum de [`modulos-de-sinal.md`](funcionalidade
 | Signal Item Sensor (`Sensor de Itens de Sinal`) | `redweave:signal_item_sensor` | Placa num inventário que emite a força escolhida quando ele tem exatamente a quantidade escolhida de um item; só lê, não guarda nem move itens | Entregue na #148 | [`sensor-de-itens.md`](funcionalidades/sensor-de-itens.md) |
 | Signal Lock (`Fechadura de Sinal`) | `redweave:signal_lock` | Abre só com a força exata da chave e emite a força escolhida; só o dono a retira | Entregue na #141 | [`fechadura.md`](funcionalidades/fechadura.md) |
 | Signal Alarm (`Alarme de Sinal`) | `redweave:signal_alarm` | Ao receber sinal, toca um som, mostra um texto e pulsa uma luz vermelha, pelo tempo escolhido e para quem o dono escolhe | Entregue na #142 | [`alarme.md`](funcionalidades/alarme.md) |
-| Signal Keypad (`Teclado de Sinal`) | `redweave:signal_keypad` | Uma senha numérica, guardada só no servidor, que libera o sinal pelo tempo aberto | Planejado na #144 | [`teclado.md`](funcionalidades/teclado.md) |
+| Signal Keypad (`Teclado de Sinal`) | `redweave:signal_keypad` | Uma senha numérica, guardada como hash só no servidor, que libera a força escolhida pelo tempo aberto, com espera crescente para quem erra e aviso ao dono | Entregue na #144 | [`teclado.md`](funcionalidades/teclado.md) |
 | Signal Flip-Flop (`Flip-Flop de Sinal`) | `redweave:signal_flip_flop` | A memória do mod, um T flip-flop: cada pulso na entrada alterna a saída, que emite a força escolhida, com o delay na saída, e o estado sobrevive ao reinício | Entregue na #110 | [`signal-flip-flop.md`](funcionalidades/signal-flip-flop.md) |
 | Módulo de trava (SR latch) | A definir | Uma entrada liga e a outra desliga a saída, que fica guardada | Planejado na #111 | — |
 | Módulo de porta (AND, OR, XOR e NAND) | A definir | A placa das portas lógicas, com a regra já no domínio | Planejado na #31 | [`portas-logicas.md`](funcionalidades/portas-logicas.md) (a regra) |
@@ -122,6 +122,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 | Signal Lock | Gancho de armadilha | 760 |
 | Signal Alarm | Bloco musical | 761 |
 | Signal Flip-Flop | Pistão grudento | 885 |
+| Signal Keypad | Botão de pedra-negra polida | 901 |
 
 ### Tingir o Signal Cable
 
@@ -131,6 +132,7 @@ Os módulos entregues têm a mesma forma, para o player aprender uma vez: o item
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:47 | O Signal Keypad passa a entregue na #144, com a receita do botão de pedra-negra polida (pergunta 901). |
 | Zennd | 2026-11-19 20:40 | O módulo de memória vira o Signal Flip-Flop, entregue na #110, com a receita do pistão grudento (perguntas 877 e 885). |
 | Zennd | 2026-11-18 09:40 | O Signal Node ganha o delay na saída (pergunta 859, #177). |
 | Zennd | 2026-11-17 15:20 | O delay na saída chega aos módulos com saída, menos o Timer e o Lock (perguntas 849 e 850, #173). |

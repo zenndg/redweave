@@ -35,7 +35,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 | [`alarme.md`](alarme.md) | 2 | O Signal Alarm, entregue na #142: som, texto e luz pulsando ao receber sinal, para quem o dono escolhe |
 | [`lampada.md`](lampada.md) | 2 | O Signal Lamp, entregue na #143: barra de LED na cor do canal, com a luz pela força e um canal de controle |
 | [`signal-flip-flop.md`](signal-flip-flop.md) | 2 | O Signal Flip-Flop, a memória da #110: um T flip-flop em que cada pulso na entrada alterna a saída, guardada no save |
-| [`teclado.md`](teclado.md) | 2 | Conceito: O Signal Keypad: senha numérica que libera o sinal (#144) |
+| [`teclado.md`](teclado.md) | 2 | O Signal Keypad, entregue na #144: senha numérica guardada como hash, que libera o sinal pelo tempo aberto, com espera para quem erra e aviso ao dono |
 | [`cartao.md`](cartao.md) | 2 | Conceito: O Signal Card: cartão de acesso vinculado (#145) |
 | [`protecao.md`](protecao.md) | 2 | Conceito: A proteção dos blocos da porta pela fechadura e pelo teclado (#146) |
 | [`portao.md`](portao.md) | 2 | Conceito: O Signal Gate: portão que só deixa passar o autorizado (#147) |
@@ -45,6 +45,7 @@ Uma página por funcionalidade, escrita antes do código e com as decisões fech
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:47 | O Signal Keypad passa a entregue na #144. |
 | Zennd | 2026-11-19 20:15 | Adiciona a página do Signal Flip-Flop (#110). |
 | Zennd | 2026-11-16 15:20 | O Signal Alarm passa a entregue na #142. |
 | Zennd | 2026-11-16 13:18 | Marca o Signal Lamp como entregue na #143. |

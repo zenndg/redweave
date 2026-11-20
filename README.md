@@ -65,7 +65,7 @@ flowchart LR
 | Phase | Theme | Delivers |
 | --- | --- | --- |
 | **1 · Wireless** (MVP, v0.1.0) | Signal anywhere | Signal Node, Network Controller, Network Terminal, Configurator tool, Signal Remote, domain simulator, Jade / The One Probe integration |
-| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131), the Signal Pressure Plate (#132), the Signal Item Sensor (#148), the Signal Lock (#141), the Signal Lamp (#143), the Signal Alarm (#142) and the Signal Flip-Flop (#110), each with a wireless or redstone input or output; planned: the Signal Keypad, Signal Card, block protection and Signal Gate (#144 to #147) |
+| **2 · Logic** (v0.1.0) | Logic you can see | Signal Modules: Signal Timer, Signal Inverter, AND / OR / XOR / NAND gate, counter, memory, latch, and source and transformer modules; multipart and the Signal Cable; the Signal Lever (#130), the Signal Button (#131), the Signal Pressure Plate (#132), the Signal Item Sensor (#148), the Signal Lock (#141), the Signal Lamp (#143), the Signal Alarm (#142), the Signal Flip-Flop (#110) and the Signal Keypad (#144), each with a wireless or redstone input or output; planned: the Signal Card, block protection and Signal Gate (#145 to #147) |
 | **3 · Chips** | Program your redstone | Circuit Workbench, drag-and-drop Circuit Editor with tick-by-tick debug, chips as items, in-game guide book |
 | **4 · Expansion** | Integrations | More mod integrations and the port to 26.x |
 | **5 · Bridge** (future) | Beyond the game | MQTT bridge to external dashboards and real hardware |
@@ -74,7 +74,7 @@ Phases 1 and 2 ship together in v0.1.0, and every release is playable. The work 
 
 ## Items
 
-Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159). Every Signal Module with an output, except the Signal Timer and the Signal Lock, has an output delay of 0 to 15 s set on its screen (#171, #173), and so does the Signal Node (#177).
+Every item of the mod, delivered or planned. IDs, families and the concept of each item are in the [item catalog](_docs/itens.md), in Portuguese. Every finished item is in the Redweave creative tab, with or without a recipe. Every delivered item is crafted from vanilla materials, and the Signal Modules also take a Signal Node, with at least one redstone in each recipe, and a white Signal Cable takes any of the 15 other dyes; the grids are in the [item catalog](_docs/itens.md#receitas) (#157, #159). Every Signal Module with an output, except the Signal Timer, the Signal Lock and the Signal Keypad, has an output delay of 0 to 15 s set on its screen (#171, #173), and so does the Signal Node (#177).
 
 | Item | What it does | Status |
 | --- | --- | --- |
@@ -96,7 +96,7 @@ Every item of the mod, delivered or planned. IDs, families and the concept of ea
 | Signal Alarm | A sound, a text and a pulsing red light when it gets a signal, for whom its owner chooses | Delivered (#142) |
 | Signal Lamp | An LED bar in the color of its channel, as bright as the signal, with an optional control channel | Delivered (#143) |
 | Signal Flip-Flop | The memory of the mod: each pulse on its input flips its output, kept through a restart, with an output delay of up to 15 s | Delivered (#110) |
-| Signal Keypad | A numeric password, kept only on the server, that lets the signal through | Planned (#144) |
+| Signal Keypad | A numeric password, kept only on the server as a hash, that lets the signal through for an open time, with a growing wait for wrong codes and a warning to its owner | Delivered (#144) |
 | Signal Card | An access card its owner links to locks, keypads and gates | Planned (#145) |
 | Signal Gate | A frame whose field only lets through what its rules allow | Planned (#147) |
 | Logic modules | Latch, gate, schedule, pulse extender, edge detector, threshold, long delay, player detector and counter | Planned (#111 to #117, #31, #30) |

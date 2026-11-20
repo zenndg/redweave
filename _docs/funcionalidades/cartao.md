@@ -16,7 +16,7 @@ O dono vincula o cartão a um ou mais itens pelo slot da tela, e quem tiver o ca
 | Identidade | Um ID único num data component (regra 7). Não dá para copiar, e cada cartão fabricado ganha um ID novo | 668 |
 | Receita | Na #24; até lá, vem do criativo | 601 e 668 |
 | Vínculo | O dono coloca o cartão num slot exclusivo da tela do item; o vínculo é feito, e o cartão volta ao inventário. Um cartão pode ser vinculado a vários itens | 669 |
-| Lista | O item guarda a lista dos IDs aceitos, com o limite em [`limites.md`](../limites.md). O dono revoga na tela do item, sem precisar do cartão | 669 |
+| Lista | O item guarda a lista dos IDs aceitos, com o limite em [`limites.md`](../limites.md). O dono revoga na tela do item, sem precisar do cartão. No Signal Keypad, a lista, o teto `card.max_links_per_item`, a regra e a revogação entraram na #144; o slot que recebe o cartão chega com o item, na #145 | 669, 902 e 904 |
 | Uso | Clicar num item vinculado com o cartão na mão abre o item pelo tempo aberto do dono. No Signal Keypad, é como a senha certa e exige sinal na entrada; no Signal Lock, é como o pulso do `Toggle` e funciona sempre | 670 |
 | Cartão errado | `This card is not linked here.`, sem contar como erro de senha | 671 |
 
@@ -34,4 +34,5 @@ JUnit do vínculo e da revogação; GameTests no mundo (o vínculo pelo slot, o 
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:47 | O Signal Keypad já guarda a lista dos cartões e a revoga, desde a #144 (perguntas 902 e 904). |
 | Zennd | 2026-11-16 09:34 | Cria o conceito, com as decisões 668 a 671. |

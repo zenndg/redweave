@@ -2,7 +2,7 @@
 
 O Signal Keypad (`redweave:signal_keypad`, `Teclado de Sinal` em português) é um [Signal Module](modulos-de-sinal.md) que libera o sinal com uma senha numérica: com sinal no seu canal de entrada, qualquer player digita a senha e, se ela estiver certa, o teclado emite a força escolhida (pergunta 659). Esta página descreve só o que é do teclado; o que todo módulo herda está em [`modulos-de-sinal.md`](modulos-de-sinal.md), e os termos são os do [`glossario.md`](../glossario.md).
 
-**Estado:** conceito fechado, com as perguntas 659 a 667, 731 e 896 a 911 respondidas (regra 9), a implementar na #144.
+**Estado:** entregue na #144, com as perguntas 659 a 667, 731 e 896 a 916 respondidas.
 
 ## Em uma frase
 
@@ -54,6 +54,17 @@ O pacote do bloco manda a cada cliente o NBT das partes do espaço. O teclado se
 
 O resumo fica no save do servidor que já guarda as redes, por dono: por teclado, o nome, o último player e o total de erros. Ao entrar, o dono recebe o resumo no chat, e ele é apagado. Cada dono guarda no máximo `keypad.max_offline_reports` teclados; acima do teto, sai o teclado do resumo mais antigo (perguntas 666, 903 e 911).
 
+## Mensagens
+
+| Quando | Inglês | Português |
+|---|---|---|
+| Clique sem sinal | `No power.` | `Sem energia.` |
+| Clique sem senha definida | `This keypad has no code.` | `Este teclado não tem senha.` |
+| `Toggle` | `<nome>: Unlocked` | `<nome>: Destrancado` |
+| Aviso ao dono | `⚠ <player> missed the code of <nome> (<n> tries)` | `⚠ <player> errou a senha de <nome> (<n> tentativas)` |
+
+As telas estão em [`telas.md`](telas.md#tela-do-signal-keypad).
+
 ## Forma
 
 Sobre a placa de 10 × 10 dos módulos, um teclado baixo de 6 × 6 px e 1 px de altura. No topo, uma fileira escura na frente separa o teclado da seta, e 3 × 2 teclas de 1 px ficam soltas, com espaço entre elas; na fileira de trás, a luz dos [Signal Emitters](emissores.md), de 2 × 1 px, vermelha trancado e verde aberto, e o ponto na cor do canal de entrada. A mira cobre a placa e o teclado (perguntas 667, 909 e 912).
@@ -94,6 +105,19 @@ Os valores ficam em [`limites.md`](../limites.md).
 
 Na forma comum dos módulos: `·, botão de pedra-negra polida, · / barra de cobre, redstone, barra de cobre / deepslate polido, Signal Node, deepslate polido`, que dá 1 Signal Keypad (perguntas 753, 766 e 901). A grade fica em [`itens.md`](../itens.md#receitas).
 
+## Código
+
+| Camada | Classe | O que faz |
+|---|---|---|
+| Domínio | `SignalKeypad`, `KeypadCode`, `KeypadSecret`, `KeypadAttempts`, `KeypadAttempt`, `KeypadCards`, `CardId`, `KeypadTry`, `KeypadEntry`, `KeypadReport`, `KeypadReports`, `KeypadLimits`, `CardLimits` | A regra, a senha com hash, as tentativas e a espera, os cartões e o resumo do dono offline |
+| Aplicação | `ChangeKeypad`, `KeypadOwnerReports`, `KeypadSalts`, `KeypadReportBook` | Só o dono muda o teclado; o resumo guardado e entregue uma vez; as portas do sal e do save |
+| Config | `KeypadConfig`, `NeoForgeKeypadLimits` | As 9 chaves da pergunta 915 |
+| Parte | `KeypadPart`, `KeypadSave`, `KeypadWarnings`, `KeypadJoinEvents`, `SecretPart` | A placa, o save com as chaves secretas fora do pacote ao cliente, o aviso ao dono e o resumo ao entrar |
+| Servidor | `SavedKeypadReport`, `SecureKeypadSalts` | O resumo no save do servidor, no campo opcional `keypad_reports`, e o sal com `SecureRandom` |
+| Menu | `KeypadMenu`, `KeypadEntryMenu`, `KeypadAction`, `KeypadCodes`, `KeypadScreenActions`, `KeypadScreenData`, `KeypadScreenLayout`, `KeypadScreenTexts` | As duas telas, conferidas no servidor; a senha viaja como tamanho × 1.000.000 + dígitos |
+| Cliente | `KeypadScreen`, `KeypadEntryScreen`, `KeypadPad` | A tela do dono, o teclado do player e o teclado 3 × 4 comum |
+| Datagen | `KeypadModels`, `KeypadEnglishTexts`, `KeypadPortugueseTexts` | O teclado 3D, a luz, o ponto tingido do canal e os textos |
+
 ## Arte
 
 A arte segue as perguntas 185 e 186: o agente escreve o prompt em `tmp/arte/signal_keypad/`, o desenvolvedor gera a imagem, e o agente a confere.
@@ -113,6 +137,7 @@ A arte segue as perguntas 185 e 186: o agente escreve o prompt em `tmp/arte/sign
 
 | Pessoa | Data e hora | Modificação |
 |---|---|---|
+| Zennd | 2026-11-19 22:48 | Entregue na #144: as mensagens, o código e o estado (perguntas 896 a 916). |
 | Zennd | 2026-11-19 22:14 | As faixas do config, com `keypad.free_tries` e `keypad.reset_ticks` (pergunta 915). |
 | Zennd | 2026-11-19 22:13 | A janela das tentativas livres e a espera, e os erros do dono que não contam (perguntas 913 e 914). |
 | Zennd | 2026-11-19 22:01 | O topo do teclado tem 3 × 2 teclas soltas, com a luz e o ponto atrás (pergunta 912). |
