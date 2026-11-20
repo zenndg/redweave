@@ -3,12 +3,15 @@ package io.github.zenndg.redweave.server;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.zenndg.redweave.domain.module.KeypadReport;
+import io.github.zenndg.redweave.domain.module.KeypadReports;
 import io.github.zenndg.redweave.domain.network.BlockLocation;
 import io.github.zenndg.redweave.domain.network.Network;
 import io.github.zenndg.redweave.domain.network.NetworkId;
 import io.github.zenndg.redweave.domain.network.NetworkLimits;
 import io.github.zenndg.redweave.domain.network.NodeId;
 import io.github.zenndg.redweave.domain.network.PlayerId;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -34,6 +37,8 @@ final class NetworkSave {
   private static final String LAST_USED = "last_used";
   private static final String TERMINALS = "terminals";
   private static final String TERMINAL_PART = "network terminal";
+  private static final String KEYPAD_REPORTS = "keypad_reports";
+  private static final String KEYPAD_REPORT_PART = "keypad report";
   private static final String NETWORK_PART = "network";
   private static final String LAST_USED_PART = "last used network";
   private static final String REPEATED = "repeated in the save";
@@ -56,7 +61,10 @@ final class NetworkSave {
                       .forGetter(Root::lastUsed),
                   Lenient.list(SavedTerminal.CODEC, TERMINAL_PART)
                       .optionalFieldOf(TERMINALS, List.of())
-                      .forGetter(Root::terminals))
+                      .forGetter(Root::terminals),
+                  Lenient.list(SavedKeypadReport.CODEC, KEYPAD_REPORT_PART)
+                      .optionalFieldOf(KEYPAD_REPORTS, List.of())
+                      .forGetter(Root::keypadReports))
               .apply(instance, Root::new));
 
   private NetworkSave() {}
@@ -65,39 +73,59 @@ final class NetworkSave {
   record Contents(
       Map<NetworkId, Network> networks,
       Map<PlayerId, NetworkId> lastUsed,
-      Map<PlayerId, BlockLocation> terminals) {
+      Map<PlayerId, BlockLocation> terminals,
+      Map<PlayerId, KeypadReports> keypadReports) {
     static Contents empty() {
-      return new Contents(new LinkedHashMap<>(), new LinkedHashMap<>(), new LinkedHashMap<>());
+      return new Contents(
+          new LinkedHashMap<>(),
+          new LinkedHashMap<>(),
+          new LinkedHashMap<>(),
+          new LinkedHashMap<>());
     }
 
     /** What goes to the file, in the order it was written. */
     CompoundTag writeInto(CompoundTag tag) {
-      return write(tag, networks.values(), lastUsed, terminals);
+      Root root =
+          new Root(
+              savedNetworks(networks.values()),
+              savedChoices(lastUsed),
+              savedTerminals(terminals),
+              savedReports(keypadReports));
+      tag.merge((CompoundTag) ROOT.encodeStart(NbtOps.INSTANCE, root).getOrThrow());
+      tag.putInt(VERSION_KEY, VERSION);
+      return tag;
     }
   }
 
   private record Root(
-      List<SavedNetwork> networks, List<LastUsedChoice> lastUsed, List<SavedTerminal> terminals) {}
+      List<SavedNetwork> networks,
+      List<LastUsedChoice> lastUsed,
+      List<SavedTerminal> terminals,
+      List<SavedKeypadReport> keypadReports) {}
 
-  static CompoundTag write(
-      CompoundTag tag,
-      Collection<Network> networks,
-      Map<PlayerId, NetworkId> lastUsed,
-      Map<PlayerId, BlockLocation> terminals) {
-    List<SavedNetwork> saved =
-        networks.stream().map(network -> SavedNetwork.of(network.snapshot())).toList();
-    List<LastUsedChoice> choices =
-        lastUsed.entrySet().stream()
-            .map(entry -> new LastUsedChoice(entry.getKey(), entry.getValue()))
-            .toList();
-    List<SavedTerminal> placed =
-        terminals.entrySet().stream()
-            .map(entry -> new SavedTerminal(entry.getKey(), entry.getValue()))
-            .toList();
-    Root root = new Root(saved, choices, placed);
-    tag.merge((CompoundTag) ROOT.encodeStart(NbtOps.INSTANCE, root).getOrThrow());
-    tag.putInt(VERSION_KEY, VERSION);
-    return tag;
+  private static List<SavedNetwork> savedNetworks(Collection<Network> networks) {
+    return networks.stream().map(network -> SavedNetwork.of(network.snapshot())).toList();
+  }
+
+  private static List<LastUsedChoice> savedChoices(Map<PlayerId, NetworkId> lastUsed) {
+    return lastUsed.entrySet().stream()
+        .map(entry -> new LastUsedChoice(entry.getKey(), entry.getValue()))
+        .toList();
+  }
+
+  private static List<SavedTerminal> savedTerminals(Map<PlayerId, BlockLocation> terminals) {
+    return terminals.entrySet().stream()
+        .map(entry -> new SavedTerminal(entry.getKey(), entry.getValue()))
+        .toList();
+  }
+
+  /** The summaries of the offline owners, one line per keypad, oldest first (answer 903). */
+  private static List<SavedKeypadReport> savedReports(Map<PlayerId, KeypadReports> reports) {
+    return reports.entrySet().stream()
+        .flatMap(entry ->
+            entry.getValue().reports().stream()
+                .map(report -> new SavedKeypadReport(entry.getKey(), report)))
+        .toList();
   }
 
   /**
@@ -119,7 +147,10 @@ final class NetworkSave {
     }
     Map<NetworkId, Network> networks = restore(root.get().networks(), limits);
     return new Contents(
-        networks, lastUsed(root.get().lastUsed(), networks), terminals(root.get().terminals()));
+        networks,
+        lastUsed(root.get().lastUsed(), networks),
+        terminals(root.get().terminals()),
+        keypadReports(root.get().keypadReports()));
   }
 
   private static Map<NetworkId, Network> restore(List<SavedNetwork> saved, NetworkLimits limits) {
@@ -172,5 +203,16 @@ final class NetworkSave {
       }
     }
     return terminals;
+  }
+
+  /** The summary of each owner, in the order it was saved; a save with none has none (903). */
+  private static Map<PlayerId, KeypadReports> keypadReports(List<SavedKeypadReport> saved) {
+    Map<PlayerId, List<KeypadReport>> byOwner = new LinkedHashMap<>();
+    for (SavedKeypadReport line : saved) {
+      byOwner.computeIfAbsent(line.owner(), owner -> new ArrayList<>()).add(line.report());
+    }
+    Map<PlayerId, KeypadReports> reports = new LinkedHashMap<>();
+    byOwner.forEach((owner, lines) -> reports.put(owner, new KeypadReports(lines)));
+    return reports;
   }
 }

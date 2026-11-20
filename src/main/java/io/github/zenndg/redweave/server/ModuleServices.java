@@ -6,6 +6,7 @@ import io.github.zenndg.redweave.application.ChangeButton;
 import io.github.zenndg.redweave.application.ChangeFlipFlop;
 import io.github.zenndg.redweave.application.ChangeInverter;
 import io.github.zenndg.redweave.application.ChangeItemSensor;
+import io.github.zenndg.redweave.application.ChangeKeypad;
 import io.github.zenndg.redweave.application.ChangeLamp;
 import io.github.zenndg.redweave.application.ChangeLever;
 import io.github.zenndg.redweave.application.ChangeLock;
@@ -16,6 +17,7 @@ import io.github.zenndg.redweave.application.ChangeTimer;
 import io.github.zenndg.redweave.application.ChangeWeatherDetector;
 import io.github.zenndg.redweave.application.ChooseModuleNetwork;
 import io.github.zenndg.redweave.application.IdGenerator;
+import io.github.zenndg.redweave.application.KeypadOwnerReports;
 import io.github.zenndg.redweave.application.PlaceModule;
 import io.github.zenndg.redweave.application.ReadModuleChannel;
 import io.github.zenndg.redweave.application.ServerClock;
@@ -46,6 +48,8 @@ public final class ModuleServices {
   private final ChangeLamp changeLamp = new ChangeLamp();
   private final ChangeAlarm changeAlarm = new ChangeAlarm();
   private final ChangeFlipFlop changeFlipFlop = new ChangeFlipFlop();
+  private final ChangeKeypad changeKeypad = new ChangeKeypad(new SecureKeypadSalts());
+  private final KeypadOwnerReports keypadReports;
   private final ChooseModuleNetwork chooseNetwork;
   private final SyncModule syncModule;
 
@@ -56,6 +60,7 @@ public final class ModuleServices {
     readChannel = new ReadModuleChannel(networks);
     chooseNetwork = new ChooseModuleNetwork(networks);
     syncModule = new SyncModule(networks, networks);
+    keypadReports = new KeypadOwnerReports(networks);
   }
 
   /** The register of the modules in their networks (answers 803 and 811). */
@@ -129,6 +134,15 @@ public final class ModuleServices {
 
   public ChangeFlipFlop changeFlipFlop() {
     return changeFlipFlop;
+  }
+
+  public ChangeKeypad changeKeypad() {
+    return changeKeypad;
+  }
+
+  /** The summaries of the misses for the offline owners of keypads (answer 903). */
+  public KeypadOwnerReports keypadReports() {
+    return keypadReports;
   }
 
   public ChooseModuleNetwork chooseNetwork() {

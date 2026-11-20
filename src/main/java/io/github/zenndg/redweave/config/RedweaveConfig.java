@@ -349,6 +349,7 @@ public final class RedweaveConfig {
             .comment(BURNOUT_COMMENT)
             .defineInRange(BURNOUT_TICKS_KEY, DEFAULT_BURNOUT, MIN_BURNOUT, MAX_BURNOUT);
     builder.pop();
+    KeypadConfig.define(builder);
     SPEC = builder.build();
   }
 
